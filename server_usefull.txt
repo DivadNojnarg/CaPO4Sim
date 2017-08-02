@@ -1,0 +1,43 @@
+######## Shiny App server #############
+
+rm -r mydir
+mkdir mydir
+
+ rm -rf * remove every files from a folder
+
+## SSH keys ##
+
+sudo chmod 600 /Users/macdavidgranjon/Desktop/shinycap.pem
+ssh-add /Users/macdavidgranjon/Desktop/shinycap.pem # to have authorization
+
+## SSH key ##
+
+scp -r /Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/global_app ubuntu@172.23.144.204:/srv/shiny-server/capApp/global_app
+
+scp -r /Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/* ubuntu@172.23.144.204:/srv/shiny-server/capApp/case_studies_app
+
+scp -r /Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/global.R ubuntu@172.23.144.204:/srv/shiny-server/capApp/case_studies_app
+
+Very important: do not forget to replace all local folders by the server folders:
+
+path_to_calc_change_base <- "/srv/shiny-server/capApp/global_app/www/calc_change_base.csv"
+
+
+deb https://pbil.univ-lyon1.fr/CRAN/ /bin/linux/ubuntu trusty/ # last version of R for 14.04
+  
+######### Apache server ###############
+# copy files in /var/www/html
+
+do not forget to create a HTTP rule on the virtual machine to allow HTTP protocol on port 80 (and maybe HTTPS on 443)
+
+sudo chown -R ubuntu:ubuntu /var/www/html # change the permission in case scp fails and also change var/www/html to the accurate folder if required
+scp -r /Users/macdavidgranjon/Documents/calcium_phosphate_homeostasis/public/* ubuntu@172.23.146.218:/var/www/html # do not forget the * to copy all files
+
+ssh ubuntu@172.23.146.218 -Y # allow for X11 display
+
+
+######### Website CSS ################
+
+www-header{background-image:linear-gradient(90deg,#046ed8 0,#2b82d8) make in blue instead of red
+ampstart-footer:before{content:"";position:absolute;width:100%;height:35px;background-image:linear-gradient(90deg,#046ed8 0,#2b82d8)
+
