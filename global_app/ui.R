@@ -43,6 +43,12 @@ jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 # Define UI 
 shinyUI(fluidPage(
   
+  # 4 danger notification that can be switched on or off as required
+  tags$style("#shiny-notification-menu_notif {position: fixed; top: 1%; right: 50% ; width: 40em; opacity: 1;}"),
+  tags$style("#shiny-notification-graph_notif {position: fixed; top: 30%; right: 25% ; width: 20em; opacity: 1;}"),
+  tags$style("#shiny-notification-control_notif {position: fixed; top: 70%; right: 15% ; width: 20em; opacity: 1;}"),
+  tags$style("#shiny-notification-diagram_notif {position: fixed; top: 75%; left: 10% ; width: 20em; opacity: 1;}"),
+  
   # tags$head(
   #   tags$style(HTML("
   #                   #network_cap{
@@ -62,7 +68,7 @@ shinyUI(fluidPage(
   withMathJax(), 
   
   # Application theme
-  theme = shinytheme("cerulean"),
+  theme = shinytheme("yeti"),
   #shinythemes::themeSelector(),
   #theme = "bootswatch-journal.css",
   

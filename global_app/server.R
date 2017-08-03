@@ -12,7 +12,6 @@ library(shiny)
 library(plotly)
 library(deSolve)
 require(visNetwork)
-library(flexdashboard)
 library(shinyBS)
 #library(parallel)
 #library(sparklines)
@@ -93,18 +92,18 @@ shinyServer(function(input, output, session) {
   nodes_Ca <- reactive({
     
     d <- data.frame(id = 1:15,
-                    shape = c("image","image","image","dot","dot","image","image","image","image","circle","circle","circle","image","circle","circle"), 
+                    shape = c("image","image","image","image","image","image","image","image","image","image","image","image","image","image","image"), 
                     # square are always scalable
-                    image = c("food.png","intestine.png","feces.png","kidney.png","kidney.png","bone.png","kidney.png","urine.png",
-                              "parathyroid_gland.png","kidney.png","kidney.png","kidney.png","cells.png","kidney.png","kidney.png"),
-                    label = c("Food", "Intestine"," Feces", "Plasma", "Rapid-Bone", "Bone", "Kidneys", "Urine", "PTH", "D3", "D3","FGF23","Cells","Cap","PO4p"),
+                    image = c("food.svg","intestine.svg","feces.svg","plasma.svg","rapid-bone.svg","bone.svg","kidney.svg","urine.svg",
+                              "parathyroid_gland.svg","D3.svg","D3.svg","FGF23.svg","cells.svg","Cap.svg","PO4.svg"),
+                    label = c("","","","","","","","","","","","","","",""),
                     #title = out()[nrow(out()),"Ca_p"],
                     #title = c(rep(as.character(as.tags(sparklines::sparkline(out()[nrow(out()),"Ca_p"]))),17)), # does not work
                     #title = paste0(img(src ="bone.png")), # tooltip to display an image
-                    x = c(8, 12, 20, 12, 0, 3, 22, 30, 12, 5, 22, 28, 11, 18, 28),
-                    y = c(0, 2, 0, 6, 6, 14, 6, 8, 17, 3, 18, 14, 12, 22, 22),
+                    x = c(8, 12, 20, 12, 0, 3, 22, 32, 12, 5, 22, 28, 11, 18, 28),
+                    y = c(0, 4, 0, 12, 12, 22, 12, 14, 27, 6, 24, 22, 20, 32, 32),
                     color = list(background = "#97C2FC", border = "#97C2FC", highlight = list(background = "orange", border = "orange")),
-                    size = c(25,50,25,25,25,50,50,25,50,25,25,25,50,25,25), # rep(50,13)
+                    size = c(50,50,50,50,50,50,50,50,50,25,25,25,50,25,25), # rep(50,13)
                     hidden = c(rep(FALSE,15)))
     
   })
@@ -119,13 +118,13 @@ shinyServer(function(input, output, session) {
                               "Rapid PO4 storage","PO4 flux into bone"),
                     id = 1:32,
                     width = 4*c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-                    font.size = c(rep(10,10),rep(30,5),10,rep(30,2),rep(10,5),30,10,rep(30,3), rep(10,4)),
+                    font.size = c(rep(11,10),rep(30,5),11,rep(30,2),rep(11,5),30,11,rep(30,3), rep(11,4)),
                     color = list(color = c(rep("black", 32)), 
                                  highlight = "yellow"),
                     dashes = c(rep(F,10),rep(T,10),rep(F,3),rep(T,5), rep(F,4)),
                     #title = paste("Edge", 1:8),
                     smooth = c(rep(T,32)),
-                    length = 200,
+                    length = c(200,200,200,200,300,200,rep(200,22),200,300,200,200),
                     stringsAsFactors=FALSE) # to change edges color do not forget this "stringsAsFactors=FALSE"
     
   })
@@ -137,20 +136,35 @@ shinyServer(function(input, output, session) {
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
     
+    legend_nodes <- data.frame(shape = c("image","image"),
+                               image = c("food.svg","D3.svg"),
+                               label = c("compartment", "hormones"),
+                               size = c(15,15))
+    
+    legend_edges <- data.frame(from = c(5,1,15,9), 
+                               to = c(4,2,12,7),
+                               width = 4,
+                               arrows = "to",
+                               label = c("inhibited flux", "stimulated flux", "hormonal regulation","perturbation"),
+                               color = list(color = c("red","green","black","yellow")),
+                               font.align = "bottom",
+                               dashes = c(F,F,T,F),
+                               smooth = c(T,T,T,F))
+    
     visNetwork(nodes_Ca, edges_Ca, width = "100%", height = "100%") %>%
       visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
-      visEdges(shadow = TRUE, font = list(align = "horizontal"),
+      visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
                arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
       visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
       visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE) %>% # prevent edge from being selected when a node is selected
       visEvents(selectNode = "function(nodes) {
-        Shiny.onInputChange('current_node_id', nodes.nodes);
+                Shiny.onInputChange('current_node_id', nodes.nodes);
                 ;}") %>%
       # visEvents(deselectNode = "function(nodes) {
       #   Shiny.onInputChange('current_node_id', 0);
       #           ;}") %>%
       visEvents(selectEdge = "function(edges) {
-        Shiny.onInputChange('current_edge_id', edges.edges);
+                Shiny.onInputChange('current_edge_id', edges.edges);
                 ;}") %>%
       visEvents(stabilized = "function() { 
                 this.setOptions({nodes : {physics : false}})}") %>%
@@ -159,8 +173,10 @@ shinyServer(function(input, output, session) {
       #           ;}") %>%
       #visLayout(randomSeed = 12, improvedLayout = TRUE)
       visIgraphLayout(smooth = TRUE) %>% # to disable repulsion
+      visLegend(addNodes = legend_nodes, addEdges = legend_edges, useGroup = FALSE, ncol = 2) %>% # add the legend, ncol = 2 to show edges otherwise a bug appear
       #visPhysics(forceAtlas2Based = list(avoidOverlap = 1)) %>%
-        visExport(type = "pdf") # export the graph as pdf
+      visExport(type = "pdf") # export the graph as pdf
+    
   })
   
   output$id <- renderPrint({
@@ -933,130 +949,103 @@ shinyServer(function(input, output, session) {
 
   #------------------------------------------------------------------------- 
   #  
-  #  Gauge rendering for better displayed values of PO4, Ca, PTH ...
+  #  Notification events to explain the user how to play with the app
   #
   #-------------------------------------------------------------------------
   
-  # Ca_p Gauge
+  # Show a welcome notification in the menu bar part
   
-  output$Ca_gauge <- renderGauge({
-    Ca_p <- round(out()[nrow(out()),"Ca_p"],2)
-    gauge(Ca_p, min = 0, max = 4, symbol = 'mM', gaugeSectors(
-      success = c(1.1, 1.3),
-      warning = c(0.6, 2),
-      danger = c(0, 4),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "[Ca2+]p")
+  observe({ 
+    
+    if(input$notif_switch == "TRUE"){
+      
+      showNotification( 
+        id = "menu_notif",
+        "In this panel you can enable/disable notifications, bookmark the state of your app to share it with colleagues, save it, load the last state you saved and change
+        the global theme.",
+        duration = 9999, # sufficient amount of time
+        closeButton = TRUE,
+        type = "error")
+      
+      #jqui_draggable('menu_notif', options = list(grid = c(80, 80))) # does not work
+      
+    }
+    else{ # this notifications can be removed at anytime
+      
+      removeNotification(id = "menu_notif", session)
+      
+    }
+    
   })
   
-  # PO4_p Gauge
+  # Show a welcome notification in the graph part
   
-  output$PO4_gauge <- renderGauge({
-    PO4_p <- round(out()[nrow(out()),"PO4_p"],2)
-    gauge(PO4_p, min = 0, max = 4, symbol = 'mM', gaugeSectors(
-      success = c(0.8, 1.6), 
-      warning = c(0.4, 2), 
-      danger = c(0, 4),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "[PO4]p")
+  observe({ 
+    
+    if(input$notif_switch == "TRUE"){
+      
+      showNotification( 
+        id = "graph_notif",
+        "In this panel are displayed the graph of CaPO4 homeostasis. To see results, start by clicking on a node and/or an edge on the interactive diagram.
+        The value of tmax which is the maximum time of simulation can be increased or decreased as required (but higher than 0).",
+        duration = 9999, # sufficient amount of time
+        closeButton = TRUE,
+        type = "error")
+      
+    }
+    else{ # this notifications can be removed at anytime
+      
+      removeNotification(id = "graph_notif", session)
+      
+    }
+    
   })
   
-  # PTH_p Gauge
+  # Show a welcome notification in the diagram area 
   
-  output$PTH_gauge <- renderGauge({
-    PTH_p <- round(out()[nrow(out()),"PTH_p"],2)
-    Vp <- 0.01*input$Vp
-    gauge(PTH_p/Vp, min = 0, max = 200, symbol = 'pM', gaugeSectors(
-      success = c(5, 10), 
-      warning = c(2, 20), 
-      danger = c(0, 200),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "[PTH]p")
+  observe({ 
+    
+    if(input$notif_switch == "TRUE"){
+      
+      showNotification( 
+        id = "diagram_notif",
+        "In this panel is displayed the interactive diagram (see legend). Basically, when a parameter is changed in the control center 
+        initial perturbations are shown in yellow. The arrow size increases if
+        it is a stimulatory effect and inversely. Fluxes are shown in red if they decrease or in green if they are enhanced. Colors correspond to the final state of the system
+        (which is the value of tmax in minutes).",
+        duration = 9999,
+        closeButton = TRUE,
+        type = "error")
+    }
+    else{
+      
+      removeNotification(id = "diagram_notif", session)
+      
+    }
+    
   })
   
-  # D3_p Gauge
+  # Show a welcome notification in the control center 
   
-  output$D3_gauge <- renderGauge({
-    D3_p <- round(out()[nrow(out()),"D3_p"],2)
-    gauge(D3_p, min = 0, max = 5000, symbol = 'pM', gaugeSectors(
-      success = c(200, 600), 
-      warning = c(100, 1000), 
-      danger = c(0, 5000),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "[D3]p")
-  })
-  
-  # FGF_p Gauge
-  
-  output$FGF_gauge <- renderGauge({
-    FGF_p <- round(out()[nrow(out()),"FGF_p"],2)
-    gauge(FGF_p, min = 0, max = 100, symbol = 'pM', gaugeSectors(
-      success = c(10, 20), 
-      warning = c(5, 30), 
-      danger = c(0, 100),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "[FGF]p")
-  })
-  
-  # U_Ca Gauge
-  
-  output$UCa_gauge <- renderGauge({
+  observe({ 
     
-    out <- out()
-    parameters_bis <- parameters_bis()
-    GFR <- 2e-003*input$GFR
+    if(input$notif_switch == "TRUE"){
+      
+      showNotification( 
+        id = "control_notif",
+        "In this panel you can select several parameters and change their value using sliders.",
+        #sliderInput("useless_slider", "", min = 0, max = 100, value = 50), # possible to add everything inside
+        duration = 9999,
+        closeButton = TRUE,
+        type = "error") # important so in red
+      
+    }
+    else{
+      
+      removeNotification(id = "control_notif", session)
+      
+    }
     
-    U_Ca <- round(out[nrow(out),"U_Ca"]/(GFR*(out[nrow(out),"Ca_p"] + out[nrow(out),"CaHPO4_p"] + out[nrow(out),"CaH2PO4_p"]))*100,2)
-    gauge(U_Ca, min = 0, max = 10, symbol = '%', gaugeSectors(
-      success = c(0, 2), 
-      warning = c(2, 3), 
-      danger = c(3, 10),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "U_Ca")
-  })
-  
-  # U_PO4 Gauge
-  
-  output$UPO4_gauge <- renderGauge({
-    
-    out <- out()
-    parameters_bis <- parameters_bis()
-    GFR <- 2e-003*input$GFR
-    
-    U_PO4 <- round(out[nrow(out),"U_PO4"]/(GFR*(out[nrow(out),"PO4_p"] + out[nrow(out),"CaHPO4_p"] + out[nrow(out),"CaH2PO4_p"] + 
-                                                  out[nrow(out),"NaPO4_p"]))*100,2)
-    gauge(U_PO4, min = 0, max = 50, symbol = '%', gaugeSectors(
-      success = c(7, 20), 
-      warning = c(5, 30), 
-      danger = c(0, 50),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "U_PO4")
-  })
-  
-  # Abs_Ca Gauge
-  
-  output$AbsCa_gauge <- renderGauge({
-    
-    out <- out()
-    parameters_bis <- parameters_bis()
-    
-    I_Ca <- 2.2e-003*input$I_Ca
-    
-    Abs_Ca <- round(out[nrow(out),"Abs_int_Ca"]/I_Ca*100,2)
-    gauge(Abs_Ca, min = 0, max = 100, symbol = '%', gaugeSectors(
-      success = c(25, 45), 
-      warning = c(15, 60), 
-      danger = c(0, 100),
-      colors = c("success", "warning", "danger")
-    ),
-    label = "Abs_Ca")
   })
   
   #------------------------------------------------------------------------- 

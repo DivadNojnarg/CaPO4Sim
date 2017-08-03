@@ -11,6 +11,14 @@
 header <- dashboardHeader(
   title="Calcium Phosphate Homeostasis in the Rat", titleWidth = 500,
   
+  # enable notifications or not since this can be boring
+  tags$li(
+    title = "",
+    class = "dropdown",
+    switchInput(inputId = "notif_switch", label = "Help?",
+                onStatus = "success", offStatus = "danger", value = FALSE, size = "mini")
+  ),
+  
   # Make a report
   tags$li(
     title = "",

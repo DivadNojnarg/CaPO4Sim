@@ -1653,7 +1653,11 @@ shinyServer(function(input, output, session) {
                            heights = c(0.5,0.5))
       
     }
-    
+    else{
+      p <- plot_ly() %>%
+        add_annotations("Please fill the quiz!", showarrow = FALSE, font = list(color = "red", size = 20))
+    }
+
   })
   
   # Vitamin D3 deficiency
@@ -1718,6 +1722,10 @@ shinyServer(function(input, output, session) {
       plot_hypoD3 <- subplot(plot_CaP_hypoD3, plot_hormones_hypoD3, plot_Ca_fluxes_hypoD3, plot_PO4_fluxes_hypoD3, titleX = TRUE, titleY = TRUE,
                              nrows = 2, margin = 0.07, heights = c(0.5,0.5))
       
+    }
+    else{
+      p <- plot_ly() %>%
+        add_annotations("Please fill the quiz!", showarrow = FALSE, font = list(color = "red", size = 20)) # prevent shiny from printing an error message which could disturb user
     }
     
   })
@@ -1793,6 +1801,10 @@ shinyServer(function(input, output, session) {
       plot_hypopara <- subplot(plot_CaP_hypopara, plot_hormones_hypopara, plot_Ca_fluxes_hypopara, plot_PO4_fluxes_hypopara, titleX = TRUE, titleY = TRUE,
                                nrows = 2, margin = 0.07, heights = c(0.5,0.5))
       
+    }
+    else{
+      p <- plot_ly() %>%
+        add_annotations("Please fill the quiz!", showarrow = FALSE, font = list(color = "red", size = 20))
     }
     
   })

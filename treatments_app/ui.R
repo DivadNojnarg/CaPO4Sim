@@ -62,7 +62,7 @@ shinyUI(fluidPage(
   withMathJax(), 
   
   # Application theme
-  theme = shinytheme("cerulean"),
+  theme = shinytheme("yeti"),
   #shinythemes::themeSelector(),
   #theme = "bootswatch-journal.css",
   

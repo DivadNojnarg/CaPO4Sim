@@ -12,7 +12,6 @@ library(shiny)
 library(plotly)
 library(deSolve)
 require(visNetwork)
-library(flexdashboard)
 library(shinyBS)
 #library(parallel)
 #library(sparklines)
@@ -39,22 +38,170 @@ shinyServer(function(input, output, session) {
   # Basic reactive expressions needed by the solver
   
   times <- reactive({seq(0,input$tmax, by = 1)})
-  state <- reactive({ c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, "FGF_p" = 16.78112, "Ca_p" = 1.2061,
-                        "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, "PO4_c" = 2.7719,
-                        "CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,
-                        "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0) })
   
-  # Parameters: multiply the real parameter value by the user input. By default, user input = 1 so that parameters are well defined
+  # Generate special state for php1, hypoD3, hypopara # Only do when the original files are unavailable or corrupted
   
-  parameters <- reactive({ c("k_prod_PTHg" = 4.192*input$k_prod_PTHg, "beta_exo_PTHg" = 5.9e-002*input$beta_exo_PTHg,
-                             "gamma_exo_PTHg" = 5.8e-002*input$gamma_exo_PTHg, "D3_inact" = 2.5e-005*input$D3_inact, "k_deg_D3" = 1e-003*input$k_deg_D3,
-                             "k_prod_FGF" = 6.902e-011*input$k_prod_FGF, "I_Ca" = 2.2e-003*input$I_Ca, "Lambda_ac_Ca" = 5.5e-004*input$Lambda_ac_Ca,
-                             "Lambda_ac_P" = 2.75e-004*input$Lambda_ac_Ca, "Lambda_res_min" = 1e-004*input$Lambda_res_min, 
-                             "delta_res_max" = 6e-004*input$delta_res_max,
-                             "k_p_Ca" = 0.44*input$k_p_Ca, "k_f_Ca" = 2.34e-003*input$k_f_Ca, "I_P" = 1.55e-003*input$I_P, "k_pc" = 0.1875*input$k_pc,
-                             "k_cp" = 1e-003*input$k_cp, "k_p_P" = 13.5*input$k_p_P, "k_f_P" = 0.25165*input$k_f_P, "k_fet" = 0.3*input$k_fet,
-                             "k_c_CPP" = 3*input$k_c_CPP, "Na" = 142*input$Na, "Prot_tot_p" = 0.6*input$Prot_tot_p, "Vp" = 0.01*input$Vp,
-                             "GFR" = 2e-003*input$GFR, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2) })
+  # observeEvent(input$disease_selected,{
+  # 
+  #   out <- out()
+  # 
+  #   if(input$disease_selected == "primary-hyperparathyroidism"){
+  # 
+  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_php1.csv")
+  # 
+  #   }
+  #   else if (input$disease_selected == "hypoparathyroidism"){
+  # 
+  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_hypopara.csv")
+  # 
+  #   }
+  #   else if (input$disease_selected == "vitamin D3 deficiency"){
+  # 
+  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_hypoD3.csv")
+  # 
+  #   }
+  # 
+  # })
+  
+  # observeEvent(input$disease_selected,{
+  # 
+  #   out <- out()
+  # 
+  #   if (input$disease_selected == "vitamin D3 deficiency"){
+  # 
+  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_hypoD3.csv")
+  # 
+  #   }
+  # 
+  # })
+  
+  state_php1 <- reactive({
+
+    state_php1 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_php1.csv", # for local config
+                           stringsAsFactors = FALSE)
+    #state_php1 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_php1.csv", # use in the server
+                           #stringsAsFactors = FALSE)
+    state_php1 <- unlist(state_php1[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
+
+  })
+
+  state_hypopara <- reactive({
+
+    state_hypopara <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_hypopara.csv", # for local config
+                           stringsAsFactors = FALSE)
+    #state_hypopara <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypopara.csv", # use in the server
+    #stringsAsFactors = FALSE)
+    state_hypopara <- unlist(state_hypopara[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
+
+  })
+
+  state_hypoD3 <- reactive({
+
+    state_hypoD3 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_hypoD3.csv", # for local config
+                               stringsAsFactors = FALSE)
+    #state_hypoD3 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypoD3.csv", # use in the server
+    #stringsAsFactors = FALSE)
+    state_hypoD3 <- unlist(state_hypoD3[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
+
+  })
+  
+  state <- reactive({ 
+    
+    if(!is.null(input$disease_selected)){
+      if(input$disease_selected == "primary-hyperparathyroidism"){
+
+       state_php1()
+
+      }
+      else if (input$disease_selected == "hypoparathyroidism"){
+
+        state_hypopara()
+
+      }
+      else if (input$disease_selected == "vitamin D3 deficiency"){
+
+        state_hypoD3()
+
+       }
+     }
+     else{
+      
+      c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, "FGF_p" = 16.78112, "Ca_p" = 1.2061,
+        "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, "PO4_c" = 2.7719,
+        "CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,
+        "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0) 
+      
+    }
+  })
+  
+  # Create parameters sets
+  
+  parameters <- reactive({ # load relevant parameters as a function  of the loaded disease
+    
+    if(!is.null(input$disease_selected)){
+      
+      if(input$disease_selected == "primary-hyperparathyroidism"){
+        
+        c("k_prod_PTHg" = 300*4.192, "beta_exo_PTHg" = 5.9e-002,
+          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
+          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
+          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
+          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
+          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
+          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
+          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
+      }
+      else if (input$disease_selected == "hypoparathyroidism"){
+        
+        c("k_prod_PTHg" = 0, "beta_exo_PTHg" = 5.9e-002,
+          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
+          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
+          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
+          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
+          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
+          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
+          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
+      }
+      else if (input$disease_selected == "vitamin D3 deficiency"){
+        
+        c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002,
+          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 0, "k_deg_D3" = 1e-003,
+          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
+          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
+          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
+          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
+          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
+          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
+      }
+      else if (input$disease_selected == "pseudohypoparathyroidism"){      
+        
+        c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002, 
+          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
+          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
+          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
+          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
+          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
+          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
+          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
+        
+      }
+      
+    }
+    else{ # default parameters
+      
+      c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002, 
+        "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
+        "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
+        "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
+        "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
+        "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
+        "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
+        "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
+      
+    }
+  })
+  
+  output$multiple <- renderPrint({ input$disease_selected })
   
   # make a vector of input$parameters, fixed_parameters and calculated parameters
   
@@ -514,17 +661,21 @@ shinyServer(function(input, output, session) {
     calc_change_t <- calc_change(out)
     calc_change_t$X <- NULL # remove column X
     
-    # calculate the difference between live fluxes and base-case values
+    path_to_calc_change_base <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/www/calc_change_base.csv" # only run in local
+    #path_to_calc_change_base <- "/srv/shiny-server/capApp/treatments_app/www/calc_change_base.csv" # only works on the linux server
+    calc_change_base <- read.csv(path_to_calc_change_base) # load the base case fluxes file to compare with "live" fluxes
+    calc_change_base$X <- NULL
+    calc_change_sum <- round(calc_change_t,2) - round(calc_change_base,2) # calculate the difference between live fluxes and base-case values
     index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21) # index of arrows in the graph (which are fluxes and not regulations)
-    calc_change_t <- rbind(calc_change_t, index)
+    calc_change_sum <- rbind(calc_change_sum, index)
     
-    flux_changed_index <- which(calc_change_t[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
-    arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
+    flux_changed_index <- which(calc_change_sum[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
+    arrow_index <- as.numeric(t(calc_change_sum[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
     
     if(!is.null(flux_changed_index)){
-      for (i in (1:ncol(calc_change_t))){
+      for (i in (1:ncol(calc_change_sum))){
         arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
-        ifelse(calc_change_t[[i]][1] > 0, edges_Ca$color.color[arrow_index_i] <- "green", edges_Ca$color.color[arrow_index_i] <- "red")
+        ifelse(calc_change_sum[[i]][1] > 0, edges_Ca$color.color[arrow_index_i] <- "green", edges_Ca$color.color[arrow_index_i] <- "red")
       }
       
     }
@@ -556,29 +707,18 @@ shinyServer(function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
-  observeEvent(input$beta_exo_PTHg,{ # critical value for PTHg
-    
-    if (input$beta_exo_PTHg < 0.9){
-      
-      sendSweetAlert(messageId = "failSw", title = "Ooops ...", text = "Invalid parameter value", type = "error")
-      reset("beta_exo_PTHg") # value is reset
-      
-    }
-    
-  })
-  
   # prevent the user to put infinite value in the max time of integration
   
-  observeEvent(input$tmax,{ # critical value for tmax
-    
-    if (input$tmax > 30000){
-      
-      sendSweetAlert(messageId = "failSw", title = "Ooops ...", text = "Invalid parameter value: the maximum time of simulation is too high!", type = "error")
-      reset("tmax") # value is reset
-      
-    }
-    
-  })
+  # observeEvent(input$tmax,{ # critical value for tmax
+  #   
+  #   if (input$tmax > 30000){
+  #     
+  #     sendSweetAlert(messageId = "failSw", title = "Ooops ...", text = "Invalid parameter value: the maximum time of simulation is too high!", type = "error")
+  #     reset("tmax") # value is reset
+  #     
+  #   }
+  #   
+  # })
   
   #------------------------------------------------------------------------- 
   #  
