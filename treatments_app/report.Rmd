@@ -1,0 +1,17 @@
+---
+title: "Dynamic report"
+#output: pdf_document
+params:
+  n: NA
+---
+
+```{r}
+# The `params` object is available in the document.
+params$n
+```
+
+Plot of $[Ca^{2+}]_p$ concentration as a function of time:
+
+```{r}
+plot(out()[,1],out()[,"Ca_p"])
+```
