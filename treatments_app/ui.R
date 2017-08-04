@@ -21,13 +21,11 @@ library(plotly)
 library(shinyBS)
 library(shinyjs)
 library(shinycssloaders)
-library(flexdashboard)
 require(visNetwork)
 library(shinyWidgets)
 library(shinyjqui)
 library(bsplus)
 library(sweetalertR)
-library(shinyLP)
 
 # Load the template components
 
@@ -55,6 +53,37 @@ shinyUI(fluidPage(
   # tags$head(tags$script(src="ng-knob.js")),
   # tags$head(tags$script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")),
   # tags$head(tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.min.js")),
+  
+  tags$head(
+    tags$style(HTML("
+                    .js-irs-0 .irs-bar {
+                      border-top-color: #d01010;
+                      border-bottom-color: #d01010;
+                    } 
+                    
+                    .js-irs-0 .irs-bar-edge {
+                      border-color: #d01010;
+                    }
+                    
+                    .js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {
+                      background: #a00;
+                    }
+                    
+                    .js-irs-1 .irs-bar {
+                      border-top-color: #10d010;
+                      border-bottom-color: #10d010;
+                    } 
+                    
+                    .js-irs-1 .irs-bar-edge {
+                      border-color: #10d010;
+                    }
+                    
+                    .js-irs-1 .irs-single, .js-irs-1 .irs-bar-edge, .js-irs-1 .irs-bar {
+                      background: #0a0;
+                    }
+
+                    "))
+  ),
   
   includeJqueryUI(), # to move graphs and resize them
   useShinyjs(),

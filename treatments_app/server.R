@@ -75,6 +75,8 @@ shinyServer(function(input, output, session) {
   # 
   # })
   
+  # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
+  
   state_php1 <- reactive({
 
     state_php1 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_php1.csv", # for local config
@@ -124,7 +126,7 @@ shinyServer(function(input, output, session) {
 
        }
      }
-     else{
+     else{ # default initial state
       
       c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, "FGF_p" = 16.78112, "Ca_p" = 1.2061,
         "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, "PO4_c" = 2.7719,
@@ -134,60 +136,58 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  # Create parameters sets
+  # Ca_iv control interface when Ca iv injection is choosen in the menu
   
-  parameters <- reactive({ # load relevant parameters as a function  of the loaded disease
+  output$Ca_iv_control <- renderUI({
     
-    if(!is.null(input$disease_selected)){
+    if(is.element("Ca iv injection", input$treatment_selected)){
       
-      if(input$disease_selected == "primary-hyperparathyroidism"){
-        
-        c("k_prod_PTHg" = 300*4.192, "beta_exo_PTHg" = 5.9e-002,
-          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
-          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
-          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
-          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
-          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
-          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
-      }
-      else if (input$disease_selected == "hypoparathyroidism"){
-        
-        c("k_prod_PTHg" = 0, "beta_exo_PTHg" = 5.9e-002,
-          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
-          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
-          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
-          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
-          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
-          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
-      }
-      else if (input$disease_selected == "vitamin D3 deficiency"){
-        
-        c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002,
-          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 0, "k_deg_D3" = 1e-003,
-          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
-          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
-          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
-          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
-          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
-      }
-      else if (input$disease_selected == "pseudohypoparathyroidism"){      
-        
-        c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002, 
-          "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
-          "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
-          "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
-          "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
-          "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
-          "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-          "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
-        
-      }
+      tagList( sliderInput("Ca_inject", "$$ k_{inject}^{Ca} $$", min = 0, max = 0.002, value = 0.001, step = 0.0001) %>%
+                 shinyInput_label_embed(
+                   icon("info") %>%
+                     bs_embed_tooltip(title = "Rate of injection of calcium in plasma (μmol/min)")),
+               
+               numericInput("t_start_inject","Time when begins the Ca iv injection:", 0, min = 0, max = NA, width = "50%"),
+               numericInput("t_stop_inject","Time,when stops the Ca iv injection:", input$tmax, min = 0, max = NA, width = "50%")
+      )
       
     }
-    else{ # default parameters
+    
+  })
+  
+  # Create parameters sets specific for events
+  
+  parameters_event <- reactive({
+    
+    input$treatment_selected
+
+    if(!is.null(input$Ca_inject)){ # for Ca iv injection
+
+      c("t_start_inject" = input$t_start_inject, "t_stop_inject" = input$t_stop_inject)
+
+    }else c("t_start_inject" = 0, "t_stop_inject" = 0)
+
+    })
+
+  # Create parameters sets for all diseases an treatments
+  
+  parameters <- reactive({ 
+    
+    if(!is.null(input$Ca_inject) && (!is.null(input$disease_selected) || !is.null(input$treatment_selected))){
+    
+    c("k_prod_PTHg" = ifelse(is.element("primary-hyperparathyroidism", input$disease_selected), 300*4.192, 4.192), "beta_exo_PTHg" = 5.9e-002, 
+    "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
+    "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
+    "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
+    "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
+    "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
+    "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
+    "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2, "PTX_coeff" = ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1),
+    "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected), input$Ca_inject, 0))
+      
+    }
+    
+    else{
       
       c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002, 
         "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
@@ -196,16 +196,16 @@ shinyServer(function(input, output, session) {
         "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
         "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
         "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-        "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2)
+        "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2, "PTX_coeff" = 1,
+        "k_inject_Ca" = 0)
       
     }
+    
   })
-  
-  output$multiple <- renderPrint({ input$disease_selected })
   
   # make a vector of input$parameters, fixed_parameters and calculated parameters
   
-  parameters_bis <- reactive({ c(parameters(), parameters_fixed )}) # parameters_calc(input) does not work
+  parameters_bis <- reactive({ c(parameters(), parameters_fixed, parameters_event()) }) # parameters_calc(input) does not work
   
   #------------------------------------------------------------------------- 
   #  

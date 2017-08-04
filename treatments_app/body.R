@@ -88,8 +88,7 @@ body <- dashboardBody(
                                                selected = "", width = "100%"
                                              )   
                                       ),
-                                      verbatimTextOutput("multiple")
-                                      
+                                      uiOutput("Ca_iv_control")
                              )
                            )
                        )

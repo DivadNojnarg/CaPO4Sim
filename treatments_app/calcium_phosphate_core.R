@@ -21,57 +21,6 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     ##################
     #                #
-    #  Simulations  #
-    #                #
-    ##################
-    
-    # write simulations scenario here such as PO4 or Ca injection ...
-    
-    #---- Hypercalcemia + Hypocalcemia  Gravesen ----#
-      
-    # if (t>=0 && t<60){
-    #   k_inject_Ca = 5e-004
-    # }
-    # else if (t>=60 && t<120){
-    #   k_inject_egta = 1e-003
-    #   k_on_egta = 9e004
-    #   k_off_egta = 18
-    # }
-    
-    #---- iv injection of PO4 ----#
-      
-    # if (t<=10){
-    #   k_inject_P = 0.15-1e-003*t
-    #   GFR = 0.002+8*10^-4*t
-    #   Vp = 0.011
-    # }
-    # else if (t>10 && t<=50){
-    #   GFR = 0.01-8*10^-5*t
-    #   Vp = 0.011 
-    # }
-    # else {
-    #   GFR = 0.006
-    #   Vp = 0.011
-    # }
-    
-    #---- PO4gavage ----#
-      
-    # if  (t>=0 && t<=25){
-    #   I_P = 0.018 - 0.000008*t
-    # }
-    # else if (t>25 && t<=160){
-    #   I_P =  0.0041 - 4.2e-005*t
-    # }
-    # else if (t>160 && t<=250){
-    #   I_P = 0.0016
-    # }
-    # else{
-    #   I_P = 0.00155
-    # }
-   
-    
-    ##################
-    #                #
     #   Equations    #
     #                #
     ##################
@@ -82,7 +31,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     # PTHg #
     
-    PTHg_synthesis_norm <- (k_prod_PTHg*Vc/PTH_g_norm)*PO4_p^n_prod_Pho/((1 + gamma_prod_D3*D3_norm*D3_p)*
+    PTHg_synthesis_norm <- PTX_coeff*(k_prod_PTHg*Vc/PTH_g_norm)*PO4_p^n_prod_Pho/((1 + gamma_prod_D3*D3_norm*D3_p)*
                                                                            ((K_prod_PTH_P/Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho))
     PTHg_degradation_norm <- k_deg_PTHg*PTH_g
     n_Ca_norm <- (n1_exo/(1+exp(-rho_exo*Ca_p_norm*(R/Ca_p_norm-Ca_p)))+n2_exo)
@@ -228,17 +177,25 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     # EGTA reaction
     
-    EGTA_form = k_on_egta*Ca_p*EGTA_p;
-    EGTA_diss = k_off_egta*CaEGTA_p;
+    EGTA_form <- k_on_egta*Ca_p*EGTA_p;
+    EGTA_diss <- k_off_egta*CaEGTA_p;
     
     ##################
     #                #
     #   Simulations  #
     ##################
     
-    # if (t>0){
-    #   k_inject_Ca = 0.01
-    # }
+    Ca_iv_inject <- 0
+    
+     if(!is.null(t_start_inject) && !is.null(t_stop_inject)){
+       
+       if(t > t_start_inject && t < t_stop_inject){
+       
+         Ca_iv_inject <- k_inject_Ca;
+       
+       }
+       
+     }
     
     ##################
     #                #
@@ -250,7 +207,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     dPTH_p <- k_inject_PTH + PTHp_influx_norm - PTHp_degradation_norm # PTHp
     dD3_p <- k_inject_D3 + D3_synthesis_norm - D3_degradation_norm # D3
     dFGF_p <- k_inject_FGF + FGF_synthesis_norm - FGF_degradation_norm # FGF23
-    dCa_p <- 1/Vp*(k_inject_Ca + Abs_intest_norm  + Resorption_norm/Ca_p_norm - Rapid_storage_Ca + Rapid_release_Ca - Excretion_norm) -
+    dCa_p <- 1/Vp*(Ca_iv_inject + Abs_intest_norm  + Resorption_norm/Ca_p_norm - Rapid_storage_Ca + Rapid_release_Ca - Excretion_norm) -
       k_form_CaProt + k_diss_CaProt - k_form_CaHPO4_norm*HPO4_norm + k_diss_CaHPO4_norm*CaHPO4_norm/Ca_p_norm -
       k_form_CaH2PO4_norm/Ca_p_norm + k_diss_CaH2PO4_norm*CaH2PO4_norm/Ca_p_norm -
       EGTA_form + EGTA_diss/Ca_p_norm # Plasma Ca
