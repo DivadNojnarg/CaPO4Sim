@@ -11,59 +11,65 @@
 header <- dashboardHeader(
   title="Calcium Phosphate Homeostasis: treatment App", titleWidth = 500,
   
-  # Make a report
+  # tmax value
+  
   tags$li(
     title = "",
     class = "dropdown",
-    dropdownButton(icon = icon("download"), width = "100px", circle = FALSE, status = "primary", label = "Report",
-      radioButtons('format', 'Document format', c('PDF', 'HTML', 'Word'),
-                   inline = TRUE),
-      downloadButton('downloadReport')
+    
+    numericInput("tmax","Value of tmax:", 500, min = 0, max = NA, width = "50%")
+    
+  ),
+  
+  # Disease selector
+  
+  tags$li(
+    title = "",
+    class = "dropdown",
+    dropdownButton(icon = icon("download"), width = "350px", circle = FALSE, status = "primary", label = "Disease",
+                   
+                   multiInput(
+                     inputId = "disease_selected", label = "Select a disease :",
+                     choices = c("primary-hyperparathyroidism", "hypoparathyroidism", "vitamin D3 deficiency", "pseudohypoparathyroidism"),
+                     selected = "", width = "100%"
+                   )
+                   
     )
   ),
   
-  # Share the state of the App with other users
+  # Treatment selector
+  
+  tags$li(
+    title = "",
+    class = "dropdown",
+    dropdownButton(icon = icon("download"), width = "300px", circle = FALSE, status = "primary", label = "Treatment",
+                   
+                   multiInput(
+                     inputId = "treatment_selected", label = "Select a treatment :",
+                     choices = c("parathyroid surgery","vitamin D3 iv injection","Ca supplementation","Ca iv injection",
+                                 "PO4 supplementation","PO4 iv injection","cinacalcet"),
+                     selected = "", width = "100%"
+                   ),
+                   
+                   uiOutput("Ca_iv_control"),
+                   uiOutput("Ca_food_control"),
+                   uiOutput("D3_iv_control"),
+                   uiOutput("P_iv_control"),
+                   uiOutput("P_food_control")
+                   
+    )
+  ),
+  
+  # Share the state of the App with other users and reset the application
+  
   tags$li(
     title = "",
     class = "dropdown",
     actionButton(inputId = "bookmark", label = "Share", 
                  icon = shiny::icon("link", lib = "glyphicon"), 
-                 class="btn btn-primary")
-    ),
-  
-  # Menu to save, load, reset and close the application
-  tags$li(
-    title = "",
-    class = "dropdown",
-    actionButton(class="fa fa-floppy-o fa-5x", inputId="save",
-                 label=" Save", class="btn btn-primary"),
-    actionButton(class="fa fa-refresh fa-5x", inputId="load",
-                 label=" Load", class="btn btn-primary"),
+                 class="btn btn-primary"),
     actionButton(class="fa fa-trash fa-5x", inputId="resetAll",
-                 label=" Reset", class="btn btn-danger"),
-    actionButton(class="fa fa-close fa-5x", inputId="close",
-                 label=" Close", class="btn btn-danger")
-  ),
-  
-  # Task Menu
-  dropdownMenu(type = "tasks", badgeStatus = "success",
-               taskItem(value = 60, color = "orange",
-                        "Design"
-               ),
-               taskItem(value = 80, color = "green",
-                        "Features"
-               )
-  ),
-  
-  tags$li(
-    title = "",
-    class = "dropdown",
-    dropdownButton(
-      # Put here a series of shiny widget for example such as theme selector, ...
-      shinythemes::themeSelector(),
-      circle = FALSE, status = "primary", icon = icon("gear"), width = "100px",
-      tooltip = tooltipOptions(title = "Click to see inputs !")
-    )
+                 label=" Reset", class="btn btn-danger")
   )
   
 )

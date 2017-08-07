@@ -58,11 +58,7 @@ body <- dashboardBody(
                                   column(4, align = "center",
                                          
                                          withSpinner(plotlyOutput("hover_graph_bis"), size = 2, type = 6, color = "#000000")
-                                  ),
-                                  
-                                  br(),
-                                  numericInput("tmax","Value of tmax:", 500, min = 0, max = NA, width = "50%")
-                                  
+                                  )
                          )
                        ),
                        
@@ -71,24 +67,23 @@ body <- dashboardBody(
                              # classic id does not work with tabBox to reset values inside ...
                              title = tagList(shiny::icon("gear"), "Control Center"), width = NULL,
                              height = "350px",
-                             tabPanel(title = tagList(shiny::icon("sliders"), "Parameters"), style = "overflow-x: scroll",
+                             tabPanel(title = tagList(shiny::icon("sliders"), "Parameters"), style = "overflow-x: scroll"
                                       
-                                      column(6, align = "center",
-                                             multiInput(
-                                               inputId = "disease_selected", label = "Select a disease :",
-                                               choices = c("primary-hyperparathyroidism", "hypoparathyroidism", "vitamin D3 deficiency", "pseudohypoparathyroidism"),
-                                               selected = "", width = "100%"
-                                             )
-                                      ),
-                                      column(6, align = "center",
-                                             multiInput(
-                                               inputId = "treatment_selected", label = "Select a treatment :",
-                                               choices = c("parathyroid surgery","vitamin D3 iv injection","Ca supplementation","Ca iv injection",
-                                                           "PO4 supplementation","PO4 iv injection","cinacalcet"),
-                                               selected = "", width = "100%"
-                                             )   
-                                      ),
-                                      uiOutput("Ca_iv_control")
+                                      # column(6, align = "center",
+                                      #        multiInput(
+                                      #          inputId = "disease_selected", label = "Select a disease :",
+                                      #          choices = c("primary-hyperparathyroidism", "hypoparathyroidism", "vitamin D3 deficiency", "pseudohypoparathyroidism"),
+                                      #          selected = "", width = "100%"
+                                      #        )
+                                      # ),
+                                      # column(6, align = "center",
+                                      #        multiInput(
+                                      #          inputId = "treatment_selected", label = "Select a treatment :",
+                                      #          choices = c("parathyroid surgery","vitamin D3 iv injection","Ca supplementation","Ca iv injection",
+                                      #                      "PO4 supplementation","PO4 iv injection","cinacalcet"),
+                                      #          selected = "", width = "100%"
+                                      #        )   
+                                      # ),
                              )
                            )
                        )

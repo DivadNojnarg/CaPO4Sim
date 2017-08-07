@@ -148,7 +148,83 @@ shinyServer(function(input, output, session) {
                      bs_embed_tooltip(title = "Rate of injection of calcium in plasma (μmol/min)")),
                
                numericInput("t_start_inject","Time when begins the Ca iv injection:", 0, min = 0, max = NA, width = "50%"),
-               numericInput("t_stop_inject","Time,when stops the Ca iv injection:", input$tmax, min = 0, max = NA, width = "50%")
+               numericInput("t_stop_inject","Time,when stops the Ca iv injection:", 100, min = 0, max = NA, width = "50%")
+      )
+      
+    }
+    
+  })
+  
+  # Ca_food control interface when Ca supplementation is choosen in the menu
+  
+  output$Ca_food_control <- renderUI({
+
+    if(is.element("Ca supplementation", input$treatment_selected)){
+
+      tagList( sliderInput("Ca_food", "Ca intake", min = 0, max = 0.008, value = 0.0022, step = 0.0001) %>%
+                 shinyInput_label_embed(
+                   icon("info") %>%
+                     bs_embed_tooltip(title = "Calcium intake (μmol/min)")),
+
+               numericInput("t_start_Caintake","Time when begins the Ca supplementation:", 0, min = 0, max = NA, width = "50%"),
+               numericInput("t_stop_Caintake","Time,when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%")
+      )
+
+    }
+
+  })
+  
+  # D3 injection control interface 
+  
+  output$D3_iv_control <- renderUI({
+    
+    if(is.element("vitamin D3 iv injection", input$treatment_selected)){
+      
+      tagList( sliderInput("D3_inject", "D3 injection", min = 0, max = 0.1, value = 0.001, step = 0.001) %>%
+                 shinyInput_label_embed(
+                   icon("info") %>%
+                     bs_embed_tooltip(title = "D3 injection (pmol/min)")),
+               
+               numericInput("t_start_D3inject","Time when begins the D3 iv injection:", 0, min = 0, max = NA, width = "50%"),
+               numericInput("t_stop_D3inject","Time,when stops the D3 iv injection:", 100, min = 0, max = NA, width = "50%")
+      )
+      
+    }
+    
+  })
+  
+  # PO4 injection control interface 
+  
+  output$P_iv_control <- renderUI({
+    
+    if(is.element("PO4 iv injection", input$treatment_selected)){
+      
+      tagList( sliderInput("P_inject", "PO4 injection", min = 0, max = 0.01, value = 0.001, step = 0.0001) %>%
+                 shinyInput_label_embed(
+                   icon("info") %>%
+                     bs_embed_tooltip(title = "PO4 injection (μmol/min)")),
+               
+               numericInput("t_start_Pinject","Time when begins the PO4 iv injection:", 0, min = 0, max = NA, width = "50%"),
+               numericInput("t_stop_Pinject","Time,when stops the PO4 iv injection:", 100, min = 0, max = NA, width = "50%")
+      )
+      
+    }
+    
+  })
+  
+  # P_food control interface when PO4 supplementation is choosen in the menu
+  
+  output$P_food_control <- renderUI({
+    
+    if(is.element("PO4 supplementation", input$treatment_selected)){
+      
+      tagList( sliderInput("P_food", "PO4 intake", min = 0, max = 0.01, value = 1.55e-003, step = 0.0001) %>%
+                 shinyInput_label_embed(
+                   icon("info") %>%
+                     bs_embed_tooltip(title = "Phosphate intake (μmol/min)")),
+               
+               numericInput("t_start_Pintake","Time when begins the Ca supplementation:", 0, min = 0, max = NA, width = "50%"),
+               numericInput("t_stop_Pintake","Time,when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%")
       )
       
     }
@@ -157,47 +233,51 @@ shinyServer(function(input, output, session) {
   
   # Create parameters sets specific for events
   
-  parameters_event <- reactive({
+  parameters_event <- reactive({  # need to write && !is.null(input$Ca_inject) since input$Ca_inject does not exist before Ca_inject is selected
     
     input$treatment_selected
 
-    if(!is.null(input$Ca_inject)){ # for Ca iv injection
-
-      c("t_start_inject" = input$t_start_inject, "t_stop_inject" = input$t_stop_inject)
-
-    }else c("t_start_inject" = 0, "t_stop_inject" = 0)
+    c("t_start_inject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_start_inject, 0), 
+      "t_stop_inject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_stop_inject, 0), 
+      "t_start_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_start_Caintake, 0), 
+      "t_stop_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_stop_Caintake, 0),
+      "t_start_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_start_D3inject, 0), 
+      "t_stop_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_stop_D3inject, 0), 
+      "t_start_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_start_Pinject, 0), 
+      "t_stop_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_stop_Pinject, 0),
+      "t_start_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_start_Pintake, 0), 
+      "t_stop_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_stop_Pintake, 0))
 
     })
 
   # Create parameters sets for all diseases an treatments
   
-  parameters <- reactive({ 
-    
-    if(!is.null(input$Ca_inject) && (!is.null(input$disease_selected) || !is.null(input$treatment_selected))){
+  parameters <- reactive({ # need to write && !is.null(input$Ca_inject) since input$Ca_inject does not exist before Ca_inject is selected
     
     c("k_prod_PTHg" = ifelse(is.element("primary-hyperparathyroidism", input$disease_selected), 300*4.192, 4.192), "beta_exo_PTHg" = 5.9e-002, 
-    "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
+    "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0, 2.5e-005), "k_deg_D3" = 1e-003,
     "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
     "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
     "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
     "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
     "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
     "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2, "PTX_coeff" = ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1),
-    "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected), input$Ca_inject, 0))
-      
-    }
+    "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$Ca_inject, 0), 
+    "Ca_food" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$Ca_food, 2.2e-003),
+    "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$D3_inject, 0),
+    "k_inject_P" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$P_inject, 0),
+    "P_food" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$P_food, 1.55e-003))
     
-    else{
+  })
+  
+  # Alert user from forbiden couples
+  
+  observeEvent(input$disease_selected, {
+    
+    if(is.element("primary-hyperparathyroidism", input$disease_selected) && is.element("hypoparathyroidism", input$disease_selected)){
       
-      c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002, 
-        "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
-        "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
-        "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
-        "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
-        "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
-        "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-        "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2, "PTX_coeff" = 1,
-        "k_inject_Ca" = 0)
+    showNotification("Cannot have primary hyperparathyroidism and hypoparathyroidism at the same time!",
+                     type = "error", closeButton = TRUE)
       
     }
     
@@ -722,39 +802,6 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  Make report of the results and download it: to implement
-  #  
-  #-------------------------------------------------------------------------
-  
-  output$downloadReport <- downloadHandler(
-    filename = function() {
-      paste('my-report', sep = '.', switch(
-        input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
-      ))
-    },
-    
-    content = function(file) {
-      src <- normalizePath('report.Rmd')
-      
-      # temporarily switch to the temp dir, in case you do not have write
-      # permission to the current working directory
-      owd <- setwd(tempdir())
-      on.exit(setwd(owd))
-      file.copy(src, 'report.Rmd', overwrite = TRUE)
-      
-      #params <- list(n = input$slider)
-      
-      library(rmarkdown)
-      out <- render('report.Rmd', switch(
-        input$format,
-        PDF = pdf_document(), HTML = html_document(), Word = word_document()
-      ))
-      file.rename(out, file)
-    }
-  )
-  
-  #------------------------------------------------------------------------- 
-  #  
   #  Useful tasks such as save, reset, load ...
   #  
   #-------------------------------------------------------------------------
@@ -764,7 +811,9 @@ shinyServer(function(input, output, session) {
     
     input$resetAll
     
-    reset("boxinput")
+    #reset("boxinput")
+    reset("disease_selected")
+    reset("treatment_selected")
     reset("tmax")
     
     edges_Ca <- edges_Ca()
@@ -774,48 +823,10 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # save and load a session
-  
-  observeEvent(input$save, {
-    values <<- lapply(reactiveValuesToList(input), unclass)
-  })
-  
-  observeEvent(input$load, {
-    if (exists("values")) {
-      lapply(names(values), function(x) session$sendInputMessage(x, 
-                                                                 list(value = values[[x]])))
-    }
-  })
-  
   # Share the state of the App via url bookmarking
   
   observeEvent(input$bookmark, {
     session$doBookmark()
   })
-  
-  # close the App with the button
-  
-  observeEvent(input$close, {
-    js$closeWindow()
-    #stopApp()
-  })
-  
-  
-  # When the button is clicked
-  # `withBusyIndicatorServer()`
-  
-  observeEvent(input$save, {
-    withBusyIndicatorServer("save", {
-      Sys.sleep(1)
-    })
-  })
-  
-  observeEvent(input$load, {
-    withBusyIndicatorServer("load", {
-      Sys.sleep(1)
-    })
-  })
-  
-  #session$onSessionEnded(stopApp)  # stop shiny app when the web-window is closed
-  
+
 })
