@@ -11,14 +11,26 @@
 header <- dashboardHeader(
   title="Calcium Phosphate Homeostasis: treatment App", titleWidth = 500,
   
-  # tmax value
+  # play button to launch simulation
   
   tags$li(
     title = "",
     class = "dropdown",
+    actionBttn(inputId = "play", label = "Run", 
+               style = "fill", color = "primary", icon = icon("play"))
     
-    numericInput("tmax","Value of tmax:", 500, min = 0, max = NA, width = "50%")
-    
+  ),
+  
+  # tmax value and other options
+  
+  tags$li(
+    title = "",
+    class = "dropdown",
+    dropdownButton(icon = icon("gear"), width = "150px", circle = FALSE, status = "danger", label = "Options",
+                   
+                   numericInput("tmax","Value of tmax:", 500, min = 0, max = NA, width = "50%")
+                   
+    )
   ),
   
   # Disease selector
@@ -26,7 +38,7 @@ header <- dashboardHeader(
   tags$li(
     title = "",
     class = "dropdown",
-    dropdownButton(icon = icon("download"), width = "350px", circle = FALSE, status = "primary", label = "Disease",
+    dropdownButton(icon = icon("stethoscope"), width = "350px", circle = FALSE, status = "primary", label = "Disease",
                    
                    multiInput(
                      inputId = "disease_selected", label = "Select a disease :",
@@ -42,7 +54,7 @@ header <- dashboardHeader(
   tags$li(
     title = "",
     class = "dropdown",
-    dropdownButton(icon = icon("download"), width = "300px", circle = FALSE, status = "primary", label = "Treatment",
+    dropdownButton(icon = icon("medkit"), width = "300px", circle = FALSE, status = "primary", label = "Treatment",
                    
                    multiInput(
                      inputId = "treatment_selected", label = "Select a treatment :",
@@ -51,11 +63,71 @@ header <- dashboardHeader(
                      selected = "", width = "100%"
                    ),
                    
-                   uiOutput("Ca_iv_control"),
-                   uiOutput("Ca_food_control"),
-                   uiOutput("D3_iv_control"),
-                   uiOutput("P_iv_control"),
-                   uiOutput("P_food_control")
+                   conditionalPanel( # for Ca iv injection
+                     condition = "/Ca iv injection/.test(input.treatment_selected)", # special JS condition to test if an element is in a list
+                     
+                     sliderInput("Ca_inject", "$$ k_{inject}^{Ca} $$", min = 0, max = 0.002, value = 0.001, step = 0.0001) %>%
+                       shinyInput_label_embed(
+                         icon("info") %>%
+                           bs_embed_tooltip(title = "Rate of injection of calcium in plasma (μmol/min)")),
+                     numericInput("t_start_Cainject","Time when begins the Ca iv injection:", 0, min = 0, max = NA, width = "50%"),
+                     numericInput("t_stop_Cainject","Time,when stops the Ca iv injection:", 100, min = 0, max = NA, width = "50%"),
+                     actionBttn(inputId = "add_newCaiv", label = NULL, 
+                                style = "material-circle", 
+                                color = "primary", icon = icon("plus"))
+                   ),
+                   
+                   conditionalPanel( # for Ca food
+                     condition = "/Ca supplementation/.test(input.treatment_selected)", 
+                     
+                     sliderInput("Ca_food", "$$ Ca intake $$", min = 0, max = 0.008, value = 0.0022, step = 0.0001) %>%
+                       shinyInput_label_embed(
+                         icon("info") %>%
+                           bs_embed_tooltip(title = "Calcium intake (μmol/min)")),
+                     
+                     numericInput("t_start_Caintake","Time when begins the Ca supplementation:", 0, min = 0, max = NA, width = "50%"),
+                     numericInput("t_stop_Caintake","Time when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%")
+                     
+                   ),
+                   
+                   conditionalPanel( # for D3 iv injection
+                     condition = "/vitamin D3 iv injection/.test(input.treatment_selected)", 
+                     
+                     sliderInput("D3_inject", "D3 injection", min = 0, max = 0.1, value = 0.001, step = 0.001) %>%
+                       shinyInput_label_embed(
+                         icon("info") %>%
+                           bs_embed_tooltip(title = "D3 injection (pmol/min)")),
+                     
+                     numericInput("t_start_D3inject","Time when begins the D3 iv injection:", 0, min = 0, max = NA, width = "50%"),
+                     numericInput("t_stop_D3inject","Time when stops the D3 iv injection:", 100, min = 0, max = NA, width = "50%")
+                     
+                   ),
+                   
+                   conditionalPanel( # for PO4 iv injection
+                     condition = "/PO4 iv injection/.test(input.treatment_selected)", 
+                     
+                     sliderInput("P_inject", "PO4 injection", min = 0, max = 0.01, value = 0.001, step = 0.0001) %>%
+                       shinyInput_label_embed(
+                         icon("info") %>%
+                           bs_embed_tooltip(title = "PO4 injection (μmol/min)")),
+                     
+                     numericInput("t_start_Pinject","Time when begins the PO4 iv injection:", 0, min = 0, max = NA, width = "50%"),
+                     numericInput("t_stop_Pinject","Time when stops the PO4 iv injection:", 100, min = 0, max = NA, width = "50%")
+                     
+                   ),
+                   
+                   conditionalPanel( # for PO4 supplementation
+                     condition = "/PO4 supplementation/.test(input.treatment_selected)", 
+                     
+                     sliderInput("P_food", "PO4 intake", min = 0, max = 0.01, value = 1.55e-003, step = 0.0001) %>%
+                       shinyInput_label_embed(
+                         icon("info") %>%
+                           bs_embed_tooltip(title = "Phosphate intake (μmol/min)")),
+                     
+                     numericInput("t_start_Pintake","Time when begins the Ca supplementation:", 0, min = 0, max = NA, width = "50%"),
+                     numericInput("t_stop_Pintake","Time when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%")
+                     
+                   )
                    
     )
   ),
@@ -70,6 +142,23 @@ header <- dashboardHeader(
                  class="btn btn-primary"),
     actionButton(class="fa fa-trash fa-5x", inputId="resetAll",
                  label=" Reset", class="btn btn-danger")
+  ),
+  
+  # Help menu
+  
+  dropdownMenu(type = "notifications", badgeStatus = "warning",
+               notificationItem(icon = icon("users"), status = "info",
+                                "5 new members joined today"
+               ),
+               notificationItem(icon = icon("warning"), status = "danger",
+                                "Resource usage near limit."
+               ),
+               notificationItem(icon = icon("shopping-cart", lib = "glyphicon"),
+                                status = "success", "25 sales made"
+               ),
+               notificationItem(icon = icon("user", lib = "glyphicon"),
+                                status = "danger", "You changed your username"
+               )
   )
   
 )

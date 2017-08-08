@@ -7,8 +7,8 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-calcium_phosphate_core <- function (t, state, parameters){
-  with(as.list(c(state, parameters)),{
+calcium_phosphate_core <- function (t, state, parameters_bis){
+  with(as.list(c(state, parameters_bis)),{
     
     ##################
     #                #
@@ -24,61 +24,27 @@ calcium_phosphate_core <- function (t, state, parameters){
     #   Simulations  #
     ##################
     
-    Ca_iv_inject <- 0
     
-    if(!is.null(t_start_inject) && !is.null(t_stop_inject)){ # Ca iv injection
-      
-      if(t > t_start_inject && t < t_stop_inject){
-        
-        Ca_iv_inject <- k_inject_Ca;
-        
-      }
-      
-    }
+    # Ca iv injection
     
-    if(!is.null(t_start_Caintake) && !is.null(t_stop_Caintake)){ # Ca supplementation
-      
-      if(t > t_start_Caintake && t < t_stop_Caintake){
-        
-        I_Ca <- Ca_food;
-        
-      }
-      
-    }
+    ifelse(t > t_start_Cainject && t < t_stop_Cainject, Ca_iv_inject <- k_inject_Ca, Ca_iv_inject <-0)
     
-    D3_inject <- 0
+    # Ca supplementation
     
-    if(!is.null(t_start_D3inject) && !is.null(t_stop_D3inject)){ # D3 iv injection
-      
-      if(t > t_start_D3inject && t < t_stop_D3inject){
-        
-        D3_inject <- k_inject_D3/Vp;
-        
-      }
-      
-    }
+    ifelse(t > t_start_Caintake && t < t_stop_Caintake, I_Ca <- Ca_food, I_Ca <- I_Ca)
     
-    P_iv_inject <- 0
+    # D3 iv injection
     
-    if(!is.null(t_start_Pinject) && !is.null(t_stop_Pinject)){ # PO4 iv injection
-      
-      if(t > t_start_Pinject && t < t_stop_Pinject){
-        
-        P_iv_inject <- k_inject_P;
-        
-      }
-      
-    }
+    ifelse(t > t_start_D3inject && t < t_stop_D3inject, D3_inject <- k_inject_D3/Vp, D3_iv_inject <-0)
     
-    if(!is.null(t_start_Pintake) && !is.null(t_stop_Pintake)){ # PO4 supplementation
-      
-      if(t > t_start_Pintake && t < t_stop_Pintake){
-        
-        I_P <- P_food;
-        
-      }
-      
-    }
+    # PO4 iv injection
+    
+    ifelse(t > t_start_Pinject && t < t_stop_Pinject, P_iv_inject <- k_inject_P, P_iv_inject <- 0)
+    
+    # PO4 supplementation
+    
+    ifelse(t > t_start_Pintake && t < t_stop_Pintake, I_P <- P_food, I_P <- I_P)
+    
     
     ##################
     #                #
@@ -93,7 +59,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     # PTHg #
     
     PTHg_synthesis_norm <- PTX_coeff*(k_prod_PTHg*Vc/PTH_g_norm)*PO4_p^n_prod_Pho/((1 + gamma_prod_D3*D3_norm*D3_p)*
-                                                                           ((K_prod_PTH_P/Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho))
+                                                                                     ((K_prod_PTH_P/Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho))
     PTHg_degradation_norm <- k_deg_PTHg*PTH_g
     n_Ca_norm <- (n1_exo/(1+exp(-rho_exo*Ca_p_norm*(R/Ca_p_norm-Ca_p)))+n2_exo)
     F_Ca_norm <- beta_exo_PTHg - gamma_exo_PTHg*Ca_p^n_Ca_norm/(Ca_p^n_Ca_norm + (K_Ca/Ca_p_norm)^n_Ca_norm)
@@ -162,7 +128,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     # P Slow Bone #
     
-    Resorption_P_norm <- 0.6*Ca_P_stoech*Resorption_norm 
+    Resorption_P_norm <- 0.3*Resorption_norm 
     
     # Ca Kidney #
     
@@ -182,7 +148,7 @@ calcium_phosphate_core <- function (t, state, parameters){
                             Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm))*GFR*(Ca_p+CaHPO4_p+CaH2PO4_p)
     
     Reabs_norm <- (Reabs_PT + Reabs_TAL_basal + Reabs_TAL_CaSR_norm + Reabs_TAL_PTH_norm + Reabs_DCT_basal + 
-      Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm)*GFR*(Ca_p+CaHPO4_p+CaH2PO4_p)
+                     Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm)*GFR*(Ca_p+CaHPO4_p+CaH2PO4_p)
     
     # P Kidney #
     
@@ -249,7 +215,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     dPTH_g <- PTHg_synthesis_norm - PTHg_degradation_norm - PTHg_exocytosis_norm # PTHg           
     dPTH_p <- k_inject_PTH + PTHp_influx_norm - PTHp_degradation_norm # PTHp
-    dD3_p <- D3_inject + D3_synthesis_norm - D3_degradation_norm # D3
+    dD3_p <- D3_iv_inject + D3_synthesis_norm - D3_degradation_norm # D3
     dFGF_p <- k_inject_FGF + FGF_synthesis_norm - FGF_degradation_norm # FGF23
     dCa_p <- 1/Vp*(Ca_iv_inject + Abs_intest_norm  + Resorption_norm/Ca_p_norm - Rapid_storage_Ca + Rapid_release_Ca - Excretion_norm) -
       k_form_CaProt + k_diss_CaProt - k_form_CaHPO4_norm*HPO4_norm + k_diss_CaHPO4_norm*CaHPO4_norm/Ca_p_norm -
@@ -259,7 +225,7 @@ calcium_phosphate_core <- function (t, state, parameters){
       k_form_CaH2PO4f_norm*Ca_p_norm*H2PO4_norm/CaH2PO4_norm + k_diss_CaH2PO4f_norm  # Rapid Bone Ca
     dCa_b <- 1/Ca_b_norm*(Accretion_norm - Resorption_norm) # Slow Bone Ca
     dPO4_p <- 1/Vp*(P_iv_inject + Abs_intest_P_norm + Resorption_P_norm/Pho_p_norm - Rapid_storage_P + Rapid_release_P - Excretion_P_norm - 
-                        Plasma_intra_Flux_norm + Intra_plasma_Flux_norm/Pho_p_norm) - 
+                      Plasma_intra_Flux_norm + Intra_plasma_Flux_norm/Pho_p_norm) - 
       k_form_CaHPO4_norm*Ca_p_norm + k_diss_CaHPO4_norm*CaHPO4_norm/Pho_p_norm - 
       k_form_CaH2PO4_norm*Ca_p_norm + k_diss_CaH2PO4_norm*CaH2PO4_norm/Pho_p_norm - 
       k_form_NaPO4 + k_diss_NaPO4 # plasma P
@@ -281,12 +247,12 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     list(c(dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, dPO4_b, dPO4_c, dCaHPO4_p, dCaH2PO4_p, dCPP_p, dCaHPO4_f, dCaH2PO4_f,
            dCaProt_p, dNaPO4_p, dCa_tot, dPO4_tot, dEGTA_p, dCaEGTA_p), c(U_Ca = Excretion_norm, U_PO4 = Excretion_P_norm, Abs_int_Ca = Abs_intest_norm,
-                                                      Abs_int_PO4 = Abs_intest_P_norm, Res_Ca = Resorption_norm, 
-                                                      Res_PO4 = Resorption_P_norm, Ac_Ca = Accretion_norm, 
-                                                      Ac_PO4 = Accretion_P_norm, Reabs_Ca = Reabs_norm, Reabs_PO4 = Reabs_P_norm,
-                                                      Ca_pf = Rapid_storage_Ca, Ca_fp = Rapid_release_Ca, PO4_pf = Rapid_storage_P,
-                                                      PO4_fp = Rapid_release_P, PO4_pc = Plasma_intra_Flux_norm,
-                                                      PO4_cp = Intra_plasma_Flux_norm)) # return the list of variables as well as fluxes in
+                                                                          Abs_int_PO4 = Abs_intest_P_norm, Res_Ca = Resorption_norm, 
+                                                                          Res_PO4 = Resorption_P_norm, Ac_Ca = Accretion_norm, 
+                                                                          Ac_PO4 = Accretion_P_norm, Reabs_Ca = Reabs_norm, Reabs_PO4 = Reabs_P_norm,
+                                                                          Ca_pf = Rapid_storage_Ca, Ca_fp = Rapid_release_Ca, PO4_pf = Rapid_storage_P,
+                                                                          PO4_fp = Rapid_release_P, PO4_pc = Plasma_intra_Flux_norm,
+                                                                          PO4_cp = Intra_plasma_Flux_norm)) # return the list of variables as well as fluxes in
     # another vector
     
   })
