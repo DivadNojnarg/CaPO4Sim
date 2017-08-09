@@ -136,22 +136,70 @@ shinyServer(function(input, output, session) {
   
   # Create parameters sets specific for events
   
-  parameters_event <- reactive({  # need to write && !is.null(input$Ca_inject) since input$Ca_inject does not exist before Ca_inject is selected
+  # parameters_event <- reactive({  # need to write && !is.null(input$Ca_inject) since input$Ca_inject does not exist before Ca_inject is selected
+  #   
+  #   input$treatment_selected
+  #   
+  #   c("t_start_Cainject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_start_Cainject, 0), 
+  #     "t_stop_Cainject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_stop_Cainject, 0), 
+  #     "t_start_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_start_Caintake, 0), 
+  #     "t_stop_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_stop_Caintake, 0),
+  #     "t_start_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_start_D3inject, 0), 
+  #     "t_stop_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_stop_D3inject, 0), 
+  #     "t_start_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_start_Pinject, 0), 
+  #     "t_stop_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_stop_Pinject, 0),
+  #     "t_start_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_start_Pintake, 0), 
+  #     "t_stop_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_stop_Pintake, 0))
+  #   
+  # })
+  
+  #output$parameters_event <- renderPrint({ parameters_event()[[1]] })
+  
+  # Add new events by clicking on +
+  
+  parameters_event_bis <- reactiveValues(t_start_Cainject = 0, t_stop_Cainject = 0, t_start_Caintake = 0, t_stop_Caintake = 0,
+                                         t_start_D3inject = 0, t_stop_D3inject = 0, t_start_Pinject = 0, t_stop_Pinject = 0,
+                                         t_start_Pintake = 0, t_stop_Pintake = 0) # generate time event reactive values
+
+  observeEvent(input$treatment_selected,{ # if treatment is selected, update the reactive values
+
+    parameters_event_bis$t_start_Cainject = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_start_Cainject, 0)
+    parameters_event_bis$t_stop_Cainject = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_stop_Cainject, 0)
+    parameters_event_bis$t_start_Caintake = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_start_Caintake, 0)
+    parameters_event_bis$t_stop_Caintake = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_stop_Caintake, 0)
+    parameters_event_bis$t_start_D3inject = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_start_D3inject, 0)
+    parameters_event_bis$t_stop_D3inject = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_stop_D3inject, 0)
+    parameters_event_bis$t_start_Pinject = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_start_Pinject, 0)
+    parameters_event_bis$t_stop_Pinject = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_stop_Pinject, 0)
+    parameters_event_bis$t_start_Pintake = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_start_Pintake, 0)
+    parameters_event_bis$t_stop_Pintake = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_stop_Pintake, 0)
+
+  })
+  
+
+  observeEvent(input$add_newCaiv,{ # cumulate events when add button is selected
+
+      parameters_event_bis$t_start_Cainject <- c(parameters_event_bis$t_start_Cainject, input$t_start_Cainject)
+      parameters_event_bis$t_stop_Cainject <- c(parameters_event_bis$t_stop_Cainject, input$t_stop_Cainject)
+    
+  })
+
+  output$parameters_event_bis <- renderPrint({ parameters_event_bis$t_start_Cainject })
+  
+  parameters_event <- reactive({ # storing reactive values in a reactive list
     
     input$treatment_selected
     
-    c("t_start_Cainject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_start_Cainject, 0), 
-      "t_stop_Cainject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_stop_Cainject, 0), 
-      "t_start_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_start_Caintake, 0), 
-      "t_stop_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_stop_Caintake, 0),
-      "t_start_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_start_D3inject, 0), 
-      "t_stop_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_stop_D3inject, 0), 
-      "t_start_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_start_Pinject, 0), 
-      "t_stop_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_stop_Pinject, 0),
-      "t_start_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_start_Pintake, 0), 
-      "t_stop_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_stop_Pintake, 0))
+    list("t_start_Cainject" = parameters_event_bis$t_start_Cainject, "t_stop_Cainject" = parameters_event_bis$t_stop_Cainject,
+      "t_start_Caintake" = parameters_event_bis$t_start_Caintake, "t_stop_Caintake" = parameters_event_bis$t_stop_Caintake,
+      "t_start_D3inject" = parameters_event_bis$t_start_D3inject, "t_stop_D3inject" = parameters_event_bis$t_stop_D3inject, 
+      "t_start_Pinject" = parameters_event_bis$t_start_Pinject, "t_stop_Pinject" = parameters_event_bis$t_stop_Pinject,
+      "t_start_Pintake" = parameters_event_bis$t_start_Pintake, "t_stop_Pintake" = parameters_event_bis$t_stop_Pintake)
     
   })
+  
+  output$parameters_event <- renderPrint({ parameters_event()["t_start_Cainject"] })
+  
   
   # Create parameters sets for all diseases an treatments
   
@@ -199,7 +247,10 @@ shinyServer(function(input, output, session) {
   parameters_bis <- reactive({ c(parameters_disease(), 
                                  parameters_fixed, 
                                  parameters_event()) 
+    
     }) 
+  
+  output$parameters_bis <- renderPrint({ parameters_bis() })
   
   #------------------------------------------------------------------------- 
   #  
@@ -210,58 +261,58 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   out <- reactive({
-    
+
     input$play
-    
+
     isolate({
-      
+
       parameters_bis <- parameters_bis()
       state <- state()
       times <- times()
-      
+
       as.data.frame(ode(y = state, times = times, func = calcium_phosphate_core, parms = parameters_bis))
-      
+
     })
-    
+
   })
-  
+
   #output$table <- renderDataTable( out(), options = list(pageLength = 10) )
-  
+
   # observe({
-  #   
+  #
   #   out <- out()
-  #   
+  #
   #   input$play
-  #   
+  #
   #   write.csv(x = out, file = "out.csv")
-  #   
+  #
   # })
-  
-  #------------------------------------------------------------------------- 
-  #  
+
+  #-------------------------------------------------------------------------
+  #
   #  The network part: make interactive diagramms of Ca and PO4 homeostasis
   #  as well as regulation by hormones such as PTH, vitamin D3 and FGF23
-  #  
+  #
   #
   #-------------------------------------------------------------------------
-  
+
   # Generate the CaP Graph network
-  
+
   nodes_Ca <- reactive({
-    
-    # ifelse(input$run_php1, 
+
+    # ifelse(input$run_php1,
     #        image <- c("food.png","intestine.png","feces.png","kidney.png","kidney.png","bone.png","kidney.png","urine.png",
-    #                   "php1.jpg","kidney.png","kidney.png","kidney.png","cells.png","kidney.png","kidney.png"), 
+    #                   "php1.jpg","kidney.png","kidney.png","kidney.png","cells.png","kidney.png","kidney.png"),
     #        image <- c("food.png","intestine.png","feces.png","kidney.png","kidney.png","bone.png","kidney.png","urine.png",
     #                   "parathyroid_gland.png","kidney.png","kidney.png","kidney.png","cells.png","kidney.png","kidney.png"))
-    
+
     d <- data.frame(id = 1:18,
                     shape = c("image","image","image","image","image","image","image","image","image","image","image",
-                              "image","image","image","image","image","image","text"), 
+                              "image","image","image","image","image","image","text"),
                     # square are always scalable
                     image = c("food.svg","intestine.svg","feces.svg","plasma.svg","rapid-bone.svg","bone.svg","kidney.svg","urine.svg",
                               "parathyroid_gland.svg","D3.svg","D3.svg","FGF23.svg","cells.svg","Cap.svg","PO4.svg","infusion.png","injection.png",""),
-                    label = c("", "","", "", "", "", "", "", "", 
+                    label = c("", "","", "", "", "", "", "", "",
                               "", "","","","","","","","EGTA"),
                     #title = out()[nrow(out()),"Ca_p"],
                     #title = c(rep(as.character(as.tags(sparklines::sparkline(out()[nrow(out()),"Ca_p"]))),17)), # does not work
@@ -271,21 +322,21 @@ shinyServer(function(input, output, session) {
                     color = list(background = "#97C2FC", border = "#97C2FC", highlight = list(background = "orange", border = "orange")),
                     size = c(50,50,50,50,50,50,50,50,50,25,25,25,50,25,25,25,35,35), # rep(50,13)
                     hidden = c(rep(FALSE,18)))
-    
+
   })
-  
+
   edges_Ca <- reactive({
-    
-    d <- data.frame(from = c(1,2,2,4,5,5,6,7,4,7,9,9,10,11,9,11,11,12,12,7,13,4,7,14,14,15,15,15,7,5,4,5,16,17,18), 
+
+    d <- data.frame(from = c(1,2,2,4,5,5,6,7,4,7,9,9,10,11,9,11,11,12,12,7,13,4,7,14,14,15,15,15,7,5,4,5,16,17,18),
                     to = c(2,3,4,5,4,6,4,4,7,8,6,7,2,9,11,7,12,11,7,7,4,13,4,11,9,9,11,12,8,4,5,6,14,15,14),
-                    label = c("Intake", "Fecal Excretion", " Intestinal absorption ", "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone", 
+                    label = c("Intake", "Fecal Excretion", " Intestinal absorption ", "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone",
                               "Resorption", "Ca reabsorption", "filtration", "Urinary Ca excretion","+","","+","-","+","","+","-","",
                               "CaSR (-)","Cells-plasma", "Plasma-cells", "PO4 reabsorption","-","CaSR(-)","+","-","+","Urinary PO4 excretion","Rapid PO4 release",
                               "Rapid PO4 storage","PO4 flux into bone","Ca iv injection","PO4 iv injection","EGTA infusion"),
                     id = 1:35,
                     width = 4,
                     font.size = c(rep(11,10),rep(30,5),11,rep(30,2),rep(11,5),30,12,rep(30,3), rep(11,7)),
-                    color = list(color = c(rep("black", 35)), 
+                    color = list(color = c(rep("black", 35)),
                                  highlight = "yellow", opacity = 1.0),
                     dashes = c(rep(F,10),rep(T,10),rep(F,3),rep(T,5), rep(F,7)),
                     arrowStrikethrough = TRUE,
@@ -293,22 +344,22 @@ shinyServer(function(input, output, session) {
                     smooth = c(rep(T,35)),
                     length = c(200,200,200,400,300,300,rep(200,22),200,300,300,300,200,200,200),
                     stringsAsFactors=FALSE) # to change edges color do not forget this "stringsAsFactors=FALSE"
-    
+
   })
-  
+
   # Generate the output of the Ca graph to be used in body
-  
+
   output$network_Ca <- renderVisNetwork({
-    
+
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
-    
+
     legend_nodes <- data.frame(shape = c("image","image"),
                                image = c("food.svg","D3.svg"),
                                label = c("compartment", "hormones"),
                                size = c(15,15))
-    
-    legend_edges <- data.frame(from = c(5,1,15,9), 
+
+    legend_edges <- data.frame(from = c(5,1,15,9),
                                to = c(4,2,12,7),
                                width = 4,
                                arrows = "to",
@@ -317,7 +368,7 @@ shinyServer(function(input, output, session) {
                                font.align = "bottom",
                                dashes = c(F,F,T,F),
                                smooth = c(T,T,T,F))
-    
+
     visNetwork(nodes_Ca, edges_Ca, width = "100%", height = "100%") %>%
       visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
       visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
@@ -333,7 +384,7 @@ shinyServer(function(input, output, session) {
       visEvents(selectEdge = "function(edges) {
                 Shiny.onInputChange('current_edge_id', edges.edges);
                 ;}") %>%
-      visEvents(stabilized = "function() { 
+      visEvents(stabilized = "function() {
                 this.setOptions({nodes : {physics : false}})}") %>%
       # visEvents(deselectEdge = "function(edges) {
       #   Shiny.onInputChange('current_edge_id', 0);
@@ -343,54 +394,54 @@ shinyServer(function(input, output, session) {
       visLegend(addNodes = legend_nodes, addEdges = legend_edges, useGroup = FALSE, ncol = 2, width = 0.1) %>% # add the legend, ncol = 2 to show edges otherwise a bug appear
       #visPhysics(forceAtlas2Based = list(avoidOverlap = 1)) %>%
       visExport(type = "pdf") # export the graph as pdf
-    
+
   })
-  
+
   output$id <- renderPrint({
     input$current_edge_id
   })
-  
+
   output$id_bis <- renderPrint({
     input$current_node_id
   })
-  
-  #------------------------------------------------------------------------- 
-  #  
+
+  #-------------------------------------------------------------------------
+  #
   #  The graph part: calls out(), parameters_bis()
   #  Interactive graph as a result of click on the diagram
   #
   #-------------------------------------------------------------------------
-  
-  
+
+
   # Generate a graph when node is clicked. The graph corresponds to the node clicked
-  
+
   output$plot_node <- renderPlotly({
-    
+
     validate(
       need(input$current_node_id, 'Select one node on the graph!')
     )
-    
+
     validate(
       need(input$current_node_id != 0, 'Select one node on the graph!')
     )
-    
+
     input$play
-    
+
     isolate({
-      
+
       if (input$current_node_id != 0 && !is.null(input$current_node_id)){
-        
+
         out <- out()
         parameters_bis <- parameters_bis()
-        
+
         #data_base <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/out.csv", # for local config
                          #stringsAsFactors = FALSE)
         #data <- read.csv("/srv/shiny-server/capApp/treatments_app/out.csv", # for server
         #stringsAsFactors = FALSE)
-        
+
         #data_base[,1] <- NULL # remove the first useless column
-        
-        xvar <- list(title = "time (min)", range = c(0, max(out[,1]))) 
+
+        xvar <- list(title = "time (min)", range = c(0, max(out[,1])))
         yvar1 <- list(title = "Concentrations (mM)", range = c(min(out[,"Ca_p"],out[,"PO4_p"])*0.8,max(out[,"Ca_p"],out[,"PO4_p"])*1.2))
         yvar2 <- list(title = "[PTH]p (pM)", range = c(min(out[,"PTH_p"]/parameters_bis["Vp"])*0.8,max(out[,"PTH_p"]/parameters_bis["Vp"])*1.2))
         yvar3 <- list(title = "[D3]p (pM)", range = c(min(out[,"D3_p"])*0.8,max(out[,"D3_p"])*1.2))
@@ -401,113 +452,113 @@ shinyServer(function(input, output, session) {
         yvar8 <- list(title = "[PO4]b (mmol)", range = c(min(out[,"PO4_b"])*0.8,max(out[,"PO4_b"])*1.2))
         yvar9 <- list(title = "[PTH]g (pmol)", range = c(min(out[,"PTH_g"])*0.8,max(out[,"PTH_g"])*1.2))
         yvar10 <- list(title = "[PO4]c (mmol)", range = c(min(out[,"PO4_c"])*0.8,max(out[,"PO4_c"])*1.2))
-        
+
         # id = 4 corresponds to plasma elements
         if (input$current_node_id == 4){
-          
+
           p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_p"], type = "scatter", mode = "lines", line = list(color = 'rgb(27, 102, 244)', width = 2)) %>%
             add_lines(x = out[,1], y = out[,"PO4_p"], line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             #add_lines(x = data_base[,1], y = data_base[,"Ca_p"], line = list(color = 'rgb(173,216,230)', width = 2, dash = 'dot')) %>% # Ca line for base case
             #add_lines(x = data_base[,1], y = data_base[,"PO4_p"], line = list(color = 'rgb(240,128,128)', width = 2, dash = 'dot')) %>% # PO4 line for base case
-            add_annotations(x = out[10,1], y = out[1,"Ca_p"]+0.5, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = FALSE , 
+            add_annotations(x = out[10,1], y = out[1,"Ca_p"]+0.5, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = FALSE ,
                             font = list(color = "blue", size = 10)) %>%
-            add_annotations(x = out[10,1], y = out[1,"PO4_p"]+1, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = FALSE , 
+            add_annotations(x = out[10,1], y = out[1,"PO4_p"]+1, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = FALSE ,
                             font = list(color = "red", size = 10)) %>%
             layout(xaxis = NULL, yaxis = yvar1)
-          
+
           p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/parameters_bis["Vp"], type = "scatter", mode = "lines",
                         line = list(color = 'black', width = 2)) %>%
             layout(xaxis = NULL, yaxis = yvar2)
-          
+
           p3 <- plot_ly(data = out, x = out[,1], y = out[,"D3_p"], type = "scatter", mode = "lines",
                         line = list(color = 'black', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar3)
-          
+
           p4 <- plot_ly(data = out, x = out[,1], y = out[,"FGF_p"], type = "scatter", mode = "lines",
                         line = list(color = 'black', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar4)
-          
+
           p <- subplot(p1, p2, p3, p4, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12, heights = c(0.5,0.5))
-          
+
           hide_legend(p)
-          
+
         }
         # id = 5 corresponds to Ca and PO4 fast bone pool
         else if(input$current_node_id == 5){
-          
+
           p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_f"], type = "scatter", mode = "lines", line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = NULL, yaxis = yvar5)
-          
+
           p2 <- plot_ly(out, x = out[,1], y = out[,"PO4_f"], type = "scatter", mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar6)
-          
+
           p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12)
-          
+
           hide_legend(p)
-          
+
         }
         # id = 6 corresponds to Ca and PO4 deep bone pool
         else if(input$current_node_id == 6){
-          
+
           p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_b"], type = "scatter", mode = "lines", line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = NULL, yaxis = yvar7)
-          
+
           p2 <- plot_ly(out, x = out[,1], y = out[,"PO4_b"], type = "scatter", mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar8)
-          
+
           p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12)
-          
+
           hide_legend(p)
-          
+
         }
         # id = 9 corresponds to PTH pool in PT glands
         else if(input$current_node_id == 9){
-          
+
           p <- plot_ly(out, x = out[,1], y = out[,"PTH_g"], type = "scatter", mode = "lines", line = list(color = 'black', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar9, title = "PTH quantity in parathyroid glands")
-          
+
           hide_legend(p)
-          
+
         }
         # id = 17 corresponds to PO4 pool in cells
         else if(input$current_node_id == 13){
-          
+
           p <- plot_ly(out, x = out[,1], y = out[,"PO4_c"], type = "scatter", mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar10, title = "PO4 quantity in cells")
-          
+
           hide_legend(p)
-          
+
         }
         else{
           p <- plot_ly() %>%
             add_annotations("Please select another node!", showarrow = FALSE, font = list(color = "red", size = 20))
         }
-        
+
       }
-      
+
     })
-    
+
   })
-  
+
   output$plot_edge <- renderPlotly({
-    
+
     validate(
       need(input$current_edge_id, 'Select one edge on the graph!')
     )
-    
+
     validate(
       need(input$current_edge_id != 0, 'Select one edge on the graph!')
     )
-    
+
     input$play
-    
+
     isolate({
-      
+
       if (input$current_edge_id != 0 && !is.null(input$current_edge_id)){
-        
+
         out <- out()
         parameters_bis <- parameters_bis()
-        
+
         xvar <- list(title = "time (min)", range = c(0, max(out[,1]))) # add slider xaxis: rangeslider = list(type = "time")
         yvar2 <- list(title = "Ca (µmol/min)", range = c(min(out[,"Abs_int_Ca"]*1000*0.8),max(out[,"Abs_int_Ca"]*1000*1.2)))
         yvar3 <- list(title = "PO4 (µmol/min)", range = c(min(out[,"Abs_int_PO4"]*1000*0.8),max(out[,"Abs_int_PO4"]*1000*1.2)))
@@ -525,173 +576,173 @@ shinyServer(function(input, output, session) {
         yvar17 <- list(title = "PO4 (µmol/min)", range = c(min(out[,"PO4_fp"]*1000*0.8),max(out[,"PO4_fp"]*1000*1.2)))
         yvar18 <- list(title = "PO4 (µmol/min)", range = c(min(out[,"PO4_pc"]*1000*0.8),max(out[,"PO4_pc"]*1000*1.2)))
         yvar19 <- list(title = "PO4 (µmol/min)", range = c(min(out[,"PO4_cp"]*1000*0.8),max(out[,"PO4_cp"]*1000*1.2)))
-        
+
         # id = 3 corresponds to intestinal Ca and PO4 absorption
         if(input$current_edge_id == 3){
-          
+
           p1 <- plot_ly(data = out, x = out[,1], y = out[,"Abs_int_Ca"]*1000, type = "scatter", mode = "lines",
                         line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar2)
-          
+
           p2 <- plot_ly(data = out, x = out[,1], y = out[,"Abs_int_PO4"]*1000, type = "scatter", mode = "lines",
                         line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar3)
-          
+
           p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12) %>%
             layout(title = "Intestinal Absorption")
-          
+
           hide_legend(p)
-          
+
         }
         # id = 4 corresponds to rapid storage of Ca in the rapidly exchangeable bone pool
         else if (input$current_edge_id == 4){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"Ca_pf"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar14, title = "Rapid Ca storage in bone")
-          
+
         }
         # id = 5 corresponds to rapid release of Ca from the rapidly exchangeable bone pool
         else if (input$current_edge_id == 5){
-          
+
           p1 <- plot_ly(data = out, x = out[,1], y = out[,"Ca_fp"]*1000, type = "scatter", mode = "lines",
                         line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar16, title = "Rapid Ca release from bone")
-          
+
         }
         # id = 6 corresponds to storage of Ca in the bone pool
         else if (input$current_edge_id == 6){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"Ac_Ca"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar6, title = "Ca flux into bone")
-          
+
         }
         # id = 7 corresponds to release of Ca and PO4 in the bone pool (resorption)
         else if (input$current_edge_id == 7){
-          
+
           p1 <- plot_ly(data = out, x = out[,1], y = out[,"Res_Ca"]*1000, type = "scatter", mode = "lines",
                         line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar8)
-          
+
           p2 <- plot_ly(data = out, x = out[,1], y = out[,"Res_PO4"]*1000, type = "scatter", mode = "lines",
                         line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar9)
-          
+
           p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12) %>%
             layout(title = "Bone resorption")
-          
+
           hide_legend(p)
-          
+
         }
         # id = 8 corresponds to renal reabsorption of Ca
         else if (input$current_edge_id == 8){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"Reabs_Ca"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar10, title = "Ca renal reabsorption")
-          
+
         }
-        # id = 10 corresponds to U_Ca 
+        # id = 10 corresponds to U_Ca
         else if (input$current_edge_id == 10){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"U_Ca"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar12, title = "Urinary Ca excretion")
-          
+
         }
         # id = 21 corresponds to PO4 release from cells
         else if (input$current_edge_id == 21){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_pc"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar18, title = "PO4 Cell release")
-          
+
         }
         # id = 22 corresponds to PO4 storage in cells
         else if (input$current_edge_id == 22){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_cp"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar19, title = "PO4 Cell storage")
-          
+
         }
         # id = 23 corresponds to renal reabsorption of PO4
         else if (input$current_edge_id == 23){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"Reabs_PO4"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar11, title = "PO4 renal reabsorption")
-          
+
         }
         # id = 29 corresponds to U_PO4
         else if (input$current_edge_id == 29){
-          
+
           p2 <- plot_ly(data = out, x = out[,1], y = out[,"U_PO4"]*1000, type = "scatter", mode = "lines",
                         line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar13, title = "Urinary PO4 excretion")
-          
+
         }
         # id = 30 corresponds to rapid release of PO4 from the rapidly exchangeable bone pool
         else if (input$current_edge_id == 30){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_fp"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar17, title = "Rapid PO4 release from bone")
-          
+
         }
         # id = 31 corresponds to rapid storage of PO4 in the rapidly exchangeable bone pool
         else if(input$current_edge_id == 31){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_pf"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar15, title = "Rapid PO4 storage in bone")
-          
+
         }
         # id = 32 corresponds to storage of PO4 in the bone pool
         else if (input$current_edge_id == 32){
-          
+
           p <- plot_ly(data = out, x = out[,1], y = out[,"Ac_PO4"]*1000, type = "scatter", mode = "lines",
                        line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
             layout(xaxis = xvar, yaxis = yvar7, title = "PO4 flux into bone")
-          
+
         }
         else{
           p <- plot_ly() %>%
             add_annotations("Please select another arrow!", showarrow = FALSE, font = list(color = "red", size = 20))
         }
-        
+
       }
-      
+
     })
-    
+
   })
-  
-  #------------------------------------------------------------------------- 
-  #  
+
+  #-------------------------------------------------------------------------
+  #
   #  Events in the network, triggered by changing input,...
-  #  
+  #
   #
   #-------------------------------------------------------------------------
-  
+
   # To develop
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Events for the CaPO4 Homeostasis diagramm whenever a flux change
-  #  
+
   #-------------------------------------------------------------------------
-  
+  #
+  #  Events for the CaPO4 Homeostasis diagramm whenever a flux change
+  #
+  #-------------------------------------------------------------------------
+
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4 injection as well as PO4 gavage
-  
+
   observe({
-    
+
     out <- out()
     edges_Ca <- edges_Ca()
-    
+
     calc_change_t <- calc_change(out)
     calc_change_t$X <- NULL # remove column X
-    
+
     path_to_calc_change_base <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/www/calc_change_base.csv" # only run in local
     #path_to_calc_change_base <- "/srv/shiny-server/capApp/treatments_app/www/calc_change_base.csv" # only works on the linux server
     calc_change_base <- read.csv(path_to_calc_change_base) # load the base case fluxes file to compare with "live" fluxes
@@ -699,27 +750,27 @@ shinyServer(function(input, output, session) {
     calc_change_sum <- round(calc_change_t,2) - round(calc_change_base,2) # calculate the difference between live fluxes and base-case values
     index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21) # index of arrows in the graph (which are fluxes and not regulations)
     calc_change_sum <- rbind(calc_change_sum, index)
-    
+
     flux_changed_index <- which(calc_change_sum[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
     arrow_index <- as.numeric(t(calc_change_sum[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
-    
+
     if(!is.null(flux_changed_index)){
       for (i in (1:ncol(calc_change_sum))){
         arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
         ifelse(calc_change_sum[[i]][1] > 0, edges_Ca$color.color[arrow_index_i] <- "green", edges_Ca$color.color[arrow_index_i] <- "red")
       }
-      
+
     }
-    
+
     visNetworkProxy("network_Ca") %>%
       visUpdateEdges(edges = edges_Ca)
-    
+
   })
-  
+
   # generate UI box by clicking on a node or edge
-  
+
   # observeEvent(input$current_node_id,{
-  #   
+  #
   #                insertUI(
   #                  selector = "#boxinfo",
   #                  where = "afterEnd",
@@ -729,53 +780,53 @@ shinyServer(function(input, output, session) {
   #                                 removable = TRUE,
   #                                 img(src ="osa_warning.png"))
   #                )
-  #   
+  #
   # })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Handle dangerous parameter values by the user
-  #  
+
   #-------------------------------------------------------------------------
-  
+  #
+  #  Handle dangerous parameter values by the user
+  #
+  #-------------------------------------------------------------------------
+
   # prevent the user to put infinite value in the max time of integration
-  
+
   # observeEvent(input$tmax,{ # critical value for tmax
-  #   
+  #
   #   if (input$tmax > 30000){
-  #     
+  #
   #     sendSweetAlert(messageId = "failSw", title = "Ooops ...", text = "Invalid parameter value: the maximum time of simulation is too high!", type = "error")
   #     reset("tmax") # value is reset
-  #     
+  #
   #   }
-  #   
+  #
   # })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Useful tasks such as save, reset, load ...
-  #  
+
   #-------------------------------------------------------------------------
-  
+  #
+  #  Useful tasks such as save, reset, load ...
+  #
+  #-------------------------------------------------------------------------
+
   # reset all the values of box inputs as well as graphs
   observe({
-    
+
     input$resetAll
-    
+
     #reset("boxinput")
     reset("disease_selected")
     reset("treatment_selected")
     reset("tmax")
-    
+
     edges_Ca <- edges_Ca()
-    
+
     visNetworkProxy("network_Ca") %>%
       visUpdateEdges(edges = edges_Ca)
-    
+
   })
-  
+
   # Share the state of the App via url bookmarking
-  
+
   observeEvent(input$bookmark, {
     session$doBookmark()
   })

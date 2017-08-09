@@ -24,10 +24,23 @@ calcium_phosphate_core <- function (t, state, parameters_bis){
     #   Simulations  #
     ##################
     
-    
     # Ca iv injection
     
-    ifelse(t > t_start_Cainject && t < t_stop_Cainject, Ca_iv_inject <- k_inject_Ca, Ca_iv_inject <-0)
+     for (i in 1:length(t_start_Cainject)){
+       ifelse(t > t_start_Cainject && t < t_stop_Cainject, Ca_iv_inject <- k_inject_Ca, Ca_iv_inject <-0)
+     }
+    
+    # if(t > 0 && t < 100){
+    #   
+    #   Ca_iv_inject <- k_inject_Ca
+    #   
+    # }
+    # else if(t > 200 && t < 400){
+    #   
+    #   Ca_iv_inject <- k_inject_Ca
+    #   
+    # }
+    # else Ca_iv_inject <-0
     
     # Ca supplementation
     
@@ -35,7 +48,7 @@ calcium_phosphate_core <- function (t, state, parameters_bis){
     
     # D3 iv injection
     
-    ifelse(t > t_start_D3inject && t < t_stop_D3inject, D3_inject <- k_inject_D3/Vp, D3_iv_inject <-0)
+    ifelse(t > t_start_D3inject && t < t_stop_D3inject, D3_iv_inject <- k_inject_D3/Vp, D3_iv_inject <-0)
     
     # PO4 iv injection
     

@@ -68,6 +68,10 @@ body <- dashboardBody(
                              title = tagList(shiny::icon("question-circle"), "Questions"), width = NULL,
                              height = "350px",
                              tabPanel(title = tagList(shiny::icon("question-circle-o"), "Q1"), #, style = "overflow-x: scroll"
+                                      
+                                      verbatimTextOutput("parameters_event_bis"),
+                                      verbatimTextOutput("parameters_event"),
+                                      verbatimTextOutput("parameters_bis"),
                                       dataTableOutput("table")
                     
                              )
