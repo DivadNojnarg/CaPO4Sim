@@ -72,9 +72,18 @@ header <- dashboardHeader(
                            bs_embed_tooltip(title = "Rate of injection of calcium in plasma (μmol/min)")),
                      numericInput("t_start_Cainject","Time when begins the Ca iv injection:", 0, min = 0, max = NA, width = "50%"),
                      numericInput("t_stop_Cainject","Time,when stops the Ca iv injection:", 100, min = 0, max = NA, width = "50%"),
-                     actionBttn(inputId = "add_newCaiv", label = NULL, 
-                                style = "material-circle", 
-                                color = "primary", icon = icon("plus"))
+                     
+                     column(6, align = "center",
+                            actionBttn(inputId = "add_newCaiv", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "primary", icon = icon("plus"))
+                     ),
+                     column(6, align = "center",
+                            actionBttn(inputId = "delete_oldCaiv", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "danger", icon = icon("minus")),
+                            numericInput("delete_Caiv_id","Event to remove?", 1, min = 1, max = NA, width = "50%")
+                     )
                    ),
                    
                    conditionalPanel( # for Ca food
@@ -86,7 +95,19 @@ header <- dashboardHeader(
                            bs_embed_tooltip(title = "Calcium intake (μmol/min)")),
                      
                      numericInput("t_start_Caintake","Time when begins the Ca supplementation:", 0, min = 0, max = NA, width = "50%"),
-                     numericInput("t_stop_Caintake","Time when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%")
+                     numericInput("t_stop_Caintake","Time when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%"),
+                     
+                     column(6, align = "center",
+                            actionBttn(inputId = "add_newCaintake", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "primary", icon = icon("plus"))
+                     ),
+                     column(6, align = "center",
+                            actionBttn(inputId = "delete_oldCaintake", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "danger", icon = icon("minus")),
+                            numericInput("delete_Caintake_id","Event to remove?", 1, min = 1, max = NA, width = "50%")
+                     )
                      
                    ),
                    
@@ -99,7 +120,19 @@ header <- dashboardHeader(
                            bs_embed_tooltip(title = "D3 injection (pmol/min)")),
                      
                      numericInput("t_start_D3inject","Time when begins the D3 iv injection:", 0, min = 0, max = NA, width = "50%"),
-                     numericInput("t_stop_D3inject","Time when stops the D3 iv injection:", 100, min = 0, max = NA, width = "50%")
+                     numericInput("t_stop_D3inject","Time when stops the D3 iv injection:", 100, min = 0, max = NA, width = "50%"),
+                     
+                     column(6, align = "center",
+                            actionBttn(inputId = "add_newD3iv", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "primary", icon = icon("plus"))
+                     ),
+                     column(6, align = "center",
+                            actionBttn(inputId = "delete_oldD3iv", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "danger", icon = icon("minus")),
+                            numericInput("delete_D3iv_id","Event to remove?", 1, min = 1, max = NA, width = "50%")
+                     )
                      
                    ),
                    
@@ -112,7 +145,19 @@ header <- dashboardHeader(
                            bs_embed_tooltip(title = "PO4 injection (μmol/min)")),
                      
                      numericInput("t_start_Pinject","Time when begins the PO4 iv injection:", 0, min = 0, max = NA, width = "50%"),
-                     numericInput("t_stop_Pinject","Time when stops the PO4 iv injection:", 100, min = 0, max = NA, width = "50%")
+                     numericInput("t_stop_Pinject","Time when stops the PO4 iv injection:", 100, min = 0, max = NA, width = "50%"),
+                     
+                     column(6, align = "center",
+                            actionBttn(inputId = "add_newPiv", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "primary", icon = icon("plus"))
+                     ),
+                     column(6, align = "center",
+                            actionBttn(inputId = "delete_oldPiv", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "danger", icon = icon("minus")),
+                            numericInput("delete_Piv_id","Event to remove?", 1, min = 1, max = NA, width = "50%")
+                     )
                      
                    ),
                    
@@ -125,7 +170,19 @@ header <- dashboardHeader(
                            bs_embed_tooltip(title = "Phosphate intake (μmol/min)")),
                      
                      numericInput("t_start_Pintake","Time when begins the Ca supplementation:", 0, min = 0, max = NA, width = "50%"),
-                     numericInput("t_stop_Pintake","Time when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%")
+                     numericInput("t_stop_Pintake","Time when stops the Ca supplementation:", 100, min = 0, max = NA, width = "50%"),
+                     
+                     column(6, align = "center",
+                            actionBttn(inputId = "add_newPintake", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "primary", icon = icon("plus"))
+                     ),
+                     column(6, align = "center",
+                            actionBttn(inputId = "delete_oldPintake", label = NULL, 
+                                       style = "material-circle", 
+                                       color = "danger", icon = icon("minus")),
+                            numericInput("delete_Pintake_id","Event to remove?", 1, min = 1, max = NA, width = "50%")
+                     )
                      
                    )
                    

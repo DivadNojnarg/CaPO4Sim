@@ -60,6 +60,7 @@ body <- dashboardBody(
                                          withSpinner(plotlyOutput("plot_edge"), size = 2, type = 6, color = "#000000")
                                   )
                          )
+                         
                        ),
                        
                        div(id = "boxinput", # values to be reset if needed
@@ -69,10 +70,7 @@ body <- dashboardBody(
                              height = "350px",
                              tabPanel(title = tagList(shiny::icon("question-circle-o"), "Q1"), #, style = "overflow-x: scroll"
                                       
-                                      verbatimTextOutput("parameters_event_bis"),
-                                      verbatimTextOutput("parameters_event"),
-                                      verbatimTextOutput("parameters_bis"),
-                                      dataTableOutput("table")
+                                      verbatimTextOutput("event_table")
                     
                              )
                            )

@@ -7,24 +7,6 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-
-library(shiny)
-library(plotly)
-library(deSolve)
-require(visNetwork)
-library(shinyBS)
-#library(parallel)
-#library(sparklines)
-
-#library(tikzDevice) # For Latex rendering in graphs but does not work
-
-source("cap_fixed_parameters.R")
-source("calcium_phosphate_core.R") # core model
-source("calc_change.R")
-source("box_close.R")
-
-#path_to_images <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/www"
-
 shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
@@ -73,54 +55,23 @@ shinyServer(function(input, output, session) {
   # 
   # })
   
-  # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
-  
-  state_php1 <- reactive({
-    
-    state_php1 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_php1.csv", # for local config
-                           stringsAsFactors = FALSE)
-    #state_php1 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_php1.csv", # use in the server
-    #stringsAsFactors = FALSE)
-    state_php1 <- unlist(state_php1[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
-    
-  })
-  
-  state_hypopara <- reactive({
-    
-    state_hypopara <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_hypopara.csv", # for local config
-                               stringsAsFactors = FALSE)
-    #state_hypopara <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypopara.csv", # use in the server
-    #stringsAsFactors = FALSE)
-    state_hypopara <- unlist(state_hypopara[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
-    
-  })
-  
-  state_hypoD3 <- reactive({
-    
-    state_hypoD3 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_hypoD3.csv", # for local config
-                             stringsAsFactors = FALSE)
-    #state_hypoD3 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypoD3.csv", # use in the server
-    #stringsAsFactors = FALSE)
-    state_hypoD3 <- unlist(state_hypoD3[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
-    
-  })
   
   state <- reactive({ 
     
     if(!is.null(input$disease_selected)){
       if(input$disease_selected == "primary-hyperparathyroidism"){
         
-        state_php1()
+        state_php1
         
       }
       else if (input$disease_selected == "hypoparathyroidism"){
         
-        state_hypopara()
+        state_hypopara
         
       }
       else if (input$disease_selected == "vitamin D3 deficiency"){
         
-        state_hypoD3()
+        state_hypoD3
         
       }
     }
@@ -134,72 +85,130 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  # Create parameters sets specific for events
+  # Set events parameters in reactiveValues so as to modify them later
   
-  # parameters_event <- reactive({  # need to write && !is.null(input$Ca_inject) since input$Ca_inject does not exist before Ca_inject is selected
-  #   
-  #   input$treatment_selected
-  #   
-  #   c("t_start_Cainject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_start_Cainject, 0), 
-  #     "t_stop_Cainject" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_stop_Cainject, 0), 
-  #     "t_start_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_start_Caintake, 0), 
-  #     "t_stop_Caintake" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_stop_Caintake, 0),
-  #     "t_start_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_start_D3inject, 0), 
-  #     "t_stop_D3inject" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_stop_D3inject, 0), 
-  #     "t_start_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_start_Pinject, 0), 
-  #     "t_stop_Pinject" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_stop_Pinject, 0),
-  #     "t_start_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_start_Pintake, 0), 
-  #     "t_stop_Pintake" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_stop_Pintake, 0))
-  #   
-  # })
-  
-  #output$parameters_event <- renderPrint({ parameters_event()[[1]] })
-  
-  # Add new events by clicking on +
-  
-  parameters_event_bis <- reactiveValues(t_start_Cainject = 0, t_stop_Cainject = 0, t_start_Caintake = 0, t_stop_Caintake = 0,
+  parameters_event <- reactiveValues(t_start_Cainject = 0, t_stop_Cainject = 0, t_start_Caintake = 0, t_stop_Caintake = 0,
                                          t_start_D3inject = 0, t_stop_D3inject = 0, t_start_Pinject = 0, t_stop_Pinject = 0,
-                                         t_start_Pintake = 0, t_stop_Pintake = 0) # generate time event reactive values
-
-  observeEvent(input$treatment_selected,{ # if treatment is selected, update the reactive values
-
-    parameters_event_bis$t_start_Cainject = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_start_Cainject, 0)
-    parameters_event_bis$t_stop_Cainject = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$t_stop_Cainject, 0)
-    parameters_event_bis$t_start_Caintake = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_start_Caintake, 0)
-    parameters_event_bis$t_stop_Caintake = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$t_stop_Caintake, 0)
-    parameters_event_bis$t_start_D3inject = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_start_D3inject, 0)
-    parameters_event_bis$t_stop_D3inject = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$t_stop_D3inject, 0)
-    parameters_event_bis$t_start_Pinject = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_start_Pinject, 0)
-    parameters_event_bis$t_stop_Pinject = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$t_stop_Pinject, 0)
-    parameters_event_bis$t_start_Pintake = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_start_Pintake, 0)
-    parameters_event_bis$t_stop_Pintake = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$t_stop_Pintake, 0)
-
-  })
+                                         t_start_Pintake = 0, t_stop_Pintake = 0)
   
-
-  observeEvent(input$add_newCaiv,{ # cumulate events when add button is selected
-
-      parameters_event_bis$t_start_Cainject <- c(parameters_event_bis$t_start_Cainject, input$t_start_Cainject)
-      parameters_event_bis$t_stop_Cainject <- c(parameters_event_bis$t_stop_Cainject, input$t_stop_Cainject)
-    
-  })
-
-  output$parameters_event_bis <- renderPrint({ parameters_event_bis$t_start_Cainject })
   
-  parameters_event <- reactive({ # storing reactive values in a reactive list
+  event_table <- reactiveValues(df = NULL)
+  
+  # cumulate events when add button is selected
+  
+  observeEvent(input$add_newCaiv,{ 
     
-    input$treatment_selected
+    parameters_event$t_start_Cainject <- c(parameters_event$t_start_Cainject, input$t_start_Cainject)
+    parameters_event$t_stop_Cainject <- c(parameters_event$t_stop_Cainject, input$t_stop_Cainject)
     
-    list("t_start_Cainject" = parameters_event_bis$t_start_Cainject, "t_stop_Cainject" = parameters_event_bis$t_stop_Cainject,
-      "t_start_Caintake" = parameters_event_bis$t_start_Caintake, "t_stop_Caintake" = parameters_event_bis$t_stop_Caintake,
-      "t_start_D3inject" = parameters_event_bis$t_start_D3inject, "t_stop_D3inject" = parameters_event_bis$t_stop_D3inject, 
-      "t_start_Pinject" = parameters_event_bis$t_start_Pinject, "t_stop_Pinject" = parameters_event_bis$t_stop_Pinject,
-      "t_start_Pintake" = parameters_event_bis$t_start_Pintake, "t_stop_Pintake" = parameters_event_bis$t_stop_Pintake)
+    #fill the event table
+    df1 <- data.frame(event = "Ca_iv", rate = paste(input$Ca_inject, "(µmol/min)"), start_time = input$t_start_Cainject,
+                                 stop_time = input$t_stop_Cainject)
+
+    event_table$df <- rbind(event_table$df, df1)
     
   })
   
-  output$parameters_event <- renderPrint({ parameters_event()["t_start_Cainject"] })
+  observeEvent(input$add_newCaintake,{ 
+    
+    parameters_event$t_start_Caintake <- c(parameters_event$t_start_Caintake, input$t_start_Caintake)
+    parameters_event$t_stop_Caintake <- c(parameters_event$t_stop_Caintake, input$t_stop_Caintake)
+    
+    df2 <- data.frame(event = "Ca_gavage", rate = paste(input$Ca_food, "(µmol/min)"), start_time = input$t_start_Caintake,
+                                 stop_time = input$t_stop_Caintake)
+
+    event_table$df <- rbind(event_table$df, df2)
+    
+  })
   
+  observeEvent(input$add_newD3iv,{ 
+    
+    parameters_event$t_start_D3inject <- c(parameters_event$t_start_D3inject, input$t_start_D3inject)
+    parameters_event$t_stop_D3inject <- c(parameters_event$t_stop_D3inject, input$t_stop_D3inject)
+    
+    df3 <- data.frame(event = "D3_iv", rate = paste(input$D3_inject, "(pmol/min)"), start_time = input$t_start_D3inject,
+                      stop_time = input$t_stop_D3inject)
+
+    event_table$df <- rbind(event_table$df, df3)
+    
+  })
+  
+  output$event_table <- renderPrint({ event_table$df })
+  
+  
+  # delete a given event when delete button is selected
+  
+  observeEvent(input$delete_oldCaiv,{ 
+    
+    
+    if(input$delete_Caiv_id > length(parameters_event$t_start_Cainject)){
+      
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+      
+    }
+    else{
+      
+      if(length(parameters_event$t_start_Cainject) > 1){
+        
+        parameters_event$t_start_Cainject <- parameters_event$t_start_Cainject[-input$delete_Caiv_id]
+        parameters_event$t_stop_Cainject <- parameters_event$t_stop_Cainject[-input$delete_Caiv_id]
+        
+        event_table$df <- event_table$df[-input$delete_Caiv_id,] # delete the corresponding row in the event table
+        
+      }
+      else{ # when there is only one event to delete, the next deletion leads to a reset 
+        # instead to avoid errors since t_start and t_stop still need to be defined
+        
+        parameters_event$t_start_Cainject <- input$t_start_Cainject
+        parameters_event$t_stop_Cainject <- input$t_stop_Cainject
+        
+      }
+      
+    }
+    
+  })
+  
+  observeEvent(input$delete_oldD3iv,{ 
+    
+    
+    if(input$delete_D3iv_id > length(parameters_event$t_start_D3inject)){
+      
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+      
+    }
+    else{
+      
+      if(length(parameters_event$t_start_D3inject) > 1){
+        
+        parameters_event$t_start_D3inject <- parameters_event$t_start_D3inject[-input$delete_D3iv_id]
+        parameters_event$t_stop_D3inject <- parameters_event$t_stop_D3inject[-input$delete_D3iv_id]
+        
+        event_table$df <- event_table$df[-input$delete_D3iv_id,] # delete the corresponding row in the event table
+        
+      }
+      else{ # when there is only one event to delete, the next deletion leads to a reset 
+        # instead to avoid errors since t_start and t_stop still need to be defined
+        
+        parameters_event$t_start_D3inject <- input$t_start_D3inject
+        parameters_event$t_stop_D3inject <- input$t_stop_D3inject
+        
+      }
+      
+    }
+    
+  })
+  
+  parameters_event_bis <- reactive({ # storing reactive values in a reactive list
+    
+    list("t_start_Cainject" = parameters_event$t_start_Cainject, "t_stop_Cainject" = parameters_event$t_stop_Cainject,
+      "t_start_Caintake" = parameters_event$t_start_Caintake, "t_stop_Caintake" = parameters_event$t_stop_Caintake,
+      "t_start_D3inject" = parameters_event$t_start_D3inject, "t_stop_D3inject" = parameters_event$t_stop_D3inject, 
+      "t_start_Pinject" = parameters_event$t_start_Pinject, "t_stop_Pinject" = parameters_event$t_stop_Pinject,
+      "t_start_Pintake" = parameters_event$t_start_Pintake, "t_stop_Pintake" = parameters_event$t_stop_Pintake)
+    
+  })
   
   # Create parameters sets for all diseases an treatments
   
@@ -209,11 +218,11 @@ shinyServer(function(input, output, session) {
                              ifelse(is.element("hypoparathyroidism", input$disease_selected), 0, 4.192)), 
       "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0, 2.5e-005),
       "PTX_coeff" = ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1),
-      "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected) && !is.null(input$Ca_inject), input$Ca_inject, 0), 
-      "Ca_food" = ifelse(is.element("Ca supplementation", input$treatment_selected) && !is.null(input$Ca_food), input$Ca_food, 2.2e-003),
-      "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected) && !is.null(input$D3_inject), input$D3_inject, 0),
-      "k_inject_P" = ifelse(is.element("PO4 iv injection", input$treatment_selected) && !is.null(input$P_inject), input$P_inject, 0),
-      "P_food" = ifelse(is.element("PO4 supplementation", input$treatment_selected) && !is.null(input$P_food), input$P_food, 1.55e-003))
+      "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected), input$Ca_inject, 0), 
+      "Ca_food" = ifelse(is.element("Ca supplementation", input$treatment_selected), input$Ca_food, 2.2e-003),
+      "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected), input$D3_inject, 0),
+      "k_inject_P" = ifelse(is.element("PO4 iv injection", input$treatment_selected), input$P_inject, 0),
+      "P_food" = ifelse(is.element("PO4 supplementation", input$treatment_selected), input$P_food, 1.55e-003))
     
   })
   
@@ -246,11 +255,9 @@ shinyServer(function(input, output, session) {
   
   parameters_bis <- reactive({ c(parameters_disease(), 
                                  parameters_fixed, 
-                                 parameters_event()) 
+                                 parameters_event_bis()) 
     
     }) 
-  
-  output$parameters_bis <- renderPrint({ parameters_bis() })
   
   #------------------------------------------------------------------------- 
   #  
@@ -443,7 +450,7 @@ shinyServer(function(input, output, session) {
 
         xvar <- list(title = "time (min)", range = c(0, max(out[,1])))
         yvar1 <- list(title = "Concentrations (mM)", range = c(min(out[,"Ca_p"],out[,"PO4_p"])*0.8,max(out[,"Ca_p"],out[,"PO4_p"])*1.2))
-        yvar2 <- list(title = "[PTH]p (pM)", range = c(min(out[,"PTH_p"]/parameters_bis["Vp"])*0.8,max(out[,"PTH_p"]/parameters_bis["Vp"])*1.2))
+        yvar2 <- list(title = "[PTH]p (pM)", range = c(min(out[,"PTH_p"]/as.numeric(parameters_bis["Vp"]))*0.8,max(out[,"PTH_p"]/as.numeric(parameters_bis["Vp"]))*1.2))
         yvar3 <- list(title = "[D3]p (pM)", range = c(min(out[,"D3_p"])*0.8,max(out[,"D3_p"])*1.2))
         yvar4 <- list(title = "[FGF23]p (pM)", range = c(min(out[,"FGF_p"])*0.8,max(out[,"FGF_p"])*1.2))
         yvar5 <- list(title = "[Ca]f (mmol)", range = c(min(out[,"Ca_f"])*0.8,max(out[,"Ca_f"])*1.2))
@@ -466,7 +473,7 @@ shinyServer(function(input, output, session) {
                             font = list(color = "red", size = 10)) %>%
             layout(xaxis = NULL, yaxis = yvar1)
 
-          p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/parameters_bis["Vp"], type = "scatter", mode = "lines",
+          p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/as.numeric(parameters_bis["Vp"]), type = "scatter", mode = "lines",
                         line = list(color = 'black', width = 2)) %>%
             layout(xaxis = NULL, yaxis = yvar2)
 
