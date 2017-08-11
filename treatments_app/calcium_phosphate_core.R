@@ -25,27 +25,32 @@ calcium_phosphate_core <- function (t, state, parameters_bis){
     ##################
     
     # Ca iv injection
+    
     Ca_iv_inject <-0
     
-    for (i in 1:length(t_start_Cainject)){
-      
-      #ifelse(t > t_start_Cainject[[i]] && t < t_stop_Cainject[[i]], Ca_iv_inject <- k_inject_Ca, Ca_iv_inject <-0)
-      if(t > t_start_Cainject[[i]] && t < t_stop_Cainject[[i]]){
+    if(!is.null(t_start_Cainject) && !is.null(t_stop_Cainject)){
+      for (i in 1:length(t_start_Cainject)){
         
-        Ca_iv_inject <- k_inject_Ca
-        
+        #ifelse(t > t_start_Cainject[[i]] && t < t_stop_Cainject[[i]], Ca_iv_inject <- k_inject_Ca, Ca_iv_inject <-0)
+        if(t > t_start_Cainject[[i]] && t < t_stop_Cainject[[i]]){
+          
+          Ca_iv_inject <- k_inject_Ca
+          
+        }
       }
     }
     
     # Ca supplementation
     
-    for (i in 1:length(t_start_Caintake)){
-      
-      #ifelse(t > t_start_Caintake && t < t_stop_Caintake, I_Ca <- Ca_food, I_Ca <- I_Ca)
-      if(t > t_start_Caintake[[i]] && t < t_stop_Caintake[[i]]){
+    if(!is.null(t_start_Caintake) && !is.null(t_stop_Caintake)){
+      for (i in 1:length(t_start_Caintake)){
         
-        I_Ca <- Ca_food
-        
+        #ifelse(t > t_start_Caintake && t < t_stop_Caintake, I_Ca <- Ca_food, I_Ca <- I_Ca)
+        if(t > t_start_Caintake[[i]] && t < t_stop_Caintake[[i]]){
+          
+          I_Ca <- Ca_food
+          
+        }
       }
     }
     
@@ -53,13 +58,15 @@ calcium_phosphate_core <- function (t, state, parameters_bis){
     
     D3_iv_inject <-0
     
-    for (i in 1:length(t_start_D3inject)){
-      
-      #ifelse(t > t_start_D3inject && t < t_stop_D3inject, D3_iv_inject <- k_inject_D3/Vp, D3_iv_inject <-0) # ifelse does not work in this case
-      if(t > t_start_D3inject[[i]] && t < t_stop_D3inject[[i]]){
+    if(!is.null(t_start_D3inject) && !is.null(t_stop_D3inject)){
+      for (i in 1:length(t_start_D3inject)){
         
-        D3_iv_inject <- k_inject_D3/Vp
-        
+        #ifelse(t > t_start_D3inject && t < t_stop_D3inject, D3_iv_inject <- k_inject_D3/Vp, D3_iv_inject <-0) # ifelse does not work in this case
+        if(t > t_start_D3inject[[i]] && t < t_stop_D3inject[[i]]){
+          
+          D3_iv_inject <- k_inject_D3/Vp
+          
+        }
       }
     }
     

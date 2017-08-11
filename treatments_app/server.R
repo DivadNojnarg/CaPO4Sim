@@ -87,8 +87,8 @@ shinyServer(function(input, output, session) {
   
   # Set events parameters in reactiveValues so as to modify them later
   
-  parameters_event <- reactiveValues(t_start_Cainject = 0, t_stop_Cainject = 0, t_start_Caintake = 0, t_stop_Caintake = 0,
-                                         t_start_D3inject = 0, t_stop_D3inject = 0, t_start_Pinject = 0, t_stop_Pinject = 0,
+  parameters_event <- reactiveValues(t_start_Cainject = NULL, t_stop_Cainject = NULL, t_start_Caintake = NULL, t_stop_Caintake = NULL,
+                                         t_start_D3inject = NULL, t_stop_D3inject = NULL, t_start_Pinject = 0, t_stop_Pinject = 0,
                                          t_start_Pintake = 0, t_stop_Pintake = 0)
   
   
@@ -133,9 +133,6 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$event_table <- renderPrint({ event_table$df })
-  
-  
   # delete a given event when delete button is selected
   
   observeEvent(input$delete_oldCaiv,{ 
@@ -154,14 +151,24 @@ shinyServer(function(input, output, session) {
         parameters_event$t_start_Cainject <- parameters_event$t_start_Cainject[-input$delete_Caiv_id]
         parameters_event$t_stop_Cainject <- parameters_event$t_stop_Cainject[-input$delete_Caiv_id]
         
-        event_table$df <- event_table$df[-input$delete_Caiv_id,] # delete the corresponding row in the event table
+        #if(is.element("Ca_iv", event_table$df[-input$delete_Caiv_id,1])){
+          event_table$df <- event_table$df[-input$delete_Caiv_id,] # delete the corresponding row in the event table
+        #}
+        #else {
+          #showNotification("Cannot delete element different from Ca_iv injection with this button. 
+                              #Please use the delete button related to the event you would like to remove!",
+                           #type = "error", closeButton = TRUE)
+        #}
         
       }
       else{ # when there is only one event to delete, the next deletion leads to a reset 
         # instead to avoid errors since t_start and t_stop still need to be defined
         
-        parameters_event$t_start_Cainject <- input$t_start_Cainject
-        parameters_event$t_stop_Cainject <- input$t_stop_Cainject
+        parameters_event$t_start_Cainject <- NULL
+        parameters_event$t_stop_Cainject <- NULL
+        
+        event_table$df <- data.frame(event = NULL, rate = NULL, start_time = NULL,
+                                     stop_time = NULL)
         
       }
       
@@ -169,35 +176,72 @@ shinyServer(function(input, output, session) {
     
   })
   
-  observeEvent(input$delete_oldD3iv,{ 
-    
-    
-    if(input$delete_D3iv_id > length(parameters_event$t_start_D3inject)){
-      
+  observeEvent(input$delete_oldCaintake,{
+
+
+    if(is.null(nrow(event_table$df))){
+
       showNotification("Please delete an event which is in the list!",
                        type = "error", closeButton = TRUE)
-      
+
     }
     else{
-      
-      if(length(parameters_event$t_start_D3inject) > 1){
+
+      if(input$delete_Caintake_id > length(parameters_event$t_start_Caintake)){
+
+        parameters_event$t_start_Caintake <- parameters_event$t_start_Caintake[-input$delete_Caintake_id]
+        parameters_event$t_stop_Caintake <- parameters_event$t_stop_Caintake[-input$delete_Caintake_id]
         
+        event_table$df <- event_table$df[-input$delete_Caintake_id,] # delete the corresponding row in the event table
+        
+      }
+      else{ # when there is only one event to delete, the next deletion leads to a reset
+        # instead to avoid errors since t_start and t_stop still need to be defined
+
+        parameters_event$t_start_Caintake <- NULL
+        parameters_event$t_stop_Caintake <- NULL
+        
+        event_table$df <- data.frame(event = NULL, rate = NULL, start_time = NULL,
+                                     stop_time = NULL)
+
+      }
+
+    }
+
+  })
+
+  observeEvent(input$delete_oldD3iv,{
+
+
+    if(input$delete_D3iv_id > length(parameters_event$t_start_D3inject)){
+
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+
+    }
+    else{
+
+      if(length(parameters_event$t_start_D3inject) > 1){
+
         parameters_event$t_start_D3inject <- parameters_event$t_start_D3inject[-input$delete_D3iv_id]
         parameters_event$t_stop_D3inject <- parameters_event$t_stop_D3inject[-input$delete_D3iv_id]
-        
-        event_table$df <- event_table$df[-input$delete_D3iv_id,] # delete the corresponding row in the event table
-        
-      }
-      else{ # when there is only one event to delete, the next deletion leads to a reset 
-        # instead to avoid errors since t_start and t_stop still need to be defined
-        
-        parameters_event$t_start_D3inject <- input$t_start_D3inject
-        parameters_event$t_stop_D3inject <- input$t_stop_D3inject
-        
-      }
       
+        event_table$df <- event_table$df[-input$delete_D3iv_id,] # delete the corresponding row in the event table
+
+      }
+      else{ # when there is only one event to delete, the next deletion leads to a reset
+        # instead to avoid errors since t_start and t_stop still need to be defined
+
+        parameters_event$t_start_D3inject <- NULL
+        parameters_event$t_stop_D3inject <- NULL
+        
+        event_table$df <- data.frame(event = NULL, rate = NULL, start_time = NULL,
+                                     stop_time = NULL)
+
+      }
+
     }
-    
+
   })
   
   parameters_event_bis <- reactive({ # storing reactive values in a reactive list
@@ -258,6 +302,15 @@ shinyServer(function(input, output, session) {
                                  parameters_event_bis()) 
     
     }) 
+  
+  output$parameters_event <- renderPrint({ 
+    
+    data.frame(t_start = parameters_event$t_start_Cainject, 
+               t_stop = parameters_event$t_stop_Cainject)
+    
+    })
+  
+  output$event_table <- renderPrint({ event_table$df })
   
   #------------------------------------------------------------------------- 
   #  
