@@ -58,7 +58,9 @@ body <- dashboardBody(
                                   column(4, align = "center",
                                          
                                          withSpinner(plotlyOutput("plot_edge"), size = 2, type = 6, color = "#000000")
-                                  )
+                                  ),
+                                  
+                                  tableOutput("event_table")
                          )
                          
                        ),
@@ -68,11 +70,8 @@ body <- dashboardBody(
                              # classic id does not work with tabBox to reset values inside ...
                              title = tagList(shiny::icon("question-circle"), "Questions"), width = NULL,
                              height = "350px",
-                             tabPanel(title = tagList(shiny::icon("question-circle-o"), "Q1"), #, style = "overflow-x: scroll"
+                             tabPanel(title = tagList(shiny::icon("question-circle-o"), "Q1") #, style = "overflow-x: scroll"
                                       
-                                      verbatimTextOutput("event_table"),
-                                      verbatimTextOutput("parameters_event")
-                    
                              )
                            )
                        )

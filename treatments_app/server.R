@@ -87,49 +87,54 @@ shinyServer(function(input, output, session) {
   
   # Set events parameters in reactiveValues so as to modify them later
   
-  parameters_event <- reactiveValues(t_start_Cainject = NULL, t_stop_Cainject = NULL, t_start_Caintake = NULL, t_stop_Caintake = NULL,
-                                         t_start_D3inject = NULL, t_stop_D3inject = NULL, t_start_Pinject = 0, t_stop_Pinject = 0,
-                                         t_start_Pintake = 0, t_stop_Pintake = 0)
-  
-  
-  event_table <- reactiveValues(df = NULL)
+  event_table <- reactiveValues(df = data.frame(event = NULL, rate = NULL, start_time = NULL,
+                                                stop_time = NULL))
   
   # cumulate events when add button is selected
   
   observeEvent(input$add_newCaiv,{ 
     
-    parameters_event$t_start_Cainject <- c(parameters_event$t_start_Cainject, input$t_start_Cainject)
-    parameters_event$t_stop_Cainject <- c(parameters_event$t_stop_Cainject, input$t_stop_Cainject)
-    
     #fill the event table
-    df1 <- data.frame(event = "Ca_iv", rate = paste(input$Ca_inject, "(µmol/min)"), start_time = input$t_start_Cainject,
-                                 stop_time = input$t_stop_Cainject)
-
-    event_table$df <- rbind(event_table$df, df1)
+    df_Caiv <- data.frame(event = "Ca_iv", rate = paste(input$Ca_inject, "(µmol/min)"), start_time = input$t_start_Cainject,
+                          stop_time = input$t_stop_Cainject)
+    
+    event_table$df <- rbind(event_table$df, df_Caiv)
     
   })
   
   observeEvent(input$add_newCaintake,{ 
     
-    parameters_event$t_start_Caintake <- c(parameters_event$t_start_Caintake, input$t_start_Caintake)
-    parameters_event$t_stop_Caintake <- c(parameters_event$t_stop_Caintake, input$t_stop_Caintake)
+    df_Caintake <- data.frame(event = "Ca_gavage", rate = paste(input$Ca_food, "(µmol/min)"), start_time = input$t_start_Caintake,
+                              stop_time = input$t_stop_Caintake)
     
-    df2 <- data.frame(event = "Ca_gavage", rate = paste(input$Ca_food, "(µmol/min)"), start_time = input$t_start_Caintake,
-                                 stop_time = input$t_stop_Caintake)
-
-    event_table$df <- rbind(event_table$df, df2)
+    event_table$df <- rbind(event_table$df, df_Caintake)
     
   })
   
   observeEvent(input$add_newD3iv,{ 
     
-    parameters_event$t_start_D3inject <- c(parameters_event$t_start_D3inject, input$t_start_D3inject)
-    parameters_event$t_stop_D3inject <- c(parameters_event$t_stop_D3inject, input$t_stop_D3inject)
+    df_D3iv <- data.frame(event = "D3_iv", rate = paste(input$D3_inject, "(pmol/min)"), start_time = input$t_start_D3inject,
+                          stop_time = input$t_stop_D3inject)
     
-    df3 <- data.frame(event = "D3_iv", rate = paste(input$D3_inject, "(pmol/min)"), start_time = input$t_start_D3inject,
-                      stop_time = input$t_stop_D3inject)
-
-    event_table$df <- rbind(event_table$df, df3)
+    event_table$df <- rbind(event_table$df, df_D3iv)
+    
+  })
+  
+  observeEvent(input$add_newPiv,{ 
+    
+    df_Piv <- data.frame(event = "P_iv", rate = paste(input$P_inject, "(µmol/min)"), start_time = input$t_start_Pinject,
+                          stop_time = input$t_stop_Pinject)
+    
+    event_table$df <- rbind(event_table$df, df_Piv)
+    
+  })
+  
+  observeEvent(input$add_newPintake,{ 
+    
+    df_Pintake <- data.frame(event = "P_gavage", rate = paste(input$P_food, "(µmol/min)"), start_time = input$t_start_Pintake,
+                              stop_time = input$t_stop_Pintake)
+    
+    event_table$df <- rbind(event_table$df, df_Pintake)
     
   })
   
@@ -138,37 +143,25 @@ shinyServer(function(input, output, session) {
   observeEvent(input$delete_oldCaiv,{ 
     
     
-    if(input$delete_Caiv_id > length(parameters_event$t_start_Cainject)){
+    if(input$delete_Caiv_id > nrow(event_table$df)){ # if the index of element to delete does not belong to the data frame
       
       showNotification("Please delete an event which is in the list!",
                        type = "error", closeButton = TRUE)
       
     }
-    else{
+    else{ # if it is an element of the data frame
       
-      if(length(parameters_event$t_start_Cainject) > 1){
+      if(nrow(event_table$df) >= 1){ # if there is still only one line in the data frame
         
-        parameters_event$t_start_Cainject <- parameters_event$t_start_Cainject[-input$delete_Caiv_id]
-        parameters_event$t_stop_Cainject <- parameters_event$t_stop_Cainject[-input$delete_Caiv_id]
         
-        #if(is.element("Ca_iv", event_table$df[-input$delete_Caiv_id,1])){
+        if(is.element("Ca_iv", event_table$df[input$delete_Caiv_id,1])){ # test if the event name corresponds to Ca_iv or not
           event_table$df <- event_table$df[-input$delete_Caiv_id,] # delete the corresponding row in the event table
-        #}
-        #else {
-          #showNotification("Cannot delete element different from Ca_iv injection with this button. 
-                              #Please use the delete button related to the event you would like to remove!",
-                           #type = "error", closeButton = TRUE)
-        #}
-        
-      }
-      else{ # when there is only one event to delete, the next deletion leads to a reset 
-        # instead to avoid errors since t_start and t_stop still need to be defined
-        
-        parameters_event$t_start_Cainject <- NULL
-        parameters_event$t_stop_Cainject <- NULL
-        
-        event_table$df <- data.frame(event = NULL, rate = NULL, start_time = NULL,
-                                     stop_time = NULL)
+        }
+        else{ # cannot suppress a D3_iv or P_iv with the Ca_iv button (security)
+          showNotification("Cannot delete element different from Ca_iv injection with this button. 
+        Please use the delete button related to the event you would like to remove!",
+                           type = "error", closeButton = TRUE)
+        }
         
       }
       
@@ -177,80 +170,122 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$delete_oldCaintake,{
-
-
-    if(is.null(nrow(event_table$df))){
-
-      showNotification("Please delete an event which is in the list!",
-                       type = "error", closeButton = TRUE)
-
-    }
-    else{
-
-      if(input$delete_Caintake_id > length(parameters_event$t_start_Caintake)){
-
-        parameters_event$t_start_Caintake <- parameters_event$t_start_Caintake[-input$delete_Caintake_id]
-        parameters_event$t_stop_Caintake <- parameters_event$t_stop_Caintake[-input$delete_Caintake_id]
-        
-        event_table$df <- event_table$df[-input$delete_Caintake_id,] # delete the corresponding row in the event table
-        
-      }
-      else{ # when there is only one event to delete, the next deletion leads to a reset
-        # instead to avoid errors since t_start and t_stop still need to be defined
-
-        parameters_event$t_start_Caintake <- NULL
-        parameters_event$t_stop_Caintake <- NULL
-        
-        event_table$df <- data.frame(event = NULL, rate = NULL, start_time = NULL,
-                                     stop_time = NULL)
-
-      }
-
-    }
-
-  })
-
-  observeEvent(input$delete_oldD3iv,{
-
-
-    if(input$delete_D3iv_id > length(parameters_event$t_start_D3inject)){
-
-      showNotification("Please delete an event which is in the list!",
-                       type = "error", closeButton = TRUE)
-
-    }
-    else{
-
-      if(length(parameters_event$t_start_D3inject) > 1){
-
-        parameters_event$t_start_D3inject <- parameters_event$t_start_D3inject[-input$delete_D3iv_id]
-        parameters_event$t_stop_D3inject <- parameters_event$t_stop_D3inject[-input$delete_D3iv_id]
+    
+    
+    if(input$delete_Caintake_id > nrow(event_table$df)){
       
-        event_table$df <- event_table$df[-input$delete_D3iv_id,] # delete the corresponding row in the event table
-
-      }
-      else{ # when there is only one event to delete, the next deletion leads to a reset
-        # instead to avoid errors since t_start and t_stop still need to be defined
-
-        parameters_event$t_start_D3inject <- NULL
-        parameters_event$t_stop_D3inject <- NULL
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+      
+    }
+    else{
+      
+      if(nrow(event_table$df) >= 1){
         
-        event_table$df <- data.frame(event = NULL, rate = NULL, start_time = NULL,
-                                     stop_time = NULL)
-
+        if(is.element("Ca_gavage", event_table$df[input$delete_Caintake_id,1])){
+          event_table$df <- event_table$df[-input$delete_Caintake_id,] # delete the corresponding row in the event table
+        }
+        else{
+          showNotification("Cannot delete element different from Ca_iv injection with this button. 
+        Please use the delete button related to the event you would like to remove!",
+                           type = "error", closeButton = TRUE)
+        }
+        
       }
 
     }
-
+    
   })
   
-  parameters_event_bis <- reactive({ # storing reactive values in a reactive list
+  observeEvent(input$delete_oldD3iv,{
     
-    list("t_start_Cainject" = parameters_event$t_start_Cainject, "t_stop_Cainject" = parameters_event$t_stop_Cainject,
-      "t_start_Caintake" = parameters_event$t_start_Caintake, "t_stop_Caintake" = parameters_event$t_stop_Caintake,
-      "t_start_D3inject" = parameters_event$t_start_D3inject, "t_stop_D3inject" = parameters_event$t_stop_D3inject, 
-      "t_start_Pinject" = parameters_event$t_start_Pinject, "t_stop_Pinject" = parameters_event$t_stop_Pinject,
-      "t_start_Pintake" = parameters_event$t_start_Pintake, "t_stop_Pintake" = parameters_event$t_stop_Pintake)
+    
+    if(input$delete_D3iv_id > nrow(event_table$df)){
+      
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+      
+    }
+    else{
+      
+      if(nrow(event_table$df) >= 1){
+        
+        if(is.element("D3_iv", event_table$df[input$delete_D3iv_id,1])){
+          event_table$df <- event_table$df[-input$delete_D3iv_id,] # delete the corresponding row in the event table
+        }
+        else{
+          showNotification("Cannot delete element different from Ca_iv injection with this button. 
+        Please use the delete button related to the event you would like to remove!",
+                           type = "error", closeButton = TRUE)
+        }
+        
+      }
+
+    }
+    
+  })
+  
+  observeEvent(input$delete_oldPiv,{
+    
+    
+    if(input$delete_Piv_id > nrow(event_table$df)){
+      
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+      
+    }
+    else{
+      
+      if(nrow(event_table$df) >= 1){
+        
+        if(is.element("P_iv", event_table$df[input$delete_Piv_id,1])){
+          event_table$df <- event_table$df[-input$delete_Piv_id,] # delete the corresponding row in the event table
+        }
+        else{
+          showNotification("Cannot delete element different from Ca_iv injection with this button. 
+        Please use the delete button related to the event you would like to remove!",
+                           type = "error", closeButton = TRUE)
+        }
+        
+      }
+ 
+    }
+    
+  })
+  
+  observeEvent(input$delete_oldPintake,{
+    
+    
+    if(input$delete_Pintake_id > nrow(event_table$df)){
+      
+      showNotification("Please delete an event which is in the list!",
+                       type = "error", closeButton = TRUE)
+      
+    }
+    else{
+      
+      if(nrow(event_table$df) >= 1){
+        
+        if(is.element("P_intake", event_table$df[input$delete_Pintake_id,1])){
+          event_table$df <- event_table$df[-input$delete_Pintake_id,] # delete the corresponding row in the event table
+        }
+        else{
+          showNotification("Cannot delete element different from Ca_iv injection with this button. 
+        Please use the delete button related to the event you would like to remove!",
+                           type = "error", closeButton = TRUE)
+        }
+        
+      }
+
+    }
+    
+  })
+  
+  # storing parameters event from the data frame to a reactive list
+  
+  parameters_event <- reactive({ 
+    
+    time_extractor(event_table)
     
   })
   
@@ -297,20 +332,15 @@ shinyServer(function(input, output, session) {
   
   # make a vector of disease related parameters, fixed_parameters and parameters related to events
   
-  parameters_bis <- reactive({ c(parameters_disease(), 
+  parameters <- reactive({ c(parameters_disease(), 
                                  parameters_fixed, 
-                                 parameters_event_bis()) 
+                                 parameters_event()) 
     
     }) 
   
-  output$parameters_event <- renderPrint({ 
-    
-    data.frame(t_start = parameters_event$t_start_Cainject, 
-               t_stop = parameters_event$t_stop_Cainject)
-    
-    })
+  # Render the event table
   
-  output$event_table <- renderPrint({ event_table$df })
+  output$event_table <- renderTable({ event_table$df })
   
   #------------------------------------------------------------------------- 
   #  
@@ -326,11 +356,11 @@ shinyServer(function(input, output, session) {
 
     isolate({
 
-      parameters_bis <- parameters_bis()
+      parameters <- parameters()
       state <- state()
       times <- times()
 
-      as.data.frame(ode(y = state, times = times, func = calcium_phosphate_core, parms = parameters_bis))
+      as.data.frame(ode(y = state, times = times, func = calcium_phosphate_core, parms = parameters))
 
     })
 
@@ -492,7 +522,7 @@ shinyServer(function(input, output, session) {
       if (input$current_node_id != 0 && !is.null(input$current_node_id)){
 
         out <- out()
-        parameters_bis <- parameters_bis()
+        parameters <- parameters()
 
         #data_base <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/out.csv", # for local config
                          #stringsAsFactors = FALSE)
@@ -503,7 +533,7 @@ shinyServer(function(input, output, session) {
 
         xvar <- list(title = "time (min)", range = c(0, max(out[,1])))
         yvar1 <- list(title = "Concentrations (mM)", range = c(min(out[,"Ca_p"],out[,"PO4_p"])*0.8,max(out[,"Ca_p"],out[,"PO4_p"])*1.2))
-        yvar2 <- list(title = "[PTH]p (pM)", range = c(min(out[,"PTH_p"]/as.numeric(parameters_bis["Vp"]))*0.8,max(out[,"PTH_p"]/as.numeric(parameters_bis["Vp"]))*1.2))
+        yvar2 <- list(title = "[PTH]p (pM)", range = c(min(out[,"PTH_p"]/as.numeric(parameters["Vp"]))*0.8,max(out[,"PTH_p"]/as.numeric(parameters["Vp"]))*1.2))
         yvar3 <- list(title = "[D3]p (pM)", range = c(min(out[,"D3_p"])*0.8,max(out[,"D3_p"])*1.2))
         yvar4 <- list(title = "[FGF23]p (pM)", range = c(min(out[,"FGF_p"])*0.8,max(out[,"FGF_p"])*1.2))
         yvar5 <- list(title = "[Ca]f (mmol)", range = c(min(out[,"Ca_f"])*0.8,max(out[,"Ca_f"])*1.2))
@@ -526,7 +556,7 @@ shinyServer(function(input, output, session) {
                             font = list(color = "red", size = 10)) %>%
             layout(xaxis = NULL, yaxis = yvar1)
 
-          p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/as.numeric(parameters_bis["Vp"]), type = "scatter", mode = "lines",
+          p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/as.numeric(parameters["Vp"]), type = "scatter", mode = "lines",
                         line = list(color = 'black', width = 2)) %>%
             layout(xaxis = NULL, yaxis = yvar2)
 
@@ -617,7 +647,7 @@ shinyServer(function(input, output, session) {
       if (input$current_edge_id != 0 && !is.null(input$current_edge_id)){
 
         out <- out()
-        parameters_bis <- parameters_bis()
+        parameters <- parameters()
 
         xvar <- list(title = "time (min)", range = c(0, max(out[,1]))) # add slider xaxis: rangeslider = list(type = "time")
         yvar2 <- list(title = "Ca (µmol/min)", range = c(min(out[,"Abs_int_Ca"]*1000*0.8),max(out[,"Abs_int_Ca"]*1000*1.2)))

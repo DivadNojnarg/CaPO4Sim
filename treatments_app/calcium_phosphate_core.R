@@ -7,8 +7,8 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-calcium_phosphate_core <- function (t, state, parameters_bis){
-  with(as.list(c(state, parameters_bis)),{
+calcium_phosphate_core <- function (t, state, parameters){
+  with(as.list(c(state, parameters)),{
     
     ##################
     #                #
@@ -74,25 +74,29 @@ calcium_phosphate_core <- function (t, state, parameters_bis){
     
     P_iv_inject <-0
     
-    for (i in 1:length(t_start_Pinject)){
-      
-      #ifelse(t > t_start_Pinject && t < t_stop_Pinject, P_iv_inject <- k_inject_P, P_iv_inject <- 0)
-      if(t > t_start_Pinject[[i]] && t < t_stop_Pinject[[i]]){
+    if(!is.null(t_start_Pinject) && !is.null(t_stop_Pinject)){
+      for (i in 1:length(t_start_Pinject)){
         
-        P_iv_inject <- k_inject_P
-        
+        #ifelse(t > t_start_Pinject && t < t_stop_Pinject, P_iv_inject <- k_inject_P, P_iv_inject <- 0)
+        if(t > t_start_Pinject[[i]] && t < t_stop_Pinject[[i]]){
+          
+          P_iv_inject <- k_inject_P
+          
+        }
       }
     }
     
     # PO4 supplementation
     
-    for (i in 1:length(t_start_Pintake)){
-      
-      #ifelse(t > t_start_Pintake && t < t_stop_Pintake, I_P <- P_food, I_P <- I_P)
-      if(t > t_start_Pintake[[i]] && t < t_stop_Pintake[[i]]){
+    if(!is.null(t_start_Pintake) && !is.null(t_stop_Pintake)){
+      for (i in 1:length(t_start_Pintake)){
         
-        I_P <- P_food
-        
+        #ifelse(t > t_start_Pintake && t < t_stop_Pintake, I_P <- P_food, I_P <- I_P)
+        if(t > t_start_Pintake[[i]] && t < t_stop_Pintake[[i]]){
+          
+          I_P <- P_food
+          
+        }
       }
     }
     
