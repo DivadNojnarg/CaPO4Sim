@@ -29,15 +29,15 @@ body <- dashboardBody(
                               
                               div(id = "network_cap",
                                   withSpinner(visNetworkOutput("network_Ca", height = "900px"), size = 2, type = 6, color = "#000000")
-                               )#,
-                               # column(6, align ="center",
-                               #        verbatimTextOutput("id")
-                               # ),
-                               # column(6, align ="center",
-                               #        verbatimTextOutput("id_bis")
-                               # )#,
+                              )#,
+                              # column(6, align ="center",
+                              #        verbatimTextOutput("id")
+                              # ),
+                              # column(6, align ="center",
+                              #        verbatimTextOutput("id_bis")
+                              # )#,
                               #downloadButton("downloadData", "Download Data")
-       
+                              
                      )
                    ) 
             ),
@@ -53,16 +53,16 @@ body <- dashboardBody(
                                   
                                   column(8, align = "center",
                                          
-                                         withSpinner(plotlyOutput("hover_graph"), size = 2, type = 6, color = "#000000")
+                                         withSpinner(plotlyOutput("plot_node"), size = 2, type = 6, color = "#000000")
                                   ),
                                   column(4, align = "center",
                                          
-                                         withSpinner(plotlyOutput("hover_graph_bis"), size = 2, type = 6, color = "#000000")
+                                         withSpinner(plotlyOutput("plot_edge"), size = 2, type = 6, color = "#000000")
                                   ),
                                   
                                   br(),
                                   numericInput("tmax","Value of tmax:", 500, min = 0, max = NA)
-         
+                                  
                          )
                        ),
                        

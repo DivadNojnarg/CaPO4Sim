@@ -7,59 +7,7 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-
-library(shiny)
-require(visNetwork)
-library(shinyBS)
-library(Rcpp)
-library(dplyr)
-library(plotly)
-library(deSolve)
-#library(timevis)
-#library(lubridate)
-
-source("calcium_phosphate_Caiv.R")
-source("calcium_phosphate_PO4iv.R")
-source("calcium_phosphate_PO4gav.R")
-source("cap_fixed_parameters.R")
-source("cap_calc_parameters.R")
-source("calc_change.R")
-
-path_to_images <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/www"
-#path_to_images <- "/srv/shiny-server/capApp/case_studies_app/www"
-
 shinyServer(function(input, output, session) {
-  
-  
-  #------------------------------------------------------------------------- 
-  #  Store times, state and parameters in reactive values that can
-  #  react to user inputs
-  #  
-  #-------------------------------------------------------------------------
-  
-  # Basic reactive expressions needed by the solver
-  
-  state <- reactive({ c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, "FGF_p" = 16.78112, "Ca_p" = 1.2061,
-                        "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, "PO4_c" = 2.7719,
-                        "CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,
-                        "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0) })
-  
-  # Parameters: multiply the real parameter value by the user input. By default, user input = 1 so that parameters are well defined
-  
-  parameters <- reactive({ c("k_prod_PTHg" = 4.192, "beta_exo_PTHg" = 5.9e-002,
-                             "gamma_exo_PTHg" = 5.8e-002, "D3_inact" = 2.5e-005, "k_deg_D3" = 1e-003,
-                             "k_prod_FGF" = 6.902e-011, "I_Ca" = 2.2e-003, "Lambda_ac_Ca" = 5.5e-004,
-                             "Lambda_ac_P" = 2.75e-004, "Lambda_res_min" = 1e-004, 
-                             "delta_res_max" = 6e-004, "k_p_Ca" = 0.44, "k_f_Ca" = 2.34e-003, "I_P" = 1.55e-003, "k_pc" = 0.1875,
-                             "k_cp" = 1e-003, "k_p_P" = 13.5, "k_f_P" = 0.25165, "k_fet" = 0.3,
-                             "k_c_CPP" = 3, "Na" = 142, "Prot_tot_p" = 0.6, "Vp" = 0.01,
-                             "GFR" = 2e-003, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2) })
-  
-  # make a vector of input$parameters, fixed_parameters and calculated parameters
-  
-  parameters_bis <- reactive({ c(parameters(), parameters_fixed )}) # parameters_calc(input) does not work
-  
-  
   
   #------------------------------------------------------------------------- 
   #  
@@ -71,20 +19,17 @@ shinyServer(function(input, output, session) {
   
   out <- reactive({
     
-    parameters_bis <- parameters_bis()
-    state <- state()
-    
     if(input$Ca_inject == "TRUE"){ # IV Ca injection followed by EGTA infusion
       times <- seq(0,input$tmax,by=1)
-      out <- as.data.frame(ode(y = state, times = times, func = calcium_phosphate_Caiv, parms = parameters_bis))
+      out <- as.data.frame(ode(y = state, times = times, func = calcium_phosphate_Caiv, parms = parameters))
     }
     else if(input$PO4_inject == "TRUE"){ # PO4 injection 
       times <- seq(0,input$tmaxbis,by=1) 
-      out <- as.data.frame(ode(y = state, times = times, func = calcium_phosphate_PO4iv, parms = parameters_bis))
+      out <- as.data.frame(ode(y = state, times = times, func = calcium_phosphate_PO4iv, parms = parameters))
     }
     else if(input$PO4_gav == "TRUE"){ # PO4 gavage
       times <- seq(0,input$tmaxtris,by=1)
-      out <- as.data.frame(ode(y = state, times = times, func = calcium_phosphate_PO4gav, parms = parameters_bis))
+      out <- as.data.frame(ode(y = state, times = times, func = calcium_phosphate_PO4gav, parms = parameters))
     }
     
   })
@@ -198,13 +143,13 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$id <- renderPrint({
-    input$current_edge_id
-  })
-  
-  output$id_bis <- renderPrint({
-    input$current_node_id
-  })
+  # output$id <- renderPrint({
+  #   input$current_edge_id
+  # })
+  # 
+  # output$id_bis <- renderPrint({
+  #   input$current_node_id
+  # })
   
   #------------------------------------------------------------------------- 
   #  
@@ -1067,7 +1012,7 @@ shinyServer(function(input, output, session) {
   
   observe({
     
-    if(!is.null(counter_quiz$hypoD3) && input$notif2_switch == "TRUE"){
+    if(!is.null(counter_quiz$hypoD3) && counter_nav$diagram == 0 && input$notif2_switch == "TRUE"){
     
     showNotification( 
       id = "hypoD31_notif",
@@ -1159,7 +1104,7 @@ shinyServer(function(input, output, session) {
   
   observe({
     
-    if(!is.null(counter_quiz$hypoD3) && counter_nav$diagram == 5 && input$notif2_switch == "TRUE"){
+    if(!is.null(counter_quiz$hypoD3) && counter_nav$diagram == 4 && input$notif2_switch == "TRUE"){
       
       showNotification( 
         id = "hypoD35_notif",
@@ -1338,10 +1283,10 @@ shinyServer(function(input, output, session) {
       
       counter_quiz$php1 <- 1 # set the counter equal to 1 so that quiz cannot be displayed again
       write.csv(x = c(input$php1q1,input$php1q2,input$php1q3), file = "answer_php1.csv") # write answers in a local file
-      f <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/answer_php1.csv", 
+      f <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/www/answer_php1.csv", 
                     stringsAsFactors = F) # do not forget to change this path if needed
       #f <- read.csv("/srv/shiny-server/capApp/case_studies_app/www/answer_php1.csv", 
-                    #stringsAsFactors = F) # do not forget to change this path if needed
+      #              stringsAsFactors = F) # do not forget to change this path if needed
       f$X <- NULL
       
       if(f$x[1] == "php1q13" && f$x[2] == "php1q24" && f$x[3] == "php1q31"){ # read the answer files 3/3
@@ -1439,10 +1384,10 @@ shinyServer(function(input, output, session) {
       
       counter_quiz$hypopara <- 1 # set the counter equal to 1 so that quiz cannot be displayed again
       write.csv(x = c(input$hypoparaq1,input$hypoparaq2,input$hypoparaq3), file = "answer_hypopara.csv") # write answers in a local file
-      f <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/answer_hypopara.csv", 
+      f <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/www/answer_hypopara.csv", 
                     stringsAsFactors = F) # do not forget to change this path if needed
       #f <- read.csv("/srv/shiny-server/capApp/case_studies_app/www/answer_hypopara.csv", 
-                    #stringsAsFactors = F) # do not forget to change this path if needed
+      #             stringsAsFactors = F) # do not forget to change this path if needed
       f$X <- NULL
       
       if(f$x[1] == "hypoparaq14" && f$x[2] == "hypoparaq22" && f$x[3] == "hypoparaq32"){ # read the answer files 3/3: this is the perfect answer
@@ -1534,10 +1479,10 @@ shinyServer(function(input, output, session) {
       
       counter_quiz$hypoD3 <- 1 # set the counter equal to 1 so that quiz cannot be displayed again
       write.csv(x = c(input$hypoD3q1,input$hypoD3q2,input$hypoD3q3), file = "answer_hypoD3.csv") # write answers in a local file
-      f <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/answer_hypoD3.csv", 
+      f <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/www/answer_hypoD3.csv", 
                     stringsAsFactors = F) # do not forget to change this path if needed
       #f <- read.csv("/srv/shiny-server/capApp/case_studies_app/www/answer_hypoD3.csv", 
-                    #stringsAsFactors = F) # do not forget to change this path if needed
+      #              stringsAsFactors = F) # do not forget to change this path if needed
       f$X <- NULL
       
       if((f$x[[2]] != "hypoparaq11") || ( f$x[[2]] != "hypoparaq12")){
@@ -2073,37 +2018,6 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  Make report of the results and download it: to implement
-  #  
-  #-------------------------------------------------------------------------
-  
-  output$downloadReport <- downloadHandler(
-    filename = function() {
-      paste('my-report', sep = '.', switch(
-        input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
-      ))
-    },
-    
-    content = function(file) {
-      src <- normalizePath('report.Rmd')
-      
-      # temporarily switch to the temp dir, in case you do not have write
-      # permission to the current working directory
-      owd <- setwd(tempdir())
-      on.exit(setwd(owd))
-      file.copy(src, 'report.Rmd', overwrite = TRUE)
-      
-      library(rmarkdown)
-      out <- render('report.Rmd', switch(
-        input$format,
-        PDF = pdf_document(), HTML = html_document(), Word = word_document()
-      ))
-      file.rename(out, file)
-    }
-  )
-  
-  #------------------------------------------------------------------------- 
-  #  
   #  Prevent user from selecting multiple boxes using shinyjs functions
   #  
   #-------------------------------------------------------------------------
@@ -2236,48 +2150,10 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # save and load a session
-  
-  observeEvent(input$save, {
-    values <<- lapply(reactiveValuesToList(input), unclass)
-  })
-  
-  observeEvent(input$load, {
-    if (exists("values")) {
-      lapply(names(values), function(x) session$sendInputMessage(x, 
-                                                                 list(value = values[[x]])))
-    }
-  })
-  
   # Share the state of the App via url bookmarking
   
   observeEvent(input$bookmark, {
     session$doBookmark()
   })
-  
-  # close the App with the button
-  
-  observeEvent(input$close, {
-    js$closeWindow()
-    #stopApp()
-  })
-  
-  
-  # When the button is clicked, wrap the code in a call to
-  # `withBusyIndicatorServer()`
-  
-  observeEvent(input$save, {
-    withBusyIndicatorServer("save", {
-      Sys.sleep(1)
-    })
-  })
-  
-  observeEvent(input$load, {
-    withBusyIndicatorServer("load", {
-      Sys.sleep(1)
-    })
-  })
-  
-  #session$onSessionEnded(stopApp)  # stop shiny app when the web-window is closed
   
 })

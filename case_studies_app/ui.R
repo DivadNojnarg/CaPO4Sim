@@ -8,39 +8,13 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-library(shiny)
-library(shinydashboard)
-library(shinythemes)
-library(shinyBS)
-library(shinyjs)
-library(shinycssloaders)
-library(flexdashboard)
-require(visNetwork)
-library(shinyWidgets)
-library(shinyjqui)
-library(bsplus)
-library(sweetalertR)
-library(shinyLP)
-#library(timevis)
-
-# Load the template components
-
-source("header.R")
-source("sidebar.R")
-source("body.R")
-source("helpers.R")
-
-# JS code for closing shiny app with a button
-
-jscode <- "shinyjs.closeWindow = function() { window.close(); }"
-
 # Define UI 
 shinyUI(fluidPage(
 
   # 4 danger notification that can be switched on or off as required
   tags$style("#shiny-notification-menu_notif {position: fixed; top: 1%; right: 50% ; width: 40em; opacity: 1;}"),
-  tags$style("#shiny-notification-graph_notif {position: fixed; top: 30%; right: 25% ; width: 20em; opacity: 1;}"),
-  tags$style("#shiny-notification-control_notif {position: fixed; top: 70%; right: 15% ; width: 20em; opacity: 1;}"),
+  tags$style("#shiny-notification-graph_notif {position: fixed; top: 30%; right: 10% ; width: 20em; opacity: 1;}"),
+  tags$style("#shiny-notification-control_notif {position: fixed; top: 75%; right: 15% ; width: 20em; opacity: 1;}"),
   tags$style("#shiny-notification-diagram_notif {position: fixed; top: 20%; left: 15% ; width: 20em; opacity: 1;}"),
   
   # notifications for php1

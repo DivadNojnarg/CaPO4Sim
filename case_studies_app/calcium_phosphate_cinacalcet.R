@@ -109,7 +109,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     # P Slow Bone #
     
-    Resorption_P_norm <- 0.6*Ca_P_stoech*Resorption_norm 
+    Resorption_P_norm <- 0.3*Resorption_norm 
     
     # Ca Kidney #
     
@@ -185,17 +185,8 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     # EGTA reaction
     
-    EGTA_form = k_on_egta*Ca_p*EGTA_p;
-    EGTA_diss = k_off_egta*CaEGTA_p;
-    
-    ##################
-    #                #
-    #   Simulations  #
-    ##################
-    
-    # if (t>0){
-    #   k_inject_Ca = 0.01
-    # }
+    EGTA_form <- k_on_egta*Ca_p*EGTA_p;
+    EGTA_diss <- k_off_egta*CaEGTA_p;
     
     ##################
     #                #

@@ -7,26 +7,6 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-
-library(shiny)
-library(plotly)
-library(deSolve)
-require(visNetwork)
-library(shinyBS)
-#library(parallel)
-#library(sparklines)
-
-#library(tikzDevice) # For Latex rendering in graphs but does not work
-
-source("cap_fixed_parameters.R")
-source("cap_calc_parameters.R")
-source("calcium_phosphate_core.R") # core model
-source("calc_change.R")
-source("box_close.R")
-#source("chatBox_tools.R")
-
-#path_to_images <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/global_app/www"
-
 shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
@@ -37,7 +17,8 @@ shinyServer(function(input, output, session) {
   
   # Basic reactive expressions needed by the solver
   
-  times <- reactive({seq(0,input$tmax, by = 1)})
+  times <- reactive({ seq(0,input$tmax, by = 1) })
+  
   state <- reactive({ c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, "FGF_p" = 16.78112, "Ca_p" = 1.2061,
                         "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, "PO4_c" = 2.7719,
                         "CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,
@@ -53,7 +34,7 @@ shinyServer(function(input, output, session) {
                              "k_p_Ca" = 0.44*input$k_p_Ca, "k_f_Ca" = 2.34e-003*input$k_f_Ca, "I_P" = 1.55e-003*input$I_P, "k_pc" = 0.1875*input$k_pc,
                              "k_cp" = 1e-003*input$k_cp, "k_p_P" = 13.5*input$k_p_P, "k_f_P" = 0.25165*input$k_f_P, "k_fet" = 0.3*input$k_fet,
                              "k_c_CPP" = 3*input$k_c_CPP, "Na" = 142*input$Na, "Prot_tot_p" = 0.6*input$Prot_tot_p, "Vp" = 0.01*input$Vp,
-                             "GFR" = 2e-003*input$GFR, "pH" = 7.4, "r" = 4, "a" = 0.8, "b" = 0.2) })
+                             "GFR" = 2e-003*input$GFR) })
   
   # make a vector of input$parameters, fixed_parameters and calculated parameters
   
@@ -197,7 +178,7 @@ shinyServer(function(input, output, session) {
   
   # Generate a graph when node is clicked. The graph corresponds to the node clicked
   
-  output$hover_graph <- renderPlotly({
+  output$plot_node <- renderPlotly({
     
     validate(
       need(input$current_node_id, 'Select one node on the graph!')
@@ -307,7 +288,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$hover_graph_bis <- renderPlotly({
+  output$plot_edge <- renderPlotly({
     
     validate(
       need(input$current_edge_id, 'Select one edge on the graph!')
@@ -1009,9 +990,9 @@ shinyServer(function(input, output, session) {
       
       showNotification( 
         id = "diagram_notif",
-        "In this panel is displayed the interactive diagram (see legend). Basically, when a parameter is changed in the control center 
-        initial perturbations are shown in yellow. The arrow size increases if
-        it is a stimulatory effect and inversely. Fluxes are shown in red if they decrease or in green if they are enhanced. Colors correspond to the final state of the system
+        "In this panel is displayed the interactive diagram (see legend). Basically, when a parameter is changed in the control center, 
+        initial perturbations are shown in yellow. The arrow size increases if it is a stimulatory effect and inversely. Fluxes are shown 
+        in red if they decrease or in green if they are enhanced. Colors correspond to the final state of the system
         (which is the value of tmax in minutes).",
         duration = 9999,
         closeButton = TRUE,
@@ -1111,39 +1092,6 @@ shinyServer(function(input, output, session) {
   # })
   # 
   # output$dynamicChatMessage <- renderChatMessage({ create_dynamicChatMessage() })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Make report of the results and download it: to implement
-  #  
-  #-------------------------------------------------------------------------
-  
-  output$downloadReport <- downloadHandler(
-    filename = function() {
-      paste('my-report', sep = '.', switch(
-        input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
-      ))
-    },
-    
-    content = function(file) {
-      src <- normalizePath('report.Rmd')
-      
-      # temporarily switch to the temp dir, in case you do not have write
-      # permission to the current working directory
-      owd <- setwd(tempdir())
-      on.exit(setwd(owd))
-      file.copy(src, 'report.Rmd', overwrite = TRUE)
-      
-      #params <- list(n = input$slider)
-      
-      library(rmarkdown)
-      out <- render('report.Rmd', switch(
-        input$format,
-        PDF = pdf_document(), HTML = html_document(), Word = word_document()
-      ))
-      file.rename(out, file)
-    }
-  )
   
   #------------------------------------------------------------------------- 
   #  
@@ -1310,46 +1258,10 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # save and load a session
-  
-  observeEvent(input$save, {
-    values <<- lapply(reactiveValuesToList(input), unclass)
-  })
-  
-  observeEvent(input$load, {
-    if (exists("values")) {
-      lapply(names(values), function(x) session$sendInputMessage(x, 
-                                                                 list(value = values[[x]])))
-    }
-  })
-  
   # Share the state of the App via url bookmarking
   
   observeEvent(input$bookmark, {
     session$doBookmark()
-  })
-  
-  # close the App with the button
-  
-  observeEvent(input$close, {
-    js$closeWindow()
-    #stopApp()
-  })
-  
-  
-  # When the button is clicked
-  # `withBusyIndicatorServer()`
-  
-  observeEvent(input$save, {
-    withBusyIndicatorServer("save", {
-      Sys.sleep(1)
-    })
-  })
-  
-  observeEvent(input$load, {
-    withBusyIndicatorServer("load", {
-      Sys.sleep(1)
-    })
   })
   
   #session$onSessionEnded(stopApp)  # stop shiny app when the web-window is closed

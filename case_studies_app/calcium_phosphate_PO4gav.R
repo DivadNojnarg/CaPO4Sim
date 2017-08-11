@@ -23,35 +23,6 @@ calcium_phosphate_PO4gav <- function (t, state, parameters){
     #                #
     ##################
     
-    # write simulations scenario here such as PO4 or Ca injection ...
-    
-    #---- Hypercalcemia + Hypocalcemia  Gravesen ----#
-    
-    # if (t>=0 && t<60){
-    #   k_inject_Ca = 5e-004
-    # }
-    # else if (t>=60 && t<120){
-    #   k_inject_egta = 1e-003
-    #   k_on_egta = 9e004
-    #   k_off_egta = 18
-    # }
-    
-    #---- iv injection of PO4 ----#
-    
-    # if (t<=10){
-    #   k_inject_P = 0.15-1e-003*t
-    #   GFR = 0.002+8*10^-4*t
-    #   Vp = 0.011
-    # }
-    # else if (t>10 && t<=50){
-    #   GFR = 0.01-8*10^-5*t
-    #   Vp = 0.011 
-    # }
-    # else {
-    #   GFR = 0.006
-    #   Vp = 0.011
-    # }
-    
     #---- PO4gavage ----#
     
     if  (t>=0 && t<=25){
@@ -150,7 +121,7 @@ calcium_phosphate_PO4gav <- function (t, state, parameters){
     
     # P Slow Bone #
     
-    Resorption_P_norm <- 0.6*Ca_P_stoech*Resorption_norm 
+    Resorption_P_norm <- 0.3*Resorption_norm 
     
     # Ca Kidney #
     
@@ -226,17 +197,8 @@ calcium_phosphate_PO4gav <- function (t, state, parameters){
     
     # EGTA reaction
     
-    EGTA_form = k_on_egta*Ca_p*EGTA_p;
-    EGTA_diss = k_off_egta*CaEGTA_p;
-    
-    ##################
-    #                #
-    #   Simulations  #
-    ##################
-    
-    # if (t>0){
-    #   k_inject_Ca = 0.01
-    # }
+    EGTA_form <- k_on_egta*Ca_p*EGTA_p;
+    EGTA_diss <- k_off_egta*CaEGTA_p;
     
     ##################
     #                #

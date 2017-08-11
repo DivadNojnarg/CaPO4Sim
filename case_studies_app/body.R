@@ -305,7 +305,7 @@ body <- dashboardBody(
                                         column(6, align = "center",
                                                conditionalPanel(
                                                  condition = "input.Ca_inject",
-                                                 sliderInput("tmax", "Current Time", min = 1, max = 120, value = 120, step = 1) %>%
+                                                 sliderInput("tmax", "Current Time", min = 1, max = 120, value = 1, step = 1) %>%
                                                    shinyInput_label_embed(
                                                      icon("info") %>%
                                                        bs_embed_tooltip(title = "Click on this button to control the time of simulation. 
@@ -314,7 +314,7 @@ body <- dashboardBody(
                                                ),
                                                conditionalPanel(
                                                  condition = "input.PO4_inject",
-                                                 sliderInput("tmaxbis", "Current Time", min = 1, max = 250, value = 250, step = 1) %>%
+                                                 sliderInput("tmaxbis", "Current Time", min = 1, max = 250, value = 1, step = 1) %>%
                                                    shinyInput_label_embed(
                                                      icon("info") %>%
                                                        bs_embed_tooltip(title = "Click on this button to control the time of simulation. 
@@ -323,7 +323,7 @@ body <- dashboardBody(
                                                ),
                                                conditionalPanel(
                                                  condition = "input.PO4_gav",
-                                                 sliderInput("tmaxtris", "Current Time", min = 1, max = 250, value = 250, step = 1) %>%
+                                                 sliderInput("tmaxtris", "Current Time", min = 1, max = 250, value = 1, step = 1) %>%
                                                    shinyInput_label_embed(
                                                      icon("info") %>%
                                                        bs_embed_tooltip(title = "Click on this button to control the time of simulation. 

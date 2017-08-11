@@ -11,7 +11,6 @@ parameters_fixed <- c(
 
 #Vp = 1e-002 # Plasma volume for a 250-300g rat (in L)
 Vc = 10^-7, # Volume in parathyroid cell (in L)
-Ca_P_stoech = 0.5, #
 
 # PTH #
 
@@ -63,7 +62,7 @@ n_abs = 2e000, #
 # accretion 
 
 #Lambda_ac_Ca = 5.5e-004 # Ca accretion rate constant (in min^-1)
-#Lambda_ac_P = Ca_P_stoech*Lambda_ac_Ca # PO4 accretion rate constant (in min^-1)
+#Lambda_ac_P = 2.75e-004 # PO4 accretion rate constant (in min^-1)
 
 # resorption
 
@@ -156,7 +155,7 @@ lambda_DCT_P = 1e-001, # Fractional reabsorption of PO4 in the DCT
 
 # Take the effect of pH into account (proportion of HPO42- VS H2PO4-)
 
-#pH = 7.4e000 # 
+pH = 7.4e000, # 
 pKa = 6.8e000, # pKA of the pair H2PO4-/HPO42-
 #r = 10^(pH-pKa) # ratio depending on pH
 #a = r/(1+r)
@@ -199,3 +198,17 @@ k_inject_egta =0,
 K_sp_DCPD = 1.87e-007 # Supersaturation index of Brushite (in M^2)
 
 )
+
+
+# calculated parameters
+parameters_calc <- with(list(parameters_fixed), c( r = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"]),
+                                                   a = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
+                                                     (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"])),
+                                                   b = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
+                                                     (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"]))/
+                                                     10^(parameters_fixed["pH"]-parameters_fixed["pKa"])
+))
+
+names(parameters_calc) <- c("r", "a", "b")
+
+parameters_fixed <- c(parameters_fixed, parameters_calc)
