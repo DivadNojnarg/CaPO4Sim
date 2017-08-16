@@ -38,7 +38,7 @@ shinyUI(fluidPage(
   
   includeJqueryUI(), # to move graphs and resize them
   useShinyjs(),
-  extendShinyjs(text = jscode, functions = c("closeWindow")),
+  #extendShinyjs(text = jscode, functions = c("closeWindow")),
   withMathJax(), 
   
   # Application theme

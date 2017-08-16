@@ -15,15 +15,22 @@ header <- dashboardHeader(
   tags$li(
     title = "",
     class = "dropdown",
-    switchInput(inputId = "notif_switch", label = "Help?",
-                onStatus = "success", offStatus = "danger", value = FALSE, size = "mini")
+    
+    switchInput(inputId = "notif_switch", 
+                label = "Help?",
+                onStatus = "success", 
+                offStatus = "danger",
+                value = FALSE, 
+                size = "mini")
   ),
   
   # Share the state of the App with other users
   tags$li(
     title = "",
     class = "dropdown",
-    actionButton(inputId = "bookmark", label = "Share", 
+    
+    actionButton(inputId = "bookmark", 
+                 label = "Share", 
                  icon = shiny::icon("link", lib = "glyphicon"), 
                  class="btn btn-primary")
     ),
@@ -32,18 +39,23 @@ header <- dashboardHeader(
   tags$li(
     title = "",
     class = "dropdown",
-    actionButton(class="fa fa-trash fa-5x", inputId="resetAll",
-                 label=" Reset", class="btn btn-danger")
+    
+    actionButton(class="fa fa-trash fa-5x", 
+                 inputId="resetAll",
+                 label=" Reset", 
+                 class="btn btn-danger")
   ),
   
   # Task Menu
   dropdownMenu(type = "tasks", badgeStatus = "success",
-               taskItem(value = 60, color = "orange",
-                        "Design"
-               ),
-               taskItem(value = 80, color = "green",
-                        "Features"
-               )
+               
+               taskItem(value = 60, 
+                        color = "orange",
+                        "Design"),
+               
+               taskItem(value = 80, 
+                        color = "green",
+                        "Features")
   )
   
 )

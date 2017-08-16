@@ -196,13 +196,14 @@ parameters_fixed <- c(
   
 )
 
-parameters_calc <- with(list(parameters_fixed), c( r = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"]),
-                               a = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
-                                 (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"])),
-                               b = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
-                                 (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"]))/
-                                 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])
-                               ))
+parameters_calc <- with(list(parameters_fixed), 
+                        c( r = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"]),
+                           a = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
+                             (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"])),
+                           b = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
+                             (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"]))/
+                             10^(parameters_fixed["pH"]-parameters_fixed["pKa"])
+                        ))
 
 names(parameters_calc) <- c("r", "a", "b")
 

@@ -28,7 +28,8 @@ body <- dashboardBody(
                      tabPanel(title = tagList(shiny::icon("map-marker"), "CaPO4 Homeostasis"),
                               
                               div(id = "network_cap",
-                                  withSpinner(visNetworkOutput("network_Ca", height = "900px"), size = 2, type = 6, color = "#000000")
+                                  withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
+                                              size = 2, type = 6, color = "#000000")
                               )#,
                               # column(6, align ="center",
                               #        verbatimTextOutput("id")

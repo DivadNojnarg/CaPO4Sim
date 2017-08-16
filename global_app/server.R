@@ -19,22 +19,18 @@ shinyServer(function(input, output, session) {
   
   times <- reactive({ seq(0,input$tmax, by = 1) })
   
-  state <- reactive({ c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, "FGF_p" = 16.78112, "Ca_p" = 1.2061,
-                        "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, "PO4_c" = 2.7719,
-                        "CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,
-                        "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0) })
-  
   # Parameters: multiply the real parameter value by the user input. By default, user input = 1 so that parameters are well defined
   
   parameters <- reactive({ c("k_prod_PTHg" = 4.192*input$k_prod_PTHg, "beta_exo_PTHg" = 5.9e-002*input$beta_exo_PTHg,
-                             "gamma_exo_PTHg" = 5.8e-002*input$gamma_exo_PTHg, "D3_inact" = 2.5e-005*input$D3_inact, "k_deg_D3" = 1e-003*input$k_deg_D3,
-                             "k_prod_FGF" = 6.902e-011*input$k_prod_FGF, "I_Ca" = 2.2e-003*input$I_Ca, "Lambda_ac_Ca" = 5.5e-004*input$Lambda_ac_Ca,
+                             "gamma_exo_PTHg" = 5.8e-002*input$gamma_exo_PTHg, "D3_inact" = 2.5e-005*input$D3_inact, 
+                             "k_deg_D3" = 1e-003*input$k_deg_D3,"k_prod_FGF" = 6.902e-011*input$k_prod_FGF, 
+                             "I_Ca" = 2.2e-003*input$I_Ca, "Lambda_ac_Ca" = 5.5e-004*input$Lambda_ac_Ca,
                              "Lambda_ac_P" = 2.75e-004*input$Lambda_ac_Ca, "Lambda_res_min" = 1e-004*input$Lambda_res_min, 
-                             "delta_res_max" = 6e-004*input$delta_res_max,
-                             "k_p_Ca" = 0.44*input$k_p_Ca, "k_f_Ca" = 2.34e-003*input$k_f_Ca, "I_P" = 1.55e-003*input$I_P, "k_pc" = 0.1875*input$k_pc,
-                             "k_cp" = 1e-003*input$k_cp, "k_p_P" = 13.5*input$k_p_P, "k_f_P" = 0.25165*input$k_f_P, "k_fet" = 0.3*input$k_fet,
-                             "k_c_CPP" = 3*input$k_c_CPP, "Na" = 142*input$Na, "Prot_tot_p" = 0.6*input$Prot_tot_p, "Vp" = 0.01*input$Vp,
-                             "GFR" = 2e-003*input$GFR) })
+                             "delta_res_max" = 6e-004*input$delta_res_max,"k_p_Ca" = 0.44*input$k_p_Ca, 
+                             "k_f_Ca" = 2.34e-003*input$k_f_Ca,"I_P" = 1.55e-003*input$I_P, "k_pc" = 0.1875*input$k_pc,
+                             "k_cp" = 1e-003*input$k_cp, "k_p_P" = 13.5*input$k_p_P,"k_f_P" = 0.25165*input$k_f_P, 
+                             "k_fet" = 0.3*input$k_fet,"k_c_CPP" = 3*input$k_c_CPP, "Na" = 142*input$Na, 
+                             "Prot_tot_p" = 0.6*input$Prot_tot_p, "Vp" = 0.01*input$Vp,"GFR" = 2e-003*input$GFR) })
   
   # make a vector of input$parameters, fixed_parameters and calculated parameters
   
@@ -51,10 +47,12 @@ shinyServer(function(input, output, session) {
   out <- reactive({
     
     parameters_bis <- parameters_bis()
-    state <- state()
     times <- times()
     
-    as.data.frame(ode(y = state, times = times, func = calcium_phosphate_core, parms = parameters_bis))
+    as.data.frame(ode(y = state, 
+                      times = times, 
+                      func = calcium_phosphate_core, 
+                      parms = parameters_bis))
     
   })
   
@@ -73,17 +71,20 @@ shinyServer(function(input, output, session) {
   nodes_Ca <- reactive({
     
     d <- data.frame(id = 1:15,
-                    shape = c("image","image","image","image","image","image","image","image","image","image","image","image","image","image","image"), 
+                    shape = c("image","image","image","image","image","image","image",
+                              "image","image","image","image","image","image","image","image"), 
                     # square are always scalable
-                    image = c("food.svg","intestine.svg","feces.svg","plasma.svg","rapid-bone.svg","bone.svg","kidney.svg","urine.svg",
-                              "parathyroid_gland.svg","D3.svg","D3.svg","FGF23.svg","cells.svg","Cap.svg","PO4.svg"),
+                    image = c("food.svg","intestine.svg","feces.svg","plasma.svg","rapid-bone.svg",
+                              "bone.svg","kidney.svg","urine.svg","parathyroid_gland.svg","D3.svg",
+                              "D3.svg","FGF23.svg","cells.svg","Cap.svg","PO4.svg"),
                     label = c("","","","","","","","","","","","","","",""),
                     #title = out()[nrow(out()),"Ca_p"],
                     #title = c(rep(as.character(as.tags(sparklines::sparkline(out()[nrow(out()),"Ca_p"]))),17)), # does not work
                     #title = paste0(img(src ="bone.png")), # tooltip to display an image
                     x = c(8, 12, 20, 12, 0, 3, 22, 32, 12, 5, 22, 28, 11, 18, 28),
                     y = c(0, 4, 0, 12, 12, 22, 12, 14, 27, 6, 24, 22, 20, 32, 32),
-                    color = list(background = "#97C2FC", border = "#97C2FC", highlight = list(background = "orange", border = "orange")),
+                    color = list(background = "#97C2FC", border = "#97C2FC", 
+                                 highlight = list(background = "orange", border = "orange")),
                     size = c(50,50,50,50,50,50,50,50,50,25,25,25,50,25,25), # rep(50,13)
                     hidden = c(rep(FALSE,15)))
     
@@ -93,9 +94,11 @@ shinyServer(function(input, output, session) {
     
     d <- data.frame(from = c(1,2,2,4,5,5,6,7,4,7,9,9,10,11,9,11,11,12,12,7,13,4,7,14,14,15,15,15,7,5,4,5), 
                       to = c(2,3,4,5,4,6,4,4,7,8,6,7,2,9,11,7,12,11,7,7,4,13,4,11,9,9,11,12,8,4,5,6),
-                    label = c("Intake", "Fecal Excretion", " Intestinal absorption ", "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone", 
-                              "Resorption", "Ca reabsorption", "filtration", "Urinary Ca excretion","+","","+","-","+","","+","-","",
-                              "CaSR (-)","Cells-plasma", "Plasma-cells", "PO4 reabsorption","-","CaSR(-)","+","-","+","Urinary PO4 excretion","Rapid PO4 release",
+                    label = c("Intake", "Fecal Excretion", " Intestinal absorption ", "Rapid Ca storage", 
+                              "Rapid Ca release", "Ca Flux into bone","Resorption", "Ca reabsorption", 
+                              "filtration", "Urinary Ca excretion","+","","+","-","+","","+","-","",
+                              "CaSR (-)","Cells-plasma", "Plasma-cells", "PO4 reabsorption","-","CaSR(-)",
+                              "+","-","+","Urinary PO4 excretion","Rapid PO4 release",
                               "Rapid PO4 storage","PO4 flux into bone"),
                     id = 1:32,
                     width = 4*c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
@@ -126,7 +129,8 @@ shinyServer(function(input, output, session) {
                                to = c(4,2,12,7),
                                width = 4,
                                arrows = "to",
-                               label = c("inhibited flux", "stimulated flux", "hormonal regulation","perturbation"),
+                               label = c("inhibited flux", "stimulated flux", 
+                                         "hormonal regulation","perturbation"),
                                color = list(color = c("red","green","black","yellow")),
                                font.align = "bottom",
                                dashes = c(F,F,T,F),
@@ -188,14 +192,18 @@ shinyServer(function(input, output, session) {
       need(input$current_node_id != 0, 'Select one node on the graph!')
     )
     
-    if (input$current_node_id != 0 && !is.null(input$current_node_id)){
+    if (input$current_node_id != 0 && !is.null(input$current_node_id)) {
       
       out <- out()
       parameters_bis <- parameters_bis()
       
       xvar <- list(title = "time (min)", range = c(0, max(out[,1]))) 
-      yvar1 <- list(title = "Concentrations (mM)", range = c(min(out[,"Ca_p"],out[,"PO4_p"])*0.8,max(out[,"Ca_p"],out[,"PO4_p"])*1.2))
-      yvar2 <- list(title = "[PTH]p (pM)", range = c(min(out[,"PTH_p"]/parameters_bis["Vp"])*0.8,max(out[,"PTH_p"]/parameters_bis["Vp"])*1.2))
+      yvar1 <- list(title = "Concentrations (mM)", 
+                    range = c(min(out[,"Ca_p"],out[,"PO4_p"])*0.8,
+                              max(out[,"Ca_p"],out[,"PO4_p"])*1.2))
+      yvar2 <- list(title = "[PTH]p (pM)", 
+                    range = c(min(out[,"PTH_p"]/parameters_bis["Vp"])*0.8,
+                              max(out[,"PTH_p"]/parameters_bis["Vp"])*1.2))
       yvar3 <- list(title = "[D3]p (pM)", range = c(min(out[,"D3_p"])*0.8,max(out[,"D3_p"])*1.2))
       yvar4 <- list(title = "[FGF23]p (pM)", range = c(min(out[,"FGF_p"])*0.8,max(out[,"FGF_p"])*1.2))
       yvar5 <- list(title = "[Ca]f (mmol)", range = c(min(out[,"Ca_f"])*0.8,max(out[,"Ca_f"])*1.2))
@@ -206,82 +214,84 @@ shinyServer(function(input, output, session) {
       yvar10 <- list(title = "[PO4]c (mmol)", range = c(min(out[,"PO4_c"])*0.8,max(out[,"PO4_c"])*1.2))
       
       # id = 4 corresponds to plasma elements
-      if (input$current_node_id == 4){
+      if (input$current_node_id == 4) {
         
-        p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_p"], type = "scatter", mode = "lines", line = list(color = 'rgb(27, 102, 244)', width = 2)) %>%
+        p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_p"], type = "scatter", 
+                      mode = "lines", line = list(color = 'rgb(27, 102, 244)', width = 2)) %>%
           add_lines(x = out[,1], y = out[,"PO4_p"], line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
-          add_annotations(x = out[10,1], y = out[1,"Ca_p"]+0.5, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = FALSE , 
+          add_annotations(x = out[10,1], y = out[1,"Ca_p"]+0.5, xref = "x", yref = "y",
+                          text = "<b>[Ca2+]p</b>", showarrow = FALSE , 
                           font = list(color = "blue", size = 10)) %>%
-          add_annotations(x = out[10,1], y = out[1,"PO4_p"]+1, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = FALSE , 
+          add_annotations(x = out[10,1], y = out[1,"PO4_p"]+1, xref = "x", yref = "y",
+                          text = "<b>[PO4]p</b>", showarrow = FALSE , 
                           font = list(color = "red", size = 10)) %>%
           layout(xaxis = NULL, yaxis = yvar1)
         
-        p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/parameters_bis["Vp"], type = "scatter", mode = "lines",
-                      line = list(color = 'black', width = 2)) %>%
+        p2 <- plot_ly(data = out, x = out[,1], y = out[,"PTH_p"]/parameters_bis["Vp"], type = "scatter", 
+                      mode = "lines", line = list(color = 'black', width = 2)) %>%
           layout(xaxis = NULL, yaxis = yvar2)
         
-        p3 <- plot_ly(data = out, x = out[,1], y = out[,"D3_p"], type = "scatter", mode = "lines",
-                      line = list(color = 'black', width = 2)) %>%
+        p3 <- plot_ly(data = out, x = out[,1], y = out[,"D3_p"], type = "scatter", 
+                      mode = "lines", line = list(color = 'black', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar3)
         
         p4 <- plot_ly(data = out, x = out[,1], y = out[,"FGF_p"], type = "scatter", mode = "lines",
                       line = list(color = 'black', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar4)
         
-        p <- subplot(p1, p2, p3, p4, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12, heights = c(0.5,0.5))
+        p <- subplot(p1, p2, p3, p4, titleX = TRUE, titleY = TRUE, nrows = 2, 
+                     margin = 0.12, heights = c(0.5,0.5))
         
         hide_legend(p)
         
-      }
-      # id = 5 corresponds to Ca and PO4 fast bone pool
-      else if(input$current_node_id == 5){
+      } else if(input$current_node_id == 5) { # id = 5 corresponds to Ca and PO4 fast bone pool
         
-        p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_f"], type = "scatter", mode = "lines", line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
+        p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_f"], type = "scatter", 
+                      mode = "lines", line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = NULL, yaxis = yvar5)
         
-        p2 <- plot_ly(out, x = out[,1], y = out[,"PO4_f"], type = "scatter", mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
+        p2 <- plot_ly(out, x = out[,1], y = out[,"PO4_f"], type = "scatter", 
+                      mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar6)
         
         p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12)
         
         hide_legend(p)
         
-      }
-      # id = 6 corresponds to Ca and PO4 deep bone pool
-      else if(input$current_node_id == 6){
+      } else if(input$current_node_id == 6) { # id = 6 corresponds to Ca and PO4 deep bone pool
         
-        p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_b"], type = "scatter", mode = "lines", line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
+        p1 <- plot_ly(out, x = out[,1], y = out[,"Ca_b"], type = "scatter", 
+                      mode = "lines", line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = NULL, yaxis = yvar7)
         
-        p2 <- plot_ly(out, x = out[,1], y = out[,"PO4_b"], type = "scatter", mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
+        p2 <- plot_ly(out, x = out[,1], y = out[,"PO4_b"], type = "scatter", 
+                      mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar8)
         
         p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.12)
         
         hide_legend(p)
         
-      }
-      # id = 9 corresponds to PTH pool in PT glands
-      else if(input$current_node_id == 9){
+      } else if (input$current_node_id == 9) { # id = 9 corresponds to PTH pool in PT glands
         
-        p <- plot_ly(out, x = out[,1], y = out[,"PTH_g"], type = "scatter", mode = "lines", line = list(color = 'black', width = 2)) %>%
+        p <- plot_ly(out, x = out[,1], y = out[,"PTH_g"], type = "scatter", 
+                     mode = "lines", line = list(color = 'black', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar9, title = "PTH quantity in parathyroid glands")
         
         hide_legend(p)
         
-      }
-      # id = 17 corresponds to PO4 pool in cells
-      else if(input$current_node_id == 13){
+      } else if(input$current_node_id == 13) { # id = 17 corresponds to PO4 pool in cells
         
-        p <- plot_ly(out, x = out[,1], y = out[,"PO4_c"], type = "scatter", mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
+        p <- plot_ly(out, x = out[,1], y = out[,"PO4_c"], type = "scatter", 
+                     mode = "lines", line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar10, title = "PO4 quantity in cells")
         
         hide_legend(p)
         
-      }
-      else{
+      } else {
         p <- plot_ly() %>%
-          add_annotations("Please select another node!", showarrow = FALSE, font = list(color = "red", size = 20))
+          add_annotations("Please select another node!", showarrow = FALSE, 
+                          font = list(color = "red", size = 20))
       }
       
     }
@@ -298,7 +308,7 @@ shinyServer(function(input, output, session) {
       need(input$current_edge_id != 0, 'Select one edge on the graph!')
     )
     
-    if (input$current_edge_id != 0 && !is.null(input$current_edge_id)){
+    if (input$current_edge_id != 0 && !is.null(input$current_edge_id)) {
       
       out <- out()
       parameters_bis <- parameters_bis()
@@ -322,7 +332,7 @@ shinyServer(function(input, output, session) {
       yvar19 <- list(title = "PO4 (µmol/min)", range = c(min(out[,"PO4_cp"]*1000*0.8),max(out[,"PO4_cp"]*1000*1.2)))
       
       # id = 3 corresponds to intestinal Ca and PO4 absorption
-      if(input$current_edge_id == 3){
+      if (input$current_edge_id == 3) {
         
         p1 <- plot_ly(data = out, x = out[,1], y = out[,"Abs_int_Ca"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
@@ -337,33 +347,25 @@ shinyServer(function(input, output, session) {
         
         hide_legend(p)
         
-      }
-      # id = 4 corresponds to rapid storage of Ca in the rapidly exchangeable bone pool
-      else if (input$current_edge_id == 4){
+      } else if (input$current_edge_id == 4) { # id = 4 corresponds to rapid storage of Ca in the rapidly exchangeable bone pool
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"Ca_pf"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar14, title = "Rapid Ca storage in bone")
         
-      }
-      # id = 5 corresponds to rapid release of Ca from the rapidly exchangeable bone pool
-      else if (input$current_edge_id == 5){
+      } else if (input$current_edge_id == 5) { # id = 5 corresponds to rapid release of Ca from the rapidly exchangeable bone pool
         
         p1 <- plot_ly(data = out, x = out[,1], y = out[,"Ca_fp"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar16, title = "Rapid Ca release from bone")
         
-      }
-      # id = 6 corresponds to storage of Ca in the bone pool
-      else if (input$current_edge_id == 6){
+      } else if (input$current_edge_id == 6) { # id = 6 corresponds to storage of Ca in the bone pool
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"Ac_Ca"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar6, title = "Ca flux into bone")
         
-      }
-      # id = 7 corresponds to release of Ca and PO4 in the bone pool (resorption)
-      else if (input$current_edge_id == 7){
+      } else if (input$current_edge_id == 7) { # id = 7 corresponds to release of Ca and PO4 in the bone pool (resorption)
         
         p1 <- plot_ly(data = out, x = out[,1], y = out[,"Res_Ca"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
@@ -378,80 +380,65 @@ shinyServer(function(input, output, session) {
         
         hide_legend(p)
         
-      }
-      # id = 8 corresponds to renal reabsorption of Ca
-      else if (input$current_edge_id == 8){
+      } else if (input$current_edge_id == 8) { # id = 8 corresponds to renal reabsorption of Ca
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"Reabs_Ca"]*1000, type = "scatter", mode = "lines",
                      line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar10, title = "Ca renal reabsorption")
         
       }
-      # id = 10 corresponds to U_Ca 
-      else if (input$current_edge_id == 10){
+     
+      else if (input$current_edge_id == 10){ # id = 10 corresponds to U_Ca 
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"U_Ca"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar12, title = "Urinary Ca excretion")
         
-      }
-      # id = 24 corresponds to PO4 release from cells
-      else if (input$current_edge_id == 21){
+      } else if (input$current_edge_id == 21) { # id = 24 corresponds to PO4 release from cells
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_pc"]*1000, type = "scatter", mode = "lines",
                      line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar18, title = "PO4 Cell release")
         
-      }
-      # id = 22 corresponds to PO4 storage in cells
-      else if (input$current_edge_id == 22){
+      } else if (input$current_edge_id == 22) { # id = 22 corresponds to PO4 storage in cells
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_cp"]*1000, type = "scatter", mode = "lines",
                      line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar19, title = "PO4 Cell storage")
         
-      }
-      # id = 23 corresponds to renal reabsorption of PO4
-      else if (input$current_edge_id == 23){
+      } else if (input$current_edge_id == 23) { # id = 23 corresponds to renal reabsorption of PO4
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"Reabs_PO4"]*1000, type = "scatter", mode = "lines",
                      line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar11, title = "PO4 renal reabsorption")
         
-      }
-      # id = 29 corresponds to U_PO4
-      else if (input$current_edge_id == 29){
+      } else if (input$current_edge_id == 29) { # id = 29 corresponds to U_PO4
         
         p2 <- plot_ly(data = out, x = out[,1], y = out[,"U_PO4"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar13, title = "Urinary PO4 excretion")
         
-      }
-      # id = 30 corresponds to rapid release of PO4 from the rapidly exchangeable bone pool
-      else if (input$current_edge_id == 30){
+      } else if (input$current_edge_id == 30) { # id = 30 corresponds to rapid release of PO4 from the rapidly exchangeable bone pool
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_fp"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar17, title = "Rapid PO4 release from bone")
 
       }
-      # id = 31 corresponds to rapid storage of PO4 in the rapidly exchangeable bone pool
-      else if(input$current_edge_id == 31){
+      
+      else if(input$current_edge_id == 31){ # id = 31 corresponds to rapid storage of PO4 in the rapidly exchangeable bone pool
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"PO4_pf"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar15, title = "Rapid PO4 storage in bone")
         
-      }
-      # id = 32 corresponds to storage of PO4 in the bone pool
-      else if (input$current_edge_id == 32){
+      } else if (input$current_edge_id == 32) { # id = 32 corresponds to storage of PO4 in the bone pool
         
         p <- plot_ly(data = out, x = out[,1], y = out[,"Ac_PO4"]*1000, type = "scatter", mode = "lines",
                       line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
           layout(xaxis = xvar, yaxis = yvar7, title = "PO4 flux into bone")
         
-      }
-      else{
+      } else {
         p <- plot_ly() %>%
           add_annotations("Please select another arrow!", showarrow = FALSE, font = list(color = "red", size = 20))
       }
@@ -477,10 +464,15 @@ shinyServer(function(input, output, session) {
       
       input$I_P # isolate Ca part from PO4
       
-      if (input$I_Ca != 1){ # prevent the graph from moving when I_Ca is reset by reset button
+      if (input$I_Ca != 1) { # prevent the graph from moving when I_Ca is reset by reset button
         
-        ifelse(input$I_Ca > 1, showNotification("Calcium intake has been increased!", type = "warning", duration = 2), 
-               showNotification("Calcium intake has been decreased!", type = "warning", duration = 2)) # ifelse is better!
+        ifelse(input$I_Ca > 1, 
+               showNotification("Calcium intake has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("Calcium intake has been decreased!", 
+                                type = "warning", 
+                                duration = 2)) # ifelse is better!
         
         edges_Ca <- edges_Ca()
         edges_Ca$width[1] <- ifelse(input$I_Ca == 1 , 4*input$I_Ca, 2*input$I_Ca) # prevent arrow from being too big
@@ -502,13 +494,20 @@ shinyServer(function(input, output, session) {
       
       input$I_Ca # isolate PO4 part from Ca
       
-      if (input$I_P != 1){ # prevent the graph from moving when I_P is reset by reset button
+      if (input$I_P != 1) { # prevent the graph from moving when I_P is reset by reset button
         
-        ifelse(input$I_P > 1, showNotification("Phosphate intake has been increased!", type = "warning", duration = 2), 
-               showNotification("Phosphate intake has been decreased!", type = "warning", duration = 2)) # ifelse is better!
+        ifelse(input$I_P > 1, 
+               showNotification("Phosphate intake has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("Phosphate intake has been decreased!", 
+                                type = "warning", 
+                                duration = 2)) # ifelse is better!
         
         edges_Ca <- edges_Ca()
-        edges_Ca$width[1] <- ifelse(input$I_P == 1 , 4*input$I_P, 2*input$I_P)
+        edges_Ca$width[1] <- ifelse(input$I_P == 1 , 
+                                    4*input$I_P, 
+                                    2*input$I_P)
         
         visNetworkProxy("network_Ca") %>%
           #visFit(nodes = 1, animation = list(duration = 1500, easingFunction
@@ -529,13 +528,20 @@ shinyServer(function(input, output, session) {
     
     input$Lambda_ac_Ca
     
-    if (input$Lambda_ac_Ca != 1){
+    if (input$Lambda_ac_Ca != 1) {
       
-      ifelse(input$Lambda_ac_Ca > 1, showNotification("Calcium flux into bone has been increased!", type = "warning", duration = 2), 
-             showNotification("Calcium flux into bone has been decreased!", type = "warning", duration = 2))
+      ifelse(input$Lambda_ac_Ca > 1, 
+             showNotification("Calcium flux into bone has been increased!", 
+                              type = "warning", 
+                              duration = 2), 
+             showNotification("Calcium flux into bone has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
-      edges_Ca$width[6] <- ifelse(input$Lambda_ac_Ca == 1 , 4*input$Lambda_ac_Ca, 2*input$Lambda_ac_Ca)
+      edges_Ca$width[6] <- ifelse(input$Lambda_ac_Ca == 1 , 
+                                  4*input$Lambda_ac_Ca, 
+                                  2*input$Lambda_ac_Ca)
       
       visNetworkProxy("network_Ca") %>%
         #visFit(nodes = 6, animation = list(duration = 1500, easingFunction
@@ -557,10 +563,15 @@ shinyServer(function(input, output, session) {
       
       input$k_p_P
     
-    if (input$k_p_Ca != 1){
+    if (input$k_p_Ca != 1) {
       
-      ifelse(input$k_p_Ca > 1, showNotification("Calcium storage in the bone rapid pool has been increased!", type = "warning", duration = 2), 
-             showNotification("Calcium storage in the bone rapid pool has been decreased!", type = "warning", duration = 2))
+      ifelse(input$k_p_Ca > 1, 
+             showNotification("Calcium storage in the bone rapid pool has been increased!", 
+                              type = "warning", 
+                              duration = 2), 
+             showNotification("Calcium storage in the bone rapid pool has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
       edges_Ca$width[4] <- 4*input$k_p_Ca
@@ -581,10 +592,15 @@ shinyServer(function(input, output, session) {
       
       input$k_p_Ca
       
-      if (input$k_p_P != 1){
+      if (input$k_p_P != 1) {
         
-        ifelse(input$k_p_P > 1, showNotification("PO4 storage in the bone rapid pool has been increased!", type = "warning", duration = 2), 
-               showNotification("PO4 storage in the bone rapid pool has been decreased!", type = "warning", duration = 2))
+        ifelse(input$k_p_P > 1, 
+               showNotification("PO4 storage in the bone rapid pool has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("PO4 storage in the bone rapid pool has been decreased!", 
+                                type = "warning", 
+                                duration = 2))
         
         edges_Ca <- edges_Ca()
         edges_Ca$width[4] <- 4*input$k_p_P
@@ -611,10 +627,15 @@ shinyServer(function(input, output, session) {
       
       input$k_f_P
     
-    if (input$k_f_Ca != 1){
+    if (input$k_f_Ca != 1) { 
       
-      ifelse(input$k_f_Ca > 1, showNotification("Calcium release from the bone rapid pool has been increased!", type = "warning", duration = 2), 
-             showNotification("Calcium release from the bone rapid pool has been decreased!", type = "warning", duration = 2))
+      ifelse(input$k_f_Ca > 1, 
+             showNotification("Calcium release from the bone rapid pool has been increased!", 
+                              type = "warning", 
+                              duration = 2), 
+             showNotification("Calcium release from the bone rapid pool has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
       edges_Ca$width[5] <- 4*input$k_f_Ca
@@ -635,10 +656,15 @@ shinyServer(function(input, output, session) {
       
       input$k_f_Ca
       
-      if (input$k_f_P != 1){
+      if (input$k_f_P != 1) {
         
-        ifelse(input$k_f_P > 1, showNotification("PO4 release from the bone rapid pool has been increased!", type = "warning", duration = 2), 
-               showNotification("PO4 release from the bone rapid pool has been decreased!", type = "warning", duration = 2))
+        ifelse(input$k_f_P > 1, 
+               showNotification("PO4 release from the bone rapid pool has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("PO4 release from the bone rapid pool has been decreased!", 
+                                type = "warning", 
+                                duration = 2))
         
         edges_Ca <- edges_Ca()
         edges_Ca$width[5] <- 4*input$k_f_P
@@ -662,14 +688,20 @@ shinyServer(function(input, output, session) {
     input$Lambda_res_min
     input$delta_res_max
     
-    if (input$Lambda_res_min != 1 || input$delta_res_max != 1){
+    if (input$Lambda_res_min != 1 || input$delta_res_max != 1) {
       
       ifelse(input$Lambda_res_min > 1 || input$delta_res_max > 1, 
-             showNotification("Calcium release from the bone (resorption) has been increased!", type = "warning", duration = 2),
-             showNotification("Calcium release from the bone (resorption) has been decreased!", type = "warning", duration = 2))
+             showNotification("Calcium release from the bone (resorption) has been increased!", 
+                              type = "warning", 
+                              duration = 2),
+             showNotification("Calcium release from the bone (resorption) has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
-      edges_Ca$width[7] <- ifelse(input$Lambda_res_min == 1 , 4*input$Lambda_res_min, 2*input$Lambda_res_min)
+      edges_Ca$width[7] <- ifelse(input$Lambda_res_min == 1 , 
+                                  4*input$Lambda_res_min, 
+                                  2*input$Lambda_res_min)
       
       visNetworkProxy("network_Ca") %>%
         #visFit(nodes = c(4,6), animation = list(duration = 1500, easingFunction
@@ -687,10 +719,15 @@ shinyServer(function(input, output, session) {
     
     input$GFR
     
-    if (input$GFR != 1){
+    if (input$GFR != 1) {
       
-      ifelse(input$GFR > 1, showNotification("GFR has been increased!", type = "warning", duration = 2), 
-             showNotification("GFR has been decreased!", type = "warning", duration = 2))
+      ifelse(input$GFR > 1, 
+             showNotification("GFR has been increased!", 
+                              type = "warning", 
+                              duration = 2), 
+             showNotification("GFR has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
       edges_Ca$width[9] <- 4*input$GFR
@@ -717,10 +754,15 @@ shinyServer(function(input, output, session) {
       
       input$k_cp
       
-      if (input$k_pc != 1){
+      if (input$k_pc != 1) {
         
-        ifelse(input$k_pc > 1, showNotification("PO4 storage into cells has been increased!", type = "warning", duration = 2), 
-               showNotification("PO4 storage into cells has been decreased!", type = "warning", duration = 2))
+        ifelse(input$k_pc > 1, 
+               showNotification("PO4 storage into cells has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("PO4 storage into cells has been decreased!", 
+                                type = "warning", 
+                                duration = 2))
         
         edges_Ca <- edges_Ca()
         edges_Ca$width[22] <- 4*input$k_pc
@@ -741,10 +783,15 @@ shinyServer(function(input, output, session) {
       
       input$k_pc
       
-      if (input$k_cp != 1){
+      if (input$k_cp != 1) {
         
-        ifelse(input$k_cp> 1, showNotification("PO4 release from cells to plasma has been increased!", type = "warning", duration = 2), 
-               showNotification("PO4 release from cells to plasma has been decreased!", type = "warning", duration = 2))
+        ifelse(input$k_cp> 1, 
+               showNotification("PO4 release from cells to plasma has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("PO4 release from cells to plasma has been decreased!", 
+                                type = "warning", 
+                                duration = 2))
         
         edges_Ca <- edges_Ca()
         edges_Ca$width[21] <- 4*input$k_cp
@@ -767,13 +814,20 @@ shinyServer(function(input, output, session) {
     
     input$k_prod_PTHg
     
-    if (input$k_prod_PTHg != 1){
+    if (input$k_prod_PTHg != 1) {
       
-      ifelse(input$k_prod_PTHg> 1, showNotification("PTH synthesis has been increased!", type = "warning", duration = 2), 
-             showNotification("PTH synthesis has been decreased!", type = "warning", duration = 2))
+      ifelse(input$k_prod_PTHg> 1, 
+             showNotification("PTH synthesis has been increased!", 
+                              type = "warning", 
+                              duration = 2), 
+             showNotification("PTH synthesis has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
-      edges_Ca$width[c(11,12,15)] <- ifelse(input$k_prod_PTHg == 1 , 4*input$k_prod_PTHg, 0.2*input$k_prod_PTHg)
+      edges_Ca$width[c(11,12,15)] <- ifelse(input$k_prod_PTHg == 1 , 
+                                            4*input$k_prod_PTHg, 
+                                            0.2*input$k_prod_PTHg)
       
       visNetworkProxy("network_Ca") %>%
         #visFit(nodes = 9, animation = list(duration = 1500, easingFunction
@@ -795,13 +849,20 @@ shinyServer(function(input, output, session) {
       
       input$k_deg_D3
       
-      if (input$D3_inact != 1){
+      if (input$D3_inact != 1) {
         
-        ifelse(input$D3_inact> 1, showNotification("25(OH)D stock has been increased!", type = "warning", duration = 2), 
-               showNotification("25(OH)D stock has been decreased!", type = "warning", duration = 2))
+        ifelse(input$D3_inact> 1, 
+               showNotification("25(OH)D stock has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("25(OH)D stock has been decreased!", 
+                                type = "warning", 
+                                duration = 2))
         
         edges_Ca <- edges_Ca()
-        edges_Ca$width[c(13,14,16,17)] <- ifelse(input$D3_inact == 1 , 4*input$D3_inact, 0.2*input$D3_inact)
+        edges_Ca$width[c(13,14,16,17)] <- ifelse(input$D3_inact == 1 , 
+                                                 4*input$D3_inact, 
+                                                 0.2*input$D3_inact)
         
         visNetworkProxy("network_Ca") %>%
           #visFit(nodes = 11, animation = list(duration = 1500, easingFunction
@@ -819,13 +880,20 @@ shinyServer(function(input, output, session) {
       
       input$D3_inact
       
-      if (input$k_deg_D3 != 1){
+      if (input$k_deg_D3 != 1) {
         
-        ifelse(input$k_deg_D3> 1, showNotification("Vitamin D3 degradation has been increased!", type = "warning", duration = 2), 
-               showNotification("Vitamin D3 degradation stock has been decreased!", type = "warning", duration = 2))
+        ifelse(input$k_deg_D3> 1, 
+               showNotification("Vitamin D3 degradation has been increased!", 
+                                type = "warning", 
+                                duration = 2), 
+               showNotification("Vitamin D3 degradation stock has been decreased!", 
+                                type = "warning", 
+                                duration = 2))
         
         edges_Ca <- edges_Ca()
-        edges_Ca$width[c(13,14,16,17)] <- ifelse(input$k_deg_D3 == 1 , 4*input$k_deg_D3, 0.2*input$k_deg_D3)
+        edges_Ca$width[c(13,14,16,17)] <- ifelse(input$k_deg_D3 == 1 , 
+                                                 4*input$k_deg_D3, 
+                                                 0.2*input$k_deg_D3)
         
         visNetworkProxy("network_Ca") %>%
           #visFit(nodes = 11, animation = list(duration = 1500, easingFunction
@@ -845,13 +913,20 @@ shinyServer(function(input, output, session) {
     
     input$k_prod_FGF
     
-    if (input$k_prod_FGF != 1){
+    if (input$k_prod_FGF != 1) {
       
-      ifelse(input$k_prod_FGF> 1, showNotification("FGF23 synthesis has been increased!", type = "warning", duration = 2), 
-             showNotification("FGF23 synthesis has been decreased!", type = "warning", duration = 2))
+      ifelse(input$k_prod_FGF> 1, 
+             showNotification("FGF23 synthesis has been increased!", 
+                              type = "warning", 
+                              duration = 2), 
+             showNotification("FGF23 synthesis has been decreased!", 
+                              type = "warning", 
+                              duration = 2))
       
       edges_Ca <- edges_Ca()
-      edges_Ca$width[c(18,19)] <- ifelse(input$k_prod_FGF == 1 , 4*input$k_prod_FGF, 2*input$k_prod_FGF)
+      edges_Ca$width[c(18,19)] <- ifelse(input$k_prod_FGF == 1 , 
+                                         4*input$k_prod_FGF, 
+                                         2*input$k_prod_FGF)
       
       visNetworkProxy("network_Ca") %>%
         #visFit(nodes = 12, animation = list(duration = 1500, easingFunction
@@ -899,10 +974,12 @@ shinyServer(function(input, output, session) {
     flux_changed_index <- which(calc_change_sum[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
     arrow_index <- as.numeric(t(calc_change_sum[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
 
-    if(!is.null(flux_changed_index)){
-      for (i in (1:ncol(calc_change_sum))){
+    if (!is.null(flux_changed_index)) {
+      for (i in (1:ncol(calc_change_sum))) {
         arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
-        ifelse(calc_change_sum[[i]][1] > 0, edges_Ca$color.color[arrow_index_i] <- "green", edges_Ca$color.color[arrow_index_i] <- "red")
+        ifelse(calc_change_sum[[i]][1] > 0, 
+               edges_Ca$color.color[arrow_index_i] <- "green", 
+               edges_Ca$color.color[arrow_index_i] <- "red")
       }
       
     }
@@ -938,11 +1015,13 @@ shinyServer(function(input, output, session) {
   
   observe({ 
     
-    if(input$notif_switch == "TRUE"){
+    if (input$notif_switch == "TRUE") {
       
       showNotification( 
         id = "menu_notif",
-        "In this panel you can enable/disable notifications, bookmark the state of your app to share it with colleagues, save it, load the last state you saved and change
+        "In this panel you can enable/disable notifications, 
+        bookmark the state of your app to share it with colleagues, 
+        save it, load the last state you saved and change
         the global theme.",
         duration = 9999, # sufficient amount of time
         closeButton = TRUE,
@@ -950,8 +1029,7 @@ shinyServer(function(input, output, session) {
       
       #jqui_draggable('menu_notif', options = list(grid = c(80, 80))) # does not work
       
-    }
-    else{ # this notifications can be removed at anytime
+    } else { # this notifications can be removed at anytime
       
       removeNotification(id = "menu_notif", session)
       
@@ -963,18 +1041,19 @@ shinyServer(function(input, output, session) {
   
   observe({ 
     
-    if(input$notif_switch == "TRUE"){
+    if (input$notif_switch == "TRUE") {
       
       showNotification( 
         id = "graph_notif",
-        "In this panel are displayed the graph of CaPO4 homeostasis. To see results, start by clicking on a node and/or an edge on the interactive diagram.
-        The value of tmax which is the maximum time of simulation can be increased or decreased as required (but higher than 0).",
+        "In this panel are displayed the graph of CaPO4 homeostasis. 
+        To see results, start by clicking on a node and/or an edge on the interactive diagram.
+        The value of tmax which is the maximum time of simulation can be increased or decreased 
+        as required (but higher than 0).",
         duration = 9999, # sufficient amount of time
         closeButton = TRUE,
         type = "error")
       
-    }
-    else{ # this notifications can be removed at anytime
+    } else { # this notifications can be removed at anytime
       
       removeNotification(id = "graph_notif", session)
       
@@ -990,15 +1069,17 @@ shinyServer(function(input, output, session) {
       
       showNotification( 
         id = "diagram_notif",
-        "In this panel is displayed the interactive diagram (see legend). Basically, when a parameter is changed in the control center, 
-        initial perturbations are shown in yellow. The arrow size increases if it is a stimulatory effect and inversely. Fluxes are shown 
-        in red if they decrease or in green if they are enhanced. Colors correspond to the final state of the system
+        "In this panel is displayed the interactive diagram (see legend). 
+        Basically, when a parameter is changed in the control center, 
+        initial perturbations are shown in yellow. The arrow size increases 
+        if it is a stimulatory effect and inversely. Fluxes are shown 
+        in red if they decrease or in green if they are enhanced. 
+        Colors correspond to the final state of the system
         (which is the value of tmax in minutes).",
         duration = 9999,
         closeButton = TRUE,
         type = "error")
-    }
-    else{
+    } else {
       
       removeNotification(id = "diagram_notif", session)
       
@@ -1010,7 +1091,7 @@ shinyServer(function(input, output, session) {
   
   observe({ 
     
-    if(input$notif_switch == "TRUE"){
+    if (input$notif_switch == "TRUE") {
       
       showNotification( 
         id = "control_notif",
@@ -1020,8 +1101,7 @@ shinyServer(function(input, output, session) {
         closeButton = TRUE,
         type = "error") # important so in red
       
-    }
-    else{
+    } else {
       
       removeNotification(id = "control_notif", session)
       
@@ -1037,9 +1117,12 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$beta_exo_PTHg,{ # critical value for PTHg
     
-    if (input$beta_exo_PTHg < 0.9){
+    if (input$beta_exo_PTHg < 0.9) {
       
-      sendSweetAlert(messageId = "failSw", title = "Ooops ...", text = "Invalid parameter value", type = "error")
+      sendSweetAlert(messageId = "failSw", 
+                     title = "Ooops ...", 
+                     text = "Invalid parameter value", 
+                     type = "error")
       reset("beta_exo_PTHg") # value is reset
       
     }
@@ -1050,9 +1133,13 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$tmax,{ # critical value for tmax
     
-    if (input$tmax > 30000){
+    if (input$tmax > 30000) {
       
-      sendSweetAlert(messageId = "failSw", title = "Ooops ...", text = "Invalid parameter value: the maximum time of simulation is too high!", type = "error")
+      sendSweetAlert(messageId = "failSw", 
+                     title = "Ooops ...", 
+                     text = "Invalid parameter value: the maximum time 
+                     of simulation is too high!", 
+                     type = "error")
       reset("tmax") # value is reset
       
     }
@@ -1101,14 +1188,14 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$PTHgroup, {
     # Change the following line for more examples
-    if (input$PTHgroup == "TRUE"){
+    if (input$PTHgroup == "TRUE") {
       disable("D3group")
       disable("FGFgroup")
       disable("Cagroup")
       disable("PO4group")
       disable("CaPO4group")
       disable("others")
-    }else{
+    } else {
       enable("D3group")
       enable("FGFgroup")
       enable("Cagroup")
@@ -1120,14 +1207,14 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$D3group, {
     # Change the following line for more examples
-    if (input$D3group == "TRUE"){
+    if (input$D3group == "TRUE") {
       disable("PTHgroup")
       disable("FGFgroup")
       disable("Cagroup")
       disable("PO4group")
       disable("CaPO4group")
       disable("others")
-    }else{
+    } else {
       enable("PTHgroup")
       enable("FGFgroup")
       enable("Cagroup")
@@ -1139,14 +1226,14 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$FGFgroup, {
     # Change the following line for more examples
-    if (input$FGFgroup == "TRUE"){
+    if (input$FGFgroup == "TRUE") {
       disable("D3group")
       disable("PTHgroup")
       disable("Cagroup")
       disable("PO4group")
       disable("CaPO4group")
       disable("others")
-    }else{
+    } else {
       enable("D3group")
       enable("PTHgroup")
       enable("Cagroup")
@@ -1177,14 +1264,14 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$PO4group, {
     # Change the following line for more examples
-    if (input$PO4group == "TRUE"){
+    if (input$PO4group == "TRUE") {
       disable("D3group")
       disable("FGFgroup")
       disable("Cagroup")
       disable("PTHgroup")
       disable("CaPO4group")
       disable("others")
-    }else{
+    } else {
       enable("D3group")
       enable("FGFgroup")
       enable("Cagroup")
@@ -1196,14 +1283,14 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$CaPO4group, {
     # Change the following line for more examples
-    if (input$CaPO4group == "TRUE"){
+    if (input$CaPO4group == "TRUE") {
       disable("D3group")
       disable("FGFgroup")
       disable("Cagroup")
       disable("PO4group")
       disable("PTHgroup")
       disable("others")
-    }else{
+    } else {
       enable("D3group")
       enable("FGFgroup")
       enable("Cagroup")
@@ -1215,14 +1302,14 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$others, {
     # Change the following line for more examples
-    if (input$others == "TRUE"){
+    if (input$others == "TRUE") {
       disable("D3group")
       disable("FGFgroup")
       disable("Cagroup")
       disable("PO4group")
       disable("CaPO4group")
       disable("PTHgroup")
-    }else{
+    } else {
       enable("D3group")
       enable("FGFgroup")
       enable("Cagroup")
