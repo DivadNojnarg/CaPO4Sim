@@ -91,7 +91,7 @@ shinyServer(function(input, output, session) {
                           rate = paste(input$Ca_inject, "(µmol/min)"), 
                           start_time = input$t_start_Cainject,
                           stop_time = input$t_stop_Cainject, 
-                          status = ifelse(input$treatment_selected == "Ca iv injection", "active", "inactive")) # does not work
+                          status = ifelse(is.element("Ca iv injection", input$treatment_selected), "active", "inactive")) # does not work
     
     event_table$df <- rbind(event_table$df, df_Caiv)
     
@@ -103,7 +103,7 @@ shinyServer(function(input, output, session) {
                               rate = paste(input$Ca_food, "(µmol/min)"), 
                               start_time = input$t_start_Caintake,
                               stop_time = input$t_stop_Caintake,
-                              status = ifelse(input$treatment_selected == "Ca supplementation", "active", "inactive"))
+                              status = ifelse(is.element("Ca supplementation", input$treatment_selected), "active", "inactive"))
     
     event_table$df <- rbind(event_table$df, df_Caintake)
     
@@ -115,7 +115,7 @@ shinyServer(function(input, output, session) {
                           rate = paste(input$D3_inject, "(pmol/min)"), 
                           start_time = input$t_start_D3inject,
                           stop_time = input$t_stop_D3inject,
-                          status = ifelse(input$treatment_selected == "vitamin D3 iv injection", "active", "inactive"))
+                          status = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected), "active", "inactive"))
     
     event_table$df <- rbind(event_table$df, df_D3iv)
     
@@ -127,7 +127,7 @@ shinyServer(function(input, output, session) {
                          rate = paste(input$P_inject, "(µmol/min)"), 
                          start_time = input$t_start_Pinject,
                          stop_time = input$t_stop_Pinject,
-                         status = ifelse(input$treatment_selected == "PO4 iv injection", "active", "inactive"))
+                         status = ifelse(is.element("PO4 iv injection", input$treatment_selected), "active", "inactive"))
     
     event_table$df <- rbind(event_table$df, df_Piv)
     
@@ -139,7 +139,7 @@ shinyServer(function(input, output, session) {
                              rate = paste(input$P_food, "(µmol/min)"), 
                              start_time = input$t_start_Pintake,
                              stop_time = input$t_stop_Pintake,
-                             status = ifelse(input$treatment_selected == "PO4 supplementation", "active", "inactive"))
+                             status = ifelse(is.element("PO4 supplementation", input$treatment_selected), "active", "inactive"))
     
     event_table$df <- rbind(event_table$df, df_Pintake)
     

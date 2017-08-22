@@ -90,7 +90,7 @@ body <- dashboardBody(
                                  
                                  # the zoom graph
                                  conditionalPanel(
-                                   condition = "input.current_node_id == 9",
+                                   condition = "input.current_node_bis_id == 9",
                                    div(id = "network_PTH",
                                        visNetworkOutput("networkPTH", height = "400px")
                                    )
@@ -105,42 +105,41 @@ body <- dashboardBody(
                                    
                                    condition = "input.current_edge_bis_id != 'null' && input.current_edge_bis_id == 1",
                                    
-                                   column(8, align = "center",
-
-                                          sliderInput("k_prod_PTHg", "$$ k_{prod}^{PTH_g} $$", min = 0, max = 100, value = 1, step = 1) %>%
+                                          sliderInput("k_prod_PTHg", "PTH synthesis rate constant (μmol/min)", min = 0, max = 100, value = 1, step = 1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "the rate of PTH synthesis from parathyroid glands (μmol/min)")),
-          
-                                          actionButton(class="fa fa-trash fa-5x", inputId="resetPTHsynthesis",
-                                                       label=" Reset", class="btn btn-danger")
-                                   )
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetPTHsynthesis",
+                                                             label="", color="danger", size = "xs"))
                                  ),
                                  
-                                 conditionalPanel( # PTH parameters for exocytosis
+                                 conditionalPanel( # PTH parameters for PTH exocytosis
                                    
-                                   condition = "input.current_edge_bis_id != 'null' && input.current_edge_bis_id == 4",
-                                   fluidRow(
-                                     column(8, align = "center",
-                                            
-                                            sliderInput("beta_exo_PTHg", "$$ \\beta_{exo}^{PTH_g} $$", min = 0, max = 2, value = 1, step = 0.1) %>%
+                                   condition = "input.current_edge_bis_id != 'null' && input.current_edge_bis_id == 3",
+
+                                            sliderInput("beta_exo_PTHg", "Rate constant for maximal 
+                                                        PTH secretion from parathyroid glands (1/min)", 
+                                                        min = 0, max = 2, value = 1, step = 0.1) %>%
                                               shinyInput_label_embed(
-                                                icon("info") %>%
-                                                  bs_embed_tooltip(title = "Rate constant for maximal PTH secretion from parathyroid glands (1/min)")),
+                                                icon("undo") %>%
+                                                  actionBttn(inputId="resetPTHexocytosis",
+                                                             label="", color="danger", size = "xs")),
                                             
                                             # generate the alert when beta_exo_PTHg may crash the solver
                                             receiveSweetAlert(messageId = "failSw")
+                                   ),
+                                 
+                                 conditionalPanel( # PTH parameters for PTH exocytosis
+                                   
+                                   condition = "input.current_edge_bis_id != 'null' && input.current_edge_bis_id == 4",
                                             
-                                     )),
-                                   fluidRow(
-                                     column(8, align = "center",
-                                            
-                                            sliderInput("gamma_exo_PTHg", "$$ \\gamma_{exo}^{PTH_g} $$", min = 0, max = 1, value = 1, step = 0.1) %>%
+                                            sliderInput("gamma_exo_PTHg", "Rate constant for maximal inhibition 
+                                                        of PTH secretion from parathyroid glands by calcium (1/min)", 
+                                                        min = 0, max = 1, value = 1, step = 0.1) %>%
                                               shinyInput_label_embed(
-                                                icon("info") %>%
-                                                  bs_embed_tooltip(title = "Rate constant for maximal inhibition of PTH secretion from parathyroid glands 
-                                                                               by calcium (1/min)"))
-                                     ))
+                                                icon("undo") %>%
+                                                  actionBttn(inputId="resetPTHexocytosisinhib",
+                                                             label="", color="danger", size = "xs"))
+                                     #))
                                    
                                  ),
                                  
@@ -150,19 +149,23 @@ body <- dashboardBody(
                                    
                                    fluidRow(
                                      column(8, align = "center",
-                                            sliderInput("k_prod_PTHg", "$$ k_{prod}^{PTH_g} $$", min = 0, max = 100, value = 1, step = 1) %>%
+                                            sliderInput("k_prod_PTHg", "PTH synthesis rate constant (μmol/min)", min = 0, max = 100, value = 1, step = 1) %>%
                                               shinyInput_label_embed(
-                                                icon("info") %>%
-                                                  bs_embed_tooltip(title = "the rate of PTH synthesis from parathyroid glands (μmol/min)"))
+                                                icon("undo") %>%
+                                                  actionBttn(inputId="resetPTHsynthesis",
+                                                             label="", color="danger", size = "xs"))
                                      )),
                                    
                                    fluidRow(
                                      column(8, align = "center",
                                             
-                                            sliderInput("beta_exo_PTHg", "$$ \\beta_{exo}^{PTH_g} $$", min = 0, max = 2, value = 1, step = 0.1) %>%
+                                            sliderInput("beta_exo_PTHg", "Rate constant for maximal 
+                                                        PTH secretion from parathyroid glands (1/min)", 
+                                                        min = 0, max = 2, value = 1, step = 0.1) %>%
                                               shinyInput_label_embed(
-                                                icon("info") %>%
-                                                  bs_embed_tooltip(title = "Rate constant for maximal PTH secretion from parathyroid glands (1/min)")),
+                                                icon("undo") %>%
+                                                  actionBttn(inputId="resetPTHexocytosis",
+                                                             label="", color="danger", size = "xs")),
                                             
                                             # generate the alert when beta_exo_PTHg may crash the solver
                                             receiveSweetAlert(messageId = "failSw")
@@ -172,11 +175,13 @@ body <- dashboardBody(
                                    fluidRow(
                                      column(8, align = "center",
                                             
-                                            sliderInput("gamma_exo_PTHg", "$$ \\gamma_{exo}^{PTH_g} $$", min = 0, max = 1, value = 1, step = 0.1) %>%
+                                            sliderInput("gamma_exo_PTHg", "Rate constant for maximal inhibition 
+                                                        of PTH secretion from parathyroid glands by calcium (1/min)", 
+                                                        min = 0, max = 1, value = 1, step = 0.1) %>%
                                               shinyInput_label_embed(
-                                                icon("info") %>%
-                                                  bs_embed_tooltip(title = "Rate constant for maximal inhibition of PTH secretion from parathyroid glands 
-                                                                               by calcium (1/min)"))
+                                                icon("undo") %>%
+                                                  actionBttn(inputId="resetPTHexocytosisinhib",
+                                                             label="", color="danger", size = "xs"))
                                      ))
                                  ),
                                  

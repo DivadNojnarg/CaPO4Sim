@@ -1257,41 +1257,6 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  Set timeline graph events
-  #
-  #-------------------------------------------------------------------------
-  
-  # myevents <- reactive({
-  #   
-  #   input$Ca_inject
-  #   
-  #   data.frame(
-  #     id      = 1,
-  #     content = "Item one",
-  #     start   = now(),  
-  #     end     = now() + 1, # time in seconds (so need to convert...)
-  #     editable = TRUE,
-  #     type = "range",
-  #     title = "Item one"
-  #   )
-  #   
-  # })
-  # 
-  # timeline <- reactive({
-  #   myevents <- myevents()
-  #   # need evenReactive otherwise, cannot dispaly visNetwork and timeline together (since they both use vis.js)
-  #   if(input$Ca_inject == "TRUE"){
-  #     timevis(myevents)
-  #   }
-  # })
-  # 
-  # output$timeline <- renderTimevis({
-  #   timeline()
-  # })
-  
-  
-  #------------------------------------------------------------------------- 
-  #  
   #  Make the start quiz: triggered when a button of case study is clicked
   #  
   #-------------------------------------------------------------------------
@@ -1300,6 +1265,9 @@ shinyServer(function(input, output, session) {
   
   score <- reactiveValues(php1 = NULL, hypopara = NULL, hypoD3 = NULL)
   counter_quiz <- reactiveValues(php1 = NULL, hypopara = NULL, hypoD3 = NULL)
+  
+  #output$scorephp1 <- renderPrint(score$php1)
+  #output$testphp1 <- renderPrint(counter_quiz$php1)
   
   # Primary hyperparathyroidism start quiz
   # For the moment, the user can display it only once due to the counter
@@ -1323,7 +1291,7 @@ shinyServer(function(input, output, session) {
                                         "high PTH levels due to an altered function of the calcium sensing receptor" = "php1q14")),
         br(),
         
-        "(2) What are the symptomes of primary hyperparathyroidism?",
+        "(2) What are the symptoms of primary hyperparathyroidism?",
         checkboxGroupInput(inputId = "php1q2", 
                            label = "", 
                            choices = c("high concentration of calcium, low vitamin D3 levels, bone loss, hypercalciuria" = "php1q21", 
@@ -1348,7 +1316,7 @@ shinyServer(function(input, output, session) {
         
       ))
       
-    } else if (input$run_php1 == "FALSE") { # if run_php1 is unckecked, reset the quiz so that graph 
+    } else if (input$run_php1 == "FALSE") { # if run_php1 is unckecked, reset the quiz so that graph is not displayed
       
       counter_quiz$php1 <- NULL
       
@@ -1365,7 +1333,7 @@ shinyServer(function(input, output, session) {
     
     if (is.null(input$php1q1) || 
        is.null(input$php1q2) || 
-       is.null(input$php1q3)) { # 
+       is.null(input$php1q3)) { # if one question is not answered
       #score$php1 <- NULL
       sendSweetAlert(messageId = "successQuizphp1", 
                      title = "Oops ...", 

@@ -225,15 +225,18 @@ shinyServer(function(input, output, session) {
                      navigationButtons = TRUE) %>% # prevent edge from being selected when a node is selected
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);
-                ;}") %>%
+                ;}") %>% # simple click event to allow graph ploting
+      visEvents(doubleClick = "function(nodes) {
+                Shiny.onInputChange('current_node_bis_id', nodes.nodes);
+                }") %>%  # add the doubleclick function to handle zoom views
       # visEvents(deselectNode = "function(nodes) {
       #   Shiny.onInputChange('current_node_id', 0);
       #           ;}") %>%
       visEvents(selectEdge = "function(edges) {
                 Shiny.onInputChange('current_edge_id', edges.edges);
                 ;}") %>%
-      visEvents(stabilized = "function() { 
-                this.setOptions({nodes : {physics : false}})}") %>%
+      #visEvents(stabilized = "function() { 
+      #          this.setOptions({nodes : {physics : false}})}") %>%
       # visEvents(deselectEdge = "function(edges) {
       #   Shiny.onInputChange('current_edge_id', 0);
       #           ;}") %>%
@@ -242,8 +245,8 @@ shinyServer(function(input, output, session) {
       visLegend(addNodes = legend_nodes, addEdges = legend_edges, 
                 useGroup = FALSE, ncol = 2, width = 0.1) %>% # add the legend, ncol = 2 to show edges otherwise a bug appear
       visPhysics(stabilization = TRUE, enabled = TRUE) %>% # stabilization prevents arrows from bouncing
-      visEvents(type = "once", startStabilizing = "function() {
-            this.moveTo({scale:1})}") %>% # to set the initial zoom (1 by default)
+      #visEvents(type = "once", startStabilizing = "function() {
+      #      this.moveTo({scale:1})}") %>% # to set the initial zoom (1 by default)
       visExport(type = "pdf") # export the graph as pdf
     
   })
@@ -276,7 +279,7 @@ shinyServer(function(input, output, session) {
                                  highlight = list(background = "orange", border = "orange")),
                     size = c(10,10,10,10,10), 
                     #fixed = list("x" = TRUE, "y" = TRUE),
-                    hidden = rep(FALSE,5))
+                    hidden = c(TRUE,FALSE,TRUE,TRUE,TRUE))
     
   })
   
@@ -293,6 +296,7 @@ shinyServer(function(input, output, session) {
                                  highlight = "yellow"),
                     dashes = c(rep(FALSE,3),TRUE),
                     smooth = c(rep(TRUE,4)),
+                    hidden = rep(FALSE,4),
                     stringsAsFactors=FALSE)
     
   })
@@ -315,7 +319,7 @@ shinyServer(function(input, output, session) {
        visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
                 arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
        visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
-                      multiselect = TRUE, zoomView = FALSE) %>%
+                      multiselect = TRUE, zoomView = FALSE, dragNodes = FALSE, dragView = FALSE) %>%
        visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
        visExport(type = "pdf") # export the graph as pdf
 })
@@ -953,20 +957,28 @@ shinyServer(function(input, output, session) {
       
       edges_PTHg <- edges_PTHg()
       edges_PTHg$width[1] <- ifelse(input$k_prod_PTHg == 1 , 4*input$k_prod_PTHg, 0.2*input$k_prod_PTHg)
+      #edges_PTHg$hidden[1] <- T
       
       #nodes_Ca <- nodes_Ca()
       #nodes_Ca$size[9] <- ifelse(input$k_prod_PTHg == 1 , 100, 50)
       
       visNetworkProxy("network_Ca") %>%
         visSetSelection(edgesId = c(11,12,15)) %>%
+        #visEvents(selectEdge = "function(properties){
+        #       this.body.data.edges_Ca.update({id: e.edge, hidden: true});
+        #                         }") %>% # does not work at all
         visUpdateEdges(edges = edges_Ca) #%>%
         #visUpdateNodes(nodes = nodes_Ca)
       
       visNetworkProxy("networkPTH") %>%
         visSetSelection(edgesId = 1) %>%
         visUpdateEdges(edges = edges_PTHg)
-
+      
+      #toggle(selector = "#shiny-notification-diagram_notif")
+      
     }
+    
+    #invalidateLater(1000)
     
   })
   
@@ -1065,29 +1077,26 @@ shinyServer(function(input, output, session) {
   #   }
   # )
   
-  observe({
+  
+  observe({ # for Ca/PO4 fluxes
 
     out <- out()
     edges_Ca <- edges_Ca()
-
-    calc_change_t <- calc_change(out)
-    calc_change_t$X <- NULL # remove column X
-
-    path_to_calc_change_base <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/global_app/www/calc_change_base.csv" # only run in local
-    #path_to_calc_change_base <- "/srv/shiny-server/capApp/global_app/www/calc_change_base.csv" # only works on the linux server
-    calc_change_base <- read.csv(path_to_calc_change_base) # load the base case fluxes file to compare with "live" fluxes
-    calc_change_base$X <- NULL
-    calc_change_sum <- round(calc_change_t) - round(calc_change_base) # calculate the difference between live fluxes and base-case values
-    index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21) # index of arrows in the graph (which are fluxes and not regulations)
-    calc_change_sum <- rbind(calc_change_sum, index)
     
-    flux_changed_index <- which(calc_change_sum[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
-    arrow_index <- as.numeric(t(calc_change_sum[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
-
-    if(!is.null(flux_changed_index)){
-      for (i in (1:ncol(calc_change_sum))){
+    calc_change_t <- round(calc_change(out))
+    calc_change_t$X <- NULL # remove column X
+    
+    # calculate the difference between live fluxes and base-case values
+    index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21) # index of arrows in the graph (which are fluxes and not regulations)
+    calc_change_t <- rbind(calc_change_t, index)
+    
+    flux_changed_index <- which(calc_change_t[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
+    arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
+    
+    if (!is.null(flux_changed_index)) {
+      for (i in (1:ncol(calc_change_t))) {
         arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
-        ifelse(calc_change_sum[[i]][1] > 0, 
+        ifelse(calc_change_t[[i]][1] > 0, 
                edges_Ca$color.color[arrow_index_i] <- "green", 
                edges_Ca$color.color[arrow_index_i] <- "red")
       }
@@ -1097,6 +1106,35 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_Ca") %>%
       visUpdateEdges(edges = edges_Ca)
 
+  })
+  
+  observe({ # for PTH fluxes
+    
+    out <- out()
+    edges_PTHg <- edges_PTHg()
+    
+    calc_change_t <- round(calc_change(out))
+    calc_change_t$X <- NULL # remove column X
+    
+    index <- c(1,2,3) # index of arrows in the graph (which are fluxes and not regulations)
+    calc_change_t <- rbind(calc_change_t, index)
+    
+    flux_changed_index <- which(calc_change_t[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
+    arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
+    
+    if(!is.null(flux_changed_index)){
+      for (i in (1:ncol(calc_change_t))){
+        arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
+        ifelse(calc_change_t[[i]][1] > 0, 
+               edges_PTHg$color.color[arrow_index_i] <- "green", 
+               edges_PTHg$color.color[arrow_index_i] <- "red")
+      }
+      
+    }
+    
+    visNetworkProxy("networkPTH") %>%
+      visUpdateEdges(edges = edges_PTHg)
+    
   })
   
   # generate UI box by clicking on a node or edge
@@ -1308,10 +1346,6 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
     
     visNetworkProxy("network_Ca") %>%
-      #visFocus(id = 4, scale = 1, offset = list(x = 0, y = 0), locked = TRUE,
-      #animation = list(duration = 1500, easingFunction = "easeOutQuad")) %>%
-      #visFit(nodes = NULL, animation = list(duration = 1500, easingFunction
-                                            #= "easeInOutQuad")) %>%
       visUpdateEdges(edges = edges_Ca)
     
   })
@@ -1319,6 +1353,22 @@ shinyServer(function(input, output, session) {
   # reset PTH synthesis parameter
   observeEvent(input$resetPTHsynthesis,{
     reset("k_prod_PTHg")
+    
+    edges_PTHg <- edges_PTHg()
+    visNetworkProxy("networkPTH") %>%
+      visUpdateEdges(edges = edges_PTHg)
+  })
+  
+  observeEvent(input$resetPTHexocytosis,{
+    reset("beta_exo_PTHg")
+    
+    edges_PTHg <- edges_PTHg()
+    visNetworkProxy("networkPTH") %>%
+      visUpdateEdges(edges = edges_PTHg)
+  })
+  
+  observeEvent(input$resetPTHexocytosisinhib,{
+    reset("gamma_exo_PTHg")
     
     edges_PTHg <- edges_PTHg()
     visNetworkProxy("networkPTH") %>%

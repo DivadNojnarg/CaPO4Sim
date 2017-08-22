@@ -23,6 +23,12 @@ shinyUI(fluidPage(
   tags$style("#shiny-notification-control_notif {position: fixed; top: 70%; right: 15% ; width: 20em; opacity: 1;}"),
   tags$style("#shiny-notification-diagram_notif {position: fixed; top: 75%; left: 10% ; width: 20em; opacity: 1;}"),
   
+  # network CSS
+  tags$style(".vis-button.vis-up {visibility: hidden;}"), # hide css class navigation from visNetwork
+  tags$style(".vis-button.vis-down {visibility: hidden;}"), #see https://github.com/datastorm-open/visNetwork/blob/master/inst/htmlwidgets/lib/vis/vis.css
+  tags$style(".vis-button.vis-left {visibility: hidden;}"), # around line 701
+  tags$style(".vis-button.vis-right {visibility: hidden;}"),
+  
   tags$head(
     tags$style(HTML("
                     #network_PTH{
@@ -33,7 +39,7 @@ shinyUI(fluidPage(
                     }
 
                     #network_cap{
-                      background-image:url('rat_wholebody.gif');
+                      background-image:url('rat_wholebody.svg');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;
                       background-position: center center;
