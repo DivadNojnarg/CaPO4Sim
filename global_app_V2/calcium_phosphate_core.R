@@ -256,7 +256,7 @@ calcium_phosphate_core <- function (t, state, parameters){
     list(c(dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, 
            dPO4_b, dPO4_c, dCaHPO4_p, dCaH2PO4_p, dCPP_p, dCaHPO4_f, dCaH2PO4_f,
            dCaProt_p, dNaPO4_p, dCa_tot, dPO4_tot, dEGTA_p, dCaEGTA_p), 
-         c(U_Ca = Excretion_norm, 
+         c(U_Ca = Excretion_norm, # out 23
            U_PO4 = Excretion_P_norm, 
            Abs_int_Ca = Abs_intest_norm,
            Abs_int_PO4 = Abs_intest_P_norm, 
@@ -266,7 +266,7 @@ calcium_phosphate_core <- function (t, state, parameters){
            Ac_PO4 = Accretion_P_norm, 
            Reabs_Ca = Reabs_norm, 
            Reabs_PO4 = Reabs_P_norm,
-           Ca_pf = Rapid_storage_Ca, 
+           Ca_pf = Rapid_storage_Ca, # out 33
            Ca_fp = Rapid_release_Ca, 
            PO4_pf = Rapid_storage_P,
            PO4_fp = Rapid_release_P, 

@@ -31,7 +31,7 @@ shinyUI(fluidPage(
   
   tags$head(
     tags$style(HTML("
-                    #network_PTH{
+                    #networkPTH{
                       background-image:url('PTHg_zoom.svg');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;

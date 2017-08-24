@@ -91,8 +91,8 @@ body <- dashboardBody(
                                  # the zoom graph
                                  conditionalPanel(
                                    condition = "input.current_node_bis_id == 9",
-                                   div(id = "network_PTH",
-                                       visNetworkOutput("networkPTH", height = "400px")
+                                   div(id = "networkPTH",
+                                       visNetworkOutput("network_PTH", height = "400px")
                                    )
                                  )
                                  
