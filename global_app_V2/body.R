@@ -52,6 +52,9 @@ body <- dashboardBody(
                       ),
                       column(6, align ="center",
                              verbatimTextOutput("viewposition")
+                      ),
+                      column(12,
+                      verbatimTextOutput("test")
                       )
                       #downloadButton("downloadData", "Download Data")
                       
@@ -68,11 +71,11 @@ body <- dashboardBody(
              
              tabPanel(title = tagList(shiny::icon("line-chart"), "Time Plot"),
                       
-                      column(8, align = "center",
+                      column(6, align = "center",
                              
                              withSpinner(plotlyOutput("plot_node"), size = 2, type = 6, color = "#000000")
                       ),
-                      column(4, align = "center",
+                      column(6, align = "center",
                              
                              withSpinner(plotlyOutput("plot_edge"), size = 2, type = 6, color = "#000000")
                       )
