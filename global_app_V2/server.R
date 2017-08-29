@@ -487,17 +487,17 @@ shinyServer(function(input, output, session) {
   # observeEvent(input$current_node_id,{
   # 
   #                insertUI(
-  #                  selector = "#boxinfo",
+  #                  selector = "#boxinput",
   #                  where = "afterEnd",
   #                  ui = box_close(title = "test",
   #                                 solidHeader = TRUE,
-  #                                 width = 4,
+  #                                 width = 12,
   #                                 removable = TRUE,
   #                                 renderVisNetwork({
-  #                                   
+  # 
   #                                   nodes_PTHg <- nodes_PTHg()
   #                                   edges_PTHg <- edges_PTHg()
-  #                                   
+  # 
   #                                   visNetwork(nodes_PTHg, edges_PTHg) %>%
   #                                     visEvents(selectEdge = "function(edges) {
   #                                               Shiny.onInputChange('current_edge_bis_id', edges.edges);
@@ -510,7 +510,7 @@ shinyServer(function(input, output, session) {
   #                                               offset: {x: 0, y:0} })}") %>% # very important: change the whole graph position after drawing
   #                                     visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
   #                                              arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
-  #                                     visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
+  #                                     visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE,
   #                                                    multiselect = TRUE, zoomView = FALSE) %>%
   #                                     visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
   #                                     visExport(type = "pdf") # export the graph as pdf
@@ -531,56 +531,12 @@ shinyServer(function(input, output, session) {
     
     if (input$notif_switch == "TRUE") {
       
-      showNotification( 
-        id = "menu_notif",
-        "In this panel you can enable/disable notifications, 
-        bookmark the state of your app to share it with colleagues, 
-        save it, load the last state you saved and change
-        the global theme.",
-        duration = 9999, # sufficient amount of time
-        closeButton = TRUE,
-        type = "error")
+      help_text_generator()
       
-      showNotification( 
-        id = "graph_notif",
-        "In this panel are displayed the graph of CaPO4 homeostasis. 
-        To see results, start by clicking on a node and/or an edge on 
-        the interactive diagram. The value of tmax which is the maximum 
-        time of simulation can be increased or decreased as required 
-        (but higher than 0).",
-        duration = 9999, # sufficient amount of time
-        closeButton = TRUE,
-        type = "error")
+    } else {
       
-      showNotification( 
-        id = "diagram_notif",
-        "In this panel is displayed the interactive diagram (see legend). 
-        Basically, when a parameter is changed in the control center, 
-        initial perturbations are shown in yellow. The arrow size increases 
-        if it is a stimulatory effect and inversely. Fluxes are shown 
-        in red if they decrease or in green if they are enhanced. 
-        Colors correspond to the final state of the system
-        (which is the value of tmax in minutes).",
-        duration = 9999,
-        closeButton = TRUE,
-        type = "error")
-      
-      showNotification( 
-        id = "control_notif",
-        "In this panel you can select several parameters 
-        and change their value using sliders.",
-        # possible to add everything inside
-        #sliderInput("useless_slider", "", min = 0, max = 100, value = 50), 
-        duration = 9999,
-        closeButton = TRUE,
-        type = "error") # important so in red
-      
-    } else { # this notifications can be removed at anytime
-      
-      removeNotification(id = "menu_notif", session)
-      removeNotification(id = "graph_notif", session)
-      removeNotification(id = "diagram_notif", session)
-      removeNotification(id = "control_notif", session)
+      # need the session argument!!!
+      help_text_destructor(session)
       
     }
     
@@ -671,12 +627,17 @@ shinyServer(function(input, output, session) {
   # reset PTH parameters
   
   reset_table <- reactiveValues( sliders = data.frame())
+  button_states <- reactiveValues(values = list())
   
   observeEvent(c(input$resetPTHsynthesis,
                  input$resetPTHexocytosis,
                  input$resetPTHexocytosisinhib),{
+                   
+    button_states$values <- append(button_states$values, list(c(input$resetPTHsynthesis[1],
+                                                    input$resetPTHexocytosis[1],
+                                                    input$resetPTHexocytosisinhib[1])))              
     
-    reset_table$sliders <- data.frame (button_id = c("resetPTHsynthesis",
+    reset_table$sliders <- data.frame(button_id = c("resetPTHsynthesis",
                                                      "resetPTHexocytosis",
                                                      "resetPTHexocytosisinhib"),
                                        
@@ -688,37 +649,11 @@ shinyServer(function(input, output, session) {
                                                      "gamma_exo_PTHg")) 
     
     edges_PTHg <- edges_PTHg()
-    sliders_reset(reset_table, network = "network_PTH", edges = edges_PTHg)
-    
-    reset_table$sliders$button_state <- rep(0,3)
+    # call the function to reset the given slider
+    sliders_reset(button_states, reset_table, 
+                  network = "network_PTH", edges = edges_PTHg)
     
   })
-  
-  output$test <- renderPrint({ reset_table$sliders })
-  
-  # observeEvent(input$resetPTHsynthesis,{
-  #   reset("k_prod_PTHg")
-  #   
-  #   edges_PTHg <- edges_PTHg()
-  #   visNetworkProxy("network_PTH") %>%
-  #     visUpdateEdges(edges = edges_PTHg)
-  # })
-  # 
-  # observeEvent(input$resetPTHexocytosis,{
-  #   reset("beta_exo_PTHg")
-  #   
-  #   edges_PTHg <- edges_PTHg()
-  #   visNetworkProxy("network_PTH") %>%
-  #     visUpdateEdges(edges = edges_PTHg)
-  # })
-  # 
-  # observeEvent(input$resetPTHexocytosisinhib,{
-  #   reset("gamma_exo_PTHg")
-  #   
-  #   edges_PTHg <- edges_PTHg()
-  #   visNetworkProxy("network_PTH") %>%
-  #     visUpdateEdges(edges = edges_PTHg)
-  # })
   
   # Share the state of the App via server bookmarking
   

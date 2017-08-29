@@ -9,19 +9,33 @@
 #-------------------------------------------------------------------------
 
 header <- dashboardHeader(
-  title="Calcium Phosphate Homeostasis in the Rat: Free exploration", titleWidth = 700,
+  title="Calcium Phosphate Homeostasis in the Rat: Free exploration", 
+  titleWidth = 700,
   
   # tmax value and other options
   
   tags$li(
     title = "",
     class = "dropdown",
-    dropdownButton(icon = icon("gear"), width = "150px", circle = FALSE, status = "danger", label = "Options",
+    dropdownButton(icon = icon("gear"), 
+                   width = "150px", 
+                   circle = FALSE, 
+                   status = "danger", 
+                   label = "Options",
                    
-                   numericInput("tmax","Value of tmax:", 500, min = 0, max = NA, width = "50%"),
+                   numericInput("tmax",
+                                "Value of tmax:", 
+                                value = 500, 
+                                min = 0, 
+                                max = NA, 
+                                width = "50%"),
                    # enable notifications or not since this can be boring
-                   switchInput(inputId = "notif_switch", label = "Help?",
-                               onStatus = "success", offStatus = "danger", value = FALSE, size = "mini")
+                   switchInput(inputId = "notif_switch", 
+                               label = "Help?",
+                               onStatus = "success", 
+                               offStatus = "danger", 
+                               value = FALSE, 
+                               size = "mini")
                    
     )
   ),
@@ -30,27 +44,32 @@ header <- dashboardHeader(
   tags$li(
     title = "",
     class = "dropdown",
-    actionButton(inputId = "bookmark", label = "Share", 
+    actionButton(inputId = "bookmark", 
+                 label = "Share", 
                  icon = shiny::icon("link", lib = "glyphicon"), 
                  class="btn btn-primary")
-    ),
+  ),
   
   # Menu to save, load, reset and close the application
   tags$li(
     title = "",
     class = "dropdown",
-    actionButton(class="fa fa-trash fa-5x", inputId="resetAll",
-                 label=" Reset", class="btn btn-danger")
+    actionButton(class="fa fa-trash fa-5x", 
+                 inputId="resetAll",
+                 label=" Reset", 
+                 class="btn btn-danger")
   ),
   
   # Task Menu
   dropdownMenu(type = "tasks", badgeStatus = "success",
-               taskItem(value = 60, color = "orange",
-                        "Design"
-               ),
-               taskItem(value = 80, color = "green",
-                        "Features"
-               )
+               
+               taskItem(value = 60, 
+                        color = "orange",
+                        "Design"),
+               
+               taskItem(value = 80, 
+                        color = "green",
+                        "Features")
   )
   
 )

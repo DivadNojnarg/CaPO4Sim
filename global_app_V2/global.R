@@ -65,51 +65,51 @@ arrow_lighting <- function(events, edges, network) {
     
     param_event <- list(values = events,
                         
-                        text = list(Ca_intake = list("Calcium intake has been increased!",
+                        text = list(list("Calcium intake has been increased!",
                                                      "Calcium intake has been decreased!"),
-                                    PO4_intake = list("Phosphate intake has been increased!",
+                                    list("Phosphate intake has been increased!",
                                                       "Phosphate intake has been decreased!"),
-                                    Ca_ac = list("Calcium flux into bone has been increased!",
+                                    list("Calcium flux into bone has been increased!",
                                                  "Calcium flux into bone has been decreased!"),
-                                    Ca_pf = list("Calcium storage in the bone rapid pool has 
+                                    list("Calcium storage in the bone rapid pool has 
                                                      been increased!",
                                                  "Calcium storage in the bone rapid pool has 
                                                      been decreased!"),
-                                    PO4_pf = list("PO4 storage in the bone rapid pool has been 
+                                    list("PO4 storage in the bone rapid pool has been 
                                                       increased!",
                                                   "PO4 storage in the bone rapid pool has been 
                                                       decreased!"),
-                                    Ca_fp = list("Calcium release from the bone rapid pool has 
+                                    list("Calcium release from the bone rapid pool has 
                                                      been increased!",
                                                  "Calcium release from the bone rapid pool has 
                                                      been decreased!"),
-                                    PO4_fp = list("PO4 release from the bone rapid pool has 
+                                    list("PO4 release from the bone rapid pool has 
                                                       been increased!",
                                                   "PO4 release from the bone rapid pool has 
                                                       been decreased!"),
-                                    Res = list("Calcium/Phosphate release from the bone 
+                                    list("Calcium/Phosphate release from the bone 
                                                    (resorption) has been increased!",
                                                "Calcium/Phosphate release from the bone 
                                                    (resorption) has been decreased!"),
-                                    Res = list("Calcium/Phosphate release from the bone 
+                                    list("Calcium/Phosphate release from the bone 
                                                    (resorption) has been increased!",
                                                "Calcium/Phosphate release from the bone 
                                                    (resorption) has been decreased!"),
-                                    GFR = list("GFR has been increased!",
+                                    list("GFR has been increased!",
                                                "GFR has been decreased!"),
-                                    PO4_pc = list("PO4 storage into cells has been increased!",
+                                    list("PO4 storage into cells has been increased!",
                                                   "PO4 storage into cells has been decreased!"),
-                                    PO4_cp = list("PO4 release from cells to plasma has been 
+                                    list("PO4 release from cells to plasma has been 
                                                       increased!",
                                                   "PO4 release from cells to plasma has been 
                                                       decreased!"),
-                                    PTH_synth = list("PTH synthesis has been increased!",
+                                    list("PTH synthesis has been increased!",
                                                      "PTH synthesis has been decreased!"),
-                                    D3_synth = list("25(OH)D stock has been increased!",
+                                    list("25(OH)D stock has been increased!",
                                                     "25(OH)D stock has been decreased!"),
-                                    D3_deg = list("Vitamin D3 degradation has been increased!",
+                                    list("Vitamin D3 degradation has been increased!",
                                                   "Vitamin D3 degradation has been decreased!"),
-                                    FGF_synth = list("FGF23 synthesis has been increased!",
+                                    list("FGF23 synthesis has been increased!",
                                                      "FGF23 synthesis has been decreased!")
                         ),
                         
@@ -139,13 +139,18 @@ arrow_lighting <- function(events, edges, network) {
   edges_id_network <- as.numeric(unlist(param_event$edges_id[event_id]))
  
   # for notification display
-  message <- ifelse(param_event$value[event_id] > 1, 
-                    param_event$text[[event_id]][1],
-                    param_event$text[[event_id]][2])
+  # split notif into 2 parts: one for increase, other for decrease
+  notif_increase <- unlist(lapply(param_event$text, function(x, ind = 1) x[ind]))
+  notif_decrease <- unlist(lapply(param_event$text, function(x, ind = 2) x[ind]))
+  message <- ifelse(param_event$values[event_id] > 1, 
+                    notif_increase[event_id],
+                    notif_decrease[event_id])
   
-  if (!is.null(message)) 
-         ifelse(param_event$value[event_id] != 1,
-                showNotification(paste(message), type = "warning", duration = 2), NULL)
+   if (!is.null(message)) 
+          ifelse(param_event$value[event_id] != 1,
+                 showNotification(paste(message[length(message)]), # does not work totally
+                                  type = "warning", 
+                                  duration = 2), NULL)
   
   return(list(edges_id_network, event_id, param_event$values))
   
@@ -180,7 +185,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events){
   arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) 
   
   if (!is.null(flux_changed_index)) {
-    for (i in (1:ncol(calc_change_t))) {
+    for (i in (seq_along(calc_change_t))) {
       arrow_index_i <- arrow_index[i] 
       # change edge color according to an increase or decrease of the flux
       ifelse(calc_change_t[[i]][1] > 0, 
@@ -535,13 +540,19 @@ plot_edge <- function(edge, out) {
 # reset_table contains the state of reset button (0 if
 # not used) as well as the related sliders_id
 
-sliders_reset <- function(reset_table, network, edges) {
+sliders_reset <- function(button_states, reset_table, network, edges) {
+
+  # store the temp state of buttons
+  states <- button_states$values
+  last_state <- states[[length(states)]]
   
   # select which reset buttons are selected
-  reset_target <- which(reset_table$sliders$button_state != 0)
-  if (length(reset_target) > 1) {
-    # only keep the last selected element
-    reset_target <- reset_target[-c(1:length(reset_target)-1)] 
+  if (length(states) <= 1) {
+    # compare the current state with 0
+    reset_target <- which(unlist(states) != 0)
+  } else {
+    # compare the current state with the previous one
+    reset_target <- which(states[[length(states)-1]] != last_state)
   }
 
   # reset the corresponding target(s) in the table
@@ -550,9 +561,63 @@ sliders_reset <- function(reset_table, network, edges) {
   #update the network
   visNetworkProxy(network) %>%
     visUpdateEdges(edges = edges)
+
+}
+
+
+# Function that handle help text generation
+#
+#
+
+help_text <- data.frame(
+  id = c("menu_notif",
+         "graph_notif",
+         "diagram_notif",
+         "control_notif"),
   
-  #print(reset_target)
-  #print(reset_table$sliders$button_id[reset_target])
+  text = c("In this panel you can enable/disable notifications, 
+           bookmark the state of your app to share it with colleagues, 
+           save it, load the last state you saved and change
+           the global theme.",
+           
+           "In this panel are displayed the graph of CaPO4 homeostasis. 
+           To see results, start by clicking on a node and/or an edge on 
+           the interactive diagram. The value of tmax which is the maximum 
+           time of simulation can be increased or decreased as required 
+           (but higher than 0).",
+           
+           "In this panel is displayed the interactive diagram (see legend). 
+           Basically, when a parameter is changed in the control center, 
+           initial perturbations are shown in yellow. The arrow size increases 
+           if it is a stimulatory effect and inversely. Fluxes are shown 
+           in red if they decrease or in green if they are enhanced. 
+           Colors correspond to the final state of the system
+           (which is the value of tmax in minutes).",
+           
+           "In this panel you can select several parameters 
+           and change their value using sliders.")
+)
+
+# notification builder
+help_text_generator <- function(){
+  
+  for (i in seq_along(help_text$id)) { 
+    showNotification(id = help_text$id[[i]],
+                     paste(help_text$text[[i]]),
+                     duration = 9999, # sufficient amount of time
+                     closeButton = TRUE,
+                     type = "error")
+  }
+
+}
+
+# notification eraser
+help_text_destructor <- function(session){
+  
+  for (i in seq_along(help_text$id)) { 
+    removeNotification(id = help_text$id[[i]], session)
+  }
+  
 }
 
 #------------------------------------------------------------------------- 
