@@ -35,7 +35,15 @@ header <- dashboardHeader(
                                onStatus = "success", 
                                offStatus = "danger", 
                                value = FALSE, 
-                               size = "mini")
+                               size = "mini"),
+                   
+                   # selector for Ca an/or PO4 homeostasis
+                   awesomeCheckboxGroup(inputId = "network_Ca_choice", 
+                                        label = "Choose your network", 
+                                        choices = c("Ca","PO4"), 
+                                        selected = c("Ca","PO4"), 
+                                        inline = TRUE, 
+                                        status = "primary")
                    
     )
   ),
@@ -58,18 +66,20 @@ header <- dashboardHeader(
                  inputId="resetAll",
                  label=" Reset", 
                  class="btn btn-danger")
-  ),
+  )#,
   
   # Task Menu
-  dropdownMenu(type = "tasks", badgeStatus = "success",
-               
-               taskItem(value = 60, 
-                        color = "orange",
-                        "Design"),
-               
-               taskItem(value = 80, 
-                        color = "green",
-                        "Features")
-  )
+  # dropdownMenu(type = "tasks", badgeStatus = "success",
+  #              
+  #              taskItem(value = 60, 
+  #                       color = "orange",
+  #                       "Design"),
+  #              
+  #              taskItem(value = 80, 
+  #                       color = "green",
+  #                       "Features")
+  # )
+  
+  #disable = TRUE
   
 )

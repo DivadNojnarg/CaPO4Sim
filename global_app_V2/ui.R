@@ -24,10 +24,16 @@ shinyUI(fluidPage(
   tags$style("#shiny-notification-diagram_notif {position: fixed; top: 75%; left: 10% ; width: 20em; opacity: 1;}"),
   
   # network CSS
-  tags$style(".vis-button.vis-up {visibility: hidden;}"), # hide css class navigation from visNetwork
-  tags$style(".vis-button.vis-down {visibility: hidden;}"), #see https://github.com/datastorm-open/visNetwork/blob/master/inst/htmlwidgets/lib/vis/vis.css
-  tags$style(".vis-button.vis-left {visibility: hidden;}"), # around line 701
+  # see https://github.com/datastorm-open/visNetwork/blob/master/inst/htmlwidgets/lib/vis/vis.css
+  # around line 701
+  # hide css class navigation from visNetwork
+  tags$style(".vis-button.vis-up {visibility: hidden;}"), 
+  tags$style(".vis-button.vis-down {visibility: hidden;}"), 
+  tags$style(".vis-button.vis-left {visibility: hidden;}"), 
   tags$style(".vis-button.vis-right {visibility: hidden;}"),
+  tags$style(".vis-button.vis-zoomIn {top:10px; right:15px;"),
+  tags$style(".vis-button.vis-zoomOut {top:10px; right:55px;"),
+  tags$style(".vis-button.vis-zoomExtends {top:50px; right:15px;"),
   
   tags$head(
     tags$style(HTML("

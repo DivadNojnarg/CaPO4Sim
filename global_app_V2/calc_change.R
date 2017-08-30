@@ -54,7 +54,7 @@ calc_change <- function (out){
                    PTHg_deg_change = PTHg_deg_change,
                    PTHg_exo_change = PTHg_exo_change,
                    PTHp_deg_change = PTHp_deg_change,
-                   stringsAsFactors = F)
+                   stringsAsFactors = FALSE)
   
 }
 

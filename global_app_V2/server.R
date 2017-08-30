@@ -20,33 +20,37 @@ shinyServer(function(input, output, session) {
   
   # Parameters: multiply the real parameter value by the user input. 
   # By default, user input = 1 so that parameters are well defined
-  parameters <- reactive({ c("k_prod_PTHg" = 4.192*input$k_prod_PTHg, 
-                             "beta_exo_PTHg" = 5.9e-002*input$beta_exo_PTHg,
-                             "gamma_exo_PTHg" = 5.8e-002*input$gamma_exo_PTHg, 
-                             "D3_inact" = 2.5e-005*input$D3_inact, 
-                             "k_deg_D3" = 1e-003*input$k_deg_D3,
-                             "k_prod_FGF" = 6.902e-011*input$k_prod_FGF, 
-                             "I_Ca" = 2.2e-003*input$I_Ca, 
-                             "Lambda_ac_Ca" = 5.5e-004*input$Lambda_ac_Ca,
-                             "Lambda_ac_P" = 2.75e-004*input$Lambda_ac_Ca, 
-                             "Lambda_res_min" = 1e-004*input$Lambda_res_min, 
-                             "delta_res_max" = 6e-004*input$delta_res_max,
-                             "k_p_Ca" = 0.44*input$k_p_Ca, 
-                             "k_f_Ca" = 2.34e-003*input$k_f_Ca, 
-                             "I_P" = 1.55e-003*input$I_P, 
-                             "k_pc" = 0.1875*input$k_pc,
-                             "k_cp" = 1e-003*input$k_cp, 
-                             "k_p_P" = 13.5*input$k_p_P, 
-                             "k_f_P" = 0.25165*input$k_f_P, 
-                             "k_fet" = 0.3*input$k_fet,
-                             "k_c_CPP" = 3*input$k_c_CPP, 
-                             "Na" = 142*input$Na, 
-                             "Prot_tot_p" = 0.6*input$Prot_tot_p, 
-                             "Vp" = 0.01*input$Vp,
-                             "GFR" = 2e-003*input$GFR) })
+  parameters <- reactive({ 
+    
+    c("k_prod_PTHg" = 4.192*input$k_prod_PTHg, 
+      "beta_exo_PTHg" = 5.9e-002*input$beta_exo_PTHg,
+      "gamma_exo_PTHg" = 5.8e-002*input$gamma_exo_PTHg, 
+      "D3_inact" = 2.5e-005*input$D3_inact, 
+      "k_deg_D3" = 1e-003*input$k_deg_D3,
+      "k_prod_FGF" = 6.902e-011*input$k_prod_FGF, 
+      "I_Ca" = 2.2e-003*input$I_Ca, 
+      "Lambda_ac_Ca" = 5.5e-004*input$Lambda_ac_Ca,
+      "Lambda_ac_P" = 2.75e-004*input$Lambda_ac_Ca, 
+      "Lambda_res_min" = 1e-004*input$Lambda_res_min, 
+      "delta_res_max" = 6e-004*input$delta_res_max,
+      "k_p_Ca" = 0.44*input$k_p_Ca, 
+      "k_f_Ca" = 2.34e-003*input$k_f_Ca, 
+      "I_P" = 1.55e-003*input$I_P, 
+      "k_pc" = 0.1875*input$k_pc,
+      "k_cp" = 1e-003*input$k_cp, 
+      "k_p_P" = 13.5*input$k_p_P, 
+      "k_f_P" = 0.25165*input$k_f_P, 
+      "k_fet" = 0.3*input$k_fet,
+      "k_c_CPP" = 3*input$k_c_CPP, 
+      "Na" = 142*input$Na, 
+      "Prot_tot_p" = 0.6*input$Prot_tot_p, 
+      "Vp" = 0.01*input$Vp,
+      "GFR" = 2e-003*input$GFR) 
+    
+  })
   
   # make a vector of input$parameters, fixed_parameters and calculated parameters
-  parameters_bis <- reactive({ c(parameters(), parameters_fixed )})
+  parameters_bis <- reactive({ c(parameters(), parameters_fixed) })
   
   #------------------------------------------------------------------------- 
   #  
@@ -82,146 +86,148 @@ shinyServer(function(input, output, session) {
   
   nodes_Ca <- reactive({
     
-    d <- data.frame(id = 1:15,
-                    shape = c("image","image","image","image","image",
-                              "image","image","image","image","image",
-                              "image","image","image","image","image"), 
-                    # square are always scalable
-                    image = c("food.svg","intestine.svg","feces.svg",
-                              "plasma.svg","rapid-bone.svg","bone.svg",
-                              "kidney.svg","urine.svg","parathyroid_gland.svg",
-                              "D3.svg","D3.svg","FGF23.svg","cells.svg",
-                              "Cap.svg","PO4.svg"),
-                    label = c("","","","","","","","","","","","","","",""),
-                    group = c(rep("without hormones",8),rep("only hormones",4), 
-                              "without hormones", rep("only hormones",2)),
-                    fixed = list("x" = TRUE, "y" = TRUE),
-                    title = c("", 
-                              paste(a("About intestinal Ca absorption", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23937&Menu=1079&backbar=0",
-                                      target="_blank"),br(),
-                                    a("About intestinal PO4 absorption", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0)",
-                                      target="_blank")),
-                              rep("",3),
-                              paste(a("About bone", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24035&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              paste(a("About Ca kidney handling", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
-                                      target="_blank"), br(),
-                                    a("About PO4 kidney handling", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23410&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              "",
-                              paste(a("About PTH", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23466&Menu=1079&backbar=0", 
-                                      target="_blank")),
-                              paste(a("About vitamin D3", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              paste(a("About vitamin D3", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              paste(a("About FGF23", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              rep("",1),
-                              paste(a("About Calcium", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18891&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              paste(a("About Phosphate", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0",
-                                      target="_blank"))), # tooltip to display an image
-                    x = c(8, 12, 20, 12, 0, 3, 22, 32, 
-                          12, 5, 22, 28, 11, 18, 28),
-                    y = c(0, 4, 0, 12, 12, 22, 12, 14, 
-                          27, 6, 24, 22, 20, 32, 32),
-                    color = list(background = "#97C2FC", 
-                                 border = "#97C2FC", 
-                                 highlight = list(background = "orange", border = "orange")),
-                    size = c(50,50,50,50,50,50,50,50,
-                             50,25,25,25,50,25,25), # rep(50,13)
-                    hidden = c(rep(FALSE,15)))
+    d <- data.frame(
+      id = 1:15,
+      shape = c("image","image","image","image","image",
+                "image","image","image","image","image",
+                "image","image","image","image","image"), 
+      # square are always scalable
+      image = c("food.svg","intestine.svg","feces.svg",
+                "plasma.svg","rapid-bone.svg","bone.svg",
+                "kidney.svg","urine.svg","parathyroid_gland.svg",
+                "D3.svg","D3.svg","FGF23.svg","cells.svg",
+                "Cap.svg","PO4.svg"),
+      label = c("","","","","","","","","","","","","","",""),
+      group = c(rep("without hormones",8),rep("only hormones",4), 
+                "without hormones", rep("only hormones",2)),
+      fixed = list("x" = TRUE, "y" = TRUE),
+      title = c("", 
+                paste(a("About intestinal Ca absorption", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23937&Menu=1079&backbar=0",
+                        target="_blank"),br(),
+                      a("About intestinal PO4 absorption", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0)",
+                        target="_blank")),
+                rep("",3),
+                paste(a("About bone", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24035&Menu=1079&backbar=0",
+                        target="_blank")),
+                paste(a("About Ca kidney handling", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
+                        target="_blank"), br(),
+                      a("About PO4 kidney handling", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23410&Menu=1079&backbar=0",
+                        target="_blank")),
+                "",
+                paste(a("About PTH", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23466&Menu=1079&backbar=0", 
+                        target="_blank")),
+                paste(a("About vitamin D3", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0",
+                        target="_blank")),
+                paste(a("About vitamin D3", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0",
+                        target="_blank")),
+                paste(a("About FGF23", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0",
+                        target="_blank")),
+                rep("",1),
+                paste(a("About Calcium", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18891&Menu=1079&backbar=0",
+                        target="_blank")),
+                paste(a("About Phosphate", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0",
+                        target="_blank"))), # tooltip to display an image
+      x = c(8, 12, 20, 12, 0, 3, 22, 32, 
+            12, 5, 22, 28, 11, 18, 28),
+      y = c(0, 4, 0, 12, 12, 22, 12, 14, 
+            27, 6, 24, 22, 20, 32, 32),
+      color = list(background = "#97C2FC", 
+                   border = "#97C2FC", 
+                   highlight = list(background = "orange", border = "orange")),
+      size = c(50,50,50,50,50,50,50,50,
+               50,25,25,25,50,25,25), # rep(50,13)
+      hidden = c(rep(FALSE,15)))
     
   })
   
   edges_Ca <- reactive({
     
-    d <- data.frame(from = c(1,2,2,4,5,5,6,7,4,7,9,9,10,11,9,11,11,
-                             12,12,7,13,4,7,14,14,15,15,15,7,5,4,5), 
-                      to = c(2,3,4,5,4,6,4,4,7,8,6,7,2,9,11,7,12,11,
-                             7,7,4,13,4,11,9,9,11,12,8,4,5,6),
-                    label = c("Intake", "Fecal Excretion", " Intestinal absorption ", 
-                              "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone", 
-                              "Resorption", "Ca reabsorption", "filtration", "Urinary Ca excretion",
-                              "+","","+","-","+","","+","-","","CaSR (-)","Cells-plasma", "Plasma-cells", 
-                              "PO4 reabsorption","-","CaSR(-)","+","-","+","Urinary PO4 excretion",
-                              "Rapid PO4 release","Rapid PO4 storage","PO4 flux into bone"),
-                    id = 1:32,
-                    width = 4*c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-                                1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-                    font.size = c(rep(11,10),rep(30,5),11,rep(30,2),
-                                  rep(11,5),30,11,rep(30,3), rep(11,4)),
-                    #font.background = c(rep("",10),rgb(1,1,1),rep("",2),rgb(1,1,1),rgb(1,1,1),"",rgb(1,1,1),rgb(1,1,1),
-                    #                    rep("",5),rgb(1,1,1),"",rgb(1,1,1),rgb(1,1,1),rgb(1,1,1),rep("",4)),
-                    font.align = c(rep("",10),"bottom",rep("",2),"bottom","top","","bottom","bottom",
-                                   rep("",5),"bottom","","top","bottom","bottom",rep("",4)),
-                    color = list(color = c(rep("black", 32)), 
-                                 highlight = "yellow"),
-                    dashes = c(rep(FALSE,10),rep(TRUE,10),rep(FALSE,3),
-                               rep(TRUE,5), rep(FALSE,4)),
-                    title = c(rep("",5),
-                              paste(a("About bone formation", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              paste(a("About bone resorption", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=25370&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              rep("",12),
-                              paste(a("About the Calcium Sensing Receptor", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              rep("",4),
-                              paste(a("About the Calcium Sensing Receptor", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
-                                      target="_blank")),
-                              rep("",6),
-                              paste(a("About bone formation", 
-                                      href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
-                                      target="_blank"))),
-                    smooth = c(rep(TRUE,32)),
-                    length = c(200,200,200,200,300,200,rep(200,22),200,300,200,200),
-                    hidden = c(rep(FALSE,3), # to show either Ca or PO4 or CaPO4 network arrows
-                               ifelse(is.element("Ca", input$network_Ca_choice), 
-                                                   ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
-                               ifelse(is.element("Ca", input$network_Ca_choice), 
-                                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               ifelse(is.element("Ca", input$network_Ca_choice), 
-                                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               FALSE,
-                               ifelse(is.element("Ca", input$network_Ca_choice), 
-                                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               FALSE,
-                               ifelse(is.element("Ca", input$network_Ca_choice), 
-                                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               rep(FALSE,10),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               rep(FALSE,5),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                               ifelse(is.element("PO4", input$network_Ca_choice), 
-                                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE)), 
-                    stringsAsFactors=FALSE) # to change edges color do not forget this "stringsAsFactors=FALSE"
+    d <- data.frame(
+      from = c(1,2,2,4,5,5,6,7,4,7,9,9,10,11,9,11,11,
+               12,12,7,13,4,7,14,14,15,15,15,7,5,4,5), 
+      to = c(2,3,4,5,4,6,4,4,7,8,6,7,2,9,11,7,12,11,
+             7,7,4,13,4,11,9,9,11,12,8,4,5,6),
+      label = c("Intake", "Fecal Excretion", " Intestinal absorption ", 
+                "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone", 
+                "Resorption", "Ca reabsorption", "filtration", "Urinary Ca excretion",
+                "+","","+","-","+","","+","-","","CaSR (-)","Cells-plasma", "Plasma-cells", 
+                "PO4 reabsorption","-","CaSR(-)","+","-","+","Urinary PO4 excretion",
+                "Rapid PO4 release","Rapid PO4 storage","PO4 flux into bone"),
+      id = 1:32,
+      width = 4*c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                  1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+      font.size = c(rep(11,10),rep(30,5),11,rep(30,2),
+                    rep(11,5),30,11,rep(30,3), rep(11,4)),
+      #font.background = c(rep("",10),rgb(1,1,1),rep("",2),rgb(1,1,1),rgb(1,1,1),"",rgb(1,1,1),rgb(1,1,1),
+      #                    rep("",5),rgb(1,1,1),"",rgb(1,1,1),rgb(1,1,1),rgb(1,1,1),rep("",4)),
+      font.align = c(rep("",10),"bottom",rep("",2),"bottom","top","","bottom","bottom",
+                     rep("",5),"bottom","","top","bottom","bottom",rep("",4)),
+      color = list(color = c(rep("black", 32)), 
+                   highlight = "yellow"),
+      dashes = c(rep(FALSE,10),rep(TRUE,10),rep(FALSE,3),
+                 rep(TRUE,5), rep(FALSE,4)),
+      title = c(rep("",5),
+                paste(a("About bone formation", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
+                        target="_blank")),
+                paste(a("About bone resorption", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=25370&Menu=1079&backbar=0",
+                        target="_blank")),
+                rep("",12),
+                paste(a("About the Calcium Sensing Receptor", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
+                        target="_blank")),
+                rep("",4),
+                paste(a("About the Calcium Sensing Receptor", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
+                        target="_blank")),
+                rep("",6),
+                paste(a("About bone formation", 
+                        href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
+                        target="_blank"))),
+      smooth = c(rep(TRUE,32)),
+      length = c(200,200,200,200,300,200,rep(200,22),200,300,200,200),
+      hidden = c(rep(FALSE,3), # to show either Ca or PO4 or CaPO4 network arrows
+                 ifelse(is.element("Ca", input$network_Ca_choice), 
+                        ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
+                 ifelse(is.element("Ca", input$network_Ca_choice), 
+                        ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("Ca", input$network_Ca_choice), 
+                        ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 FALSE,
+                 ifelse(is.element("Ca", input$network_Ca_choice), 
+                        ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 FALSE,
+                 ifelse(is.element("Ca", input$network_Ca_choice), 
+                        ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 rep(FALSE,10),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 rep(FALSE,5),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE)), 
+      stringsAsFactors=FALSE) # to change edges color do not forget this "stringsAsFactors=FALSE"
     
   })
   
@@ -232,21 +238,23 @@ shinyServer(function(input, output, session) {
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
     
-    legend_nodes <- data.frame(shape = c("image","image"),
-                               image = c("food.svg","D3.svg"),
-                               label = c("compartment", "hormones"),
-                               size = c(15,15))
+    legend_nodes <- data.frame(
+      shape = c("image","image"),
+      image = c("food.svg","D3.svg"),
+      label = c("compartment", "hormones"),
+      size = c(15,15))
     
-    legend_edges <- data.frame(from = c(5,1,15,9), 
-                               to = c(4,2,12,7),
-                               width = 4,
-                               arrows = "to",
-                               label = c("inhibited flux", "stimulated flux", 
-                                         "hormonal regulation","perturbation"),
-                               color = list(color = c("red","green","black","yellow")),
-                               font.align = "bottom",
-                               dashes = c(F,F,T,F),
-                               smooth = c(T,T,T,F))
+    legend_edges <- data.frame(
+      from = c(5,1,15,9), 
+      to = c(4,2,12,7),
+      width = 4,
+      arrows = "to",
+      label = c("inhibited flux", "stimulated flux", 
+                "hormonal regulation","perturbation"),
+      color = list(color = c("red","green","black","yellow")),
+      font.align = "bottom",
+      dashes = c(F,F,T,F),
+      smooth = c(T,T,T,F))
     
     visNetwork(nodes_Ca, edges_Ca, width = "100%", height = "100%") %>%
       visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
@@ -285,13 +293,9 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$id <- renderPrint({
-    input$current_edge_id
-  })
+  output$id <- renderPrint({ input$current_edge_id })
   
-  output$id_bis <- renderPrint({
-    input$current_node_id
-  })
+  output$id_bis <- renderPrint({ input$current_node_id })
   
   
   #------------------------------------------------------------------------- 
@@ -304,63 +308,63 @@ shinyServer(function(input, output, session) {
   
   nodes_PTHg <- reactive({
     
-    d <- data.frame(id = 1:5,
-                    shape = c("circle","circle","circle","circle","circle"), 
-                    label = c("","PTHg","","",""),
-                    x = c(-50,81,51,184,109), 
-                    y = c(-6,-6,119,-106,-165), 
-                    color = list(background = "#97C2FC", border = "#97C2FC", 
-                                 highlight = list(background = "orange", border = "orange")),
-                    size = c(10,10,10,10,10), 
-                    #fixed = list("x" = TRUE, "y" = TRUE),
-                    hidden = c(TRUE,FALSE,TRUE,TRUE,TRUE))
+    d <- data.frame(
+      id = 1:5,
+      shape = c("circle","circle","circle","circle","circle"), 
+      label = c("","PTHg","","",""),
+      x = c(-50,81,51,184,109), 
+      y = c(-6,-6,119,-106,-165), 
+      color = list(background = "#97C2FC", border = "#97C2FC", 
+                   highlight = list(background = "orange", border = "orange")),
+      size = c(10,10,10,10,10), 
+      #fixed = list("x" = TRUE, "y" = TRUE),
+      hidden = c(TRUE,FALSE,TRUE,TRUE,TRUE))
     
   })
   
   edges_PTHg <- reactive({
     
-    d <- data.frame(from = c(1,2,2,5), 
-                    to = c(2,3,4,4),
-                    label = c("PTHg synthesis", "PTHg degradation", 
-                              "PTHg exocytosis", "CaSR inhibition"),
-                    id = 1:4,
-                    width = 4,
-                    font.size = 12,
-                    color = list(color = c(rep("black", 4)), 
-                                 highlight = "yellow"),
-                    dashes = c(rep(FALSE,3),TRUE),
-                    smooth = c(rep(TRUE,4)),
-                    hidden = rep(FALSE,4),
-                    stringsAsFactors=FALSE)
+    d <- data.frame(
+      from = c(1,2,2,5), 
+      to = c(2,3,4,4),
+      label = c("PTHg synthesis", "PTHg degradation", 
+                "PTHg exocytosis", "CaSR inhibition"),
+      id = 1:4,
+      width = 4,
+      font.size = 12,
+      color = list(color = c(rep("black", 4)), 
+                   highlight = "yellow"),
+      dashes = c(rep(FALSE,3),TRUE),
+      smooth = c(rep(TRUE,4)),
+      hidden = rep(FALSE,4),
+      stringsAsFactors=FALSE)
     
   })
   
   output$network_PTH <- renderVisNetwork({
-
+    
     nodes_PTHg <- nodes_PTHg()
     edges_PTHg <- edges_PTHg()
     
     visNetwork(nodes_PTHg, edges_PTHg) %>%
-       visEvents(selectEdge = "function(edges) {
+      visEvents(selectEdge = "function(edges) {
                  Shiny.onInputChange('current_edge_bis_id', edges.edges);
                  ;}") %>%
-       visEvents(deselectEdge = "function(edges) {
+      visEvents(deselectEdge = "function(edges) {
          Shiny.onInputChange('current_edge_bis_id', 'null');
                  ;}") %>% # set value to NULL to prevent sliders from being displayed
       visEvents(type = "once", afterDrawing = "function() {
                 this.moveTo({ position: {x: 2.5, y:-2.5},
                 offset: {x: 0, y:0} })}") %>% # very important: change the whole graph position after drawing
-       visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
-                arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
-       visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
-                      multiselect = TRUE, zoomView = FALSE, dragNodes = FALSE, dragView = FALSE) %>%
-       visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
-       visExport(type = "pdf") # export the graph as pdf
-})
-  
-  output$id_tris <- renderPrint({
-    input$current_edge_bis_id
+      visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
+               arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
+      visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
+                     multiselect = TRUE, zoomView = FALSE, dragNodes = FALSE, dragView = FALSE) %>%
+      visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
+      visExport(type = "pdf") # export the graph as pdf
   })
+  
+  output$id_tris <- renderPrint({ input$current_edge_bis_id })
   
   # node coordinates
   output$position <- renderPrint( vals$coords ) # usefull when developing to return x and y position
@@ -394,13 +398,8 @@ shinyServer(function(input, output, session) {
   
   output$plot_node <- renderPlotly({
     
-    validate(
-      need(input$current_node_id, 'Select one node on the graph!')
-    )
-    
-    validate(
-      need(input$current_node_id != 0, 'Select one node on the graph!')
-    )
+    validate(need(input$current_node_id, 'Select one node on the graph!'))
+    validate(need(input$current_node_id != 0, 'Select one node on the graph!'))
     
     out <- out()
     parameters_bis <- parameters_bis()
@@ -411,13 +410,8 @@ shinyServer(function(input, output, session) {
   
   output$plot_edge <- renderPlotly({
     
-    validate(
-      need(input$current_edge_id, 'Select one edge on the graph!')
-    )
-    
-    validate(
-      need(input$current_edge_id != 0, 'Select one edge on the graph!')
-    )
+    validate(need(input$current_edge_id, 'Select one edge on the graph!'))
+    validate(need(input$current_edge_id != 0, 'Select one edge on the graph!'))
     
     out <- out()
     
@@ -432,7 +426,7 @@ shinyServer(function(input, output, session) {
   #  
   #
   #-------------------------------------------------------------------------
-
+  
   # The following commented lines are mandatory
   # if a new flux is added so as to generate
   # the new table needed for computations
@@ -456,21 +450,21 @@ shinyServer(function(input, output, session) {
   observe({ 
     
     events <- c(input$I_Ca,input$I_P,
-                   input$Lambda_ac_Ca,
-                   input$k_p_Ca,input$k_p_P,
-                   input$k_f_Ca, input$k_f_P,
-                   input$Lambda_res_min,
-                   input$delta_res_max,
-                   input$GFR, input$k_pc,
-                   input$k_cp, input$k_prod_PTHg,
-                   input$D3_inact, input$k_deg_D3,
-                   input$k_prod_FGF)
+                input$Lambda_ac_Ca,
+                input$k_p_Ca,input$k_p_P,
+                input$k_f_Ca, input$k_f_P,
+                input$Lambda_res_min,
+                input$delta_res_max,
+                input$GFR, input$k_pc,
+                input$k_cp, input$k_prod_PTHg,
+                input$D3_inact, input$k_deg_D3,
+                input$k_prod_FGF)
     
     events_PTH <- c(input$k_prod_PTHg,
                     input$beta_exo_PTHg,
                     input$gamma_exo_PTHg)
     
-
+    
     out <- out()
     edges_Ca <- edges_Ca()
     edges_PTHg <- edges_PTHg()
@@ -479,7 +473,7 @@ shinyServer(function(input, output, session) {
     flux_lighting(edges_Ca, network = "network_Ca", out, events = events)
     # for the PTH network
     flux_lighting(edges_PTHg, network = "network_PTH", out, events = events_PTH)
-
+    
   })
   
   # generate UI box by clicking on a node or edge
@@ -518,7 +512,7 @@ shinyServer(function(input, output, session) {
   #                )
   # 
   # })
-
+  
   #------------------------------------------------------------------------- 
   #  
   #  Notification events to explain the user how to play with the app
@@ -550,7 +544,7 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$beta_exo_PTHg,{ # critical value for PTHg
     
-    if (input$beta_exo_PTHg < 0.9){
+    if (input$beta_exo_PTHg < 0.9) {
       
       sendSweetAlert(messageId = "failSw", 
                      title = "Ooops ...", 
@@ -566,7 +560,7 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$tmax,{ # critical value for tmax
     
-    if (input$tmax > 30000){
+    if (input$tmax > 30000) {
       
       sendSweetAlert(messageId = "failSw", 
                      title = "Ooops ...", 
@@ -600,7 +594,6 @@ shinyServer(function(input, output, session) {
       enable(selector = "#network_Ca_choice input[value='Ca']")
     }
     
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -610,6 +603,7 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # reset all the values of box inputs as well as graphs
+  
   observe({
     
     input$resetAll
@@ -624,36 +618,33 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # reset PTH parameters
+  # reset parameters individually
   
-  reset_table <- reactiveValues( sliders = data.frame())
+  reset_table <- reactiveValues( sliders = list())
   button_states <- reactiveValues(values = list())
   
   observeEvent(c(input$resetPTHsynthesis,
                  input$resetPTHexocytosis,
-                 input$resetPTHexocytosisinhib),{
+                 input$resetPTHexocytosisinhib,
+                 input$resetD3inact,
+                 input$resetD3deg,
+                 input$resetFGFsynth,
+                 input$resetCaintake,
+                 input$resetPintake,
+                 input$resetkpCa,
+                 input$resetkfCa,
+                 input$resetkpP,
+                 input$resetkfP,
+                 input$resetacCa,
+                 input$resetresmin,
+                 input$resetresmax,
+                 input$resetkpc,
+                 input$resetkcp),{
                    
-    button_states$values <- append(button_states$values, list(c(input$resetPTHsynthesis[1],
-                                                    input$resetPTHexocytosis[1],
-                                                    input$resetPTHexocytosisinhib[1])))              
-    
-    reset_table$sliders <- data.frame(button_id = c("resetPTHsynthesis",
-                                                     "resetPTHexocytosis",
-                                                     "resetPTHexocytosisinhib"),
-                                       
-                                       button_state = c(input$resetPTHsynthesis[1],
-                                                        input$resetPTHexocytosis[1],
-                                                        input$resetPTHexocytosisinhib[1]),
-                                       
-                                       slider_id = c("k_prod_PTHg", "beta_exo_PTHg",
-                                                     "gamma_exo_PTHg")) 
-    
-    edges_PTHg <- edges_PTHg()
-    # call the function to reset the given slider
-    sliders_reset(button_states, reset_table, 
-                  network = "network_PTH", edges = edges_PTHg)
-    
-  })
+                   # call the function to reset the given slider
+                   sliders_reset(button_states, reset_table, input)
+                   
+                 })
   
   # Share the state of the App via server bookmarking
   

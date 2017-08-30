@@ -29,13 +29,6 @@ body <- dashboardBody(
                       
                       div(id = "network_cap",
                           
-                          awesomeCheckboxGroup(inputId = "network_Ca_choice", 
-                                               label = "Choose your network", 
-                                               choices = c("Ca","PO4"), 
-                                               selected = c("Ca","PO4"), 
-                                               inline = TRUE, 
-                                               status = "primary"), # selector for Ca an/or PO4 homeostasis
-                          
                           withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
                                       size = 2, 
                                       type = 6, 
@@ -137,8 +130,9 @@ body <- dashboardBody(
                                    condition = "input.current_edge_bis_id != 'null' && 
                                                 input.current_edge_bis_id == 3",
 
-                                            sliderInput("beta_exo_PTHg", "Rate constant for maximal 
-                                                        PTH secretion from parathyroid glands (1/min)", 
+                                            sliderInput("beta_exo_PTHg", 
+                                                        "Maximal PTH secretion from parathyroid 
+                                                        glands (1/min)", 
                                                         min = 0, 
                                                         max = 2, 
                                                         value = 1, 
@@ -160,8 +154,9 @@ body <- dashboardBody(
                                                 input.current_edge_bis_id == 4",
                                             
                                             sliderInput("gamma_exo_PTHg", 
-                                                        "Rate constant for maximal inhibition of PTH 
-                                                        secretion from parathyroid glands by calcium (1/min)", 
+                                                        "Maximal inhibition of PTH 
+                                                        secretion from parathyroid glands 
+                                                        by calcium (1/min)", 
                                                         min = 0, 
                                                         max = 1, 
                                                         value = 1, 
@@ -200,8 +195,9 @@ body <- dashboardBody(
                                    fluidRow(
                                      column(8, align = "center",
                                             
-                                            sliderInput("beta_exo_PTHg", "Rate constant for maximal 
-                                                        PTH secretion from parathyroid glands (1/min)", 
+                                            sliderInput("beta_exo_PTHg", 
+                                                        "Maximal PTH secretion from parathyroid 
+                                                        glands (1/min)", 
                                                         min = 0, 
                                                         max = 2, 
                                                         value = 1, 
@@ -222,7 +218,7 @@ body <- dashboardBody(
                                      column(8, align = "center",
                                             
                                             sliderInput("gamma_exo_PTHg", 
-                                                        "Rate constant for maximal inhibition of PTH secretion 
+                                                        "Maximal inhibition of PTH secretion 
                                                         from parathyroid glands by calcium (1/min)", 
                                                         min = 0, 
                                                         max = 1, 
@@ -243,35 +239,40 @@ body <- dashboardBody(
                                    condition = "input.current_node_id == 10 || 
                                                 input.current_node_id == 11",
                                    
-                                   jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
-                                     div(
-                                       column(4, align = "center",
+                                   #jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
+                                     #div(
+                                       column(12, align = "center",
                                               sliderInput("D3_inact", 
-                                                          "$$ [D_3^{inact}]_p $$", 
+                                                          "Plasma concentration of 25(OH)D (nM)", 
                                                           min = 0, 
                                                           max = 100, 
                                                           value = 1, 
                                                           step = 1) %>%
                                                 shinyInput_label_embed(
-                                                  icon("info") %>%
-                                                    bs_embed_tooltip(title = "Plasma concentration of 25(OH)D, 
-                                                                     the inactive vitamin D3 (nM)"))
+                                                  icon("undo") %>%
+                                                    actionBttn(inputId="resetD3inact",
+                                                               label="", 
+                                                               color="danger", 
+                                                               size = "xs"))
                                        ),
-                                       column(4, align = "center",             
+                                       column(12, align = "center",             
                                               sliderInput("k_deg_D3", 
-                                                          "$$ k_{deg}^{D3} $$", 
+                                                          "Rate constant for vitamin D3 
+                                                                     degradation (1/min)", 
                                                           min = 0, 
                                                           max = 10, 
                                                           value = 1, 
                                                           step = 0.1) %>%
                                                 shinyInput_label_embed(
-                                                  icon("info") %>%
-                                                    bs_embed_tooltip(title = "Rate constant for vitamin D3 
-                                                                     degradation (1/min)"))
+                                                  icon("undo") %>%
+                                                    actionBttn(inputId="resetD3deg",
+                                                               label="", 
+                                                               color="danger", 
+                                                               size = "xs"))
                                        )
                                        
-                                     )
-                                   )
+                                     #)
+                                   #)
                                  ),
                                  
                                  
@@ -279,40 +280,52 @@ body <- dashboardBody(
                                    
                                    condition = "input.current_node_id == 12",
                                    
-                                   sliderInput("k_prod_FGF", "$$ k_{prod}^{FGF} $$", 
+                                   sliderInput("k_prod_FGF", 
+                                               "Minimal rate of FGF23 synthesis (fM/min)", 
                                                min = 0, 
                                                max = 10, 
                                                value = 1, 
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
-                                       icon("info") %>%
-                                         bs_embed_tooltip(title = "Minimal rate of FGF23 synthesis (fM/min)"))
-                                   
+                                       icon("undo") %>%
+                                         actionBttn(inputId="resetFGFsynth",
+                                                    label="", 
+                                                    color="danger", 
+                                                    size = "xs"))
                                  ),
                                  
                                  
                                  conditionalPanel( # Intake parameters
                                    
                                    condition = "input.current_node_id == 1",
-                                   column(4, align = "center",
-                                          sliderInput("I_Ca", "$$ I_{Ca} $$", 
+                                   
+                                   column(12, align = "center",
+                                          sliderInput("I_Ca", 
+                                                      "Calcium intake (μmol/min)", 
                                                       min = 0, 
                                                       max = 10, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Calcium intake (μmol/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetCaintake",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    ),
-                                   column(4, align = "center",
-                                          sliderInput("I_P", "$$ I_{PO_4} $$", 
+                                   column(12, align = "center",
+                                          sliderInput("I_P", 
+                                                      "Phosphate intake (μmol/min)", 
                                                       min = 0, 
                                                       max = 10, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Phosphate intake (μmol/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetPintake",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    )
                                    
                                    
@@ -322,52 +335,65 @@ body <- dashboardBody(
                                  conditionalPanel( # Fast Bone parameters
                                    
                                    condition = "input.current_node_id == 5",
-                                   column(4, align = "center",           
+                                   column(6, align = "center",           
                                           sliderInput("k_p_Ca", 
-                                                      "$$ k_{pf}^{Ca} $$", 
+                                                      "Ca transfer 
+                                                      from plasma to fast bone pool (1/min)", 
                                                       min = 0, 
                                                       max = 2, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Rate constant of calcium transfer 
-                                                                 from plasma to fast bone pool (1/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetkpCa",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    ),
-                                   column(4, align = "center",             
+                                   column(6, align = "center",             
                                           sliderInput("k_f_Ca", 
-                                                      "$$ k_{fp}^{Ca} $$", 
+                                                      "Ca transfer 
+                                                      from fast bone pool to plasma (1/min)", 
                                                       min = 0, 
                                                       max = 2, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Rate constant of calcium transfer 
-                                                                 from fast bone pool to plasma (1/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetkfCa",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    ),
-                                   column(4, align = "center",           
+                                   column(6, align = "center",           
                                           sliderInput("k_p_P", 
-                                                      "$$ k_{pf}^{PO_4} $$", 
+                                                      "PO4 transfer from 
+                                                      plasma to fast bone pool (1/min)", 
                                                       min = 0, 
                                                       max = 2, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Rate constant of PO4 transfer from 
-                                                                 plasma to fast bone pool (1/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetkpP",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    ),
-                                   column(4, align = "center",           
-                                          sliderInput("k_f_P", "$$ k_{fp}^{PO_4} $$", 
+                                   column(6, align = "center",           
+                                          sliderInput("k_f_P", 
+                                                      "PO4 transfer from 
+                                                       fast bone pool to plasma (1/min)", 
                                                       min = 0, 
                                                       max = 2, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Rate constant of PO4 transfer from 
-                                                                 fast bone pool to plasma (1/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetkfP",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    )
                                    
                                    
@@ -377,38 +403,47 @@ body <- dashboardBody(
                                  conditionalPanel( # Slow Bone parameters
                                    
                                    condition = "input.current_node_id == 6",
-                                   column(4, align = "center",           
+                                   column(12, align = "center",           
                                           sliderInput("Lambda_ac_Ca", 
-                                                      "$$ \\gamma_{ac}^{Ca} $$", 
+                                                      "rate constant of Ca flux into bone (1/min)", 
                                                       min = 0, 
                                                       max = 10, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "rate constant of Ca flux into bone (1/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetacCa",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    ),
-                                   column(4, align = "center",            
+                                   column(12, align = "center",            
                                           sliderInput("Lambda_res_min", 
-                                                      "$$ \\Gamma_{res}^{min} $$", 
+                                                      "Minimal resorption rate (μmol/min)", 
                                                       min = 0, 
                                                       max = 10, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Minimal resorption rate (μmol/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetresmin",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    ),
-                                   column(4, align = "center",            
+                                   column(12, align = "center",            
                                           sliderInput("delta_res_max", 
-                                                      "$$ \\delta_{res}^{max} $$", 
+                                                      "Maximal resorption rate (μmol/min)", 
                                                       min = 0, 
                                                       max = 10, 
                                                       value = 1, 
                                                       step = 0.1) %>%
                                             shinyInput_label_embed(
-                                              icon("info") %>%
-                                                bs_embed_tooltip(title = "Maximal resorption rate (μmol/min)"))
+                                              icon("undo") %>%
+                                                actionBttn(inputId="resetresmax",
+                                                           label="", 
+                                                           color="danger", 
+                                                           size = "xs"))
                                    )
                                    
                                    
@@ -417,35 +452,41 @@ body <- dashboardBody(
                                  conditionalPanel( # Cells parameters
                                    
                                    condition = "input.current_node_id == 13",
-                                   jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
-                                     div(
-                                       column(4, align = "center",           
+                                   #jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
+                                     #div(
+                                       column(12, align = "center",           
                                               sliderInput("k_pc", 
-                                                          "$$ k_{pc} $$", 
+                                                          "PO4 transfer from 
+                                                           plasma pool to intracellular (1/min)", 
                                                           min = 0, 
                                                           max = 2, 
                                                           value = 1, 
                                                           step = 0.1) %>%
                                                 shinyInput_label_embed(
-                                                  icon("info") %>%
-                                                    bs_embed_tooltip(title = "Rate constant of PO4 transfer from 
-                                                                     plasma pool to intracellular (1/min)"))
+                                                  icon("undo") %>%
+                                                    actionBttn(inputId="resetkpc",
+                                                               label="", 
+                                                               color="danger", 
+                                                               size = "xs"))
                                        ),
-                                       column(4, align = "center",            
+                                       column(12, align = "center",            
                                               sliderInput("k_cp", 
-                                                          "$$ k_{cp} $$", 
+                                                          "PO4 transfer from 
+                                                           intracellular pool to plasma (1/min)", 
                                                           min = 0, 
                                                           max = 2, 
                                                           value = 1, 
                                                           step = 0.1) %>%
                                                 shinyInput_label_embed(
-                                                  icon("info") %>%
-                                                    bs_embed_tooltip(title = "Rate constant of PO4 transfer from 
-                                                                     intracellular pool to plasma (1/min)"))
+                                                  icon("undo") %>%
+                                                    actionBttn(inputId="resetkcp",
+                                                               label="", 
+                                                               color="danger", 
+                                                               size = "xs"))
                                        )
                                        
-                                     )
-                                   )
+                                     #)
+                                   #)
                                    
                                  ),
                                  
@@ -453,9 +494,9 @@ body <- dashboardBody(
                                  conditionalPanel( # CaPO4 group
                                    
                                    condition = "input.CaPO4group",
-                                   jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
-                                     div(
-                                       column(4, align = "center",
+                                   #jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
+                                     #div(
+                                       column(6, align = "center",
                                               sliderInput("k_fet", 
                                                           "$$ k_f^{fetA} $$", 
                                                           min = 0, 
@@ -467,7 +508,7 @@ body <- dashboardBody(
                                                     bs_embed_tooltip(title = "Fetuin-A binding to CaHPO4 and 
                                                                      CaH2PO4+ (1/min)"))
                                        ),
-                                       column(4, align = "center",           
+                                       column(6, align = "center",           
                                               sliderInput("k_c_CPP", 
                                                           "$$ k_c^{CPP} $$", 
                                                           min = 0, 
@@ -478,7 +519,7 @@ body <- dashboardBody(
                                                   icon("info") %>%
                                                     bs_embed_tooltip(title = "CPP degradation rate constant (1/min)"))
                                        ),
-                                       column(4, align = "center",          
+                                       column(6, align = "center",          
                                               sliderInput("Na", 
                                                           "$$ [Na^+]_p $$", 
                                                           min = 0, 
@@ -489,7 +530,7 @@ body <- dashboardBody(
                                                   icon("info") %>%
                                                     bs_embed_tooltip(title = "Sodium plasma concentration (mM)"))
                                        ),
-                                       column(4, align = "center",           
+                                       column(6, align = "center",           
                                               sliderInput("Prot_tot_p", 
                                                           "$$ [Prot^{tot}]_p $$", 
                                                           min = 0.25, 
@@ -500,17 +541,17 @@ body <- dashboardBody(
                                                   icon("info") %>%
                                                     bs_embed_tooltip(title = "Concentration of proteins in plasma (mM)"))
                                        )
-                                     )
-                                   )
+                                     #)
+                                   #)
                                  ),
                                  
                                  
                                  conditionalPanel( # Other parameters
                                    
                                    condition = "input.others",
-                                   jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
-                                     div(
-                                       column(4, align = "center",
+                                   #jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
+                                     #div(
+                                       column(12, align = "center",
                                               sliderInput("Vp", 
                                                           "$$ V_p $$", 
                                                           min = 0.7, 
@@ -521,7 +562,7 @@ body <- dashboardBody(
                                                   icon("info") %>%
                                                     bs_embed_tooltip(title = "Plasma volume (mL)"))
                                        ),
-                                       column(4, align = "center",            
+                                       column(12, align = "center",            
                                               sliderInput("GFR", 
                                                           "$$ GFR $$", 
                                                           min = 0, 
@@ -535,8 +576,8 @@ body <- dashboardBody(
                                        #sliderInput("tau", "Value of tau:", min = 0, max = 500, value = 240, step = 1) # integrate the delay
                                        
                                        #sliderInput("pH", "Value of pH:", min = 0, max = 12, value = 7.4, step = 1) # integrate effect of pH
-                                     )
-                                   )
+                                     #)
+                                   #)
                                    
                                  )
                                  

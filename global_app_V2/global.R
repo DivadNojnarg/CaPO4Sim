@@ -63,81 +63,90 @@ arrow_lighting <- function(events, edges, network) {
   
   if (network == "network_Ca") {
     
-    param_event <- list(values = events,
-                        
-                        text = list(list("Calcium intake has been increased!",
-                                                     "Calcium intake has been decreased!"),
-                                    list("Phosphate intake has been increased!",
-                                                      "Phosphate intake has been decreased!"),
-                                    list("Calcium flux into bone has been increased!",
-                                                 "Calcium flux into bone has been decreased!"),
-                                    list("Calcium storage in the bone rapid pool has 
+    param_event <- list(
+      values = events,
+      
+      text = list(list("Calcium intake has been increased!",
+                       "Calcium intake has been decreased!"),
+                  list("Phosphate intake has been increased!",
+                       "Phosphate intake has been decreased!"),
+                  list("Calcium flux into bone has been increased!",
+                       "Calcium flux into bone has been decreased!"),
+                  list("Calcium storage in the bone rapid pool has 
                                                      been increased!",
-                                                 "Calcium storage in the bone rapid pool has 
+                       "Calcium storage in the bone rapid pool has 
                                                      been decreased!"),
-                                    list("PO4 storage in the bone rapid pool has been 
+                  list("PO4 storage in the bone rapid pool has been 
                                                       increased!",
-                                                  "PO4 storage in the bone rapid pool has been 
+                       "PO4 storage in the bone rapid pool has been 
                                                       decreased!"),
-                                    list("Calcium release from the bone rapid pool has 
+                  list("Calcium release from the bone rapid pool has 
                                                      been increased!",
-                                                 "Calcium release from the bone rapid pool has 
+                       "Calcium release from the bone rapid pool has 
                                                      been decreased!"),
-                                    list("PO4 release from the bone rapid pool has 
+                  list("PO4 release from the bone rapid pool has 
                                                       been increased!",
-                                                  "PO4 release from the bone rapid pool has 
+                       "PO4 release from the bone rapid pool has 
                                                       been decreased!"),
-                                    list("Calcium/Phosphate release from the bone 
+                  list("Calcium/Phosphate release from the bone 
                                                    (resorption) has been increased!",
-                                               "Calcium/Phosphate release from the bone 
+                       "Calcium/Phosphate release from the bone 
                                                    (resorption) has been decreased!"),
-                                    list("Calcium/Phosphate release from the bone 
+                  list("Calcium/Phosphate release from the bone 
                                                    (resorption) has been increased!",
-                                               "Calcium/Phosphate release from the bone 
+                       "Calcium/Phosphate release from the bone 
                                                    (resorption) has been decreased!"),
-                                    list("GFR has been increased!",
-                                               "GFR has been decreased!"),
-                                    list("PO4 storage into cells has been increased!",
-                                                  "PO4 storage into cells has been decreased!"),
-                                    list("PO4 release from cells to plasma has been 
+                  list("GFR has been increased!",
+                       "GFR has been decreased!"),
+                  list("PO4 storage into cells has been increased!",
+                       "PO4 storage into cells has been decreased!"),
+                  list("PO4 release from cells to plasma has been 
                                                       increased!",
-                                                  "PO4 release from cells to plasma has been 
+                       "PO4 release from cells to plasma has been 
                                                       decreased!"),
-                                    list("PTH synthesis has been increased!",
-                                                     "PTH synthesis has been decreased!"),
-                                    list("25(OH)D stock has been increased!",
-                                                    "25(OH)D stock has been decreased!"),
-                                    list("Vitamin D3 degradation has been increased!",
-                                                  "Vitamin D3 degradation has been decreased!"),
-                                    list("FGF23 synthesis has been increased!",
-                                                     "FGF23 synthesis has been decreased!")
-                        ),
-                        
-                        edges_id = list(1,1,6,4,31,5,30,7,7,9,22,21,c(11,12,15),
-                                        c(13,14,16,17),c(13,14,16,17), c(18,19))
-                        
+                  list("PTH synthesis has been increased!",
+                       "PTH synthesis has been decreased!"),
+                  list("25(OH)D stock has been increased!",
+                       "25(OH)D stock has been decreased!"),
+                  list("Vitamin D3 degradation has been increased!",
+                       "Vitamin D3 degradation has been decreased!"),
+                  list("FGF23 synthesis has been increased!",
+                       "FGF23 synthesis has been decreased!")
+      ),
+      
+      edges_id = list(1,1,6,4,31,5,30,7,7,9,22,21,c(11,12,15),
+                      c(13,14,16,17),c(13,14,16,17), c(18,19))
+      
     )
+    
   } else {
     
-    param_event <- list(values = events,
-                            
-                            text = list(PTH_synth = list(),
-                                        PTHg_exo = list("PTH exocytosis has been increased",
-                                                        "PTH exocytosis has been decreased"),
-                                        PTHg_exoinhib  = list("CaSR inhibition on PTH synthesis 
+    param_event <- list(
+      values = events,
+      
+      text = list(PTH_synth = list(),
+                  PTHg_exo = list("PTH exocytosis has been increased",
+                                  "PTH exocytosis has been decreased"),
+                  PTHg_exoinhib  = list("CaSR inhibition on PTH synthesis 
                                                             has been increased",
-                                                              "CaSR inhibition on PTH synthesis 
+                                        "CaSR inhibition on PTH synthesis 
                                                             has been decreased")
-                            ),
-                            
-                            edges_id = list(1,3,4)
+      ),
+      
+      edges_id = list(1,3,4)
     )
   }
-
+  
   # search for events which value are different of 1
-  event_id <- which(param_event$value != 1)
+  event_id <- which(param_event$values != 1)
+  #test <- param_event$edges_id[event_id]
+  #if (length(test) > 1) {
+  #  test <- test[[-1]]
+  #event_id <- event_id[[-1]]
+  #}
+  #edges_id_network <- as.numeric(unlist(test))
   edges_id_network <- as.numeric(unlist(param_event$edges_id[event_id]))
- 
+  
   # for notification display
   # split notif into 2 parts: one for increase, other for decrease
   notif_increase <- unlist(lapply(param_event$text, function(x, ind = 1) x[ind]))
@@ -146,13 +155,14 @@ arrow_lighting <- function(events, edges, network) {
                     notif_increase[event_id],
                     notif_decrease[event_id])
   
-   if (!is.null(message)) 
-          ifelse(param_event$value[event_id] != 1,
-                 showNotification(paste(message[length(message)]), # does not work totally
-                                  type = "warning", 
-                                  duration = 2), NULL)
+  if (!is.null(message)) 
+    ifelse(param_event$value[event_id] != 1,
+           showNotification(paste(message[length(message)]), # does not work totally
+                            type = "warning", 
+                            duration = 2), NULL)
   
-  return(list(edges_id_network, event_id, param_event$values))
+  return(list(edges_id_network, event_id, 
+              param_event$values, param_event$edges_id))
   
 }
 
@@ -165,19 +175,20 @@ arrow_lighting <- function(events, edges, network) {
 
 flux_lighting <- function(edges, network = "network_Ca", out, events){ 
   
-  # round by default, otherwise to much precision can cause problems
-  calc_change_t <- round(calc_change(out)) 
-  calc_change_t$X <- NULL # remove column X
-  
   # calculate the difference between live fluxes and base-case values
+  # depending on the graph selection
   if (network == "network_Ca") {
+    # round by 0.1, otherwise to much precision can cause problems
+    # low precision also
+    calc_change_t <- round(calc_change(out)[1:14],1)
     # index of arrows in the Ca network (which are fluxes and not regulations)
-    index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21) 
+    index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21)
+    calc_change_t <- rbind(calc_change_t, index)
   } else { # should use else if when other graphs will be added
+    calc_change_t <- round(calc_change(out)[c(15,17:18)],1)
     index <- c(1,2,3) # index arrows in the PTH network
+    calc_change_t <- rbind(calc_change_t, index)
   }
-  
-  calc_change_t <- rbind(calc_change_t, index)
   
   # calculate which element in the sum table is different of 0 and store the index
   flux_changed_index <- which(calc_change_t[1,] != 0) 
@@ -540,8 +551,50 @@ plot_edge <- function(edge, out) {
 # reset_table contains the state of reset button (0 if
 # not used) as well as the related sliders_id
 
-sliders_reset <- function(button_states, reset_table, network, edges) {
-
+sliders_reset <- function(button_states, reset_table, input) {
+  
+  # stock the previous state of buttons in
+  # reactiveValues so as to compare with
+  # the current state
+  button_states$values <- append(button_states$values, 
+                                 list(c(input$resetPTHsynthesis[1],
+                                        input$resetPTHexocytosis[1],
+                                        input$resetPTHexocytosisinhib[1],
+                                        input$resetD3inact[1],
+                                        input$resetD3deg[1],
+                                        input$resetFGFsynth[1],
+                                        input$resetCaintake[1],
+                                        input$resetPintake[1],
+                                        input$resetkpCa[1],
+                                        input$resetkfCa[1],
+                                        input$resetkpP[1],
+                                        input$resetkfP[1],
+                                        input$resetacCa[1],
+                                        input$resetresmin[1],
+                                        input$resetresmax[1],
+                                        input$resetkpc[1],
+                                        input$resetkcp[1])))         
+  
+  # associate each reset button to its related slider
+  reset_table$sliders <- list(
+    slider_id = c("k_prod_PTHg", 
+                  "beta_exo_PTHg",
+                  "gamma_exo_PTHg",
+                  "D3_inact",
+                  "k_deg_D3",
+                  "k_prod_FGF",
+                  "I_Ca",
+                  "I_P",
+                  "k_p_Ca",
+                  "k_f_Ca",
+                  "k_p_P",
+                  "k_f_P",
+                  "Lambda_ac_Ca",
+                  "Lambda_res_min",
+                  "delta_res_max",
+                  "k_pc",
+                  "k_cp")) 
+  
   # store the temp state of buttons
   states <- button_states$values
   last_state <- states[[length(states)]]
@@ -554,14 +607,14 @@ sliders_reset <- function(button_states, reset_table, network, edges) {
     # compare the current state with the previous one
     reset_target <- which(states[[length(states)-1]] != last_state)
   }
-
+  
   # reset the corresponding target(s) in the table
   shinyjs::reset(reset_table$sliders$slider_id[reset_target])
   
   #update the network
-  visNetworkProxy(network) %>%
-    visUpdateEdges(edges = edges)
-
+  #visNetworkProxy(network) %>%
+  #  visUpdateEdges(edges = edges)
+  
 }
 
 
@@ -608,7 +661,7 @@ help_text_generator <- function(){
                      closeButton = TRUE,
                      type = "error")
   }
-
+  
 }
 
 # notification eraser
