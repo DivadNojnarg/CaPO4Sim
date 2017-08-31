@@ -108,7 +108,10 @@ shinyServer(function(input, output, session) {
                       a("About intestinal PO4 absorption", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0)",
                         target="_blank")),
-                rep("",3),
+                rep("",2),
+                paste(a("About rapid bone pool", 
+                        href = "https://academic.oup.com/ndt/article/26/8/2438/1917340/The-exchangeable-calcium-pool-physiology-and",
+                        target="_blank")),
                 paste(a("About bone", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24035&Menu=1079&backbar=0",
                         target="_blank")),
@@ -263,7 +266,7 @@ shinyServer(function(input, output, session) {
       visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE, 
                  selectedBy = "group", collapse = FALSE) %>% # add group selection option
       visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
-                     dragNodes = TRUE, dragView = TRUE, zoomView = TRUE,
+                     dragNodes = TRUE, dragView = TRUE, zoomView = FALSE,
                      navigationButtons = TRUE) %>% # prevent edge from being selected when a node is selected
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);
@@ -289,7 +292,7 @@ shinyServer(function(input, output, session) {
       visPhysics(stabilization = TRUE, enabled = TRUE) %>% # stabilization prevents arrows from bouncing
       #visEvents(type = "once", startStabilizing = "function() {
       #      this.moveTo({scale:1})}") %>% # to set the initial zoom (1 by default)
-      visExport(type = "pdf") # export the graph as pdf
+      visExport(type = "pdf", style = css_export) # export the graph as pdf
     
   })
   
@@ -361,7 +364,7 @@ shinyServer(function(input, output, session) {
       visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
                      multiselect = TRUE, zoomView = FALSE, dragNodes = FALSE, dragView = FALSE) %>%
       visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
-      visExport(type = "pdf") # export the graph as pdf
+      visExport(type = "pdf", style = css_export_zoom) # export the graph as pdf
   })
   
   output$id_tris <- renderPrint({ input$current_edge_bis_id })
@@ -446,8 +449,11 @@ shinyServer(function(input, output, session) {
   #   }
   # )
   
+  event_stack <- reactiveValues(id = list(CaP = c(), PTH = c()))
   
-  observe({ 
+  output$test <- renderPrint({ event_stack$id })
+  
+  observeEvent(parameters(),{ 
     
     events <- c(input$I_Ca,input$I_P,
                 input$Lambda_ac_Ca,
@@ -470,9 +476,9 @@ shinyServer(function(input, output, session) {
     edges_PTHg <- edges_PTHg()
     
     # for Ca/PO4 fluxes, call the flux_lighting() function
-    flux_lighting(edges_Ca, network = "network_Ca", out, events = events)
+    flux_lighting(edges_Ca, network = "network_Ca", out, events = events, event_stack)
     # for the PTH network
-    flux_lighting(edges_PTHg, network = "network_PTH", out, events = events_PTH)
+    flux_lighting(edges_PTHg, network = "network_PTH", out, events = events_PTH, event_stack)
     
   })
   
@@ -604,23 +610,21 @@ shinyServer(function(input, output, session) {
   
   # reset all the values of box inputs as well as graphs
   
-  observe({
-    
-    input$resetAll
+  observeEvent(input$resetAll,{
     
     reset("boxinput")
     reset("tmax")
     
     edges_Ca <- edges_Ca()
+    edges_PTHg <- edges_PTHg()
     
-    visNetworkProxy("network_Ca") %>%
-      visUpdateEdges(edges = edges_Ca)
+    graphs_reset(network = "network_Ca", edges = edges_Ca)
+    graphs_reset(network = "network_PTH", edges = edges_PTHg)
     
   })
   
   # reset parameters individually
   
-  reset_table <- reactiveValues( sliders = list())
   button_states <- reactiveValues(values = list())
   
   observeEvent(c(input$resetPTHsynthesis,
@@ -642,7 +646,7 @@ shinyServer(function(input, output, session) {
                  input$resetkcp),{
                    
                    # call the function to reset the given slider
-                   sliders_reset(button_states, reset_table, input)
+                   sliders_reset(button_states, input)
                    
                  })
   

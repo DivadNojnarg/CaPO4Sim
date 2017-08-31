@@ -43,6 +43,34 @@ source("calcium_phosphate_core.R") # core model
 source("calc_change.R")
 source("box_close.R")
 
+# css style for visNetwork export
+
+css_export <- paste0("float: left;
+              -webkit-border-radius: 10;
+              -moz-border-radius: 10;
+              border-radius: 10px;
+              font-family: Arial;
+              color: #ffffff;
+              font-size: 12px;
+              background: #090a0a;
+              padding: 4px 8px 4px 4px;
+              text-decoration: none;
+              position: absolute;
+              top: -800px;")
+
+css_export_zoom <- paste0("float: left;
+                          -webkit-border-radius: 10;
+                          -moz-border-radius: 10;
+                          border-radius: 10px;
+                          font-family: Arial;
+                          color: #ffffff;
+                          font-size: 12px;
+                          background: #090a0a;
+                          padding: 4px 8px 4px 4px;
+                          text-decoration: none;
+                          position: absolute;
+                          top: -400px;")
+
 # initial conditions
 state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
            "D3_p" = 564.2664, "FGF_p" = 16.78112, 
@@ -59,7 +87,7 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687,
 # This function is then called by flux_lighting
 # to update edges at the same time
 
-arrow_lighting <- function(events, edges, network) {
+arrow_lighting <- function(events, event_stack, edges, network) {
   
   if (network == "network_Ca") {
     
@@ -119,6 +147,8 @@ arrow_lighting <- function(events, edges, network) {
       
     )
     
+    stack_id <- event_stack$id$CaP
+    
   } else {
     
     param_event <- list(
@@ -135,33 +165,43 @@ arrow_lighting <- function(events, edges, network) {
       
       edges_id = list(1,3,4)
     )
+    
+    stack_id <- event_stack$id$PTH
   }
   
   # search for events which value are different of 1
   event_id <- which(param_event$values != 1)
-  #test <- param_event$edges_id[event_id]
-  #if (length(test) > 1) {
-  #  test <- test[[-1]]
-  #event_id <- event_id[[-1]]
-  #}
-  #edges_id_network <- as.numeric(unlist(test))
-  edges_id_network <- as.numeric(unlist(param_event$edges_id[event_id]))
+  
+  ifelse(network == "network_Ca",
+         event_stack$id$CaP <- append(event_stack$id$CaP, event_id),
+         event_stack$id$PTH <- append(event_stack$id$PTH, event_id))
+  if (length(event_stack$id) > 1) {
+    last_event_id <- stack_id[length(stack_id)]
+    penultimate_event_id <- stack_id[length(stack_id) - 1]
+    event_target <- which(penultimate_event_id != last_event_id)
+  } else {
+    event_target <- event_id
+  }
+
+  # select the related edges on the network
+  edges_id_network <- as.numeric(unlist(param_event$edges_id[event_target]))
   
   # for notification display
   # split notif into 2 parts: one for increase, other for decrease
   notif_increase <- unlist(lapply(param_event$text, function(x, ind = 1) x[ind]))
   notif_decrease <- unlist(lapply(param_event$text, function(x, ind = 2) x[ind]))
-  message <- ifelse(param_event$values[event_id] > 1, 
-                    notif_increase[event_id],
-                    notif_decrease[event_id])
+
+  message <- ifelse(param_event$values[event_target] > 1, 
+                    notif_increase[event_target],
+                    notif_decrease[event_target])
   
   if (!is.null(message)) 
-    ifelse(param_event$value[event_id] != 1,
+    ifelse(param_event$value[event_target] != 1,
            showNotification(paste(message[length(message)]), # does not work totally
                             type = "warning", 
                             duration = 2), NULL)
   
-  return(list(edges_id_network, event_id, 
+  return(list(edges_id_network, event_target, 
               param_event$values, param_event$edges_id))
   
 }
@@ -173,7 +213,7 @@ arrow_lighting <- function(events, edges, network) {
 # takes edges, network (by default set to network_Ca), out and
 # events as arguments
 
-flux_lighting <- function(edges, network = "network_Ca", out, events){ 
+flux_lighting <- function(edges, network = "network_Ca", out, events, event_stack){ 
   
   # calculate the difference between live fluxes and base-case values
   # depending on the graph selection
@@ -207,7 +247,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events){
   }
   
   # proceed to perturbation highlithing
-  selected_edges <- arrow_lighting(events, edges, network)
+  selected_edges <- arrow_lighting(events, event_stack, edges, network)
   # increase/decrease the size of the corresponding edge
   edges$width[selected_edges[[1]]] <- ifelse(selected_edges[[3]][selected_edges[[2]]] > 1, 12, 2)
   
@@ -215,6 +255,8 @@ flux_lighting <- function(edges, network = "network_Ca", out, events){
   visNetworkProxy(network) %>% # update the network: two choices for the moment
     visSetSelection(edgesId = selected_edges[[1]]) %>%
     visUpdateEdges(edges = edges)
+  
+  print(selected_edges[[2]])
 }
 
 
@@ -222,6 +264,8 @@ flux_lighting <- function(edges, network = "network_Ca", out, events){
 # quantities related to the latest selected node
 # nodes can be input$current_node_id and out is out()
 # Finally, also needs parameters_bis
+
+title_size <- list(size = 10)
 
 plot_node <- function(node, out, parameters_bis) {
   
@@ -262,11 +306,18 @@ plot_node <- function(node, out, parameters_bis) {
                   visible = FALSE) %>%
         layout(
           title = "Plasma compartment concentrations",
+          font = title_size,
           xaxis = xvar,
           yaxis = list(title = "y"),
           updatemenus = list(
             list(
-              y = 0.7,
+              type = "buttons",
+              direction = "right",
+              xanchor = 'center',
+              yanchor = "bottom",
+              #pad = list('r'= 0, 't'= 10, 'b' = 10),
+              x = 0.5,
+              y = -0.4,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE)),
@@ -288,7 +339,9 @@ plot_node <- function(node, out, parameters_bis) {
                      args = list("visible", list(FALSE, FALSE, FALSE, FALSE, TRUE)),
                      label = "FGFp")))
           )
-        )
+        ) %>%
+        config(displayModeBar = FALSE)
+      
     } else if (node == 5) {
       
       # rapid bone compartment
@@ -304,12 +357,19 @@ plot_node <- function(node, out, parameters_bis) {
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
         layout(
-          title = "Rapid bone pool Ca and PO4 quantities (mmol)",
+          title = "Rapid bone pool Ca and PO4 content",
+          font = title_size,
           xaxis = xvar,
-          yaxis = list(title = "y"),
+          yaxis = list(title = "Quantities (mmol)"),
           updatemenus = list(
             list(
-              y = 0.7,
+              type = "buttons",
+              direction = "right",
+              xanchor = 'center',
+              yanchor = "bottom",
+              #pad = list('r'= 0, 't'= 10, 'b' = 10),
+              x = 0.5,
+              y = -0.4,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -323,7 +383,8 @@ plot_node <- function(node, out, parameters_bis) {
                      args = list("visible", list(TRUE, TRUE, FALSE)),
                      label = "Both")))
           )
-        )
+        ) %>%
+        config(displayModeBar = FALSE)
       
     } else if (node == 6) {
       
@@ -340,26 +401,35 @@ plot_node <- function(node, out, parameters_bis) {
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
         layout(
-          title = "Deep bone pool Ca and PO4 quantities (mmol)",
+          title = "Deep bone pool Ca and PO4 content",
+          font = title_size,
           xaxis = xvar,
-          yaxis = list(title = "y"),
+          yaxis = list(title = "Quantities (mmol"),
           updatemenus = list(
             list(
-              y = 0.7,
+              type = "buttons",
+              direction = "right",
+              xanchor = 'center',
+              yanchor = "bottom",
+              #pad = list('r'= 0, 't'= 10, 'b' = 10),
+              x = 0.5,
+              y = -0.4,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
-                     label = "Ca deep bone"),
+                     label = "Ca bone"),
                 
                 list(method = "restyle",
                      args = list("visible", list(FALSE, TRUE, FALSE)),
-                     label = "PO4 deep bone"),
+                     label = "PO4 bone"),
                 
                 list(method = "restyle",
                      args = list("visible", list(TRUE, TRUE, FALSE)),
                      label = "Both")))
           )
-        )
+        ) %>%
+        config(displayModeBar = FALSE)
+      
     } else {
       
       # other cases: need to convert graph indexes to the solver indexes
@@ -384,8 +454,10 @@ plot_node <- function(node, out, parameters_bis) {
                    mode = "lines",
                    line = list(color = 'black', width = 2)) %>%
         layout(title = paste(node_Ca_list$names[node]),
+               font = title_size,
                xaxis = xvar,
-               yaxis = yvar)
+               yaxis = yvar) %>%
+        config(displayModeBar = FALSE)
       
     }
     
@@ -395,14 +467,17 @@ plot_node <- function(node, out, parameters_bis) {
     p <- plot_ly() %>%
       add_annotations("Please select another node!", 
                       showarrow = FALSE, 
-                      font = list(color = "red", size = 20))
+                      font = list(color = "red", size = 10)) %>%
+      config(displayModeBar = FALSE)
   }
 }
 
 
 # plot_edge function will plot the flux
 # related to the last selected edge
-# edge can be input$current_edge_id and out is out()
+# edge can be input$current_edge_id and out 
+# contains all the variables returned by the 
+# solver
 
 plot_edge <- function(edge, out) {
   
@@ -417,7 +492,9 @@ plot_edge <- function(edge, out) {
     p <- plot_ly() %>%
       add_annotations("Please select another edge!", 
                       showarrow = FALSE, 
-                      font = list(color = "red", size = 20))
+                      font = list(color = "red", size = 10)) %>%
+      config(displayModeBar = FALSE)
+    
   } else {
     
     # select edges where Ca and PO4 fluxes
@@ -441,11 +518,18 @@ plot_edge <- function(edge, out) {
                   visible = FALSE) %>%
         layout(
           title = "Intestinal absorption fluxes",
+          font = title_size,
           xaxis = xvar,
           yaxis = yvar,
           updatemenus = list(
             list(
-              y = 0.7,
+              type = "buttons",
+              direction = "right",
+              xanchor = 'center',
+              yanchor = "bottom",
+              #pad = list('r'= 0, 't'= 10, 'b' = 10),
+              x = 0.5,
+              y = -0.4,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -459,7 +543,8 @@ plot_edge <- function(edge, out) {
                      args = list("visible", list(TRUE, TRUE, FALSE)),
                      label = "Both")))
           )
-        )
+        ) %>%
+        config(displayModeBar = FALSE)
       
     } else if (edge == 7) {
       
@@ -483,11 +568,18 @@ plot_edge <- function(edge, out) {
                   visible = FALSE) %>%
         layout(
           title = "Resorption fluxes",
+          font = title_size,
           xaxis = xvar,
           yaxis = yvar,
           updatemenus = list(
             list(
-              y = 0.7,
+              type = "buttons",
+              direction = "right",
+              xanchor = 'center',
+              yanchor = "bottom",
+              #pad = list('r'= 0, 't'= 10, 'b' = 10),
+              x = 0.5,
+              y = -0.4,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -501,7 +593,8 @@ plot_edge <- function(edge, out) {
                      args = list("visible", list(TRUE, TRUE, FALSE)),
                      label = "Both")))
           )
-        )
+        ) %>%
+        config(displayModeBar = FALSE)
       
     } else {
       
@@ -537,8 +630,10 @@ plot_edge <- function(edge, out) {
                    mode = "lines",
                    line = list(color = 'black', width = 2)) %>%
         layout(title = paste(names(edge_Ca_list)[edge]),
+               font = title_size,
                xaxis = xvar,
-               yaxis = yvar)
+               yaxis = yvar) %>%
+        config(displayModeBar = F)
       
     }
     
@@ -551,7 +646,7 @@ plot_edge <- function(edge, out) {
 # reset_table contains the state of reset button (0 if
 # not used) as well as the related sliders_id
 
-sliders_reset <- function(button_states, reset_table, input) {
+sliders_reset <- function(button_states, input) {
   
   # stock the previous state of buttons in
   # reactiveValues so as to compare with
@@ -576,8 +671,7 @@ sliders_reset <- function(button_states, reset_table, input) {
                                         input$resetkcp[1])))         
   
   # associate each reset button to its related slider
-  reset_table$sliders <- list(
-    slider_id = c("k_prod_PTHg", 
+  reset_vector <- c("k_prod_PTHg", 
                   "beta_exo_PTHg",
                   "gamma_exo_PTHg",
                   "D3_inact",
@@ -593,7 +687,7 @@ sliders_reset <- function(button_states, reset_table, input) {
                   "Lambda_res_min",
                   "delta_res_max",
                   "k_pc",
-                  "k_cp")) 
+                  "k_cp")
   
   # store the temp state of buttons
   states <- button_states$values
@@ -605,11 +699,12 @@ sliders_reset <- function(button_states, reset_table, input) {
     reset_target <- which(unlist(states) != 0)
   } else {
     # compare the current state with the previous one
-    reset_target <- which(states[[length(states)-1]] != last_state)
+    penultimate_state <- states[[length(states) - 1]]
+    reset_target <- which(penultimate_state != last_state)
   }
   
   # reset the corresponding target(s) in the table
-  shinyjs::reset(reset_table$sliders$slider_id[reset_target])
+  shinyjs::reset(reset_vector[reset_target])
   
   #update the network
   #visNetworkProxy(network) %>%
@@ -618,9 +713,22 @@ sliders_reset <- function(button_states, reset_table, input) {
 }
 
 
-# Function that handle help text generation
-#
-#
+# Function graphs_reset remove all changes
+# of color/size of arrows/nodes
+# It takes graph id as argument as well as
+# edges 
+
+graphs_reset <- function(network, edges) {
+  
+  visNetworkProxy(network) %>%
+    visUpdateEdges(edges = edges)
+}
+
+
+# Functions that handle help text generation
+# help_text_generator will generate notifications
+# whereas help_text_destructor will remove these
+# notifications
 
 help_text <- data.frame(
   id = c("menu_notif",
@@ -652,6 +760,7 @@ help_text <- data.frame(
 )
 
 # notification builder
+# do not need any argument
 help_text_generator <- function(){
   
   for (i in seq_along(help_text$id)) { 
@@ -665,6 +774,7 @@ help_text_generator <- function(){
 }
 
 # notification eraser
+# needs the session argument !!!
 help_text_destructor <- function(session){
   
   for (i in seq_along(help_text$id)) { 
