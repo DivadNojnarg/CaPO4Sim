@@ -87,7 +87,7 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687,
 # This function is then called by flux_lighting
 # to update edges at the same time
 
-arrow_lighting <- function(events, event_stack, edges, network) {
+arrow_lighting <- function(events, edges, network) {
   
   if (network == "network_Ca") {
     
@@ -147,14 +147,13 @@ arrow_lighting <- function(events, event_stack, edges, network) {
       
     )
     
-    stack_id <- event_stack$id$CaP
-    
   } else {
     
     param_event <- list(
       values = events,
       
-      text = list(PTH_synth = list(),
+      text = list(PTH_synth = list("",
+                                   ""),
                   PTHg_exo = list("PTH exocytosis has been increased",
                                   "PTH exocytosis has been decreased"),
                   PTHg_exoinhib  = list("CaSR inhibition on PTH synthesis 
@@ -165,23 +164,15 @@ arrow_lighting <- function(events, event_stack, edges, network) {
       
       edges_id = list(1,3,4)
     )
-    
-    stack_id <- event_stack$id$PTH
   }
   
   # search for events which value are different of 1
   event_id <- which(param_event$values != 1)
-  
-  ifelse(network == "network_Ca",
-         event_stack$id$CaP <- append(event_stack$id$CaP, event_id),
-         event_stack$id$PTH <- append(event_stack$id$PTH, event_id))
-  if (length(event_stack$id) > 1) {
-    last_event_id <- stack_id[length(stack_id)]
-    penultimate_event_id <- stack_id[length(stack_id) - 1]
-    event_target <- which(penultimate_event_id != last_event_id)
-  } else {
-    event_target <- event_id
-  }
+  # if a previous event is already active
+  # only select the last new event
+  ifelse(length(event_id)  > 1,
+         event_target <- event_id[[length(event_id)]],
+         event_target <- event_id)
 
   # select the related edges on the network
   edges_id_network <- as.numeric(unlist(param_event$edges_id[event_target]))
@@ -213,7 +204,7 @@ arrow_lighting <- function(events, event_stack, edges, network) {
 # takes edges, network (by default set to network_Ca), out and
 # events as arguments
 
-flux_lighting <- function(edges, network = "network_Ca", out, events, event_stack){ 
+flux_lighting <- function(edges, network = "network_Ca", out, events){ 
   
   # calculate the difference between live fluxes and base-case values
   # depending on the graph selection
@@ -225,7 +216,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, event_stac
     index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21)
     calc_change_t <- rbind(calc_change_t, index)
   } else { # should use else if when other graphs will be added
-    calc_change_t <- round(calc_change(out)[c(15,17:18)],1)
+    calc_change_t <- round(calc_change(out)[c(15,17:18)])
     index <- c(1,2,3) # index arrows in the PTH network
     calc_change_t <- rbind(calc_change_t, index)
   }
@@ -247,16 +238,28 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, event_stac
   }
   
   # proceed to perturbation highlithing
-  selected_edges <- arrow_lighting(events, event_stack, edges, network)
+  selected_edges <- arrow_lighting(events, edges, network)
+  edges_id_network <- selected_edges[[1]]
+  event_target <- selected_edges[[2]]
+  param_event_values <- selected_edges[[3]]
+  
   # increase/decrease the size of the corresponding edge
-  edges$width[selected_edges[[1]]] <- ifelse(selected_edges[[3]][selected_edges[[2]]] > 1, 12, 2)
+  if (network == "network_Ca") {
+    # need to take care when parameters correspond to
+    # degradation rate (edge$width is thus inverted) 
+    ifelse(param_event_values[15] == 1,
+         edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
+         edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
+    
+  } else {
+    edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2)
+  }
+  
   
   # update the network
-  visNetworkProxy(network) %>% # update the network: two choices for the moment
-    visSetSelection(edgesId = selected_edges[[1]]) %>%
+  visNetworkProxy(network) %>% 
+    visSetSelection(edgesId = edges_id_network) %>%
     visUpdateEdges(edges = edges)
-  
-  print(selected_edges[[2]])
 }
 
 

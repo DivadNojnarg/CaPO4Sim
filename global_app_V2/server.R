@@ -448,12 +448,8 @@ shinyServer(function(input, output, session) {
   #     write.csv(calc_change_table(), file)
   #   }
   # )
-  
-  event_stack <- reactiveValues(id = list(CaP = c(), PTH = c()))
-  
-  output$test <- renderPrint({ event_stack$id })
-  
-  observeEvent(parameters(),{ 
+
+  observe({ 
     
     events <- c(input$I_Ca,input$I_P,
                 input$Lambda_ac_Ca,
@@ -476,9 +472,9 @@ shinyServer(function(input, output, session) {
     edges_PTHg <- edges_PTHg()
     
     # for Ca/PO4 fluxes, call the flux_lighting() function
-    flux_lighting(edges_Ca, network = "network_Ca", out, events = events, event_stack)
+    flux_lighting(edges_Ca, network = "network_Ca", out, events = events)
     # for the PTH network
-    flux_lighting(edges_PTHg, network = "network_PTH", out, events = events_PTH, event_stack)
+    flux_lighting(edges_PTHg, network = "network_PTH", out, events = events_PTH)
     
   })
   
