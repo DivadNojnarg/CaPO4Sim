@@ -21,11 +21,12 @@ body <- dashboardBody(
     #jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
     #div(
     column(width = 6,
-           tabBox(
+           box(
              id = "boxinfo",
-             title = tagList(shiny::icon("map-o"), "Interactive Map"), height = "1000px", width = NULL,
+             #title = tagList(shiny::icon("map-o"), "Interactive Map"), 
+             height = "1000px", width = 12,
              #For column-based layouts, use NULL for the width; the width is set by the column that contains the box
-             tabPanel(title = tagList(shiny::icon("map-marker"), "CaPO4 Homeostasis"),
+             #tabPanel(title = tagList(shiny::icon("map-marker"), "CaPO4 Homeostasis"),
                       
                       div(id = "network_cap",
                           
@@ -54,18 +55,19 @@ body <- dashboardBody(
                       )
                       #downloadButton("downloadData", "Download Data")
                       
-             )
+             #)
            ) 
     ),
     
     column(width = 6,
            #jqui_sortabled( # the too tabBoxes for picture and results can be changed. However, the graph cannot be moved anymore
            #div(
-           tabBox(
+           box(
              id = "tabset1",
-             title = tagList(shiny::icon("microchip"), "Results"), height = "500px", width = NULL,
+             #title = tagList(shiny::icon("microchip"), "Results"), 
+             height = "500px", width = 12,
              
-             tabPanel(title = tagList(shiny::icon("line-chart"), "Time Plot"),
+             #tabPanel(title = tagList(shiny::icon("line-chart"), "Time Plot"),
                       
                       column(6, align = "center",
                              
@@ -82,15 +84,15 @@ body <- dashboardBody(
                                          color = "#000000")
                       )
                       
-             )
+             #)
            ),
            
            div(id = "boxinput", # values to be reset if needed
-               tabBox(
+               box(
                  # classic id does not work with tabBox to reset values inside ...
-                 title = tagList(shiny::icon("gear"), "Control Center"), width = NULL,
-                 height = "500px",
-                 tabPanel(title = tagList(shiny::icon("sliders"), "Parameters"),
+                 #title = tagList(shiny::icon("gear"), "Control Center"), width = NULL,
+                 height = "500px", width = 12,
+                 #tabPanel(title = tagList(shiny::icon("sliders"), "Parameters"),
                           column(8, align="left",
                                  
                                  # the zoom graph
@@ -582,7 +584,7 @@ body <- dashboardBody(
                                  )
                                  
                           )
-                 )
+                 #)
                )
            )
            #)

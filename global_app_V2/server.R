@@ -16,7 +16,7 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # Basic reactive expressions needed by the solver
-  times <- reactive({ seq(0,input$tmax, by = 1) })
+  times <- reactive({ seq(0,input$tmax, by = 1) }) # maybe 0:input$tmax is faster?
   
   # Parameters: multiply the real parameter value by the user input. 
   # By default, user input = 1 so that parameters are well defined
