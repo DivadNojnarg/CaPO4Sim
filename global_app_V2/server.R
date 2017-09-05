@@ -87,19 +87,19 @@ shinyServer(function(input, output, session) {
   nodes_Ca <- reactive({
     
     d <- data.frame(
-      id = 1:15,
+      id = 1:17,
       shape = c("image","image","image","image","image",
                 "image","image","image","image","image",
-                "image","image","image","image","image"), 
+                "image","image","image","image","image","image","image"), 
       # square are always scalable
       image = c("food.svg","intestine.svg","feces.svg",
                 "plasma.svg","rapid-bone.svg","bone.svg",
                 "kidney.svg","urine.svg","parathyroid_gland.svg",
                 "D3.svg","D3.svg","FGF23.svg","cells.svg",
-                "Cap.svg","PO4.svg"),
-      label = c("","","","","","","","","","","","","","",""),
+                "Cap.svg","PO4.svg","D3.svg","PTH.svg"),
+      label = rep("", 17),
       group = c(rep("without hormones",8),rep("only hormones",4), 
-                "without hormones", rep("only hormones",2)),
+                "without hormones", rep("only hormones",2), rep("only hormones",2)),
       fixed = list("x" = TRUE, "y" = TRUE),
       title = c("", 
                 paste(a("About intestinal Ca absorption", 
@@ -140,46 +140,42 @@ shinyServer(function(input, output, session) {
                         target="_blank")),
                 paste(a("About Phosphate", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0",
-                        target="_blank"))), # tooltip to display an image
-      x = c(8, 12, 20, 12, 0, 3, 22, 32, 
-            12, 5, 22, 28, 11, 18, 28),
-      y = c(0, 4, 0, 12, 12, 22, 12, 14, 
-            27, 6, 24, 22, 20, 32, 32),
+                        target="_blank")),
+                rep("",2)), # tooltip to display an image
+      x = c(3,38,64,-65,-115,-256,180,170,41,-286,230,381,-156,130,161,385,-418),
+      y = c(-533,-1,451,195,502,240,70,406,-252,-106,-252,-259,62,-117,-433,30,240),
       color = list(background = "#97C2FC", 
                    border = "#97C2FC", 
                    highlight = list(background = "orange", border = "orange")),
       size = c(50,50,50,50,50,50,50,50,
-               50,25,25,25,50,25,25), # rep(50,13)
-      hidden = c(rep(FALSE,15)))
+               50,25,25,25,50,25,25,25,25),
+      #fixed = list("x" = TRUE, "y" = TRUE),
+      hidden = c(rep(FALSE,17)))
     
   })
   
   edges_Ca <- reactive({
     
     d <- data.frame(
-      from = c(1,2,2,4,5,5,6,7,4,7,9,9,10,11,9,11,11,
-               12,12,7,13,4,7,14,14,15,15,15,7,5,4,5), 
-      to = c(2,3,4,5,4,6,4,4,7,8,6,7,2,9,11,7,12,11,
-             7,7,4,13,4,11,9,9,11,12,8,4,5,6),
+      from = c(1,2,2,4,5,5,6,7,4,7,9,10,11,9,11,
+               12,12,14,13,4,7,14,14,15,15,15,7,5,4,5,16,16,17,10), 
+      to = c(2,3,4,5,4,6,4,4,7,8,7,2,9,11,12,11,
+             7,7,4,13,4,11,9,9,11,12,8,4,5,6,7,16,6,6),
       label = c("Intake", "Fecal Excretion", " Intestinal absorption ", 
                 "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone", 
                 "Resorption", "Ca reabsorption", "filtration", "Urinary Ca excretion",
-                "+","","+","-","+","","+","-","","CaSR (-)","Cells-plasma", "Plasma-cells", 
-                "PO4 reabsorption","-","CaSR(-)","+","-","+","Urinary PO4 excretion",
-                "Rapid PO4 release","Rapid PO4 storage","PO4 flux into bone"),
-      id = 1:32,
-      width = 4*c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-                  1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-      font.size = c(rep(11,10),rep(30,5),11,rep(30,2),
-                    rep(11,5),30,11,rep(30,3), rep(11,4)),
-      #font.background = c(rep("",10),rgb(1,1,1),rep("",2),rgb(1,1,1),rgb(1,1,1),"",rgb(1,1,1),rgb(1,1,1),
-      #                    rep("",5),rgb(1,1,1),"",rgb(1,1,1),rgb(1,1,1),rgb(1,1,1),rep("",4)),
-      font.align = c(rep("",10),"bottom",rep("",2),"bottom","top","","bottom","bottom",
-                     rep("",5),"bottom","","top","bottom","bottom",rep("",4)),
-      color = list(color = c(rep("black", 32)), 
+                "","+","-","+","+","-","","-","Cells-plasma", "Plasma-cells", 
+                "PO4 reabsorption","-","-","+","-","+","Urinary PO4 excretion",
+                "Rapid PO4 release","Rapid PO4 storage","PO4 flux into bone","","-","+","+"),
+      id = 1:34,
+      width = 4,
+      font.size = 11,
+      font.align = c(rep("",10),rep("",2),"bottom","top","","bottom",
+                     rep("",5),"bottom","","top","bottom","bottom",rep("",8)),
+      color = list(color = c(rep("black", 34)), 
                    highlight = "yellow"),
-      dashes = c(rep(FALSE,10),rep(TRUE,10),rep(FALSE,3),
-                 rep(TRUE,5), rep(FALSE,4)),
+      dashes = c(rep(FALSE,10),rep(TRUE,8),rep(FALSE,3),
+                 rep(TRUE,5), rep(FALSE,4), rep(TRUE, 4)),
       title = c(rep("",5),
                 paste(a("About bone formation", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
@@ -187,7 +183,7 @@ shinyServer(function(input, output, session) {
                 paste(a("About bone resorption", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=25370&Menu=1079&backbar=0",
                         target="_blank")),
-                rep("",12),
+                rep("",14),
                 paste(a("About the Calcium Sensing Receptor", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0",
                         target="_blank")),
@@ -199,9 +195,10 @@ shinyServer(function(input, output, session) {
                 paste(a("About bone formation", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
                         target="_blank"))),
-      smooth = c(rep(TRUE,32)),
-      length = c(200,200,200,200,300,200,rep(200,22),200,300,200,200),
-      hidden = c(rep(FALSE,3), # to show either Ca or PO4 or CaPO4 network arrows
+      smooth = c(rep(TRUE,34)),
+      length = c(200,200,200,200,300,200,rep(200,20),200,300,200,200, rep(200,4)),
+      # to show either Ca or PO4 or CaPO4 network arrows
+      hidden = c(rep(FALSE,3), 
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
                  ifelse(is.element("Ca", input$network_Ca_choice), 
@@ -214,14 +211,14 @@ shinyServer(function(input, output, session) {
                  FALSE,
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 rep(FALSE,10),
+                 rep(FALSE,8),
                  ifelse(is.element("PO4", input$network_Ca_choice), 
                         ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("PO4", input$network_Ca_choice), 
                         ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("PO4", input$network_Ca_choice), 
                         ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 rep(FALSE,5),
+                 rep(FALSE,9),
                  ifelse(is.element("PO4", input$network_Ca_choice), 
                         ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("PO4", input$network_Ca_choice), 
@@ -262,42 +259,41 @@ shinyServer(function(input, output, session) {
     visNetwork(nodes_Ca, edges_Ca, width = "100%", height = "100%") %>%
       visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
       visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
-               arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
+               arrows = list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
       visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE, 
                  selectedBy = "group", collapse = FALSE) %>% # add group selection option
+      # prevent edge from being selected when a node is selected
       visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
-                     dragNodes = TRUE, dragView = TRUE, zoomView = FALSE,
-                     navigationButtons = TRUE) %>% # prevent edge from being selected when a node is selected
+                     dragNodes = TRUE, dragView = FALSE, zoomView = FALSE,
+                     navigationButtons = FALSE) %>% 
+      # simple click event to allow graph ploting
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);
-                ;}") %>% # simple click event to allow graph ploting
+                ;}") %>% 
+      # add the doubleclick function to handle zoom views
       visEvents(doubleClick = "function(nodes) {
                 Shiny.onInputChange('current_node_bis_id', nodes.nodes);
-                }") %>%  # add the doubleclick function to handle zoom views
-      # visEvents(deselectNode = "function(nodes) {
-      #   Shiny.onInputChange('current_node_id', 0);
-      #           ;}") %>%
+                }") %>%  
       visEvents(selectEdge = "function(edges) {
                 Shiny.onInputChange('current_edge_id', edges.edges);
                 ;}") %>%
-      #visEvents(stabilized = "function() { 
-      #          this.setOptions({nodes : {physics : false}})}") %>%
-      # visEvents(deselectEdge = "function(edges) {
-      #   Shiny.onInputChange('current_edge_id', 0);
-      #           ;}") %>%
-      #visLayout(randomSeed = 12, improvedLayout = TRUE)
-      visIgraphLayout(smooth = TRUE) %>% # to disable repulsion
-      visLegend(addNodes = legend_nodes, addEdges = legend_edges, 
-                useGroup = FALSE, ncol = 2, width = 0.1) %>% # add the legend, ncol = 2 to show edges otherwise a bug appear
-      visPhysics(stabilization = TRUE, enabled = TRUE) %>% # stabilization prevents arrows from bouncing
-      #visEvents(type = "once", startStabilizing = "function() {
-      #      this.moveTo({scale:1})}") %>% # to set the initial zoom (1 by default)
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x: 0, y:-13.43},
+                offset: {x: 0, y:0} })}") %>% 
+      visEvents(type = "once", startStabilizing = "function() {
+            this.moveTo({scale:2})}") %>% # to set the initial zoom (1 by default)
+      #visIgraphLayout(smooth = TRUE) %>% # to disable repulsion
+      # add the legend, ncol = 2 to show edges otherwise a bug appear
+      #visLegend(addNodes = legend_nodes, addEdges = legend_edges, 
+      #          useGroup = FALSE, ncol = 2, width = 0.1) %>% 
+      # stabilization prevents arrows from bouncing
+      visPhysics(stabilization = TRUE, enabled = TRUE) %>%
       visExport(type = "pdf", style = css_export) # export the graph as pdf
     
   })
   
   output$id <- renderPrint({ input$current_edge_id })
-  
   output$id_bis <- renderPrint({ input$current_node_id })
   
   
@@ -353,12 +349,14 @@ shinyServer(function(input, output, session) {
       visEvents(selectEdge = "function(edges) {
                  Shiny.onInputChange('current_edge_bis_id', edges.edges);
                  ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
       visEvents(deselectEdge = "function(edges) {
          Shiny.onInputChange('current_edge_bis_id', 'null');
-                 ;}") %>% # set value to NULL to prevent sliders from being displayed
+                 ;}") %>% 
+      # very important: change the whole graph position after drawing
       visEvents(type = "once", afterDrawing = "function() {
                 this.moveTo({ position: {x: 2.5, y:-2.5},
-                offset: {x: 0, y:0} })}") %>% # very important: change the whole graph position after drawing
+                offset: {x: 0, y:0} })}") %>% 
       visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
                arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
       visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
@@ -370,22 +368,24 @@ shinyServer(function(input, output, session) {
   output$id_tris <- renderPrint({ input$current_edge_bis_id })
   
   # node coordinates
-  output$position <- renderPrint( vals$coords ) # usefull when developing to return x and y position
+  # useful when developing to return x and y position
+  output$position <- renderPrint( vals$coords ) 
   vals <- reactiveValues(coords=NULL, viewposition = NULL)
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_PTH") %>% visGetPositions()
-    vals$coords <- if (!is.null(input$network_PTH_positions)) 
-      do.call(rbind, input$network_PTH_positions)
+    visNetworkProxy("network_Ca") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_Ca_positions)) 
+      do.call(rbind, input$network_Ca_positions)
   })
   
   # view position (of the camera)
+  # useful to set a proper view
   output$viewposition <- renderPrint({ vals$viewposition })
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_PTH") %>% visGetViewPosition()
-    vals$viewposition <- if (!is.null(input$network_PTH_viewPosition))
-      do.call(rbind, input$network_PTH_viewPosition)
+    visNetworkProxy("network_Ca") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_Ca_viewPosition))
+      do.call(rbind, input$network_Ca_viewPosition)
     
   })
   

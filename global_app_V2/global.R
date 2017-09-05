@@ -26,9 +26,6 @@ source("header.R")
 source("sidebar.R")
 source("body.R")
 
-# JS code for closing shiny app with a button
-#jscode <- "shinyjs.closeWindow = function() { window.close(); }"
-
 #------------------------------------------------------------------------- 
 #  
 #  
