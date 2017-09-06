@@ -258,15 +258,30 @@ shinyServer(function(input, output, session) {
       dashes = c(F,F,T,F),
       smooth = c(T,T,T,F))
     
-    visNetwork(nodes_Ca, edges_Ca, width = "100%", height = "100%") %>%
+    visNetwork(nodes_Ca, 
+               edges_Ca, 
+               width = "100%", 
+               height = "100%") %>%
       visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
-      visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
-               arrows = list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
-      visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE, 
-                 selectedBy = "group", collapse = FALSE) %>% # add group selection option
+      # put shadow on false
+      visEdges(shadow = FALSE, 
+               font = list(align = "horizontal"), 
+               arrows = list(to = list(enabled = TRUE, 
+                                       scaleFactor = 1, 
+                                       type = "arrow"))) %>%
+      # add group selection option
+      visOptions(highlightNearest = FALSE, 
+                 clickToUse = FALSE, 
+                 manipulation = FALSE, 
+                 selectedBy = "group", 
+                 collapse = FALSE) %>% 
       # prevent edge from being selected when a node is selected
-      visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
-                     dragNodes = TRUE, dragView = FALSE, zoomView = FALSE,
+      visInteraction(hover = TRUE, 
+                     hoverConnectedEdges = FALSE, 
+                     selectConnectedEdges = FALSE, 
+                     dragNodes = TRUE, 
+                     dragView = FALSE, 
+                     zoomView = FALSE,
                      navigationButtons = FALSE) %>% 
       # simple click event to allow graph ploting
       visEvents(selectNode = "function(nodes) {
@@ -359,11 +374,21 @@ shinyServer(function(input, output, session) {
       visEvents(type = "once", afterDrawing = "function() {
                 this.moveTo({ position: {x: 2.5, y:-2.5},
                 offset: {x: 0, y:0} })}") %>% 
-      visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
-               arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
-      visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE, 
-                     multiselect = TRUE, zoomView = FALSE, dragNodes = FALSE, dragView = FALSE) %>%
-      visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
+      visEdges(shadow = FALSE, 
+               font = list(align = "horizontal"), # put shadow on false
+               arrows = list(to = list(enabled = TRUE, 
+                                       scaleFactor = 1, 
+                                       type = "arrow"))) %>%
+      visInteraction(hover = TRUE, 
+                     hoverConnectedEdges = FALSE, 
+                     selectConnectedEdges = FALSE, 
+                     multiselect = TRUE, 
+                     zoomView = FALSE, 
+                     dragNodes = FALSE, 
+                     dragView = FALSE) %>%
+      visOptions(highlightNearest = FALSE, 
+                 clickToUse = FALSE, 
+                 manipulation = FALSE) %>%
       visExport(type = "pdf", style = css_export_zoom) # export the graph as pdf
   })
   
@@ -599,12 +624,14 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$network_Ca_choice, {
     
-    if (is.element("PO4", input$network_Ca_choice) && !is.element("Ca", input$network_Ca_choice)) {
+    if (is.element("PO4", input$network_Ca_choice) && 
+        !is.element("Ca", input$network_Ca_choice)) {
       disable(selector = "#network_Ca_choice input[value='PO4']")
     } else {
       enable(selector = "#network_Ca_choice input[value='PO4']")
     }
-    if (is.element("Ca", input$network_Ca_choice) && !is.element("PO4", input$network_Ca_choice)) {
+    if (is.element("Ca", input$network_Ca_choice) && 
+        !is.element("PO4", input$network_Ca_choice)) {
       disable(selector = "#network_Ca_choice input[value='Ca']")
     } else {
       enable(selector = "#network_Ca_choice input[value='Ca']")
