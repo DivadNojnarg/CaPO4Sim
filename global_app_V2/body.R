@@ -92,6 +92,35 @@ body <- dashboardBody(
                           div(id = "networkPTH",
                               visNetworkOutput("network_PTH", height = "400px")
                           )
+                        ),
+                        conditionalPanel(
+                          condition = "input.current_node_bis_id == 19",
+                          div(id = "network_TALzoom",
+                              imageOutput("TAL")
+                              )
+                        ),
+                        conditionalPanel(
+                          condition = "input.current_node_bis_id == 20",
+                          div(id = "network_PTzoom",
+                              imageOutput("PT")
+                          )
+                        ),
+                        conditionalPanel(
+                          condition = "input.current_node_bis_id == 21",
+                          div(id = "network_DCT-CNTzoom",
+                              imageOutput("DCT_CNT")
+                          )
+                        ),
+                        conditionalPanel(
+                          condition = "input.current_node_bis_id == 2",
+                          div(id = "network_intestinezoom",
+                              imageOutput("intestine_zoom")
+                          )
+                        ),conditionalPanel(
+                          condition = "input.current_node_bis_id == 6",
+                          div(id = "network_bonezoom",
+                              imageOutput("bone_zoom")
+                          )
                         )
                         
                  ),

@@ -54,7 +54,6 @@ shinyUI(fluidPage(
                       background-repeat: no-repeat;
                       background-position: center center;
                     }
-
                     "))
   ),
   

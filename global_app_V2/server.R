@@ -87,19 +87,22 @@ shinyServer(function(input, output, session) {
   nodes_Ca <- reactive({
     
     d <- data.frame(
-      id = 1:17,
+      id = 1:21,
       shape = c("image","image","image","image","image",
                 "image","image","image","image","image",
-                "image","image","image","image","image","image","image"), 
+                "image","image","image","image","image","image",
+                "image","image", "circle","circle","circle"), 
       # square are always scalable
       image = c("food.svg","intestine.svg","feces.svg",
                 "plasma.svg","rapid-bone.svg","bone.svg",
                 "kidney.svg","urine.svg","parathyroid_gland.svg",
                 "D3.svg","D3.svg","FGF23.svg","cells.svg",
-                "Cap.svg","PO4.svg","D3.svg","PTH.svg"),
-      label = rep("", 17),
+                "Cap.svg","PO4.svg","D3.svg","PTH.svg","kidney_zoom1.svg",
+                rep("",3)),
+      label = c(rep("", 18),"TAL","PT","DCT"),
       group = c(rep("without hormones",8),rep("only hormones",4), 
-                "without hormones", rep("only hormones",2), rep("only hormones",2)),
+                "without hormones", rep("only hormones",2), rep("only hormones",2),
+                rep("without hormones",4)),
       fixed = list("x" = TRUE, "y" = TRUE),
       title = c("", 
                 paste(a("About intestinal Ca absorption", 
@@ -141,16 +144,16 @@ shinyServer(function(input, output, session) {
                 paste(a("About Phosphate", 
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0",
                         target="_blank")),
-                rep("",2)), # tooltip to display an image
-      x = c(3,38,64,-65,-115,-256,180,170,41,-286,230,381,-156,130,161,385,-418),
-      y = c(-533,-1,451,195,502,240,70,406,-252,-106,-252,-259,62,-117,-433,30,240),
-      color = list(background = "#97C2FC", 
-                   border = "#97C2FC", 
+                rep("",6)), # tooltip to display an image
+      x = c(3,38,64,-65,-115,-256,180,170,41,-286,230,381,-156,190,161,385,-418,
+            360,450, 380, 430),
+      y = c(-533,-1,451,195,502,240,70,406,-252,-106,-252,-259,62,-117,-433,30,
+            240,280,300, 160, 180),
+      color = list(background = "#97C2FC", border = "#97C2FC", 
                    highlight = list(background = "orange", border = "orange")),
-      size = c(50,50,50,50,50,50,50,50,
-               50,25,25,25,50,25,25,25,25),
+      size = c(50,50,50,50,50,50,50,50,50,25,25,25,50,25,25,25,25,150,25,25,25),
       #fixed = list("x" = TRUE, "y" = TRUE),
-      hidden = c(rep(FALSE,17)))
+      hidden = c(rep(FALSE,21)))
     
   })
   
@@ -367,6 +370,8 @@ shinyServer(function(input, output, session) {
   
   output$id_tris <- renderPrint({ input$current_edge_bis_id })
   
+  
+  
   # node coordinates
   # useful when developing to return x and y position
   output$position <- renderPrint( vals$coords ) 
@@ -388,6 +393,53 @@ shinyServer(function(input, output, session) {
       do.call(rbind, input$network_Ca_viewPosition)
     
   })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  Render image of the experimental graphs
+  #
+  #-------------------------------------------------------------------------
+  
+  output$TAL <- renderImage({
+    # When input$n is 1, filename is ./images/image1.jpeg
+    filename <- normalizePath(file.path('./www', 'kidney_TAL.jpg'))
+    
+    # Return a list containing the filename
+    list(src = filename)
+  }, deleteFile = FALSE)
+  
+  output$PT <- renderImage({
+    # When input$n is 1, filename is ./images/image1.jpeg
+    filename <- normalizePath(file.path('./www', 'kidney_PT.jpg'))
+    
+    # Return a list containing the filename
+    list(src = filename)
+  }, deleteFile = FALSE)
+  
+  output$DCT_CNT <- renderImage({
+    # When input$n is 1, filename is ./images/image1.jpeg
+    filename <- normalizePath(file.path('./www', 'kidney_DCT-CNT.jpg'))
+    
+    # Return a list containing the filename
+    list(src = filename)
+  }, deleteFile = FALSE)
+  
+  output$intestine_zoom <- renderImage({
+    # When input$n is 1, filename is ./images/image1.jpeg
+    filename <- normalizePath(file.path('./www', 'intestine_zoom.jpg'))
+    
+    # Return a list containing the filename
+    list(src = filename)
+  }, deleteFile = FALSE)
+  
+  output$bone_zoom <- renderImage({
+    # When input$n is 1, filename is ./images/image1.jpeg
+    filename <- normalizePath(file.path('./www', 'bone_zoom.jpg'))
+    
+    # Return a list containing the filename
+    list(src = filename)
+  }, deleteFile = FALSE)
+  
   
   #------------------------------------------------------------------------- 
   #  
