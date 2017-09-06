@@ -79,7 +79,6 @@ shinyServer(function(input, output, session) {
   #  The network part: make interactive diagramms of Ca and PO4 homeostasis
   #  as well as regulation by hormones such as PTH, vitamin D3 and FGF23
   #  
-  #
   #-------------------------------------------------------------------------
   
   # Generate the CaP Graph network
@@ -230,8 +229,8 @@ shinyServer(function(input, output, session) {
                         ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("PO4", input$network_Ca_choice), 
                         ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE)), 
-      stringsAsFactors=FALSE) # to change edges color do not forget this "stringsAsFactors=FALSE"
-    
+      stringsAsFactors=FALSE) 
+    # to change edges color do not forget this "stringsAsFactors=FALSE"
   })
   
   # Generate the output of the Ca graph to be used in body
@@ -530,43 +529,6 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # generate UI box by clicking on a node or edge
-  
-  # observeEvent(input$current_node_id,{
-  # 
-  #                insertUI(
-  #                  selector = "#boxinput",
-  #                  where = "afterEnd",
-  #                  ui = box_close(title = "test",
-  #                                 solidHeader = TRUE,
-  #                                 width = 12,
-  #                                 removable = TRUE,
-  #                                 renderVisNetwork({
-  # 
-  #                                   nodes_PTHg <- nodes_PTHg()
-  #                                   edges_PTHg <- edges_PTHg()
-  # 
-  #                                   visNetwork(nodes_PTHg, edges_PTHg) %>%
-  #                                     visEvents(selectEdge = "function(edges) {
-  #                                               Shiny.onInputChange('current_edge_bis_id', edges.edges);
-  #                                               ;}") %>%
-  #                                     visEvents(deselectEdge = "function(edges) {
-  #                                               Shiny.onInputChange('current_edge_bis_id', 'null');
-  #                                               ;}") %>% # set value to NULL to prevent sliders from being displayed
-  #                                     visEvents(type = "once", afterDrawing = "function() {
-  #                                               this.moveTo({ position: {x: 2.5, y:-2.5},
-  #                                               offset: {x: 0, y:0} })}") %>% # very important: change the whole graph position after drawing
-  #                                     visEdges(shadow = FALSE, font = list(align = "horizontal"), # put shadow on false
-  #                                              arrows =list(to = list(enabled = TRUE, scaleFactor = 1, type = "arrow"))) %>%
-  #                                     visInteraction(hover = TRUE, hoverConnectedEdges = FALSE, selectConnectedEdges = FALSE,
-  #                                                    multiselect = TRUE, zoomView = FALSE) %>%
-  #                                     visOptions(highlightNearest = FALSE, clickToUse = FALSE, manipulation = FALSE) %>%
-  #                                     visExport(type = "pdf") # export the graph as pdf
-  #                                   }))
-  #                )
-  # 
-  # })
-  
   #------------------------------------------------------------------------- 
   #  
   #  Notification events to explain the user how to play with the app
@@ -699,11 +661,8 @@ shinyServer(function(input, output, session) {
                  })
   
   # Share the state of the App via server bookmarking
-  
   observeEvent(input$bookmark, {
     session$doBookmark()
   })
-  
-  #session$onSessionEnded(stopApp)  # stop shiny app when the web-window is closed
   
 })
