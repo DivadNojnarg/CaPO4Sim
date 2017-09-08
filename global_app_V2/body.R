@@ -58,7 +58,7 @@ body <- dashboardBody(
            box(
              id = "tabset1",
              #title = tagList(shiny::icon("microchip"), "Results"), 
-             height = "500px", width = 12,
+             height = "450px", width = 12,
              
              #tabPanel(title = tagList(shiny::icon("line-chart"), "Time Plot"),
              
@@ -88,25 +88,25 @@ body <- dashboardBody(
                         
                         # the zoom graph
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 9",
+                          condition = "input.current_node_bis_id == 16",
                           div(id = "networkPTH",
                               visNetworkOutput("network_PTH", height = "400px")
                           )
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 19",
-                          div(id = "network_TALzoom",
-                              imageOutput("TAL")
-                              )
-                        ),
-                        conditionalPanel(
-                          condition = "input.current_node_bis_id == 20",
+                          condition = "input.current_node_bis_id == 9",
                           div(id = "network_PTzoom",
                               imageOutput("PT")
                           )
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 21",
+                          condition = "input.current_node_bis_id == 10",
+                          div(id = "network_TALzoom",
+                              imageOutput("TAL")
+                              )
+                        ),
+                        conditionalPanel(
+                          condition = "input.current_node_bis_id == 11",
                           div(id = "network_DCT-CNTzoom",
                               imageOutput("DCT_CNT")
                           )

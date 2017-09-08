@@ -253,10 +253,10 @@ calcium_phosphate_core <- function (t, state, parameters){
     dEGTA_p <- 1/Vp*k_inject_egta/EGTA_norm - EGTA_form + EGTA_diss/EGTA_norm # equation for continuous EGTA injection
     dCaEGTA_p <- EGTA_form/Ca_EGTA_norm - EGTA_diss # kinetic of CaEGTA_p complex
     
-    list(c(dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, 
+    list(list(dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, 
            dPO4_b, dPO4_c, dCaHPO4_p, dCaH2PO4_p, dCPP_p, dCaHPO4_f, dCaH2PO4_f,
            dCaProt_p, dNaPO4_p, dCa_tot, dPO4_tot, dEGTA_p, dCaEGTA_p), 
-         c(U_Ca = Excretion_norm, # out 23
+         list(U_Ca = Excretion_norm, # out 23
            U_PO4 = Excretion_P_norm, 
            Abs_int_Ca = Abs_intest_norm,
            Abs_int_PO4 = Abs_intest_P_norm, 

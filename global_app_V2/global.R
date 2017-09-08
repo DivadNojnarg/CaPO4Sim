@@ -98,37 +98,37 @@ arrow_lighting <- function(events, edges, network) {
                   list("Calcium flux into bone has been increased!",
                        "Calcium flux into bone has been decreased!"),
                   list("Calcium storage in the bone rapid pool has 
-                                                     been increased!",
+                        been increased!",
                        "Calcium storage in the bone rapid pool has 
-                                                     been decreased!"),
+                        been decreased!"),
                   list("PO4 storage in the bone rapid pool has been 
-                                                      increased!",
+                        increased!",
                        "PO4 storage in the bone rapid pool has been 
-                                                      decreased!"),
+                        decreased!"),
                   list("Calcium release from the bone rapid pool has 
-                                                     been increased!",
+                        been increased!",
                        "Calcium release from the bone rapid pool has 
-                                                     been decreased!"),
+                        been decreased!"),
                   list("PO4 release from the bone rapid pool has 
-                                                      been increased!",
+                        been increased!",
                        "PO4 release from the bone rapid pool has 
-                                                      been decreased!"),
+                        been decreased!"),
                   list("Calcium/Phosphate release from the bone 
-                                                   (resorption) has been increased!",
+                       (resorption) has been increased!",
                        "Calcium/Phosphate release from the bone 
-                                                   (resorption) has been decreased!"),
+                       (resorption) has been decreased!"),
                   list("Calcium/Phosphate release from the bone 
-                                                   (resorption) has been increased!",
+                       (resorption) has been increased!",
                        "Calcium/Phosphate release from the bone 
-                                                   (resorption) has been decreased!"),
+                        (resorption) has been decreased!"),
                   list("GFR has been increased!",
                        "GFR has been decreased!"),
                   list("PO4 storage into cells has been increased!",
                        "PO4 storage into cells has been decreased!"),
                   list("PO4 release from cells to plasma has been 
-                                                      increased!",
+                        increased!",
                        "PO4 release from cells to plasma has been 
-                                                      decreased!"),
+                       decreased!"),
                   list("PTH synthesis has been increased!",
                        "PTH synthesis has been decreased!"),
                   list("25(OH)D stock has been increased!",
@@ -139,8 +139,8 @@ arrow_lighting <- function(events, edges, network) {
                        "FGF23 synthesis has been decreased!")
       ),
       
-      edges_id = list(1,1,6,4,31,5,30,7,7,9,22,21,c(11,12,15),
-                      c(13,14,16,17),c(13,14,16,17), c(18,19))
+      edges_id = list(1,1,8,4,5,6,7,10,10,11,16,17,c(24,25,26),
+                      c(27,28,29,30,31,32),c(27,28,29,30,31,32), c(33,34))
       
     )
     
@@ -154,9 +154,9 @@ arrow_lighting <- function(events, edges, network) {
                   PTHg_exo = list("PTH exocytosis has been increased",
                                   "PTH exocytosis has been decreased"),
                   PTHg_exoinhib  = list("CaSR inhibition on PTH synthesis 
-                                                            has been increased",
+                                        has been increased",
                                         "CaSR inhibition on PTH synthesis 
-                                                            has been decreased")
+                                        has been decreased")
       ),
       
       edges_id = list(1,3,4)
@@ -269,7 +269,7 @@ title_size <- list(size = 10)
 
 plot_node <- function(node, out, parameters_bis) {
   
-  if (!is.null(node) && sum(node ==  c(1:3,7:8,10:12,14:15)) != 1) {
+  if (!is.null(node) && sum(node ==  c(1:3,7:12,14:15,17:21)) != 1) {
     
     # set the x/y-axis ranges
     time <- out[,1]
@@ -435,11 +435,11 @@ plot_node <- function(node, out, parameters_bis) {
       # other cases: need to convert graph indexes to the solver indexes
       # which are totally different (and is a big problem!!!). 
       # 0 correspond to nodes in previous cases or not interesting
-      node_Ca_list <- data.frame(id = c(rep(0,8), 2, rep(0,3),12),
-                                 names = c(rep("",8),"PTH quantity in parathyroid glands",
-                                           rep("",3),"PO4 quantity in cells"),
-                                 units = c(rep("",8),"pmol",
-                                           rep("",3),"mmol"))
+      node_Ca_list <- data.frame(id = c(rep(0,12),12,rep(0,2),2),
+                                 names = c(rep("",12),"PO4 quantity in cells",
+                                           rep("",2),"PTH quantity in parathyroid glands"),
+                                 units = c(rep("",12),"mmol",
+                                           rep("",2),"pmol"))
       #names(node_Ca_list) <- c(rep("",8),"PTH quantity in parathyroid glands",
       #                         rep("",3),"PO4 quantity in cells")
       
@@ -486,9 +486,9 @@ plot_edge <- function(edge, out) {
                range = c(0, max(time)))
   
   # avoid edges that are not fluxes in the network
-  if (edge == 1 | edge == 2 | edge == 9 |
+  if (edge == 1 | edge == 3 | edge == 11 |
       # sum counts the number of true, only one is enough
-      sum(edge ==  11:20) == 1 | sum(edge == 24:28) == 1) {
+      sum(edge ==  18:34) == 1) {
     p <- plot_ly() %>%
       add_annotations("Please select another edge!", 
                       showarrow = FALSE, 
@@ -499,7 +499,7 @@ plot_edge <- function(edge, out) {
     
     # select edges where Ca and PO4 fluxes
     # have the same regulation
-    if (edge == 3) {
+    if (edge == 2) {
       
       yvar <- list(title = "Flux (µmol/min)", 
                    range = c(min(out[,"Abs_int_Ca"]*1000*0.8),
@@ -546,7 +546,7 @@ plot_edge <- function(edge, out) {
         ) %>%
         config(displayModeBar = FALSE)
       
-    } else if (edge == 7) {
+    } else if (edge == 10) {
       
       # resorption case
       yvar <- list(title = "Flux (µmol/min)", 
@@ -601,8 +601,8 @@ plot_edge <- function(edge, out) {
       # other cases: need to convert graph indexes to the solver indexes
       # which are totally different (and is a big problem!!!). 
       # 0 correspond to arrows in previous cases or not interesting
-      edge_Ca_list <- c(rep(0,3),34,35,30,0,32,33,24,rep(0,10),
-                        39,38,33,rep(0,5),25,37,36,31)
+      edge_Ca_list <- c(rep(0,3),4,6,8,0,12,13,14,rep(0,10),
+                        17,16,33,rep(0,5),15,7,5,9)
       names(edge_Ca_list) <- c(rep("",3),"Rapid Ca storage in bone",
                                "Rapid Ca release from bone",
                                "Ca flux into bone",
