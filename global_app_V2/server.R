@@ -87,16 +87,13 @@ shinyServer(function(input, output, session) {
     
     d <- data.frame(
       id = 1:21,
-      shape = c("image","image","image","image","image",
-                "image","image","image","image","image",
-                "image","image","image","image","image","image",
+      shape = c("image","image","image","image","image","image","image","image",
+                "image","image","image","image","image","image","image","image",
                 "image","image", "circle","circle","circle"), 
-      # square are always scalable
-      image = c("food.svg","intestine.svg","feces.svg",
-                "plasma.svg","rapid-bone.svg","bone.svg",
-                "kidney.svg","urine.svg","parathyroid_gland.svg",
-                "D3.svg","D3.svg","FGF23.svg","cells.svg",
-                "Cap.svg","PO4.svg","D3.svg","PTH.svg","kidney_zoom1.svg",
+      image = c("food.svg","intestine.svg","feces.svg","plasma.svg","rapid-bone.svg",
+                "bone.svg","kidney.svg","urine.svg","parathyroid_gland.svg",
+                "D3.svg","D3.svg","FGF23.svg","cells.svg","Cap.svg","PO4.svg",
+                "D3.svg","PTH.svg","kidney_zoom1.svg",
                 rep("",3)),
       label = c(rep("", 18),"TAL","PT","DCT"),
       group = c(rep("without hormones",8),rep("only hormones",4), 
@@ -144,14 +141,15 @@ shinyServer(function(input, output, session) {
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0",
                         target="_blank")),
                 rep("",6)), # tooltip to display an image
-      x = c(3,38,64,-65,-115,-256,180,170,41,-286,230,381,-156,190,161,385,-418,
-            360,450, 380, 430),
-      y = c(-533,-1,451,195,502,240,70,406,-252,-106,-252,-259,62,-117,-433,30,
-            240,280,300, 160, 180),
+      x = c(3,38,64,-65,-65,-256,180,170,41,-386,330,481,-190,290,320,385,-418,
+            360,450,380,430),
+      y = c(-633,-150,551,195,472,460,0,506,-452,-106,-452,-452,0,-317,-633,30,
+            240,230,250,110,130),
       color = list(background = "#97C2FC", border = "#97C2FC", 
                    highlight = list(background = "orange", border = "orange")),
       size = c(50,50,50,50,50,50,50,50,50,25,25,25,50,25,25,25,25,150,25,25,25),
       #fixed = list("x" = TRUE, "y" = TRUE),
+      physics = rep(FALSE,21),
       hidden = c(rep(FALSE,21)))
     
   })
@@ -159,10 +157,10 @@ shinyServer(function(input, output, session) {
   edges_Ca <- reactive({
     
     d <- data.frame(
-      from = c(1,2,2,4,5,5,6,7,4,7,9,10,11,9,11,
-               12,12,14,13,4,7,14,14,15,15,15,7,5,4,5,16,16,17,10), 
-      to = c(2,3,4,5,4,6,4,4,7,8,7,2,9,11,12,11,
-             7,7,4,13,4,11,9,9,11,12,8,4,5,6,7,16,6,6),
+      from = c(1,2,2,4,5,5,6,7,4,7,9,10,11,9,11,12,12,14,
+               13,4,7,14,14,15,15,15,7,5,4,5,16,16,17,10), 
+      to = c(2,3,4,5,4,6,4,4,7,8,7,2,9,11,12,11,7,7,
+             4,13,4,11,9,9,11,12,8,4,5,6,7,16,6,6),
       label = c("Intake", "Fecal Excretion", " Intestinal absorption ", 
                 "Rapid Ca storage", "Rapid Ca release", "Ca Flux into bone", 
                 "Resorption", "Ca reabsorption", "filtration", "Urinary Ca excretion",
