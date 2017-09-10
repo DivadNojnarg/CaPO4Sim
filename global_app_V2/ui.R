@@ -38,9 +38,6 @@ shinyUI(fluidPage(
                       height:100%;
                     }
 
-                    #options{
-                    float: right;
-                    }
                     "))
   ),
   

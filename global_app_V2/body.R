@@ -84,7 +84,6 @@ body <- dashboardBody(
            
            div(id = "boxinput", # values to be reset if needed
                box(
-                 id = "boxparam",
                  width = 12,
                  title = header_box_network,
                  

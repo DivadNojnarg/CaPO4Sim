@@ -13,6 +13,8 @@ header_box_network <- div(
                    up = TRUE,
                    label = "",
                    
+                   br(),
+                   
                    # enable notifications or not since this can be boring
                    actionBttn(inputId = "notif_switch", 
                               label = "Help?",

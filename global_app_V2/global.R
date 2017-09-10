@@ -20,6 +20,7 @@ library(shinyWidgets)
 library(shinyjqui)
 library(bsplus)
 library(sweetalertR)
+library(rintrojs)
 
 # Load the template components of UI
 source("header.R")
@@ -40,6 +41,7 @@ source("cap_fixed_parameters.R")
 source("calcium_phosphate_core.R") # core model
 source("calc_change.R")
 source("box_close.R")
+source("networks.R")
 
 # css style for visNetwork export
 
@@ -318,7 +320,7 @@ plot_node <- function(node, out, parameters_bis) {
               yanchor = "bottom",
               #pad = list('r'= 0, 't'= 10, 'b' = 10),
               x = 0.5,
-              y = -0.4,
+              y = -0.45,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE)),
@@ -370,7 +372,7 @@ plot_node <- function(node, out, parameters_bis) {
               yanchor = "bottom",
               #pad = list('r'= 0, 't'= 10, 'b' = 10),
               x = 0.5,
-              y = -0.4,
+              y = -0.45,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -414,7 +416,7 @@ plot_node <- function(node, out, parameters_bis) {
               yanchor = "bottom",
               #pad = list('r'= 0, 't'= 10, 'b' = 10),
               x = 0.5,
-              y = -0.4,
+              y = -0.45,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -530,7 +532,7 @@ plot_edge <- function(edge, out) {
               yanchor = "bottom",
               #pad = list('r'= 0, 't'= 10, 'b' = 10),
               x = 0.5,
-              y = -0.4,
+              y = -0.45,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -580,7 +582,7 @@ plot_edge <- function(edge, out) {
               yanchor = "bottom",
               #pad = list('r'= 0, 't'= 10, 'b' = 10),
               x = 0.5,
-              y = -0.4,
+              y = -0.45,
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
@@ -706,11 +708,11 @@ sliders_reset <- function(button_states, input) {
 }
 
 
-# Function network_update 
+# Function network_hide_edges 
 # It takes graph id as argument as well as
-# edges 
+# edges and hide the selected edges
 
-network_update <- function(edges, network, choice) {
+network_hide_edges <- function(edges, network, choice) {
   
   # not very nice, improve if find better
   if (choice == "TRUE") {
@@ -727,37 +729,37 @@ network_update <- function(edges, network, choice) {
     visUpdateEdges(edges = edges)
 }
 
-#  help text generation
+# help text generation
 # needed for the introjs help
+# contains a vector of all instructions
 
-help_text <- c("In this panel is displayed the interactive diagram (see legend). 
+help_text <- c("In this panel is displayed the interactive network (see legend). 
                Basically, when a parameter is changed, initial perturbations are shown 
-               in yellow. The arrow size increases 
-               if it is a stimulatory effect and inversely. Fluxes are shown 
-               in red if they decrease or in green if they are enhanced. 
-               Colors correspond to the final state of the system
-               (which is the value of tmax in minutes).",
+               in yellow. The arrow size increases if it is a stimulatory effect and 
+               inversely. Fluxes are shown in red if they decrease or in green if 
+               they are enhanced. Colors correspond to the final state of the system
+               (which is the value of tmax in minutes). Some nodes can be 
+               double-clicked (parathyroid glands, intestine, bone as well as kidneys) 
+               in order to display a detailed view of what happens inside these nodes.",
                
                "In this panel are displayed the graph of CaPO4 homeostasis. 
-               To see the results, start by clicking on a node on the interactive diagram. 
+               To see the results, start by clicking on a node on the interactive network. 
                The value of tmax, which is the maximum time of simulation, can be 
                increased or decreased as required (but always higher than 0). 
-               Some results may be unavailable (for instance in feces, food,...)",
+               Some graphs may be unavailable (for instance in feces, food,...).",
                
                "To see the results, start by clicking on an edge on the interactive diagram.
                Note that several edges do not have any graph associated.",
                
-               "Some nodes can be double-clicked (parathyroid glands, intestine, bone
-               as well as kidneys) in order to display a detailed view of what happens
-               inside these nodes. When not available, nothing is displayed.",
+               "When a detailed view is not available, nothing is displayed. You
+               can select each edges of the detailed view in order to print the 
+               corresponding slider(s) on the right.",
                
-               "On each detailed view, as well as in the main graph, clicking on an edge
-               also diplays the related parameters in the current box. Their values 
-               can be changed moving sliders from right to left and inversely. 
-               To reset the value of a slider, click on the reset button on the right side of the
-               slider.",
+               "Sliders can be moved from the right to the left and inversely. 
+               To reset the value of a slider, click on the reset button on the 
+               right side of the slider.",
                
-               "Select specific edges to Ca or PO4 homeostasis.",
+               "Select edges specific to Ca or PO4 homeostasis.",
                
                "Remove or allow the display of hormonal regulation in the graph",
                
