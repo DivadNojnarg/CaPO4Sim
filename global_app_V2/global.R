@@ -210,7 +210,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events){
     # low precision also
     calc_change_t <- round(calc_change(out)[1:14],1)
     # index of arrows in the Ca network (which are fluxes and not regulations)
-    index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21)
+    index <- c(2,14,15,10,8,9,12,13,4,5,6,7,16,17)
     calc_change_t <- rbind(calc_change_t, index)
   } else { # should use else if when other graphs will be added
     calc_change_t <- round(calc_change(out)[c(15,17:18)])
@@ -601,23 +601,19 @@ plot_edge <- function(edge, out) {
       # other cases: need to convert graph indexes to the solver indexes
       # which are totally different (and is a big problem!!!). 
       # 0 correspond to arrows in previous cases or not interesting
-      edge_Ca_list <- c(rep(0,3),4,6,8,0,12,13,14,rep(0,10),
-                        17,16,33,rep(0,5),15,7,5,9)
+      edge_Ca_list <- c(rep(0,3),34,36,35,37,30,31,rep(0,2),32,33,24,25,38,39)
       names(edge_Ca_list) <- c(rep("",3),"Rapid Ca storage in bone",
+                               "Rapid PO4 storage in bone",
                                "Rapid Ca release from bone",
+                               "Rapid PO4 release from bone",
                                "Ca flux into bone",
-                               "","Ca renal reabsorption",
+                               "PO4 flux into bone",
+                               rep("",2),"Ca renal reabsorption",
                                "PO4 renal reabsorption",
                                "Urinary Ca excretion",
-                               rep("",10),
-                               "PO4 Cell release",
-                               "PO4 Cell storage",
-                               "PO4 renal reabsorption",
-                               rep("",5),
                                "Urinary PO4 excretion",
-                               "Rapid PO4 release from bone",
-                               "Rapid PO4 storage in bone",
-                               "PO4 flux into bone")
+                               "PO4 Cell storage",
+                               "PO4 Cell release")
       
       yvar <- list(title = "Flux (µmol/min)", 
                    range = c(min(out[,edge_Ca_list[edge]]*1000*0.8),
