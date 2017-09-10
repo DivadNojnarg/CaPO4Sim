@@ -95,7 +95,7 @@ shinyServer(function(input, output, session) {
                 "cells.svg","Cap.svg","PO4.svg","parathyroid_gland.svg","PTH.svg",
                 "D3.svg","D3.svg","D3.svg","FGF23.svg"),
       label = c(rep("", 8),"PT","TAL","DCT", rep("",10)),
-      group = c(rep("without hormones",13),rep("only hormones",8)),
+      #group = c(rep("without hormones",13),rep("only hormones",8)),
       fixed = list("x" = TRUE, "y" = TRUE),
       title = c("", 
                 paste(a("About intestinal Ca absorption", 
@@ -190,37 +190,31 @@ shinyServer(function(input, output, session) {
                         href = "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0",
                         target="_blank"))),
       smooth = c(rep(TRUE,34)),
-      length = c(rep(200,3),rep(300,4),rep(300,2),200,300,200,300,300,300,300,300,rep(200,17)),
+      length = c(rep(200,3),rep(300,4),rep(300,2),200,300,200,rep(300,5),rep(200,17)),
       # to show either Ca or PO4 or CaPO4 network arrows
       hidden = c(rep(FALSE,3), 
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 FALSE,
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+                 rep(FALSE,2),
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 FALSE,
+                 ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                  ifelse(is.element("Ca", input$network_Ca_choice), 
                         ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 rep(FALSE,8),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 rep(FALSE,9),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-                 ifelse(is.element("PO4", input$network_Ca_choice), 
-                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE)), 
+                 rep(ifelse(is.element("PO4", input$network_Ca_choice), 
+                        ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),3),
+                 rep(FALSE,17)), 
       stringsAsFactors=FALSE) 
     # to change edges color do not forget this "stringsAsFactors=FALSE"
   })
@@ -265,7 +259,7 @@ shinyServer(function(input, output, session) {
       visOptions(highlightNearest = FALSE, 
                  clickToUse = FALSE, 
                  manipulation = FALSE, 
-                 selectedBy = "group", 
+                 #selectedBy = "group", 
                  collapse = FALSE) %>% 
       # prevent edge from being selected when a node is selected
       visInteraction(hover = TRUE, 
@@ -546,27 +540,26 @@ shinyServer(function(input, output, session) {
     
   })
   
+  # Disable/enable regulation pathway
+  
+  observeEvent(input$network_hormonal_choice,{
+    
+    choice <- input$network_hormonal_choice
+    edges_Ca <- edges_Ca()
+    network_update(edges = edges_Ca, network = "network_Ca", choice = choice)
+    
+  })
+  
   #------------------------------------------------------------------------- 
   #  
   #  Notification events to explain the user how to play with the app
   #
   #-------------------------------------------------------------------------
   
-  # Show a welcome notification in the menu bar part
+  # help animation with introjs
   
-  observe({ 
-    
-    if (input$notif_switch == "TRUE") {
-      
-      help_text_generator()
-      
-    } else {
-      
-      # need the session argument!!!
-      help_text_destructor(session)
-      
-    }
-    
+  observeEvent(input$notif_switch,{
+      introjs(session)
   })
   
   #------------------------------------------------------------------------- 
@@ -637,21 +630,6 @@ shinyServer(function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
-  # reset all the values of box inputs as well as graphs
-  
-  observeEvent(input$resetAll,{
-    
-    reset("boxinput")
-    reset("tmax")
-    
-    edges_Ca <- edges_Ca()
-    edges_PTHg <- edges_PTHg()
-    
-    graphs_reset(network = "network_Ca", edges = edges_Ca)
-    graphs_reset(network = "network_PTH", edges = edges_PTHg)
-    
-  })
-  
   # reset parameters individually
   
   button_states <- reactiveValues(values = list())
@@ -678,10 +656,5 @@ shinyServer(function(input, output, session) {
                    sliders_reset(button_states, input)
                    
                  })
-  
-  # Share the state of the App via server bookmarking
-  observeEvent(input$bookmark, {
-    session$doBookmark()
-  })
   
 })

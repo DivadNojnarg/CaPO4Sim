@@ -23,6 +23,7 @@ library(sweetalertR)
 
 # Load the template components of UI
 source("header.R")
+source("header_box_network.R")
 source("sidebar.R")
 source("body.R")
 
@@ -170,7 +171,7 @@ arrow_lighting <- function(events, edges, network) {
   ifelse(length(event_id)  > 1,
          event_target <- event_id[[length(event_id)]],
          event_target <- event_id)
-
+  
   # select the related edges on the network
   edges_id_network <- as.numeric(unlist(param_event$edges_id[event_target]))
   
@@ -178,7 +179,7 @@ arrow_lighting <- function(events, edges, network) {
   # split notif into 2 parts: one for increase, other for decrease
   notif_increase <- unlist(lapply(param_event$text, function(x, ind = 1) x[ind]))
   notif_decrease <- unlist(lapply(param_event$text, function(x, ind = 2) x[ind]))
-
+  
   message <- ifelse(param_event$values[event_target] > 1, 
                     notif_increase[event_target],
                     notif_decrease[event_target])
@@ -245,8 +246,8 @@ flux_lighting <- function(edges, network = "network_Ca", out, events){
     # need to take care when parameters correspond to
     # degradation rate (edge$width is thus inverted) 
     ifelse(param_event_values[15] == 1,
-         edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
-         edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
+           edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
+           edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
     
   } else {
     edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2)
@@ -668,22 +669,22 @@ sliders_reset <- function(button_states, input) {
   
   # associate each reset button to its related slider
   reset_vector <- c("k_prod_PTHg", 
-                  "beta_exo_PTHg",
-                  "gamma_exo_PTHg",
-                  "D3_inact",
-                  "k_deg_D3",
-                  "k_prod_FGF",
-                  "I_Ca",
-                  "I_P",
-                  "k_p_Ca",
-                  "k_f_Ca",
-                  "k_p_P",
-                  "k_f_P",
-                  "Lambda_ac_Ca",
-                  "Lambda_res_min",
-                  "delta_res_max",
-                  "k_pc",
-                  "k_cp")
+                    "beta_exo_PTHg",
+                    "gamma_exo_PTHg",
+                    "D3_inact",
+                    "k_deg_D3",
+                    "k_prod_FGF",
+                    "I_Ca",
+                    "I_P",
+                    "k_p_Ca",
+                    "k_f_Ca",
+                    "k_p_P",
+                    "k_f_P",
+                    "Lambda_ac_Ca",
+                    "Lambda_res_min",
+                    "delta_res_max",
+                    "k_pc",
+                    "k_cp")
   
   # store the temp state of buttons
   states <- button_states$values
@@ -702,82 +703,69 @@ sliders_reset <- function(button_states, input) {
   # reset the corresponding target(s) in the table
   shinyjs::reset(reset_vector[reset_target])
   
-  #update the network
-  #visNetworkProxy(network) %>%
-  #  visUpdateEdges(edges = edges)
-  
 }
 
 
-# Function graphs_reset remove all changes
-# of color/size of arrows/nodes
+# Function network_update 
 # It takes graph id as argument as well as
 # edges 
 
-graphs_reset <- function(network, edges) {
+network_update <- function(edges, network, choice) {
+  
+  # not very nice, improve if find better
+  if (choice == "TRUE") {
+    choice_id <- c(18:34)
+  } else {
+    choice_id <- NULL
+  }
+  
+  
+  # hide edges which are not selected
+  edges$hidden[choice_id] <- TRUE
   
   visNetworkProxy(network) %>%
     visUpdateEdges(edges = edges)
 }
 
+#  help text generation
+# needed for the introjs help
 
-# Functions that handle help text generation
-# help_text_generator will generate notifications
-# whereas help_text_destructor will remove these
-# notifications
+help_text <- c("In this panel is displayed the interactive diagram (see legend). 
+               Basically, when a parameter is changed, initial perturbations are shown 
+               in yellow. The arrow size increases 
+               if it is a stimulatory effect and inversely. Fluxes are shown 
+               in red if they decrease or in green if they are enhanced. 
+               Colors correspond to the final state of the system
+               (which is the value of tmax in minutes).",
+               
+               "In this panel are displayed the graph of CaPO4 homeostasis. 
+               To see the results, start by clicking on a node on the interactive diagram. 
+               The value of tmax, which is the maximum time of simulation, can be 
+               increased or decreased as required (but always higher than 0). 
+               Some results may be unavailable (for instance in feces, food,...)",
+               
+               "To see the results, start by clicking on an edge on the interactive diagram.
+               Note that several edges do not have any graph associated.",
+               
+               "Some nodes can be double-clicked (parathyroid glands, intestine, bone
+               as well as kidneys) in order to display a detailed view of what happens
+               inside these nodes. When not available, nothing is displayed.",
+               
+               "On each detailed view, as well as in the main graph, clicking on an edge
+               also diplays the related parameters in the current box. Their values 
+               can be changed moving sliders from right to left and inversely. 
+               To reset the value of a slider, click on the reset button on the right side of the
+               slider.",
+               
+               "Select specific edges to Ca or PO4 homeostasis.",
+               
+               "Remove or allow the display of hormonal regulation in the graph",
+               
+               "This corresponds to the maximum value of integration. You can increase
+               or decrease it but it has to be always positive."
+               
+              )
 
-help_text <- data.frame(
-  id = c("menu_notif",
-         "graph_notif",
-         "diagram_notif",
-         "control_notif"),
-  
-  text = c("In this panel you can enable/disable notifications, 
-           bookmark the state of your app to share it with colleagues, 
-           save it, load the last state you saved and change
-           the global theme.",
-           
-           "In this panel are displayed the graph of CaPO4 homeostasis. 
-           To see results, start by clicking on a node and/or an edge on 
-           the interactive diagram. The value of tmax which is the maximum 
-           time of simulation can be increased or decreased as required 
-           (but higher than 0).",
-           
-           "In this panel is displayed the interactive diagram (see legend). 
-           Basically, when a parameter is changed in the control center, 
-           initial perturbations are shown in yellow. The arrow size increases 
-           if it is a stimulatory effect and inversely. Fluxes are shown 
-           in red if they decrease or in green if they are enhanced. 
-           Colors correspond to the final state of the system
-           (which is the value of tmax in minutes).",
-           
-           "In this panel you can select several parameters 
-           and change their value using sliders.")
-)
-
-# notification builder
-# do not need any argument
-help_text_generator <- function(){
-  
-  for (i in seq_along(help_text$id)) { 
-    showNotification(id = help_text$id[[i]],
-                     paste(help_text$text[[i]]),
-                     duration = 9999, # sufficient amount of time
-                     closeButton = TRUE,
-                     type = "error")
-  }
-  
-}
-
-# notification eraser
-# needs the session argument !!!
-help_text_destructor <- function(session){
-  
-  for (i in seq_along(help_text$id)) { 
-    removeNotification(id = help_text$id[[i]], session)
-  }
-  
-}
 
 #------------------------------------------------------------------------- 
 #  

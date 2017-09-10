@@ -17,27 +17,7 @@
 # Define UI 
 shinyUI(fluidPage(
   
-  # 4 danger notification that can be switched on or off as required
-  tags$style("#shiny-notification-menu_notif {position: fixed; top: 1%; 
-             right: 50% ; width: 40em; opacity: 1;}"),
-  tags$style("#shiny-notification-graph_notif {position: fixed; top: 30%; 
-             right: 25% ; width: 20em; opacity: 1;}"),
-  tags$style("#shiny-notification-control_notif {position: fixed; top: 70%; 
-             right: 15% ; width: 20em; opacity: 1;}"),
-  tags$style("#shiny-notification-diagram_notif {position: fixed; top: 75%; 
-             left: 10% ; width: 20em; opacity: 1;}"),
-  
   # network CSS
-  # see https://github.com/datastorm-open/visNetwork/blob/master/inst/htmlwidgets/lib/vis/vis.css
-  # around line 701
-  # hide css class navigation from visNetwork
-  tags$style(".vis-button.vis-up {visibility: hidden;}"), 
-  tags$style(".vis-button.vis-down {visibility: hidden;}"), 
-  tags$style(".vis-button.vis-left {visibility: hidden;}"), 
-  tags$style(".vis-button.vis-right {visibility: hidden;}"),
-  tags$style(".vis-button.vis-zoomIn {top:10px; right:15px;"),
-  tags$style(".vis-button.vis-zoomOut {top:10px; right:55px;"),
-  tags$style(".vis-button.vis-zoomExtends {top:50px; right:15px;"),
   
   tags$head(
     tags$style(HTML("
@@ -49,19 +29,25 @@ shinyUI(fluidPage(
                     }
 
                     #network_cap{
+                      padding-left: 0; 
+                      padding-right: 0;
                       background-image:url('rat_wholebody.svg');
-                      background-size: 100% 100%;
+                      background-size: cover;
                       background-repeat: no-repeat;
-                      background-position: center center;
+                      background-position: center;
+                      height:100%;
+                    }
+
+                    #options{
+                    float: right;
                     }
                     "))
   ),
   
-  # tags$head(tags$script(src="ng-knob.js")),
-  # tags$head(tags$script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")),
-  # tags$head(tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.min.js")),
-  
-  includeJqueryUI(), # to move graphs and resize them
+  # to print help
+  introjsUI(),
+  # to move graphs and resize them
+  includeJqueryUI(),
   useShinyjs(),
   withMathJax(), 
   

@@ -9,77 +9,7 @@
 #-------------------------------------------------------------------------
 
 header <- dashboardHeader(
-  title="Calcium Phosphate Homeostasis in the Rat: Free exploration", 
-  titleWidth = 700,
   
-  # tmax value and other options
-  
-  tags$li(
-    title = "",
-    class = "dropdown",
-    dropdownButton(icon = icon("gear"), 
-                   width = "150px", 
-                   circle = FALSE, 
-                   status = "danger", 
-                   label = "Options",
-                   
-                   numericInput("tmax",
-                                "Value of tmax:", 
-                                value = 500, 
-                                min = 0, 
-                                max = NA, 
-                                width = "50%"),
-                   # enable notifications or not since this can be boring
-                   switchInput(inputId = "notif_switch", 
-                               label = "Help?",
-                               onStatus = "success", 
-                               offStatus = "danger", 
-                               value = FALSE, 
-                               size = "mini"),
-                   
-                   # selector for Ca an/or PO4 homeostasis
-                   awesomeCheckboxGroup(inputId = "network_Ca_choice", 
-                                        label = "Choose your network", 
-                                        choices = c("Ca","PO4"), 
-                                        selected = c("Ca","PO4"), 
-                                        inline = TRUE, 
-                                        status = "primary")
-                   
-    )
-  ),
-  
-  # Share the state of the App with other users
-  tags$li(
-    title = "",
-    class = "dropdown",
-    actionButton(inputId = "bookmark", 
-                 label = "Share", 
-                 icon = shiny::icon("link", lib = "glyphicon"), 
-                 class="btn btn-primary")
-  ),
-  
-  # Menu to save, load, reset and close the application
-  tags$li(
-    title = "",
-    class = "dropdown",
-    actionButton(class="fa fa-trash fa-5x", 
-                 inputId="resetAll",
-                 label=" Reset", 
-                 class="btn btn-danger")
-  )#,
-  
-  # Task Menu
-  # dropdownMenu(type = "tasks", badgeStatus = "success",
-  #              
-  #              taskItem(value = 60, 
-  #                       color = "orange",
-  #                       "Design"),
-  #              
-  #              taskItem(value = 80, 
-  #                       color = "green",
-  #                       "Features")
-  # )
-  
-  #disable = TRUE
+  disable = TRUE
   
 )
