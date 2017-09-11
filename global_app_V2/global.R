@@ -707,28 +707,6 @@ sliders_reset <- function(button_states, input) {
   
 }
 
-
-# Function network_hide_edges 
-# It takes graph id as argument as well as
-# edges and hide the selected edges
-
-network_hide_edges <- function(edges, network, choice) {
-  
-  # not very nice, improve if find better
-  if (choice == "TRUE") {
-    choice_id <- c(18:34)
-  } else {
-    choice_id <- NULL
-  }
-  
-  
-  # hide edges which are not selected
-  edges$hidden[choice_id] <- TRUE
-  
-  visNetworkProxy(network) %>%
-    visUpdateEdges(edges = edges)
-}
-
 # help text generation
 # needed for the introjs help
 # contains a vector of all instructions

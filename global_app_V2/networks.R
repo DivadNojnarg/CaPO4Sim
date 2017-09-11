@@ -209,7 +209,7 @@ generate_edges_Ca <- function(input) {
                       ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
                rep(ifelse(is.element("PO4", input$network_Ca_choice), 
                           ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),3),
-               rep(FALSE,17)), 
+               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),17)), 
     stringsAsFactors=FALSE) 
   
 }

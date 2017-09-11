@@ -40,7 +40,7 @@ header_box_network <- div(
                    # selector for hormonal regulation
                    introBox(
                      switchInput(inputId = "network_hormonal_choice", 
-                                 label = "Hide hormones?", 
+                                 label = "Show regulations?", 
                                  value = FALSE,
                                  onStatus = "success",
                                  offStatus = "danger",

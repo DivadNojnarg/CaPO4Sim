@@ -313,16 +313,6 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # Disable/enable regulation pathway: to improve
-  
-  observeEvent(input$network_hormonal_choice,{
-    
-    choice <- input$network_hormonal_choice
-    edges_Ca <- edges_Ca()
-    network_hide_edges(edges = edges_Ca, network = "network_Ca", choice = choice)
-    
-  })
-  
   #------------------------------------------------------------------------- 
   #  
   #  Notification events to explain the user how to play with the app
