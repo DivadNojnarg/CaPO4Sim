@@ -204,19 +204,19 @@ arrow_lighting <- function(events, edges, network) {
 # takes edges, network (by default set to network_Ca), out and
 # events as arguments
 
-flux_lighting <- function(edges, network = "network_Ca", out, events){ 
+flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){ 
   
   # calculate the difference between live fluxes and base-case values
   # depending on the graph selection
   if (network == "network_Ca") {
     # round by 0.1, otherwise to much precision can cause problems
     # low precision also
-    calc_change_t <- round(calc_change(out)[1:14],1)
+    calc_change_t <- round(calc_change(out, t_target)[1:14],1)
     # index of arrows in the Ca network (which are fluxes and not regulations)
     index <- c(2,14,15,10,8,9,12,13,4,5,6,7,16,17)
     calc_change_t <- rbind(calc_change_t, index)
   } else { # should use else if when other graphs will be added
-    calc_change_t <- round(calc_change(out)[c(15,17:18)])
+    calc_change_t <- round(calc_change(out, t_target)[c(15,17:18)])
     index <- c(1,2,3) # index arrows in the PTH network
     calc_change_t <- rbind(calc_change_t, index)
   }
@@ -667,7 +667,8 @@ sliders_reset <- function(button_states, input) {
                                         input$resetresmin[1],
                                         input$resetresmax[1],
                                         input$resetkpc[1],
-                                        input$resetkcp[1])))         
+                                        input$resetkcp[1],
+                                        input$reset_t_now[1])))         
   
   # associate each reset button to its related slider
   reset_vector <- c("k_prod_PTHg", 
@@ -686,7 +687,8 @@ sliders_reset <- function(button_states, input) {
                     "Lambda_res_min",
                     "delta_res_max",
                     "k_pc",
-                    "k_cp")
+                    "k_cp",
+                    "t_now")
   
   # store the temp state of buttons
   states <- button_states$values
@@ -742,7 +744,11 @@ help_text <- c("In this panel is displayed the interactive network (see legend).
                "Remove or allow the display of hormonal regulation in the graph",
                
                "This corresponds to the maximum value of integration. You can increase
-               or decrease it but it has to be always positive."
+               or decrease it but it has to be always positive.",
+               
+               "By moving this slider, you can see the dynamics evolution of all
+               fluxes (denoted by red/green arrows) as a function of time, at any 
+               time after the begining of the simulation."
                
               )
 

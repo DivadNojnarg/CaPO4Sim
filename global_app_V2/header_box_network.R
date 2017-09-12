@@ -54,12 +54,31 @@ header_box_network <- div(
                    # tmax: maximum time of integration
                    introBox(
                      numericInput("tmax",
-                                  "Value of tmax:", 
+                                  "Maximum simulated time:", 
                                   value = 500, 
                                   min = 0, 
                                   max = NA),
                      data.step = 8,
                      data.intro = help_text[8]
+                   ),
+                   
+                   br(),
+                   
+                   # current time of interest for arrow lighting
+                   introBox(
+                     sliderInput("t_now",
+                                  "Time after simulation:", 
+                                  value = 1, 
+                                  min = 1, 
+                                  max = 500)%>%
+                       shinyInput_label_embed(
+                         icon("undo") %>%
+                           actionBttn(inputId="reset_t_now",
+                                      label="", 
+                                      color="danger", 
+                                      size = "xs")),
+                     data.step = 9,
+                     data.intro = help_text[9]
                    )
                    
     )

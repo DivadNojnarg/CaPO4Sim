@@ -18,6 +18,8 @@ shinyServer(function(input, output, session) {
   # Basic reactive expressions needed by the solver
   times <- reactive({ seq(0,input$tmax, by = 1) }) # maybe 0:input$tmax is faster?
   
+  t_target <- reactive({ input$t_now })
+  
   # Parameters: multiply the real parameter value by the user input. 
   # By default, user input = 1 so that parameters are well defined
   parameters <- reactive({ 
@@ -307,11 +309,28 @@ shinyServer(function(input, output, session) {
     edges_PTHg <- edges_PTHg()
     
     # for Ca/PO4 fluxes, call the flux_lighting() function
-    flux_lighting(edges_Ca, network = "network_Ca", out, events = events)
+    flux_lighting(edges_Ca, 
+                  network = "network_Ca", 
+                  out, 
+                  events = events, 
+                  t_target())
     # for the PTH network
-    flux_lighting(edges_PTHg, network = "network_PTH", out, events = events_PTH)
+    flux_lighting(edges_PTHg, 
+                  network = "network_PTH", 
+                  out, 
+                  events = events_PTH, 
+                  t_target())
     
   })
+  
+  observe({
+    updateSliderInput(session, 
+                      inputId = "t_now",
+                      value = input$tmax, 
+                      max = input$tmax, 
+                      step = 1)
+  })
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -413,7 +432,8 @@ shinyServer(function(input, output, session) {
                  input$resetresmin,
                  input$resetresmax,
                  input$resetkpc,
-                 input$resetkcp),{
+                 input$resetkcp,
+                 input$reset_t_now),{
                    
                    # call the function to reset the given slider
                    sliders_reset(button_states, input)
