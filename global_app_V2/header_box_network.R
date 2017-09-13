@@ -1,5 +1,6 @@
 
 # tmax value and other options
+source("help.R")
 
 header_box_network <- div(
   

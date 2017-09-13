@@ -8,6 +8,7 @@
 #  David Granjon, the Interface Group, Zurich
 #  June 12th, 2017
 #-------------------------------------------------------------------------
+source("help.R")
 
 body <- dashboardBody(
 
