@@ -718,4 +718,4 @@ sliders_reset <- function(button_states, input) {
 #-------------------------------------------------------------------------
 
 # Bookmarking
-enableBookmarking(store = "server") # save to the disk
+#enableBookmarking(store = "server") # save to the disk
