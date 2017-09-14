@@ -52,6 +52,12 @@ header_box_network <- div(
 
                    br(),
                    
+                   # selector for background display
+                   
+                   materialSwitch(inputId = "background_switch", "Show background", value = TRUE),
+                   
+                   br(),
+                   
                    # tmax: maximum time of integration
                    introBox(
                      numericInput("tmax",

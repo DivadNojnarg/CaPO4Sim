@@ -156,7 +156,7 @@ body <- dashboardBody(
                                         "PTH synthesis rate constant (μmol/min)",
                                         min = 0, 
                                         max = 100, 
-                                        value = 1, 
+                                        value = 1,
                                         step = 1) %>%
                               shinyInput_label_embed(
                                 icon("undo") %>%

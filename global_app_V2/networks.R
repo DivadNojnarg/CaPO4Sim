@@ -70,13 +70,14 @@ PTH_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23466&Menu=1079&
 D3_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0"
 FGF23_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0"
 
-generate_nodes_Ca <- function() {
+generate_nodes_Ca <- function(input) {
   
   data.frame(
     id = 1:21,
     shape = c("image","image","image","image","image","image","image","image",
               "circle","circle","circle","image","image","image","image","image",
-              "image","image","image","image","image"), 
+              "image","image","image",
+              ifelse(input$network_hormonal_choice == "TRUE","image","text"),"image"), 
     image = c("food.svg","intestine.svg","feces.svg","plasma.svg","rapid-bone.svg",
               "bone.svg","kidney.svg","kidney_zoom1.svg", rep("",3),"urine.svg",
               "cells.svg","Cap.svg","PO4.svg","parathyroid_gland.svg","PTH.svg",

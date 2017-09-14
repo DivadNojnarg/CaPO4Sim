@@ -85,7 +85,7 @@ shinyServer(function(input, output, session) {
   
   # Generate the CaP Graph network
   
-  nodes_Ca <- reactive({ generate_nodes_Ca() })
+  nodes_Ca <- reactive({ generate_nodes_Ca(input) })
   edges_Ca <- reactive({ generate_edges_Ca(input) })
   
   # Generate the output of the Ca graph to be used in body
