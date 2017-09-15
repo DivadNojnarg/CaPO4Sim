@@ -54,7 +54,8 @@ header_box_network <- div(
                    
                    # selector for background display
                    
-                   materialSwitch(inputId = "background_switch", "Show background", value = TRUE),
+                   materialSwitch(inputId = "background_switch", 
+                                  label = "Show background", value = TRUE),
                    
                    br(),
                    

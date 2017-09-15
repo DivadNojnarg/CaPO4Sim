@@ -150,7 +150,7 @@ shinyServer(function(input, output, session) {
       visEvents(type = "once", afterDrawing = "function() {
                 this.moveTo({ position: {x: 2.5, y:-2.5},
                 offset: {x: 0, y:0} })}")
-      
+    
   })
   
   output$id_tris <- renderPrint({ input$current_edge_bis_id })
@@ -285,7 +285,7 @@ shinyServer(function(input, output, session) {
   #     write.csv(calc_change_table(), file)
   #   }
   # )
-
+  
   observe({ 
     
     events <- c(input$I_Ca,input$I_P,
@@ -341,7 +341,7 @@ shinyServer(function(input, output, session) {
   # help animation with introjs
   
   observeEvent(input$notif_switch,{
-      introjs(session)
+    introjs(session)
   })
   
   #------------------------------------------------------------------------- 
@@ -439,5 +439,13 @@ shinyServer(function(input, output, session) {
                    sliders_reset(button_states, input)
                    
                  })
+  
+  # display or do not display the network background
+  observeEvent(input$background_switch,{
+    
+    toggleClass(id = "network_cap", class = "network_cap",
+                condition = input$background_switch)
+    
+  })
   
 })

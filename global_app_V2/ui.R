@@ -28,7 +28,7 @@ shinyUI(fluidPage(
                       background-position: center center;
                     }
 
-                    #network_cap{
+                    .network_cap{
                       padding-left: 0; 
                       padding-right: 0;
                       background-image:url('rat_wholebody.svg');
