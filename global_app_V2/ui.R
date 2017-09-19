@@ -44,7 +44,6 @@ shinyUI(fluidPage(
   # to print help
   introjsUI(),
   # to move graphs and resize them
-  includeJqueryUI(),
   useShinyjs(),
   withMathJax(), 
   

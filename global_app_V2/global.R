@@ -94,56 +94,56 @@ arrow_lighting <- function(events, edges, network) {
     param_event <- list(
       values = events,
       
-      text = list(list("Calcium intake has been increased!",
-                       "Calcium intake has been decreased!"),
-                  list("Phosphate intake has been increased!",
-                       "Phosphate intake has been decreased!"),
-                  list("Calcium flux into bone has been increased!",
-                       "Calcium flux into bone has been decreased!"),
-                  list("Calcium storage in the bone rapid pool has 
+      text = list(
+        list("Calcium flux into bone has been increased!",
+             "Calcium flux into bone has been decreased!"),
+        list("Calcium storage in the bone rapid pool has 
                         been increased!",
-                       "Calcium storage in the bone rapid pool has 
+             "Calcium storage in the bone rapid pool has 
                         been decreased!"),
-                  list("PO4 storage in the bone rapid pool has been 
+        list("PO4 storage in the bone rapid pool has been 
                         increased!",
-                       "PO4 storage in the bone rapid pool has been 
+             "PO4 storage in the bone rapid pool has been 
                         decreased!"),
-                  list("Calcium release from the bone rapid pool has 
+        list("Calcium release from the bone rapid pool has 
                         been increased!",
-                       "Calcium release from the bone rapid pool has 
+             "Calcium release from the bone rapid pool has 
                         been decreased!"),
-                  list("PO4 release from the bone rapid pool has 
+        list("PO4 release from the bone rapid pool has 
                         been increased!",
-                       "PO4 release from the bone rapid pool has 
+             "PO4 release from the bone rapid pool has 
                         been decreased!"),
-                  list("Calcium/Phosphate release from the bone 
+        list("Calcium/Phosphate release from the bone 
                        (resorption) has been increased!",
-                       "Calcium/Phosphate release from the bone 
+             "Calcium/Phosphate release from the bone 
                        (resorption) has been decreased!"),
-                  list("Calcium/Phosphate release from the bone 
+        list("Calcium/Phosphate release from the bone 
                        (resorption) has been increased!",
-                       "Calcium/Phosphate release from the bone 
+             "Calcium/Phosphate release from the bone 
                         (resorption) has been decreased!"),
-                  list("GFR has been increased!",
-                       "GFR has been decreased!"),
-                  list("PO4 storage into cells has been increased!",
-                       "PO4 storage into cells has been decreased!"),
-                  list("PO4 release from cells to plasma has been 
+        list("GFR has been increased!",
+             "GFR has been decreased!"),
+        list("PO4 storage into cells has been increased!",
+             "PO4 storage into cells has been decreased!"),
+        list("PO4 release from cells to plasma has been 
                         increased!",
-                       "PO4 release from cells to plasma has been 
+             "PO4 release from cells to plasma has been 
                        decreased!"),
-                  list("PTH synthesis has been increased!",
-                       "PTH synthesis has been decreased!"),
-                  list("25(OH)D stock has been increased!",
-                       "25(OH)D stock has been decreased!"),
-                  list("Vitamin D3 degradation has been increased!",
-                       "Vitamin D3 degradation has been decreased!"),
-                  list("FGF23 synthesis has been increased!",
-                       "FGF23 synthesis has been decreased!")
+        list("PTH synthesis has been increased!",
+             "PTH synthesis has been decreased!"),
+        list("25(OH)D stock has been increased!",
+             "25(OH)D stock has been decreased!"),
+        list("Vitamin D3 degradation has been increased!",
+             "Vitamin D3 degradation has been decreased!"),
+        list("FGF23 synthesis has been increased!",
+             "FGF23 synthesis has been decreased!")
       ),
       
-      edges_id = list(1,1,8,4,5,6,7,10,10,11,16,17,c(24,25,26),
-                      c(27,28,29,30,31,32),c(27,28,29,30,31,32), c(33,34))
+      edges_id = list(6,2,3,4,5,8,8,9,14,15,
+                      c(22,23,24),
+                      c(25,26,27,28,29,30),
+                      c(25,26,27,28,29,30), 
+                      c(31,32))
       
     )
     
@@ -213,7 +213,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     # low precision also
     calc_change_t <- round(calc_change(out, t_target)[1:14],1)
     # index of arrows in the Ca network (which are fluxes and not regulations)
-    index <- c(2,14,15,10,8,9,12,13,4,5,6,7,16,17)
+    index <- c(1,12,13,8,6,7,10,11,2,3,4,5,14,15)
     calc_change_t <- rbind(calc_change_t, index)
   } else { # should use else if when other graphs will be added
     calc_change_t <- round(calc_change(out, t_target)[c(15,17:18)])
@@ -246,8 +246,9 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
   # increase/decrease the size of the corresponding edge
   if (network == "network_Ca") {
     # need to take care when parameters correspond to
-    # degradation rate (edge$width is thus inverted) 
-    ifelse(param_event_values[15] == 1,
+    # degradation rate (edge$width is thus inverted)
+    # such as for vitamin D3 degradation
+    ifelse(param_event_values[13] == 1,
            edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
            edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
     
@@ -272,7 +273,7 @@ title_size <- list(size = 10)
 
 plot_node <- function(node, out, parameters_bis) {
   
-  if (!is.null(node) && sum(node ==  c(1:3,7:12,14:15,17:21)) != 1) {
+  if (!is.null(node) && sum(node ==  c(1,5:10,12:13,15:19)) != 1) {
     
     # set the x/y-axis ranges
     time <- out[,1]
@@ -283,7 +284,7 @@ plot_node <- function(node, out, parameters_bis) {
     #                       max(out[,node])*1.2))
     
     # plasma compartment
-    if (node == 4) {
+    if (node == 2) {
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
@@ -345,7 +346,7 @@ plot_node <- function(node, out, parameters_bis) {
         ) %>%
         config(displayModeBar = FALSE)
       
-    } else if (node == 5) {
+    } else if (node == 3) {
       
       # rapid bone compartment
       p <- plot_ly(out, 
@@ -389,7 +390,7 @@ plot_node <- function(node, out, parameters_bis) {
         ) %>%
         config(displayModeBar = FALSE)
       
-    } else if (node == 6) {
+    } else if (node == 4) {
       
       # deep bone compartment
       p <- plot_ly(out, 
@@ -438,10 +439,10 @@ plot_node <- function(node, out, parameters_bis) {
       # other cases: need to convert graph indexes to the solver indexes
       # which are totally different (and is a big problem!!!). 
       # 0 correspond to nodes in previous cases or not interesting
-      node_Ca_list <- data.frame(id = c(rep(0,12),12,rep(0,2),2),
-                                 names = c(rep("",12),"PO4 quantity in cells",
+      node_Ca_list <- data.frame(id = c(rep(0,10),12,rep(0,2),2),
+                                 names = c(rep("",10),"PO4 quantity in cells",
                                            rep("",2),"PTH quantity in parathyroid glands"),
-                                 units = c(rep("",12),"mmol",
+                                 units = c(rep("",10),"mmol",
                                            rep("",2),"pmol"))
       #names(node_Ca_list) <- c(rep("",8),"PTH quantity in parathyroid glands",
       #                         rep("",3),"PO4 quantity in cells")
@@ -489,9 +490,9 @@ plot_edge <- function(edge, out) {
                range = c(0, max(time)))
   
   # avoid edges that are not fluxes in the network
-  if (edge == 1 | edge == 3 | edge == 11 |
+  if (edge == 9 |
       # sum counts the number of true, only one is enough
-      sum(edge ==  18:34) == 1) {
+      sum(edge ==  16:32) == 1) {
     p <- plot_ly() %>%
       add_annotations("Please select another edge!", 
                       showarrow = FALSE, 
@@ -502,7 +503,7 @@ plot_edge <- function(edge, out) {
     
     # select edges where Ca and PO4 fluxes
     # have the same regulation
-    if (edge == 2) {
+    if (edge == 1) {
       
       yvar <- list(title = "Flux (µmol/min)", 
                    range = c(min(out[,"Abs_int_Ca"]*1000*0.8),
@@ -549,7 +550,7 @@ plot_edge <- function(edge, out) {
         ) %>%
         config(displayModeBar = FALSE)
       
-    } else if (edge == 10) {
+    } else if (edge == 8) {
       
       # resorption case
       yvar <- list(title = "Flux (µmol/min)", 
@@ -604,8 +605,8 @@ plot_edge <- function(edge, out) {
       # other cases: need to convert graph indexes to the solver indexes
       # which are totally different (and is a big problem!!!). 
       # 0 correspond to arrows in previous cases or not interesting
-      edge_Ca_list <- c(rep(0,3),34,36,35,37,30,31,rep(0,2),32,33,24,25,38,39)
-      names(edge_Ca_list) <- c(rep("",3),"Rapid Ca storage in bone",
+      edge_Ca_list <- c(0,34,36,35,37,30,31,rep(0,2),32,33,24,25,38,39)
+      names(edge_Ca_list) <- c("","Rapid Ca storage in bone",
                                "Rapid PO4 storage in bone",
                                "Rapid Ca release from bone",
                                "Rapid PO4 release from bone",

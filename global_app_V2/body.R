@@ -100,7 +100,7 @@ body <- dashboardBody(
                         introBox(
                           # the zoom graph
                           conditionalPanel(
-                            condition = "input.current_node_bis_id == 16",
+                            condition = "input.current_node_bis_id == 14",
                             
                             div(id = "networkPTH",
                                 visNetworkOutput("network_PTH", height = "400px")
@@ -111,25 +111,25 @@ body <- dashboardBody(
                           data.intro = help_text[4]
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 9",
+                          condition = "input.current_node_bis_id == 7",
                           div(id = "network_PTzoom",
                               imageOutput("PT")
                           )
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 10",
+                          condition = "input.current_node_bis_id == 8",
                           div(id = "network_TALzoom",
                               imageOutput("TAL")
                           )
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 11",
+                          condition = "input.current_node_bis_id == 9",
                           div(id = "network_DCT-CNTzoom",
                               imageOutput("DCT_CNT")
                           )
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 2",
+                          condition = "input.current_node_bis_id == 1",
                           div(id = "network_intestinezoom",
                               imageOutput("intestine_zoom")
                           )
@@ -213,8 +213,9 @@ body <- dashboardBody(
                           
                           conditionalPanel( # Vitamin D3 parameters
                             
-                            condition = "input.current_node_id == 10 || 
-                            input.current_node_id == 11",
+                            condition = "input.current_node_id == 16 || 
+                                         input.current_node_id == 17 ||
+                                         input.current_node_id == 18",
                             
                             column(12, align = "center", 
                                    sliderInput("D3_inact", 
@@ -251,7 +252,7 @@ body <- dashboardBody(
                           
                           conditionalPanel( # FGF parameters
                             
-                            condition = "input.current_node_id == 12",
+                            condition = "input.current_node_id == 19",
                             
                             sliderInput("k_prod_FGF", 
                                         "Minimal rate of FGF23 synthesis (fM/min)", 
@@ -305,7 +306,7 @@ body <- dashboardBody(
                           
                           conditionalPanel( # Fast Bone parameters
                             
-                            condition = "input.current_node_id == 5",
+                            condition = "input.current_node_id == 3",
                             
                             column(6, align = "center",           
                                    sliderInput("k_p_Ca", 
@@ -371,7 +372,7 @@ body <- dashboardBody(
                           
                           conditionalPanel( # Slow Bone parameters
                             
-                            condition = "input.current_node_id == 6",
+                            condition = "input.current_node_id == 4",
                             column(12, align = "center",           
                                    sliderInput("Lambda_ac_Ca", 
                                                "rate constant of Ca flux into bone (1/min)", 
@@ -420,7 +421,7 @@ body <- dashboardBody(
                           
                           conditionalPanel( # Cells parameters
                             
-                            condition = "input.current_node_id == 13",
+                            condition = "input.current_node_id == 11",
                             
                             column(12, align = "center",           
                                    sliderInput("k_pc", 

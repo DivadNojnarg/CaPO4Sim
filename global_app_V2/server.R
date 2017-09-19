@@ -288,8 +288,7 @@ shinyServer(function(input, output, session) {
   
   observe({ 
     
-    events <- c(input$I_Ca,input$I_P,
-                input$Lambda_ac_Ca,
+    events <- c(input$Lambda_ac_Ca,
                 input$k_p_Ca,input$k_p_P,
                 input$k_f_Ca, input$k_f_P,
                 input$Lambda_res_min,
