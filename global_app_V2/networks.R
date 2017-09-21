@@ -25,10 +25,7 @@ generate_network <- function(nodes, edges, css_export) {
     visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
     # put shadow on false
     visEdges(shadow = FALSE, 
-             font = list(align = "horizontal"), 
-             arrows = list(to = list(enabled = TRUE, 
-                                     scaleFactor = 1, 
-                                     type = "arrow"))) %>%
+             font = list(align = "horizontal")) %>%
     # add group selection option
     visOptions(highlightNearest = FALSE, 
                clickToUse = FALSE, 
@@ -144,7 +141,12 @@ generate_nodes_Ca <- function(input) {
     hidden = c(rep(FALSE,10),
                ifelse(is.element("PO4", input$network_Ca_choice), 
                       ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               rep(FALSE,8)))
+               FALSE,
+               ifelse(is.element("PO4", input$network_Ca_choice), 
+                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+               rep(FALSE,5),
+               ifelse(is.element("PO4", input$network_Ca_choice), 
+                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE)))
   
 }
 
@@ -157,25 +159,31 @@ CaSR_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079
 generate_edges_Ca <- function(input) {
   
   data.frame(
-    from = c(1,rep(2,2),rep(3,2),rep(3,2),4,2,rep(5,2),rep(5,2),2,11,
+    from = c(1,2,3,rep(3,2),4,2,rep(5,2),rep(5,2),11,
              rep(12,3),rep(13,3),rep(14,2),15,rep(16,2),rep(17,2),rep(18,2),
              rep(19,2)), 
-    to = c(2,rep(3,2),rep(2,2),rep(4,2),2,5,rep(2,2),rep(10,2),11,2,14,5,
+    to = c(2,3,2,rep(4,2),2,5,rep(2,2),rep(10,2),2,14,5,
            16,14,16,19,5,16,4,14,19,17,5,4,1,16,5),
-    label = c("","Ca","PO4","Ca","PO4","Ca","PO4",rep("",2),"Ca","PO4",
-              "Ca","PO4", rep("PO4",2),rep("-",3),"+","-","+",
+    
+    arrows = list(to = list(enabled = c(TRUE, rep(FALSE,2), rep(TRUE,8), FALSE, rep(TRUE,17)), 
+                            scaleFactor = 1, 
+                            type = "arrow")),
+    
+    label = c("","Net Flux","","Ca","PO4",rep("",2),"Ca","PO4",
+              "Ca","PO4", "Net Flux",rep("-",3),"+","-","+",
               "","+","+","-","+","-","-","+","+","-","-"),
-    id = 1:32,
-    width = c(rep(8,15), rep(4,17)),
-    font.size = c(rep(25,15),rep(60,17)),
-    font.align = c(rep("",3),"bottom","top","top","bottom",rep("",4),"bottom",
-                   "top","bottom","top","bottom",rep("top",2),"top","top",
+    id = c("Abs_int","Net_Ca_pf","Net_PO4_pf","Ac_Ca","Ac_PO4","Res",7,"Reabs_Ca",
+           "Reabs_PO4","U_Ca","U_PO4","Net_PO4_cells",13:29),
+    width = c(rep(8,12), rep(4,17)),
+    font.size = c(rep(25,12),rep(60,17)),
+    font.align = c("","top","bottom","top","bottom",rep("",4),"bottom",
+                   "top","bottom","bottom",rep("top",2),"top","top",
                    "top","",rep("bottom",2),"top","bottom","bottom","top","top",
                    rep("top",2),"bottom"),
-    color = list(color = c(rep("black", 32)), 
+    color = list(color = c(rep("black", 29)), 
                  highlight = "yellow"),
-    dashes = c(rep(FALSE,15), rep(TRUE,17)),
-    title = c(rep("",5),
+    dashes = c(rep(FALSE,12), rep(TRUE,17)),
+    title = c(rep("",3),
               paste(a("About bone formation", 
                       href = ac_web ,
                       target="_blank")),
@@ -185,7 +193,7 @@ generate_edges_Ca <- function(input) {
               paste(a("About bone resorption", 
                       href = res_web,
                       target="_blank")),
-              rep("",7),
+              rep("",6),
               paste(a("About the Calcium Sensing Receptor", 
                       href = CaSR_web,
                       target="_blank")),
@@ -193,16 +201,12 @@ generate_edges_Ca <- function(input) {
                       href = CaSR_web,
                       target="_blank")),
               rep("",15)),
-    smooth = c(rep(TRUE,32)),
-    length = c(200,rep(300,4),rep(300,2),200,300,200,rep(300,5),rep(200,17)),
+    smooth = c(rep(TRUE,29)),
+    length = c(200,rep(300,2),rep(300,2),200,300,200,rep(300,4),rep(200,17)),
     # to show either Ca or PO4 or CaPO4 network arrows
     hidden = c(FALSE, 
                ifelse(is.element("Ca", input$network_Ca_choice), 
                       ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               ifelse(is.element("Ca", input$network_Ca_choice), 
-                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
                ifelse(is.element("PO4", input$network_Ca_choice), 
                       ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
                ifelse(is.element("Ca", input$network_Ca_choice), 
@@ -217,8 +221,19 @@ generate_edges_Ca <- function(input) {
                ifelse(is.element("Ca", input$network_Ca_choice), 
                       ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
                rep(ifelse(is.element("PO4", input$network_Ca_choice), 
-                          ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),3),
-               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),17)), 
+                          ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),2),
+               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),3),
+               rep(ifelse(input$network_hormonal_choice == "TRUE", 
+                          ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
+                          TRUE),3),
+               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),4),
+               ifelse(input$network_hormonal_choice == "TRUE", 
+                      ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
+                      TRUE),
+               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),4),
+               rep(ifelse(input$network_hormonal_choice == "TRUE", 
+                          ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
+                          TRUE),2)), 
     stringsAsFactors=FALSE) 
   
 }
@@ -253,6 +268,9 @@ generate_edges_PTHg <- function() {
   data.frame(
     from = c(1,2,2,5), 
     to = c(2,3,4,4),
+    arrows = list(to = list(enabled = TRUE, 
+                            scaleFactor = 1, 
+                            type = "arrow")),
     label = c("PTHg synthesis", "PTHg degradation", 
               "PTHg exocytosis", "CaSR inhibition"),
     id = 1:4,

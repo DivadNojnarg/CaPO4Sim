@@ -139,11 +139,12 @@ arrow_lighting <- function(events, edges, network) {
              "FGF23 synthesis has been decreased!")
       ),
       
-      edges_id = list(6,2,3,4,5,8,8,9,14,15,
-                      c(22,23,24),
-                      c(25,26,27,28,29,30),
-                      c(25,26,27,28,29,30), 
-                      c(31,32))
+      # do not use rep(6,2) to have 6,6//12,12 because of a bug
+      edges_id = list(4,2,3,2,3,6,6,7,12,12,
+                      c(19,20,21),
+                      c(22,23,24,25,26,27),
+                      c(22,23,24,25,26,27), 
+                      c(28,29))
       
     )
     
@@ -209,14 +210,27 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
   # calculate the difference between live fluxes and base-case values
   # depending on the graph selection
   if (network == "network_Ca") {
-    # round by 0.1, otherwise to much precision can cause problems
+    # round by 0.1, otherwise too much precision might cause problems
     # low precision also
-    calc_change_t <- round(calc_change(out, t_target)[1:14],1)
+    calc_change_t <- round(calc_change(out, t_target)[1:11],1)
     # index of arrows in the Ca network (which are fluxes and not regulations)
-    index <- c(1,12,13,8,6,7,10,11,2,3,4,5,14,15)
+    # except filtration which is not included
+    index <- c(1,10,11,6,4,5,8,9,2,3,12)
     calc_change_t <- rbind(calc_change_t, index)
+    # change arrowhead orientation for Ca flux between plasma and rapid bone
+    edges$from[2] <- ifelse(calc_change_t[1,9] > 0, 2, 3)
+    edges$to[2] <- ifelse(calc_change_t[1,9] > 0, 3, 2)
+    # change arrowhead orientation for PO4 flux between plasma and rapid bone
+    edges$from[3] <- ifelse(calc_change_t[1,10] > 0, 2, 3)
+    edges$to[3] <- ifelse(calc_change_t[1,10] > 0, 3, 2)
+    # change arrowhead orientation for PO4 flux between plasma and cells
+    edges$from[12] <- ifelse(calc_change_t[1,11] > 0, 2, 11)
+    edges$to[12] <- ifelse(calc_change_t[1,11] > 0, 11, 2)
+    
+    edges$arrows.to.enabled[c(2,3,12)] <- TRUE
+    
   } else { # should use else if when other graphs will be added
-    calc_change_t <- round(calc_change(out, t_target)[c(15,17:18)])
+    calc_change_t <- round(calc_change(out, t_target)[c(12,14:15)])
     index <- c(1,2,3) # index arrows in the PTH network
     calc_change_t <- rbind(calc_change_t, index)
   }
@@ -224,7 +238,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
   # calculate which element in the sum table is different of 0 and store the index
   flux_changed_index <- which(calc_change_t[1,] != 0) 
   # convert to arrow index in the interactive diagramm
-  arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) 
+  arrow_index <- t(calc_change_t[2,flux_changed_index]) 
   
   if (!is.null(flux_changed_index)) {
     for (i in (seq_along(calc_change_t))) {
@@ -256,11 +270,13 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2)
   }
   
-  
   # update the network
   visNetworkProxy(network) %>% 
     visSetSelection(edgesId = edges_id_network) %>%
     visUpdateEdges(edges = edges)
+  
+  print(calc_change_t)
+  
 }
 
 
@@ -273,7 +289,7 @@ title_size <- list(size = 10)
 
 plot_node <- function(node, out, parameters_bis) {
   
-  if (!is.null(node) && sum(node ==  c(1,5:10,12:13,15:19)) != 1) {
+  if (sum(node ==  c(1,5:10,12:13,15:19)) != 1) {
     
     # set the x/y-axis ranges
     time <- out[,1]
@@ -288,23 +304,23 @@ plot_node <- function(node, out, parameters_bis) {
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
-        add_lines(y = out[,"Ca_p"],
+        add_lines(y = round(out[,"Ca_p"], 4),
                   name = "Cap",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = out[,"PO4_p"], 
+        add_lines(y = round(out[,"PO4_p"], 4), 
                   name = "PO4p",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = FALSE) %>%
-        add_lines(y = out[,"PTH_p"]/parameters_bis["Vp"],
+        add_lines(y = round(out[,"PTH_p"]/parameters_bis["Vp"], 2),
                   name = "PTHp",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
-        add_lines(y = out[,"D3_p"],
+        add_lines(y = round(out[,"D3_p"]),
                   name = "D3p",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
-        add_lines(y = out[,"FGF_p"],
+        add_lines(y = round(out[,"FGF_p"], 2),
                   name = "FGFp",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
@@ -312,7 +328,7 @@ plot_node <- function(node, out, parameters_bis) {
           title = "Plasma compartment concentrations",
           font = title_size,
           xaxis = xvar,
-          yaxis = list(title = "y"),
+          #yaxis = list(title = "y"),
           updatemenus = list(
             list(
               type = "buttons",
@@ -352,11 +368,11 @@ plot_node <- function(node, out, parameters_bis) {
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
-        add_lines(y = out[,"Ca_f"],
+        add_lines(y = round(out[,"Ca_f"], 3),
                   name = "Caf",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = out[,"PO4_f"], 
+        add_lines(y = round(out[,"PO4_f"], 3), 
                   name = "PO4f",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
@@ -396,11 +412,11 @@ plot_node <- function(node, out, parameters_bis) {
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
-        add_lines(y = out[,"Ca_b"],
+        add_lines(y = round(out[,"Ca_b"],3),
                   name = "Cab",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = out[,"PO4_b"], 
+        add_lines(y = round(out[,"PO4_b"],3), 
                   name = "PO4b",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
@@ -489,10 +505,11 @@ plot_edge <- function(edge, out) {
   xvar <- list(title = "time (min)", 
                range = c(0, max(time)))
   
-  # avoid edges that are not fluxes in the network
-  if (edge == 9 |
+  # avoid edges that are not fluxes in the network 13:29
+  # as well as filtration process
+  if (edge == 7 |
       # sum counts the number of true, only one is enough
-      sum(edge ==  16:32) == 1) {
+      sum(edge ==  13:29) == 1) {
     p <- plot_ly() %>%
       add_annotations("Please select another edge!", 
                       showarrow = FALSE, 
@@ -503,25 +520,27 @@ plot_edge <- function(edge, out) {
     
     # select edges where Ca and PO4 fluxes
     # have the same regulation
-    if (edge == 1) {
+    if (edge == "Abs_int" | edge == "Res") {
       
       yvar <- list(title = "Flux (µmol/min)", 
-                   range = c(min(out[,"Abs_int_Ca"]*1000*0.8),
-                             max(out[,"Abs_int_Ca"]*1000*1.2)))
+                   range = c(min(out[,paste0(edge,"_Ca")]*1000*0.8,
+                                 out[,paste0(edge,"_PO4")]*1000*0.8),
+                             max(out[,paste0(edge,"_Ca")]*1000*1.2,
+                                 out[,paste0(edge,"_PO4")]*1000*1.2)))
       
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
-        add_lines(y = out[,"Abs_int_Ca"]*1000,
-                  name = "Ca abs",
+        add_lines(y = out[,paste0(edge,"_Ca")]*1000,
+                  name = paste0("Ca ",edge),
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = out[,"Abs_int_PO4"]*1000, 
-                  name = "PO4 abs",
+        add_lines(y = out[,paste0(edge,"_PO4")]*1000, 
+                  name = paste0("PO4 ",edge),
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = FALSE) %>%
         layout(
-          title = "Intestinal absorption fluxes",
+          title = paste(edge),
           font = title_size,
           xaxis = xvar,
           yaxis = yvar,
@@ -545,33 +564,32 @@ plot_edge <- function(edge, out) {
                 
                 list(method = "restyle",
                      args = list("visible", list(TRUE, TRUE, FALSE)),
-                     label = "Both")))
-          )
-        ) %>%
+                     label = "Both"))))) %>%
         config(displayModeBar = FALSE)
       
-    } else if (edge == 8) {
+    } else if (edge == "Net_Ca_pf" | edge == "Net_PO4_pf") {
       
-      # resorption case
+      # extract the pattern Ca or PO4 from the edge name
+      elem <- unlist(strsplit(edge,"_"))[[2]]
+      
+      # Ca and PO4 exchanges between plasma and rapid pool
       yvar <- list(title = "Flux (µmol/min)", 
-                   range = c(min(out[,"Res_Ca"]*1000*0.8,
-                                 out[,"Res_PO4"]*1000*0.8),
-                             max(out[,"Res_Ca"]*1000*1.2,
-                                 out[,"Res_Ca"]*1000*1.2)))
+                   range = c(min(out[,paste0(elem,"_pf")]*1000*0.8),
+                             max(out[,paste0(elem,"_pf")]*1000*1.2)))
       
       p <- plot_ly(out, 
                    x = time,
                    mode = "lines") %>%
-        add_lines(y = out[,"Res_Ca"]*1000,
-                  name = "Ca resorption",
+        add_lines(y = out[,paste0(elem,"_pf")]*1000,
+                  name = paste(elem, "flux between plasma and fast bone pool"),
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = out[,"Res_PO4"]*1000, 
-                  name = "PO4 resorption",
+        add_lines(y = out[,paste0(elem,"_fp")]*1000, 
+                  name = paste(elem, "flux between fast bone pool and plasma"),
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = FALSE) %>%
         layout(
-          title = "Resorption fluxes",
+          title = paste("Plasma/fast bone pool",elem,"exchanges"),
           font = title_size,
           xaxis = xvar,
           yaxis = yvar,
@@ -587,49 +605,79 @@ plot_edge <- function(edge, out) {
               buttons = list(
                 list(method = "restyle",
                      args = list("visible", list(TRUE, FALSE, FALSE)),
-                     label = "Ca"),
+                     label = "Plasma -> bone"),
                 
                 list(method = "restyle",
                      args = list("visible", list(FALSE, TRUE, FALSE)),
-                     label = "PO4"),
+                     label = "Bone -> plasma"),
                 
                 list(method = "restyle",
                      args = list("visible", list(TRUE, TRUE, FALSE)),
-                     label = "Both")))
-          )
-        ) %>%
+                     label = "Both"))))) %>%
+        config(displayModeBar = FALSE)
+      
+    } else if (edge == "Net_PO4_cells") {
+      
+      # PO4 exchanges between cells and plasma
+      yvar <- list(title = "Flux (µmol/min)", 
+                   range = c(min(out[,"PO4_pc"]*1000*0.8,
+                                 out[,"PO4_cp"]*1000*0.8),
+                             max(out[,"PO4_cp"]*1000*1.2,
+                                 out[,"PO4_pc"]*1000*1.2)))
+      
+      p <- plot_ly(out, 
+                   x = time,
+                   mode = "lines") %>%
+        add_lines(y = out[,"PO4_pc"]*1000,
+                  name = "PO4 flux into cell",
+                  line = list(color = 'rgb(27, 102, 244)', width = 2), 
+                  visible = TRUE) %>%
+        add_lines(y = out[,"PO4_cp"]*1000, 
+                  name = "PO4 release from cells",
+                  line = list(color = 'rgb(244, 27, 27)', width = 2), 
+                  visible = FALSE) %>%
+        layout(
+          title = "Plasma/Cells PO4 exchanges",
+          font = title_size,
+          xaxis = xvar,
+          yaxis = yvar,
+          updatemenus = list(
+            list(
+              type = "buttons",
+              direction = "right",
+              xanchor = 'center',
+              yanchor = "bottom",
+              #pad = list('r'= 0, 't'= 10, 'b' = 10),
+              x = 0.5,
+              y = -0.45,
+              buttons = list(
+                list(method = "restyle",
+                     args = list("visible", list(TRUE, FALSE, FALSE)),
+                     label = "Plasma -> Cells"),
+                
+                list(method = "restyle",
+                     args = list("visible", list(FALSE, TRUE, FALSE)),
+                     label = "Cells -> Plasma"),
+                
+                list(method = "restyle",
+                     args = list("visible", list(TRUE, TRUE, FALSE)),
+                     label = "Both"))))) %>%
         config(displayModeBar = FALSE)
       
     } else {
       
-      # other cases: need to convert graph indexes to the solver indexes
-      # which are totally different (and is a big problem!!!). 
-      # 0 correspond to arrows in previous cases or not interesting
-      edge_Ca_list <- c(0,34,36,35,37,30,31,rep(0,2),32,33,24,25,38,39)
-      names(edge_Ca_list) <- c("","Rapid Ca storage in bone",
-                               "Rapid PO4 storage in bone",
-                               "Rapid Ca release from bone",
-                               "Rapid PO4 release from bone",
-                               "Ca flux into bone",
-                               "PO4 flux into bone",
-                               rep("",2),"Ca renal reabsorption",
-                               "PO4 renal reabsorption",
-                               "Urinary Ca excretion",
-                               "Urinary PO4 excretion",
-                               "PO4 Cell storage",
-                               "PO4 Cell release")
-      
+      # other cases
       yvar <- list(title = "Flux (µmol/min)", 
-                   range = c(min(out[,edge_Ca_list[edge]]*1000*0.8),
-                             max(out[,edge_Ca_list[edge]]*1000*1.2)))
+                   range = c(min(out[,edge]*1000*0.8),
+                             max(out[,edge]*1000*1.2)))
       
       p <- plot_ly(out, 
                    x = time, 
-                   y = out[,edge_Ca_list[edge]]*1000,
+                   y = out[,edge]*1000,
                    type = "scatter",
                    mode = "lines",
                    line = list(color = 'black', width = 2)) %>%
-        layout(title = paste(names(edge_Ca_list)[edge]),
+        layout(title = paste(edge),
                font = title_size,
                xaxis = xvar,
                yaxis = yvar) %>%

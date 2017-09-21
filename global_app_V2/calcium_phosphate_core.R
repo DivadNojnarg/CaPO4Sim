@@ -253,10 +253,17 @@ calcium_phosphate_core <- function (t, state, parameters){
     dEGTA_p <- 1/Vp*k_inject_egta/EGTA_norm - EGTA_form + EGTA_diss/EGTA_norm # equation for continuous EGTA injection
     dCaEGTA_p <- EGTA_form/Ca_EGTA_norm - EGTA_diss # kinetic of CaEGTA_p complex
     
+    ##################
+    #                #
+    #    Results     #
+    ##################
+    
+    # return the list of variables as well as fluxes in 
+    # another vector
     list(list(dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, 
            dPO4_b, dPO4_c, dCaHPO4_p, dCaH2PO4_p, dCPP_p, dCaHPO4_f, dCaH2PO4_f,
            dCaProt_p, dNaPO4_p, dCa_tot, dPO4_tot, dEGTA_p, dCaEGTA_p), 
-         list(U_Ca = Excretion_norm, # out 23
+         list(U_Ca = Excretion_norm, # out 24
            U_PO4 = Excretion_P_norm, 
            Abs_int_Ca = Abs_intest_norm,
            Abs_int_PO4 = Abs_intest_P_norm, 
@@ -266,7 +273,7 @@ calcium_phosphate_core <- function (t, state, parameters){
            Ac_PO4 = Accretion_P_norm, 
            Reabs_Ca = Reabs_norm, 
            Reabs_PO4 = Reabs_P_norm,
-           Ca_pf = Rapid_storage_Ca, # out 33
+           Ca_pf = Rapid_storage_Ca, # out 34
            Ca_fp = Rapid_release_Ca, 
            PO4_pf = Rapid_storage_P,
            PO4_fp = Rapid_release_P, 
@@ -275,8 +282,7 @@ calcium_phosphate_core <- function (t, state, parameters){
            PTHg_synth = PTHg_synthesis_norm,
            PTHg_deg = PTHg_degradation_norm,
            PTHg_exo = PTHg_exocytosis_norm,
-           PTHp_deg = PTHp_degradation_norm)) # return the list of variables as well as fluxes in 
-    # another vector
+           PTHp_deg = PTHp_degradation_norm)) 
     
   })
   

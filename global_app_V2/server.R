@@ -286,23 +286,22 @@ shinyServer(function(input, output, session) {
   #   }
   # )
   
-  observe({ 
-    
-    events <- c(input$Lambda_ac_Ca,
-                input$k_p_Ca,input$k_p_P,
-                input$k_f_Ca, input$k_f_P,
-                input$Lambda_res_min,
-                input$delta_res_max,
-                input$GFR, input$k_pc,
-                input$k_cp, input$k_prod_PTHg,
-                input$D3_inact, input$k_deg_D3,
-                input$k_prod_FGF)
-    
-    events_PTH <- c(input$k_prod_PTHg,
-                    input$beta_exo_PTHg,
-                    input$gamma_exo_PTHg)
-    
-    
+  events <- reactive(c(input$Lambda_ac_Ca,
+              input$k_p_Ca,input$k_p_P,
+              input$k_f_Ca, input$k_f_P,
+              input$Lambda_res_min,
+              input$delta_res_max,
+              input$GFR, input$k_pc,
+              input$k_cp, input$k_prod_PTHg,
+              input$D3_inact, input$k_deg_D3,
+              input$k_prod_FGF))
+  
+  events_PTH <- reactive(c(input$k_prod_PTHg,
+                  input$beta_exo_PTHg,
+                  input$gamma_exo_PTHg))
+  
+  observeEvent(c(events(), events_PTH()),{ 
+
     out <- out()
     edges_Ca <- edges_Ca()
     edges_PTHg <- edges_PTHg()
@@ -311,13 +310,13 @@ shinyServer(function(input, output, session) {
     flux_lighting(edges_Ca, 
                   network = "network_Ca", 
                   out, 
-                  events = events, 
+                  events = events(), 
                   t_target())
     # for the PTH network
     flux_lighting(edges_PTHg, 
                   network = "network_PTH", 
                   out, 
-                  events = events_PTH, 
+                  events = events_PTH(), 
                   t_target())
     
   })
@@ -436,7 +435,7 @@ shinyServer(function(input, output, session) {
                    
                    # call the function to reset the given slider
                    sliders_reset(button_states, input)
-                   
+                
                  })
   
   # display or do not display the network background

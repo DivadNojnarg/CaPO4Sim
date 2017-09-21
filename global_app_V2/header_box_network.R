@@ -29,7 +29,7 @@ header_box_network <- div(
                      awesomeCheckboxGroup(inputId = "network_Ca_choice", 
                                           label = "Choose your network", 
                                           choices = c("Ca","PO4"), 
-                                          selected = c("Ca","PO4"), 
+                                          selected = "Ca", 
                                           inline = TRUE, 
                                           status = "primary"),
                      data.step = 6,
