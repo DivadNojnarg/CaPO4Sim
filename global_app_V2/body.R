@@ -135,7 +135,7 @@ body <- dashboardBody(
                           )
                         ),
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 6",
+                          condition = "input.current_node_bis_id == 4",
                           div(id = "network_bonezoom",
                               imageOutput("bone_zoom")
                           )
