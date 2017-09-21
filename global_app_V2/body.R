@@ -27,10 +27,10 @@ body <- dashboardBody(
                ),
                data.step = 1,
                data.intro = help_text[1]
-             ),
-              column(6, align ="center",
-                     verbatimTextOutput("id")
-              )
+             )#,
+              #column(6, align ="center",
+              #       verbatimTextOutput("id")
+              #)
              # column(6, align ="center",
              #        verbatimTextOutput("id_bis")
              # ),
