@@ -30,7 +30,8 @@ generate_network <- function(nodes, edges, css_export) {
     visOptions(highlightNearest = FALSE, 
                clickToUse = FALSE, 
                manipulation = FALSE, 
-               collapse = FALSE) %>% 
+               collapse = FALSE,
+               autoResize = TRUE) %>% 
     # prevent edge from being selected when a node is selected
     visInteraction(hover = TRUE, 
                    hoverConnectedEdges = FALSE, 
@@ -39,7 +40,8 @@ generate_network <- function(nodes, edges, css_export) {
                    dragNodes = FALSE, 
                    dragView = FALSE, 
                    zoomView = FALSE,
-                   navigationButtons = FALSE) %>% 
+                   navigationButtons = FALSE,
+                   selectable = TRUE) %>% 
     # stabilization prevents arrows from bouncing
     visPhysics(stabilization = TRUE, enabled = TRUE) %>%
     # export the graph as pdf
