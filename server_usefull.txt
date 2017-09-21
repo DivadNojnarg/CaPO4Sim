@@ -41,3 +41,8 @@ ssh ubuntu@172.23.146.218 -Y # allow for X11 display
 www-header{background-image:linear-gradient(90deg,#046ed8 0,#2b82d8) make in blue instead of red
 ampstart-footer:before{content:"";position:absolute;width:100%;height:35px;background-image:linear-gradient(90deg,#046ed8 0,#2b82d8)
 
+########### R packages ############
+
+devtools::install_github("timelyportfolio/sweetalertR")
+devtools::install_github("ijlyttle/bsplus")
+devtools::install_github("carlganz/rintrojs")

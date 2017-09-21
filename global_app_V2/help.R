@@ -32,6 +32,8 @@ help_text <- c("In this panel is displayed the interactive network (see legend).
                
                "Remove or allow the display of hormonal regulation in the graph",
                
+               "Enable/Disable the background",
+               
                "This corresponds to the maximum value of integration. You can increase
                or decrease it but it has to be always positive.",
                

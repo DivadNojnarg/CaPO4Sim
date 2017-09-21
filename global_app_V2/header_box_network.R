@@ -53,8 +53,12 @@ header_box_network <- div(
                    br(),
                    
                    # selector for background display
-                   materialSwitch(inputId = "background_switch", 
-                                  label = "Show background", value = TRUE),
+                   introBox(
+                     materialSwitch(inputId = "background_switch", 
+                                    label = "Show background", value = TRUE),
+                     data.step = 8,
+                     data.intro = help_text[8]
+                   ),
                    
                    br(),
                    
@@ -65,8 +69,8 @@ header_box_network <- div(
                                   value = 500, 
                                   min = 0, 
                                   max = NA),
-                     data.step = 8,
-                     data.intro = help_text[8]
+                     data.step = 9,
+                     data.intro = help_text[9]
                    ),
                    
                    br(),
@@ -84,8 +88,8 @@ header_box_network <- div(
                                       label="", 
                                       color="danger", 
                                       size = "xs")),
-                     data.step = 9,
-                     data.intro = help_text[9]
+                     data.step = 10,
+                     data.intro = help_text[10]
                    )
                    
     )
