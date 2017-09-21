@@ -303,23 +303,23 @@ plot_node <- function(node, out, parameters_bis) {
                    x = time, 
                    mode = "lines") %>%
         add_lines(y = round(out[,"Ca_p"], 4),
-                  name = "Cap",
+                  name = "Ca2+p (mM)",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
         add_lines(y = round(out[,"PO4_p"], 4), 
-                  name = "PO4p",
+                  name = "PO4p (mM)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = FALSE) %>%
         add_lines(y = round(out[,"PTH_p"]/parameters_bis["Vp"], 2),
-                  name = "PTHp",
+                  name = "PTHp (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
         add_lines(y = round(out[,"D3_p"]),
-                  name = "D3p",
+                  name = "D3p (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
         add_lines(y = round(out[,"FGF_p"], 2),
-                  name = "FGFp",
+                  name = "FGFp (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
         layout(
@@ -367,11 +367,11 @@ plot_node <- function(node, out, parameters_bis) {
                    x = time, 
                    mode = "lines") %>%
         add_lines(y = round(out[,"Ca_f"], 3),
-                  name = "Caf",
+                  name = "Caf (mmol)",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
         add_lines(y = round(out[,"PO4_f"], 3), 
-                  name = "PO4f",
+                  name = "PO4f (mmol)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
         layout(
@@ -411,11 +411,11 @@ plot_node <- function(node, out, parameters_bis) {
                    x = time, 
                    mode = "lines") %>%
         add_lines(y = round(out[,"Ca_b"],3),
-                  name = "Cab",
+                  name = "Cab (mmol)",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
         add_lines(y = round(out[,"PO4_b"],3), 
-                  name = "PO4b",
+                  name = "PO4b (mmol)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
         layout(
