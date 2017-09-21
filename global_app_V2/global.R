@@ -275,8 +275,6 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     visSetSelection(edgesId = edges_id_network) %>%
     visUpdateEdges(edges = edges)
   
-  print(calc_change_t)
-  
 }
 
 
