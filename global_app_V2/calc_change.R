@@ -22,15 +22,16 @@ calc_change <- function (out, t_target){
   Ac_PO4_change <- (out[t_target,"Ac_PO4"] - 2.178550e-04)/2.178550e-04*100
   Reabs_Ca_change <- (out[t_target,"Reabs_Ca"] - 2.592522e-03)/2.592522e-03*100
   Reabs_PO4_change <- (out[t_target,"Reabs_PO4"] - 4.606232e-03)/4.606232e-03*100
-  Ca_pf_change <- (out[t_target,"Ca_pf"] - 5.306840e-03)/5.306840e-03*100
-  PO4_pf_change <- (out[t_target,"PO4_pf"] - 1.995840e-01)/1.995840e-01*100
-  Ca_fp_change <- (out[t_target,"Ca_fp"] - 4.296942e-03)/4.296942e-03*100
-  PO4_fp_change <- (out[t_target,"PO4_fp"] - 1.993571e-01)/1.993571e-01*100
-  PO4_pc_change <- (out[t_target,"PO4_pc"] - 2.772000e-03)/2.772000e-03*100
-  PO4_cp_change <- (out[t_target,"PO4_cp"] - 2.771900e-03)/2.771900e-03*100
+  Net_Ca_pf_change <- ((out[t_target,"Ca_pf"] - out[t_target,"Ca_fp"])-
+                         (5.306840e-03-4.296942e-03))/(5.306840e-03-4.296942e-03)*100
+  Net_PO4_pf_change <- (round((out[t_target,"PO4_pf"] - out[t_target,"PO4_fp"])-
+                          (1.995840e-01-1.993571e-01),4))/(1.995840e-01-1.993571e-01)*100
+  # need to round since the order or magnitude of the difference is 1e-7
+  Net_PO4_pc_change <- (round((out[t_target,"PO4_pc"] - out[t_target,"PO4_cp"])-
+                          (2.772000e-03-2.771900e-03),6))/(2.772000e-03-2.771900e-03)*100
+  
   
   # change for PTH fluxes
-  
   PTHg_synth_change <- (out[t_target,"PTHg_synth"] - 54.02698)/54.02698*100 # numbers represent the base-case value
   PTHg_deg_change <- (out[t_target,"PTHg_deg"] - 45.086650)/45.086650*100
   PTHg_exo_change <- (out[t_target,"PTHg_exo"] - 8.936505)/8.936505*100
@@ -44,12 +45,9 @@ calc_change <- function (out, t_target){
                    Ac_PO4_change = Ac_PO4_change, 
                    Reabs_Ca_change = Reabs_Ca_change, 
                    Reabs_PO4_change = Reabs_PO4_change, 
-                   Ca_pf_change = Ca_pf_change, 
-                   PO4_pf_change = PO4_pf_change, 
-                   Ca_fp_change = Ca_fp_change, 
-                   PO4_fp_change = PO4_fp_change, 
-                   PO4_pc_change = PO4_pc_change, 
-                   PO4_cp_change = PO4_cp_change,
+                   Net_Ca_pf_change = Net_Ca_pf_change, 
+                   Net_PO4_pf_change = Net_PO4_pf_change, 
+                   Net_PO4_pc_change = Net_PO4_pc_change, 
                    PTHg_synth_change = PTHg_synth_change,
                    PTHg_deg_change = PTHg_deg_change,
                    PTHg_exo_change = PTHg_exo_change,
