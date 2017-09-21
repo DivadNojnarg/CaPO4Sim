@@ -93,76 +93,18 @@ arrow_lighting <- function(events, edges, network) {
     
     param_event <- list(
       values = events,
-      
-      text = list(
-        list("Calcium flux into bone has been increased!",
-             "Calcium flux into bone has been decreased!"),
-        list("Calcium storage in the bone rapid pool has 
-                        been increased!",
-             "Calcium storage in the bone rapid pool has 
-                        been decreased!"),
-        list("PO4 storage in the bone rapid pool has been 
-                        increased!",
-             "PO4 storage in the bone rapid pool has been 
-                        decreased!"),
-        list("Calcium release from the bone rapid pool has 
-                        been increased!",
-             "Calcium release from the bone rapid pool has 
-                        been decreased!"),
-        list("PO4 release from the bone rapid pool has 
-                        been increased!",
-             "PO4 release from the bone rapid pool has 
-                        been decreased!"),
-        list("Calcium/Phosphate release from the bone 
-                       (resorption) has been increased!",
-             "Calcium/Phosphate release from the bone 
-                       (resorption) has been decreased!"),
-        list("Calcium/Phosphate release from the bone 
-                       (resorption) has been increased!",
-             "Calcium/Phosphate release from the bone 
-                        (resorption) has been decreased!"),
-        list("GFR has been increased!",
-             "GFR has been decreased!"),
-        list("PO4 storage into cells has been increased!",
-             "PO4 storage into cells has been decreased!"),
-        list("PO4 release from cells to plasma has been 
-                        increased!",
-             "PO4 release from cells to plasma has been 
-                       decreased!"),
-        list("PTH synthesis has been increased!",
-             "PTH synthesis has been decreased!"),
-        list("25(OH)D stock has been increased!",
-             "25(OH)D stock has been decreased!"),
-        list("Vitamin D3 degradation has been increased!",
-             "Vitamin D3 degradation has been decreased!"),
-        list("FGF23 synthesis has been increased!",
-             "FGF23 synthesis has been decreased!")
-      ),
-      
       # do not use rep(6,2) to have 6,6//12,12 because of a bug
       edges_id = list(4,2,3,2,3,6,6,7,12,12,
                       c(19,20,21),
                       c(22,23,24,25,26,27),
                       c(22,23,24,25,26,27), 
                       c(28,29))
-      
     )
     
   } else {
     
     param_event <- list(
       values = events,
-      
-      text = list(PTH_synth = list("",
-                                   ""),
-                  PTHg_exo = list("PTH exocytosis has been increased",
-                                  "PTH exocytosis has been decreased"),
-                  PTHg_exoinhib  = list("CaSR inhibition on PTH synthesis 
-                                        has been increased",
-                                        "CaSR inhibition on PTH synthesis 
-                                        has been decreased")
-      ),
-      
       edges_id = list(1,3,4)
     )
   }
@@ -177,21 +119,6 @@ arrow_lighting <- function(events, edges, network) {
   
   # select the related edges on the network
   edges_id_network <- as.numeric(unlist(param_event$edges_id[event_target]))
-  
-  # for notification display
-  # split notif into 2 parts: one for increase, other for decrease
-  notif_increase <- unlist(lapply(param_event$text, function(x, ind = 1) x[ind]))
-  notif_decrease <- unlist(lapply(param_event$text, function(x, ind = 2) x[ind]))
-  
-  message <- ifelse(param_event$values[event_target] > 1, 
-                    notif_increase[event_target],
-                    notif_decrease[event_target])
-  
-  if (!is.null(message)) 
-    ifelse(param_event$value[event_target] != 1,
-           showNotification(paste(message[length(message)]), # does not work totally
-                            type = "warning", 
-                            duration = 2), NULL)
   
   return(list(edges_id_network, event_target, 
               param_event$values, param_event$edges_id))
