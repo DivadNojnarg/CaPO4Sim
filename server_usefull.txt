@@ -12,11 +12,13 @@ ssh-add /Users/macdavidgranjon/Desktop/shinycap.pem # to have authorization
 
 ## SSH key ##
 
-scp -r /Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/global_app ubuntu@172.23.144.204:/srv/shiny-server/capApp/global_app
+scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/global_app/* ubuntu@130.60.24.79:/srv/shiny-server/capApp/global_app
 
-scp -r /Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/* ubuntu@172.23.144.204:/srv/shiny-server/capApp/case_studies_app
+scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/global_app_V2/* ubuntu@130.60.24.79:/srv/shiny-server/capApp/global_app_V2
 
-scp -r /Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/global.R ubuntu@172.23.144.204:/srv/shiny-server/capApp/case_studies_app
+scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/case_studies_app/* ubuntu@130.60.24.79:/srv/shiny-server/capApp/case_studies_app
+
+scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app/* ubuntu@130.60.24.79:/srv/shiny-server/capApp/treatments_app
 
 Very important: do not forget to replace all local folders by the server folders:
 
@@ -31,9 +33,9 @@ deb https://pbil.univ-lyon1.fr/CRAN/ /bin/linux/ubuntu trusty/ # last version of
 do not forget to create a HTTP rule on the virtual machine to allow HTTP protocol on port 80 (and maybe HTTPS on 443)
 
 sudo chown -R ubuntu:ubuntu /var/www/html # change the permission in case scp fails and also change var/www/html to the accurate folder if required
-scp -r /Users/macdavidgranjon/Documents/calcium_phosphate_homeostasis/public/* ubuntu@172.23.146.218:/var/www/html # do not forget the * to copy all files
+scp -r /Users/macdavidgranjon/Documents/calcium_phosphate_homeostasis/public/* ubuntu@130.60.24.78:/var/www/html # do not forget the * to copy all files
 
-ssh ubuntu@172.23.146.218 -Y # allow for X11 display
+ssh ubuntu@130.60.24.78 -Y # allow for X11 display
 
 
 ######### Website CSS ################
