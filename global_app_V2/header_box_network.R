@@ -41,7 +41,7 @@ header_box_network <- div(
                    # selector for hormonal regulation
                    introBox(
                      switchInput(inputId = "network_hormonal_choice", 
-                                 label = "Show regulations?", 
+                                 label = "Show regulations", 
                                  value = FALSE,
                                  onStatus = "success",
                                  offStatus = "danger",
@@ -54,8 +54,12 @@ header_box_network <- div(
                    
                    # selector for background display
                    introBox(
-                     materialSwitch(inputId = "background_switch", 
-                                    label = "Show background", value = TRUE),
+                     switchInput(inputId = "background_switch", 
+                                 label = "Show background", 
+                                 value = TRUE,
+                                 onStatus = "success",
+                                 offStatus = "danger",
+                                 size = "mini"),
                      data.step = 8,
                      data.intro = help_text[8]
                    ),
