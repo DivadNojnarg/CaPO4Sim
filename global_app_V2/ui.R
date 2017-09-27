@@ -38,12 +38,11 @@ shinyUI(fluidPage(
                       height:100%;
                     }
 
-                    "))
+                    ")),
+    # Hotjar tracker
+    includeScript("hotjar.js")
   ),
   
-  # Hotjar tracker
-  
-  tags$head(tags$script(src="hotjar.js")),
   
   # to print help
   introjsUI(),
