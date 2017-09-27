@@ -41,6 +41,10 @@ shinyUI(fluidPage(
                     "))
   ),
   
+  # Hotjar tracker
+  
+  tags$head(tags$script(src="hotjar.js")),
+  
   # to print help
   introjsUI(),
   # to move graphs and resize them
