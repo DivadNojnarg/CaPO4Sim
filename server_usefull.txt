@@ -33,7 +33,7 @@ deb https://pbil.univ-lyon1.fr/CRAN/ /bin/linux/ubuntu trusty/ # last version of
 do not forget to create a HTTP rule on the virtual machine to allow HTTP protocol on port 80 (and maybe HTTPS on 443)
 
 sudo chown -R ubuntu:ubuntu /var/www/html # change the permission in case scp fails and also change var/www/html to the accurate folder if required
-scp -r /Users/macdavidgranjon/Documents/calcium_phosphate_homeostasis/public/* ubuntu@130.60.24.78:/var/www/html # do not forget the * to copy all files
+scp -r /Users/macdavidgranjon/Documents/NCCR_CaP_webserver/public/* ubuntu@130.60.24.78:/var/www/html # do not forget the * to copy all files
 
 ssh ubuntu@130.60.24.78 -Y # allow for X11 display
 
