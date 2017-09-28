@@ -38,6 +38,11 @@ scp -r /Users/macdavidgranjon/Documents/NCCR_CaP_webserver/public/* ubuntu@130.6
 ssh ubuntu@130.60.24.78 -Y # allow for X11 display
 
 
+####### Git repository ###############
+
+/usr/local/git/bin/git # use it to link toward the good git
+
+
 ######### Website CSS ################
 
 www-header{background-image:linear-gradient(90deg,#046ed8 0,#2b82d8) make in blue instead of red
