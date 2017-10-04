@@ -27,10 +27,13 @@ body <- dashboardBody(
                ),
                data.step = 1,
                data.intro = help_text[1]
-             )#,
-              #column(6, align ="center",
-              #       verbatimTextOutput("id")
-              #)
+             ),
+             column(6, align ="center",
+                    verbatimTextOutput("node_tris")
+             ),
+             column(6, align ="center",
+                    verbatimTextOutput("id")
+              )
              # column(6, align ="center",
              #        verbatimTextOutput("id_bis")
              # ),
@@ -98,9 +101,9 @@ body <- dashboardBody(
                         ),
                         
                         introBox(
-                          # the zoom graph
+                          # the PTH zoom graph
                           conditionalPanel(
-                            condition = "input.current_node_bis_id == 14",
+                            condition = "input.current_node_bis_id == 11",
                             
                             div(id = "networkPTH",
                                 visNetworkOutput("network_PTH", height = "400px")
@@ -110,35 +113,73 @@ body <- dashboardBody(
                           data.step = 4,
                           data.intro = help_text[4]
                         ),
+                        
+                        # Kidney zoom 1
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 7",
-                          div(id = "network_PTzoom",
-                              imageOutput("PT")
+                          condition = "input.current_node_bis_id == 6",
+                          
+                          div(id = "networkkidney_zoom2",
+                              visNetworkOutput("network_kidney_zoom2", height = "400px")
                           )
+                          
                         ),
+                        
+                        # Proximal tubule zoom
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 8",
-                          div(id = "network_TALzoom",
-                              imageOutput("TAL")
+                          condition = "input.current_node_tris_id == 1 &&
+                                       input.current_node_bis_id != 'null' &&
+                                       input.current_node_tris_id != 'null'",
+                          
+                          div(id = "networkkidney_PT",
+                              visNetworkOutput("network_kidney_PT", height = "400px")
                           )
+                          
                         ),
+                        
+                        # TAL zoom
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 9",
-                          div(id = "network_DCT-CNTzoom",
-                              imageOutput("DCT_CNT")
+                          condition = "input.current_node_tris_id == 2 &&
+                                       input.current_node_bis_id != 'null' &&
+                                       input.current_node_tris_id != 'null'",
+                          
+                          div(id = "networkkidney_TAL",
+                              visNetworkOutput("network_kidney_TAL", height = "400px")
                           )
+                          
                         ),
+                        
+                        # DCT zoom
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 1",
-                          div(id = "network_intestinezoom",
-                              imageOutput("intestine_zoom")
+                          condition = "input.current_node_tris_id == 3 &&
+                                       input.current_node_bis_id != 'null' &&
+                                       input.current_node_tris_id != 'null'",
+                          
+                          div(id = "networkkidney_DCT",
+                              visNetworkOutput("network_kidney_DCT", height = "400px")
                           )
+                          
                         ),
+                        
+                        # Intestine zoom
                         conditionalPanel(
-                          condition = "input.current_node_bis_id == 4",
-                          div(id = "network_bonezoom",
-                              imageOutput("bone_zoom")
+                          condition = "input.current_node_bis_id == 1 &&
+                                       input.current_node_bis_id != 'null'",
+                          
+                          div(id = "networkintestine",
+                              visNetworkOutput("network_intestine", height = "400px")
                           )
+                          
+                        ),
+                        
+                        # bone zoom
+                        conditionalPanel(
+                          condition = "input.current_node_bis_id == 4 &&
+                                       input.current_node_bis_id != 'null'",
+                          
+                          div(id = "networkbone",
+                              visNetworkOutput("network_bone", height = "400px")
+                          )
+                          
                         )
                         
                  ),
@@ -150,7 +191,8 @@ body <- dashboardBody(
                           conditionalPanel(
                             
                             condition = "input.current_edge_bis_id != 'null' && 
-                            input.current_edge_bis_id == 1",
+                                         input.current_edge_bis_id == 1 && 
+                                         input.current_node_bis_id == 11",
                             
                             sliderInput("k_prod_PTHg", 
                                         "PTH synthesis rate constant (μmol/min)",
@@ -169,7 +211,8 @@ body <- dashboardBody(
                           conditionalPanel( # PTH parameters for PTH exocytosis
                             
                             condition = "input.current_edge_bis_id != 'null' && 
-                            input.current_edge_bis_id == 3",
+                                         input.current_edge_bis_id == 3 &&
+                                         input.current_node_bis_id == 11",
                             
                             sliderInput("beta_exo_PTHg", 
                                         "Maximal PTH secretion from parathyroid 
@@ -192,7 +235,8 @@ body <- dashboardBody(
                           conditionalPanel( # PTH parameters for PTH exocytosis
                             
                             condition = "input.current_edge_bis_id != 'null' && 
-                            input.current_edge_bis_id == 4",
+                                         input.current_edge_bis_id == 4 &&
+                                         input.current_node_bis_id == 11",
                             
                             sliderInput("gamma_exo_PTHg", 
                                         "Maximal inhibition of PTH 
@@ -213,9 +257,9 @@ body <- dashboardBody(
                           
                           conditionalPanel( # Vitamin D3 parameters
                             
-                            condition = "input.current_node_id == 16 || 
-                                         input.current_node_id == 17 ||
-                                         input.current_node_id == 18",
+                            condition = "input.current_node_id == 13 || 
+                                         input.current_node_id == 14 ||
+                                         input.current_node_id == 15",
                             
                             column(12, align = "center", 
                                    sliderInput("D3_inact", 
@@ -252,7 +296,7 @@ body <- dashboardBody(
                           
                           conditionalPanel( # FGF parameters
                             
-                            condition = "input.current_node_id == 19",
+                            condition = "input.current_node_id == 16",
                             
                             sliderInput("k_prod_FGF", 
                                         "Minimal rate of FGF23 synthesis (fM/min)", 
@@ -421,7 +465,7 @@ body <- dashboardBody(
                           
                           conditionalPanel( # Cells parameters
                             
-                            condition = "input.current_node_id == 11",
+                            condition = "input.current_node_id == 8",
                             
                             column(12, align = "center",           
                                    sliderInput("k_pc", 

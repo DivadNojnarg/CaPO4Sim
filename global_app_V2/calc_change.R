@@ -1,8 +1,7 @@
 #-------------------------------------------------------------------------
 #  This code contains the function that calculates the percentage of 
 #  change of each flux, which is then needed to change the color of arrows
-#  depending on the resulting variation. Green for increase and red
-#  for decrease.
+#  depending on the resulting variation. (see global.R for color change)
 #
 #  David Granjon, the Interface Group, Zurich
 #  July 10th, 2017
@@ -12,7 +11,9 @@
 calc_change <- function (out, t_target){
   
   # change for Ca and PO4 fluxes
-  Abs_int_change <- 0.5*((out[t_target,"Abs_int_Ca"] - 9.829864e-04)/9.829864e-04*100 +  # numbers represent the base-case value
+  # numbers represent the base-case value
+  # t target is the time at which to compute calc_change
+  Abs_int_change <- 0.5*((out[t_target,"Abs_int_Ca"] - 9.829864e-04)/9.829864e-04*100 +  
                             (out[t_target,"Abs_int_PO4"] - 8.233724e-04)/8.233724e-04*100 )
   U_Ca_change <- (out[t_target,"U_Ca"] - 3.907788e-05)/3.907788e-05*100
   U_PO4_change <- (out[t_target,"U_PO4"] - 3.969683e-04)/3.969683e-04*100
@@ -32,7 +33,9 @@ calc_change <- function (out, t_target){
   
   
   # change for PTH fluxes
-  PTHg_synth_change <- (out[t_target,"PTHg_synth"] - 54.02698)/54.02698*100 # numbers represent the base-case value
+  # numbers represent the base-case value
+  # t target is the time at which to compute calc_change
+  PTHg_synth_change <- (out[t_target,"PTHg_synth"] - 54.02698)/54.02698*100
   PTHg_deg_change <- (out[t_target,"PTHg_deg"] - 45.086650)/45.086650*100
   PTHg_exo_change <- (out[t_target,"PTHg_exo"] - 8.936505)/8.936505*100
   PTHp_deg_change <- (out[t_target,"PTHp_deg"] - 8.931000)/8.931000*100

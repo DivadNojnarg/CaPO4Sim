@@ -26,7 +26,8 @@
       <path class="cls-3" d="M16.3,34a2.46,2.46,0,0,1,0-4.92"/>
       <path class="cls-3" d="M10.6,43.81a2.46,2.46,0,0,1,0-4.92"/>
       <ellipse class="cls-4" cx="24.97" cy="25.07" rx="2.94" ry="5.53"/>
-      <text class="cls-5" transform="translate(31.89 87.2)" style="white-space: pre;">PTH</text>
+      <text class="cls-5" transform="translate(31.89 87.2)" style="white-space: pre;">PTHg</text>
+      <text x="114.112" y="72.653" style="white-space: pre; fill: rgb(51, 51, 51); font-family: sans-serif; font-size: 24px;"> </text>
     </symbol>
     <symbol id="CaSR-" data-name="CaSR-" viewBox="0 0 55 77.35">
       <g id="Neues_Symbol_4" data-name="Neues Symbol 4">
@@ -75,6 +76,6 @@
     </g>
   </g>
   <g id="g-4" transform="matrix(0.468905, 0, 0, 0.467831, 29.598352, 15.12596)">
-    <use width="55" height="77.3499984741211" transform="matrix(0.9026902914047241, 0, 0, 0.9183126688003541, 7.659983915309226, -26.93980039150283)" xlink:href="#symbol-3"/>
+    <use width="55" height="77.3499984741211" transform="matrix(0.9026902914047241, 0, 0, 0.9183127284049988, 7.6599836349487305, -26.939800262451172)" xlink:href="#symbol-3"/>
   </g>
 </svg>

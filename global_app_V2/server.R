@@ -95,12 +95,15 @@ shinyServer(function(input, output, session) {
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
     
-    generate_network(nodes = nodes_Ca, edges = edges_Ca, 
-                     css_export = css_export) %>%
+    generate_network(nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
       # simple click event to allow graph ploting
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);
                 ;}") %>% 
+      # unselect node event
+      visEvents(deselectNode = "function(nodes) {
+                Shiny.onInputChange('current_node_bis_id', 'null');
+                ;}") %>%
       # add the doubleclick function to handle zoom views
       visEvents(doubleClick = "function(nodes) {
                 Shiny.onInputChange('current_node_bis_id', nodes.nodes);
@@ -110,7 +113,7 @@ shinyServer(function(input, output, session) {
                 ;}") %>%
       # very important: change the whole graph position after drawing
       visEvents(type = "once", afterDrawing = "function() {
-                this.moveTo({ position: {x: 0, y:-13.43},
+                this.moveTo({ position: {x:0, y:-13.43},
                 offset: {x: 0, y:0} })}") %>% 
       visEvents(type = "once", startStabilizing = "function() {
                 this.moveTo({scale:2})}") # to set the initial zoom (1 by default)
@@ -119,6 +122,8 @@ shinyServer(function(input, output, session) {
   
   output$id <- renderPrint({ input$current_edge_id })
   output$id_bis <- renderPrint({ input$current_node_id })
+  
+  output$node_bis <- renderPrint({ input$current_node_bis_id })
   
   
   #------------------------------------------------------------------------- 
@@ -137,18 +142,17 @@ shinyServer(function(input, output, session) {
     nodes_PTHg <- nodes_PTHg()
     edges_PTHg <- edges_PTHg()
     
-    generate_network(nodes = nodes_PTHg, edges = edges_PTHg, 
-                     css_export = css_export_zoom) %>%
+    generate_network(nodes = nodes_PTHg, edges = edges_PTHg) %>%
       visEvents(selectEdge = "function(edges) {
-                 Shiny.onInputChange('current_edge_bis_id', edges.edges);
-                 ;}") %>%
+                Shiny.onInputChange('current_edge_bis_id', edges.edges);
+                ;}") %>%
       # set value to NULL to prevent sliders from being displayed
       visEvents(deselectEdge = "function(edges) {
-         Shiny.onInputChange('current_edge_bis_id', 'null');
-                 ;}") %>% 
+                Shiny.onInputChange('current_edge_bis_id', 'null');
+                ;}") %>% 
       # very important: change the whole graph position after drawing
       visEvents(type = "once", afterDrawing = "function() {
-                this.moveTo({ position: {x: 2.5, y:-2.5},
+                this.moveTo({ position: {x:2.5, y:-2.5},
                 offset: {x: 0, y:0} })}")
     
   })
@@ -163,9 +167,9 @@ shinyServer(function(input, output, session) {
   vals <- reactiveValues(coords=NULL, viewposition = NULL)
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_Ca") %>% visGetPositions()
-    vals$coords <- if (!is.null(input$network_Ca_positions)) 
-      do.call(rbind, input$network_Ca_positions)
+    visNetworkProxy("network_bone") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_bone_positions)) 
+      do.call(rbind, input$network_bone_positions)
   })
   
   # view position (of the camera)
@@ -173,58 +177,212 @@ shinyServer(function(input, output, session) {
   output$viewposition <- renderPrint({ vals$viewposition })
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_Ca") %>% visGetViewPosition()
-    vals$viewposition <- if (!is.null(input$network_Ca_viewPosition))
-      do.call(rbind, input$network_Ca_viewPosition)
+    visNetworkProxy("network_bone") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_bone_viewPosition))
+      do.call(rbind, input$network_bone_viewPosition)
     
   })
   
   #------------------------------------------------------------------------- 
   #  
-  #  Render image of the experimental graphs
+  #  The zoom network part: make zoom network kidney_zoom2
+  #  nephron containing PT, TAL and DCT
   #
   #-------------------------------------------------------------------------
   
-  output$TAL <- renderImage({
-    # When input$n is 1, filename is ./images/image1.jpeg
-    filename <- normalizePath(file.path('./www', 'kidney_TAL.jpg'))
-    
-    # Return a list containing the filename
-    list(src = filename)
-  }, deleteFile = FALSE)
+  # Generate the kidney_zoom2 Graph network
   
-  output$PT <- renderImage({
-    # When input$n is 1, filename is ./images/image1.jpeg
-    filename <- normalizePath(file.path('./www', 'kidney_PT.jpg'))
-    
-    # Return a list containing the filename
-    list(src = filename)
-  }, deleteFile = FALSE)
+  nodes_kidney_zoom2 <- reactive({ generate_nodes_kidney_zoom2() })
+  edges_kidney_zoom2 <- reactive({ generate_edges_kidney_zoom2() })
   
-  output$DCT_CNT <- renderImage({
-    # When input$n is 1, filename is ./images/image1.jpeg
-    filename <- normalizePath(file.path('./www', 'kidney_DCT-CNT.jpg'))
-    
-    # Return a list containing the filename
-    list(src = filename)
-  }, deleteFile = FALSE)
+  # Generate the output of the kidney_zoom2 graph to be used in body
   
-  output$intestine_zoom <- renderImage({
-    # When input$n is 1, filename is ./images/image1.jpeg
-    filename <- normalizePath(file.path('./www', 'intestine_zoom.jpg'))
+  output$network_kidney_zoom2 <- renderVisNetwork({
     
-    # Return a list containing the filename
-    list(src = filename)
-  }, deleteFile = FALSE)
-  
-  output$bone_zoom <- renderImage({
-    # When input$n is 1, filename is ./images/image1.jpeg
-    filename <- normalizePath(file.path('./www', 'bone_zoom.jpg'))
+    nodes_kidney_zoom2 <- nodes_kidney_zoom2()
+    edges_kidney_zoom2 <- edges_kidney_zoom2()
     
-    # Return a list containing the filename
-    list(src = filename)
-  }, deleteFile = FALSE)
+    generate_network(nodes = nodes_kidney_zoom2, edges = edges_kidney_zoom2) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x:-28.8, y:-2.34},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(doubleClick = "function(nodes) {
+                Shiny.onInputChange('current_node_tris_id', nodes.nodes);
+                }") %>%
+      # unselect node event
+      visEvents(deselectNode = "function(nodes) {
+                Shiny.onInputChange('current_node_tris_id', 'null');
+                ;}")
+      
+    })
   
+  output$node_tris <- renderPrint({ input$current_node_tris_id })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  The zoom network part: make zoom network kidney_PT
+  #  proximal tubule zoom
+  #
+  #-------------------------------------------------------------------------
+  
+  # Generate the kidney_PT Graph network
+  
+  nodes_kidney_PT <- reactive({ generate_nodes_kidney_PT() })
+  edges_kidney_PT <- reactive({ generate_edges_kidney_PT() })
+  
+  # Generate the output of the kidney_PT graph to be used in body
+  
+  output$network_kidney_PT <- renderVisNetwork({
+    
+    nodes_kidney_PT <- nodes_kidney_PT()
+    edges_kidney_PT <- edges_kidney_PT()
+    
+    generate_network(nodes = nodes_kidney_PT, edges = edges_kidney_PT) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x:-28.8, y:-2.34},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(selectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_tris_id', edges.edges);
+                ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_tris_id', 'null');
+                ;}")
+    })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  The zoom network part: make zoom network kidney_TAL
+  #  Thick ascending limb of Henle zoom
+  #
+  #-------------------------------------------------------------------------
+  
+  # Generate the kidney_TAL Graph network
+  
+  nodes_kidney_TAL <- reactive({ generate_nodes_kidney_TAL() })
+  edges_kidney_TAL <- reactive({ generate_edges_kidney_TAL() })
+  
+  # Generate the output of the kidney_TAL graph to be used in body
+  
+  output$network_kidney_TAL <- renderVisNetwork({
+    
+    nodes_kidney_TAL <- nodes_kidney_TAL()
+    edges_kidney_TAL <- edges_kidney_TAL()
+    
+    generate_network(nodes = nodes_kidney_TAL, edges = edges_kidney_TAL) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x:-13, y:-29},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(selectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_4_id', edges.edges);
+                ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_4_id', 'null');
+                ;}")
+    })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  The zoom network part: make zoom network kidney_DCT
+  #  Distal convoluted tubule zoom
+  #
+  #-------------------------------------------------------------------------
+  
+  # Generate the kidney_DCT Graph network
+  
+  nodes_kidney_DCT <- reactive({ generate_nodes_kidney_DCT() })
+  edges_kidney_DCT <- reactive({ generate_edges_kidney_DCT() })
+  
+  # Generate the output of the kidney_DCT graph to be used in body
+  
+  output$network_kidney_DCT <- renderVisNetwork({
+    
+    nodes_kidney_DCT <- nodes_kidney_DCT()
+    edges_kidney_DCT <- edges_kidney_DCT()
+    
+    generate_network(nodes = nodes_kidney_DCT, edges = edges_kidney_DCT) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x:-13, y:-29},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(selectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_5_id', edges.edges);
+                ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_5_id', 'null');
+                ;}")
+    })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  The zoom network part: make zoom network Intestine
+  #  Effect of D3 on the intestinal transport of Ca
+  #
+  #-------------------------------------------------------------------------
+  
+  # Generate the kidney_DCT Graph network
+  
+  nodes_intestine <- reactive({ generate_nodes_intestine() })
+  edges_intestine <- reactive({ generate_edges_intestine() })
+  
+  # Generate the output of the kidney_DCT graph to be used in body
+  
+  output$network_intestine <- renderVisNetwork({
+    
+    nodes_intestine <- nodes_intestine()
+    edges_intestine <- edges_intestine()
+    
+    generate_network(nodes = nodes_intestine, edges = edges_intestine) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x:97.5, y:201.0},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(selectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_6_id', edges.edges);
+                ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_6_id', 'null');
+                ;}")
+    })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  The zoom network part: make zoom network Bone
+  #  Effect of D3 and PTH on bone matabolism
+  #
+  #-------------------------------------------------------------------------
+  
+  # Generate the kidney_DCT Graph network
+  
+  nodes_bone <- reactive({ generate_nodes_bone() })
+  edges_bone <- reactive({ generate_edges_bone() })
+  
+  # Generate the output of the kidney_DCT graph to be used in body
+  
+  output$network_bone <- renderVisNetwork({
+    
+    nodes_bone <- nodes_bone()
+    edges_bone <- edges_bone()
+    
+    generate_network(nodes = nodes_bone, edges = edges_bone) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "once", afterDrawing = "function() {
+                this.moveTo({ position: {x:-7.1, y:27.8},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(selectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_7_id', edges.edges);
+                ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_7_id', 'null');
+                ;}")
+    })
   
   #------------------------------------------------------------------------- 
   #  
@@ -272,8 +430,8 @@ shinyServer(function(input, output, session) {
   # the new table needed for computations
   
   # calc_change_table <- reactive({
-  # 
-  #   as.data.frame(calc_change(out())) # calculate the base case value of change and let it isolate
+  # # calculate the base case value of change and let it isolate
+  #   as.data.frame(calc_change(out())) 
   # 
   # })
   # 
@@ -289,19 +447,19 @@ shinyServer(function(input, output, session) {
   observe({ 
     
     events <- c(input$Lambda_ac_Ca,
-                         input$k_p_Ca,input$k_p_P,
-                         input$k_f_Ca, input$k_f_P,
-                         input$Lambda_res_min,
-                         input$delta_res_max,
-                         input$GFR, input$k_pc,
-                         input$k_cp, input$k_prod_PTHg,
-                         input$D3_inact, input$k_deg_D3,
-                         input$k_prod_FGF)
+                input$k_p_Ca,input$k_p_P,
+                input$k_f_Ca, input$k_f_P,
+                input$Lambda_res_min,
+                input$delta_res_max,
+                input$GFR, input$k_pc,
+                input$k_cp, input$k_prod_PTHg,
+                input$D3_inact, input$k_deg_D3,
+                input$k_prod_FGF)
     
     events_PTH <- c(input$k_prod_PTHg,
-                             input$beta_exo_PTHg,
-                             input$gamma_exo_PTHg)
-
+                    input$beta_exo_PTHg,
+                    input$gamma_exo_PTHg)
+    
     out <- out()
     edges_Ca <- edges_Ca()
     edges_PTHg <- edges_PTHg()
@@ -322,6 +480,7 @@ shinyServer(function(input, output, session) {
   })
   
   observe({
+    
     updateSliderInput(session, 
                       inputId = "t_now",
                       value = input$tmax, 
@@ -371,7 +530,7 @@ shinyServer(function(input, output, session) {
       sendSweetAlert(messageId = "failSw", 
                      title = "Ooops ...", 
                      text = "Invalid parameter value: the maximum 
-                            time of simulation is too high!", 
+                     time of simulation is too high!", 
                      type = "error")
       reset("tmax") # value is reset
       
@@ -435,7 +594,7 @@ shinyServer(function(input, output, session) {
                    
                    # call the function to reset the given slider
                    sliders_reset(button_states, input)
-                
+                   
                  })
   
   # display or do not display the network background

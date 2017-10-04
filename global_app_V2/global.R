@@ -43,34 +43,6 @@ source("calc_change.R")
 source("box_close.R")
 source("networks.R")
 
-# css style for visNetwork export
-
-css_export <- paste0("float: left;
-              -webkit-border-radius: 10;
-              -moz-border-radius: 10;
-              border-radius: 10px;
-              font-family: Arial;
-              color: #ffffff;
-              font-size: 12px;
-              background: #090a0a;
-              padding: 4px 8px 4px 4px;
-              text-decoration: none;
-              position: absolute;
-              top: -800px;")
-
-css_export_zoom <- paste0("float: left;
-                          -webkit-border-radius: 10;
-                          -moz-border-radius: 10;
-                          border-radius: 10px;
-                          font-family: Arial;
-                          color: #ffffff;
-                          font-size: 12px;
-                          background: #090a0a;
-                          padding: 4px 8px 4px 4px;
-                          text-decoration: none;
-                          position: absolute;
-                          top: -400px;")
-
 # initial conditions
 state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
            "D3_p" = 564.2664, "FGF_p" = 16.78112, 
@@ -145,14 +117,14 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     index <- c(1,10,11,6,4,5,8,9,2,3,12)
     calc_change_t <- rbind(calc_change_t, index)
     # change arrowhead orientation for Ca flux between plasma and rapid bone
-    edges$from[2] <- ifelse(calc_change_t[1,9] > 0, 2, 3)
-    edges$to[2] <- ifelse(calc_change_t[1,9] > 0, 3, 2)
+    edges$from[2] <- ifelse(calc_change_t[1,"Net_Ca_pf_change"] > 0, 2, 3)
+    edges$to[2] <- ifelse(calc_change_t[1,"Net_Ca_pf_change"] > 0, 3, 2)
     # change arrowhead orientation for PO4 flux between plasma and rapid bone
-    edges$from[3] <- ifelse(calc_change_t[1,10] > 0, 2, 3)
-    edges$to[3] <- ifelse(calc_change_t[1,10] > 0, 3, 2)
+    edges$from[3] <- ifelse(calc_change_t[1,"Net_PO4_pf_change"] > 0, 2, 3)
+    edges$to[3] <- ifelse(calc_change_t[1,"Net_PO4_pf_change"] > 0, 3, 2)
     # change arrowhead orientation for PO4 flux between plasma and cells
-    edges$from[12] <- ifelse(calc_change_t[1,11] > 0, 2, 11)
-    edges$to[12] <- ifelse(calc_change_t[1,11] > 0, 11, 2)
+    edges$from[12] <- ifelse(calc_change_t[1,"Net_PO4_pc_change"] > 0, 2, 8)
+    edges$to[12] <- ifelse(calc_change_t[1,"Net_PO4_pc_change"] > 0, 8, 2)
     
     edges$arrows.to.enabled[c(2,3,12)] <- TRUE
     
@@ -214,7 +186,7 @@ title_size <- list(size = 10)
 
 plot_node <- function(node, out, parameters_bis) {
   
-  if (sum(node ==  c(1,5:10,12:13,15:19)) != 1) {
+  if (sum(node ==  c(1,5:7,9:10,12:16)) != 1) {
     
     # set the x/y-axis ranges
     time <- out[,1]
@@ -380,10 +352,10 @@ plot_node <- function(node, out, parameters_bis) {
       # other cases: need to convert graph indexes to the solver indexes
       # which are totally different (and is a big problem!!!). 
       # 0 correspond to nodes in previous cases or not interesting
-      node_Ca_list <- data.frame(id = c(rep(0,10),12,rep(0,2),2),
-                                 names = c(rep("",10),"PO4 quantity in cells",
+      node_Ca_list <- data.frame(id = c(rep(0,7),11,rep(0,2),2),
+                                 names = c(rep("",7),"PO4 quantity in cells",
                                            rep("",2),"PTH quantity in parathyroid glands"),
-                                 units = c(rep("",10),"mmol",
+                                 units = c(rep("",7),"mmol",
                                            rep("",2),"pmol"))
       #names(node_Ca_list) <- c(rep("",8),"PTH quantity in parathyroid glands",
       #                         rep("",3),"PO4 quantity in cells")
