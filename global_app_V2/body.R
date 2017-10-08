@@ -229,7 +229,7 @@ body <- dashboardBody(
                                              size = "xs")),
                             
                             # generate the alert when beta_exo_PTHg may crash the solver
-                            receiveSweetAlert(messageId = "failSw")
+                            useSweetAlert()
                           ),
                           
                           conditionalPanel( # PTH parameters for PTH exocytosis

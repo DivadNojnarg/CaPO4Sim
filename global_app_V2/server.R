@@ -511,7 +511,7 @@ shinyServer(function(input, output, session) {
     
     if (input$beta_exo_PTHg < 0.9) {
       
-      sendSweetAlert(messageId = "failSw", 
+      sendSweetAlert(session, 
                      title = "Ooops ...", 
                      text = "Invalid parameter value", 
                      type = "error")
@@ -525,9 +525,9 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$tmax,{ # critical value for tmax
     
-    if (input$tmax > 30000) {
+    if (input$tmax > 10000) {
       
-      sendSweetAlert(messageId = "failSw", 
+      sendSweetAlert(session, 
                      title = "Ooops ...", 
                      text = "Invalid parameter value: the maximum 
                      time of simulation is too high!", 
