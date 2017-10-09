@@ -151,6 +151,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     for (i in (seq_along(calc_change_t))) {
       arrow_index_i <- arrow_index[i] 
       if (is.element(arrow_index_i, edges_id_network)) {
+        # if the edge is part of the selection
         edges$color.color[arrow_index_i] <- "yellow"
       } else {
       # change edge color according to an increase or decrease of the flux
