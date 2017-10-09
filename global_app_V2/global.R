@@ -128,7 +128,7 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     
     edges$arrows.to.enabled[c(2,3,12)] <- TRUE
     
-  } else { # should use else if when other graphs will be added
+  } else {# should use else if when other graphs will be added
     calc_change_t <- round(calc_change(out, t_target)[c(12,14:15)])
     index <- c(1,2,3) # index arrows in the PTH network
     calc_change_t <- rbind(calc_change_t, index)
@@ -139,22 +139,27 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
   # convert to arrow index in the interactive diagramm
   arrow_index <- t(calc_change_t[2,flux_changed_index]) 
   
-  if (!is.null(flux_changed_index)) {
-    for (i in (seq_along(calc_change_t))) {
-      arrow_index_i <- arrow_index[i] 
-      # change edge color according to an increase or decrease of the flux
-      ifelse(calc_change_t[[i]][1] > 0, 
-             edges$color.color[arrow_index_i] <- "green", 
-             edges$color.color[arrow_index_i] <- "red")
-    }
-    
-  }
   
   # proceed to perturbation highlithing
   selected_edges <- arrow_lighting(events, edges, network)
   edges_id_network <- selected_edges[[1]]
   event_target <- selected_edges[[2]]
   param_event_values <- selected_edges[[3]]
+  
+  # edge color engine
+  if (!is.null(flux_changed_index)) {
+    for (i in (seq_along(calc_change_t))) {
+      arrow_index_i <- arrow_index[i] 
+      if (is.element(arrow_index_i, edges_id_network)) {
+        edges$color.color[arrow_index_i] <- "yellow"
+      } else {
+      # change edge color according to an increase or decrease of the flux
+      ifelse(calc_change_t[[i]][1] > 0, 
+             edges$color.color[arrow_index_i] <- "green", 
+             edges$color.color[arrow_index_i] <- "red")
+      }
+    }
+  }
   
   # increase/decrease the size of the corresponding edge
   if (network == "network_Ca") {
