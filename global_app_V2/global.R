@@ -62,7 +62,6 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687,
 arrow_lighting <- function(events, edges, network) {
   
   if (network == "network_Ca") {
-    
     param_event <- list(
       values = events,
       # do not use rep(6,2) to have 6,6//12,12 because of a bug
@@ -72,12 +71,25 @@ arrow_lighting <- function(events, edges, network) {
                       c(22,23,24,25,26,27), 
                       c(28,29))
     )
-    
-  } else {
-    
+  } else if (network == "network_PTH") {
     param_event <- list(
       values = events,
-      edges_id = list(1,3,4)
+      edges_id = list(1,3,4,6,6)
+    )
+  } else if (network == "network_kidney_PT") {
+    param_event <- list(
+      values = events,
+      edges_id = 1
+    )
+  } else if (network == "network_kidney_TAL") {
+    param_event <- list(
+      values = events,
+      edges_id = 1
+    )
+  } else {
+    param_event <- list(
+      values = events,
+      edges_id = list(1, c(5,6), c(5,6))
     )
   }
   
@@ -128,9 +140,23 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
     
     edges$arrows.to.enabled[c(2,3,12)] <- TRUE
     
-  } else {# should use else if when other graphs will be added
-    calc_change_t <- round(calc_change(out, t_target)[c(12,14:15)])
-    index <- c(1,2,3) # index arrows in the PTH network
+  } else if (network == "network_PTH") {# should use else if when other graphs will be added
+    calc_change_t <- round(calc_change(out, t_target)[c(12:17)])
+    index <- c(1,6,5,4,3,2) # index arrows in the PTH network
+    calc_change_t <- rbind(calc_change_t, index)
+  } else if (network == "network_kidney_PT") {# PT network
+    # the second arrow of PT is not part of calc_change so need
+    # to do as if it is the same as for the first arrow
+    calc_change_t <- as.data.frame(rep(round(calc_change(out, t_target)[19]),2))
+    index <- c(1,2)
+    calc_change_t <- rbind(calc_change_t, index)
+  } else if (network == "network_kidney_TAL") {
+    calc_change_t <- round(calc_change(out, t_target)[20:21])
+    index <- c(2,3)
+    calc_change_t <- rbind(calc_change_t, index)
+  } else {
+    calc_change_t <- round(calc_change(out, t_target)[c(rep(22,4), rep(23,3))])
+    index <- c(1:7)
     calc_change_t <- rbind(calc_change_t, index)
   }
   
@@ -179,6 +205,8 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
   visNetworkProxy(network) %>% 
     visSetSelection(edgesId = edges_id_network) %>%
     visUpdateEdges(edges = edges)
+  
+  print(calc_change_t)
   
 }
 

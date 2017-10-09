@@ -7,7 +7,7 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-calcium_phosphate_core <- function (t, state, parameters){
+calcium_phosphate_core <- function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
     
     ##################
@@ -31,9 +31,14 @@ calcium_phosphate_core <- function (t, state, parameters){
     
     # PTHg #
     
-    PTHg_synthesis_norm <- (k_prod_PTHg*Vc/PTH_g_norm)*PO4_p^n_prod_Pho/
-                           ((1 + gamma_prod_D3*D3_norm*D3_p)*
-                              ((K_prod_PTH_P/Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho))
+    PTHg_basal_synthesis_norm <- k_prod_PTHg*Vc/PTH_g_norm
+    PTHg_synthesis_D3_norm <- 1 / (1 + gamma_prod_D3*D3_norm*D3_p)
+    PTHg_synthesis_PO4_norm <- PO4_p^n_prod_Pho/
+                      ((K_prod_PTH_P/Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho)
+    
+    PTHg_synthesis_norm <- PTHg_basal_synthesis_norm*PTHg_synthesis_D3_norm*
+                           PTHg_synthesis_PO4_norm
+    
     PTHg_degradation_norm <- k_deg_PTHg*PTH_g
     n_Ca_norm <- (n1_exo/(1 + exp(-rho_exo*Ca_p_norm*(R/Ca_p_norm - Ca_p))) + n2_exo)
     F_Ca_norm <- beta_exo_PTHg - gamma_exo_PTHg*Ca_p^n_Ca_norm/
@@ -65,23 +70,23 @@ calcium_phosphate_core <- function (t, state, parameters){
     FGF_basal_synthesis_norm <- k_prod_FGF/FGF_p_norm
     FGF_D3_activ_norm <- delta_max_prod_D3*D3_p^n_prod_FGF/
                          (D3_p^n_prod_FGF + (K_prod_D3/D3_norm)^n_prod_FGF)
-    FGF_P_activ_norm <- PO4_p/(PO4_p+ K_prod_P/Pho_p_norm)
+    FGF_P_activ_norm <- PO4_p/(PO4_p + K_prod_P/Pho_p_norm)
     
-    FGF_synthesis_norm <- FGF_basal_synthesis_norm*(1+FGF_D3_activ_norm*FGF_P_activ_norm)
+    FGF_synthesis_norm <- FGF_basal_synthesis_norm*(1 + FGF_D3_activ_norm*FGF_P_activ_norm)
     
     FGF_degradation_norm <- k_deg_FGF*FGF_p
     
     # Ca Abs_intest #
     
     Abs_intest_basal_norm <- 0.25*I_Ca
-    Abs_intest_D3_norm <-(0.45*I_Ca*D3_p^n_abs)/(D3_p^n_abs + (K_abs_D3/D3_norm)^n_abs)
+    Abs_intest_D3_norm <- (0.45*I_Ca*D3_p^n_abs)/(D3_p^n_abs + (K_abs_D3/D3_norm)^n_abs)
     
     Abs_intest_norm <- (Abs_intest_basal_norm + Abs_intest_D3_norm)/(Ca_p_norm)
     
     # P Abs_intest #
     
     Abs_intest_basal_P_norm <- 0.4*I_P
-    Abs_intest_D3_P_norm <-(0.3*I_P*D3_p^n_abs)/(D3_p^n_abs + (K_abs_D3/D3_norm)^n_abs)
+    Abs_intest_D3_P_norm <- (0.3*I_P*D3_p^n_abs)/(D3_p^n_abs + (K_abs_D3/D3_norm)^n_abs)
     
     Abs_intest_P_norm <- (Abs_intest_basal_P_norm + Abs_intest_D3_P_norm)/(Pho_p_norm)
     
@@ -146,10 +151,10 @@ calcium_phosphate_core <- function (t, state, parameters){
                        (PO4_p^n_reabs_P + (K_PT_P/Pho_p_norm)^n_reabs_P)
     Reabs_DCT_basal_P <- lambda_DCT_P
     
-    Excretion_P_norm <- (1-(Reabs_PT_basal_P + Reabs_PT_PTH_P_norm + 
+    Excretion_P_norm <- (1 - (Reabs_PT_basal_P + Reabs_PT_PTH_P_norm + 
                               Reabs_PT_FGF_P_norm + Reabs_PT_P_norm +
                               Reabs_DCT_basal_P))*
-                              GFR*(PO4_p + CaHPO4_p + CaH2PO4_p+ NaPO4_p)
+                              GFR*(PO4_p + CaHPO4_p + CaH2PO4_p + NaPO4_p)
     
     Reabs_P_norm <- (Reabs_PT_basal_P + Reabs_PT_PTH_P_norm + 
                        Reabs_PT_FGF_P_norm + Reabs_PT_P_norm +
@@ -279,10 +284,18 @@ calcium_phosphate_core <- function (t, state, parameters){
            PO4_fp = Rapid_release_P, 
            PO4_pc = Plasma_intra_Flux_norm,
            PO4_cp = Intra_plasma_Flux_norm,
-           PTHg_synth = PTHg_synthesis_norm,
+           PTHg_synth = PTHg_synthesis_norm, # out 40
+           PTHg_synth_D3 = PTHg_synthesis_D3_norm,
+           PTHg_synth_PO4 = PTHg_synthesis_PO4_norm,
+           PTHg_exo_CaSR = F_Ca_norm,
            PTHg_deg = PTHg_degradation_norm,
            PTHg_exo = PTHg_exocytosis_norm,
-           PTHp_deg = PTHp_degradation_norm)) 
+           PTHp_deg = PTHp_degradation_norm,
+           Reabs_PT_PTH = Reabs_PT_PTH_norm,
+           Reabs_TAL_CaSR = Reabs_TAL_CaSR_norm,
+           Reabs_TAL_PTH = Reabs_TAL_PTH_norm,
+           Reabs_DCT_PTH = Reabs_DCT_PTH_norm,
+           Reabs_DCT_D3 = Reabs_DCT_D3_norm)) 
     
   })
   

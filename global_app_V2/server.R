@@ -74,7 +74,11 @@ shinyServer(function(input, output, session) {
     
   })
   
-  #output$table <- renderDataTable( out(), options = list(pageLength = 10) )
+  output$table <- renderDataTable({ 
+    
+    out()[length(out()), 41:43]
+    
+    })
   
   #------------------------------------------------------------------------- 
   #  
@@ -252,6 +256,8 @@ shinyServer(function(input, output, session) {
                 ;}")
     })
   
+  output$edges_id_PT <- renderPrint({ input$current_edge_tris_id })
+  
   #------------------------------------------------------------------------- 
   #  
   #  The zoom network part: make zoom network kidney_TAL
@@ -285,6 +291,9 @@ shinyServer(function(input, output, session) {
                 ;}")
     })
   
+  output$edges_id_TAL <- renderPrint({ input$current_edge_4_id })
+  
+  
   #------------------------------------------------------------------------- 
   #  
   #  The zoom network part: make zoom network kidney_DCT
@@ -317,6 +326,8 @@ shinyServer(function(input, output, session) {
                 Shiny.onInputChange('current_edge_5_id', 'null');
                 ;}")
     })
+  
+  output$edges_id_DCT <- renderPrint({ input$current_edge_5_id })
   
   #------------------------------------------------------------------------- 
   #  
@@ -444,8 +455,8 @@ shinyServer(function(input, output, session) {
   #   }
   # )
   
-  observe({ 
-    
+  observe({
+
     events <- c(input$Lambda_ac_Ca,
                 input$k_p_Ca,input$k_p_P,
                 input$k_f_Ca, input$k_f_P,
@@ -455,28 +466,65 @@ shinyServer(function(input, output, session) {
                 input$k_cp, input$k_prod_PTHg,
                 input$D3_inact, input$k_deg_D3,
                 input$k_prod_FGF)
-    
+
     events_PTH <- c(input$k_prod_PTHg,
                     input$beta_exo_PTHg,
-                    input$gamma_exo_PTHg)
-    
+                    input$gamma_exo_PTHg,
+                    input$D3_inact,
+                    input$k_deg_D3)
+
+    # events in the proximal tubule depend on PTH
+    events_kidney_PT <- input$k_prod_PTHg
+
+    # events in the TAL
+    events_kidney_TAL <- input$k_prod_PTHg
+
+    # events in the DCT function of PTH and D3
+    events_kidney_DCT <- c(input$k_prod_PTHg,
+                           input$D3_inact,
+                           input$k_deg_D3)
+
     out <- out()
     edges_Ca <- edges_Ca()
     edges_PTHg <- edges_PTHg()
-    
+    edges_kidney_PT <- edges_kidney_PT()
+    edges_kidney_TAL <- edges_kidney_TAL()
+    edges_kidney_DCT <- edges_kidney_DCT()
+
     # for Ca/PO4 fluxes, call the flux_lighting() function
-    flux_lighting(edges_Ca, 
-                  network = "network_Ca", 
-                  out, 
-                  events = events, 
+    flux_lighting(edges_Ca,
+                  network = "network_Ca",
+                  out,
+                  events = events,
                   t_target())
     # for the PTH network
-    flux_lighting(edges_PTHg, 
-                  network = "network_PTH", 
-                  out, 
-                  events = events_PTH, 
+    flux_lighting(edges_PTHg,
+                  network = "network_PTH",
+                  out,
+                  events = events_PTH,
                   t_target())
-    
+
+    # for the kidney PT network
+    flux_lighting(edges_kidney_PT,
+                  network = "network_kidney_PT",
+                  out,
+                  events = events_kidney_PT,
+                  t_target())
+
+    # for the kidney TAL network
+    flux_lighting(edges_kidney_TAL,
+                  network = "network_kidney_TAL",
+                  out,
+                  events = events_kidney_TAL,
+                  t_target())
+
+    # for the kidney DCT network
+    flux_lighting(edges_kidney_DCT,
+                  network = "network_kidney_DCT",
+                  out,
+                  events = events_kidney_DCT,
+                  t_target())
+
   })
   
   observe({
