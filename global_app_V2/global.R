@@ -21,6 +21,7 @@ library(shinyjqui)
 library(bsplus)
 library(sweetalertR)
 library(rintrojs)
+library(purrr)
 
 # Load the template components of UI
 source("header.R")
@@ -116,7 +117,7 @@ arrow_lighting <- function(events, edges, network) {
 # takes edges, network (by default set to network_Ca), out and
 # events as arguments
 
-flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){ 
+flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){ 
   
   # calculate the difference between live fluxes and base-case values
   # depending on the graph selection
@@ -205,9 +206,6 @@ flux_lighting <- function(edges, network = "network_Ca", out, events, t_target){
   visNetworkProxy(network) %>% 
     visSetSelection(edgesId = edges_id_network) %>%
     visUpdateEdges(edges = edges)
-  
-  print(calc_change_t)
-  
 }
 
 

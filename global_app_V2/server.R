@@ -490,40 +490,20 @@ shinyServer(function(input, output, session) {
     edges_kidney_PT <- edges_kidney_PT()
     edges_kidney_TAL <- edges_kidney_TAL()
     edges_kidney_DCT <- edges_kidney_DCT()
-
-    # for Ca/PO4 fluxes, call the flux_lighting() function
-    flux_lighting(edges_Ca,
-                  network = "network_Ca",
-                  out,
-                  events = events,
-                  t_target())
-    # for the PTH network
-    flux_lighting(edges_PTHg,
-                  network = "network_PTH",
-                  out,
-                  events = events_PTH,
-                  t_target())
-
-    # for the kidney PT network
-    flux_lighting(edges_kidney_PT,
-                  network = "network_kidney_PT",
-                  out,
-                  events = events_kidney_PT,
-                  t_target())
-
-    # for the kidney TAL network
-    flux_lighting(edges_kidney_TAL,
-                  network = "network_kidney_TAL",
-                  out,
-                  events = events_kidney_TAL,
-                  t_target())
-
-    # for the kidney DCT network
-    flux_lighting(edges_kidney_DCT,
-                  network = "network_kidney_DCT",
-                  out,
-                  events = events_kidney_DCT,
-                  t_target())
+    
+    # create the list of arguments needed by pmap
+    network_list <- list(
+      edges = list(edges_Ca, edges_PTHg, edges_kidney_PT, 
+                edges_kidney_TAL, edges_kidney_DCT),
+      
+      network = list("network_Ca", "network_PTH", "network_kidney_PT",
+                "network_kidney_TAL", "network_kidney_DCT"),
+      
+      events = list(events, events_PTH, events_kidney_PT,
+                    events_kidney_TAL, events_kidney_DCT))
+    
+    # apply flux_lighting for all networks using pmap function
+    pmap(network_list, flux_lighting, out, t_target())
 
   })
   
