@@ -33,15 +33,15 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     PTHg_basal_synthesis_norm <- k_prod_PTHg*Vc/PTH_g_norm
     PTHg_synthesis_D3_norm <- 1 / (1 + gamma_prod_D3*D3_norm*D3_p)
-    PTHg_synthesis_PO4_norm <- PO4_p^n_prod_Pho/
+    PTHg_synthesis_PO4_norm <- PO4_p^n_prod_Pho /
                       ((K_prod_PTH_P/Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho)
     
-    PTHg_synthesis_norm <- PTHg_basal_synthesis_norm*PTHg_synthesis_D3_norm*
+    PTHg_synthesis_norm <- PTHg_basal_synthesis_norm*PTHg_synthesis_D3_norm *
                            PTHg_synthesis_PO4_norm
     
     PTHg_degradation_norm <- k_deg_PTHg*PTH_g
     n_Ca_norm <- (n1_exo/(1 + exp(-rho_exo*Ca_p_norm*(R/Ca_p_norm - Ca_p))) + n2_exo)
-    F_Ca_norm <- beta_exo_PTHg - gamma_exo_PTHg*Ca_p^n_Ca_norm/
+    F_Ca_norm <- beta_exo_PTHg - gamma_exo_PTHg*Ca_p^n_Ca_norm /
                                                 (Ca_p^n_Ca_norm + (K_Ca/Ca_p_norm)^n_Ca_norm)
     PTHg_exocytosis_norm <- F_Ca_norm*PTH_g
     
@@ -53,22 +53,22 @@ calcium_phosphate_core <- function(t, state, parameters) {
     # D3 #
     
     D3_basal_synthesis_norm <- k_conv_min*D3_inact/D3_norm
-    D3_conv_PTH_norm <- (delta_conv_max*(D3_inact/D3_norm)*PTH_p^n_conv)/
+    D3_conv_PTH_norm <- (delta_conv_max*(D3_inact/D3_norm)*PTH_p^n_conv) /
                         (PTH_p^n_conv + (K_conv/PTH_p_norm)^n_conv) # choose PTH_p or PTH_p_lag
     D3_conv_Ca_norm <- 1/(1 + gamma_ca_conv*Ca_p_norm*Ca_p)
     D3_conv_D3_norm <- 1/(1 + gamma_D3_conv*D3_norm*D3_p)
     D3_conv_P_norm <- 1/(1 + gamma_P_conv*Pho_p_norm*PO4_p)
     D3_conv_FGF_norm <- 1/(1 + gamma_FGF_conv*FGF_p_norm*FGF_p)
-    D3_synthesis_norm <- D3_basal_synthesis_norm + D3_conv_PTH_norm*D3_conv_Ca_norm*
+    D3_synthesis_norm <- D3_basal_synthesis_norm + D3_conv_PTH_norm*D3_conv_Ca_norm *
                          D3_conv_D3_norm*D3_conv_P_norm*D3_conv_FGF_norm
     
-    D3_degradation_norm <- (k_deg_D3*(1 + gamma_deg_FGF*FGF_p_norm*FGF_p)*D3_p)/
+    D3_degradation_norm <- (k_deg_D3*(1 + gamma_deg_FGF*FGF_p_norm*FGF_p)*D3_p) /
                            (1 + gamma_deg_PTH*PTH_p_norm*PTH_p)  
     
     # FGF23 #
     
     FGF_basal_synthesis_norm <- k_prod_FGF/FGF_p_norm
-    FGF_D3_activ_norm <- delta_max_prod_D3*D3_p^n_prod_FGF/
+    FGF_D3_activ_norm <- delta_max_prod_D3*D3_p^n_prod_FGF /
                          (D3_p^n_prod_FGF + (K_prod_D3/D3_norm)^n_prod_FGF)
     FGF_P_activ_norm <- PO4_p/(PO4_p + K_prod_P/Pho_p_norm)
     
@@ -105,9 +105,9 @@ calcium_phosphate_core <- function(t, state, parameters) {
     # Ca Slow bone #
     
     Resorption_basal <- Lambda_res_min
-    Resorption_PTH_norm <- (delta_res_max*0.2*PTH_p^n_res)/
+    Resorption_PTH_norm <- (delta_res_max*0.2*PTH_p^n_res) /
                            (PTH_p^n_res + (K_res_PTH/PTH_p_norm)^n_res)
-    Resorption_D3_norm <- (delta_res_max*0.8*D3_p^n_res)/
+    Resorption_D3_norm <- (delta_res_max*0.8*D3_p^n_res) /
                           (D3_p^n_res + (K_res_D3/D3_norm)^n_res)
     
     Resorption_norm <- (Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm)
@@ -131,35 +131,35 @@ calcium_phosphate_core <- function(t, state, parameters) {
     Reabs_DCT_D3_norm <- (delta_DCT_max*0.2*D3_p)/(D3_p + K_DCT_D3/D3_norm)
     
     Excretion_norm <- (1 - (Reabs_PT + Reabs_TAL_basal + Reabs_TAL_CaSR_norm + 
-                              Reabs_TAL_PTH_norm + Reabs_DCT_basal + 
-                            Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm))*
+                            Reabs_TAL_PTH_norm + Reabs_DCT_basal + 
+                            Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm)) *
                             GFR*(Ca_p + CaHPO4_p + CaH2PO4_p)
     
     Reabs_norm <- (Reabs_PT + Reabs_TAL_basal + Reabs_TAL_CaSR_norm + 
-                     Reabs_TAL_PTH_norm + Reabs_DCT_basal + 
-                      Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm)*
-                      GFR*(Ca_p + CaHPO4_p + CaH2PO4_p)
+                   Reabs_TAL_PTH_norm + Reabs_DCT_basal + 
+                   Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm) *
+                   GFR * (Ca_p + CaHPO4_p + CaH2PO4_p)
     
     # P Kidney #
     
     Reabs_PT_basal_P <- lambda_PT_0
-    Reabs_PT_PTH_P_norm <- (delta_PTH_max_P*(K_PT_PTH/PTH_p_norm)^n_reabs_P)/
+    Reabs_PT_PTH_P_norm <- (delta_PTH_max_P*(K_PT_PTH/PTH_p_norm)^n_reabs_P) /
                            (PTH_p^n_reabs_P + (K_PT_PTH/PTH_p_norm)^n_reabs_P)
-    Reabs_PT_FGF_P_norm <- (delta_FGF_max*(K_PT_FGF/FGF_p_norm)^n_reabs_P)/
+    Reabs_PT_FGF_P_norm <- (delta_FGF_max*(K_PT_FGF/FGF_p_norm)^n_reabs_P) /
                            (FGF_p^n_reabs_P + (K_PT_FGF/FGF_p_norm)^n_reabs_P)
-    Reabs_PT_P_norm <- (delta_P_max*(K_PT_P/Pho_p_norm)^n_reabs_P)/
+    Reabs_PT_P_norm <- (delta_P_max*(K_PT_P/Pho_p_norm)^n_reabs_P) /
                        (PO4_p^n_reabs_P + (K_PT_P/Pho_p_norm)^n_reabs_P)
     Reabs_DCT_basal_P <- lambda_DCT_P
     
     Excretion_P_norm <- (1 - (Reabs_PT_basal_P + Reabs_PT_PTH_P_norm + 
                               Reabs_PT_FGF_P_norm + Reabs_PT_P_norm +
-                              Reabs_DCT_basal_P))*
-                              GFR*(PO4_p + CaHPO4_p + CaH2PO4_p + NaPO4_p)
+                              Reabs_DCT_basal_P)) *
+                              GFR * (PO4_p + CaHPO4_p + CaH2PO4_p + NaPO4_p)
     
     Reabs_P_norm <- (Reabs_PT_basal_P + Reabs_PT_PTH_P_norm + 
-                       Reabs_PT_FGF_P_norm + Reabs_PT_P_norm +
-                       Reabs_DCT_basal_P)*
-                       GFR*(PO4_p + CaHPO4_p + CaH2PO4_p + NaPO4_p)
+                     Reabs_PT_FGF_P_norm + Reabs_PT_P_norm +
+                     Reabs_DCT_basal_P) *
+                     GFR * (PO4_p + CaHPO4_p + CaH2PO4_p + NaPO4_p)
     
     # Intracellular P #
     
@@ -203,15 +203,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     EGTA_form <- k_on_egta*Ca_p*EGTA_p;
     EGTA_diss <- k_off_egta*CaEGTA_p;
-    
-    ##################
-    #                #
-    #   Simulations  #
-    ##################
-    
-    # if (t>0){
-    #   k_inject_Ca = 0.01
-    # }
+  
     
     ##################
     #                #
@@ -219,44 +211,96 @@ calcium_phosphate_core <- function(t, state, parameters) {
     #    Change      #
     ##################
     
-    dPTH_g <- PTHg_synthesis_norm - PTHg_degradation_norm - PTHg_exocytosis_norm # PTHg           
-    dPTH_p <- k_inject_PTH + PTHp_influx_norm - PTHp_degradation_norm # PTHp
-    dD3_p <- k_inject_D3 + D3_synthesis_norm - D3_degradation_norm # D3
-    dFGF_p <- k_inject_FGF + FGF_synthesis_norm - FGF_degradation_norm # FGF23
-    dCa_p <- 1/Vp*(k_inject_Ca + Abs_intest_norm  + Resorption_norm/Ca_p_norm - 
-                     Rapid_storage_Ca + Rapid_release_Ca - Excretion_norm) -
-      k_form_CaProt + k_diss_CaProt - k_form_CaHPO4_norm*HPO4_norm + 
-      k_diss_CaHPO4_norm*CaHPO4_norm/Ca_p_norm -
-      k_form_CaH2PO4_norm/Ca_p_norm + k_diss_CaH2PO4_norm*CaH2PO4_norm/Ca_p_norm -
-      EGTA_form + EGTA_diss/Ca_p_norm # Plasma Ca
+    # PTHg
+    dPTH_g <- PTHg_synthesis_norm - PTHg_degradation_norm - PTHg_exocytosis_norm
+    
+    # PTHp
+    dPTH_p <- k_inject_PTH + PTHp_influx_norm - PTHp_degradation_norm 
+    
+    # D3
+    dD3_p <- k_inject_D3 + D3_synthesis_norm - D3_degradation_norm 
+    
+    # FGF23
+    dFGF_p <- k_inject_FGF + FGF_synthesis_norm - FGF_degradation_norm 
+    
+    # Plasma Ca
+    dCa_p <- 1 / Vp * (k_inject_Ca + Abs_intest_norm  + Resorption_norm/Ca_p_norm - 
+                       Rapid_storage_Ca + Rapid_release_Ca - Excretion_norm) -
+             k_form_CaProt + k_diss_CaProt - k_form_CaHPO4_norm*HPO4_norm + 
+             k_diss_CaHPO4_norm * CaHPO4_norm / Ca_p_norm -
+             k_form_CaH2PO4_norm / Ca_p_norm + 
+             k_diss_CaH2PO4_norm * CaH2PO4_norm / Ca_p_norm -
+             EGTA_form + EGTA_diss / Ca_p_norm 
+    
+    # Rapid Bone Ca
     dCa_f <- Rapid_storage_Ca - Rapid_release_Ca - Accretion_norm - 
-      k_form_CaHPO4f_norm*Ca_p_norm*HPO4_norm/CaHPO4_norm + k_diss_CaHPO4f_norm - 
-      k_form_CaH2PO4f_norm*Ca_p_norm*H2PO4_norm/CaH2PO4_norm + k_diss_CaH2PO4f_norm  # Rapid Bone Ca
-    dCa_b <- 1/Ca_b_norm*(Accretion_norm - Resorption_norm) # Slow Bone Ca
-    dPO4_p <- 1/Vp*(k_inject_P + Abs_intest_P_norm + Resorption_P_norm/Pho_p_norm - 
-                      Rapid_storage_P + Rapid_release_P - Excretion_P_norm - 
-                        Plasma_intra_Flux_norm + Intra_plasma_Flux_norm/Pho_p_norm) - 
-      k_form_CaHPO4_norm*Ca_p_norm + k_diss_CaHPO4_norm*CaHPO4_norm/Pho_p_norm - 
-      k_form_CaH2PO4_norm*Ca_p_norm + k_diss_CaH2PO4_norm*CaH2PO4_norm/Pho_p_norm - 
-      k_form_NaPO4 + k_diss_NaPO4 # plasma P
+             k_form_CaHPO4f_norm * Ca_p_norm * HPO4_norm / CaHPO4_norm + 
+             k_diss_CaHPO4f_norm - 
+             k_form_CaH2PO4f_norm * Ca_p_norm*H2PO4_norm / CaH2PO4_norm + 
+             k_diss_CaH2PO4f_norm  
+    
+    # Slow Bone Ca
+    dCa_b <- 1 / Ca_b_norm * (Accretion_norm - Resorption_norm) 
+    
+    # plasma PO4
+    dPO4_p <- 1 / Vp * (k_inject_P + Abs_intest_P_norm + Resorption_P_norm / Pho_p_norm - 
+                    Rapid_storage_P + Rapid_release_P - Excretion_P_norm - 
+                    Plasma_intra_Flux_norm + Intra_plasma_Flux_norm / Pho_p_norm) - 
+              k_form_CaHPO4_norm * Ca_p_norm + 
+              k_diss_CaHPO4_norm * CaHPO4_norm / Pho_p_norm - 
+              k_form_CaH2PO4_norm * Ca_p_norm + 
+              k_diss_CaH2PO4_norm * CaH2PO4_norm / Pho_p_norm - 
+              k_form_NaPO4 + k_diss_NaPO4 
+    
+    # Rapid Bone PO4
     dPO4_f <- Rapid_storage_P - Rapid_release_P - Accretion_P_norm - 
-      k_form_CaHPO4f_norm*Ca_p_norm*HPO4_norm/CaHPO4_norm + k_diss_CaHPO4f_norm - 
-      k_form_CaH2PO4f_norm*Ca_p_norm*H2PO4_norm/CaH2PO4_norm + k_diss_CaH2PO4f_norm # Rapid Bone P
-    dPO4_b <- 1/Pho_b_norm*(Accretion_P_norm - Resorption_P_norm) # Slow bone P
-    dPO4_c <- Plasma_intra_Flux_norm/Pho_c_norm - Intra_plasma_Flux_norm # Intracellular P
-    dCaHPO4_p <- k_form_CaHPO4_norm*Ca_p_norm*HPO4_norm/CaHPO4_norm - k_diss_CaHPO4_norm - 
-      k_fet_CaHPO4_norm # CaHPO4p
-    dCaH2PO4_p <- k_form_CaH2PO4_norm*Ca_p_norm*H2PO4_norm/CaH2PO4_norm - k_diss_CaH2PO4_norm - 
-      k_fet_CaH2PO4_norm # Ca(H2PO4)2p
-    dCPP_p <- k_fet_CaHPO4_norm + k_fet_CaH2PO4_norm - CPP_degradation  # CPP particles
-    dCaHPO4_f <- k_form_CaHPO4f_norm*Ca_p_norm*HPO4_norm/CaHPO4_norm - k_diss_CaHPO4f_norm # CaHPO4 fast pool
-    dCaH2PO4_f <- k_form_CaH2PO4f_norm*Ca_p_norm*H2PO4_norm/CaH2PO4_norm - k_diss_CaH2PO4f_norm # CaH2PO4 fast pool
-    dCaProt_p <- k_form_CaProt - k_diss_CaProt # CaProt plasma
-    dNaPO4_p <- k_form_NaPO4 - k_diss_NaPO4 # NaPho plasma
-    dCa_tot <- dCa_p + 1*dCaHPO4_p + 1*dCaH2PO4_p + dCaProt_p + 1*dCPP_p # calcium total
-    dPO4_tot <- dPO4_p + 1*dCaHPO4_p + 1*dCaH2PO4_p + dNaPO4_p + 1*dCPP_p # phosphate total
-    dEGTA_p <- 1/Vp*k_inject_egta/EGTA_norm - EGTA_form + EGTA_diss/EGTA_norm # equation for continuous EGTA injection
-    dCaEGTA_p <- EGTA_form/Ca_EGTA_norm - EGTA_diss # kinetic of CaEGTA_p complex
+              k_form_CaHPO4f_norm * Ca_p_norm*HPO4_norm / CaHPO4_norm + 
+              k_diss_CaHPO4f_norm - k_form_CaH2PO4f_norm * Ca_p_norm * 
+              H2PO4_norm / CaH2PO4_norm + k_diss_CaH2PO4f_norm 
+    
+    # Slow bone PO4
+    dPO4_b <- 1 / Pho_b_norm * (Accretion_P_norm - Resorption_P_norm) 
+    
+    # Intracellular PO4
+    dPO4_c <- Plasma_intra_Flux_norm / Pho_c_norm - Intra_plasma_Flux_norm 
+    
+    # CaHPO4p
+    dCaHPO4_p <- k_form_CaHPO4_norm * Ca_p_norm*HPO4_norm / CaHPO4_norm - 
+                 k_diss_CaHPO4_norm - k_fet_CaHPO4_norm 
+    
+    # Ca(H2PO4)2p
+    dCaH2PO4_p <- k_form_CaH2PO4_norm * Ca_p_norm * H2PO4_norm / CaH2PO4_norm - 
+                  k_diss_CaH2PO4_norm - k_fet_CaH2PO4_norm 
+    
+    # CPP particles
+    dCPP_p <- k_fet_CaHPO4_norm + k_fet_CaH2PO4_norm - CPP_degradation  
+    
+    # CaHPO4 fast pool
+    dCaHPO4_f <- k_form_CaHPO4f_norm * Ca_p_norm * HPO4_norm / CaHPO4_norm - 
+                 k_diss_CaHPO4f_norm 
+    
+    # CaH2PO4 fast pool
+    dCaH2PO4_f <- k_form_CaH2PO4f_norm * Ca_p_norm * H2PO4_norm / CaH2PO4_norm - 
+                  k_diss_CaH2PO4f_norm 
+    
+    # CaProt plasma
+    dCaProt_p <- k_form_CaProt - k_diss_CaProt 
+    
+    # NaPho plasma
+    dNaPO4_p <- k_form_NaPO4 - k_diss_NaPO4 
+    
+    # calcium total
+    dCa_tot <- dCa_p + 1 * dCaHPO4_p + 1 * dCaH2PO4_p + dCaProt_p + 1 * dCPP_p 
+    
+    # phosphate total
+    dPO4_tot <- dPO4_p + 1 * dCaHPO4_p + 1 * dCaH2PO4_p + dNaPO4_p + 1 * dCPP_p 
+    
+    # equation for continuous EGTA injection
+    dEGTA_p <- 1 / Vp * k_inject_egta / EGTA_norm - EGTA_form + EGTA_diss / EGTA_norm 
+    
+    # kinetic of CaEGTA_p complex
+    dCaEGTA_p <- EGTA_form / Ca_EGTA_norm - EGTA_diss 
+    
     
     ##################
     #                #
@@ -265,10 +309,13 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     # return the list of variables as well as fluxes in 
     # another vector
-    list(list(dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, 
-           dPO4_b, dPO4_c, dCaHPO4_p, dCaH2PO4_p, dCPP_p, dCaHPO4_f, dCaH2PO4_f,
-           dCaProt_p, dNaPO4_p, dCa_tot, dPO4_tot, dEGTA_p, dCaEGTA_p), 
-         list(U_Ca = Excretion_norm, # out 24
+    list(
+      list(
+        dPTH_g, dPTH_p, dD3_p, dFGF_p, dCa_p, dCa_f, dCa_b, dPO4_p, dPO4_f, 
+        dPO4_b, dPO4_c, dCaHPO4_p, dCaH2PO4_p, dCPP_p, dCaHPO4_f, dCaH2PO4_f,
+        dCaProt_p, dNaPO4_p, dCa_tot, dPO4_tot, dEGTA_p, dCaEGTA_p
+        ), 
+      list(U_Ca = Excretion_norm, # out 24
            U_PO4 = Excretion_P_norm, 
            Abs_int_Ca = Abs_intest_norm,
            Abs_int_PO4 = Abs_intest_P_norm, 
@@ -298,7 +345,9 @@ calcium_phosphate_core <- function(t, state, parameters) {
            Reabs_DCT_D3 = Reabs_DCT_D3_norm,
            Abs_int_D3 = Abs_intest_D3_norm,
            Res_PTH = Resorption_PTH_norm,
-           Res_D3 = Resorption_D3_norm)) 
+           Res_D3 = Resorption_D3_norm
+           )
+      ) 
     
   })
   

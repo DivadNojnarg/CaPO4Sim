@@ -128,48 +128,48 @@ generate_nodes_Ca <- function(input) {
     fixed = list("x" = TRUE, "y" = TRUE),
     title = c(paste(a("About intestinal Ca absorption", 
                       href = Ca_int_web,
-                      target="_blank"),br(),
+                      target = "_blank"),br(),
                     a("About intestinal PO4 absorption", 
                       href = PO4_int_web,
-                      target="_blank")),
+                      target = "_blank")),
               "",
               paste(a("About rapid bone pool", 
                       href = rapid_bone_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About bone", 
                       href = bone_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About Ca kidney handling", 
                       href = Ca_kidney_web,
-                      target="_blank"), br(),
+                      target = "_blank"), br(),
                     a("About PO4 kidney handling", 
                       href = PO4_kidney_web,
-                      target="_blank")),
+                      target = "_blank")),
               rep("",3),
               paste(a("About Calcium", 
                       href = Ca_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About Phosphate", 
                       href = PO4_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About PTH", 
                       href = PTH_web, 
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About PTH", 
                       href = PTH_web, 
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About vitamin D3", 
                       href = D3_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About vitamin D3", 
                       href = D3_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About vitamin D3", 
                       href = D3_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About FGF23", 
                       href = FGF23_web,
-                      target="_blank"))), # tooltip to display an image
+                      target = "_blank"))), # tooltip to display an image
     x = c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481),
     y = c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452),
     color = list(background = "#97C2FC", border = "#97C2FC", 
@@ -224,20 +224,20 @@ generate_edges_Ca <- function(input) {
     title = c(rep("",3),
               paste(a("About bone formation", 
                       href = ac_web ,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About bone formation", 
                       href = ac_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About bone resorption", 
                       href = res_web,
-                      target="_blank")),
+                      target = "_blank")),
               rep("",6),
               paste(a("About the Calcium Sensing Receptor", 
                       href = CaSR_web,
-                      target="_blank")),
+                      target = "_blank")),
               paste(a("About the Calcium Sensing Receptor", 
                       href = CaSR_web,
-                      target="_blank")),
+                      target = "_blank")),
               rep("",15)),
     smooth = c(rep(TRUE,29)),
     length = c(200,rep(300,2),rep(300,2),200,300,200,rep(300,4),rep(200,17)),
@@ -319,7 +319,7 @@ generate_edges_PTHg <- function() {
     dashes = c(rep(FALSE,3),rep(TRUE,3)),
     smooth = rep(TRUE,6),
     hidden = rep(FALSE,6),
-    stringsAsFactors=FALSE)
+    stringsAsFactors = FALSE)
   
 }
 
@@ -395,7 +395,7 @@ generate_edges_kidney_PT <- function() {
     dashes = rep(TRUE,2),
     smooth = rep(TRUE,2),
     hidden = rep(FALSE,2),
-    stringsAsFactors=FALSE)
+    stringsAsFactors = FALSE)
   
 }
 
@@ -418,7 +418,7 @@ generate_nodes_kidney_TAL <- function() {
                  highlight = list(background = "orange", border = "orange")),
     size = c(10,10,10,10,10), 
     #fixed = list("x" = TRUE, "y" = TRUE),
-    hidden = c(FALSE, FALSE,FALSE,FALSE,FALSE))
+    hidden = c(FALSE,FALSE,FALSE,FALSE,FALSE))
   
 }
 
@@ -440,7 +440,7 @@ generate_edges_kidney_TAL <- function() {
     dashes = rep(TRUE,3),
     smooth = rep(TRUE,3),
     hidden = rep(FALSE,3),
-    stringsAsFactors=FALSE)
+    stringsAsFactors = FALSE)
   
 }
 
@@ -485,7 +485,7 @@ generate_edges_kidney_DCT <- function() {
     dashes = c(rep(TRUE,4), rep(FALSE,3)),
     smooth = rep(TRUE,7),
     hidden = rep(FALSE,7),
-    stringsAsFactors=FALSE)
+    stringsAsFactors = FALSE)
   
 }
 
@@ -521,16 +521,17 @@ generate_edges_intestine <- function() {
     arrows = list(to = list(enabled = TRUE, 
                             scaleFactor = 1, 
                             type = "arrow")),
-    label = c(rep("", 7)),
+    label = c(rep("+", 7)),
     id = 1:7,
     width = 4,
-    font.size = 12,
+    font.size = 25,
+    font.align = c("top","bottom","top","bottom","top","top","bottom"),
     color = list(color = c(rep("black", 7)), 
                  highlight = "yellow"),
     dashes = rep(TRUE,7),
     smooth = rep(TRUE,7),
     hidden = rep(FALSE,7),
-    stringsAsFactors=FALSE)
+    stringsAsFactors = FALSE)
   
 }
 
@@ -566,15 +567,16 @@ generate_edges_bone <- function() {
     arrows = list(to = list(enabled = TRUE, 
                             scaleFactor = 0.3, 
                             type = "arrow")),
-    label = c(rep("", 7)),
+    label = c(rep("+",2),"-",rep("+",4)),
     id = 1:7,
     width = 4,
-    font.size = 12,
+    font.size = 25,
+    font.align = c("bottom","bottom","middle","bottom","top","top","bottom"),
     color = list(color = c(rep("black", 7)), 
                  highlight = "yellow"),
     dashes = rep(TRUE,7),
     smooth = rep(TRUE,7),
     hidden = rep(FALSE,7),
-    stringsAsFactors=FALSE)
+    stringsAsFactors = FALSE)
   
 }
