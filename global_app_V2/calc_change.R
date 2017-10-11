@@ -51,6 +51,13 @@ calc_change <- function(out, t_target) {
   Reabs_DCT_PTH_change <- (out[t_target, "Reabs_DCT_PTH"] - 0.00417)/0.00417*100
   Reabs_DCT_D3_change <- (out[t_target, "Reabs_DCT_D3"] - 0.00108)/0.00108*100
   
+  # change for intest Ca reabs due to D3
+  Abs_int_D3_change <- (out[t_target, "Abs_int_D3"] - 0.000433)/0.000433*100
+  
+  # change for Ca resorption due to PTH and D3
+  Res_PTH_change <- (out[t_target, "Res_PTH"] - 0.0000669)/0.0000669*100
+  Res_D3_change <- (out[t_target, "Res_D3"] - 0.000225)/0.000225*100
+  
   df <- data.frame(Abs_int_change = Abs_int_change, 
                    U_Ca_change = U_Ca_change, 
                    U_PO4_change = U_PO4_change, 
@@ -74,6 +81,9 @@ calc_change <- function(out, t_target) {
                    Reabs_TAL_PTH_change = Reabs_TAL_PTH_change,
                    Reabs_DCT_PTH_change = Reabs_DCT_PTH_change,
                    Reabs_DCT_D3_change = Reabs_DCT_D3_change,
+                   Abs_int_D3_change = Abs_int_D3_change,
+                   Res_PTH_change = Res_PTH_change, # 25
+                   Res_D3_change = Res_D3_change,
                    stringsAsFactors = FALSE)
   
 }

@@ -87,10 +87,20 @@ arrow_lighting <- function(events, edges, network) {
       values = events,
       edges_id = 1
     )
-  } else {
+  } else if (network == "network_kidney_DCT") {
     param_event <- list(
       values = events,
       edges_id = list(1, c(5,6), c(5,6))
+    )
+  } else if (network == "network_intestine") {
+    param_event <- list(
+      values = events,
+      edges_id = list(c(1,2),c(1,2))
+    )
+  } else {
+    param_event <- list(
+      values = events,
+      edges_id = list(1,5,5)
     )
   }
   
@@ -155,8 +165,16 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
     calc_change_t <- round(calc_change(out, t_target)[20:21])
     index <- c(2,3)
     calc_change_t <- rbind(calc_change_t, index)
-  } else {
+  } else if (network == "network_kidney_DCT") {
     calc_change_t <- round(calc_change(out, t_target)[c(rep(22,4), rep(23,3))])
+    index <- c(1:7)
+    calc_change_t <- rbind(calc_change_t, index)
+  } else if (network == "network_intestine") {
+    calc_change_t <- round(calc_change(out, t_target)[rep(24,7)])
+    index <- c(1:7)
+    calc_change_t <- rbind(calc_change_t, index)
+  } else {
+    calc_change_t <- round(calc_change(out, t_target)[c(rep(25,4), rep(26,3))])
     index <- c(1:7)
     calc_change_t <- rbind(calc_change_t, index)
   }

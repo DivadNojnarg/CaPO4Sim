@@ -289,13 +289,16 @@ calcium_phosphate_core <- function(t, state, parameters) {
            PTHg_synth_PO4 = PTHg_synthesis_PO4_norm,
            PTHg_exo_CaSR = F_Ca_norm,
            PTHg_deg = PTHg_degradation_norm,
-           PTHg_exo = PTHg_exocytosis_norm,
+           PTHg_exo = PTHg_exocytosis_norm, # 45
            PTHp_deg = PTHp_degradation_norm,
            Reabs_PT_PTH = Reabs_PT_PTH_norm,
            Reabs_TAL_CaSR = Reabs_TAL_CaSR_norm,
            Reabs_TAL_PTH = Reabs_TAL_PTH_norm,
-           Reabs_DCT_PTH = Reabs_DCT_PTH_norm,
-           Reabs_DCT_D3 = Reabs_DCT_D3_norm)) 
+           Reabs_DCT_PTH = Reabs_DCT_PTH_norm, # 50
+           Reabs_DCT_D3 = Reabs_DCT_D3_norm,
+           Abs_int_D3 = Abs_intest_D3_norm,
+           Res_PTH = Resorption_PTH_norm,
+           Res_D3 = Resorption_D3_norm)) 
     
   })
   

@@ -76,7 +76,7 @@ shinyServer(function(input, output, session) {
   
   output$table <- renderDataTable({ 
     
-    out()[length(out()), 41:43]
+    out()[nrow(out()), 53:54]
     
     })
   
@@ -361,6 +361,8 @@ shinyServer(function(input, output, session) {
                 ;}")
     })
   
+  output$edges_id_intestine <- renderPrint({ input$current_edge_6_id })
+  
   #------------------------------------------------------------------------- 
   #  
   #  The zoom network part: make zoom network Bone
@@ -393,6 +395,8 @@ shinyServer(function(input, output, session) {
                 Shiny.onInputChange('current_edge_7_id', 'null');
                 ;}")
     })
+  
+  output$edges_id_bone <- renderPrint({ input$current_edge_7_id })
   
   #------------------------------------------------------------------------- 
   #  
@@ -482,6 +486,13 @@ shinyServer(function(input, output, session) {
     events_kidney_DCT <- c(input$k_prod_PTHg,
                            input$D3_inact,
                            input$k_deg_D3)
+    
+    events_intestine <- c(input$D3_inact,
+                         input$k_deg_D3)
+    
+    events_bone <- c(input$k_prod_PTHg,
+                    input$D3_inact,
+                    input$k_deg_D3)
 
     out <- out()
     edges_Ca <- edges_Ca()
@@ -489,17 +500,20 @@ shinyServer(function(input, output, session) {
     edges_kidney_PT <- edges_kidney_PT()
     edges_kidney_TAL <- edges_kidney_TAL()
     edges_kidney_DCT <- edges_kidney_DCT()
+    edges_intestine <- edges_intestine()
+    edges_bone <- edges_bone()
     
     # create the list of arguments needed by pmap
     network_list <- list(
-      edges = list(edges_Ca, edges_PTHg, edges_kidney_PT, 
-                edges_kidney_TAL, edges_kidney_DCT),
+      edges = list(edges_Ca, edges_PTHg, edges_kidney_PT, edges_kidney_TAL, 
+                   edges_kidney_DCT, edges_intestine, edges_bone),
       
       network = list("network_Ca", "network_PTH", "network_kidney_PT",
-                "network_kidney_TAL", "network_kidney_DCT"),
+                     "network_kidney_TAL", "network_kidney_DCT", 
+                     "network_intestine", "network_bone"),
       
-      events = list(events, events_PTH, events_kidney_PT,
-                    events_kidney_TAL, events_kidney_DCT))
+      events = list(events, events_PTH, events_kidney_PT, events_kidney_TAL, 
+                    events_kidney_DCT, events_intestine, events_bone))
     
     # apply flux_lighting for all networks using pmap function
     pmap(network_list, flux_lighting, out, t_target())

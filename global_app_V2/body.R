@@ -27,13 +27,13 @@ body <- dashboardBody(
                ),
                data.step = 1,
                data.intro = help_text[1]
-             ),
+             )#,
              # column(6, align = "center",
-             #        verbatimTextOutput("id_tris")
+             #         verbatimTextOutput("edges_id_bone")
              # ),
-             #column(6, align = "center",
-             #       dataTableOutput("table")
-             #)
+             # column(6, align = "center",
+             #        dataTableOutput("table")
+             # )
              #column(6, align ="center",
              #       verbatimTextOutput("node_tris")
              #),
@@ -46,12 +46,12 @@ body <- dashboardBody(
              # column(6, align ="center",
              #        verbatimTextOutput("id_tris")
              # ),
-             column(6, align ="center",
-                    verbatimTextOutput("position")
-             ),
-             column(6, align ="center",
-                    verbatimTextOutput("viewposition")
-             )
+             # column(6, align ="center",
+             #        verbatimTextOutput("position")
+             # ),
+             # column(6, align ="center",
+             #        verbatimTextOutput("viewposition")
+             # )
              # column(12,
              #        verbatimTextOutput("test")
              # )
