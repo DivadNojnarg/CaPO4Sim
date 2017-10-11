@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------- 
-#  This codes contains all network skeleton for CaPO4, PTH, ...
+#  This codes contains all network skeletons for CaPO4, PTH, ...
 #  For each network, we define two dataframe: node contains all informations
 #  related to nodes and edges to edges...
 #
@@ -12,7 +12,48 @@
 #                  #
 # % % % % % % % %  #
 
-# This function is used to generate a graph as well
+# This function wrap the generate_network function to
+# build all the networks needed for this app
+# Its takes nodes, edges, physics as well as the number
+# of networks to build, namely n_networks
+# For instance there are 8 networks
+
+all_networks <- list(
+  names = c("Ca","PTHg","kidney_zoom2","kidney_PT",
+           "kidney_TAL","kidney_DCT","intestine","bone"),
+  nodes = c("nodes_Ca","nodes_PTHg","nodes_kidney_zoom2","nodes_kidney_PT",
+            "nodes_kidney_TAL","nodes_kidney_DCT","nodes_intestine","nodes_bone"),
+  edges = c("edges_Ca","edges_PTHg","edges_kidney_zoom2","edges_kidney_PT",
+            "edges_kidney_TAL","edges_kidney_DCT","edges_intestine","edges_bone"),
+  generate_nodes = c(),
+  generate_edges = c()
+  )
+
+build_all_networks <- function(nodes, edges, usephysics = FALSE, 
+                               n_network = all_networks) {
+  for (i in seq_along(all_networks$nodes)) {
+    if (str_detect(string = all_networks$nodes[i], pattern = "Ca") == TRUE) {
+     parse(text = all_networks[i]) <- reactive({ 
+       generate_node_parse(text = all_networks[i])(input)
+       })
+     
+     edges_parse(text = all_networks[i]) <- reactive({
+       generate_edge_parse(text = all_networks[i])(input)
+     })
+    } else {
+      nodes_parse(text = all_networks[i]) <- reactive({ 
+        generate_node_parse(text = all_networks[i])()
+      })
+      
+      edges_parse(text = all_networks[i]) <- reactive({
+        generate_edge_parse(text = all_networks[i])()
+      })
+    }
+    
+  }
+}
+
+# This function is used to generate a network as well
 # as basic options such as physics, manipulations,
 # selection
 
@@ -37,7 +78,7 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
                    hoverConnectedEdges = FALSE, 
                    selectConnectedEdges = FALSE, 
                    multiselect = FALSE, 
-                   dragNodes = FALSE, 
+                   dragNodes = TRUE, 
                    dragView = FALSE, 
                    zoomView = FALSE,
                    navigationButtons = FALSE,
@@ -461,8 +502,8 @@ generate_nodes_intestine <- function() {
     id = 1:9,
     shape = c(rep("text",9)), 
     label = c(rep("",9)),
-    x = c(280,177,139,210,226,86,60,29,51), 
-    y = c(377,382,323,284,316,322,253,298,381), 
+    x = c(263,165,142,206,206,83,55,31,59), 
+    y = c(358,357,264,238,295,263,186,249,307), 
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
     size = c(rep(10,9)), 
@@ -499,31 +540,31 @@ generate_edges_intestine <- function() {
 #                    #
 # % % % % % % % % %  #
 
-# generate intestine nodes
+# generate bone nodes
 generate_nodes_bone <- function() {
   
   data.frame(
-    id = 1:9,
-    shape = c(rep("text",9)), 
-    label = c(rep("",9)),
-    x = c(-178,-138,-156,-139,-127,-76,-65,-40,-38), 
-    y = c(22,61,-50,-31,-8,17,86,183,-28), 
+    id = 1:11,
+    shape = c(rep("text",11)), 
+    label = c(rep("",11)),
+    x = c(-188,-179,-145,-168,-144,-119,-58,-61,-36,-20,-51), 
+    y = c(49,112,112,5,17,27,37,121,200,-10,123), 
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
-    size = c(rep(10,9)), 
+    size = c(rep(10,11)), 
     #fixed = list("x" = TRUE, "y" = TRUE),
-    hidden = rep(FALSE,9))
+    hidden = rep(FALSE,11))
   
 }
 
-# generate intestine edges
+# generate bone edges
 generate_edges_bone <- function() {
   
   data.frame(
-    from = c(1,rep(2,3),6,7,8), 
-    to = c(2,3,4,5,7,9,9),
+    from = c(1,rep(3,3),7,9,11), 
+    to = c(2,4,5,6,8,rep(10,2)),
     arrows = list(to = list(enabled = TRUE, 
-                            scaleFactor = 1, 
+                            scaleFactor = 0.3, 
                             type = "arrow")),
     label = c(rep("", 7)),
     id = 1:7,

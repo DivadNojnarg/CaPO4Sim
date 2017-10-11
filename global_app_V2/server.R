@@ -132,8 +132,8 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  The zoom network part: make zoom network of CaPO4 homeostasis
-  #  PTHg network
+  # 
+  #   The zoom network part: make zoom network of PTHg network
   #  
   #
   #-------------------------------------------------------------------------
@@ -168,12 +168,12 @@ shinyServer(function(input, output, session) {
   # node coordinates
   # useful when developing to return x and y position
   output$position <- renderPrint( vals$coords ) 
-  vals <- reactiveValues(coords=NULL, viewposition = NULL)
+  vals <- reactiveValues(coords = NULL, viewposition = NULL)
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_bone") %>% visGetPositions()
-    vals$coords <- if (!is.null(input$network_bone_positions)) 
-      do.call(rbind, input$network_bone_positions)
+    visNetworkProxy("network_intestine") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_intestine_positions)) 
+      do.call(rbind, input$network_intestine_positions)
   })
   
   # view position (of the camera)
@@ -181,16 +181,15 @@ shinyServer(function(input, output, session) {
   output$viewposition <- renderPrint({ vals$viewposition })
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_bone") %>% visGetViewPosition()
-    vals$viewposition <- if (!is.null(input$network_bone_viewPosition))
-      do.call(rbind, input$network_bone_viewPosition)
+    visNetworkProxy("network_intestine") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_intestine_viewPosition))
+      do.call(rbind, input$network_intestine_viewPosition)
     
   })
   
   #------------------------------------------------------------------------- 
   #  
-  #  The zoom network part: make zoom network kidney_zoom2
-  #  nephron containing PT, TAL and DCT
+  #  The zoom network part: nephron containing PT, TAL and DCT
   #
   #-------------------------------------------------------------------------
   
