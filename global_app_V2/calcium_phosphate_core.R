@@ -130,7 +130,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     Reabs_TAL_basal <- lambda_TAL_0
     Reabs_TAL_CaSR_norm <- delta_CaSR_max / (1 + (Ca_p * Ca_p_norm / Ca_ref)^n_TAL)
-    Reabs_TAL_PTH_norm <- delta_PTH_max*PTH_p / (PTH_p + K_TAL_PTH / PTH_p_norm)
+    Reabs_TAL_PTH_norm <- delta_PTH_max * PTH_p / (PTH_p + K_TAL_PTH / PTH_p_norm)
     
     Reabs_DCT_basal <- lambda_DCT_0
     Reabs_DCT_PTH_norm <- (delta_DCT_max * 0.8 * PTH_p) / 

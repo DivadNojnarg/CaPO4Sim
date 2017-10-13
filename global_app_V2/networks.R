@@ -207,8 +207,8 @@ generate_edges_Ca <- function(input) {
                             scaleFactor = 1, 
                             type = "arrow")),
     
-    label = c("","Net Flux","","Ca","PO4",rep("",2),"Ca","PO4",
-              "Ca","PO4", "Net Flux",rep("-",3),"+","-","+",
+    label = c("","Net Ca","Net PO4","Ca","PO4",rep("",2),"Ca","PO4",
+              "Ca","PO4", "Net PO4",rep("-",3),"+","-","+",
               "","+","+","-","+","-","-","+","+","-","-"),
     id = c("Abs_int","Net_Ca_pf","Net_PO4_pf","Ac_Ca","Ac_PO4","Res",7,"Reabs_Ca",
            "Reabs_PO4","U_Ca","U_PO4","Net_PO4_cells",13:29),

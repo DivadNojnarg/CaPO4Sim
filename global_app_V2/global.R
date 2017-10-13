@@ -216,6 +216,14 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
            edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
            edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
     
+  } else if (network == "network_kidney_DCT" | network == "network_bone") {
+    ifelse(param_event_values[3] == 1,
+           edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
+           edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
+  } else if (network == "network_intestine") {
+    ifelse(param_event_values[2] == 1,
+           edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2),
+           edges$width[edges_id_network] <- ifelse(param_event_values[event_target] < 1, 12, 2))
   } else {
     edges$width[edges_id_network] <- ifelse(param_event_values[event_target] > 1, 12, 2)
   }
@@ -224,6 +232,7 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
   visNetworkProxy(network) %>% 
     visSetSelection(edgesId = edges_id_network) %>%
     visUpdateEdges(edges = edges)
+
 }
 
 

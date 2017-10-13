@@ -76,7 +76,7 @@ shinyServer(function(input, output, session) {
   
   output$table <- renderDataTable({ 
     
-    out()[nrow(out()), 53:54]
+    out()[nrow(out()), 26:27]
     
     })
   

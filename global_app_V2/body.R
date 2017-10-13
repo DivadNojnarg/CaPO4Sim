@@ -31,9 +31,9 @@ body <- dashboardBody(
              # column(6, align = "center",
              #         verbatimTextOutput("edges_id_bone")
              # ),
-             # column(6, align = "center",
+             #column(6, align = "center",
              #        dataTableOutput("table")
-             # )
+             #)
              #column(6, align ="center",
              #       verbatimTextOutput("node_tris")
              #),
