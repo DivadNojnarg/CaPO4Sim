@@ -119,10 +119,31 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:0, y:-13.43},
                 offset: {x: 0, y:0} })}") %>% 
+      # very important: allow to detect the web browser used by client
+      # use before drawing the network. Works with find_navigator.js
+      visEvents(type = "on", beforeDrawing = "function() {
+                Shiny.onInputChange('browser', navigator.sayswho);
+                ;}") %>%
       visEvents(type = "once", startStabilizing = "function() {
                 this.moveTo({scale:2})}") # to set the initial zoom (1 by default)
     
   })
+  
+  observeEvent(input$browser, {
+    
+    if (str_detect(input$browser, "Firefox")) {
+    nodes_Ca <- nodes_Ca()
+    nodes_Ca$image <- c("intestine.png","plasma.png","rapid-bone.png",
+                        "bone.png","kidney.png","kidney_zoom1.png","urine.png",
+                        "cells.png","Cap.png","PO4.png","parathyroid_gland.png",
+                        "PTH.png","D3.png","D3.png","D3.png","FGF23.png")
+    
+    visNetworkProxy("network_Ca") %>%
+      visUpdateNodes(nodes = nodes_Ca)
+    }
+  })
+  
+  output$browser <- renderPrint({input$browser})
   
   output$id <- renderPrint({ input$current_edge_id })
   output$id_bis <- renderPrint({ input$current_node_id })

@@ -22,6 +22,7 @@ library(bsplus)
 library(sweetalertR)
 library(rintrojs)
 library(purrr)
+library(stringr)
 
 # Load the template components of UI
 source("header.R")

@@ -83,8 +83,10 @@ shinyUI(fluidPage(
                     "))
   ),
   
+  # include the script for Hotjar tracking
   tags$head(includeScript("www/hotjar.js")),
-  
+  # include the script needed to find the web browser
+  tags$head(includeScript("www/find_navigator.js")),
   
   # to print help
   introjsUI(),

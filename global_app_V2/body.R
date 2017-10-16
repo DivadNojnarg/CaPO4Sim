@@ -27,7 +27,10 @@ body <- dashboardBody(
                ),
                data.step = 1,
                data.intro = help_text[1]
-             )#,
+             ),
+             column(6, align = "center",
+                     verbatimTextOutput("browser")
+             )
              # column(6, align = "center",
              #         verbatimTextOutput("edges_id_bone")
              # ),
