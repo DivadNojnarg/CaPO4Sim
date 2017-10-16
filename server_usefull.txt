@@ -58,3 +58,9 @@ devtools::install_github("carlganz/rintrojs")
 ########### Server Willy Virtual Kidney ##############
 scp -r /Users/macdavidgranjon/Desktop/WebGLBuild/* ubuntu@172.23.172.211:/srv/shiny-server/WebGLBuild
 sudo chown -R ubuntu:ubuntu /srv/shiny-server/WebGLBuild
+
+
+########### Use Microsoft remote desktop ############
+connection names: rds_vartan
+pc name: srv30001.physiol.win2000.unizh.ch
+user name: dgranj

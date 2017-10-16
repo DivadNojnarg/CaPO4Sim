@@ -22,7 +22,7 @@ shinyUI(fluidPage(
   tags$head(
     tags$style(HTML("
                     #networkPTH{
-                      background-image:url('parathyroid_gland_zoom.pdf');
+                      background-image:url('parathyroid_gland_zoom.png');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;
                       background-position: center center;
@@ -36,35 +36,35 @@ shinyUI(fluidPage(
                     }
 
                     #networkkidney_PT{
-                      background-image:url('kidney_PT_zoom.pdf');
+                      background-image:url('kidney_PT_zoom.png');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;
                       background-position: center center;
                     }
 
                     #networkkidney_TAL{
-                      background-image:url('kidney_TAL_zoom.pdf');
+                      background-image:url('kidney_TAL_zoom.png');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;
                       background-position: center center;
                     }
 
                     #networkkidney_DCT{
-                      background-image:url('kidney_DCT_zoom.pdf');
+                      background-image:url('kidney_DCT_zoom.png');
                     background-size: 100% 100%;
                     background-repeat: no-repeat;
                     background-position: center center;
                     }
 
                     #networkintestine{
-                      background-image:url('intestine_zoom.pdf');
+                      background-image:url('intestine_zoom.png');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;
                       background-position: center center;
                     }
 
                     #networkbone{
-                      background-image:url('bone_zoom.pdf');
+                      background-image:url('bone_zoom.png');
                       background-size: 100% 100%;
                       background-repeat: no-repeat;
                       background-position: center center;
