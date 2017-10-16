@@ -46,10 +46,10 @@ body <- dashboardBody(
              # column(6, align ="center",
              #        verbatimTextOutput("id_tris")
              # ),
-             # column(6, align ="center",
+             # column(6, align = "center",
              #        verbatimTextOutput("position")
              # ),
-             # column(6, align ="center",
+             # column(6, align = "center",
              #        verbatimTextOutput("viewposition")
              # )
              # column(12,

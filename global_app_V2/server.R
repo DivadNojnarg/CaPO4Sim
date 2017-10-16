@@ -116,7 +116,7 @@ shinyServer(function(input, output, session) {
                 Shiny.onInputChange('current_edge_id', edges.edges);
                 ;}") %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:0, y:-13.43},
                 offset: {x: 0, y:0} })}") %>% 
       visEvents(type = "once", startStabilizing = "function() {
@@ -155,7 +155,7 @@ shinyServer(function(input, output, session) {
                 Shiny.onInputChange('current_edge_bis_id', 'null');
                 ;}") %>% 
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:2.5, y:-2.5},
                 offset: {x: 0, y:0} })}")
     
@@ -171,9 +171,9 @@ shinyServer(function(input, output, session) {
   vals <- reactiveValues(coords = NULL, viewposition = NULL)
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_intestine") %>% visGetPositions()
-    vals$coords <- if (!is.null(input$network_intestine_positions)) 
-      do.call(rbind, input$network_intestine_positions)
+    visNetworkProxy("network_PTH") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_PTH_positions)) 
+      do.call(rbind, input$network_PTH_positions)
   })
   
   # view position (of the camera)
@@ -181,9 +181,9 @@ shinyServer(function(input, output, session) {
   output$viewposition <- renderPrint({ vals$viewposition })
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_intestine") %>% visGetViewPosition()
-    vals$viewposition <- if (!is.null(input$network_intestine_viewPosition))
-      do.call(rbind, input$network_intestine_viewPosition)
+    visNetworkProxy("network_PTH") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_PTH_viewPosition))
+      do.call(rbind, input$network_PTH_viewPosition)
     
   })
   
@@ -207,7 +207,7 @@ shinyServer(function(input, output, session) {
     
     generate_network(nodes = nodes_kidney_zoom2, edges = edges_kidney_zoom2) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:-28.8, y:-2.34},
                 offset: {x: 0, y:0} })}") %>%
       visEvents(doubleClick = "function(nodes) {
@@ -243,7 +243,7 @@ shinyServer(function(input, output, session) {
     
     generate_network(nodes = nodes_kidney_PT, edges = edges_kidney_PT) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:-28.8, y:-2.34},
                 offset: {x: 0, y:0} })}") %>%
       visEvents(selectEdge = "function(edges) {
@@ -278,7 +278,7 @@ shinyServer(function(input, output, session) {
     
     generate_network(nodes = nodes_kidney_TAL, edges = edges_kidney_TAL) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:-13, y:-29},
                 offset: {x: 0, y:0} })}") %>%
       visEvents(selectEdge = "function(edges) {
@@ -314,7 +314,7 @@ shinyServer(function(input, output, session) {
     
     generate_network(nodes = nodes_kidney_DCT, edges = edges_kidney_DCT) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:-13, y:-29},
                 offset: {x: 0, y:0} })}") %>%
       visEvents(selectEdge = "function(edges) {
@@ -349,7 +349,7 @@ shinyServer(function(input, output, session) {
     
     generate_network(nodes = nodes_intestine, edges = edges_intestine) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:97.5, y:201.0},
                 offset: {x: 0, y:0} })}") %>%
       visEvents(selectEdge = "function(edges) {
@@ -384,7 +384,7 @@ shinyServer(function(input, output, session) {
     
     generate_network(nodes = nodes_bone, edges = edges_bone) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "once", afterDrawing = "function() {
+      visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:-7.1, y:27.8},
                 offset: {x: 0, y:0} })}") %>%
       visEvents(selectEdge = "function(edges) {
