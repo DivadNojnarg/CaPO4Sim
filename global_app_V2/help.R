@@ -28,6 +28,10 @@ help_text <- c("In this panel is displayed the interactive network (see legend).
                To reset the value of a slider, click on the reset button on the 
                right side of the slider.",
                
+               "In this navbar, you can print help, choose your network,
+               show regulations or not in the network, display the background and
+               control a lot of other options",
+               
                "Select edges specific to Ca or PO4 homeostasis.",
                
                "Remove or allow the display of hormonal regulation in the graph",

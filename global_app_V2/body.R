@@ -13,9 +13,9 @@ source("help.R")
 body <- dashboardBody(
 
   fluidRow(
-    column(width = 6, offset = 0, style='padding:0px;',
+    column(width = 6, offset = 0, style = 'padding:0px;',
            box(
-             id = "boxinfo", width = 12,
+             id = "boxinfo", width = 12, solidHeader = TRUE,
         
              introBox(
                div(id = "network_cap",
@@ -27,10 +27,10 @@ body <- dashboardBody(
                ),
                data.step = 1,
                data.intro = help_text[1]
-             ),
-             column(6, align = "center",
-                     verbatimTextOutput("browser")
-             )
+             )#,
+             #column(6, align = "center",
+             #        verbatimTextOutput("browser")
+             #)
              # column(6, align = "center",
              #         verbatimTextOutput("edges_id_bone")
              # ),
@@ -70,6 +70,7 @@ body <- dashboardBody(
              id = "tabset1",
              width = 12,
              collapsible = TRUE,
+             solidHeader = TRUE,
              
              column(6, align = "center", offset = 0, style='padding:0px;',
                     
@@ -98,9 +99,10 @@ body <- dashboardBody(
            div(id = "boxinput", # values to be reset if needed
                box(
                  width = 12,
-                 title = header_box_network,
+                 #title = header_box_network,
+                 solidHeader = TRUE,
                  
-                 column(8, align="left", offset = 0, style='padding:0px;',
+                 column(8, align = "left", offset = 0, style = 'padding:0px;',
                         
                         conditionalPanel(
                           condition = "input.current_node_bis_id == null",
@@ -111,8 +113,10 @@ body <- dashboardBody(
                         
                         introBox(
                           # the PTH zoom graph
+                          # this panel is also shown when help button is clicked
                           conditionalPanel(
-                            condition = "input.current_node_bis_id == 11",
+                            condition = "input.current_node_bis_id == 11 ||
+                                         input.notif_switch",
                             
                             div(id = "networkPTH",
                                 visNetworkOutput("network_PTH", height = "400px")
@@ -194,14 +198,16 @@ body <- dashboardBody(
                  ),
                  
                  # Parameter sliders
-                 column(4, align = "right", offset = 0, style='padding:0px;',
+                 column(4, align = "right", offset = 0, style = 'padding:0px;',
                         introBox(
                           # PTH parameters, help is added beside each slider with tooltip
+                          # this slider can also be seen when help button is clicked
                           conditionalPanel(
                             
                             condition = "input.current_edge_bis_id != 'null' && 
                                          input.current_edge_bis_id == 1 && 
-                                         input.current_node_bis_id == 11",
+                                         input.current_node_bis_id == 11 ||
+                                         input.notif_switch",
                             
                             sliderInput("k_prod_PTHg", 
                                         "PTH synthesis rate constant (μmol/min)",
@@ -211,9 +217,9 @@ body <- dashboardBody(
                                         step = 1) %>%
                               shinyInput_label_embed(
                                 icon("undo") %>%
-                                  actionBttn(inputId="resetPTHsynthesis",
-                                             label="", 
-                                             color="danger", 
+                                  actionBttn(inputId = "resetPTHsynthesis",
+                                             label = "", 
+                                             color = "danger", 
                                              size = "xs"))
                           ),
                           
@@ -232,9 +238,9 @@ body <- dashboardBody(
                                         step = 0.1) %>%
                               shinyInput_label_embed(
                                 icon("undo") %>%
-                                  actionBttn(inputId="resetPTHexocytosis",
-                                             label="", 
-                                             color="danger", 
+                                  actionBttn(inputId = "resetPTHexocytosis",
+                                             label = "", 
+                                             color = "danger", 
                                              size = "xs")),
                             
                             # generate the alert when beta_exo_PTHg may crash the solver
@@ -257,9 +263,9 @@ body <- dashboardBody(
                                         step = 0.1) %>%
                               shinyInput_label_embed(
                                 icon("undo") %>%
-                                  actionBttn(inputId="resetPTHexocytosisinhib",
-                                             label="", 
-                                             color="danger", 
+                                  actionBttn(inputId = "resetPTHexocytosisinhib",
+                                             label = "", 
+                                             color = "danger", 
                                              size = "xs"))
                             
                           ),
@@ -279,9 +285,9 @@ body <- dashboardBody(
                                                step = 1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetD3inact",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetD3inact",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(12, align = "center",            
@@ -294,9 +300,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetD3deg",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetD3deg",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             )
                             
@@ -315,9 +321,9 @@ body <- dashboardBody(
                                         step = 0.1) %>%
                               shinyInput_label_embed(
                                 icon("undo") %>%
-                                  actionBttn(inputId="resetFGFsynth",
-                                             label="", 
-                                             color="danger", 
+                                  actionBttn(inputId = "resetFGFsynth",
+                                             label = "", 
+                                             color = "danger", 
                                              size = "xs"))
                           ),
                           
@@ -335,9 +341,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetCaintake",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetCaintake",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(12, align = "center", 
@@ -349,9 +355,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetPintake",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetPintake",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             )
                           ),
@@ -371,9 +377,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetkpCa",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetkpCa",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(6, align = "center",             
@@ -386,9 +392,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetkfCa",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetkfCa",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(6, align = "center",           
@@ -401,9 +407,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetkpP",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetkpP",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(6, align = "center",           
@@ -416,9 +422,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetkfP",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetkfP",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             )
                           ),
@@ -435,9 +441,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetacCa",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetacCa",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(12, align = "center",            
@@ -449,9 +455,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetresmin",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetresmin",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(12, align = "center",            
@@ -463,9 +469,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetresmax",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetresmax",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             )
                             
@@ -486,9 +492,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetkpc",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetkpc",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             ),
                             column(12, align = "center",            
@@ -501,9 +507,9 @@ body <- dashboardBody(
                                                step = 0.1) %>%
                                      shinyInput_label_embed(
                                        icon("undo") %>%
-                                         actionBttn(inputId="resetkcp",
-                                                    label="", 
-                                                    color="danger", 
+                                         actionBttn(inputId = "resetkcp",
+                                                    label = "", 
+                                                    color = "danger", 
                                                     size = "xs"))
                             )
                             

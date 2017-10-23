@@ -90,14 +90,14 @@ shinyUI(fluidPage(
   
   # to print help
   introjsUI(),
-  # to move graphs and resize them
+  # JS interactions
   useShinyjs(),
-  withMathJax(), 
   
   # Application theme
-  theme = shinytheme("yeti"),
-
+  theme = shinytheme("journal"),
+  
   # include a dashboard
+  header_box_network,
   dashboardPage(skin = "black", header, sidebar, body)
   
 ))

@@ -23,10 +23,11 @@ library(sweetalertR)
 library(rintrojs)
 library(purrr)
 library(stringr)
+library(shinyMenus)
 
 # Load the template components of UI
 source("header.R")
-source("header_box_network.R")
+source("navbar.R")
 source("sidebar.R")
 source("body.R")
 

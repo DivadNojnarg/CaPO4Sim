@@ -129,11 +129,12 @@ shinyServer(function(input, output, session) {
     
   })
   
+  # Handle Firefox images
   observeEvent(input$browser, {
     
     if (str_detect(input$browser, "Firefox")) {
     nodes_Ca <- nodes_Ca()
-    nodes_Ca$image <- c("intestine.png","plasma.png","rapid-bone.png",
+    nodes_Ca$image <- c("intestine.png","plasma.png","rapid-bone.jpeg",
                         "bone.png","kidney.png","kidney_zoom1.png","urine.png",
                         "cells.png","Cap.png","PO4.png","parathyroid_gland.png",
                         "PTH.png","D3.png","D3.png","D3.png","FGF23.png")
@@ -141,6 +142,7 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_Ca") %>%
       visUpdateNodes(nodes = nodes_Ca)
     }
+    
   })
   
   output$browser <- renderPrint({input$browser})
@@ -192,9 +194,9 @@ shinyServer(function(input, output, session) {
   vals <- reactiveValues(coords = NULL, viewposition = NULL)
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_PTH") %>% visGetPositions()
-    vals$coords <- if (!is.null(input$network_PTH_positions)) 
-      do.call(rbind, input$network_PTH_positions)
+    visNetworkProxy("network_kidney_TAL") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_kidney_TAL_positions)) 
+      do.call(rbind, input$network_kidney_TAL_positions)
   })
   
   # view position (of the camera)
@@ -202,9 +204,9 @@ shinyServer(function(input, output, session) {
   output$viewposition <- renderPrint({ vals$viewposition })
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_PTH") %>% visGetViewPosition()
-    vals$viewposition <- if (!is.null(input$network_PTH_viewPosition))
-      do.call(rbind, input$network_PTH_viewPosition)
+    visNetworkProxy("network_kidney_TAL") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_kidney_TAL_viewPosition))
+      do.call(rbind, input$network_kidney_TAL_viewPosition)
     
   })
   
