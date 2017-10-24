@@ -20,19 +20,19 @@ shinyServer(function(input, output, session) {
   out <- reactive({
     
     if (input$run_Ca_inject == "TRUE") { # IV Ca injection followed by EGTA infusion
-      times <- seq(0,input$tmax,by=1)
+      times <- seq(0,input$tmax,by = 1)
       out <- as.data.frame(ode(y = state, 
                                times = times, 
                                func = calcium_phosphate_Caiv, 
                                parms = parameters))
     } else if (input$run_PO4_inject == "TRUE") { # PO4 injection 
-      times <- seq(0,input$tmaxbis,by=1) 
+      times <- seq(0,input$tmaxbis,by = 1) 
       out <- as.data.frame(ode(y = state, 
                                times = times, 
                                func = calcium_phosphate_PO4iv, 
                                parms = parameters))
     } else if (input$run_PO4_gav == "TRUE") { # PO4 gavage
-      times <- seq(0,input$tmaxtris,by=1)
+      times <- seq(0,input$tmaxtris,by = 1)
       out <- as.data.frame(ode(y = state, 
                                times = times, 
                                func = calcium_phosphate_PO4gav, 
@@ -51,8 +51,8 @@ shinyServer(function(input, output, session) {
   
   # Generate the CaP Graph network
   
-  nodes_Ca <- reactive({ generate_nodes_Ca(input) })
-  edges_Ca <- reactive({ generate_edges_Ca(input) })
+  nodes_Ca <- reactive({generate_nodes_Ca(input)})
+  edges_Ca <- reactive({generate_edges_Ca(input)})
   
   # Generate the output of the Ca graph to be used in body
   
@@ -91,13 +91,13 @@ shinyServer(function(input, output, session) {
     
     })
   
-  # output$id <- renderPrint({
-  #   input$current_edge_id
-  # })
-  # 
-  # output$id_bis <- renderPrint({
-  #   input$current_node_id
-  # })
+  output$id <- renderPrint({
+    input$current_edge_id
+  })
+
+  output$id_bis <- renderPrint({
+    input$current_node_id
+  })
   
   #-------------------------------------------------------------------------
   #
@@ -108,35 +108,25 @@ shinyServer(function(input, output, session) {
   # create a navigation counter to trigger sequential graph animation
   counter_nav <- reactiveValues(diagram = 0) 
 
-  observeEvent(input$back1,{ # counter decrease
-
+  observeEvent(input$back1,{# counter decrease
     if (counter_nav$diagram == 0) {
-
     } else {counter_nav$diagram <- counter_nav$diagram - 1}
-
   })
 
-  observeEvent(input$next1,{ # counter incrementation
-
+  observeEvent(input$next1,{# counter incrementation
       counter_nav$diagram <- counter_nav$diagram + 1
-
   })
 
-  observeEvent(input$next1,{ # reset the counter if higher than 5
-
-    if (counter_nav$diagram > 5) {
-
+  
+  observeEvent(input$next1,{# reset the counter if higher than 5
+    if (counter_nav$diagram > 6) {
       counter_nav$diagram <- 0
-
       edges_Ca <- edges_Ca()
-
       edges_Ca$color <- "black"
       edges_Ca$witdh <- 4
       visNetworkProxy("network_Ca", session) %>%  # then reset the graph
         visUpdateEdges(edges = edges_Ca)
-
     }
-
   })
   
   output$counter_nav <- renderPrint({counter_nav$diagram}) 
@@ -625,29 +615,29 @@ shinyServer(function(input, output, session) {
                                showlegend = F) %>%
         add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"PO4_p"]/php1_table[1,"PO4_p"], 
                   line = list(color = 'rgb(244, 27, 27)', width = 2), showlegend = F) %>%
-        add_annotations(x= 400, y= 2.6, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = T) %>%
-        add_annotations(x= 400, y= 0.3, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = T) %>%
+        add_annotations(x = 400, y = 2.6, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = T) %>%
+        add_annotations(x = 400, y = 0.3, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = T) %>%
         layout(xaxis = NULL, yaxis = yvar1)
       
       plot_hormones_php1 <- plot_ly(php1_table, x = php1_vec/php1_vec[1], 
                                     y = php1_table[,"PTH_p"]/php1_table[1,"PTH_p"],
                                     type = "scatter", mode = "lines", 
                                     line = list(color = 'black', width = 2, dash = "dash"), 
-                                    showlegend = F)%>%
+                                    showlegend = F) %>%
         add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"D3_p"]/php1_table[1,"D3_p"], 
                   line = list(color = 'black', width = 2, dash = "dot"), showlegend = F) %>%
         add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"FGF_p"]/php1_table[1,"FGF_p"], 
                   line = list(color = 'black', width = 2, dash = "solid"), showlegend = F) %>%
-        add_annotations(x= 200, y= 5.2, xref = "x2", yref = "y2", text = "<b>[PTH]p</b>", showarrow = T, ax = 20, ay = 25) %>%
-        add_annotations(x= 400, y= 10, xref = "x2", yref = "y2", text = "<b>[D3]p</b>", showarrow = T) %>%
-        add_annotations(x= 600, y= 2, xref = "x2", yref = "y2", text = "<b>[FGF23]p</b>", showarrow = T) %>%
+        add_annotations(x = 200, y = 5.2, xref = "x2", yref = "y2", text = "<b>[PTH]p</b>", showarrow = T, ax = 20, ay = 25) %>%
+        add_annotations(x = 400, y = 10, xref = "x2", yref = "y2", text = "<b>[D3]p</b>", showarrow = T) %>%
+        add_annotations(x = 600, y = 2, xref = "x2", yref = "y2", text = "<b>[FGF23]p</b>", showarrow = T) %>%
         layout(xaxis = NULL, yaxis = yvar2)
       
       plot_Ca_fluxes_php1 <- plot_ly(php1_table, x = php1_vec/php1_vec[1], 
                                      y = php1_table[,"U_Ca"]/php1_table[1,"U_Ca"],
                                      type = "scatter", mode = "lines", 
                                      line = list(color = 'black', width = 2, dash = "dash"), 
-                                     showlegend = F)%>%
+                                     showlegend = F) %>%
         add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Abs_int_Ca"]/php1_table[1,"Abs_int_Ca"], 
                   line = list(color = 'black', width = 2, dash = "dot"), showlegend = F) %>%
         add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Res_Ca"]/php1_table[1,"Res_Ca"], 
@@ -660,7 +650,7 @@ shinyServer(function(input, output, session) {
                                       y = php1_table[,"U_PO4"]/php1_table[1,"U_PO4"],
                                       type = "scatter", mode = "lines", 
                                       line = list(color = 'black', width = 2, dash = "dash"), 
-                                      name = "Urinary Excretion")%>%
+                                      name = "Urinary Excretion") %>%
         add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Abs_int_PO4"]/php1_table[1,"Abs_int_PO4"], 
                   line = list(color = 'black', width = 2, dash = "dot"), 
                   name = "Intestinal absorption") %>%
@@ -699,10 +689,10 @@ shinyServer(function(input, output, session) {
       xvar <- list(title = "D3_inact fold decrease", 
                    range = c(max(hypoD3_vec/hypoD3_vec[1]), 
                              min(hypoD3_vec)/hypoD3_vec[1]),
-                   autorange = F, autorange="reversed")
+                   autorange = F, autorange = "reversed")
       xvar_bis <- list(title = "", range = c(max(hypopara_vec/hypopara_vec[1]), 
                                              min(hypopara_vec)/hypopara_vec[1]),
-                       autorange = F, autorange="reversed")
+                       autorange = F, autorange = "reversed")
       yvar1 <- list(title = "Normalized concentrations", range = c(0, 1.1))
       yvar2 <- list(title = "Normalized concentrations", range = c(0,4))
       yvar3 <- list(title = "Normalized Ca fluxes", range = c(0,1.2))
@@ -715,9 +705,9 @@ shinyServer(function(input, output, session) {
                                  showlegend = F) %>%
         add_lines(x = hypoD3_vec/hypoD3_vec[1], y = hypoD3_table[,"PO4_p"]/hypoD3_table[1,"PO4_p"], 
                   line = list(color = 'rgb(244, 27, 27)', width = 2), showlegend = F) %>%
-        add_annotations(x= 0.7, y= 0.95, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", 
+        add_annotations(x = 0.7, y = 0.95, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", 
                         showarrow = T, ax = -20, ay = 40) %>%
-        add_annotations(x= 0.4, y= 1.1, xref = "x", yref = "y",text = "<b>[PO4]p</b>", 
+        add_annotations(x = 0.4, y = 1.1, xref = "x", yref = "y",text = "<b>[PO4]p</b>", 
                         showarrow = T, ax = -20, ay = -20) %>%
         layout(xaxis = xvar_bis, yaxis = yvar1)
       
@@ -725,14 +715,14 @@ shinyServer(function(input, output, session) {
                                       y = hypoD3_table[,"PTH_p"]/hypoD3_table[1,"PTH_p"],
                                       type = "scatter", mode = "lines", 
                                       line = list(color = 'black', width = 2, dash = "dash"), 
-                                      showlegend = F)%>%
+                                      showlegend = F) %>%
         add_lines(x = hypoD3_vec/hypoD3_vec[1], y = hypoD3_table[,"D3_p"]/hypoD3_table[1,"D3_p"], 
                   line = list(color = 'black', width = 2, dash = "dot"), showlegend = F) %>%
         add_lines(x = hypoD3_vec/hypoD3_vec[1], y = hypoD3_table[,"FGF_p"]/hypoD3_table[1,"FGF_p"], 
                   line = list(color = 'black', width = 2, dash = "solid"), showlegend = F) %>%
-        add_annotations(x= 0, y= 2.3, xref = "x2", yref = "y2", text = "<b>[PTH]p</b>", showarrow = T) %>%
-        add_annotations(x= 0.9, y= 0.9, xref = "paper", yref = "y2", text = "<b>[D3]p</b>", showarrow = T) %>%
-        add_annotations(x= 0.9, y= 0.4, xref = "paper", yref = "y2", text = "<b>[FGF23]p</b>", showarrow = T, 
+        add_annotations(x = 0, y = 2.3, xref = "x2", yref = "y2", text = "<b>[PTH]p</b>", showarrow = T) %>%
+        add_annotations(x = 0.9, y = 0.9, xref = "paper", yref = "y2", text = "<b>[D3]p</b>", showarrow = T) %>%
+        add_annotations(x = 0.9, y = 0.4, xref = "paper", yref = "y2", text = "<b>[FGF23]p</b>", showarrow = T, 
                         ax = -20, ay = 30) %>%
         layout(xaxis = xvar_bis, yaxis = yvar2)
       
@@ -740,7 +730,7 @@ shinyServer(function(input, output, session) {
                                        y = hypoD3_table[,"U_Ca"]/hypoD3_table[1,"U_Ca"],
                                        type = "scatter", mode = "lines", 
                                        line = list(color = 'black', width = 2, dash = "dash"), 
-                                       showlegend = F)%>%
+                                       showlegend = F) %>%
         add_lines(x = hypoD3_vec/hypoD3_vec[1], y = hypoD3_table[,"Abs_int_Ca"]/hypoD3_table[1,"Abs_int_Ca"], 
                   line = list(color = 'black', width = 2, dash = "dot"), showlegend = F) %>%
         add_lines(x = hypoD3_vec/hypoD3_vec[1], y = hypoD3_table[,"Res_Ca"]/hypoD3_table[1,"Res_Ca"], 
@@ -753,7 +743,7 @@ shinyServer(function(input, output, session) {
                                         y = hypoD3_table[,"U_PO4"]/hypoD3_table[1,"U_PO4"],
                                         type = "scatter", mode = "lines", 
                                         line = list(color = 'black', width = 2, dash = "dash"),
-                                        name = "Urinary Excretion")%>%
+                                        name = "Urinary Excretion") %>%
         add_lines(x = hypoD3_vec/hypoD3_vec[1], y = hypoD3_table[,"Abs_int_PO4"]/hypoD3_table[1,"Abs_int_PO4"], 
                   line = list(color = 'black', width = 2, dash = "dot"), 
                   name = "Intestinal absorption") %>%
@@ -790,11 +780,11 @@ shinyServer(function(input, output, session) {
       xvar <- list(title = "k_prod_PTHg fold decrease", 
                    range = c(max(hypopara_vec/hypopara_vec[1]), 
                              min(hypopara_vec)/hypopara_vec[1]),
-                   autorange = F, autorange="reversed")
+                   autorange = F, autorange = "reversed")
       xvar_bis <- list(title = "", 
                        range = c(max(hypopara_vec/hypopara_vec[1]), 
                                  min(hypopara_vec)/hypopara_vec[1]),
-                       autorange = F, autorange="reversed")
+                       autorange = F, autorange = "reversed")
       yvar1 <- list(title = "Normalized concentrations", range = c(0, 1.4))
       yvar2 <- list(title = "Normalized concentrations", range = c(0,1))
       yvar3 <- list(title = "Normalized Ca fluxes", range = c(0,1))
@@ -809,9 +799,9 @@ shinyServer(function(input, output, session) {
                   y = hypopara_table[,"PO4_p"]/hypopara_table[1,"PO4_p"], 
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   showlegend = F) %>%
-        add_annotations(x= 0.5, y= 0.85, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", 
+        add_annotations(x = 0.5, y = 0.85, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", 
                         showarrow = T, ax = -20, ay = 40) %>%
-        add_annotations(x= 0.1, y= 1.7, xref = "x", yref = "y",text = "<b>[PO4]p</b>", 
+        add_annotations(x = 0.1, y = 1.7, xref = "x", yref = "y",text = "<b>[PO4]p</b>", 
                         showarrow = T) %>%
         layout(xaxis = xvar_bis, yaxis = yvar1)
       
@@ -819,7 +809,7 @@ shinyServer(function(input, output, session) {
                                         y = hypopara_table[,"PTH_p"]/hypopara_table[1,"PTH_p"],
                                         type = "scatter", mode = "lines", 
                                         line = list(color = 'black', width = 2, dash = "dash"), 
-                                        showlegend = F)%>%
+                                        showlegend = F) %>%
         add_lines(x = hypopara_vec/hypopara_vec[1], 
                   y = hypopara_table[,"D3_p"]/hypopara_table[1,"D3_p"], 
                   line = list(color = 'black', width = 2, dash = "dot"), 
@@ -828,11 +818,11 @@ shinyServer(function(input, output, session) {
                   y = hypopara_table[,"FGF_p"]/hypopara_table[1,"FGF_p"], 
                   line = list(color = 'black', width = 2, dash = "solid"), 
                   showlegend = F) %>%
-        add_annotations(x= 0.9, y= 0.2, xref = "paper", yref = "y2", text = "<b>[PTH]p</b>", 
+        add_annotations(x = 0.9, y = 0.2, xref = "paper", yref = "y2", text = "<b>[PTH]p</b>", 
                         showarrow = T, ax = -20, ay = 40) %>%
-        add_annotations(x= 0.9, y= 0.67, xref = "paper", yref = "y2", text = "<b>[D3]p</b>", 
+        add_annotations(x = 0.9, y = 0.67, xref = "paper", yref = "y2", text = "<b>[D3]p</b>", 
                         showarrow = T, ax = 15, ay = -30) %>%
-        add_annotations(x= 0.88, y= 0.5, xref = "paper", yref = "y2", text = "<b>[FGF23]p</b>", 
+        add_annotations(x = 0.88, y = 0.5, xref = "paper", yref = "y2", text = "<b>[FGF23]p</b>", 
                         showarrow = T, ax = -50, ay = 10) %>%
         layout(xaxis = xvar_bis, yaxis = yvar2)
       
@@ -840,7 +830,7 @@ shinyServer(function(input, output, session) {
                                          y = hypopara_table[,"U_Ca"]/hypopara_table[1,"U_Ca"],
                                          type = "scatter", mode = "lines", 
                                          line = list(color = 'black', width = 2, dash = "dash"), 
-                                         showlegend = F)%>%
+                                         showlegend = F) %>%
         add_lines(x = hypopara_vec/hypopara_vec[1], 
                   y = hypopara_table[,"Abs_int_Ca"]/hypopara_table[1,"Abs_int_Ca"], 
                   line = list(color = 'black', width = 2, dash = "dot"), 
@@ -859,7 +849,7 @@ shinyServer(function(input, output, session) {
                                           y = hypopara_table[,"U_PO4"]/hypopara_table[1,"U_PO4"],
                                           type = "scatter", mode = "lines", 
                                           line = list(color = 'black', width = 2, dash = "dash"),
-                                          name = "Urinary Excretion")%>%
+                                          name = "Urinary Excretion") %>%
         add_lines(x = hypopara_vec/hypopara_vec[1], 
                   y = hypopara_table[,"Abs_int_PO4"]/hypopara_table[1,"Abs_int_PO4"], 
                   line = list(color = 'black', width = 2, dash = "dot"),
@@ -900,7 +890,7 @@ shinyServer(function(input, output, session) {
                                err_Ca = 1/1.35*2*c(0.02,0.04,0.04,0.06,0.04,0.06,0.06,0.07, 0.04),
                                err_PTH = 1/65*c(20, 0, 70, 100, 70, 70, 50, 70, 110))
     
-    xvar <- list(title = "time (min)", range = c(0, max(Ca_iv_table[,1])+10))
+    xvar <- list(title = "time (min)", range = c(0, max(Ca_iv_table[,1]) + 10))
     yvar1 <- list(title = "Normalized [Ca2+]p", range = c(0,2))
     yvar2 <- list(title = "Normalized [PTH]p", range = c(0,10))
     
@@ -908,8 +898,8 @@ shinyServer(function(input, output, session) {
                   y = Ca_iv_table[,"Ca_p"]/Ca_iv_table[1,"Ca_p"], 
                   type = "scatter", mode = "lines", 
                   line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-      add_markers(x=injectevents$times, 
-                  y=injectevents$Ca_val, mode = 'markers', 
+      add_markers(x = injectevents$times, 
+                  y = injectevents$Ca_val, mode = 'markers', 
                   symbols = "o", marker = list(size = 10, color = 'black'),
                   error_y = list(array = injectevents$err_Ca, color = 'black'), 
                   line = list(color = 'white')) %>%
@@ -926,8 +916,8 @@ shinyServer(function(input, output, session) {
                   y = Ca_iv_table[,"PTH_p"]/Ca_iv_table[1,"PTH_p"], 
                   type = "scatter", mode = "lines",
                   line = list(color = 'black', width = 2)) %>%
-      add_trace(x=injectevents$times, 
-                y=injectevents$PTH_val, mode = 'markers', symbols = "o", 
+      add_trace(x = injectevents$times, 
+                y = injectevents$PTH_val, mode = 'markers', symbols = "o", 
                 marker = list(size = 10, color = 'black'),
                 error_y = list(array = injectevents$err_PTH, color = 'black'), 
                 line = list(color = 'white')) %>%
@@ -973,8 +963,8 @@ shinyServer(function(input, output, session) {
     p1 <- plot_ly(PO4_iv_table, x = PO4_iv_table[,1], 
                   y = PO4_iv_table[,"PO4_tot"], type = "scatter", mode = "lines", 
                   line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
-      add_markers(x=injectevents$times, 
-                  y=injectevents$PO4_val, mode = 'markers', symbols = "o", 
+      add_markers(x = injectevents$times, 
+                  y = injectevents$PO4_val, mode = 'markers', symbols = "o", 
                   marker = list(size = 10, color = 'black'),
                   error_y = list(array = injectevents$err_PO4, color = 'black'), 
                   line = list(color = 'white')) %>%
@@ -989,8 +979,8 @@ shinyServer(function(input, output, session) {
                   y = PO4_iv_table[,"Ca_tot"]/PO4_iv_table[1,"Ca_tot"], 
                   type = "scatter", mode = "lines", 
                   line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-      add_markers(x=injectevents$times, 
-                  y=injectevents$Ca_val, mode = 'markers', symbols = "o", 
+      add_markers(x = injectevents$times, 
+                  y = injectevents$Ca_val, mode = 'markers', symbols = "o", 
                   marker = list(size = 10, color = 'black'),
                   error_y = list(array = injectevents$err_Ca, color = 'black'), 
                   line = list(color = 'white')) %>%
@@ -1007,8 +997,8 @@ shinyServer(function(input, output, session) {
                   y = PO4_iv_table[,"PTH_p"]/PO4_iv_table[1,"PTH_p"],
                   type = "scatter", mode = "lines",
                   line = list(color = 'black', width = 2)) %>%
-      add_trace(x=injectevents$times, 
-                y=injectevents$PTH_val, mode = 'markers', symbols = "o", 
+      add_trace(x = injectevents$times, 
+                y = injectevents$PTH_val, mode = 'markers', symbols = "o", 
                 marker = list(size = 10, color = 'black'),
                 error_y = list(array = injectevents$err_PTH, color = '#000000'), 
                 line = list(color = 'white')) %>%
@@ -1109,7 +1099,7 @@ shinyServer(function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
-  observeEvent(input$back1,{ # if the user clicks on back
+  observeEvent(input$back1,{# if the user clicks on back
     
     sliderlist <- list(
       inputId = c("tmax","tmaxbis","tmaxtris"),
@@ -1125,7 +1115,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  observeEvent(input$next1,{ # if the user clicks on next
+  observeEvent(input$next1,{# if the user clicks on next
     
     sliderlist <- list(
       inputId = c("tmax","tmaxbis","tmaxtris"),

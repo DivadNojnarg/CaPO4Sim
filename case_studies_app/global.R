@@ -71,6 +71,18 @@ generate_notification <- function(simulation, counter, allowed) {
                   eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
                   type = "message",
                   duration = 9999)
+    
+  # toastr is interesting but need to be improved!  
+  # toastr_info(message = eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+  #             title = "",
+  #             closeButton = TRUE,
+  #             preventDuplicates = TRUE,
+  #             position = "top-left",
+  #             timeOut = 0,
+  #             showMethod = "fadeIn",
+  #             hideMethod = "fadeOut"
+  # )  
+    
   } else {
    removeNotification(id = "notifid")
   }

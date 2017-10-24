@@ -22,6 +22,15 @@ notification_list <- list(
            Additionally, it blunts PO4 reasbsorption in the proximal tubule. 
            The relationship between PTH and FGF23 are still controversial, to date.",
            
+           "Ca represses PTH secretion via the calcium sensing receptor (CaSR) in
+           parathyroid chief cells. It also reduces the synthesis of the active
+           form of vitamin D3. Finally, it activates the CaSR in the kidney,
+           thereby lowering the reabsorption of Ca in the TAL.",
+           
+           "Since plasma PO4 levels are decreased, the activation of PTH synthesis
+            by PO4 is reduced, as well as the repression of vitamin D3 conversion and 
+            the increase of FGF23 synthesis.",
+           
            "Ionized plasma Ca concentration is widely increased during 
            primary hyperparathyroidism, mainly because of an higher intestinal 
            absorption, resorption and reabsorption in kidney. 

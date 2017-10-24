@@ -45,7 +45,7 @@ navbar <- introBox(
                        onStatus = "success",
                        offStatus = "danger",
                        size = "mini"),
-           smNavDropdown("Steady-state simulation",
+           smNavDropdown("Steady-state simulations",
                          # Modal for primary hyperparathyroidism
                          
                          modal_php1 <-
