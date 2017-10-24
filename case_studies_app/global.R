@@ -90,7 +90,7 @@ extract_running_sim <- function(input) {
   # which simulation is set to true? (php1, hypopara, ...)
   sim_idx <- which(sim_obj == TRUE)
   current_simulation <- sim[sim_idx]
-  return(current_simulation)
+  return(list(current_simulation, sim))
 }
 
 

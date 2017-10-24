@@ -1146,67 +1146,25 @@ shinyServer(function(input, output, session) {
   #  Prevent user from selecting multiple boxes using shinyjs functions
   #  
   #-------------------------------------------------------------------------
-
   
-  sim_list <- c("run_php1", "run_hypopara", "run_hypoD3", 
-                "run_Ca_inject", "run_PO4_inject", "run_PO4_gav")
-  
-  observeEvent(eval(parse(text = paste("input$", sim_list, sep = ""))), {
+  observeEvent(eval(parse(text = paste("input$", extract_running_sim(input)[[2]], sep = ""))), {
     
-    current_simulation <- extract_running_sim(input)
-    print(paste("input$", current_simulation, sep = ""))
+    # extract the list of simulations and the current one as well as its index
+    # to properly select boxes to enable/disable
+    sim_list <- extract_running_sim(input)[[2]]
+    current_simulation <- extract_running_sim(input)[[1]]
+    index <- which(sim_list == current_simulation)
 
-    # Change the following line for more examples
-    if (input$run_php1 == "TRUE") {
-      map(sim_list[-1], disable)
-    } else {
-      map(sim_list[-1], enable)
+    # if one simulation run, disable all boxes that are not related to that one
+    if (!is_empty(current_simulation)) {
+      temp <- eval(parse(text = paste("input$", current_simulation, sep = "")))
+      if (temp == "TRUE") {
+        map(sim_list[-index], disable)
+      } 
+    } else {# if no simulation runs, all boxes are available
+      map(sim_list, enable)
     }
-  })
-  
-  observeEvent(input$run_hypopara, {
-    # Change the following line for more examples
-    if (input$run_hypopara == "TRUE") {
-      map(sim_list[-2], disable)
-    } else {
-      map(sim_list[-2], enable)
-    }
-  })
-  
-  observeEvent(input$run_hypoD3, {
-    # Change the following line for more examples
-    if (input$run_hypoD3 == "TRUE") {
-      map(sim_list[-3], disable)
-    } else {
-      map(sim_list[-3], enable)
-    }
-  })
-  
-  observeEvent(input$run_Ca_inject, {
-    # Change the following line for more examples
-    if (input$run_Ca_inject == "TRUE") {
-      map(sim_list[-4], disable)
-    } else {
-      map(sim_list[-4], enable)
-    }
-  })
-  
-  observeEvent(input$run_PO4_inject, {
-    # Change the following line for more examples
-    if (input$run_PO4_inject == "TRUE") {
-      map(sim_list[-5], disable)
-    } else {
-      map(sim_list[-5], enable)
-    }
-  })
-  
-  observeEvent(input$run_PO4_gav, {
-    # Change the following line for more examples
-    if (input$run_PO4_gav == "TRUE") {
-      map(sim_list[-6], disable)
-    } else {
-      map(sim_list[-6], enable)
-    }
+    
   })
   
   #------------------------------------------------------------------------- 
@@ -1234,7 +1192,7 @@ shinyServer(function(input, output, session) {
                    if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" | 
                        input$run_hypoD3 == "TRUE") {
 
-                     current_simulation <- extract_running_sim(input)
+                     current_simulation <- extract_running_sim(input)[[1]]
                      generate_notification(counter = counter_nav$diagram, 
                                            simulation = current_simulation,
                                            allowed = input$notif2_switch)
