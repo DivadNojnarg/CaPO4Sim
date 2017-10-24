@@ -30,20 +30,20 @@ help_text <- c("In this panel is displayed the interactive network (see legend).
                
                "In this navbar, you can print help, choose your network,
                show regulations or not in the network, display the background and
-               control a lot of other options",
+               control a lot of other options"#,
                
-               "Select edges specific to Ca or PO4 homeostasis.",
-               
-               "Remove or allow the display of hormonal regulation in the graph",
-               
-               "Enable/Disable the background",
-               
-               "This corresponds to the maximum value of integration. You can increase
-               or decrease it but it has to be always positive.",
-               
-               "By moving this slider, you can see the dynamics evolution of all
-               fluxes (denoted by red/green arrows) as a function of time, at any 
-               time after the begining of the simulation."
+               # "Select edges specific to Ca or PO4 homeostasis.",
+               # 
+               # "Remove or allow the display of hormonal regulation in the graph",
+               # 
+               # "Enable/Disable the background",
+               # 
+               # "This corresponds to the maximum value of integration. You can increase
+               # or decrease it but it has to be always positive.",
+               # 
+               # "By moving this slider, you can see the dynamics evolution of all
+               # fluxes (denoted by red/green arrows) as a function of time, at any 
+               # time after the begining of the simulation."
                
 )
 

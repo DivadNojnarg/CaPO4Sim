@@ -14,6 +14,11 @@ library(shinyWidgets)
 library(shinyjqui)
 library(bsplus)
 library(sweetalertR)
+library(shinytoastr)
+library(shinyMenus)
+library(stringr)
+library(purrr)
+library(rintrojs)
 
 # Load the template components
 
@@ -32,8 +37,12 @@ source("calcium_phosphate_PO4iv.R")
 source("calcium_phosphate_PO4gav.R")
 source("cap_fixed_parameters.R")
 source("calc_change.R")
+source("notifications.R")
+source("help.R")
+source("navbar.R")
+source("network.R")
 
-path_to_images <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/case_studies_app/www"
+path_to_images <- "/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/case_studies_app/www"
 #path_to_images <- "/srv/shiny-server/capApp/case_studies_app/www"
 
 
@@ -47,6 +56,42 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664,
            "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
            "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
 
-# Bookmarking
 
-enableBookmarking(store = "url")
+# Notification function
+# Takes counter_nav diagram as well as the simulation event as arguments
+# and also the switch to allow notifications or not.
+generate_notification <- function(simulation, counter, allowed) {
+  idx <- counter
+  # only take the part after the "_"
+  message <- str_split(simulation, pattern = "_")[[1]][2]
+  # print only if notifications are allowed
+  if (allowed == TRUE) {
+  showNotification(id = "notifid",
+                  # need to eval and deparse so as to paste message
+                  eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+                  type = "message",
+                  duration = 9999)
+  } else {
+   removeNotification(id = "notifid")
+  }
+}
+
+
+# Extract the current runing simulation among php1, hypoD3, hypopara
+# Ca_inject, PO4_inject and PO4 gavage. Takes input as argument
+# returns the names of the current simulation (string).
+extract_running_sim <- function(input) {
+  # extract all simulations
+  sim <- str_extract(names(input), pattern = "^run_\\w+")
+  # remove NAs
+  sim <- sim[!is.na(sim)]
+  # converting each string to the corresponding object
+  sim_obj <- lapply(sim, function(x) {eval(parse(text = paste("input$", x)))})
+  # which simulation is set to true? (php1, hypopara, ...)
+  sim_idx <- which(sim_obj == TRUE)
+  current_simulation <- sim[sim_idx]
+  return(current_simulation)
+}
+
+
+

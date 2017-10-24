@@ -64,3 +64,9 @@ sudo chown -R ubuntu:ubuntu /srv/shiny-server/WebGLBuild
 connection names: rds_vartan
 pc name: srv30001.physiol.win2000.unizh.ch
 user name: dgranj
+
+########### Shiny load test ###############
+
+node lib/main.js record -t 'http://130.60.24.77:3838/global_app_V2.2/' > app-recording.txt
+node lib/main.js playback
+
