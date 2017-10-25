@@ -1019,7 +1019,7 @@ shinyServer(function(input, output, session) {
   # PO4 gavage
   
   path_to_PO4_gav <- "/Users/macdavidgranjon/Documents//WebApp_CaP_homeostasis/case_studies_app/www/gav_PO4.csv"
-  #path_to_run_PO4_gav <- "/srv/shiny-server/capApp/case_studies_app/www/gav_PO4.csv"
+  #path_to_PO4_gav <- "/srv/shiny-server/capApp/case_studies_app/www/gav_PO4.csv"
   PO4_gav_table <- read.csv(path_to_PO4_gav)
   
   output$PO4_gav_plot  <- renderPlotly({
