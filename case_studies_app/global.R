@@ -1,4 +1,10 @@
-## global.R ##
+#------------------------------------------------------------------------- 
+#  This codes loads all packages needed by the application.
+#  Moreover, it contains all mandatory UI and server elements. 
+#  Some useful functions are defined here so as to lighten
+#  the server code
+#
+#-------------------------------------------------------------------------
 
 library(shiny)
 require(visNetwork)
@@ -36,6 +42,7 @@ source("help.R")
 source("navbar.R")
 source("network.R")
 source("animations.R")
+source("all_plots.R")
 
 path_to_images <- "/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/case_studies_app/www"
 #path_to_images <- "/srv/shiny-server/capApp/case_studies_app/www"
