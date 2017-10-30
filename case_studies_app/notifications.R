@@ -45,6 +45,11 @@ notification_list <- list(
                You can click on the info button (on the right of each checkbox in the control center), 
                to have more information about the current simulation.",
                
+               "Bone resorption, Ca reabsorption (in TAL and DCT/CNT ) 
+               and vitamin D3 conversion into its active form are decreased. 
+               Furthermore, the repression of PO4 reabsorption in the proximal tubule
+               is dampened",
+               
                "Less vitamin D3 is converted into 1,25 vitamin D3, 
                resulting in a decrease of intestinal absorption of 
                both Ca and PO4, a decreased reabsorption of Ca.",
@@ -52,6 +57,15 @@ notification_list <- list(
                "FGF23 synthesis is reduced due to lower vitamin D3 levels. 
                Moreover, the elevation of PO4 levels is not enough to 
                compensate the loss of vitamin D3.",
+               
+               "Because of the decreased levels of plasma Ca, PTH secretion is
+               less repressed. Besides, more Ca is reabsorbed in the kidney
+               since CaSR is less activated. The inhibitory effect of Ca on
+               D3 synthesis is also blunted.",
+               
+               "Since plasma PO4 levels are increased, the activation of PTH synthesis
+               by PO4 is increased, as well as the repression of vitamin D3 conversion and 
+               the increase of FGF23 synthesis.",
                
                "Ionized plasma Ca concentration is widely decreased since intestinal 
                absorption, resorption and reabsorption in kidney are substantially reduced. 
@@ -80,6 +94,15 @@ notification_list <- list(
              
              "FGF23 synthesis is reduced as a result 
              of vitamin D3 deficiency.",
+             
+             "The reduction of plasma Ca levels cause an increase of PTH exocytosis
+             since CaSR is less activated. The decrease of Ca inhibitory effect on
+             D3 synthesis, as well as elevated PTH levels are not enough significant 
+             to compensate for 25(OH)D3 deficiency. Finally, CaSR is less activated in the
+             kidney so as to enhance Ca reabsorption.",
+             
+             "Activation of PTH synthesis by PO4 is reduced, as well as its effect
+             on D3 synthesis. Besides, FGF23 synthesis is less activated",
              
              "Ionized plasma Ca concentration and PO4 remain quite stable as 
              long as vitamin D3 stocks are not totally depleted. However, 

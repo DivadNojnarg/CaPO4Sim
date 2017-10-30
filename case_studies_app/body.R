@@ -33,17 +33,18 @@ body <- dashboardBody(
                       # this panel is also available in help
                       condition = "input.run_Ca_inject | input.help",
                       introBox(
-                        sliderInput("tmax", 
+                        sliderInput("tmaxCainj", 
                                     "Current Time", 
                                     min = 1, 
                                     max = 120, 
                                     value = 1, 
                                     step = 1) %>%
                           shinyInput_label_embed(
-                            icon("info") %>%
-                              bs_embed_tooltip(title = "Click on this button to control the time of simulation. 
-                                             (only for Ca-EGTA infusion, PO4 iv and PO4 gavage). 
-                                             Thus you can visualize the change in fluxes at each time point on the diagramm.")),
+                            icon("undo") %>%
+                              actionBttn(inputId = "reset_tmaxCainj",
+                                         label = "", 
+                                         color = "danger", 
+                                         size = "xs")),
                         data.step = 4,
                         data.intro = help_text[4]
                       )
@@ -51,32 +52,34 @@ body <- dashboardBody(
                     conditionalPanel(
                       condition = "input.run_PO4_inject",
                       
-                      sliderInput("tmaxbis", 
+                      sliderInput("tmaxPO4inj", 
                                   "Current Time", 
                                   min = 1, 
                                   max = 250, 
                                   value = 1, 
                                   step = 1) %>%
                         shinyInput_label_embed(
-                          icon("info") %>%
-                            bs_embed_tooltip(title = "Click on this button to control the time of simulation. 
-                                             (only for Ca-EGTA infusion, PO4 iv and PO4 gavage). 
-                                             Thus you can visualize the change in fluxes at each time point on the diagramm."))
+                          icon("undo") %>%
+                            actionBttn(inputId = "reset_tmaxPO4inj",
+                                       label = "", 
+                                       color = "danger", 
+                                       size = "xs"))
                     ),
                     conditionalPanel(
                       condition = "input.run_PO4_gav",
                       
-                      sliderInput("tmaxtris", 
+                      sliderInput("tmaxPO4gav", 
                                   "Current Time",
                                   min = 1,
                                   max = 250, 
                                   value = 1, 
                                   step = 1) %>%
                         shinyInput_label_embed(
-                          icon("info") %>%
-                            bs_embed_tooltip(title = "Click on this button to control the time of simulation. 
-                                             (only for Ca-EGTA infusion, PO4 iv and PO4 gavage). 
-                                             Thus you can visualize the change in fluxes at each time point on the diagramm."))
+                          icon("undo") %>%
+                            actionBttn(inputId = "reset_tmaxPO4gav",
+                                       label = "", 
+                                       color = "danger", 
+                                       size = "xs"))
                     )
              ),
              column(4, align = "right",

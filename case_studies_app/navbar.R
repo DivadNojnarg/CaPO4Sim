@@ -46,35 +46,59 @@ navbar <- introBox(
                        offStatus = "danger",
                        size = "mini"),
            smNavDropdown("Steady-state simulations",
-                         # Modal for primary hyperparathyroidism
                          
+                         # Modal for primary hyperparathyroidism
                          modal_php1 <-
                            bs_modal(
                              id = "modal_php1",
                              title = "About Primary Hyperparathyroidism",
-                             body = withMathJax("This is a simulation of primary hyperparathyroidism in the rat. The coefficient of PTH 
-                                                production will be increased several times its base case value (until 300 times). Then 
-                                                \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), \\([D_3]_p\\) and \\([FGF]_p\\), as well as 
-                                                calcium and phosphate fluxes are calculated at equilibrium and normalized compared to their 
-                                                initial equilibrium value (namely when PTH production is normal). What is displayed are all 
-                                                these concentations and fluxes as a function of the normalized PTH synthesis rate (and not as a 
-                                                function of time). A rat model of primary hyperparathyroidism already exists in the rat and can 
+                             body = withMathJax("This is a simulation of primary hyperparathyroidism in the rat. The coefficient of PTH
+                                                production will be increased several times its base case value (until 300 times). Then
+                                                \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), \\([D_3]_p\\) and \\([FGF]_p\\), as well as
+                                                calcium and phosphate fluxes are calculated at equilibrium and normalized compared to their
+                                                initial equilibrium value (namely when PTH production is normal). What is displayed are all
+                                                these concentations and fluxes as a function of the normalized PTH synthesis rate (and not as a
+                                                function of time). A rat model of primary hyperparathyroidism already exists in the rat and can
                                                 be found here: https://www.ncbi.nlm.nih.gov/pubmed/3591940"),
-                             size = "medium"
+                             size = "small"
                            ),
-                         
-                         awesomeCheckbox("run_php1", 
-                                         "PHP1", 
-                                         value = FALSE, 
-                                         status = "primary", 
+
+                         awesomeCheckbox("run_php1",
+                                         "PHP1",
+                                         value = FALSE,
+                                         status = "primary",
                                          width = NULL) %>%
                            shinyInput_label_embed(
                              shiny_iconlink() %>%
                                bs_attach_modal(id_modal = "modal_php1")),
                          
-                         smDivider(),
-                         # Modal for hypoparathyroidism
                          
+                        
+                         # awesomeCheckbox("run_php1", 
+                         #                   "PHP1", 
+                         #                   value = FALSE, 
+                         #                   status = "primary", 
+                         #                   width = NULL) %>%
+                         #   shinyInput_label_embed(
+                         #     shiny_iconlink() %>%
+                         #       bs_embed_tooltip(
+                         #         title = withMathJax("This is a simulation of primary hyperparathyroidism in the rat. The coefficient of PTH 
+                         #                               production will be increased several times its base case value (until 300 times). Then 
+                         #                               \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), \\([D_3]_p\\) and \\([FGF]_p\\), as well as 
+                         #                               calcium and phosphate fluxes are calculated at equilibrium and normalized compared to their 
+                         #                               initial equilibrium value (namely when PTH production is normal). What is displayed are all 
+                         #                               these concentations and fluxes as a function of the normalized PTH synthesis rate (and not as a 
+                         #                               function of time). A model of primary hyperparathyroidism already exists in the rat and can 
+                         #                               be found here: https://www.ncbi.nlm.nih.gov/pubmed/3591940"),
+                         #         placement = "right"
+                         #         
+                         #         )
+                         #   ),
+                         
+                         
+                         smDivider(),
+                         
+                         # Modal for hypoparathyroidism
                          modal_hypopara <-
                            bs_modal(
                              id = "modal_hypopara",
@@ -102,8 +126,8 @@ navbar <- introBox(
                                bs_attach_modal(id_modal = "modal_hypopara")),
                          
                          smDivider(),
-                         # Modal for vitamin D3 deficiency
                          
+                         # Modal for vitamin D3 deficiency
                          modal_hypoD3 <-
                            bs_modal(
                              id = "modal_hypoD3",
@@ -132,7 +156,6 @@ navbar <- introBox(
            smNavDropdown("Dynamic simulations",
                          
                          # Modal for Ca iv injection
-                         
                          modal_Ca_inject <-
                            bs_modal(
                              id = "modal_Ca_inject",
@@ -155,8 +178,9 @@ navbar <- introBox(
                              shiny_iconlink() %>%
                                bs_attach_modal(id_modal = "modal_Ca_inject")),
                          
-                         # Modal for PO4 iv injection
+                         smDivider(),
                          
+                         # Modal for PO4 iv injection
                          modal_PO4_inject <-
                            bs_modal(
                              id = "modal_PO4_inject",
@@ -179,8 +203,9 @@ navbar <- introBox(
                              shiny_iconlink() %>%
                                bs_attach_modal(id_modal = "modal_PO4_inject")),
                          
-                         # Modal for PO4 iv injection
+                         smDivider(),
                          
+                         # Modal for PO4 iv injection
                          modal_PO4_gavage <-
                            bs_modal(
                              id = "modal_PO4_gavage",

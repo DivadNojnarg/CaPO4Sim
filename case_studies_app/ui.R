@@ -56,6 +56,9 @@ shinyUI(fluidPage(
   # make beautiful notifications, replace showNotifications by shiny
   useToastr(),
   
+  use_bs_popover(),
+  use_bs_tooltip(),
+  
   # Application theme
   theme = shinytheme("journal"),
   

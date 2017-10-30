@@ -20,19 +20,19 @@ shinyServer(function(input, output, session) {
   out <- reactive({
     
     if (input$run_Ca_inject == "TRUE") { # IV Ca injection followed by EGTA infusion
-      times <- seq(0,input$tmax,by = 1)
+      times <- seq(0,input$tmaxCainj,by = 1)
       out <- as.data.frame(ode(y = state, 
                                times = times, 
                                func = calcium_phosphate_Caiv, 
                                parms = parameters))
     } else if (input$run_PO4_inject == "TRUE") { # PO4 injection 
-      times <- seq(0,input$tmaxbis,by = 1) 
+      times <- seq(0,input$tmaxPO4inj,by = 1) 
       out <- as.data.frame(ode(y = state, 
                                times = times, 
                                func = calcium_phosphate_PO4iv, 
                                parms = parameters))
     } else if (input$run_PO4_gav == "TRUE") { # PO4 gavage
-      times <- seq(0,input$tmaxtris,by = 1)
+      times <- seq(0,input$tmaxPO4gav,by = 1)
       out <- as.data.frame(ode(y = state, 
                                times = times, 
                                func = calcium_phosphate_PO4gav, 
@@ -108,405 +108,63 @@ shinyServer(function(input, output, session) {
   # create a navigation counter to trigger sequential graph animation
   counter_nav <- reactiveValues(diagram = 0) 
 
-  observeEvent(input$back1,{# counter decrease
+  # counter decrease
+  observeEvent(input$back1,{
     if (counter_nav$diagram == 0) {
     } else {counter_nav$diagram <- counter_nav$diagram - 1}
   })
 
-  observeEvent(input$next1,{# counter incrementation
+  # counter incrementation
+  observeEvent(input$next1,{
       counter_nav$diagram <- counter_nav$diagram + 1
   })
 
-  
-  observeEvent(input$next1,{# reset the counter if higher than 5
+  # reset the counter if higher than 5
+  observeEvent(input$next1,{
     if (counter_nav$diagram > 6) {
       counter_nav$diagram <- 0
-      edges_Ca <- edges_Ca()
-      edges_Ca$color <- "black"
-      edges_Ca$witdh <- 4
-      visNetworkProxy("network_Ca", session) %>%  # then reset the graph
-        visUpdateEdges(edges = edges_Ca)
     }
+  })
+  
+  # reset also if another simulation is choosen
+  observeEvent(eval(parse(text = paste("input$", extract_running_sim(input)[[2]], sep = ""))),{
+    counter_nav$diagram <- 0
+    edges_Ca <- edges_Ca()
+    edges_Ca$color <- "black"
+    edges_Ca$witdh <- 4
+    visNetworkProxy("network_Ca", session) %>%  # then reset the graph
+      visUpdateEdges(edges = edges_Ca)
   })
   
   output$counter_nav <- renderPrint({counter_nav$diagram}) 
   
-  # #------------------------------------------------------------------------- 
-  # #  
-  # #  Events for the CaPO4 Homeostasis diagramm during php1
-  # #  
-  # #-------------------------------------------------------------------------
+  #------------------------------------------------------------------------- 
+  #  
+  #  Animations of arrows when event occurs (php1, hypopara, hypoD3)
+  #  
+  #-------------------------------------------------------------------------
   
-  # 
-  # # Events when php1 is selected
-  # 
-  # observeEvent(input$next1 | input$back1,{ # primary perturbation
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 1 && input$run_php1 == "TRUE") { # need && input$run_php1 == "TRUE" since run_Ca_inject also use back and next buttons
-  #   
-  #   edges_Ca$color.color[c(11,12,15)] <- "yellow" # perturbation
-  #   edges_Ca$width[c(11,12,15)] <- 8
-  #   
-  #   visNetworkProxy("network_Ca", session) %>%  
-  #     visUpdateEdges(edges = edges_Ca)
-  #   
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 2 && input$run_php1 == "TRUE") { # secondary hormonal regulation (vitamin D3)
-  #     
-  #     edges_Ca$color.color[c(11,12,15)] <- "khaki" # previous arrows are less bright
-  #     # edges_Ca$color.opacity[c(11,12,15)] <- 0
-  #     
-  #     edges_Ca$color.color[c(13,14,16,17)] <- "yellow"
-  #     edges_Ca$width[c(13,14,16,17)] <- 8
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # FGF23 hormonal regulation
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 3 && input$run_php1 == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(18,19)] <- "yellow"
-  #     edges_Ca$width[c(18,19)] <- 8
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # Fluxes are colored
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 4 && input$run_php1 == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17,18,19)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(3,4,5,6,7,8,10,29)] <- "green" # increased fluxes
-  #     edges_Ca$color.color[c(21,22,23,30,31,32)] <- "red" # decreased fluxesd
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # Ca and PO4 final retrocontrol
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 5 && input$run_php1 == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17,18,19)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(3,4,5,6,7,8,10,29)] <- "green" # increased fluxes
-  #     edges_Ca$color.color[c(21,22,23,30,31,32)] <- "red" # decreased fluxesd
-  #     
-  #     edges_Ca$color.color[c(20,24,25,26,27,28)] <- "yellow"
-  #     edges_Ca$width[c(20,24,25)] <- 8 # Ca
-  #     edges_Ca$width[c(26,27,28)] <- 2 # PO4
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$back1,{ # reset diagram when back is clicked
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram == 0 && input$run_php1 == "TRUE") { # reset if counter_diagram is 0
-  #     
-  #     edges_Ca$color <- "black"
-  #     edges_Ca$witdh <- 4
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # #------------------------------------------------------------------------- 
-  # #  
-  # #  Events for the CaPO4 Homeostasis diagramm during hypoparathyroidism
-  # #  
-  # #-------------------------------------------------------------------------
-  # 
-  # # Events when hypopara is selected: basically it is the reverse case of php1
-  # 
-  # observeEvent(input$next1 | input$back1,{ # primary perturbation
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 1 && input$run_hypopara == "TRUE") { # need && input$run_hypopara == "TRUE" since run_Ca_inject also use back and next buttons
-  #     
-  #     edges_Ca$color.color[c(11,12,15)] <- "yellow" # perturbation
-  #     edges_Ca$width[c(11,12,15)] <- 2 # decreased size compared to php1
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 2 && input$run_hypopara == "TRUE") { # secondary hormonal regulation (vitamin D3)
-  #     
-  #     edges_Ca$color.color[c(11,12,15)] <- "khaki" # previous arrows are less bright
-  #     # edges_Ca$color.opacity[c(11,12,15)] <- 0
-  #     
-  #     edges_Ca$color.color[c(13,14,16,17)] <- "yellow"
-  #     edges_Ca$width[c(13,14,16,17)] <- 2
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # FGF23 hormonal regulation
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 3 && input$run_hypopara == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(18,19)] <- "yellow"
-  #     edges_Ca$width[c(18,19)] <- 2
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # Fluxes are colored
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 4 && input$run_hypopara == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17,18,19)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(21,22,23,30,31,32)] <- "green"
-  #     edges_Ca$color.color[c(3,4,5,6,7,8,10,29)] <- "red"
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # Ca and PO4 final retrocontrol
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 5 && input$run_hypopara == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17,18,19)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(21,22,23,30,31,32)] <- "green"
-  #     edges_Ca$color.color[c(3,4,5,6,7,8,10,29)] <- "red"
-  #     
-  #     edges_Ca$color.color[c(20,24,25,26,27,28)] <- "yellow"
-  #     edges_Ca$width[c(20,24,25)] <- 2 # Ca
-  #     edges_Ca$width[c(26,27,28)] <- 8 # PO4
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$back1,{ # reset diagram
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram == 0 && input$run_hypopara == "TRUE") { # reset if counter_diagram is 0
-  #     
-  #     edges_Ca$color <- "black"
-  #     edges_Ca$witdh <- 4
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # #------------------------------------------------------------------------- 
-  # #  
-  # #  Events for the CaPO4 Homeostasis diagramm during vitamin D3 deficiency
-  # #  
-  # #-------------------------------------------------------------------------
-  # 
-  # # Events when hypoD3 is selected
-  # 
-  # observeEvent(input$next1 | input$back1,{
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 1 && input$run_hypoD3 == "TRUE") { # primary perturbation
-  #     
-  #     edges_Ca$color.color[c(13,14,16,17)] <- "yellow"
-  #     edges_Ca$width[c(13,14,16,17)] <- 2
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # PTH
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 2 && input$run_hypoD3 == "TRUE") { # need && input$run_hypopara == "TRUE" since run_Ca_inject also use back and next buttons
-  #     
-  #     edges_Ca$color.color[c(13,14,16,17)] <- "khaki"
-  #     edges_Ca$color.color[c(11,12,15)] <- "yellow" # perturbation
-  #     edges_Ca$width[c(11,12,15)] <- 8 # decreased size compared to php1
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # 
-  # 
-  # observeEvent(input$next1 | input$back1,{ # FGF23 hormonal regulation
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 3 && input$run_hypoD3 == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(18,19)] <- "yellow"
-  #     edges_Ca$width[c(18,19)] <- 2
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # Fluxes are colored
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 4 && input$run_hypoD3 == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17,18,19)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(3,4,5,6,7,8,10,21,22,23,29,30,31,32)] <- "red"
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$next1 | input$back1,{ # Ca and PO4 final retrocontrol
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram >= 5 && input$run_hypoD3 == "TRUE") { # secondary hormonal regulation
-  #     
-  #     edges_Ca$color.color[c(11,12,13,14,15,16,17,18,19)] <- "khaki" # previous arrows are less bright
-  #     
-  #     edges_Ca$color.color[c(3,4,5,6,7,8,10,21,22,23,29,30,31,32)] <- "red"
-  #     
-  #     edges_Ca$color.color[c(20,24,25,26,27,28)] <- "yellow"
-  #     edges_Ca$width[c(20,24,25)] <- 2 # Ca
-  #     edges_Ca$width[c(26,27,28)] <- 2 # PO4
-  #     
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
-  # 
-  # observeEvent(input$back1,{ # reset diagram
-  #   
-  #   counter_nav$diagram
-  #   
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   if (counter_nav$diagram == 0 && input$run_hypoD3 == "TRUE") { # reset if counter_diagram is 0
-  #     
-  #     edges_Ca$color <- "black"
-  #     edges_Ca$witdh <- 4
-  #     visNetworkProxy("network_Ca", session) %>%  
-  #       visUpdateEdges(edges = edges_Ca)
-  #     
-  #   }
-  #   
-  # })
+  observeEvent(input$next1 | input$back1 ,{
+    
+    edges_Ca <- edges_Ca()
+    current_sim <- extract_running_sim(input)[[1]]
+    dynamic_sim <- !(input$run_Ca_inject | input$run_PO4_inject |
+                     input$run_PO4_gav)
+    # only if a simulation is selected 
+    # dynamics simulations are excluded since calculations
+    # are performed live contrary to steady-state simulations
+    if (!is_empty(current_sim) &&  dynamic_sim) {
+      if (eval(parse(text = paste("input$", current_sim, sep = "")))) {
+        arrow_lighting(edges = edges_Ca,
+                       simulation = current_sim,
+                       counter = counter_nav$diagram,
+                       input,
+                       session)
+      } 
+    }
+    
+  })
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -516,68 +174,14 @@ shinyServer(function(input, output, session) {
   
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4 injection as well as PO4 gavage
   
-  # observe({
-  #   
-  #   out <- out()
-  #   edges_Ca <- edges_Ca()
-  #   
-  #   calc_change_t <- calc_change(out)
-  #   calc_change_t$X <- NULL # remove column X
-  #   
-  #   # calculate the difference between live fluxes and base-case values
-  #   index <- c(3,10,29,7,6,32,8,23,4,31,5,30,22,21) # index of arrows in the graph (which are fluxes and not regulations)
-  #   calc_change_t <- rbind(calc_change_t, index)
-  #   
-  #   flux_changed_index <- which(calc_change_t[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
-  #   arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
-  #   
-  #   if (!is.null(flux_changed_index)) {
-  #     for (i in (1:ncol(calc_change_t))) {
-  #       arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
-  #       ifelse(calc_change_t[[i]][1] > 0, 
-  #              edges_Ca$color.color[arrow_index_i] <- "green", 
-  #              edges_Ca$color.color[arrow_index_i] <- "red")
-  #     }
-  #     
-  #   }
-  #   
-  #   if (input$run_PO4_gav) { # PO4 gavage
-  #     
-  #     edges_Ca$color.color[1] <- "yellow" # perturbation
-  #     edges_Ca$width[1] <- 8
-  #     
-  #   }
-  #   if (input$run_Ca_inject) {
-  #     if (input$tmax<60) { # Ca infusion
-  #       
-  #       edges_Ca$color.color[c(20,24,25,33)] <- "yellow" # perturbation
-  #       edges_Ca$width[c(20,24,25,33)] <- 8
-  #       
-  #     } else { # EGTA infusion
-  #       
-  #       edges_Ca$color.color[c(20,24,25,35)] <- "yellow" # perturbation
-  #       edges_Ca$width[c(20,24,25)] <- 2
-  #       edges_Ca$width[35] <- 8
-  #       
-  #     }
-  #   }
-  #   if (input$run_PO4_inject) { # PO4 injection
-  #     edges_Ca$color.color[c(26,27,28)] <- "yellow" # perturbation
-  #     edges_Ca$width[c(26,27,28)] <- 8
-  #     
-  #     if (input$tmaxbis <= 3) {
-  #       
-  #       edges_Ca$color.color[34] <- "yellow" # perturbation
-  #       edges_Ca$width[34] <- 8
-  #       
-  #     }
-  #     
-  #   }
-  #   
-  #   visNetworkProxy("network_Ca") %>%
-  #     visUpdateEdges(edges = edges_Ca)
-  #   
-  # })
+  observe({
+
+    out <- out()
+    edges_Ca <- edges_Ca()
+
+    arrow_lighting_live(out, edges = edges_Ca, session)
+
+  })
   
   #------------------------------------------------------------------------- 
   #  
@@ -907,7 +511,7 @@ shinyServer(function(input, output, session) {
                 y = Ca_iv_table[,"Ca_p"]/Ca_iv_table[1,"Ca_p"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-      add_lines(x = input$tmax, y = c(0,2), 
+      add_lines(x = input$tmaxCainj, y = c(0,2), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       #add_annotations(x = input$tmax, y = 0, text = "Current Time") %>%
       layout(xaxis = xvar, yaxis = yvar1)
@@ -925,7 +529,7 @@ shinyServer(function(input, output, session) {
                 y = Ca_iv_table[,"PTH_p"]/Ca_iv_table[1,"PTH_p"], 
                 type = "scatter", mode = "lines",
                 line = list(color = 'black', width = 2)) %>%
-      add_lines(x = input$tmax, y = c(0,10), 
+      add_lines(x = input$tmaxCainj, y = c(0,10), 
                 line = list(size = 6, color = 'orange', 
                             dashed = "dashdot")) %>%
       #add_annotations(x = input$tmax, y = 0, text = "Current Time") %>%
@@ -971,7 +575,7 @@ shinyServer(function(input, output, session) {
       add_lines(x = PO4_iv_table[,1], 
                 y = PO4_iv_table[,"PO4_tot"], type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
-      add_lines(x = input$tmaxbis, y = c(0,8), 
+      add_lines(x = input$tmaxPO4inj, y = c(0,8), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       layout(xaxis = NULL, yaxis = yvar1)
     
@@ -988,7 +592,7 @@ shinyServer(function(input, output, session) {
                 y = PO4_iv_table[,"Ca_tot"]/PO4_iv_table[1,"Ca_tot"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-      add_lines(x = input$tmaxbis, y = c(0,2), 
+      add_lines(x = input$tmaxPO4inj, y = c(0,2), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       
       layout(xaxis = xvar, yaxis = yvar2)
@@ -1006,7 +610,7 @@ shinyServer(function(input, output, session) {
                 y = PO4_iv_table[,"PTH_p"]/PO4_iv_table[1,"PTH_p"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'black', width = 2)) %>%
-      add_lines(x = input$tmaxbis, y = c(0,20), 
+      add_lines(x = input$tmaxPO4inj, y = c(0,20), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       layout(xaxis = xvar, yaxis = yvar3)
     
@@ -1048,7 +652,7 @@ shinyServer(function(input, output, session) {
       add_lines(x = PO4_gav_table[,1], y = PO4_gav_table[,"PO4_tot"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
-      add_lines(x = input$tmaxtris, y = c(0,8), 
+      add_lines(x = input$tmaxPO4gav, y = c(0,8), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       layout(xaxis = NULL, yaxis = yvar1)
     
@@ -1065,7 +669,7 @@ shinyServer(function(input, output, session) {
                 y = PO4_gav_table[,"Ca_tot"]/PO4_gav_table[1,"Ca_tot"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-      add_lines(x = input$tmaxtris, y = c(0,2), 
+      add_lines(x = input$tmaxPO4gav, y = c(0,2), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       layout(xaxis = xvar, yaxis = yvar2)
     
@@ -1081,7 +685,7 @@ shinyServer(function(input, output, session) {
                 y = PO4_gav_table[,"PTH_p"]/PO4_gav_table[1,"PTH_p"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'black', width = 2)) %>%
-      add_lines(x = input$tmaxtris, y = c(0,20), 
+      add_lines(x = input$tmaxPO4gav, y = c(0,20), 
                 line = list(size = 6, color = 'orange', dashed = "dashdot")) %>%
       layout(xaxis = xvar, yaxis = yvar3)
     
@@ -1102,15 +706,16 @@ shinyServer(function(input, output, session) {
   observeEvent(input$back1,{# if the user clicks on back
     
     sliderlist <- list(
-      inputId = c("tmax","tmaxbis","tmaxtris"),
-      value = c(input$tmax - 10 , input$tmaxbis - 10, input$tmaxtris - 10))
+      inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
+      value = c(input$tmaxCainj - 10 , input$tmaxbisPO4inj - 10, 
+                input$tmaxtrisPO4gav - 10),
+      max = c(120, 250, 250))
     
     pmap(sliderlist, 
          updateSliderInput, 
          session = session, 
          label = "Current Time", 
          min = 1, 
-         max = 250, 
          step = 1)
     
   })
@@ -1118,15 +723,15 @@ shinyServer(function(input, output, session) {
   observeEvent(input$next1,{# if the user clicks on next
     
     sliderlist <- list(
-      inputId = c("tmax","tmaxbis","tmaxtris"),
-      value = c(input$tmax + 10 , input$tmaxbis + 10, input$tmaxtris + 10))
+      inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
+      value = c(input$tmaxCainj + 10 , input$tmaxbisPO4inj + 10, 
+                input$tmaxtrisPO4gav + 10))
     
     pmap(sliderlist, 
          updateSliderInput, 
          session = session, 
          label = "Current Time", 
          min = 1, 
-         max = 250, 
          step = 1)
     
   })
@@ -1251,5 +856,17 @@ shinyServer(function(input, output, session) {
     }
     
   })
+  
+  # reset parameters individually
+  button_states <- reactiveValues(values = list())
+  
+  observeEvent(c(input$reset_tmaxCainj,
+                 input$reset_tmaxPO4inj,
+                 input$reset_tmaxPO4gav),{
+                   
+                   # call the function to reset the given slider
+                   sliders_reset(button_states, input)
+                   
+                 })
   
 })
