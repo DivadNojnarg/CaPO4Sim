@@ -113,8 +113,7 @@ extract_running_sim <- function(input) {
 # Lighting events for php1, hypopara and hypoD3
 # As fluxes are not calculated by the model
 # we have to make something different of what
-# was done in the global app
-# 
+# was done in the global app.
 
 
 # extract the proper table of animations
@@ -126,8 +125,12 @@ extract_animation <- function(input) {
   return(current_animation)
 }
 
-
-# highlight arrows for steady state events
+# highlight arrows for steady state events.
+# Takes edges id, current simulation, the counter value 
+# (which represents the current step f-of the animation), 
+# some input values as well as session. Nothing is returned
+# except that the network is updated. This function calls
+# extract_animation() to get the current animation
 arrow_lighting <- function(edges, simulation, counter, input, session) {
   # store the current animation
   current_anim <- eval(parse(text = extract_animation(input)))
@@ -176,20 +179,27 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
 
 
 # highlitght arrows for dynamic events
+# take out (result of integration by ode solver),
+# edges and session as arguments. Nothing special
+# is returned, except that the network is updated
 arrow_lighting_live <- function(out, edges, session) {
   calc_change_t <- calc_change(out)
   calc_change_t$X <- NULL # remove column X
   
   # calculate the difference between live fluxes and base-case values
-  index <- c(1,10,11,6,4,5,8,9,2,3,12) # index of arrows in the graph (which are fluxes and not regulations)
+  # index of arrows in the graph (which are fluxes and not regulations)
+  index <- c(1,10,11,6,4,5,8,9,2,3,12) 
   calc_change_t <- rbind(calc_change_t, index)
   
-  flux_changed_index <- which(calc_change_t[1,] != 0) # calculate which element in the sum table is different of 0 and store the index
-  arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) # convert to arrow index in the interactive diagramm
+  # calculate which element in the sum table is different of 0 and store the index
+  flux_changed_index <- which(calc_change_t[1,] != 0) 
+  # convert to arrow index in the interactive diagramm
+  arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index])) 
   
   if (!is.null(flux_changed_index)) {
     for (i in (1:ncol(calc_change_t))) {
-      arrow_index_i <- arrow_index[i] # change edge color according to an increase or decrease of the flux
+      # change edge color according to an increase or decrease of the flux
+      arrow_index_i <- arrow_index[i] 
       ifelse(calc_change_t[[i]][1] > 0,
              edges$color.color[arrow_index_i] <- "green",
              edges$color.color[arrow_index_i] <- "red")
@@ -241,7 +251,6 @@ arrow_lighting_live <- function(out, edges, session) {
 # Takes a reset_table, network and edges as arguments
 # reset_table contains the state of reset button (0 if
 # not used) as well as the related sliders_id
-
 sliders_reset <- function(button_states, input) {
   
   # stock the previous state of buttons in

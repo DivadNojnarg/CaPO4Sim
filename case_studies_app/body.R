@@ -120,89 +120,18 @@ body <- dashboardBody(
              id = "tabset1", width = 12, solidHeader = TRUE,
              ### Steady-state simulations ###
              conditionalPanel(
-               condition = "input.run_php1",
+               condition = "input.run_php1 | input.run_hypopara | 
+                            input.run_hypoD3 | input.run_Ca_inject | 
+                            input.run_PO4_inject | input.run_PO4_gav | input.help",
                
                column(12, align = "center",
-                      
-                      withSpinner(plotlyOutput("php1_plot", height = "400px"), 
-                                  size = 2, type = 6, color = "#000000")
-                      
+                      introBox(
+                        withSpinner(plotlyOutput("plot", height = "400px"), 
+                                    size = 2, type = 6, color = "#000000"),
+                        data.step = 5,
+                        data.intro = help_text[5]
+                      )
                )
-               
-             ),
-             
-             # hypopara
-             conditionalPanel(
-               condition = "input.run_hypopara",
-               
-               column(12, align = "center",
-                      
-                      withSpinner(plotlyOutput("hypopara_plot", height = "400px"), 
-                                  size = 2, type = 6, color = "#000000")
-                      
-               )
-               
-             ),
-             
-             
-             # hypoD3
-             introBox(
-               conditionalPanel(
-                 condition = "input.run_hypoD3 | input.help",
-                 
-                 column(12, align = "center",
-                        
-                        withSpinner(plotlyOutput("hypoD3_plot", height = "400px"), 
-                                    size = 2, type = 6, color = "#000000")
-                        
-                 )
-                 
-               ),
-               
-               ### dynamic simulations ###
-               conditionalPanel(
-                 condition = "input.run_Ca_inject | input.help",
-                 
-                 column(12, align = "center",
-                        #introBox(
-                        withSpinner(plotlyOutput("Ca_iv_plot", height = "400px"), 
-                                    size = 2, type = 6, color = "#000000")
-                        #data.step = 5,
-                        #data.intro = help_text[5]
-                        #)
-                        
-                 )
-                 
-               ),
-               data.step = 5,
-               data.intro = help_text[5],
-               data.position = "left"
-             ),
-             
-             # PO4 inject 
-             conditionalPanel(
-               condition = "input.run_PO4_inject",
-               
-               column(12, align = "center",
-                      
-                      withSpinner(plotlyOutput("PO4_iv_plot", height = "400px"), 
-                                  size = 2, type = 6, color = "#000000")
-                      
-               )
-               
-             ),
-             
-             # PO4 gavage
-             conditionalPanel(
-               condition = "input.run_PO4_gav",
-               
-               column(12, align = "center",
-                      
-                      withSpinner(plotlyOutput("PO4_gav_plot", height = "400px"), 
-                                  size = 2, type = 6, color = "#000000")
-                      
-               )
-               
              )
            )
     )
