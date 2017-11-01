@@ -101,16 +101,16 @@ body <- dashboardBody(
                ),
                data.step = 2,
                data.intro = help_text[2]
-             ),
-             column(4, align = "left",
-                    verbatimTextOutput("counter_nav")
-             ),
-             column(4, align = "center",
-                    verbatimTextOutput("id_bis")
-             ),
-             column(4, align = "right",
-                    verbatimTextOutput("id")
-             )
+             )#,
+             # column(4, align = "left",
+             #        verbatimTextOutput("counter_nav")
+             # ),
+             # column(4, align = "center",
+             #        verbatimTextOutput("id_bis")
+             # ),
+             # column(4, align = "right",
+             #        verbatimTextOutput("id")
+             # )
              
            ) 
     ),

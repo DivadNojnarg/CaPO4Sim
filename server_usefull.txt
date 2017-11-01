@@ -25,6 +25,9 @@ Very important: do not forget to replace all local folders by the server folders
 path_to_calc_change_base <- "/srv/shiny-server/capApp/global_app/www/calc_change_base.csv"
 
 
+scp -r /Users/macdavidgranjon/Movies/2017-10-31\ 17-05-43.mp4 ubuntu@130.60.24.77:/srv/shiny-server/tutorials
+
+
 deb https://pbil.univ-lyon1.fr/CRAN/ /bin/linux/ubuntu trusty/ # last version of R for 14.04
   
 ######### Apache server ###############
