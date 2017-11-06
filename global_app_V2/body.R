@@ -116,7 +116,7 @@ body <- dashboardBody(
                           # this panel is also shown when help button is clicked
                           conditionalPanel(
                             condition = "input.current_node_bis_id == 11 ||
-                                         input.notif_switch",
+                                         input.help",
                             
                             div(id = "networkPTH",
                                 visNetworkOutput("network_PTH", height = "400px")
@@ -207,7 +207,7 @@ body <- dashboardBody(
                             condition = "input.current_edge_bis_id != 'null' && 
                                          input.current_edge_bis_id == 1 && 
                                          input.current_node_bis_id == 11 ||
-                                         input.notif_switch",
+                                         input.help",
                             
                             sliderInput("k_prod_PTHg", 
                                         "PTH synthesis rate constant (μmol/min)",

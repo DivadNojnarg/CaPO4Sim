@@ -3,11 +3,18 @@ header_box_network <- introBox(
   fluidPage(
     smNavBar("testMenu", "", full.width = TRUE, fixed = FALSE, 
              # enable notifications or not since this can be boring
-             actionBttn(inputId = "notif_switch", 
+             actionBttn(inputId = "help", 
                         label = "Help?",
                         color = "danger", 
                         size = "lg",
                         style = "simple"),
+             # show a demonstration
+             actionBttn(inputId = "ShowDemo", 
+                        label = "Demo",
+                        color = "warning", 
+                        size = "lg",
+                        style = "simple",
+                        icon = icon("youtube-play")),
              # select the network
              awesomeCheckboxGroup(inputId = "network_Ca_choice", 
                                   label = "Choose your network", 
