@@ -126,12 +126,18 @@ body <- dashboardBody(
                
                column(12, align = "center",
                       introBox(
-                        withSpinner(plotlyOutput("plot", height = "400px"), 
+                        withSpinner(plotlyOutput("plot", height = "600px"), 
                                     size = 2, type = 6, color = "#000000"),
                         data.step = 5,
                         data.intro = help_text[5]
                       )
-               )
+               ),
+               br(),
+               column(4, align = "left"),
+               column(4, align = "center",
+                      uiOutput("slider", class = "theme-orange")
+               ),
+               column(4, align = "right")
              )
            )
     )

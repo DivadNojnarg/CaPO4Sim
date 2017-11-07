@@ -14,6 +14,34 @@ shinyUI(fluidPage(
   tags$head(
     tags$style(HTML("
 
+                    #page{
+                      position: relative;
+                    }
+  
+                    .js-irs-0 .irs-single, 
+                    .js-irs-0 .irs-bar-edge,
+                    .js-irs-0 .irs-bar{
+                      background: orange;
+                    }
+
+                    .js-irs-1 .irs-single, 
+                    .js-irs-1 .irs-bar-edge, 
+                    .js-irs-1 .irs-bar{
+                      background: orange;
+                    }
+
+                    .js-irs-2 .irs-single, 
+                    .js-irs-2 .irs-bar-edge, 
+                    .js-irs-2 .irs-bar{
+                      background: orange;
+                    }
+
+                    .theme-orange .irs-single, 
+                    .theme-orange .irs-bar-edge, 
+                    .theme-orange .irs-bar{
+                      background: orange;
+                    }
+    
                     .network_capnone{
                       padding-left: 0; 
                       padding-right: 0;
@@ -43,11 +71,10 @@ shinyUI(fluidPage(
                     "))
     ),
 
-  # 4 danger notification that can be switched on or off as required
-  tags$style("#shiny-notification-menu_notif {position: fixed; top: 1%; right: 50% ; width: 40em; opacity: 1;}"),
-  tags$style("#shiny-notification-graph_notif {position: fixed; top: 30%; right: 10% ; width: 20em; opacity: 1;}"),
-  tags$style("#shiny-notification-control_notif {position: fixed; top: 75%; right: 15% ; width: 20em; opacity: 1;}"),
-  tags$style("#shiny-notification-diagram_notif {position: fixed; top: 20%; left: 15% ; width: 20em; opacity: 1;}"),
+  # notification that can be switched on or off as required
+  #tags$style("#shiny-notification-notifid {position: fixed; top: 25%; right: 76% ; width: 20em; opacity: 1;}"),
+  tags$style("#shiny-notification-notifid {position: fixed; top: 25%; 
+             right: 76% ; width: 20em; opacity: 1; z-index:100;}"),
   
   # perform some javascript events such as show/hide ...
   useShinyjs(), 
@@ -63,7 +90,9 @@ shinyUI(fluidPage(
   theme = shinytheme("journal"),
   
   # include a dashboard
+  div(id = "page",
   navbar,
   dashboardPage(skin = "black", header, sidebar, body)
+  )
   
 ))

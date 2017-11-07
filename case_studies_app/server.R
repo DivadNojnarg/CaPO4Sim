@@ -180,10 +180,6 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
 
     arrow_lighting_live(out, edges = edges_Ca, session)
-    
-    # print(list(extract_running_sim(input)[[2]], 
-    #            extract_running_sim(input)[[1]],
-    #            extract_animation(input)))
 
   })
   
@@ -207,15 +203,7 @@ shinyServer(function(input, output, session) {
     req(current_sim)
     
     if (!is_empty(current_sim) | input$help) {
-      
-      if (current_sim == "Ca_inject" | current_sim == "PO4_inject" | 
-          current_sim == "PO4_gav") {
-        eval(parse(text = paste("make_plot_", current_sim, "(input)", sep = "")))    
-        
-      } else {
-        eval(parse(text = paste("make_plot_", current_sim, "()", sep = "")))
-      }
-  
+      eval(parse(text = paste("make_plot_", current_sim, "(input)", sep = "")))    
     }
   })
   
@@ -258,6 +246,29 @@ shinyServer(function(input, output, session) {
          step = 1)
     
   })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  # Generate sliders for php1, hypopara and hypoD3
+  #  
+  #-------------------------------------------------------------------------
+  
+  output$slider <- renderUI({
+    current_sim <- extract_running_sim(input)[[1]] %>%
+      str_extract("_\\w+") %>%
+      str_replace("_", "")
+    
+    if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+      
+      sliderTextInput(inputId = paste("slider_", current_sim, sep = ""), 
+                      label = paste(current_sim, "severity", sep = " "), 
+                      choices = seq(from = ifelse(input$run_php1, 0, 1), 
+                                    to = ifelse(input$run_php1, 300, 0), 
+                                    by = ifelse(input$run_php1, 20, -0.1)), 
+                      grid = TRUE)
+    }
+  })
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -344,6 +355,8 @@ shinyServer(function(input, output, session) {
                      generate_notification(counter = counter_nav$diagram, 
                                            simulation = current_simulation,
                                            allowed = input$notif2_switch)
+                     # make it draggable
+                     jqui_draggable(selector = "#shiny-notification-notifid")
                    }
                  })
   

@@ -127,7 +127,7 @@ generate_nodes_Ca <- function(input) {
     y = c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452),
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
-    size = c(rep(60,5), 150, rep(60,2), rep(25,2), 60, rep(25,5)),
+    size = c(rep(70,5), 150, rep(70,2), rep(40,2), 70, rep(40,5)),
     #fixed = list("x" = TRUE, "y" = TRUE),
     physics = rep(FALSE,16),
     hidden = c(rep(FALSE,7),
@@ -225,6 +225,6 @@ generate_edges_Ca <- function(input) {
                rep(ifelse(input$network_hormonal_choice == "TRUE", 
                           ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
                           TRUE),2)), 
-    stringsAsFactors=FALSE) 
+    stringsAsFactors = FALSE) 
   
 }

@@ -48,6 +48,7 @@ ssh ubuntu@130.60.24.78 -Y # allow for X11 display
 
 git reset --hard <sha1-commit-id> (to go back to the following commit in case of emergency)
 git diff-tree --no-commit-id --name-only -r <sha1-commit-id> (see all staged files in a commit)
+git reset HEAD~ (unstage all files from the last commit)
 
 
 ######### Website CSS ################
@@ -76,4 +77,16 @@ user name: dgranj
 
 node lib/main.js record -t 'http://130.60.24.77:3838/global_app_V2.2/' > app-recording.txt
 node lib/main.js playback
+
+########## Modify package source ##########
+
+1. download package sources: install.packages("shiny", type = "source")
+2. Go to: /private/var/folders/80/tt_3189x7gvc6y_6_ml_jwj80000gn/T/RtmpE8cmFR/downloaded_packages/
+3. then unzip it and modify what you want
+4. rezip the file: tar -zcvf shiny_1.0.5.tar.gz shiny_update
+5. still in the same directory, run in a terminal R CMD INSTALL shiny.tar.gz or in R install.packages(<pathtopackage>, repos = NULL, type="source")
+
+To change slider theme in shiny, replace the theme used in bootstrap.R
+
+Make a copy of the real package before is better
 

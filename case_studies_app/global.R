@@ -42,12 +42,10 @@ source("help.R")
 source("navbar.R")
 source("network.R")
 source("animations.R")
-source("all_plots.R")
 
-path_to_images <- "/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/case_studies_app/www"
-#path_to_images <- "/srv/shiny-server/capApp/case_studies_app/www"
-
-
+# load the initial state of the model. Only needed for dynamic
+# simulation that is, Ca/EGTA injection, PO4 injection and
+# PO4 gavage
 state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, 
            "FGF_p" = 16.78112, "Ca_p" = 1.2061, # initial conditions
            "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, 
@@ -59,9 +57,9 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664,
            "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
 
 
-# Notification function
-# Takes counter_nav diagram as well as the simulation event as arguments
-# and also the switch to allow notifications or not.
+# Notification function. Takes counter_nav diagram as well 
+# as the simulation event as arguments and also the switch 
+# to allow notifications or not.
 generate_notification <- function(simulation, counter, allowed) {
   idx <- counter
   # only take the part after the "_"
@@ -74,8 +72,12 @@ generate_notification <- function(simulation, counter, allowed) {
                      type = "message",
                      duration = 9999)
     
-    # toastr is interesting but need to be improved!  
-    # toastr_info(message = eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+    # toastr is interesting but need to be improved!
+    # I do not know how to remove this kind of notification
+    # toastr_info(message = eval(parse(text = paste("notification_list$", 
+    #                                               message, 
+    #                                               "[idx+1]", 
+    #                                               sep = ""))),
     #             title = "",
     #             closeButton = TRUE,
     #             preventDuplicates = TRUE,
@@ -247,6 +249,23 @@ arrow_lighting_live <- function(out, edges, session) {
 
 
 
+# function needed to generate the slider for php1, 
+# hypopara and hypoD3. Takes input as argument and
+# returns the slider_value as output. It is used by
+# all_plots.R script to draw the vertical orange line
+# during php1, hypopara and hypoD3
+generate_slidersteady <- function(input){
+  current_sim <- extract_running_sim(input)[[1]] %>%
+    str_extract("_\\w+") %>%
+    str_replace("_", "")
+  
+  slider_name <- paste("slider_", current_sim, sep = "")
+  slider_value <- eval(parse(text = paste("input$", slider_name, sep = "")))
+  return(slider_value)
+}
+
+
+
 # Function to reset sliders input to their original values
 # Takes a reset_table, network and edges as arguments
 # reset_table contains the state of reset button (0 if
@@ -284,3 +303,7 @@ sliders_reset <- function(button_states, input) {
   shinyjs::reset(reset_vector[reset_target])
   
 }
+
+# all plot requires generate_slidersteady and extract_running_sim
+# to run properly. Therefore, it is loaded in the end
+source("all_plots.R")
