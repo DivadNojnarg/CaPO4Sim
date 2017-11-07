@@ -76,7 +76,7 @@ shinyServer(function(input, output, session) {
   
   output$table <- renderDataTable({ 
     
-    out()[nrow(out()), 26:27]
+    out()[nrow(out()), 55:56]
     
     })
   
@@ -194,9 +194,9 @@ shinyServer(function(input, output, session) {
   vals <- reactiveValues(coords = NULL, viewposition = NULL)
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_kidney_TAL") %>% visGetPositions()
-    vals$coords <- if (!is.null(input$network_kidney_TAL_positions)) 
-      do.call(rbind, input$network_kidney_TAL_positions)
+    visNetworkProxy("network_kidney_PT_PO4") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_kidney_PT_PO4_positions)) 
+      do.call(rbind, input$network_kidney_PT_PO4_positions)
   })
   
   # view position (of the camera)
@@ -204,9 +204,9 @@ shinyServer(function(input, output, session) {
   output$viewposition <- renderPrint({ vals$viewposition })
   observe({
     invalidateLater(1000)
-    visNetworkProxy("network_kidney_TAL") %>% visGetViewPosition()
-    vals$viewposition <- if (!is.null(input$network_kidney_TAL_viewPosition))
-      do.call(rbind, input$network_kidney_TAL_viewPosition)
+    visNetworkProxy("network_kidney_PT_PO4") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_kidney_PT_PO4_viewPosition))
+      do.call(rbind, input$network_kidney_PT_PO4_viewPosition)
     
   })
   
@@ -252,6 +252,11 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
+  # ========= #
+  #     Ca    #
+  # ========= #
+  
+  
   # Generate the kidney_PT Graph network
   
   nodes_kidney_PT <- reactive({ generate_nodes_kidney_PT() })
@@ -279,6 +284,36 @@ shinyServer(function(input, output, session) {
     })
   
   output$edges_id_PT <- renderPrint({ input$current_edge_tris_id })
+  
+  # ========= #
+  #    PO4    #
+  # ========= #
+  
+  nodes_kidney_PT_PO4 <- reactive({ generate_nodes_kidney_PT_PO4() })
+  edges_kidney_PT_PO4 <- reactive({ generate_edges_kidney_PT_PO4() })
+  
+  # Generate the output of the kidney_PT graph to be used in body
+  
+  output$network_kidney_PT_PO4 <- renderVisNetwork({
+    
+    nodes_kidney_PT_PO4 <- nodes_kidney_PT_PO4()
+    edges_kidney_PT_PO4 <- edges_kidney_PT_PO4()
+    
+    generate_network(nodes = nodes_kidney_PT_PO4, edges = edges_kidney_PT_PO4) %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "on", afterDrawing = "function() {
+                this.moveTo({ position: {x:-28.8, y:-2.34},
+                offset: {x: 0, y:0} })}") %>%
+      visEvents(selectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_PT_PO4_id', edges.edges);
+                ;}") %>%
+      # set value to NULL to prevent sliders from being displayed
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_PT_PO4_id', 'null');
+                ;}")
+    })
+  
+  output$edges_id_PT2 <- renderPrint({ input$current_edge_PT_PO4_id })
   
   #------------------------------------------------------------------------- 
   #  
@@ -502,6 +537,10 @@ shinyServer(function(input, output, session) {
     # events in the proximal tubule depend on PTH
     events_kidney_PT <- input$k_prod_PTHg
 
+    # events in the proximal tubule for PO4: PTH and FGF23
+    events_kidney_PT_PO4 <- c(input$k_prod_PTHg,
+                              input$k_prod_FGF)
+
     # events in the TAL
     events_kidney_TAL <- input$k_prod_PTHg
 
@@ -509,10 +548,10 @@ shinyServer(function(input, output, session) {
     events_kidney_DCT <- c(input$k_prod_PTHg,
                            input$D3_inact,
                            input$k_deg_D3)
-    
+
     events_intestine <- c(input$D3_inact,
                          input$k_deg_D3)
-    
+
     events_bone <- c(input$k_prod_PTHg,
                     input$D3_inact,
                     input$k_deg_D3)
@@ -521,23 +560,27 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
     edges_PTHg <- edges_PTHg()
     edges_kidney_PT <- edges_kidney_PT()
+    edges_kidney_PT_PO4 <- edges_kidney_PT_PO4()
     edges_kidney_TAL <- edges_kidney_TAL()
     edges_kidney_DCT <- edges_kidney_DCT()
     edges_intestine <- edges_intestine()
     edges_bone <- edges_bone()
-    
+
     # create the list of arguments needed by pmap
     network_list <- list(
-      edges = list(edges_Ca, edges_PTHg, edges_kidney_PT, edges_kidney_TAL, 
+      edges = list(edges_Ca, edges_PTHg, edges_kidney_PT,
+                   edges_kidney_PT_PO4, edges_kidney_TAL,
                    edges_kidney_DCT, edges_intestine, edges_bone),
-      
+
       network = list("network_Ca", "network_PTH", "network_kidney_PT",
-                     "network_kidney_TAL", "network_kidney_DCT", 
-                     "network_intestine", "network_bone"),
-      
-      events = list(events, events_PTH, events_kidney_PT, events_kidney_TAL, 
+                     "network_kidney_PT_PO4", "network_kidney_TAL",
+                     "network_kidney_DCT", "network_intestine",
+                     "network_bone"),
+
+      events = list(events, events_PTH, events_kidney_PT,
+                    events_kidney_PT_PO4, events_kidney_TAL,
                     events_kidney_DCT, events_intestine, events_bone))
-    
+
     # apply flux_lighting for all networks using pmap function
     pmap(network_list, flux_lighting, out, t_target())
 

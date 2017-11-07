@@ -84,6 +84,11 @@ arrow_lighting <- function(events, edges, network) {
       values = events,
       edges_id = 1
     )
+  } else if (network == "network_kidney_PT_PO4") {
+    param_event <- list(
+      values = events,
+      edges_id = list(c(3,4), c(1,2))
+    )
   } else if (network == "network_kidney_TAL") {
     param_event <- list(
       values = events,
@@ -162,6 +167,11 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
     # to do as if it is the same as for the first arrow
     calc_change_t <- as.data.frame(rep(round(calc_change(out, t_target)[19]),2))
     index <- c(1,2)
+    calc_change_t <- rbind(calc_change_t, index)
+  } else if (network == "network_kidney_PT_PO4") {
+    # PTH and FGF23 have the same qualitative effect
+    calc_change_t <- round(calc_change(out, t_target)[c(rep(27,2), rep(28,2))], 2)
+    index <- c(4,3,2,1)
     calc_change_t <- rbind(calc_change_t, index)
   } else if (network == "network_kidney_TAL") {
     calc_change_t <- round(calc_change(out, t_target)[20:21])

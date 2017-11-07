@@ -42,6 +42,13 @@ shinyUI(fluidPage(
                       background-position: center center;
                     }
 
+                    #networkkidney_PT_PO4{
+                      background-image:url('kidney_PT_PO4_zoom.png');
+                    background-size: auto 100%;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    }
+
                     #networkkidney_TAL{
                       background-image:url('kidney_TAL_zoom.png');
                       background-size: auto 100%;

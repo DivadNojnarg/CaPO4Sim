@@ -174,7 +174,7 @@ generate_nodes_Ca <- function(input) {
     y = c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452),
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
-    size = c(rep(60,5), 150, rep(60,2), rep(25,2), 60, rep(25,5)),
+    size = c(rep(70,5), 150, rep(70,2), rep(40,2), 70, rep(40,5)),
     #fixed = list("x" = TRUE, "y" = TRUE),
     physics = rep(FALSE,16),
     hidden = c(rep(FALSE,7),
@@ -354,11 +354,11 @@ generate_edges_kidney_zoom2 <- function() {
   
 }
 
-# % % % % % % % % %  #
-#                    #
-#   Kidney_PT        #
-#                    #
-# % % % % % % % % %  #
+# % % % % % % % % % #
+#                   #
+#   Kidney_PT Ca    #
+#                   #
+# % % % % % % % % % #
 
 # generate kidney_PT nodes
 generate_nodes_kidney_PT <- function() {
@@ -398,6 +398,53 @@ generate_edges_kidney_PT <- function() {
     stringsAsFactors = FALSE)
   
 }
+
+
+# % % % % % % % % % #
+#                   #
+#   Kidney_PT PO4   #
+#                   #
+# % % % % % % % % % #
+
+# generate kidney_PT_PO4 nodes
+generate_nodes_kidney_PT_PO4 <- function() {
+  
+  data.frame(
+    id = 1:8,
+    shape = c(rep("text", 8)), 
+    label = c(rep("", 8)),
+    x = c(55,-53,54,-48,48,-50,49,-50), 
+    y = c(44,42,58,115,112,57,131,130), 
+    color = list(background = "#97C2FC", border = "#97C2FC", 
+                 highlight = list(background = "orange", border = "orange")),
+    size = rep(10, 8), 
+    #fixed = list("x" = TRUE, "y" = TRUE),
+    hidden = rep(FALSE, 8))
+  
+}
+
+# generate kidney_PT_PO4 edges
+generate_edges_kidney_PT_PO4 <- function() {
+  
+  data.frame(
+    from = c(1,3,5,7), 
+    to = c(2,4,6,8),
+    arrows = list(to = list(enabled = TRUE, 
+                            scaleFactor = 1, 
+                            type = "arrow")),
+    label = c(rep("", 4)),
+    id = 1:4,
+    width = 4,
+    font.size = 12,
+    color = list(color = c(rep("black", 4)), 
+                 highlight = "yellow"),
+    dashes = rep(TRUE,4),
+    smooth = rep(TRUE,4),
+    hidden = rep(FALSE,4),
+    stringsAsFactors = FALSE)
+  
+}
+
 
 # % % % % % % % % %  #
 #                    #

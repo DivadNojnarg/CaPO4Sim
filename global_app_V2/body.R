@@ -22,21 +22,21 @@ body <- dashboardBody(
                    
                    withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
                                size = 2, 
-                               type = 6, 
+                               type = 8, 
                                color = "#000000")
                ),
                data.step = 1,
                data.intro = help_text[1]
-             )#,
+             ),
              #column(6, align = "center",
              #        verbatimTextOutput("browser")
              #)
-             # column(6, align = "center",
-             #         verbatimTextOutput("edges_id_bone")
-             # ),
-             #column(6, align = "center",
-             #        dataTableOutput("table")
-             #)
+             column(6, align = "center",
+                      verbatimTextOutput("edges_id_PT2")
+             ),
+             column(6, align = "center",
+                     dataTableOutput("table")
+             )
              #column(6, align ="center",
              #       verbatimTextOutput("node_tris")
              #),
@@ -64,7 +64,7 @@ body <- dashboardBody(
            ) 
     ),
     
-    column(width = 6, offset = 0, style='padding:0px;',
+    column(width = 6, offset = 0, style = 'padding:0px;',
            
            box(
              id = "tabset1",
@@ -72,23 +72,23 @@ body <- dashboardBody(
              collapsible = TRUE,
              solidHeader = TRUE,
              
-             column(6, align = "center", offset = 0, style='padding:0px;',
+             column(6, align = "center", offset = 0, style = 'padding:0px;',
                     
                     introBox(
                       withSpinner(plotlyOutput("plot_node", height = "300px"), 
                                   size = 2, 
-                                  type = 6, 
+                                  type = 8, 
                                   color = "#000000"),
                       data.step = 2,
                       data.intro = help_text[2]
                     )
                     
              ),
-             column(6, align = "center", offset = 0, style='padding:0px;',
+             column(6, align = "center", offset = 0, style = 'padding:0px;',
                     introBox(
                       withSpinner(plotlyOutput("plot_edge", height = "300px"), 
                                   size = 2, 
-                                  type = 6, 
+                                  type = 8, 
                                   color = "#000000"),
                       data.step = 3,
                       data.intro = help_text[3]
@@ -137,14 +137,28 @@ body <- dashboardBody(
                           
                         ),
                         
-                        # Proximal tubule zoom
+                        # Proximal tubule zoom Ca
                         conditionalPanel(
                           condition = "input.current_node_tris_id == 1 &&
                                        input.current_node_bis_id != 'null' &&
-                                       input.current_node_tris_id != 'null'",
+                                       input.current_node_tris_id != 'null' &&
+                                       input.network_Ca_choice.indexOf('Ca') > -1 ",
                           
                           div(id = "networkkidney_PT",
                               visNetworkOutput("network_kidney_PT", height = "400px")
+                          )
+                          
+                        ),
+                        
+                        # Proximal tubule zoom PO4
+                        conditionalPanel(
+                          condition = "input.current_node_tris_id == 1 &&
+                          input.current_node_bis_id != 'null' &&
+                          input.current_node_tris_id != 'null' &&
+                          input.network_Ca_choice.indexOf('PO4') > -1 ",
+                          
+                          div(id = "networkkidney_PT_PO4",
+                              visNetworkOutput("network_kidney_PT_PO4", height = "400px")
                           )
                           
                         ),

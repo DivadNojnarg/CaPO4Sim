@@ -353,7 +353,9 @@ calcium_phosphate_core <- function(t, state, parameters) {
            Reabs_DCT_D3 = Reabs_DCT_D3_norm,
            Abs_int_D3 = Abs_intest_D3_norm,
            Res_PTH = Resorption_PTH_norm,
-           Res_D3 = Resorption_D3_norm
+           Res_D3 = Resorption_D3_norm,
+           Reabs_PT_PO4_PTH = Reabs_PT_PTH_P_norm, # 55
+           Reabs_PT_PO4_FGF = Reabs_PT_FGF_P_norm
            )
       ) 
     
