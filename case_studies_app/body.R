@@ -97,7 +97,7 @@ body <- dashboardBody(
              introBox(
                div(id = "network_cap", # to insert a background image if needed
                    withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
-                               size = 2, type = 6, color = "#000000")
+                               size = 2, type = 8, color = "#000000")
                ),
                data.step = 2,
                data.intro = help_text[2]
@@ -127,7 +127,7 @@ body <- dashboardBody(
                column(12, align = "center",
                       introBox(
                         withSpinner(plotlyOutput("plot", height = "600px"), 
-                                    size = 2, type = 6, color = "#000000"),
+                                    size = 2, type = 8, color = "#000000"),
                         data.step = 5,
                         data.intro = help_text[5]
                       )
