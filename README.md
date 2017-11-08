@@ -2,24 +2,29 @@
 Repository of NCCR project containing shiny apps of Calcium Phosphate homeostasis
 
 ### **Staff** ###
-*Project manager*: [Dr. Diane de Zélicourt and Prof. Vartan Kurtcuoglu](http://interfacegroup.ch)
-*Experts in Physiology*: [Prof. François Verrey](https://www.physiol.uzh.ch/en/research/institutegroups/EpithelialTransports/TeamMembers/FVerrey.html),
-[Prof. Olivier Bonny](https://www.unil.ch/dpt/fr/home/menuinst/recherche/groupe-bonny.html),
-[Prof. Bernard Rossier](https://hset.org/organization/team/),
-[Prof. Carten Wagner](https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html)
-*Graphic designer*: [Tara von Grebel](https://www.uzh.ch/id/cl/iframe/org/index.php?id=tg)
-*Model developer*: [Dr. David Granjon](https://divadnojnarg.github.io)
-*Web/R developer*: Dr. David Granjon
-*Server management*: Dr. David Granjon
-*Server expert*: [Dr. Sergio Maffioletti](https://www.id.uzh.ch/en/scienceit/about/team.html)
-*Consultants*: [Dr. Nathalie Debard](https://hset.org/organization/team/)
++ *Project manager*: [Dr. Diane de Zélicourt and Prof. Vartan Kurtcuoglu](http://interfacegroup.ch)
++ *Experts in Physiology*: 
+- [Prof. François Verrey](https://www.physiol.uzh.ch/en/research/institutegroups/EpithelialTransports/TeamMembers/FVerrey.html),
+- [Prof. Olivier Bonny](https://www.unil.ch/dpt/fr/home/menuinst/recherche/groupe-bonny.html),
+- [Prof. Bernard Rossier](https://hset.org/organization/team/),
+- [Prof. Carten Wagner](https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html)
++ *Graphic designer*: [Tara von Grebel](https://www.uzh.ch/id/cl/iframe/org/index.php?id=tg)
++ *Model developer*: [Dr. David Granjon](https://divadnojnarg.github.io)
++ *Web/R developer*: Dr. David Granjon
++ *Server management*: Dr. David Granjon
++ *Server expert*: [Dr. Sergio Maffioletti](https://www.id.uzh.ch/en/scienceit/about/team.html)
++ *Consultants*: [Dr. Nathalie Debard](https://hset.org/organization/team/)
 
 ### **Aknowledgments** ###
 
 ![Figure 1-1](images/aknowledgments.png)
+
+
 I am also very grateful to the [shiny](http://shiny.rstudio.com) developers 
 and [RStudio](https://www.rstudio.com) team, who provide a lot of useful softwares
-and packages. I finally thanks: Dean Attali ([shinyjs](https://deanattali.com/shinyjs/)), 
+and packages. 
+
+I finally thanks: Dean Attali ([shinyjs](https://deanattali.com/shinyjs/)), 
 Karline Soetaert and Thomas Petzoldt ([deSolve](http://desolve.r-forge.r-project.org)),
 Carson Sievert ([plotly](https://plot.ly/r/)), 
 the datastorm team ([visNetwork](http://datastorm-open.github.io/visNetwork/)),
