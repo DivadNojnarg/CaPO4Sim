@@ -41,7 +41,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
                            PTHg_synthesis_PO4_norm
     
     PTHg_degradation_norm <- k_deg_PTHg * PTH_g
-    n_Ca_norm <- (n1_exo/(1 + exp(-rho_exo * Ca_p_norm * (R / Ca_p_norm - Ca_p))) + n2_exo)
+    n_Ca_norm <- n1_exo / (1 + exp(-rho_exo * Ca_p_norm * (R / Ca_p_norm - Ca_p))) + n2_exo
     F_Ca_norm <- beta_exo_PTHg - gamma_exo_PTHg * Ca_p^n_Ca_norm /
                                                 (Ca_p^n_Ca_norm + (K_Ca / Ca_p_norm)^n_Ca_norm)
     PTHg_exocytosis_norm <- F_Ca_norm * PTH_g
@@ -56,7 +56,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
     D3_basal_synthesis_norm <- k_conv_min * D3_inact / D3_norm
     # choose PTH_p or PTH_p_lag[1]
     D3_conv_PTH_norm <- (delta_conv_max * (D3_inact / D3_norm) * PTH_p^n_conv) /
-                        (PTH_p^n_conv + (K_conv/PTH_p_norm)^n_conv) 
+                        (PTH_p^n_conv + (K_conv / PTH_p_norm)^n_conv) 
     D3_conv_Ca_norm <- 1 / (1 + gamma_ca_conv * Ca_p_norm * Ca_p)
     D3_conv_D3_norm <- 1 / (1 + gamma_D3_conv * D3_norm * D3_p)
     D3_conv_P_norm <- 1 / (1 + gamma_P_conv * Pho_p_norm * PO4_p)
@@ -69,7 +69,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     # FGF23 #
     
-    FGF_basal_synthesis_norm <- k_prod_FGF/FGF_p_norm
+    FGF_basal_synthesis_norm <- k_prod_FGF / FGF_p_norm
     FGF_D3_activ_norm <- delta_max_prod_D3 * D3_p^n_prod_FGF /
                          (D3_p^n_prod_FGF + (K_prod_D3 / D3_norm)^n_prod_FGF)
     FGF_P_activ_norm <- PO4_p / (PO4_p + K_prod_P / Pho_p_norm)
@@ -77,7 +77,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
     FGF_synthesis_norm <- FGF_basal_synthesis_norm * 
                           (1 + FGF_D3_activ_norm * FGF_P_activ_norm)
     
-    FGF_degradation_norm <- k_deg_FGF*FGF_p
+    FGF_degradation_norm <- k_deg_FGF * FGF_p
     
     # Ca Abs_intest #
     
@@ -98,9 +98,9 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     # Ca Fast bone #
     
-    Rapid_storage_Ca <- k_p_Ca*Ca_p*Vp  
-    Rapid_release_Ca <- k_f_Ca*Ca_f
-    Accretion_norm <- Lambda_ac_Ca*Ca_f
+    Rapid_storage_Ca <- k_p_Ca * Ca_p * Vp  
+    Rapid_release_Ca <- k_f_Ca * Ca_f
+    Accretion_norm <- Lambda_ac_Ca * Ca_f
     
     # P Fast Bone #
     
@@ -209,8 +209,8 @@ calcium_phosphate_core <- function(t, state, parameters) {
     
     # EGTA reaction
     
-    EGTA_form <- k_on_egta * Ca_p * EGTA_p;
-    EGTA_diss <- k_off_egta * CaEGTA_p;
+    EGTA_form <- k_on_egta * Ca_p * EGTA_p
+    EGTA_diss <- k_off_egta * CaEGTA_p
   
     
     ##################

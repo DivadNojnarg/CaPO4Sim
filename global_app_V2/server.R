@@ -62,16 +62,46 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
+  # out <- reactive({
+  #   
+  #   parameters_bis <- parameters_bis()
+  #   times <- times()
+  #   
+  #   as.data.frame(ode(y = state, 
+  #                     times = times, 
+  #                     func = calcium_phosphate_core, 
+  #                     parms = parameters_bis))
+  #   
+  # })
+  
+  # use the compiled version of the model instead
+  # uncomment the code below to use the classic version
+  # and comment this one. Compiled code is 60 times faster...
   out <- reactive({
-    
-    parameters_bis <- parameters_bis()
+    parameters <- parameters_bis()
     times <- times()
     
-    as.data.frame(ode(y = state, 
-                      times = times, 
-                      func = calcium_phosphate_core, 
-                      parms = parameters_bis))
-    
+    temp <- as.data.frame(
+      ode(y = state,
+          times = times,
+          func = "derivs",
+          parms = parameters,
+          dllname = "compiled_core",
+          initfunc = "initmod",
+          nout = 33,
+          outnames = c("U_Ca", "U_PO4", "Abs_int_Ca", 
+                       "Abs_int_PO4", "Res_Ca", "Res_PO4", 
+                       "Ac_Ca", "Ac_PO4", "Reabs_Ca", "Reabs_PO4", 
+                       "Ca_pf", "Ca_fp", "PO4_pf", "PO4_fp",
+                       "PO4_pc", "PO4_cp", "PTHg_synth", 
+                       "PTHg_synth_D3", "PTHg_synth_PO4",
+                       "PTHg_exo_CaSR", "PTHg_deg", "PTHg_exo", 
+                       "PTHp_deg", "Reabs_PT_PTH",
+                       "Reabs_TAL_CaSR", "Reabs_TAL_PTH", 
+                       "Reabs_DCT_PTH", "Reabs_DCT_D3",
+                       "Abs_int_D3", "Res_PTH", "Res_D3", 
+                       "Reabs_PT_PO4_PTH", "Reabs_PT_PO4_FGF")))
+    temp
   })
   
   output$table <- renderDataTable({ 
@@ -660,7 +690,7 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$tmax,{ # critical value for tmax
     
-    if (input$tmax > 10000) {
+    if (input$tmax > 100000) {
       
       sendSweetAlert(session, 
                      title = "Ooops ...", 

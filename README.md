@@ -68,6 +68,8 @@ library(shinyMenus)
 - a detailed view of PO4 reabsorption and its regulation by PTH and FGF23
 in the proximal tubule is now available.
 - the shinycssloader (spinner when application is busy) has been updated.
+- the core has been replaced by a C code which runs 60 times faster than
+the previous version. 
 
 ## Changelog version 2.2 (case studies app)
 
@@ -83,9 +85,9 @@ be dragged anywhere.
 
 ## General
 
-- set a load balancer
+- set a load balancer (Ready to be done)
 - set authentication
-- use a compiled model instead of only deSolve core
+- <del>use a compiled model instead of only deSolve core<del> (DONE)
 - write "about" section for the staff
 - update the main website
 - refine video tutorials

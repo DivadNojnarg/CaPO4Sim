@@ -56,6 +56,10 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687,
            "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
            "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
 
+# compile the C code containing equations
+system("R CMD SHLIB compiled_core.c")
+dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))
+
 # Function that allows to light the graph when an event occurs:
 # arrows are in yellow to show perturbations
 # take event argument, edges and network
