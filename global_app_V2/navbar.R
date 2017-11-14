@@ -44,7 +44,7 @@ header_box_network <- introBox(
                                         value = 500, 
                                         min = 0, 
                                         max = NA,
-                                        width = "90%"),
+                                        width = "100%"),
                            smDivider(),
                            # navigate to a given time
                            sliderInput("t_now",

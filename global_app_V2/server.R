@@ -16,9 +16,13 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # Basic reactive expressions needed by the solver
-  times <- reactive({ seq(0,input$tmax, by = 1) }) # maybe 0:input$tmax is faster?
+  times <- reactive({ 
+    # add this to avoid error in lsoda if tmax is < 0
+    req(input$tmax > 0)
+    seq(0,input$tmax, by = 1) 
+    }) 
   
-  t_target <- reactive({ input$t_now })
+  t_target <- reactive({input$t_now})
   
   # Parameters: multiply the real parameter value by the user input. 
   # By default, user input = 1 so that parameters are well defined
@@ -687,20 +691,41 @@ shinyServer(function(input, output, session) {
   })
   
   # prevent the user to put infinite value in the max time of integration
-  
-  observeEvent(input$tmax,{ # critical value for tmax
+  # With compiled code, tmax = 100000 min is a correct value
+  observeEvent(input$tmax,{
     
-    if (input$tmax > 100000) {
-      
+    # critical value for tmax
+    feedbackWarning(
+      inputId = "tmax",
+      condition = !is.na(input$tmax),
+      text = "tmax should exist and set between 1 and 100000."
+    )
+    
+    # check if input tmax does not exists or is not numeric
+    if (is.na(input$tmax)) {
       sendSweetAlert(session, 
                      title = "Ooops ...", 
-                     text = "Invalid parameter value: the maximum 
-                     time of simulation is too high!", 
+                     text = "Invalid value: tmax should be set correctly.", 
                      type = "error")
       reset("tmax") # value is reset
-      
+    } else {
+      # if yes, check it is negative
+      if (input$tmax <= 0) {
+        sendSweetAlert(session, 
+                       title = "Ooops ...", 
+                       text = "Invalid value: tmax must be higher than 0.", 
+                       type = "error")
+        reset("tmax") # value is reset
+        # check whether it is too high
+      } else if (input$tmax > 100000) {
+        sendSweetAlert(session, 
+                       title = "Ooops ...", 
+                       text = "Invalid value: the maximum 
+                                 time of simulation is too high!", 
+                       type = "error")
+        reset("tmax") # value is reset
+      }
     }
-    
   })
   
   #------------------------------------------------------------------------- 

@@ -24,6 +24,7 @@ library(rintrojs)
 library(purrr)
 library(stringr)
 library(shinyMenus)
+library(shinyFeedback)
 
 # Load the template components of UI
 source("header.R")

@@ -99,6 +99,8 @@ shinyUI(fluidPage(
   introjsUI(),
   # JS interactions
   useShinyjs(),
+  # print feedback for input
+  useShinyFeedback(),
   
   # Application theme
   theme = shinytheme("journal"),

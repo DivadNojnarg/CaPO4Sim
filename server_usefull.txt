@@ -26,7 +26,8 @@ path_to_calc_change_base <- "/srv/shiny-server/capApp/global_app/www/calc_change
 
 
 scp -r /Users/macdavidgranjon/Movies/2017-10-31\ 17-05-43.mp4 ubuntu@130.60.24.77:/srv/shiny-server/tutorials
-scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/case_studies_app/* ubuntu@130.60.24.77:/srv/shiny-server/case_studies_app_V2
+scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/case_studies_app/* ubuntu@130.60.24.77:/srv/shiny-server/case_studies_app_V2.2
+scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/global_app_V2/* ubuntu@130.60.24.77:/srv/shiny-server/global_app_V2.4
 
 
 deb https://pbil.univ-lyon1.fr/CRAN/ /bin/linux/ubuntu trusty/ # last version of R for 14.04
