@@ -29,7 +29,7 @@ shinyUI(fluidPage(
                     }
 
                     #networkkidney_zoom2{
-                      background-image:url('kidney_zoom2.svg');
+                      background-image:url('kidney_zoom2.png');
                       background-size: auto 100%;
                       background-repeat: no-repeat;
                       background-position: center center;

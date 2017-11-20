@@ -11,6 +11,13 @@
 navbar <- introBox(
   
   smNavBar("testMenu", "", full.width = TRUE, fixed = FALSE, 
+           # show about section and form
+           actionBttn(inputId = "about", 
+                      label = "About",
+                      color = "warning", 
+                      size = "lg",
+                      style = "simple",
+                      icon = icon("info-circle")),
            # show help animation
            actionBttn(inputId = "help", 
                       label = "Help?",
@@ -47,7 +54,7 @@ navbar <- introBox(
                                 status = "primary"),
            # selector for hormonal regulation
            switchInput(inputId = "network_hormonal_choice", 
-                       label = "Show regulations", 
+                       label = "Regulations?", 
                        value = FALSE,
                        onStatus = "success",
                        offStatus = "danger",
@@ -177,7 +184,7 @@ navbar <- introBox(
                            ),
                          
                          awesomeCheckbox("run_Ca_inject", 
-                                         "Ca IV injection", 
+                                         "Ca/EGTA IV injection", 
                                          value = FALSE, 
                                          status = "primary", 
                                          width = NULL) %>%

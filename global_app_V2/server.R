@@ -632,12 +632,33 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
+  #  About section and form
+  #
+  #-------------------------------------------------------------------------
+  
+  # about us section as well as form contact
+  observeEvent(input$about,{
+    aboutmod <- modalDialog(
+      bs_carousel(id = "about_carousel", 
+                  use_controls = FALSE, 
+                  use_indicators = TRUE) %>%
+        bs_append(content = includeHTML("contact.html")) %>%
+        bs_append(content = NULL),
+      easyClose = TRUE,
+      footer = NULL
+        )
+    
+    showModal(aboutmod)
+    
+  })
+  
+  #------------------------------------------------------------------------- 
+  #  
   #  Notification events to explain the user how to play with the app
   #
   #-------------------------------------------------------------------------
   
   # help animation with introjs
-  
   observeEvent(input$help,{
     introjs(session)
   })
@@ -651,7 +672,7 @@ shinyServer(function(input, output, session) {
   observeEvent(input$ShowDemo,{
     test <- modalDialog(
       #title = "Tutorial",
-      bs_carousel(id = "with_the_beatles", 
+      bs_carousel(id = "demo_carousel", 
                   use_controls = FALSE, 
                   use_indicators = TRUE) %>%
         bs_append(content = HTML('<iframe width="560" height="315"

@@ -35,7 +35,8 @@ Andrew Sali ([shinycssloaders](https://github.com/andrewsali/shinycssloaders)),
 Yang Tang ([shinyjqui](https://cran.r-project.org/web/packages/shinyjqui/vignettes/introduction.html)),
 Ian Lyttle ([bsplus](http://ijlyttle.github.io/bsplus/)),
 Kent Russell ([sweetalertR](http://timelyportfolio.github.io/buildingwidgets/week25/sweetalert_examples.html)),
-Carl Ganz and Afshin Mehrabani ([rintrojs](https://carlganz.github.io/rintrojs/)).
+Carl Ganz and Afshin Mehrabani ([rintrojs](https://carlganz.github.io/rintrojs/)),
+Andy Merlino ([shinyFeedback](https://cran.r-project.org/web/packages/shinyFeedback/vignettes/shinyFeedback-intro.html))
 
 ```R
 library(shiny)
@@ -55,6 +56,7 @@ library(rintrojs)
 library(purrr)
 library(stringr)
 library(shinyMenus)
+library(shinyFeedback)
 ```
 
 ### **Contacts** ###
@@ -68,6 +70,9 @@ library(shinyMenus)
 - a detailed view of PO4 reabsorption and its regulation by PTH and FGF23
 in the proximal tubule is now available.
 - the shinycssloader (spinner when application is busy) has been updated.
+- tmax is now secured: if it has a bad value (missing, negative,...), then an
+error is displayed and the parameter is reset. Moreover, an orange text indicates
+which value to choose for tmax (shinyFeedback)
 - the core has been replaced by a C code which runs 60 times faster than
 the previous version. 
 

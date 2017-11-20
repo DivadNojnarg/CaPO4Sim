@@ -310,6 +310,28 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
+  #  About section and form
+  #
+  #-------------------------------------------------------------------------
+  
+  # about us section as well as form contact
+  observeEvent(input$about,{
+    aboutmod <- modalDialog(
+      bs_carousel(id = "about_carousel", 
+                  use_controls = FALSE, 
+                  use_indicators = TRUE) %>%
+        bs_append(content = includeHTML("contact.html")) %>%
+        bs_append(content = NULL),
+      easyClose = TRUE,
+      footer = NULL
+    )
+    
+    showModal(aboutmod)
+    
+  })
+  
+  #------------------------------------------------------------------------- 
+  #  
   #  Video tutorial
   #
   #-------------------------------------------------------------------------

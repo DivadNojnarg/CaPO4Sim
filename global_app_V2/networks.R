@@ -337,11 +337,11 @@ generate_nodes_kidney_zoom2 <- function() {
     id = 1:3,
     shape = c(rep("text", 3)), 
     label = c(rep("", 3)),
-    x = c(-125, -2, 34), 
+    x = c(-100, 25, 60), 
     y = c(-35, 57, -135), 
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
-    size = c(10,10,10), 
+    size = c(30,30,30), 
     #fixed = list("x" = TRUE, "y" = TRUE),
     hidden = c(FALSE, FALSE, FALSE))
   

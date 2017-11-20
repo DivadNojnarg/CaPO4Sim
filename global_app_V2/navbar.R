@@ -2,6 +2,13 @@ source("help.R")
 header_box_network <- introBox(
   fluidPage(
     smNavBar("testMenu", "", full.width = TRUE, fixed = FALSE, 
+             # show about section and form
+             actionBttn(inputId = "about", 
+                        label = "About",
+                        color = "warning", 
+                        size = "lg",
+                        style = "simple",
+                        icon = icon("info-circle")),
              # enable notifications or not since this can be boring
              actionBttn(inputId = "help", 
                         label = "Help?",
