@@ -87,6 +87,32 @@ shinyUI(fluidPage(
                       height:100%;
                     }
 
+                    .network_capnone{
+                      padding-left: 0; 
+                      padding-right: 0;
+                      height:100%;
+                    }
+                    
+                    .network_caprat{
+                      padding-left: 0; 
+                      padding-right: 0;
+                      background-image:url('rat_wholebody.svg');
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                      height:100%;
+                    }
+                    
+                    .network_caphuman{
+                      padding-left: 0; 
+                      padding-right: 0;
+                      background-image:url('human_wholebody.svg');
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                      height:100%;
+                    }
+
                     "))
   ),
   

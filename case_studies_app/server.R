@@ -91,12 +91,30 @@ shinyServer(function(input, output, session) {
     
     })
   
-  output$id <- renderPrint({
-    input$current_edge_id
+  output$id <- renderPrint({input$current_edge_id})
+  output$id_bis <- renderPrint({input$current_node_id})
+  output$background_choice <- renderPrint({input$background_choice})
+  
+  # node coordinates
+  # useful when developing to return x and y position
+  output$position <- renderPrint( vals$coords ) 
+  vals <- reactiveValues(coords = NULL, viewposition = NULL)
+  observe({
+    invalidateLater(1000)
+    visNetworkProxy("network_Ca") %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_Ca_positions)) 
+      do.call(rbind, input$network_Ca_positions)
   })
-
-  output$id_bis <- renderPrint({
-    input$current_node_id
+  
+  # view position (of the camera)
+  # useful to set a proper view
+  output$viewposition <- renderPrint({vals$viewposition})
+  observe({
+    invalidateLater(1000)
+    visNetworkProxy("network_Ca") %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_Ca_viewPosition))
+      do.call(rbind, input$network_Ca_viewPosition)
+    
   })
   
   #-------------------------------------------------------------------------
@@ -261,7 +279,13 @@ shinyServer(function(input, output, session) {
     if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
       
       sliderTextInput(inputId = paste("slider_", current_sim, sep = ""), 
-                      label = paste(current_sim, "severity", sep = " "), 
+                      label = if (input$run_php1) {
+                        "PTH synthesis fold increase"
+                      } else if (input$run_hypopara) {
+                        "PTH synthesis fold decrease"
+                      } else if (input$run_hypoD3) {
+                        "25(OH)D stock"
+                      }, 
                       choices = seq(from = ifelse(input$run_php1, 0, 1), 
                                     to = ifelse(input$run_php1, 300, 0), 
                                     by = ifelse(input$run_php1, 20, -0.1)), 

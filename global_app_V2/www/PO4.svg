@@ -10,5 +10,5 @@
   <circle class="cls-33" cx="415.58" cy="177.58" r="3.99" transform="matrix(0.9999999999999999, 0, 0, 1.0000040531158447, -114.89744567871094, 132.43141174316403)"/>
   <circle class="cls-33" cx="401.01" cy="175.51" r="3.99" transform="matrix(0.9999999999999999, 0, 0, 1.0000040531158447, -114.89741516113281, 132.4314270019531)"/>
   <circle class="cls-33" cx="409.19" cy="166.37" r="3.99" transform="matrix(1, 0, 0, 0.999996, -114.897415, 133.432709)"/>
-  <text class="cls-35" style="white-space: pre; font-size: 14px;" x="277.982" y="333.522" transform="matrix(0.9999999999999999, 0, 0, 0.9999999999999999, 0, -1.4210854715202004e-14)">PO4p</text>
+  <text class="cls-35" style="white-space: pre; font-size: 14px;" x="274.396" y="334.29">[PO4]p</text>
 </svg>

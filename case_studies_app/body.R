@@ -103,6 +103,13 @@ body <- dashboardBody(
                data.intro = help_text[2]
              )#,
              # column(4, align = "left",
+             #        verbatimTextOutput("position")
+             # ),
+             # column(4, align = "center",
+             #        verbatimTextOutput("viewposition")
+             # )
+             #,
+             # column(4, align = "left",
              #        verbatimTextOutput("counter_nav")
              # ),
              # column(4, align = "center",

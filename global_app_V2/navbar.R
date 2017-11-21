@@ -22,6 +22,13 @@ header_box_network <- introBox(
                         size = "lg",
                         style = "simple",
                         icon = icon("youtube-play")),
+             # show background or not 
+             awesomeCheckboxGroup(inputId = "background_choice", 
+                                  label = "Background", 
+                                  choices = c("rat","human"), 
+                                  selected = "", 
+                                  inline = TRUE, 
+                                  status = "primary"),
              # select the network
              awesomeCheckboxGroup(inputId = "network_Ca_choice", 
                                   label = "Choose your network", 
@@ -33,13 +40,6 @@ header_box_network <- introBox(
              switchInput(inputId = "network_hormonal_choice", 
                          label = "Show regulations", 
                          value = FALSE,
-                         onStatus = "success",
-                         offStatus = "danger",
-                         size = "mini"),
-             # show background or not 
-             switchInput(inputId = "background_switch", 
-                         label = "Show background", 
-                         value = TRUE,
                          onStatus = "success",
                          offStatus = "danger",
                          size = "mini"),

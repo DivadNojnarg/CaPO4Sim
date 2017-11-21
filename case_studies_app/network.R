@@ -75,8 +75,15 @@ generate_nodes_Ca <- function(input) {
               ifelse(input$network_hormonal_choice == "TRUE","image","text")), 
     image = c("intestine.svg","plasma.svg","rapid-bone.svg",
               "bone.svg","kidney.svg","kidney_zoom1.svg","urine.svg",
-              "cells.svg","Cap.svg","PO4.svg","parathyroid_gland.svg","PTH.svg",
-              "D3.svg","D3.svg","D3.svg","FGF23.svg"),
+              "cells.svg","Cap.svg","PO4.svg",
+              if (is.null(input$background_choice)) {
+                "parathyroid_gland.svg"
+              } else if (input$background_choice == "rat") {
+                "parathyroid_gland.svg"
+              } else {
+                "parathyroid_gland_human.svg"
+              }
+              ,"PTH.svg", "D3.svg","D3.svg","D3.svg","FGF23.svg"),
     label = c(rep("", 6), rep("",10)),
     fixed = list("x" = TRUE, "y" = TRUE),
     title = c(paste(a("About intestinal Ca absorption", 
@@ -123,8 +130,23 @@ generate_nodes_Ca <- function(input) {
               paste(a("About FGF23", 
                       href = FGF23_web,
                       target = "_blank"))), # tooltip to display an image
-    x = c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481),
-    y = c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452),
+    
+    x = if (is.null(input$background_choice)) {
+          c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481)
+        } else if (input$background_choice == "rat") {
+          c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481)
+        } else {
+          c(13,-80,-185,-322,157,333,7,-175,290,320,9,-466,330,385,-386,481)
+        },
+    
+    y = if (is.null(input$background_choice)) {
+          c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452)
+        } else if (input$background_choice == "rat") {
+          c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452)
+        } else {
+          c(23,320,524,214,189,439,581,88,-317,-633,-449,400,-452,0,-106,-452)
+        },
+      
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
     size = c(rep(70,5), 150, rep(70,2), rep(40,2), 70, rep(40,5)),

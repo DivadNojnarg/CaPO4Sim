@@ -10,5 +10,5 @@
   <circle class="cls-33" cx="499.99" cy="30" r="3.99" transform="matrix(0.9999999999999999, 0, 0, 0.9999999999999999, -415.112548828125, 287.1368103027344)"/>
   <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(1, 0, 0, 1.000005, -414.112549, 287.136677)"/>
   <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(1, 0, 0, 0.999998, -415.112549, 288.136853)"/>
-  <text class="cls-35" transform="matrix(0.9999999999999999, 0, 0, 0.9999999999999999, 91.77745056152342, 337.5668029785156)" style="white-space: pre;">D3</text>
+  <text class="cls-35" style="white-space: pre; font-size: 14px;" x="84.057" y="337.104">[D3]p</text>
 </svg>

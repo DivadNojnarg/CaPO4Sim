@@ -79,8 +79,8 @@ shinyServer(function(input, output, session) {
   # })
   
   # use the compiled version of the model instead
-  # uncomment the code below to use the classic version
-  # and comment this one. Compiled code is 60 times faster...
+  # uncomment the code above to use the classic version
+  # and comment this one. Compiled code is at least 60 times faster...
   out <- reactive({
     parameters <- parameters_bis()
     times <- times()
@@ -808,11 +808,41 @@ shinyServer(function(input, output, session) {
                    
                  })
   
-  # display or do not display the network background
-  observeEvent(input$background_switch,{
+  # display or not display the network background
+  observe({
     
-    toggleClass(id = "network_cap", class = "network_cap",
-                condition = input$background_switch)
+    if (!is_empty(input$background_choice)) {
+      if (input$background_choice == "rat") {
+        addClass(id = "network_cap", class = "network_caprat")
+        removeClass(id = "network_cap", class = "network_caphuman")
+      } else {
+        removeClass(id = "network_cap", class = "network_caprat")
+        addClass(id = "network_cap", class = "network_caphuman")
+      }
+    } else {
+      addClass(id = "network_cap", class = "network_capnone")
+      removeClass(id = "network_cap", class = "network_caphuman")
+      removeClass(id = "network_cap", class = "network_caprat")
+    }
+    #print(input$background_choice)
+    
+  })
+  
+  # prevent user from selecting multiple background
+  observe({
+    
+    if (is.element("rat", input$background_choice) &&
+        !is.element("human", input$background_choice)) {
+      disable(selector = "#background_choice input[value='human']")
+    } else {
+      enable(selector = "#background_choice input[value='human']")
+    }
+    if (is.element("human", input$background_choice) && 
+        !is.element("rat", input$background_choice)) {
+      disable(selector = "#background_choice input[value='rat']")
+    } else {
+      enable(selector = "#background_choice input[value='rat']")
+    }
     
   })
   

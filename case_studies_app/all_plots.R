@@ -20,7 +20,7 @@ make_plot_php1 <- function(input) {
   names(php1_vec) <- paste("k_prod_PTHg =", php1_vec)
   
   # define x and y ranges
-  xvar <- list(title = "k_prod_PTHg fold increase", 
+  xvar <- list(title = "PTH synthesis fold increase", 
                range = c(min(php1_vec/php1_vec[1]), 
                          max(php1_vec)/php1_vec[1]))
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 2))
@@ -36,7 +36,7 @@ make_plot_php1 <- function(input) {
                            showlegend = F) %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"PO4_p"]/php1_table[1,"PO4_p"], 
               line = list(color = 'rgb(244, 27, 27)', width = 2), showlegend = F) %>%
-    add_lines(x = slidersteady_value, y = c(0, 1.6), 
+    add_lines(x = slidersteady_value, y = c(0, 1.8), 
               line = list(size = 6, color = 'orange', dash = "solid", width = 6)) %>%
     add_annotations(x = 400, y = 2.6, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = T) %>%
     add_annotations(x = 400, y = 0.3, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = T) %>%
@@ -102,7 +102,8 @@ make_plot_php1 <- function(input) {
                        plot_PO4_fluxes_php1, 
                        titleX = TRUE, titleY = TRUE, nrows = 2, 
                        margin = c(0.07, 0.07, 0.07, 0.07), 
-                       heights = c(0.5, 0.5))
+                       heights = c(0.5, 0.5)) %>%
+    config(displayModeBar = FALSE)
   
   plot_php1$elementId <- NULL
   
@@ -126,7 +127,7 @@ make_plot_hypoD3 <- function(input) {
   
   
   # define x and y ranges
-  xvar <- list(title = "D3_inact fold decrease", 
+  xvar <- list(title = "25(OH)D stock fold decrease", 
                range = c(max(hypoD3_vec/hypoD3_vec[1]), 
                          min(hypoD3_vec)/hypoD3_vec[1]),
                autorange = F, autorange = "reversed")
@@ -213,7 +214,9 @@ make_plot_hypoD3 <- function(input) {
   # gather all subplots
   plot_hypoD3 <- subplot(plot_CaP_hypoD3, plot_hormones_hypoD3, plot_Ca_fluxes_hypoD3, 
                          plot_PO4_fluxes_hypoD3, titleX = TRUE, titleY = TRUE,
-                         nrows = 2, margin = 0.07, heights = c(0.5,0.5))
+                         nrows = 2, margin = 0.07, heights = c(0.5,0.5)) %>%
+    config(displayModeBar = FALSE)
+  
   plot_hypoD3$elementId <- NULL
   
   plot_hypoD3
@@ -235,7 +238,7 @@ make_plot_hypopara <- function(input) {
   names(hypopara_vec) <- paste("k_prod_PTHg =",  hypopara_vec)
   
   # define x and y ranges
-  xvar <- list(title = "k_prod_PTHg fold decrease", 
+  xvar <- list(title = "PTH synthesis fold decrease", 
                range = c(max(hypopara_vec/hypopara_vec[1]), 
                          min(hypopara_vec)/hypopara_vec[1]),
                autorange = F, autorange = "reversed")
@@ -341,7 +344,8 @@ make_plot_hypopara <- function(input) {
   plot_hypopara <- subplot(plot_CaP_hypopara, plot_hormones_hypopara, 
                            plot_Ca_fluxes_hypopara, plot_PO4_fluxes_hypopara, 
                            titleX = TRUE, titleY = TRUE,
-                           nrows = 2, margin = 0.07, heights = c(0.5,0.5))
+                           nrows = 2, margin = 0.07, heights = c(0.5,0.5)) %>%
+    config(displayModeBar = FALSE)
   
   plot_hypopara$elementId <- NULL
   
@@ -376,11 +380,11 @@ make_plot_Ca_inject <- function(input){
                 y = Ca_iv_table[,"Ca_p"]/Ca_iv_table[1,"Ca_p"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-    add_markers(x = injectevents$times, 
-                y = injectevents$Ca_val, mode = 'markers', 
-                symbols = "o", marker = list(size = 10, color = 'black'),
-                error_y = list(array = injectevents$err_Ca, color = 'black'), 
-                line = list(color = 'white')) %>%
+    # add_markers(x = injectevents$times, 
+    #             y = injectevents$Ca_val, mode = 'markers', 
+    #             symbols = "o", marker = list(size = 10, color = 'black'),
+    #             error_y = list(array = injectevents$err_Ca, color = 'black'), 
+    #             line = list(color = 'white')) %>%
     add_lines(x = Ca_iv_table[,1], 
               y = Ca_iv_table[,"Ca_p"]/Ca_iv_table[1,"Ca_p"], 
               type = "scatter", mode = "lines", 
@@ -399,11 +403,11 @@ make_plot_Ca_inject <- function(input){
                 y = Ca_iv_table[,"PTH_p"]/Ca_iv_table[1,"PTH_p"], 
                 type = "scatter", mode = "lines",
                 line = list(color = 'black', width = 2)) %>%
-    add_trace(x = injectevents$times, 
-              y = injectevents$PTH_val, mode = 'markers', symbols = "o", 
-              marker = list(size = 10, color = 'black'),
-              error_y = list(array = injectevents$err_PTH, color = 'black'), 
-              line = list(color = 'white')) %>%
+    # add_trace(x = injectevents$times, 
+    #           y = injectevents$PTH_val, mode = 'markers', symbols = "o", 
+    #           marker = list(size = 10, color = 'black'),
+    #           error_y = list(array = injectevents$err_PTH, color = 'black'), 
+    #           line = list(color = 'white')) %>%
     add_lines(x = Ca_iv_table[,1], 
               y = Ca_iv_table[,"PTH_p"]/Ca_iv_table[1,"PTH_p"], 
               type = "scatter", mode = "lines",
@@ -414,7 +418,9 @@ make_plot_Ca_inject <- function(input){
     layout(xaxis = xvar, yaxis = yvar2)
   
   # gather all subplots
-  p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 1, margin = 0.05)
+  p <- subplot(p1, p2, titleX = TRUE, titleY = TRUE, nrows = 1, margin = 0.05) %>%
+    config(displayModeBar = FALSE)
+  
   p$elementId <- NULL
   p
   hide_legend(p)
@@ -450,11 +456,11 @@ make_plot_PO4_inject <- function(input){
   p1 <- plot_ly(PO4_iv_table, x = PO4_iv_table[,1], 
                 y = PO4_iv_table[,"PO4_tot"], type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
-    add_markers(x = injectevents$times, 
-                y = injectevents$PO4_val, mode = 'markers', symbols = "o", 
-                marker = list(size = 10, color = 'black'),
-                error_y = list(array = injectevents$err_PO4, color = 'black'), 
-                line = list(color = 'white')) %>%
+    # add_markers(x = injectevents$times, 
+    #             y = injectevents$PO4_val, mode = 'markers', symbols = "o", 
+    #             marker = list(size = 10, color = 'black'),
+    #             error_y = list(array = injectevents$err_PO4, color = 'black'), 
+    #             line = list(color = 'white')) %>%
     add_lines(x = PO4_iv_table[,1], 
               y = PO4_iv_table[,"PO4_tot"], type = "scatter", mode = "lines", 
               line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
@@ -468,11 +474,11 @@ make_plot_PO4_inject <- function(input){
                 y = PO4_iv_table[,"Ca_tot"]/PO4_iv_table[1,"Ca_tot"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-    add_markers(x = injectevents$times, 
-                y = injectevents$Ca_val, mode = 'markers', symbols = "o", 
-                marker = list(size = 10, color = 'black'),
-                error_y = list(array = injectevents$err_Ca, color = 'black'), 
-                line = list(color = 'white')) %>%
+    # add_markers(x = injectevents$times, 
+    #             y = injectevents$Ca_val, mode = 'markers', symbols = "o", 
+    #             marker = list(size = 10, color = 'black'),
+    #             error_y = list(array = injectevents$err_Ca, color = 'black'), 
+    #             line = list(color = 'white')) %>%
     add_lines(x = PO4_iv_table[,1], 
               y = PO4_iv_table[,"Ca_tot"]/PO4_iv_table[1,"Ca_tot"], 
               type = "scatter", mode = "lines", 
@@ -488,11 +494,11 @@ make_plot_PO4_inject <- function(input){
                 y = PO4_iv_table[,"PTH_p"]/PO4_iv_table[1,"PTH_p"],
                 type = "scatter", mode = "lines",
                 line = list(color = 'black', width = 2)) %>%
-    add_trace(x = injectevents$times, 
-              y = injectevents$PTH_val, mode = 'markers', symbols = "o", 
-              marker = list(size = 10, color = 'black'),
-              error_y = list(array = injectevents$err_PTH, color = '#000000'), 
-              line = list(color = 'white')) %>%
+    # add_trace(x = injectevents$times, 
+    #           y = injectevents$PTH_val, mode = 'markers', symbols = "o", 
+    #           marker = list(size = 10, color = 'black'),
+    #           error_y = list(array = injectevents$err_PTH, color = '#000000'), 
+    #           line = list(color = 'white')) %>%
     add_lines(x = PO4_iv_table[,1], 
               y = PO4_iv_table[,"PTH_p"]/PO4_iv_table[1,"PTH_p"], 
               type = "scatter", mode = "lines", 
@@ -503,7 +509,9 @@ make_plot_PO4_inject <- function(input){
     layout(xaxis = xvar, yaxis = yvar3)
   
   # gather all subplots
-  p <- subplot(p1, p2, p3, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.05)
+  p <- subplot(p1, p2, p3, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.05) %>%
+    config(displayModeBar = FALSE)
+  
   p$elementId <- NULL
   p
   hide_legend(p)
@@ -540,11 +548,11 @@ make_plot_PO4_gav <- function(input){
   p1 <- plot_ly(PO4_gav_table, x = PO4_gav_table[,1], 
                 y = PO4_gav_table[,"PO4_tot"], type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
-    add_markers(x = gavevents$times, 
-                y = gavevents$PO4_val, mode = 'markers', symbols = "o", 
-                marker = list(size = 10, color = 'black'),
-                error_y = list(array = gavevents$err_PO4, color = 'black'), 
-                line = list(color = 'white')) %>%
+    #add_markers(x = gavevents$times, 
+    #            y = gavevents$PO4_val, mode = 'markers', symbols = "o", 
+    #            marker = list(size = 10, color = 'black'),
+    #            error_y = list(array = gavevents$err_PO4, color = 'black'), 
+    #            line = list(color = 'white')) %>%
     add_lines(x = PO4_gav_table[,1], y = PO4_gav_table[,"PO4_tot"], 
               type = "scatter", mode = "lines", 
               line = list(color = 'rgb(244, 27, 27)', width = 2)) %>%
@@ -558,11 +566,11 @@ make_plot_PO4_gav <- function(input){
                 y = PO4_gav_table[,"Ca_tot"]/PO4_gav_table[1,"Ca_tot"], 
                 type = "scatter", mode = "lines", 
                 line = list(color = 'rgb(27, 27, 244)', width = 2)) %>%
-    add_markers(x = gavevents$times, 
-                y = gavevents$Ca_val, mode = 'markers', symbols = "o", 
-                marker = list(size = 10, color = 'black'),
-                error_y = list(array = gavevents$err_Ca, color = 'black'), 
-                line = list(color = 'white')) %>%
+    # add_markers(x = gavevents$times, 
+    #             y = gavevents$Ca_val, mode = 'markers', symbols = "o", 
+    #             marker = list(size = 10, color = 'black'),
+    #             error_y = list(array = gavevents$err_Ca, color = 'black'), 
+    #             line = list(color = 'white')) %>%
     add_lines(x = PO4_gav_table[,1], 
               y = PO4_gav_table[,"Ca_tot"]/PO4_gav_table[1,"Ca_tot"], 
               type = "scatter", mode = "lines", 
@@ -576,11 +584,11 @@ make_plot_PO4_gav <- function(input){
   p3 <- plot_ly(data = PO4_gav_table, x = PO4_gav_table[,1], 
                 y = PO4_gav_table[,"PTH_p"]/PO4_gav_table[1,"PTH_p"], type = "scatter", mode = "lines",
                 line = list(color = 'black', width = 2)) %>%
-    add_trace(x = gavevents$times, 
-              y = gavevents$PTH_val, mode = 'markers', symbols = "o", 
-              marker = list(size = 10, color = 'black'),
-              error_y = list(array = gavevents$err_PTH, color = 'black'), 
-              line = list(color = 'white')) %>%
+    # add_trace(x = gavevents$times, 
+    #           y = gavevents$PTH_val, mode = 'markers', symbols = "o", 
+    #           marker = list(size = 10, color = 'black'),
+    #           error_y = list(array = gavevents$err_PTH, color = 'black'), 
+    #           line = list(color = 'white')) %>%
     add_lines(x = PO4_gav_table[,1], 
               y = PO4_gav_table[,"PTH_p"]/PO4_gav_table[1,"PTH_p"], 
               type = "scatter", mode = "lines", 
@@ -591,7 +599,9 @@ make_plot_PO4_gav <- function(input){
     layout(xaxis = xvar, yaxis = yvar3)
   
   # gather all subplots
-  p <- subplot(p1, p2, p3, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.05)
+  p <- subplot(p1, p2, p3, titleX = TRUE, titleY = TRUE, nrows = 2, margin = 0.05) %>%
+    config(displayModeBar = FALSE)
+  
   p$elementId <- NULL
   p
   hide_legend(p)

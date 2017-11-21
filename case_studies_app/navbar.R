@@ -38,20 +38,6 @@ navbar <- introBox(
                        offStatus = "danger", 
                        value = TRUE, 
                        size = "mini"),
-           # show background or not 
-           awesomeCheckboxGroup(inputId = "background_choice", 
-                                label = "Choose your background", 
-                                choices = c("rat","human"), 
-                                selected = "", 
-                                inline = TRUE, 
-                                status = "primary"),
-           # select the network
-           awesomeCheckboxGroup(inputId = "network_Ca_choice", 
-                                label = "Choose your network", 
-                                choices = c("Ca","PO4"), 
-                                selected = "Ca", 
-                                inline = TRUE, 
-                                status = "primary"),
            # selector for hormonal regulation
            switchInput(inputId = "network_hormonal_choice", 
                        label = "Regulations?", 
@@ -59,6 +45,22 @@ navbar <- introBox(
                        onStatus = "success",
                        offStatus = "danger",
                        size = "mini"),
+           # show background or not 
+           awesomeCheckboxGroup(inputId = "background_choice", 
+                                label = "Background", 
+                                choices = c("rat","human"), 
+                                selected = "", 
+                                inline = TRUE, 
+                                status = "primary"),
+           # select the network
+           awesomeCheckboxGroup(inputId = "network_Ca_choice", 
+                                label = "Network", 
+                                choices = c("Ca","PO4"), 
+                                selected = "Ca", 
+                                inline = TRUE, 
+                                status = "primary"),
+           
+           # simulations
            smNavDropdown("Steady-state simulations",
                          
                          # Modal for primary hyperparathyroidism
@@ -78,7 +80,7 @@ navbar <- introBox(
                            ),
 
                          awesomeCheckbox("run_php1",
-                                         "PHP1",
+                                         "Primary hyperparathyroidism",
                                          value = FALSE,
                                          status = "primary",
                                          width = NULL) %>%
@@ -159,7 +161,7 @@ navbar <- introBox(
                            ),
                          
                          awesomeCheckbox("run_hypoD3", 
-                                         "D3 deficiency", 
+                                         "25(OH)D deficiency", 
                                          value = FALSE, 
                                          status = "primary", 
                                          width = NULL) %>%
