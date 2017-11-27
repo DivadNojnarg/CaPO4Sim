@@ -59,7 +59,6 @@ calc_change <- function(out, t_target) {
   Res_D3_change <- (out[t_target, "Res_D3"] - 0.000225)/0.000225*100
   
   # Change for PO4 reabsorption due to PTH and FGF23
-  
   Reabs_PT_PO4_PTH_change <- (out[t_target, "Reabs_PT_PO4_PTH"] - 0.09952)/0.09952*100
   Reabs_PT_PO4_FGF_change <- (out[t_target, "Reabs_PT_PO4_FGF"] - 0.14124)/0.14124*100
   
@@ -90,8 +89,8 @@ calc_change <- function(out, t_target) {
     Abs_int_D3_change = Abs_int_D3_change,
     Res_PTH_change = Res_PTH_change, # 25
     Res_D3_change = Res_D3_change,
-    Reabs_PT_PO4_PTH_change,
-    Reabs_PT_PO4_FGF_change, # 28
+    Reabs_PT_PO4_PTH_change = Reabs_PT_PO4_PTH_change,
+    Reabs_PT_PO4_FGF_change = Reabs_PT_PO4_FGF_change, # 28
     stringsAsFactors = FALSE)
   
 }

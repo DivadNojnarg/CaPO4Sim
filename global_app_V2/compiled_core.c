@@ -9,10 +9,10 @@
 
 /* includes */
 #include <R.h>
-static double parameters[126];
 
 
 /* define parameters */
+static double parameters[126];
 
 /* reactive parameters */
 #define k_prod_PTHg parameters[0]
@@ -41,8 +41,6 @@ static double parameters[126];
 #define GFR parameters[23]
 
 /* fixed parameters */
-
-
 #define Vc parameters[24]
 #define k_deg_PTHg parameters[25]
 #define k_deg_PTHp parameters[26]
@@ -142,6 +140,7 @@ static double parameters[126];
 #define k_off_egta parameters[120]
 #define k_inject_egta parameters[121]
 #define K_sp_DCPD parameters[122]
+
 /* define 3 calculated parameters */
 #define r parameters[123]
 #define a parameters[124]
@@ -403,7 +402,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   ydot[21] = EGTA_form / Ca_EGTA_norm - EGTA_diss;
   
   
-  /* This vaariables will be used byt the application
+  /* This variables will be used by the application
      Do not change their name nor their order.
   */
   yout[0] = Excretion_norm;
