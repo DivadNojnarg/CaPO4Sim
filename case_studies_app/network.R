@@ -16,7 +16,8 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
              edges, 
              width = "100%", 
              height = "100%") %>%
-    visNodes(shapeProperties = list(useBorderWithImage = FALSE)) %>%
+    visNodes(shapeProperties = list(useBorderWithImage = FALSE,
+                                    interpolation = FALSE)) %>%
     # put shadow on false
     visEdges(shadow = FALSE, 
              font = list(align = "horizontal")) %>%
