@@ -1,0 +1,155 @@
+# Use sudo to edit files. You can use gedit, nano, vim ...
+# Need to configure port 80 and port 3838 in the sciencecloud interface
+# (see below). I guess it would be similar with AWS or digitalOcean...
+
+# Rshiny rules
+Sortie	IPv6	Tout	Tout	::/0	-
+Sortie	IPv4	Tout	Tout	0.0.0.0/0	-
+Entrée	IPv4	TCP	3838	0.0.0.0/0	-
+Sortie	IPv4	TCP	3838	0.0.0.0/0 -
+
+# Apache2 rules
+Sortie	IPv4	Tout	Tout	0.0.0.0/0	-
+Sortie	IPv6	Tout	Tout	::/0	-
+Entrée	IPv4	TCP	80 (HTTP)	0.0.0.0/0	-
+Sortie	IPv4	TCP	80 (HTTP)	0.0.0.0/0 -
+
+# default rules
+Sortie	IPv4	Tout	Tout	0.0.0.0/0	-	
+Entrée	IPv6	Tout	Tout	-	default	
+Sortie	IPv6	Tout	Tout	::/0	-	
+Entrée	IPv4	Tout	Tout	- default	
+Entrée	IPv4	TCP	22 (SSH)	0.0.0.0/0	-
+
+
+  
+  
+  
+  
+# Set up /etc/shiny-server/shiny-server.conf file.
+# Add 127.0.0.1 to listen only to 80 and block access to 3838
+# otherwise user would be able to bypass the authentication on port 80.
+# You should also redirect 3838 to 80 via apache2 (see below) otherwise
+# your app will not be accessible
+server{
+  listen 3838 127.0.0.1;
+  
+  location / {
+    site_dir /srv/shiny-server;
+    log_dir /var/log/shiny-server;
+    directory_index off;
+  }
+}
+
+
+
+
+
+##  /etc/apache2/sites-enabled/000-default.conf
+# add the script below in the file and save
+<VirtualHost *:80>
+  # The ServerName directive sets the request scheme, hostname and port that
+  # the server uses to identify itself. This is used when creating
+  # redirection URLs. In the context of virtual hosts, the ServerName
+  # specifies what hostname must appear in the request's Host: header to
+  # match this virtual host. For the default virtual host (this file) this
+  # value is not decisive as it is used as a last resort host regardless.
+  # However, you must set it for any further virtual host explicitly.
+  #ServerName www.example.com
+  
+  ServerAdmin webmaster@localhost
+
+# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+# error, crit, alert, emerg.
+# It is also possible to configure the loglevel for particular
+# modules, e.g.
+#LogLevel info ssl:warn
+
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+# For most configuration files from conf-available/, which are
+# enabled or disabled at a global level, it is possible to
+# include a line for only one particular virtual host. For example the
+# following line enables the CGI configuration for this host only
+# after it has been globally disabled with "a2disconf".
+#Include conf-available/serve-cgi-bin.conf
+
+# redirection from 3838 to 80
+  ProxyPass / http://localhost:3838/ 
+  ProxyPassReverse / http://localhost:3838/ 
+  ProxyPreserveHost On
+
+# authentication. Users are stored in htpasswd file (see below)
+<Location />
+  AuthType Basic
+  AuthName "Restricted Content"
+  AuthUserFile /etc/apache2/htpasswd.users
+  Require valid-user
+</Location>
+  
+</VirtualHost>
+  
+
+    
+    
+    
+    
+# remove the following from /etc/apache2/apache2.conf
+# I don't know if it was set by previous admins or not
+  <VirtualHost *:80>
+  
+  Redirect /shiny /shiny/
+  ProxyPass /shiny/ http://127.0.0.1:3838/
+  ProxyPassReverse /shiny/ http://127.0.0.1:3838/
+  
+  <Location /shiny>
+    AuthType Basic
+    AuthName "Enter your login name and password"
+    AuthUserFile /etc/apache2/htpasswd.users
+    Require valid-user
+  </Location>
+  
+  </VirtualHost>
+  
+     
+      
+     
+        
+# Add a new user to the htpasswd file (as much as you want)
+# replace user and password by what you want
+sudo htpasswd -bc /etc/apache2/htpasswd.users user password
+
+    
+    
+    
+    
+# Then replace the basic index.html of apache in /var/www/html in order
+# to avoid displaying apache2 index behind the login window.
+# It does not look nice but it is not a mandatory step. 
+# The following code chunk will add an empty page. 
+# Up to you to add any other custom page ... even a website ...
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>title</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  </head>
+  <body>
+  <!-- page content -->
+  </body>
+  </html>
+
+      
+      
+      
+      
+# Then, restart all servers.
+# Sometimes, shiny server fails to restart. 
+# In this case, restart the VM. It will take some times to
+# be able to connect again (5-10 minutes).
+sudo service apache2 restart
+sudo restart shiny-server
+  
