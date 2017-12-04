@@ -33,20 +33,20 @@ source("calc_change.R")
 source("box_close.R")
 
 # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
-state_php1 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_php1.csv", # for local config
+state_php1 <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app/init_php1.csv", # for local config
                        stringsAsFactors = FALSE)
 # state_php1 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_php1.csv", # use in the server
 #                        stringsAsFactors = FALSE)
 state_php1 <- unlist(state_php1[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
 
-state_hypopara <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_hypopara.csv", # for local config
+state_hypopara <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app/init_hypopara.csv", # for local config
                            stringsAsFactors = FALSE)
 # state_hypopara <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypopara.csv", # use in the server
 #                            stringsAsFactors = FALSE)
 state_hypopara <- unlist(state_hypopara[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
 
 
-state_hypoD3 <- read.csv("/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/init_hypoD3.csv", # for local config
+state_hypoD3 <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app/init_hypoD3.csv", # for local config
                          stringsAsFactors = FALSE)
 # state_hypoD3 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypoD3.csv", # use in the server
 #                          stringsAsFactors = FALSE)
@@ -71,7 +71,8 @@ t_stop_Pinject <- NULL
 t_start_Pintake <- NULL
 t_stop_Pintake <- NULL
 
-time_extractor <- function(event_table) { # to recover to_start and t_stop time when reading the event_table
+# to recover to_start and t_stop time when reading the event_table
+time_extractor <- function(event_table) { 
   
   for (i in 1:nrow(event_table$df)) {
 
@@ -102,7 +103,8 @@ time_extractor <- function(event_table) { # to recover to_start and t_stop time 
       
     }
   }
-  return(list("t_start_Cainject" = t_start_Cainject, "t_stop_Cainject" = t_stop_Cainject, # return what is really important
+  # return what is really important
+  return(list("t_start_Cainject" = t_start_Cainject, "t_stop_Cainject" = t_stop_Cainject, 
               "t_start_Caintake" = t_start_Caintake, "t_stop_Caintake" = t_stop_Caintake,
               "t_start_D3inject" = t_start_D3inject, "t_stop_D3inject" = t_stop_D3inject,
               "t_start_Pinject" = t_start_Pinject, "t_stop_Pinject" = t_stop_Pinject,

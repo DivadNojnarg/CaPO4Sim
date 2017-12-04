@@ -813,7 +813,7 @@ shinyServer(function(input, output, session) {
     calc_change_t <- calc_change(out)
     calc_change_t$X <- NULL # remove column X
     
-    path_to_calc_change_base <- "/Users/macdavidgranjon/Dropbox/Post_Doc_Zurich_2017/WebApp_CaP_homeostasis/treatments_app/www/calc_change_base.csv" # only run in local
+    path_to_calc_change_base <- "/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app/www/calc_change_base.csv" # only run in local
     #path_to_calc_change_base <- "/srv/shiny-server/capApp/treatments_app/www/calc_change_base.csv" # only works on the linux server
     calc_change_base <- read.csv(path_to_calc_change_base) # load the base case fluxes file to compare with "live" fluxes
     calc_change_base$X <- NULL
