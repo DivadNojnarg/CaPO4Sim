@@ -629,6 +629,48 @@ shinyServer(function(input, output, session) {
                       step = 1)
   })
   
+  #------------------------------------------------------------------------- 
+  #  
+  #  Toggle the sidebar when a user select a parameter
+  #  (which is of course in the model core)
+  #
+  #-------------------------------------------------------------------------
+  
+  # Be careful: currently, current_node_id is never reset via js code
+  # contrary to current_edge_bis_id which is null when the arrow is
+  # unselected (see the network part above to change this behaviour)
+  observe({
+    if (is.null(input$current_edge_bis_id)) {
+      # the only time current_node_id is NULL is at the begining
+      # then when the user select a value, it is not NULL anymore (see network)
+      if (is.null(input$current_node_id)) {
+        # if no arrow is selected as well as no nodes, 
+        # remove the "control-sidebar-open" class so that the 
+        # control sidebar does not show
+        shinyjs::removeClass(id = "controlbar", class = "control-sidebar-open")
+      } else {
+        # if a node is selected an contains parameters, display the controlbar
+        shinyjs::toggleClass(id = "controlbar", class = "control-sidebar-open",
+                             condition = input$current_node_id %in% c(1,3,4,8,13,14,15,16) & 
+                               !is.null(input$current_node_id))
+      } 
+    } else if (input$current_edge_bis_id == "null") {
+      # this is a special case. Javascript uses "null" instead of NULL in R.
+      # This part of the code ensures that when an arrow has been selected and
+      # unselected, which ultimately sets current_edge_bis_id to null (not NULL), 
+      # node selection can still trigger hide/show of the controlbar
+      shinyjs::toggleClass(id = "controlbar", class = "control-sidebar-open",
+                           condition = input$current_node_id %in% c(1,3,4,8,13,14,15,16) & 
+                             !is.null(input$current_node_id))
+    } else {
+      # then if an arrow containing parameters is selected, show the 
+      # controlbar, not matter the value of node id
+      shinyjs::toggleClass(id = "controlbar", class = "control-sidebar-open",
+                           condition = input$current_edge_bis_id %in% c(1,3,4) & 
+                             !is.null(input$current_edge_bis_id))
+    }
+  })
+  
   
   #------------------------------------------------------------------------- 
   #  

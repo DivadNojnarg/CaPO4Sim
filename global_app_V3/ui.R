@@ -18,4 +18,7 @@
 #header_box_network,
 dashboardPage(skin = "black", title = "CaPO4 Teaching App", 
               collapse_sidebar = TRUE, header, sidebar, body,
-              footerOutput(outputId = "dynamicFooter"), dashboardControlbar())
+              footerOutput(outputId = "dynamicFooter"), 
+              div(id = "controlbar",
+                  dashboardControlbar()
+                  ))

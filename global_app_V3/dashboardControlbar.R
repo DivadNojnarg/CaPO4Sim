@@ -23,18 +23,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading">Recent Activity</h3>
-      <ul class="control-sidebar-menu">
-      <li>
-      <a href="javascript::;">
-      <i class="menu-icon fa fa-code bg-purple"></i>
-      <div class="menu-info">
-      <h4 class="control-sidebar-subheading">ygdashboard development</h4>
-      <p>TODO: complete control-sidebar module.</p>
-      </div>
-      </a>
-      </li>
-      </ul>
+      <h3 class="control-sidebar-heading">Parameter Input</h3>
 
       <div data-display-if="input.current_edge_bis_id != &#39;null&#39; &amp;&amp; &#10;    input.current_edge_bis_id == 1 &amp;&amp; &#10;    input.current_node_bis_id == 11 ||&#10;    input.help" data-ns-prefix="">
         <div class="form-group shiny-input-container">
@@ -347,21 +336,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
         </div>
       </div>
 
-      <!-- /.control-sidebar-menu -->
-      <h3 class="control-sidebar-heading">Tasks Progress</h3>
-      <ul class="control-sidebar-menu">
-      <li>
-      <a href="javascript::;">
-      <h4 class="control-sidebar-subheading">
-      Custom Template Design
-      <span class="label label-danger pull-right">70%</span>
-      </h4>
-      <div class="progress progress-xxs">
-      <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-      </div>
-      </a>
-      </li>
-      </ul>
+      
       <!-- /.control-sidebar-menu -->
       </div>
       <!-- /.tab-pane -->
@@ -370,19 +345,13 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
       <div class="tab-pane" id="control-sidebar-settings-tab">
-      <form method="post">
-      <h3 class="control-sidebar-heading">General Settings</h3>
-      <div class="form-group">
-      <label class="control-sidebar-subheading">
-      Report panel usage
-      <input type="checkbox" class="pull-right" checked>
-      </label>
-      <p>
-      Some information about this general settings option
-      </p>
-      </div>
-      <!-- /.form-group -->
-      </form>
+      <h3 class="control-sidebar-heading">Other Options</h3>
+      
+      In development
+
+
+
+
       </div>
       <!-- /.tab-pane -->
       </div>
