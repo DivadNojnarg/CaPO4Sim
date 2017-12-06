@@ -1,4 +1,23 @@
-help_text <- c(" This is the navigation bar. You can control several options",
+help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
+                     "</b></font></mark>", "You can control several options:", "<br>", "<ul>",
+                     "<li>", icon("info-circle"), "is the", "<font color=\"#0000FF\"><b>", 
+                     "about", "</b></font>", "section containing informations
+                     about the development staff.", "</li>", "<li>", 
+                     icon("question-circle"), "contains some", "<font color=\"#0000FF\"><b>", 
+                     "help", "</b></font>", "text as well as a review of all 
+                     features of this application you can trigger by pressing the 
+                     help button.", "</li>", "<li>", icon("youtube-play"), "contains", 
+                     "<font color=\"#0000FF\"><b>", "video tutorial", "</b></font>", 
+                     "showing how the application works.", "</li>", "<li>", icon("home"), 
+                     "is the", "<font color=\"#FF0000\"><b>", "main window", "</b></font>", 
+                     "containing the application.", "</li>", "<li>", icon("map-o"), 
+                     "is dedicated to the", "<font color=\"#0000FF\"><b>", 
+                     "educational content", "</b></font>", "of the app. Go here if you
+                     want to select some case studies.", "</li>", "<li>", icon("sliders"), 
+                     "is where you handle the", "<font color=\"#FF0000\"><b>", 
+                     "parameters", "</b></font>", "of this application 
+                     such as changing the background, display regulation
+                     mechanisms or not...", "</li>","</ul>", sep = " "),
                
                "This is the central part of the app: the network. 
                At start, only Ca arrow are displayed without any regulation. This 
@@ -20,16 +39,6 @@ help_text <- c(" This is the navigation bar. You can control several options",
                which will move the slider.",
                
                "In this panel are displayed the graphs of each simulation. 
-               To see results, start by clicking on a case study in the control center,
-               (navigation bar above).",
-               
-               "In this panel you can select several case studies. 
-               On the right, the information sign can give you further 
-               details about the experimental conditions of simulations. 
-               When you select Calcium infusion, PO4 injection or PO4 gavage, 
-               a slider input bar will be displayed to enable you to control the current time."
-              
-              
-               
-  
+               To see results, start by clicking on a case study in the navigation bar,
+               (navigation bar above)."
 )

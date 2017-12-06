@@ -700,6 +700,21 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  
+  # try to make notif collapse/uncollapse. Seems like shinyjs does not
+  # work even if good ids are provided
+  # observe({
+  #   param_notif <- find_parameter_change(parameters())
+  #   #req(param_notif)
+  #   if (length(param_notif) > 0) {
+  #     shinyjs::removeClass(id = "parameter_changed", class = "notifications-menu")
+  #     shinyjs::addClass(id = "parameter_changed", class = "notifications-menu open") # parameter_changed
+  #   } else {
+  #     shinyjs::removeClass(id = "parameter_changed", class = "notifications-menu open")
+  #     shinyjs::addClass(id = "parameter_changed", class = "notifications-menu")
+  #   }
+  # })
+  
   #------------------------------------------------------------------------- 
   #  
   #  Notification events to explain the user how to play with the app

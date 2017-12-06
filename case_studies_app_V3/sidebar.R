@@ -12,7 +12,6 @@ sidebar <- dashboardSidebar(
   introBox(
     
     sidebarMenu(
-      
       id = "sidebar_main",
       
       #menuSegment("MAIN NAVIGATION"),
@@ -23,14 +22,20 @@ sidebar <- dashboardSidebar(
                           color = "default", size = "md", block = FALSE, no_outline = TRUE)),
       menuItem("Demo", tabName = "demo", icon = icon("youtube-play")),
       menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE),
+      
       menuItem("Case Studies", tabName = "case_studies", icon = icon("map-o"),
+               
+               
+               # choose basic animations
                radioGroupButtons(inputId = "basic_animation", 
                                  label = "Choose an animation :", 
-                                 choices = c(`<i class='fa fa-bar-chart'></i>` = "Ca homeostasis", 
-                                             `<i class='fa fa-line-chart'></i>` = "Phosphate Homeostasis"), 
-                                 justified = TRUE),
-               
-               
+                                 choices = c("Calcium", "Phosphate"), 
+                                 individual = TRUE, 
+                                 checkIcon = list(yes = tags$i(class = "fa fa-circle", 
+                                                               style = "color: steelblue"), 
+                                                  no = tags$i(class = "fa fa-circle-o", 
+                                                              style = "color: steelblue"))),
+               # basic case studies
                h4("Steady-state simulations"),
                # Modal for primary hyperparathyroidism
                modal_php1 <-
@@ -46,7 +51,7 @@ sidebar <- dashboardSidebar(
                                       function of time). A rat model of primary hyperparathyroidism already exists in the rat and can
                                       be found here: https://www.ncbi.nlm.nih.gov/pubmed/3591940"),
                    size = "small"
-                   ),
+                 ),
                
                awesomeCheckbox("run_php1",
                                "Primary hyperparathyroidism",
@@ -99,7 +104,7 @@ sidebar <- dashboardSidebar(
                                       PTH synthesis."),
                    img(src = "bone.png"), # include image in modal
                    size = "medium"
-                   ),
+                 ),
                
                awesomeCheckbox("run_hypopara",
                                "Hypoparathyroidism",
@@ -127,7 +132,7 @@ sidebar <- dashboardSidebar(
                                       the base-case, while 0.5 corresponds to a division by a factor 2 of the 25(OH)D concentration
                                       and 0 represents the absence of 25(OH)D."),
                    size = "medium"
-                   ),
+                 ),
                
                awesomeCheckbox("run_hypoD3",
                                "25(OH)D deficiency",
@@ -152,7 +157,7 @@ sidebar <- dashboardSidebar(
                                       decreased by 0.3 mM. On the y-axis are represented normalized \\([Ca^{2+}]_p\\) and
                                       \\([PTH]_p\\) as a function of time. Experimental observations are shown as black dots"),
                    size = "medium"
-                   ),
+                 ),
                
                awesomeCheckbox("run_Ca_inject",
                                "Ca/EGTA IV injection",
@@ -177,7 +182,7 @@ sidebar <- dashboardSidebar(
                                       \\([PTH]_p\\) as a function of time (250 minutes). Experimental observations are shown as black
                                       dots."),
                    size = "medium"
-                   ),
+                 ),
                
                awesomeCheckbox("run_PO4_inject",
                                "PO4 IV injection",
@@ -201,7 +206,7 @@ sidebar <- dashboardSidebar(
                                       concentration of phosphate), normalized \\([Ca^{2+}]_p\\) and \\([PTH]_p\\) as a function of
                                       time (250 minutes). Experimental observations are shown as black dots."),
                    size = "medium"
-                   ),
+                 ),
                
                awesomeCheckbox("run_PO4_gav",
                                "PO4 gavage",
@@ -211,8 +216,8 @@ sidebar <- dashboardSidebar(
                  shinyInput_label_embed(
                    shiny_iconlink() %>%
                      bs_attach_modal(id_modal = "modal_PO4_gavage"))
-               
-                 ),
+         
+    ),
       
       menuItem("Settings", tabName = "settings", icon = icon("sliders"),
                
@@ -231,41 +236,19 @@ sidebar <- dashboardSidebar(
                
                # notification for diagram and graph part
                materialSwitch(inputId = "notif2_switch",
-                           label = "Notifications?",
-                           status = "success",
-                           value = TRUE),
+                              label = "Notifications?",
+                              status = "success",
+                              value = TRUE),
                
                # selector for hormonal regulation
                materialSwitch(inputId = "network_hormonal_choice", 
                               label = "Show regulations", 
                               status = "success",
-                              value = FALSE),
-               
-               # maximum time of integration
-               numericInput("tmax",
-                            "Maximum simulated time:", 
-                            value = 500, 
-                            min = 0, 
-                            max = NA,
-                            width = "100%"),
-               
-               # navigate to a given time
-               sliderInput("t_now",
-                           "Time after simulation:", 
-                           value = 1, 
-                           min = 1, 
-                           max = 500,
-                           width = "90%") %>%
-                 shinyInput_label_embed(
-                   icon("undo") %>%
-                     actionBttn(inputId = "reset_t_now",
-                                label = "", 
-                                color = "danger", 
-                                size = "xs"))
+                              value = FALSE)
       )
     ),
-    data.step = 6,
-    data.intro = help_text[6]
+    data.step = 1,
+    data.intro = help_text[1]
   )
 )
 

@@ -72,7 +72,10 @@ body <- dashboardBody(
                     #boxvideo{
                       text-align: center;
                     }
-                    
+
+                    mark {
+                      background-color: yellow;
+                    }
                     "))
     ),
   
