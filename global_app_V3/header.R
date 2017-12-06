@@ -14,7 +14,10 @@ header <- dashboardHeader(
     '<img src= "online-learning.svg">'
   )),
   
-  titleWidth = 300#,
+  titleWidth = 300,
+  
+    dropdownMenuOutput("parameter_changed")
+  
   # dropdownMenu(
   #   tags$li(
   #     HTML(paste0(

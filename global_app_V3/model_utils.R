@@ -667,3 +667,31 @@ sliders_reset <- function(button_states, input) {
   shinyjs::reset(reset_vector[reset_target])
   
 }
+
+
+# Function that determines which parameter is changed or not
+# Takes parameters values as argument and returns a list
+# of all parameters that are currently different from their
+# base case value
+find_parameter_change <- function(parms) {
+  param_base_case <- c(4.192, 5.9e-002, 5.8e-002, 2.5e-005, 1e-003, 6.902e-011, 
+                       2.2e-003, 5.5e-004, 2.75e-004, 1e-004, 6e-004, 0.44, 
+                       2.34e-003, 1.55e-003, 0.1875, 1e-003, 13.5,
+                       0.25165, 0.3, 3, 142, 0.6, 0.01, 2e-003)
+  # determines which param val is different of 1 (normalized value)
+  id <- which(parms/param_base_case != 1)
+  if (is_empty(id)) {
+    NULL
+  } else {
+    param_name <- names(parms[id])
+    parms <- unname(parms)
+    param_val <- parms[id]
+    param_ratio <- parms[id]/param_base_case[id]
+    param_col <- ifelse(param_ratio > 1, "success", "danger")
+    param_variation <- ifelse(param_ratio > 1, "increased", "decreased")
+    
+    list("value" = param_val, "color" = param_col,
+                "text" = paste(param_name, "is", param_variation, "by", 
+                               param_ratio, sep = " "))
+  }
+}

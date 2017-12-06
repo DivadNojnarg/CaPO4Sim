@@ -642,14 +642,14 @@ shinyServer(function(input, output, session) {
   observe({
     if (is.null(input$current_edge_bis_id)) {
       # the only time current_node_id is NULL is at the begining
-      # then when the user select a value, it is not NULL anymore (see network)
+      # then when the user selects a value, it is not NULL anymore (see network)
       if (is.null(input$current_node_id)) {
         # if no arrow is selected as well as no nodes, 
         # remove the "control-sidebar-open" class so that the 
         # control sidebar does not show
         shinyjs::removeClass(id = "controlbar", class = "control-sidebar-open")
       } else {
-        # if a node is selected an contains parameters, display the controlbar
+        # if a node is selected and contains parameters, display the controlbar
         shinyjs::toggleClass(id = "controlbar", class = "control-sidebar-open",
                              condition = input$current_node_id %in% c(1,3,4,8,13,14,15,16) & 
                                !is.null(input$current_node_id))
@@ -671,6 +671,34 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  Add notification in the header when a parameter was changed
+  #  as well as how much parameters are changed. To remind the user...
+  #
+  #-------------------------------------------------------------------------
+  
+  output$parameter_changed <- renderMenu({
+    param_notif <- find_parameter_change(parameters())
+    # if notif is not NULL, we can fill the notification dropdown menu
+    if (!is.null(param_notif)) {
+      items <- lapply(1:length(param_notif$value), function(i) {
+        notificationItem(status = param_notif$color[i],
+                         text = param_notif$text[i])
+      })
+      dropdownMenu(
+        type = "notifications", badgeStatus = "warning",
+        .list = items
+      )
+    } else {
+      # req ensure that no error is displayed when notif is empty since
+      # remove UI need at least one element to work
+      req(param_notif)
+      # remove the corresponding id
+      removeUI(selector = "parameter_changed")
+    }
+  })
   
   #------------------------------------------------------------------------- 
   #  
