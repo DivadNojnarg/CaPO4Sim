@@ -327,9 +327,18 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # help animation with introjs
-  
+  # options are provided to control the size of the help
   observeEvent(input$help,{
-    introjs(session)
+    introjs(session, 
+            options = list("nextLabel" = "Next step!",
+                           "prevLabel" = "Did you forget something?",
+                           "tooltipClass" = "newClass"),
+            events = list("onbeforechange" = '
+                                   if (targetElement.getAttribute("data-step")==="2") {
+                                   $(".newClass").css("max-width", "800px").css("min-width","800px");  
+                                   } else {
+                                   $(".newClass").css("max-width", "500px").css("min-width","500px");
+                                   }'))
   })
   
   #------------------------------------------------------------------------- 

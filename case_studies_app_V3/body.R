@@ -76,6 +76,11 @@ body <- dashboardBody(
                     mark {
                       background-color: yellow;
                     }
+
+                    .newClass{
+                      min-width: 900px;
+                      max-width: 900px;
+                    }
                     "))
     ),
   
@@ -194,7 +199,8 @@ body <- dashboardBody(
                                    size = 2, type = 8, color = "#000000")
                    ),
                    data.step = 2,
-                   data.intro = help_text[2]
+                   data.intro = help_text[2],
+                   data.position = "right"
                  )#,
                  # column(4, align = "left",
                  #        verbatimTextOutput("position")
