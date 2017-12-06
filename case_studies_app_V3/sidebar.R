@@ -242,7 +242,7 @@ sidebar <- dashboardSidebar(
                
                # selector for hormonal regulation
                materialSwitch(inputId = "network_hormonal_choice", 
-                              label = "Show regulations", 
+                              label = "Regulations?", 
                               status = "success",
                               value = FALSE)
       )

@@ -72,7 +72,19 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      can also use the back and next buttons to change the 
                      slider value.", sep = " "),
                
-               "In this panel are displayed the graphs of each simulation. 
-               To see results, start by clicking on a case study in the navigation bar,
-               (navigation bar above)."
+               paste("In this panel are displayed the graphs of each simulation. 
+                      To see results, start by clicking on a case study in the",
+                     icon("map-o fa-2x"), "section of the",
+                      "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
+                      "</b></font></mark>", sep = " "),
+               
+               paste("This slider allow the user to control the severity of the
+                     simulated disease (namely primary-hyperparathyroidism (PHP1), 
+                     hypoparathyroidism and 25(OH) vitamin D3 deficiency. For PHP1,
+                     when the slider is on 0, there is no disease. Then, moving the
+                     slider to the right increases the severity of PHP1. For 
+                     hypoparathyroidism or 25(OH) vitamin D3 deficiency,
+                     the slider start on 1 (no disease) and 0 represent when
+                     PTH synthesis is abolished and 25(OH) vitamin D3 stock is 0,
+                     respectively.")
 )

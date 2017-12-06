@@ -276,7 +276,7 @@ shinyServer(function(input, output, session) {
       str_extract("_\\w+") %>%
       str_replace("_", "")
     
-    if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+    if (input$run_php1 | input$run_hypopara | input$run_hypoD3 | input$help) {
       
       sliderTextInput(inputId = paste("slider_", current_sim, sep = ""), 
                       label = if (input$run_php1) {
@@ -286,9 +286,9 @@ shinyServer(function(input, output, session) {
                       } else if (input$run_hypoD3) {
                         "25(OH)D stock"
                       }, 
-                      choices = seq(from = ifelse(input$run_php1, 0, 1), 
-                                    to = ifelse(input$run_php1, 300, 0), 
-                                    by = ifelse(input$run_php1, 20, -0.1)), 
+                      choices = seq(from = ifelse(input$run_php1 | input$help, 0, 1), 
+                                    to = ifelse(input$run_php1 | input$help, 300, 0), 
+                                    by = ifelse(input$run_php1 | input$help, 20, -0.1)), 
                       grid = TRUE)
     }
   })

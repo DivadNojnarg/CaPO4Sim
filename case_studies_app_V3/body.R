@@ -242,7 +242,11 @@ body <- dashboardBody(
                    br(),
                    column(4, align = "left"),
                    column(4, align = "center",
-                          uiOutput("slider", class = "theme-orange")
+                          introBox(
+                          uiOutput("slider", class = "theme-orange"),
+                          data.step = 6,
+                          data.intro = help_text[6]
+                          )
                    ),
                    column(4, align = "right")
                  )
