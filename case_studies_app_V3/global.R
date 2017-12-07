@@ -45,6 +45,7 @@ source("notifications.R")
 source("help.R")
 source("network.R")
 source("animations.R")
+source("modals.R")
 
 # load the initial state of the model. Only needed for dynamic
 # simulation that is, Ca/EGTA injection, PO4 injection and

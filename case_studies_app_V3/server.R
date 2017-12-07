@@ -379,30 +379,22 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  Video tutorial
+  #  Modal for primary hyperparathyroidism, hypopara, ...
+  #  gives the user some extr information
   #
   #-------------------------------------------------------------------------
   
-  observeEvent(input$ShowDemo,{
-    test <- modalDialog(
-      #title = "Tutorial",
-      bs_carousel(id = "with_the_beatles", 
-                  use_controls = FALSE, 
-                  use_indicators = TRUE) %>%
-        bs_append(content = HTML('<iframe width="560" height="315"
-           src="https://www.youtube.com/embed/AfnWY2mjsog"
-           frameborder="0" allowfullscreen></iframe>')) %>%
-        # I added the same video just to show the indicator
-        # in the future release, add new video here
-        bs_append(content = HTML('<iframe width="560" height="315"
-           src="https://www.youtube.com/embed/AfnWY2mjsog"
-           frameborder="0" allowfullscreen></iframe>')),
-      easyClose = TRUE,
-      footer = NULL
-    )
-    
-    showModal(test)
-    
+  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3,
+               input$Ca_inject, input$PO4_inject, input$PO4_gav),{
+           
+                 # extract only the last part of the simulation
+                 # so gives php1, hypopara, hypoD3, ...
+                 current_sim <- extract_running_sim(input)[[1]] %>%
+                   str_extract("_\\w+") %>%
+                   str_replace("_", "")
+                
+                 req(current_sim)
+                 showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
   })
   
   #------------------------------------------------------------------------- 
