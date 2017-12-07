@@ -328,19 +328,27 @@ shinyServer(function(input, output, session) {
   
   # help animation with introjs
   # options are provided to control the size of the help
+  # Do not forget to wrap the event content in I('my_function')
+  # otherwise it will fail
   observeEvent(input$help,{
     introjs(session, 
             options = list("nextLabel" = "Next step!",
                            "prevLabel" = "Did you forget something?",
-                           "tooltipClass" = "newClass"),
-            events = list("onbeforechange" = '
-                                   if (targetElement.getAttribute("data-step")==="2") {
-                                   $(".newClass").css("max-width", "800px").css("min-width","800px");  
-                                   } else {
-                                   $(".newClass").css("max-width", "500px").css("min-width","500px");
-                                   }'))
+                           "tooltipClass" = "newClass",
+                           "showProgress" = TRUE,
+                           "showBullets" = FALSE),
+            events = list(# reset the session to hide sliders and back/next buttons
+                          "oncomplete" = I('history.go(0)')))
+    
+  #   "onbeforechange" = I('
+  #                                  if (targetElement.getAttribute("data-step")==="2") {
+  #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
+  # } else {
+  #                        $(".newClass").css("max-width", "500px").css("min-width","500px");
+  # }'),
+    
   })
-  
+
   # Print a short help text above the graph part
   # removeUI does not work
   output$info <- renderUI({
@@ -362,20 +370,20 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # about us section as well as form contact
-  observeEvent(input$about,{
-    aboutmod <- modalDialog(
-      bs_carousel(id = "about_carousel", 
-                  use_controls = FALSE, 
-                  use_indicators = TRUE) %>%
-        bs_append(content = includeHTML("contact.html")) %>%
-        bs_append(content = NULL),
-      easyClose = TRUE,
-      footer = NULL
-    )
-    
-    showModal(aboutmod)
-    
-  })
+  # observeEvent(input$about,{
+  #   aboutmod <- modalDialog(
+  #     bs_carousel(id = "about_carousel", 
+  #                 use_controls = FALSE, 
+  #                 use_indicators = TRUE) %>%
+  #       bs_append(content = includeHTML("contact.html")) %>%
+  #       bs_append(content = NULL),
+  #     easyClose = TRUE,
+  #     footer = NULL
+  #   )
+  #   
+  #   showModal(aboutmod)
+  #   
+  # })
   
   #------------------------------------------------------------------------- 
   #  

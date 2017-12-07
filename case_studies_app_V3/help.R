@@ -69,9 +69,7 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "</b></font></mark>", "and not steady-state ones. Recall that
                      dynamics simulations can be selected in the", icon("map-o fa-2x"), 
                      "section, in the", "<mark><font color=\"#FF0000\"><b>", 
-                     "navigation bar.", "</b></font></mark>", "Besides, you 
-                     can also use the back and next buttons to change the 
-                     slider value.", sep = " "),
+                     "navigation bar.", "</b></font></mark>", sep = " "),
                
                paste("In this panel are displayed the graphs of each simulation. 
                       To see results, start by clicking on a case study in the",

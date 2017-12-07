@@ -33,7 +33,7 @@ sidebar <- dashboardSidebar(
                             inline = TRUE, status = "success"),
                
                # basic case studies
-               menuItem("Steady-state simulations", tabName = "steady_state", 
+               menuItem("Dysregulations", tabName = "steady_state", 
                         icon = shiny::icon("angle-double-right"),
                         
                         # awesomeCheckboxGroup(inputId = "steady_state",
@@ -63,7 +63,7 @@ sidebar <- dashboardSidebar(
                                         width = NULL)), 
                
                
-               menuItem("Dynamic simulations", tabName = "dynamic", 
+               menuItem("Dynamic", tabName = "dynamic", 
                         icon = shiny::icon("angle-double-right"),
                         
                         # awesomeCheckboxGroup(inputId = "dynamic",
