@@ -82,7 +82,7 @@ body <- dashboardBody(
                       max-width: 900px;
                     }
                     "))
-    ),
+  ),
   
   # notification that can be switched on or off as required
   #tags$style("#shiny-notification-notifid {position: fixed; top: 25%; right: 76% ; width: 20em; opacity: 1;}"),
@@ -116,15 +116,19 @@ body <- dashboardBody(
                  id = "boxinfo", width = 12, solidHeader = TRUE,
                  
                  column(4, align = "left",
-                        introBox(
-                          actionBttn(inputId = "back1", 
-                                     label = "Back", 
-                                     style = "stretch", 
-                                     color = "primary", 
-                                     size = "md", 
-                                     icon = icon("step-backward")),
-                          data.step = 3,
-                          data.intro = help_text[3]
+                        conditionalPanel(
+                          condition = "input.run_php1 | input.run_hypopara | 
+                                       input.run_hypoD3 | input.help",
+                          introBox(
+                            actionBttn(inputId = "back1", 
+                                       label = "Back", 
+                                       style = "stretch", 
+                                       color = "primary", 
+                                       size = "md", 
+                                       icon = icon("step-backward")),
+                            data.step = 3,
+                            data.intro = help_text[3]
+                          )
                         )
                  ),
                  column(4, align = "center",
@@ -182,13 +186,16 @@ body <- dashboardBody(
                         )
                  ),
                  column(4, align = "right",
-                        
-                        actionBttn(inputId = "next1", 
-                                   label = "Next", 
-                                   style = "stretch", 
-                                   color = "primary", 
-                                   size = "md", 
-                                   icon = icon("step-forward"))
+                        conditionalPanel(
+                          condition = "input.run_php1 | input.run_hypopara | 
+                                       input.run_hypoD3 | input.help",
+                          actionBttn(inputId = "next1", 
+                                     label = "Next", 
+                                     style = "stretch", 
+                                     color = "primary", 
+                                     size = "md", 
+                                     icon = icon("step-forward"))
+                        )
                  ),
                  
                  br(),
@@ -243,9 +250,10 @@ body <- dashboardBody(
                    column(4, align = "left"),
                    column(4, align = "center",
                           introBox(
-                          uiOutput("slider", class = "theme-orange"),
-                          data.step = 6,
-                          data.intro = help_text[6]
+                            uiOutput("slider", class = "theme-orange"),
+                            data.step = 6,
+                            data.intro = help_text[6],
+                            data.position = "left"
                           )
                    ),
                    column(4, align = "right")

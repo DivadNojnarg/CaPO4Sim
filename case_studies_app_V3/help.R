@@ -59,7 +59,8 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      corresponding to the case studies available in the",
                      icon("map-o fa-2x"), "section of the", 
                      "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
-                     "</b></font></mark>",
+                     "</b></font></mark>", "Be careful, clicking on Next/Back 
+                     without having selected a case study will not trigger anything.",
                      sep = " "),
                
                paste("By moving this slider, you can control the current time 
@@ -78,13 +79,22 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                       "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
                       "</b></font></mark>", sep = " "),
                
-               paste("This slider allow the user to control the severity of the
-                     simulated disease (namely primary-hyperparathyroidism (PHP1), 
-                     hypoparathyroidism and 25(OH) vitamin D3 deficiency. For PHP1,
-                     when the slider is on 0, there is no disease. Then, moving the
-                     slider to the right increases the severity of PHP1. For 
-                     hypoparathyroidism or 25(OH) vitamin D3 deficiency,
-                     the slider start on 1 (no disease) and 0 represent when
+               paste("This slider allows the user to control the", 
+                     "<font color=\"#0000FF\"><b>", "severity", "</b></font>", "of the
+                     simulated disease, namely primary-hyperparathyroidism (PHP1), 
+                     hypoparathyroidism and 25(OH) vitamin D3 deficiency.",
+                     "Recall that diseases can be selected in the", icon("map-o fa-2x"), 
+                     "section, in the", "<mark><font color=\"#FF0000\"><b>", 
+                     "navigation bar.", "</b></font></mark>",
+                     "For PHP1, when the slider is on 0, there is no disease.", "<br>",
+                     "<img src=\"php1_min_help.svg\">", "<br>",
+                     "Then, moving the slider to the right increases the severity 
+                     of PHP1 (see below).", "<br>",
+                     "<img src=\"php1_max_help.svg\">", "<br>",
+                     "For hypoparathyroidism or 25(OH) vitamin D3 deficiency,
+                     the slider starts on 1 (no disease) and 0 represents when
                      PTH synthesis is abolished and 25(OH) vitamin D3 stock is 0,
-                     respectively.")
+                     respectively. Below, an example for hypoparathyroidism.", "<br>",
+                     "<img src=\"hypopara_min_help.svg\">", "<br>",
+                     "<img src=\"hypopara_max_help.svg\">", sep = " ")
 )
