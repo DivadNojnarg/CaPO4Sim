@@ -232,38 +232,38 @@ shinyServer(function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
-  observeEvent(input$back1,{# if the user clicks on back
-    
-    sliderlist <- list(
-      inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
-      value = c(input$tmaxCainj - 10 , input$tmaxbisPO4inj - 10, 
-                input$tmaxtrisPO4gav - 10),
-      max = c(120, 250, 250))
-    
-    pmap(sliderlist, 
-         updateSliderInput, 
-         session = session, 
-         label = "Current Time", 
-         min = 1, 
-         step = 1)
-    
-  })
-  
-  observeEvent(input$next1,{# if the user clicks on next
-    
-    sliderlist <- list(
-      inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
-      value = c(input$tmaxCainj + 10 , input$tmaxbisPO4inj + 10, 
-                input$tmaxtrisPO4gav + 10))
-    
-    pmap(sliderlist, 
-         updateSliderInput, 
-         session = session, 
-         label = "Current Time", 
-         min = 1, 
-         step = 1)
-    
-  })
+  # observeEvent(input$back1,{# if the user clicks on back
+  #   
+  #   sliderlist <- list(
+  #     inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
+  #     value = c(input$tmaxCainj - 10 , input$tmaxbisPO4inj - 10, 
+  #               input$tmaxtrisPO4gav - 10),
+  #     max = c(120, 250, 250))
+  #   
+  #   pmap(sliderlist, 
+  #        updateSliderInput, 
+  #        session = session, 
+  #        label = "Current Time", 
+  #        min = 1, 
+  #        step = 1)
+  #   
+  # })
+  # 
+  # observeEvent(input$next1,{# if the user clicks on next
+  #   
+  #   sliderlist <- list(
+  #     inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
+  #     value = c(input$tmaxCainj + 10 , input$tmaxbisPO4inj + 10, 
+  #               input$tmaxtrisPO4gav + 10))
+  #   
+  #   pmap(sliderlist, 
+  #        updateSliderInput, 
+  #        session = session, 
+  #        label = "Current Time", 
+  #        min = 1, 
+  #        step = 1)
+  #   
+  # })
   
   #------------------------------------------------------------------------- 
   #  
@@ -339,6 +339,20 @@ shinyServer(function(input, output, session) {
                                    } else {
                                    $(".newClass").css("max-width", "500px").css("min-width","500px");
                                    }'))
+  })
+  
+  # Print a short help text above the graph part
+  # removeUI does not work
+  output$info <- renderUI({
+    if (is_empty(input$php1) | is_empty(input$hypopara) | is_empty(input$hypoD3) |
+        is_empty(input$Ca_inject) | is_empty(input$PO4_inject) | is_empty(input$PO4_gav)) {
+      HTML(paste("To print me select a case study.", 
+                 "They can be choosen in the", icon("map-o fa-2x"), 
+                 "section, in the", "<mark><font color=\"#FF0000\"><b>", 
+                 "navigation bar.", "</b></font></mark>", sep = " "))
+    } else {
+      removeUI(selector = "info")
+    }
   })
   
   #------------------------------------------------------------------------- 
@@ -489,5 +503,31 @@ shinyServer(function(input, output, session) {
                    sliders_reset(button_states, input)
                    
                  })
+  
+  
+  # change the dashboard skin
+  current_skin <- reactiveValues(color = NULL)
+  previous_skin <- reactiveValues(color = NULL)
+  observeEvent(input$skin,{
+    # the first time, previous_skin$color is set to the first
+    # skin value at opening. Same thing for current value
+    if (is.null(previous_skin$color)) {
+      previous_skin$color <- current_skin$color <- input$skin
+    } else {
+      current_skin$color <- input$skin
+      # if the old skin is the same as the current selected skin
+      # then, do nothing
+      if (previous_skin$color == current_skin$color) {
+        NULL
+      } else {
+        # otherwise, remove the old CSS class and add the new one
+        shinyjs::removeClass(selector = "body", class = paste("skin", previous_skin$color, sep = "-"))
+        shinyjs::addClass(selector = "body", class = paste("skin", current_skin$color, sep = "-"))
+        # the current skin is added to previous_skin to be ready for
+        # the next change
+        previous_skin$color <- c(previous_skin$color, current_skin$color)[-1]
+      }
+    }
+  })
   
 })

@@ -232,7 +232,9 @@ body <- dashboardBody(
         column(width = 6, offset = 0, style = 'padding:0px;',
                box(
                  id = "tabset1", width = 12, solidHeader = TRUE,
-                 ### Steady-state simulations ###
+                 
+                 uiOutput("info"),
+                 
                  conditionalPanel(
                    condition = "input.run_php1 | input.run_hypopara | 
                    input.run_hypoD3 | input.run_Ca_inject | 

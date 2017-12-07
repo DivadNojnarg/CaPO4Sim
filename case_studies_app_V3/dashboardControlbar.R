@@ -23,9 +23,21 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading">Parameter Input</h3>
+      <h3 class="control-sidebar-heading">Parameters</h3>
 
-      In development
+      <div class="form-group shiny-input-container">
+        <label class="control-label" for="skin">Select a skin:</label>
+        <div>
+          <select id="skin"><option value="blue">blue</option>
+      <option value="black" selected>black</option>
+      <option value="purple">purple</option>
+      <option value="green">green</option>
+      <option value="red">red</option>
+      <option value="yellow">yellow</option>
+      </select>
+          <script type="application/json" data-for="skin" data-nonempty="">{}</script>
+        </div>
+      </div>
 
       
       <!-- /.control-sidebar-menu -->
