@@ -87,20 +87,8 @@ modal_hypopara <- modalDialog(
 # Modal for vitamin D3 deficiency
 modal_hypoD3 <- modalDialog(
   title = "About vitamin D3 deficiency",
-  withMathJax("This is a simulation of vitamin D\\(_3\\) deficiency in 
-               the rat. The concentration of inactive vitamin D (25(OH)D) 
-               will be decreased several times its base case value (until 0
-               times). Then \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), 
-               \\([D_3]_p\\) and \\([FGF]_p\\), as well as calcium and 
-               phosphate fluxes are calculated at equilibrium and
-               normalized compared to their initial equilibrium value 
-               (namely when PTH production is normal).
-               What is displayed are all these concentations and fluxes as 
-               a function of the normalized 25(OH)D concentration 
-               (and not as a function of time). On the x-axis, the value 
-               1 represents the base-case, while 0.5 corresponds to a 
-               division by a factor 2 of the 25(OH)D concentration
-               and 0 represents the absence of 25(OH)D."),
+  "blabla",
+  tags$img(src = "hypoD3_notif_1-1.svg"),
   size = "m"
 )
 
