@@ -354,7 +354,7 @@ shinyServer(function(input, output, session) {
   output$info <- renderUI({
     if (is_empty(input$php1) | is_empty(input$hypopara) | is_empty(input$hypoD3) |
         is_empty(input$Ca_inject) | is_empty(input$PO4_inject) | is_empty(input$PO4_gav)) {
-      HTML(paste("To print me select a case study.", 
+      HTML(paste("To print me, select a case study.", 
                  "They can be choosen in the", icon("map-o fa-2x"), 
                  "section, in the", "<mark><font color=\"#FF0000\"><b>", 
                  "navigation bar.", "</b></font></mark>", sep = " "))
@@ -393,7 +393,7 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3,
-               input$Ca_inject, input$PO4_inject, input$PO4_gav),{
+               input$run_Ca_inject, input$run_PO4_inject, input$run_PO4_gav),{
            
                  # extract only the last part of the simulation
                  # so gives php1, hypopara, hypoD3, ...
@@ -426,6 +426,7 @@ shinyServer(function(input, output, session) {
                                            allowed = input$notif2_switch)
                      # make it draggable
                      jqui_draggable(selector = "#shiny-notification-notifid")
+                     jqui_draggable(selector = "#shiny-notification-graph_notif")
                    }
                  })
   

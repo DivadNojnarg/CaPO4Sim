@@ -86,8 +86,10 @@ body <- dashboardBody(
   
   # notification that can be switched on or off as required
   #tags$style("#shiny-notification-notifid {position: fixed; top: 25%; right: 76% ; width: 20em; opacity: 1;}"),
-  tags$style("#shiny-notification-notifid {position: fixed; top: 25%; 
+  tags$style("#shiny-notification-notifid {position: fixed; top: 20%; 
              right: 76% ; width: 20em; opacity: 1; z-index:100;}"),
+  tags$style("#shiny-notification-graph_notif {position: fixed; top: 30%; 
+             left: 70% ; width: 20em; opacity: 1; z-index:100;}"),
   
   # perform some javascript events such as show/hide ...
   useShinyjs(), 

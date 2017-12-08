@@ -13,7 +13,7 @@ notification_list <- list(
            Cyp27b1 and inhibits Cyp24a1. Active vitamin D3 increases
            intestinal absorption of Ca and PO4, Ca reabsorption in kidney 
            (DCT/CNT) as well as FGF23 synthesis in bone. 
-           Besides, it represses PTH synhtesis in parathyroid glands.",
+           Besides, it represses PTH synthesis in parathyroid glands.",
            
            "FGF23 synthesis is mainly enhanced by vitamin D3 and to a 
            lesser extent by PO4. Its main role is to prevent vitamin D3 toxicity 

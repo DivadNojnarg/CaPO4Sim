@@ -7,29 +7,47 @@ generate_notification <- function(simulation, counter, allowed) {
   message <- str_split(simulation, pattern = "_")[[1]][2]
   # print only if notifications are allowed
   if (allowed == TRUE) {
-    showNotification(id = "notifid",
-                     # need to eval and deparse so as to paste message
-                     eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
-                     type = "message",
-                     duration = 9999)
+    showNotification(
+      id = "notifid",
+      # need to eval and deparse so as to paste message
+      eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+      type = "message",
+      duration = 9999
+    )
+    
+    notif <- eval(parse(text = paste("graph_notification_list$", message, "[idx+1]", sep = "")))
+    is.na(notif)
+    if (!is.na(notif)) {
+      showNotification(
+        id = "graph_notif",
+        # need to eval and deparse so as to paste message
+        withMathJax(notif),
+        type = "warning",
+        duration = 9999
+      )
+    } else {
+      removeNotification(id = "graph_notif")
+    }
     
     # toastr is interesting but need to be improved!
-    # I do not know how to remove this kind of notification
-    # toastr_info(message = eval(parse(text = paste("notification_list$", 
-    #                                               message, 
-    #                                               "[idx+1]", 
-    #                                               sep = ""))),
-    #             title = "",
-    #             closeButton = TRUE,
-    #             preventDuplicates = TRUE,
-    #             position = "top-left",
-    #             timeOut = 0,
-    #             showMethod = "fadeIn",
-    #             hideMethod = "fadeOut"
-    # )  
+    # toastr_info(
+    #   message = eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+    #   title = "",
+    #   closeButton = TRUE,
+    #   preventDuplicates = TRUE,
+    #   position = "top-full-width",
+    #   timeOut = 0,
+    #   showEasing = "swing",
+    #   showMethod = "fadeIn",
+    #   hideMethod = "fadeOut",
+    #   progressBar = TRUE,
+    #   newestOnTop = TRUE
+    # )
     
   } else {
     removeNotification(id = "notifid")
+    removeNotification(id = "graph_notif")
+    #toastr_clear_all(with_animation = TRUE)
   }
 }
 
