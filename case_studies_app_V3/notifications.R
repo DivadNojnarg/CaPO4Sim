@@ -10,7 +10,11 @@ notification_list <- list(
            
            paste("PTH increases <b>bone resorption</b>, Ca <b>reabsorption</b> (in TAL and DCT/CNT ) 
            and enhances vitamin D3 <b>conversion</b> into its active form. Furthermore, 
-           it represses <b>PO4 reabsorption</b> in the proximal tubule.", sep = " "),
+           it represses <b>PO4 reabsorption</b> in the proximal tubule.", 
+           "You can <b>hover</b> on", "<mark><font color=\"#FF0000\"><b>", "bone", 
+           "</b></font></mark>", "and", "<mark><font color=\"#FF0000\"><b>", "kidney", 
+           "</b></font></mark>", "nodes to display details.",
+          sep = " "),
            
            "1,25 vitamin D3 synthesis is enhanced by PTH, which stimulates 
            Cyp27b1 and inhibits Cyp24a1. Active vitamin D3 increases

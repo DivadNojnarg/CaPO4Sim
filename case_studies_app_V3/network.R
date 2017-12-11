@@ -36,7 +36,21 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
                    dragView = FALSE, 
                    zoomView = FALSE,
                    navigationButtons = FALSE,
-                   selectable = TRUE) %>% 
+                   selectable = TRUE,
+                   tooltipStyle = 'position: fixed;
+                                   visibility:hidden;
+                                   padding: 5px;
+                                   white-space: nowrap;
+                                   font-family: verdana;
+                                   font-size:14px;
+                                   font-color:#000000;
+                                   background-color: #f5f4ed;
+                                   -moz-border-radius: 3px;
+                                   -webkit-border-radius: 3px;
+                                   border-radius: 3px;
+                                   border: 1px solid #808074;
+                                   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+                                   z-index: 100;') %>% 
     # stabilization prevents arrows from bouncing
     visPhysics(stabilization = TRUE, enabled = usephysics)
 }
@@ -98,16 +112,42 @@ generate_nodes_Ca <- function(input) {
       paste(a("About rapid bone pool", 
               href = rapid_bone_web,
               target = "_blank")),
-      paste(a("About bone", 
-              href = bone_web,
-              target = "_blank")),
+      if (input$run_php1) {
+        HTML(paste("<a href=\"php1_notif_bone.png\" target=\"_blank\">
+                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_bone.png\"/></a>"
+            )
+        )
+      } else {
+        paste(a("About bone", 
+                href = bone_web,
+                target = "_blank"))
+      },
       paste(a("About Ca kidney handling", 
               href = Ca_kidney_web,
               target = "_blank"), br(),
             a("About PO4 kidney handling", 
               href = PO4_kidney_web,
               target = "_blank")),
-      rep("",3),
+      if (input$run_php1) {
+        HTML(paste("<a href=\"php1_notif_Ca_PTreab.png\" target=\"_blank\">
+                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_Ca_PTreab.png\"/></a>",
+                   "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
+                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>",
+                   "<a href=\"php1_notif_Ca_TALreab.png\" target=\"_blank\">
+                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_Ca_TALreab.png\"/></a>",
+                   "<a href=\"php1_notif_Ca_DCTreab.png\" target=\"_blank\">
+                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_Ca_DCTreab.png\"/></a>"
+            )
+        )
+      } else {
+        ""
+      },
+      rep("",2),
       paste(a("About Calcium", 
               href = Ca_web,
               target = "_blank")),
@@ -116,10 +156,9 @@ generate_nodes_Ca <- function(input) {
               target = "_blank")),
       if (input$run_php1) {
         HTML(paste("<a href=\"php1_notif_1-2.png\" target=\"_blank\">
-                            <img width=\"220\" height=\"250\" border=\"0\" 
-                            align=\"center\"  src=\"php1_notif_1-2.png\"/>
-                            </a>"
-        )
+                    <img width=\"220\" height=\"220\" border=\"0\" 
+                    align=\"center\"  src=\"php1_notif_1-2.png\"/></a>"
+            )
         )
       } else {
         paste(a("About PTH", 
