@@ -25,6 +25,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-pane active" id="control-sidebar-home-tab">
       <h3 class="control-sidebar-heading">Parameters</h3>
 
+      <div data-step="7" data-intro="Here you can change the global &lt;b&gt;theme&lt;/b&gt; &#10;of the dashboard" data-position="left">
       <div class="form-group shiny-input-container">
         <label class="control-label" for="skin">Select a skin:</label>
         <div>
@@ -37,6 +38,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </select>
           <script type="application/json" data-for="skin" data-nonempty="">{}</script>
         </div>
+      </div>
       </div>
 
       

@@ -224,46 +224,7 @@ shinyServer(function(input, output, session) {
       eval(parse(text = paste("make_plot_", current_sim, "(input)", sep = "")))    
     }
   })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Update the time navigation bar for Ca/EGTA inject, PO4 inject and 
-  #  PO4 gavage by clicking on back or next buttons
-  #  
-  #-------------------------------------------------------------------------
-  
-  # observeEvent(input$back1,{# if the user clicks on back
-  #   
-  #   sliderlist <- list(
-  #     inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
-  #     value = c(input$tmaxCainj - 10 , input$tmaxbisPO4inj - 10, 
-  #               input$tmaxtrisPO4gav - 10),
-  #     max = c(120, 250, 250))
-  #   
-  #   pmap(sliderlist, 
-  #        updateSliderInput, 
-  #        session = session, 
-  #        label = "Current Time", 
-  #        min = 1, 
-  #        step = 1)
-  #   
-  # })
-  # 
-  # observeEvent(input$next1,{# if the user clicks on next
-  #   
-  #   sliderlist <- list(
-  #     inputId = c("tmaxCainj","tmaxPO4inj","tmaxPO4gav"),
-  #     value = c(input$tmaxCainj + 10 , input$tmaxbisPO4inj + 10, 
-  #               input$tmaxtrisPO4gav + 10))
-  #   
-  #   pmap(sliderlist, 
-  #        updateSliderInput, 
-  #        session = session, 
-  #        label = "Current Time", 
-  #        min = 1, 
-  #        step = 1)
-  #   
-  # })
+
   
   #------------------------------------------------------------------------- 
   #  
@@ -365,28 +326,6 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  About section and form
-  #
-  #-------------------------------------------------------------------------
-  
-  # about us section as well as form contact
-  # observeEvent(input$about,{
-  #   aboutmod <- modalDialog(
-  #     bs_carousel(id = "about_carousel", 
-  #                 use_controls = FALSE, 
-  #                 use_indicators = TRUE) %>%
-  #       bs_append(content = includeHTML("contact.html")) %>%
-  #       bs_append(content = NULL),
-  #     easyClose = TRUE,
-  #     footer = NULL
-  #   )
-  #   
-  #   showModal(aboutmod)
-  #   
-  # })
-  
-  #------------------------------------------------------------------------- 
-  #  
   #  Modal for primary hyperparathyroidism, hypopara, ...
   #  gives the user some extr information
   #
@@ -429,6 +368,20 @@ shinyServer(function(input, output, session) {
                      jqui_draggable(selector = "#shiny-notification-graph_notif")
                    }
                  })
+  
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  Toggle the sidebar when a user press the help button
+  #
+  #-------------------------------------------------------------------------
+  
+  
+  observe({
+    shinyjs::toggleClass(id = "controlbar", 
+                         class = "control-sidebar-open",
+                         condition = input$help)
+  })
   
   
   #------------------------------------------------------------------------- 

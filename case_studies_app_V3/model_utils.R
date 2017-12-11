@@ -4,24 +4,27 @@
 generate_notification <- function(simulation, counter, allowed) {
   idx <- counter
   # only take the part after the "_"
-  message <- str_split(simulation, pattern = "_")[[1]][2]
+  sim <- str_split(simulation, pattern = "_")[[1]][2]
   # print only if notifications are allowed
   if (allowed == TRUE) {
     showNotification(
       id = "notifid",
       # need to eval and deparse so as to paste message
-      eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+      # need also to use HTML to handle html tags in the text
+      # such as <b> >/b>, ...
+      HTML(eval(parse(text = paste("notification_list$", sim, "[idx+1]", sep = "")))),
       type = "message",
       duration = 9999
     )
     
-    notif <- eval(parse(text = paste("graph_notification_list$", message, "[idx+1]", sep = "")))
-    is.na(notif)
+    notif <- eval(parse(text = paste("graph_notification_list$", sim, "[idx+1]", sep = "")))
+    # this part ensures that the graph notif is only displayed
+    # a the first iteration of the animation. 
     if (!is.na(notif)) {
       showNotification(
         id = "graph_notif",
         # need to eval and deparse so as to paste message
-        withMathJax(notif),
+        withMathJax(HTML(notif)),
         type = "warning",
         duration = 9999
       )
@@ -31,7 +34,7 @@ generate_notification <- function(simulation, counter, allowed) {
     
     # toastr is interesting but need to be improved!
     # toastr_info(
-    #   message = eval(parse(text = paste("notification_list$", message, "[idx+1]", sep = ""))),
+    #   message = eval(parse(text = paste("notification_list$", sim, "[idx+1]", sep = ""))),
     #   title = "",
     #   closeButton = TRUE,
     #   preventDuplicates = TRUE,

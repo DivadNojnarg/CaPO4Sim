@@ -94,5 +94,10 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      PTH synthesis is abolished and 25(OH) vitamin D3 stock is 0,
                      respectively. Below, an example for hypoparathyroidism.", "<br>",
                      "<img src=\"hypopara_min_help.svg\">", "<br>",
-                     "<img src=\"hypopara_max_help.svg\">", sep = " ")
+                     "<img src=\"hypopara_max_help.svg\">", sep = " "),
+               
+               # as this help section is part of the controlbar, need
+               # to update it manually in dashboardControlbar.R
+               paste("Here you can change the global <b>theme</b> 
+                     of the dashboard", sep = " ")
 )

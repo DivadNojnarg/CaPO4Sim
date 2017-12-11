@@ -1,13 +1,16 @@
 notification_list <- list(
-  php1 = c("PTH synthesis is increased in parathyroid gland, mainly caused by a tumor.
-           Hover on PTH node in the diagram to have more details.
-           You can click on the info button (on the right of each checkbox in the control center),
-           to have more information about the current simulation. To launch the simulation,
-           click on next button below, and on back if you want to go back.",
+  php1 = c(paste("Welcome on the", "<mark><font color=\"#FF0000\"><b>", 
+           "primary-hyperparathyroidism", "</b></font></mark>", "(PHP1) case study.
+           To launch the simulation, click on <b>next</b> button above. At any time,
+           you can go back to the previous step by clicking on <b>back</b>", 
+           "Besides, you can <b>hover</b> on a node. It will display 
+           (when available) additional content. However, you need to have an HSeT account. 
+           More informations here: ", tags$b(tags$a("https://hset.org/contact/")), 
+           sep = " "),
            
-           "PTH increases bone resorption, Ca reabsorption (in TAL and DCT/CNT ) 
-           and enhances vitamin D3 conversion into its active form. Furthermore, 
-           it represses PO4 reabsorption in the proximal tubule",
+           paste("PTH increases <b>bone resorption</b>, Ca <b>reabsorption</b> (in TAL and DCT/CNT ) 
+           and enhances vitamin D3 <b>conversion</b> into its active form. Furthermore, 
+           it represses <b>PO4 reabsorption</b> in the proximal tubule.", sep = " "),
            
            "1,25 vitamin D3 synthesis is enhanced by PTH, which stimulates 
            Cyp27b1 and inhibits Cyp24a1. Active vitamin D3 increases

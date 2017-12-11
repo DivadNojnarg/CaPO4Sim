@@ -2,7 +2,7 @@
 modal_php1 <- modalDialog(
   title = "About Primary Hyperparathyroidism",
   withMathJax(
-    "This is a simulation of primary hyperparathyroidism (PHP1) in the rat. 
+    "This is a simulation of", tags$b("primary hyperparathyroidism"), "(PHP1) in the rat. 
     PHP1 is due to a tumor in parathyroid glands.",
     tags$br(), tags$br(),
     fluidRow(

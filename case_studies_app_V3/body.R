@@ -14,7 +14,6 @@ body <- dashboardBody(
   
   tags$head(
     tags$style(HTML("
-                    
                     #page{
                     position: relative;
                     }
@@ -80,6 +79,11 @@ body <- dashboardBody(
                     .newClass{
                       min-width: 900px;
                       max-width: 900px;
+                    }
+
+                    #about_us{
+                      max-width:100%;
+                      max-height:100%;
                     }
                     "))
   ),
@@ -283,7 +287,11 @@ body <- dashboardBody(
     # About section Panel
     tabItem(
       tabName = "about",
-      h1("About us")
+      div(id = "about_us",
+          HTML(paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
+                      border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
+          #HTML(paste(tags$img(src = "about_us.jpg")))
+      )
     ),
     
     # Written tutorial for this app
