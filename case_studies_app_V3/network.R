@@ -130,18 +130,24 @@ generate_nodes_Ca <- function(input) {
               href = PO4_kidney_web,
               target = "_blank")),
       if (input$run_php1) {
-        HTML(paste("<a href=\"php1_notif_Ca_PTreab.png\" target=\"_blank\">
+        HTML(paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
+                   "<a href=\"php1_notif_Ca_PTreab.png\" target=\"_blank\">
                    <img width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_Ca_PTreab.png\"/></a>",
+                   align=\"center\"  src=\"php1_notif_Ca_PTreab.png\"/></a>", 
+                  "</div>", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
                    <img width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>",
+                   align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>", 
+                   "</div>", "</div>",
+                   "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_Ca_TALreab.png\" target=\"_blank\">
                    <img width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_Ca_TALreab.png\"/></a>",
+                   align=\"center\"  src=\"php1_notif_Ca_TALreab.png\"/></a>", 
+                   "</div>", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_Ca_DCTreab.png\" target=\"_blank\">
                    <img width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_Ca_DCTreab.png\"/></a>"
+                   align=\"center\"  src=\"php1_notif_Ca_DCTreab.png\"/></a>", 
+                  "</div>", "</div>"
             )
         )
       } else {
