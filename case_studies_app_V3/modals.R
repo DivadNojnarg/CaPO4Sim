@@ -87,8 +87,28 @@ modal_hypopara <- modalDialog(
 # Modal for vitamin D3 deficiency
 modal_hypoD3 <- modalDialog(
   title = "About vitamin D3 deficiency",
-  "blabla",
+  "As shown in the figure below, vitamin D3 synthesis's pathway is complex and has
+  two main origins: a reaction between UV rays and skin and from the food (vitamin D3,
+  vitamin D2). The storage form of vitamin D is 25(OH)D, also known as calcidiol, whose
+  conversion into calcitriol (active form of vitamin D3) is extremely regulated.
+  Vitamin D deficiency refers to a deficiency in the storage form, namely 25(OH)D,
+  which may be due to a reduced skin synthesis, a decreased intake, liver failure, 
+  chronic kidney disease, nephrotic syndrom.
+  About 1 billion of people on earth have vitamin D deficiency.",
   tags$img(src = "hypoD3_notif_1-1.svg"),
+  "Vitamin D deficiency causes hypocalcemia, hypophosphatemia as well as high PTH levels 
+  (secondary hyperparathyroidism).
+  This may result in bone diseases such as osteoporosis as well as osteopenia.
+  To treat vitamin D deficiency, a common approach is to use vitamin D supplements.
+  However, inadequat treatment may result in massive hypercalcemia, hypercalciuria,
+  with the risk of kidney stones formation, mainly if the treatment is extended.
+  In the following case study, you will be explained all consequences and mechanisms
+  involved during vitamin D3 deficiency.",
+  "You can find extra informations here:",
+  tags$br(),
+  tags$a("http://www.nejm.org/doi/full/10.1056/NEJMra070553"),
+  tags$a("http://www.nejm.org/doi/pdf/10.1056/NEJMp1608005"),
+  tags$a("http://www.nejm.org/doi/full/10.1056/NEJMc063341#t=article"),
   size = "m"
 )
 

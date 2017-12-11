@@ -27,8 +27,8 @@ graph_notification_list <- list(
   
   hypoD3 = c("This is a simulation of vitamin D\\(_3\\) deficiency in 
              the rat. The concentration of inactive vitamin D (25(OH)D) 
-             will may be decreased several times its base case value (until 0
-             times). \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), 
+             may be decreased several times its base case value (until 0). 
+             \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), 
              \\([D_3]_p\\) and \\([FGF]_p\\), as well as calcium and 
              phosphate fluxes are calculated at equilibrium and
              normalized compared to their initial equilibrium value 
