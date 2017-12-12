@@ -39,7 +39,7 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "</b></font></mark>", "by selecting calcium, phosphate or both.",
                      "</li>", "<li>","<img src=\"regulation_help.svg\">", "<br>", 
                      "<font color=\"#0000FF\"><b>", "Hormones", "</b></font>", 
-                     "and regulator are represented by light green nodes. They
+                     "and regulators are represented by light green nodes. They
                      can be enabled in the", icon("sliders fa-2x"), "section of
                      the", "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
                      "</b></font></mark>",
@@ -50,7 +50,7 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "<br>", "They are highlighted in yellow, in response to a", 
                      "<font color=\"#0000FF\"><b>" ,"perturbation.", "</b></font>", 
                      "The size increases if it is a stimulation, 
-                     an inversely.", "</li>", "</ul>", "Perturbations can be 
+                     and inversely.", "</li>", "</ul>", "Perturbations can be 
                      selected via the", icon("map-o fa-2x"), "section, in the", 
                      "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
                      "</b></font></mark>","</li>", "</ul>", sep = " "),
@@ -67,7 +67,7 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      of the simulation (orange vertical line in the graph). It only works
                      for", "<mark><font color=\"#FF0000\"><b>", "dynamic simulations", 
                      "</b></font></mark>", "and not steady-state ones. Recall that
-                     dynamics simulations can be selected in the", icon("map-o fa-2x"), 
+                     dynamic simulations can be selected in the", icon("map-o fa-2x"), 
                      "section, in the", "<mark><font color=\"#FF0000\"><b>", 
                      "navigation bar.", "</b></font></mark>", sep = " "),
                

@@ -1,8 +1,11 @@
 notification_list <- list(
   php1 = c(paste("Welcome on the", "<mark><font color=\"#FF0000\"><b>", 
-                 "primary-hyperparathyroidism", "</b></font></mark>", "(PHP1) case study.
-                  To launch the simulation, click on <b>next</b> button above. At any time,
-                  you can go back to the previous step by clicking on <b>back</b>.", 
+                 "primary-hyperparathyroidism", "</b></font></mark>", "(PHP1) case study.",
+                 "Before going further, make sure that <b>regulations</b> are enabled,
+                 and that Ca and PO4 homeostasis are selected (see below):",
+                 "<img src=\"before_casestudy.svg\">", "<br>",
+                 "To launch the simulation, click on <b>next</b> button above. At any time,
+                 you can go back to the previous step by clicking on <b>back</b>.", 
                  "You can <b>hover</b> on", "<mark><font color=\"#FF0000\"><b>", "intestine,", 
                  "</b></font></mark>", "<mark><font color=\"#FF0000\"><b>", "kidney,", 
                  "</b></font></mark>", "<mark><font color=\"#FF0000\"><b>", "bone,", 
@@ -55,8 +58,11 @@ notification_list <- list(
   ),
   
   hypopara = c(paste("Welcome on the", "<mark><font color=\"#FF0000\"><b>", 
-                     "hypoparathyroidism", "</b></font></mark>", "case study.
-                     To launch the simulation, click on <b>next</b> button above. 
+                     "hypoparathyroidism", "</b></font></mark>", "case study.",
+                     "Before going further, make sure that <b>regulations</b> 
+                     are enabled, and that Ca and PO4 homeostasis are selected 
+                     (see below):", "<br>", "<img src=\"before_casestudy.svg\">",
+                     "<br>", "To launch the simulation, click on <b>next</b> button above. 
                      At any time, you can go back to the previous step by clicking 
                      on <b>back</b>.", "You can <b>hover</b> on", 
                      "<mark><font color=\"#FF0000\"><b>", "intestine,", 
@@ -106,8 +112,11 @@ notification_list <- list(
   ),
   
   hypoD3 = c(paste("Welcome on the", "<mark><font color=\"#FF0000\"><b>", 
-                   "vitamin D3 deficiency", "</b></font></mark>", "case study.
-                   To launch the simulation, click on <b>next</b> button above. 
+                   "vitamin D3 deficiency", "</b></font></mark>", "case study.",
+                   "Before going further, make sure that <b>regulations</b> 
+                   are enabled, and that Ca and PO4 homeostasis are selected 
+                   (see below):", "<br>", "<img src=\"before_casestudy.svg\">",
+                   "<br>","To launch the simulation, click on <b>next</b> button above. 
                    At any time, you can go back to the previous step by clicking 
                    on <b>back</b>.", "You can <b>hover</b> on", 
                    "<mark><font color=\"#FF0000\"><b>", "intestine,", 
