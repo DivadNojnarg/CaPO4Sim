@@ -40,11 +40,13 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
                    tooltipStyle = 'position: fixed;
                                    visibility:hidden;
                                    padding: 5px;
+                                   padding-right: 10px;
+                                   padding-bottom: 10px;
                                    white-space: nowrap;
                                    font-family: verdana;
                                    font-size:14px;
                                    font-color:#000000;
-                                   background-color: #f5f4ed;
+                                   background-color: #FFFFFF;
                                    -moz-border-radius: 3px;
                                    -webkit-border-radius: 3px;
                                    border-radius: 3px;
@@ -101,20 +103,35 @@ generate_nodes_Ca <- function(input) {
               ,"PTH.svg", "D3.svg","D3.svg","D3.svg","FGF23.svg"),
     label = c(rep("", 6), rep("",10)),
     fixed = list("x" = TRUE, "y" = TRUE),
+    
+    # tooltip to display an image
     title = c(
-      paste(a("About intestinal Ca absorption", 
-              href = Ca_int_web,
-              target = "_blank"),br(),
-            a("About intestinal PO4 absorption", 
-              href = PO4_int_web,
-              target = "_blank")),
+        # intestinal absorption tooltip
+        if (input$run_php1) {
+          HTML(paste("<a href=\"php1_notif_intestine.png\" target=\"_blank\">
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_intestine.png\"/></a>"
+              )
+          )
+        } else {
+          paste(a("About intestinal Ca absorption", 
+                  href = Ca_int_web,
+                  target = "_blank"),br(),
+                a("About intestinal PO4 absorption", 
+                  href = PO4_int_web,
+                  target = "_blank"))
+        },
       "",
+      
+      # rapid bone pool tooltip
       paste(a("About rapid bone pool", 
               href = rapid_bone_web,
               target = "_blank")),
+      
+      # deep bone zoom tooltip
       if (input$run_php1) {
         HTML(paste("<a href=\"php1_notif_bone.png\" target=\"_blank\">
-                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_bone.png\"/></a>"
             )
         )
@@ -123,29 +140,33 @@ generate_nodes_Ca <- function(input) {
                 href = bone_web,
                 target = "_blank"))
       },
+      
+      # kidney tooltip
       paste(a("About Ca kidney handling", 
               href = Ca_kidney_web,
               target = "_blank"), br(),
             a("About PO4 kidney handling", 
               href = PO4_kidney_web,
               target = "_blank")),
+      
+      # kidney_zoom tooltip
       if (input$run_php1) {
         HTML(paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_Ca_PTreab.png\" target=\"_blank\">
-                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_Ca_PTreab.png\"/></a>", 
                   "</div>", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
-                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>", 
-                   "</div>", "</div>",
+                   "</div>", "</div>", "<br>",
                    "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_Ca_TALreab.png\" target=\"_blank\">
-                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_Ca_TALreab.png\"/></a>", 
                    "</div>", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_Ca_DCTreab.png\" target=\"_blank\">
-                   <img width=\"220\" height=\"220\" border=\"0\" 
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_Ca_DCTreab.png\"/></a>", 
                   "</div>", "</div>"
             )
@@ -154,16 +175,35 @@ generate_nodes_Ca <- function(input) {
         ""
       },
       rep("",2),
+      
+      # calcium tooltip
       paste(a("About Calcium", 
               href = Ca_web,
               target = "_blank")),
+      # PO4 tooltip
       paste(a("About Phosphate", 
               href = PO4_web,
               target = "_blank")),
+      
+      # PTH synthesis zoom
       if (input$run_php1) {
-        HTML(paste("<a href=\"php1_notif_1-2.png\" target=\"_blank\">
-                    <img width=\"220\" height=\"220\" border=\"0\" 
-                    align=\"center\"  src=\"php1_notif_1-2.png\"/></a>"
+        HTML(paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
+                    "<a href=\"php1_notif_1-2.png\" target=\"_blank\">
+                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                    align=\"center\"  src=\"php1_notif_1-2.png\"/></a>", 
+                    "</div>", "<div class=\"col-sm-6\">",
+                   "<a href=\"php1_notif_PTHgD3inhib.png\" target=\"_blank\">
+                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_PTHgD3inhib.png\"/></a>", 
+                   "</div>", "</div>", "<br>","<div class=\"row\">", "<div class=\"col-sm-6\">", 
+                   "<a href=\"php1_notif_PTHgPO4activ.png\" target=\"_blank\">
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_PTHgPO4activ.png\"/></a>", 
+                   "</div>", "<div class=\"col-sm-6\">", 
+                  "<a href=\"php1_notif_PTHgCainhib.png\" target=\"_blank\">
+                   <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                   align=\"center\"  src=\"php1_notif_PTHgCainhib.png\"/></a>", 
+                   "</div>", "</div>"
             )
         )
       } else {
@@ -171,22 +211,27 @@ generate_nodes_Ca <- function(input) {
                 href = PTH_web, 
                 target = "_blank"))
       },
+      # PTH tooltip
       paste(a("About PTH", 
               href = PTH_web, 
               target = "_blank")),
+      # D3 tooltip
       paste(a("About vitamin D3", 
               href = D3_web,
               target = "_blank")),
+      # D3 tooltip
       paste(a("About vitamin D3", 
               href = D3_web,
               target = "_blank")),
+      # D3 tooltip
       paste(a("About vitamin D3", 
               href = D3_web,
               target = "_blank")),
+      # FGF23 tooltip
       paste(a("About FGF23", 
               href = FGF23_web,
               target = "_blank"))
-    ), # tooltip to display an image
+    ),
     
     x = if (is.null(input$background_choice)) {
           c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481)

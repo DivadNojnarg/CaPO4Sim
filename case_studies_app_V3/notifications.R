@@ -1,49 +1,54 @@
 notification_list <- list(
   php1 = c(paste("Welcome on the", "<mark><font color=\"#FF0000\"><b>", 
-           "primary-hyperparathyroidism", "</b></font></mark>", "(PHP1) case study.
+                 "primary-hyperparathyroidism", "</b></font></mark>", "(PHP1) case study.
            To launch the simulation, click on <b>next</b> button above. At any time,
-           you can go back to the previous step by clicking on <b>back</b>", 
-           "Besides, you can <b>hover</b> on a node. It will display 
+           you can go back to the previous step by clicking on <b>back</b>.", 
+                 "You can <b>hover</b> on", "<mark><font color=\"#FF0000\"><b>", "intestine,", 
+                 "</b></font></mark>", "<mark><font color=\"#FF0000\"><b>", "kidney,", 
+                 "</b></font></mark>", "<mark><font color=\"#FF0000\"><b>", "bone,", 
+                 "</b></font></mark>", "and", "<mark><font color=\"#FF0000\"><b>", "PTHg", 
+                 "</b></font></mark>","nodes to display details.", "It will display 
            (when available) additional content. However, you need to have an HSeT account. 
            More informations here: ", tags$b(tags$a("https://hset.org/contact/")), 
-           sep = " "),
+                 sep = " "),
            
            paste("PTH increases <b>bone resorption</b>, Ca <b>reabsorption</b> (in TAL and DCT/CNT ) 
            and enhances vitamin D3 <b>conversion</b> into its active form. Furthermore, 
-           it represses <b>PO4 reabsorption</b> in the proximal tubule.", 
-           "You can <b>hover</b> on", "<mark><font color=\"#FF0000\"><b>", "bone", 
-           "</b></font></mark>", "and", "<mark><font color=\"#FF0000\"><b>", "kidney", 
-           "</b></font></mark>", "nodes to display details.",
-          sep = " "),
+           it represses <b>PO4 reabsorption</b> in the proximal tubule.",
+                 sep = " "),
            
-           "1,25 vitamin D3 synthesis is enhanced by PTH, which stimulates 
-           Cyp27b1 and inhibits Cyp24a1. Active vitamin D3 increases
-           intestinal absorption of Ca and PO4, Ca reabsorption in kidney 
-           (DCT/CNT) as well as FGF23 synthesis in bone. 
-           Besides, it represses PTH synthesis in parathyroid glands.",
+           paste("1,25 vitamin D3 synthesis is enhanced by <b>PTH</b>, which stimulates 
+           <b>Cyp27b1</b> and inhibits <b>Cyp24a1</b>. Active vitamin D3 increases
+           <b>intestinal absorption</b> of Ca and PO4, <b>Ca reabsorption</b> in kidney 
+           (DCT/CNT) as well as <b>FGF23 synthesis</b> in bone. 
+           Besides, it represses <b>PTH synthesis</b> in parathyroid glands.", 
+                 sep = " "),
            
-           "FGF23 synthesis is mainly enhanced by vitamin D3 and to a 
-           lesser extent by PO4. Its main role is to prevent vitamin D3 toxicity 
+           paste("FGF23 synthesis is mainly enhanced by vitamin D3 and to a 
+           lesser extent by PO4. Its main role is to <b>prevent vitamin D3 toxicity</b>
            by repressing its synthesis (activates 
            Cyp24a1 and represses Cyp27b1, so antagonist of PTH). 
-           Additionally, it blunts PO4 reasbsorption in the proximal tubule. 
-           The relationship between PTH and FGF23 are still controversial, to date.",
+           Additionally, it blunts <b>PO4 reabsorption</b> in the proximal tubule. 
+           The relationship between PTH and FGF23 are still controversial, to date."),
            
-           "Ca represses PTH secretion via the calcium sensing receptor (CaSR) in
+           paste("Ca <b>represses PTH secretion</b> via the <b>calcium sensing receptor</b> (CaSR) in
            parathyroid chief cells. It also reduces the synthesis of the active
            form of vitamin D3. Finally, it activates the CaSR in the kidney,
-           thereby lowering the reabsorption of Ca in the TAL.",
+           thereby <b>lowering the reabsorption of Ca</b> in the TAL."),
            
-           "Since plasma PO4 levels are decreased, the activation of PTH synthesis
+           paste("Since plasma PO4 levels are decreased, the activation of PTH synthesis
             by PO4 is reduced, as well as the repression of vitamin D3 conversion and 
-            the increase of FGF23 synthesis.",
+            the increase of FGF23 synthesis."),
            
-           "Ionized plasma Ca concentration is widely increased during 
-           primary hyperparathyroidism, mainly because of an higher intestinal 
-           absorption, resorption and reabsorption in kidney. 
-           Inversely, PO4 plasma concentration is significantly reduced as a consequence 
+           paste("Ionized plasma Ca concentration is", "<mark><font color=\"#FF0000\"><b>",
+                 "widely increased", "</b></font></mark>", "during, PHP1, mainly because 
+           of an higher intestinal absorption, resorption and reabsorption in kidney. 
+           Inversely, PO4 plasma concentration is", "<mark><font color=\"#FF0000\"><b>",
+                 "significantly reduced", "</b></font></mark>", "as a consequence 
            of PTH and FGF23 effects on its renal reabsorption. Ca and PO4 are also known to
-           regulate hormonal synthesis, for example via the CaSR in parathyroid glands."),
+           regulate hormonal synthesis, for example via the CaSR in parathyroid glands.", 
+                 sep = " ")
+  ),
   
   hypopara = c("PTH synthesis is decreased in parathyroid gland, mainly caused 
                by a loss of function of parathyroid glands. 

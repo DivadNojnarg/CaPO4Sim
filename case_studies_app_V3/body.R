@@ -15,7 +15,7 @@ body <- dashboardBody(
   tags$head(
     tags$style(HTML("
                     #page{
-                    position: relative;
+                      position: relative;
                     }
                     
                     .js-irs-0 .irs-single, 
@@ -43,29 +43,29 @@ body <- dashboardBody(
                     }
                     
                     .network_capnone{
-                    padding-left: 0; 
-                    padding-right: 0;
-                    height:100%;
+                      padding-left: 0; 
+                      padding-right: 0;
+                      height:100%;
                     }
                     
                     .network_caprat{
-                    padding-left: 0; 
-                    padding-right: 0;
-                    background-image:url('rat_wholebody.svg');
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    height:100%;
+                      padding-left: 0; 
+                      padding-right: 0;
+                      background-image:url('rat_wholebody.svg');
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                      height:100%;
                     }
                     
                     .network_caphuman{
-                    padding-left: 0; 
-                    padding-right: 0;
-                    background-image:url('human_wholebody.svg');
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    height:100%;
+                      padding-left: 0; 
+                      padding-right: 0;
+                      background-image:url('human_wholebody.svg');
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                      height:100%;
                     }
 
                     #boxvideo{
@@ -84,6 +84,12 @@ body <- dashboardBody(
                     #about_us{
                       max-width:100%;
                       max-height:100%;
+                    }
+
+                    #zoom_image{
+                      border: 3px black solid;
+                      border-radius: 10px;
+                      box-shadow: 6px 6px 0px black;
                     }
                     "))
   ),
