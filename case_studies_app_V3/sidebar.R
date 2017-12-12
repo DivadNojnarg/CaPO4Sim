@@ -27,10 +27,11 @@ sidebar <- dashboardSidebar(
                
                
                # choose basic animations
-               awesomeRadio(inputId = "basic_animation", 
-                            label = "Choose an animation :", 
-                            choices = c("Calcium", "Phosphate"),
-                            inline = TRUE, status = "success"),
+               # Uncomment when animations are ready
+               # awesomeRadio(inputId = "basic_animation", 
+               #              label = "Choose an animation :", 
+               #              choices = c("Calcium", "Phosphate"),
+               #              inline = TRUE, status = "success"),
                
                # basic case studies
                menuItem("Dysregulations", tabName = "steady_state", 

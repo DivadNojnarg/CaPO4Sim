@@ -38,7 +38,6 @@ shinyServer(function(input, output, session) {
                                func = calcium_phosphate_PO4gav, 
                                parms = parameters))
     }
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -89,7 +88,7 @@ shinyServer(function(input, output, session) {
       visEvents(type = "once", startStabilizing = "function() {
                 this.moveTo({scale:2})}") # to set the initial zoom (1 by default)
     
-    })
+  })
   
   output$id <- renderPrint({input$current_edge_id})
   output$id_bis <- renderPrint({input$current_node_id})
@@ -114,7 +113,6 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_Ca") %>% visGetViewPosition()
     vals$viewposition <- if (!is.null(input$network_Ca_viewPosition))
       do.call(rbind, input$network_Ca_viewPosition)
-    
   })
   
   #-------------------------------------------------------------------------
@@ -122,21 +120,21 @@ shinyServer(function(input, output, session) {
   #  Navigation counter
   #
   #-------------------------------------------------------------------------
-
+  
   # create a navigation counter to trigger sequential graph animation
   counter_nav <- reactiveValues(diagram = 0) 
-
+  
   # counter decrease
   observeEvent(input$back1,{
     if (counter_nav$diagram == 0) {
     } else {counter_nav$diagram <- counter_nav$diagram - 1}
   })
-
+  
   # counter incrementation
   observeEvent(input$next1,{
-      counter_nav$diagram <- counter_nav$diagram + 1
+    counter_nav$diagram <- counter_nav$diagram + 1
   })
-
+  
   # reset the counter if higher than 5
   observeEvent(input$next1,{
     if (counter_nav$diagram > 6) {
@@ -167,7 +165,7 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
     current_sim <- extract_running_sim(input)[[1]]
     dynamic_sim <- !(input$run_Ca_inject | input$run_PO4_inject |
-                     input$run_PO4_gav)
+                       input$run_PO4_gav)
     # only if a simulation is selected 
     # dynamics simulations are excluded since calculations
     # are performed live contrary to steady-state simulations
@@ -192,12 +190,11 @@ shinyServer(function(input, output, session) {
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4 injection as well as PO4 gavage
   
   observe({
-
+    
     out <- out()
     edges_Ca <- edges_Ca()
-
+    
     arrow_lighting_live(out, edges = edges_Ca, session)
-
   })
   
   #------------------------------------------------------------------------- 
@@ -209,7 +206,7 @@ shinyServer(function(input, output, session) {
   
   # draw each of the 6 plots as a function of the selected simulation
   output$plot <- renderPlotly({
-  
+    
     # extract only the name of the simulation
     # and not "run_simulation", as given by extract_running_sim()
     current_sim <- extract_running_sim(input)[[1]] %>%
@@ -223,7 +220,7 @@ shinyServer(function(input, output, session) {
       eval(parse(text = paste("make_plot_", current_sim, "(input)", sep = "")))    
     }
   })
-
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -267,7 +264,7 @@ shinyServer(function(input, output, session) {
     sim_list <- extract_running_sim(input)[[2]]
     current_simulation <- extract_running_sim(input)[[1]]
     index <- which(sim_list == current_simulation)
-
+    
     # if one simulation run, disable all boxes that are not related to that one
     if (!is_empty(current_simulation)) {
       temp <- eval(parse(text = paste("input$", current_simulation, sep = "")))
@@ -277,7 +274,6 @@ shinyServer(function(input, output, session) {
     } else {# if no simulation runs, all boxes are available
       map(sim_list, enable)
     }
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -298,17 +294,17 @@ shinyServer(function(input, output, session) {
                            "showProgress" = TRUE,
                            "showBullets" = FALSE),
             events = list(# reset the session to hide sliders and back/next buttons
-                          "oncomplete" = I('history.go(0)')))
+              "oncomplete" = I('history.go(0)')))
     
-  #   "onbeforechange" = I('
-  #                                  if (targetElement.getAttribute("data-step")==="2") {
-  #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
-  # } else {
-  #                        $(".newClass").css("max-width", "500px").css("min-width","500px");
-  # }'),
+    #   "onbeforechange" = I('
+    #                                  if (targetElement.getAttribute("data-step")==="2") {
+    #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
+    # } else {
+    #                        $(".newClass").css("max-width", "500px").css("min-width","500px");
+    # }'),
     
   })
-
+  
   # Print a short help text above the graph part
   # removeUI does not work
   output$info <- renderUI({
@@ -331,17 +327,17 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3,
-               input$run_Ca_inject, input$run_PO4_inject, input$run_PO4_gav),{
-           
-                 # extract only the last part of the simulation
-                 # so gives php1, hypopara, hypoD3, ...
-                 current_sim <- extract_running_sim(input)[[1]] %>%
-                   str_extract("_\\w+") %>%
-                   str_replace("_", "")
-                
-                 req(current_sim)
-                 showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
-  })
+                 input$run_Ca_inject, input$run_PO4_inject, input$run_PO4_gav),{
+                   
+                   # extract only the last part of the simulation
+                   # so gives php1, hypopara, hypoD3, ...
+                   current_sim <- extract_running_sim(input)[[1]] %>%
+                     str_extract("_\\w+") %>%
+                     str_replace("_", "")
+                   
+                   req(current_sim)
+                   showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
+                 })
   
   #------------------------------------------------------------------------- 
   #  
@@ -358,7 +354,7 @@ shinyServer(function(input, output, session) {
                    
                    if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" | 
                        input$run_hypoD3 == "TRUE") {
-
+                     
                      generate_notification(counter = counter_nav$diagram, 
                                            simulation = current_simulation,
                                            allowed = input$notif2_switch)
@@ -405,8 +401,6 @@ shinyServer(function(input, output, session) {
       removeClass(id = "network_cap", class = "network_caphuman")
       removeClass(id = "network_cap", class = "network_caprat")
     }
-    #print(input$background_choice)
-    
   })
   
   # prevent user from selecting multiple background
@@ -424,7 +418,6 @@ shinyServer(function(input, output, session) {
     } else {
       enable(selector = "#background_choice input[value='rat']")
     }
-    
   })
   
   # prevent user from unselecting all graph components
@@ -442,7 +435,6 @@ shinyServer(function(input, output, session) {
     } else {
       enable(selector = "#network_Ca_choice input[value='Ca']")
     }
-    
   })
   
   # reset parameters individually
@@ -454,7 +446,6 @@ shinyServer(function(input, output, session) {
                    
                    # call the function to reset the given slider
                    sliders_reset(button_states, input)
-                   
                  })
   
   

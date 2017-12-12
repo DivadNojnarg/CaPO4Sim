@@ -145,7 +145,7 @@ modal_PO4_inject <- modalDialog(
 )
 
 # Modal for PO4 gavage
-modal_PO4_gavage <- modalDialog(
+modal_PO4_gav <- modalDialog(
   title = "About PO4 gavage",
   withMathJax("This is a simulation of phosphate gavage in 250g-350g male 
                wistar rats (https://www.ncbi.nlm.nih.gov/pubmed/28246304). 
