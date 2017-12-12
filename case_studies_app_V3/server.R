@@ -180,7 +180,6 @@ shinyServer(function(input, output, session) {
                        session)
       } 
     }
-    
   })
   
   
