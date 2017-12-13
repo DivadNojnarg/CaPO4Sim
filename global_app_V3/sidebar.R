@@ -20,7 +20,7 @@ sidebar <- dashboardSidebar(
       menuItem("About", tabName = "about", icon = icon("info-circle")), 
       menuItem("Help", tabName = "help", icon = icon("question-circle"),
                actionBttn("help", label = "Help", icon = NULL, style = "unite",
-                          color = "default", size = "md", block = FALSE, no_outline = TRUE)),
+                          color = "danger", size = "lg", block = FALSE, no_outline = TRUE)),
       menuItem("Demo", tabName = "demo", icon = icon("youtube-play")),
       menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE),
       menuItem("Settings", tabName = "settings", icon = icon("sliders"),
@@ -67,8 +67,8 @@ sidebar <- dashboardSidebar(
                                 size = "xs"))
       )
     ),
-    data.step = 6,
-    data.intro = help_text[6]
+    data.step = 1,
+    data.intro = help_text[1]
   )
 )
 

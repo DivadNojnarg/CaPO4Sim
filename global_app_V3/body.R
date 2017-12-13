@@ -111,6 +111,26 @@ body <- dashboardBody(
                       text-align: center;
                     }
                     
+                    mark {
+                      background-color: yellow;
+                    }
+                    
+                    .newClass{
+                      min-width: 900px;
+                      max-width: 900px;
+                    }
+                    
+                    #about_us{
+                      max-width:100%;
+                      max-height:100%;
+                    }
+                    
+                    #zoom_image{
+                      border: 3px black solid;
+                      border-radius: 10px;
+                      box-shadow: 6px 6px 0px black;
+                    }
+
                     "))
   ),
   
@@ -144,8 +164,8 @@ body <- dashboardBody(
                                    type = 8, 
                                    color = "#000000")
                    ),
-                   data.step = 1,
-                   data.intro = help_text[1]
+                   data.step = 2,
+                   data.intro = help_text[2]
                  )
                ) 
         ),
@@ -165,8 +185,8 @@ body <- dashboardBody(
                                       size = 2, 
                                       type = 8, 
                                       color = "#000000"),
-                          data.step = 2,
-                          data.intro = help_text[2]
+                          data.step = 3,
+                          data.intro = help_text[3]
                         )
                         
                  ),
@@ -176,8 +196,8 @@ body <- dashboardBody(
                                       size = 2, 
                                       type = 8, 
                                       color = "#000000"),
-                          data.step = 3,
-                          data.intro = help_text[3]
+                          data.step = 4,
+                          data.intro = help_text[4]
                         )
                  )
                ),
@@ -191,10 +211,13 @@ body <- dashboardBody(
                      #column(8, align = "left", offset = 0, style = 'padding:0px;',
                      
                      conditionalPanel(
-                       condition = "input.current_node_bis_id == null",
-                       "Please double-click on a node to display its
-                          detailed content (only available for parathyroid glands,
-                          bones, kidneys and intestine)."
+                       condition = "input.current_node_bis_id == null ||
+                                    input.current_node_bis_id == 'null'",
+                       HTML(paste("Please", "<mark><font color=\"#FF0000\"><b>", 
+                                  "double-click", "</b></font></mark>", 
+                                  "on a node to display its, <b>detailed content</b> 
+                                  (only available for parathyroid glands,
+                                  bones, kidneys and intestine)."), sep = " ")
                      ),
                      
                      introBox(
@@ -209,8 +232,8 @@ body <- dashboardBody(
                          )
                          
                        ),
-                       data.step = 4,
-                       data.intro = help_text[4]
+                       data.step = 5,
+                       data.intro = help_text[5]
                      ),
                      
                      # Kidney zoom 1
@@ -226,9 +249,9 @@ body <- dashboardBody(
                      # Proximal tubule zoom Ca
                      conditionalPanel(
                        condition = "input.current_node_tris_id == 1 &&
-                                       input.current_node_bis_id != 'null' &&
-                                       input.current_node_tris_id != 'null' &&
-                                       input.network_Ca_choice.indexOf('Ca') > -1 ",
+                                    input.current_node_bis_id != 'null' &&
+                                    input.current_node_tris_id != 'null' &&
+                                    input.network_Ca_choice.indexOf('Ca') > -1 ",
                        
                        div(id = "networkkidney_PT",
                            visNetworkOutput("network_kidney_PT", height = "400px")
@@ -239,9 +262,9 @@ body <- dashboardBody(
                      # Proximal tubule zoom PO4
                      conditionalPanel(
                        condition = "input.current_node_tris_id == 1 &&
-                          input.current_node_bis_id != 'null' &&
-                          input.current_node_tris_id != 'null' &&
-                          input.network_Ca_choice.indexOf('PO4') > -1 ",
+                                    input.current_node_bis_id != 'null' &&
+                                    input.current_node_tris_id != 'null' &&
+                                    input.network_Ca_choice.indexOf('PO4') > -1 ",
                        
                        div(id = "networkkidney_PT_PO4",
                            visNetworkOutput("network_kidney_PT_PO4", height = "400px")
@@ -252,8 +275,8 @@ body <- dashboardBody(
                      # TAL zoom
                      conditionalPanel(
                        condition = "input.current_node_tris_id == 2 &&
-                                       input.current_node_bis_id != 'null' &&
-                                       input.current_node_tris_id != 'null'",
+                                    input.current_node_bis_id != 'null' &&
+                                    input.current_node_tris_id != 'null'",
                        
                        div(id = "networkkidney_TAL",
                            visNetworkOutput("network_kidney_TAL", height = "400px")
@@ -264,8 +287,8 @@ body <- dashboardBody(
                      # DCT zoom
                      conditionalPanel(
                        condition = "input.current_node_tris_id == 3 &&
-                                       input.current_node_bis_id != 'null' &&
-                                       input.current_node_tris_id != 'null'",
+                                    input.current_node_bis_id != 'null' &&
+                                    input.current_node_tris_id != 'null'",
                        
                        div(id = "networkkidney_DCT",
                            visNetworkOutput("network_kidney_DCT", height = "400px")
@@ -276,7 +299,7 @@ body <- dashboardBody(
                      # Intestine zoom
                      conditionalPanel(
                        condition = "input.current_node_bis_id == 1 &&
-                                       input.current_node_bis_id != 'null'",
+                                    input.current_node_bis_id != 'null'",
                        
                        div(id = "networkintestine",
                            visNetworkOutput("network_intestine", height = "400px")
@@ -287,7 +310,7 @@ body <- dashboardBody(
                      # bone zoom
                      conditionalPanel(
                        condition = "input.current_node_bis_id == 4 &&
-                                       input.current_node_bis_id != 'null'",
+                                    input.current_node_bis_id != 'null'",
                        
                        div(id = "networkbone",
                            visNetworkOutput("network_bone", height = "400px")
@@ -307,8 +330,8 @@ body <- dashboardBody(
       div(id = "boxvideo",
           box(id = "boxvideo", solidHeader = TRUE,
               HTML('<iframe width="560" height="315"
-                src="https://www.youtube.com/embed/AKFyJfYdJhA"
-                frameborder="0" allowfullscreen></iframe>')
+                   src="https://www.youtube.com/embed/AKFyJfYdJhA"
+                   frameborder="0" allowfullscreen></iframe>')
           )
       )
     ),
@@ -316,7 +339,11 @@ body <- dashboardBody(
     # About section Panel
     tabItem(
       tabName = "about",
-      h1("About us")
+      div(id = "about_us",
+          HTML(paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
+                      border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
+          #HTML(paste(tags$img(src = "about_us.jpg")))
+      )
     ),
     
     # Written tutorial for this app

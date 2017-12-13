@@ -17,7 +17,7 @@ header <- dashboardHeader(
   titleWidth = 300,
   
     dropdownMenuOutput("parameter_changed")
-  
+
   # dropdownMenu(
   #   tags$li(
   #     HTML(paste0(

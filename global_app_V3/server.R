@@ -52,7 +52,6 @@ shinyServer(function(input, output, session) {
       "Prot_tot_p" = 0.6*input$Prot_tot_p, 
       "Vp" = 0.01*input$Vp,
       "GFR" = 2e-003*input$GFR) 
-    
   })
   
   # make a vector of input$parameters, fixed_parameters and calculated parameters
@@ -109,9 +108,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$table <- renderDataTable({ 
-    
     out()[nrow(out()), 55:56]
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -176,7 +173,6 @@ shinyServer(function(input, output, session) {
       visNetworkProxy("network_Ca") %>%
         visUpdateNodes(nodes = nodes_Ca)
     }
-    
   })
   
   output$browser <- renderPrint({input$browser})
@@ -215,7 +211,6 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", afterDrawing = "function() {
                 this.moveTo({ position: {x:2.5, y:-2.5},
                 offset: {x: 0, y:0} })}")
-    
     })
   
   output$id_tris <- renderPrint({input$current_edge_bis_id})
@@ -241,7 +236,6 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_kidney_PT_PO4") %>% visGetViewPosition()
     vals$viewposition <- if (!is.null(input$network_kidney_PT_PO4_viewPosition))
       do.call(rbind, input$network_kidney_PT_PO4_viewPosition)
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -274,7 +268,6 @@ shinyServer(function(input, output, session) {
       visEvents(deselectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_tris_id', 'null');
                 ;}")
-    
   })
   
   output$node_tris <- renderPrint({input$current_node_tris_id})
@@ -502,26 +495,22 @@ shinyServer(function(input, output, session) {
   
   output$plot_node <- renderPlotly({
     
-    validate(need(input$current_node_id, 'Select one node on the graph!'))
-    validate(need(input$current_node_id != 0, 'Select one node on the graph!'))
+    validate(need(input$current_node_id, "Select one node on the graph!"))
     
     out <- out()
     parameters_bis <- parameters_bis()
     
     plot_node(node = input$current_node_id , out, parameters_bis)
-    
   })
   
   output$plot_edge <- renderPlotly({
     
-    validate(need(input$current_edge_id, 'Select one edge on the graph!'))
-    validate(need(input$current_edge_id != 0, 'Select one edge on the graph!'))
+    validate(need(input$current_edge_id, "Select one edge on the graph!"))
     
     out <- out()
     
     # call the plot_edge() function defined in global.R
     plot_edge(edge = input$current_edge_id , out)
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -681,6 +670,7 @@ shinyServer(function(input, output, session) {
   
   output$parameter_changed <- renderMenu({
     param_notif <- find_parameter_change(parameters())
+    
     # if notif is not NULL, we can fill the notification dropdown menu
     if (!is.null(param_notif)) {
       items <- lapply(1:length(param_notif$value), function(i) {
@@ -699,8 +689,7 @@ shinyServer(function(input, output, session) {
       removeUI(selector = "parameter_changed")
     }
   })
-  
-  
+
   # try to make notif collapse/uncollapse. Seems like shinyjs does not
   # work even if good ids are provided
   # observe({
@@ -722,9 +711,43 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # help animation with introjs
+  # options are provided to control the size of the help
+  # Do not forget to wrap the event content in I('my_function')
+  # otherwise it will fail
   observeEvent(input$help,{
-    introjs(session)
+    introjs(session, 
+            options = list("nextLabel" = "Next step!",
+                           "prevLabel" = "Did you forget something?",
+                           "tooltipClass" = "newClass",
+                           "showProgress" = TRUE,
+                           "showBullets" = FALSE),
+            events = list(# reset the session to hide sliders and back/next buttons
+              "oncomplete" = I('history.go(0)')))
+    
+    #   "onbeforechange" = I('
+    #                                  if (targetElement.getAttribute("data-step")==="2") {
+    #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
+    # } else {
+    #                        $(".newClass").css("max-width", "500px").css("min-width","500px");
+    # }'),
   })
+  
+  #------------------------------------------------------------------------- 
+  #  
+  #  Toggle each sidebar when a user press the help button
+  #
+  #-------------------------------------------------------------------------
+  
+  observe({
+    shinyjs::toggleClass(id = "controlbar", 
+                         class = "control-sidebar-open",
+                         condition = input$help)
+  })
+  
+  # observeEvent(input$help,{
+  #   shinyjs::removeClass(selector = "body", 
+  #                        class = "sidebar-collapse")
+  # })
   
   #------------------------------------------------------------------------- 
   #  
@@ -741,9 +764,7 @@ shinyServer(function(input, output, session) {
                      text = "Invalid parameter value", 
                      type = "error")
       reset("beta_exo_PTHg") # value is reset
-      
     }
-    
   })
   
   # prevent the user to put infinite value in the max time of integration
@@ -806,7 +827,6 @@ shinyServer(function(input, output, session) {
     } else {
       enable(selector = "#network_Ca_choice input[value='Ca']")
     }
-    
   })
   
   #------------------------------------------------------------------------- 
@@ -840,7 +860,6 @@ shinyServer(function(input, output, session) {
                    
                    # call the function to reset the given slider
                    sliders_reset(button_states, input)
-                   
                  })
   
   # display or not display the network background
@@ -859,8 +878,6 @@ shinyServer(function(input, output, session) {
       removeClass(id = "network_cap", class = "network_caphuman")
       removeClass(id = "network_cap", class = "network_caprat")
     }
-    #print(input$background_choice)
-    
   })
   
   # prevent user from selecting multiple background
@@ -878,7 +895,31 @@ shinyServer(function(input, output, session) {
     } else {
       enable(selector = "#background_choice input[value='rat']")
     }
-    
+  })
+  
+  # change the dashboard skin
+  current_skin <- reactiveValues(color = NULL)
+  previous_skin <- reactiveValues(color = NULL)
+  observeEvent(input$skin,{
+    # the first time, previous_skin$color is set to the first
+    # skin value at opening. Same thing for current value
+    if (is.null(previous_skin$color)) {
+      previous_skin$color <- current_skin$color <- input$skin
+    } else {
+      current_skin$color <- input$skin
+      # if the old skin is the same as the current selected skin
+      # then, do nothing
+      if (previous_skin$color == current_skin$color) {
+        NULL
+      } else {
+        # otherwise, remove the old CSS class and add the new one
+        shinyjs::removeClass(selector = "body", class = paste("skin", previous_skin$color, sep = "-"))
+        shinyjs::addClass(selector = "body", class = paste("skin", current_skin$color, sep = "-"))
+        # the current skin is added to previous_skin to be ready for
+        # the next change
+        previous_skin$color <- c(previous_skin$color, current_skin$color)[-1]
+      }
+    }
   })
   
 })

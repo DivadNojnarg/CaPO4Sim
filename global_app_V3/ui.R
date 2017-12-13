@@ -21,4 +21,5 @@ dashboardPage(skin = "black", title = "CaPO4 Teaching App",
               footerOutput(outputId = "dynamicFooter"), 
               div(id = "controlbar",
                   dashboardControlbar()
-                  ))
+              )
+)

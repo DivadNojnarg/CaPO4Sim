@@ -1,3 +1,21 @@
+## Changelog version 3 (global app)
+- major update of the design: new dashboard display
+- major update on the parameter display: now they are accessible
+by clicking on nodes (which contain parameters). The controbar on the right side
+plays a crucial role to display parameters
+- add a notification in the header to remind the user which parameter is changed
+and how (is it increased? decreased?)
+- refine some help text written in the zoom area
+
+
+## Changelog version 3 (case studies app)
+- major update of the design: new dashboard display
+- major update of the help section
+- major update of notifications during case studies
+- major update of modal during case studies
+- option to change the dashboard theme
+
+
 ## Changelog version 2.5 (global app)
 - add human background
 - adapt node display to the human background

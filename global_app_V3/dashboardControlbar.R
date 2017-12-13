@@ -25,6 +25,9 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-pane active" id="control-sidebar-home-tab">
       <h3 class="control-sidebar-heading">Parameter Input</h3>
 
+      <div data-step="6" data-intro="&lt;b&gt;Sliders&lt;/b&gt; can be moved from the right to the left and inversely. &#10;
+      To &lt;mark&gt;&lt;font color=&quot;#FF0000&quot;&gt;&lt;b&gt; reset &lt;/b&gt;&lt;/font&gt;&lt;/mark&gt; the value of a slider, click on the &#10;
+      &lt;b&gt;reset&lt;/b&gt; button on the &lt;b&gt;right side&lt;/b&gt; of the slider.">
       <div data-display-if="input.current_edge_bis_id != &#39;null&#39; &amp;&amp; &#10;    input.current_edge_bis_id == 1 &amp;&amp; &#10;    input.current_node_bis_id == 11 ||&#10;    input.help" data-ns-prefix="">
         <div class="form-group shiny-input-container">
           <label class="control-label" for="k_prod_PTHg" style="width:100%;">
@@ -39,6 +42,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
           <input class="js-range-slider" id="k_prod_PTHg" data-min="0" data-max="100" data-from="1" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
         </div>
       </div>
+    </div>
 
 
       <div data-display-if="input.current_edge_bis_id != &#39;null&#39; &amp;&amp; &#10;    input.current_edge_bis_id == 3 &amp;&amp;&#10;    input.current_node_bis_id == 11" data-ns-prefix="">
@@ -347,7 +351,19 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-pane" id="control-sidebar-settings-tab">
       <h3 class="control-sidebar-heading">Other Options</h3>
       
-      In development
+      <div class="form-group shiny-input-container">
+      <label class="control-label" for="skin">Select a skin:</label>
+      <div>
+      <select id="skin"><option value="blue">blue</option>
+      <option value="black" selected>black</option>
+      <option value="purple">purple</option>
+      <option value="green">green</option>
+      <option value="red">red</option>
+      <option value="yellow">yellow</option>
+      </select>
+      <script type="application/json" data-for="skin" data-nonempty="">{}</script>
+      </div>
+      </div>
 
 
 
