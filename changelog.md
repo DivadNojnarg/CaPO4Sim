@@ -6,6 +6,7 @@ plays a crucial role to display parameters
 - add a notification in the header to remind the user which parameter is changed
 and how (is it increased? decreased?)
 - refine some help text written in the zoom area
+- new about section (credits)
 
 
 ## Changelog version 3 (case studies app)
@@ -14,6 +15,7 @@ and how (is it increased? decreased?)
 - major update of notifications during case studies
 - major update of modal during case studies
 - option to change the dashboard theme
+- new about section (credits)
 
 
 ## Changelog version 2.5 (global app)
