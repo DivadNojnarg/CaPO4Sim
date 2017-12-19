@@ -82,8 +82,10 @@ body <- dashboardBody(
                     }
 
                     #about_us{
-                      max-width:100%;
-                      max-height:100%;
+                      margin-left: auto;
+                      margin-right: auto;
+                      max-width:70%;
+                      max-height:70%;
                     }
 
                     #zoom_image{

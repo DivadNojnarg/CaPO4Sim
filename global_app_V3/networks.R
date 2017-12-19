@@ -231,7 +231,7 @@ generate_edges_Ca <- function(input) {
     
     label = c("","Net Ca","Net PO4","Ca","PO4",rep("",2),"Ca","PO4",
               "Ca","PO4", "Net PO4",rep("-",3),"+","-","+",
-              "","+","+","-","+","-","-","+","+","-","-"),
+              "","+","+","-","+","-","+","+","+","-","-"),
     id = c("Abs_int","Net_Ca_pf","Net_PO4_pf","Ac_Ca","Ac_PO4","Res",7,"Reabs_Ca",
            "Reabs_PO4","U_Ca","U_PO4","Net_PO4_cells",13:29),
     width = c(rep(8,12), rep(4,17)),
