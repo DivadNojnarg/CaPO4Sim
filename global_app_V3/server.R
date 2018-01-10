@@ -922,4 +922,18 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # Custom footer
+  output$dynamicFooter <- renderFooter({ 
+    dashboardFooter(
+      mainText = h5(
+        "2017, The interface Group, Zurich.",
+        br(),
+        "Built with", 
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30"),
+        "by",
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30"), "."), 
+      subText = HTML("<b>Version</b> Beta 3")
+    ) 
+  })
+  
 })
