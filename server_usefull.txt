@@ -10,6 +10,10 @@ mkdir mydir
 sudo chmod 600 /Users/macdavidgranjon/Desktop/shinycap.pem
 ssh-add /Users/macdavidgranjon/Desktop/shinycap.pem # to have authorization
 
+it is also possible to do like that
+chmod 400 /Users/macdavidgranjon/Desktop/shinycap.pem
+ssh -i chmod 400 /Users/macdavidgranjon/Desktop/shinycap.pem ubuntu@<public-DNS>
+
 ## SSH key ##
 
 scp -r /Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/global_app/* ubuntu@130.60.24.79:/srv/shiny-server/capApp/global_app
