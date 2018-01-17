@@ -243,7 +243,7 @@ shinyServer(function(input, output, session) {
                       } else if (input$run_hypoD3) {
                         "25(OH)D stock"
                       }, 
-                      choices = seq(from = ifelse(input$run_php1 | input$help, 0, 1), 
+                      choices = seq(from = ifelse(input$run_php1 | input$help, 1, 1), 
                                     to = ifelse(input$run_php1 | input$help, 300, 0), 
                                     by = ifelse(input$run_php1 | input$help, 20, -0.1)), 
                       grid = TRUE)

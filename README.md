@@ -91,9 +91,9 @@ and how (is it increased? decreased?)
 ## General
 
 - set a load balancer (Ready to be done)
-- set authentication
+- <del>set authentication</del> (DONE).
 - <del>use a compiled model instead of only deSolve core<del> (DONE)
-- write "about" section for the staff
+- <del>write "about" section for the staff</del> (DONE).
 - update the main website
 - refine video tutorials
 - make animations on visnetwork (blinking,...)
@@ -108,7 +108,7 @@ so that they are always visible</del> (DONE).
 - the size of the box should scale each screen (and file the whole half page, 
 which is not the case now).
 - <del>decrease navbar height</del> (DONE).
-- improve help navigation.
+- <del>improve help navigation</del> (DONE).
 - <del>adjust the human background</del> (DONE).
 
 ## Case studies App
@@ -117,9 +117,9 @@ which is not the case now).
 - the size of the box should scale each screen (and file the whole half page, 
 which is not the case now).
 - <del>adjust the human background</del> (DONE).
-- slider cursor on 1 by default for each simulation (need to set a reset).
-- find a way to better user graphs.
-- include detailed zoom?
-- improve help navigation
+- <del>slider cursor on 1 by default for each simulation (need to set a reset)</del> (DONE).
+- <del>find a way to better user graphs</del> (DONE).
+- <del>include detailed zoom?</del> (DONE).
+- <del>improve help navigation</del> (DONE).
 - change title "steady-state" and "dynamics" simulations (too computational).
 - use "explanations"" instead of "notifications".
