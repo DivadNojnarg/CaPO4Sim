@@ -17,6 +17,12 @@ and how (is it increased? decreased?)
 - option to change the dashboard theme
 - new about section (credits)
 
+## Changelog version 3 (treatments app)
+- major update of the design: new dashboard display
+- major update on the parameter display: now they are accessible
+- refine some help text written in the zoom area
+- new about section (credits)
+
 
 ## Changelog version 2.5 (global app)
 - add human background

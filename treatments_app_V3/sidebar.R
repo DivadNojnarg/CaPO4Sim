@@ -97,7 +97,8 @@ sidebar <- dashboardSidebar(
                    
                    
                    conditionalPanel( # for Ca iv injection
-                     condition = "/Ca iv injection/.test(input.treatment_selected)", # special JS condition to test if an element is in a list
+                     # special JS condition to test if an element is in a list
+                     condition = "/Ca iv injection/.test(input.treatment_selected)", 
                      
                      sliderInput("Ca_inject", 
                                  "$$ k_{inject}^{Ca} $$", 

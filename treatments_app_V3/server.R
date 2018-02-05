@@ -157,19 +157,19 @@ shinyServer(function(input, output, session) {
                        type = "error", closeButton = TRUE)
     } else {# if it is an element of the data frame
       # if there is still only one line in the data frame
-        if (nrow(event_table$df) >= 1) { 
-          # test if the event name corresponds to Ca_iv or not
-          if (is.element("Ca_iv", event_table$df[input$delete_Caiv_id,1])) { 
-            # delete the corresponding row in the event table
-            event_table$df <- event_table$df[-input$delete_Caiv_id,] 
-          } else {# cannot suppress a D3_iv or P_iv with the Ca_iv button (security)
-            showNotification("Cannot delete element different from Ca_iv 
+      if (nrow(event_table$df) >= 1) { 
+        # test if the event name corresponds to Ca_iv or not
+        if (is.element("Ca_iv", event_table$df[input$delete_Caiv_id,1])) { 
+          # delete the corresponding row in the event table
+          event_table$df <- event_table$df[-input$delete_Caiv_id,] 
+        } else {# cannot suppress a D3_iv or P_iv with the Ca_iv button (security)
+          showNotification("Cannot delete element different from Ca_iv 
                              injection with this button. Please use the 
                              delete button related to the event you would 
                              like to remove!",
-                             type = "error", closeButton = TRUE)
-          }
+                           type = "error", closeButton = TRUE)
         }
+      }
     }
   })
   
@@ -178,18 +178,18 @@ shinyServer(function(input, output, session) {
       showNotification("Please delete an event which is in the list!",
                        type = "error", closeButton = TRUE)
     } else{
-        if (nrow(event_table$df) >= 1) {
-          if (is.element("Ca_gavage", event_table$df[input$delete_Caintake_id,1])) {
+      if (nrow(event_table$df) >= 1) {
+        if (is.element("Ca_gavage", event_table$df[input$delete_Caintake_id,1])) {
           event_table$df <- event_table$df[-input$delete_Caintake_id,]
-          } else {
-            showNotification("Cannot delete element different from Ca_iv 
+        } else {
+          showNotification("Cannot delete element different from Ca_iv 
                              injection with this button. Please use the 
                              delete button related to the event you would 
                              like to remove!",
-                             type = "error", closeButton = TRUE)
-          }
+                           type = "error", closeButton = TRUE)
         }
       }
+    }
   })
   
   observeEvent(input$delete_oldD3iv,{
@@ -204,7 +204,7 @@ shinyServer(function(input, output, session) {
           showNotification("Cannot delete element different from Ca_iv 
                            injection with this button. Please use the delete 
                            button related to the event you would like to remove!",
-                            type = "error", closeButton = TRUE)
+                           type = "error", closeButton = TRUE)
         }
       }
     }
@@ -222,7 +222,7 @@ shinyServer(function(input, output, session) {
           showNotification("Cannot delete element different from Ca_iv 
                            injection with this button. Please use the delete 
                            button related to the event you would like to remove!",
-                            type = "error", closeButton = TRUE)
+                           type = "error", closeButton = TRUE)
         }
       }
     }
@@ -239,7 +239,7 @@ shinyServer(function(input, output, session) {
         } else {
           showNotification("Cannot delete element different from Ca_iv injection with this button. 
                             Please use the delete button related to the event you would like to remove!",
-                            type = "error", closeButton = TRUE)
+                           type = "error", closeButton = TRUE)
         }
       }
     }
@@ -367,7 +367,7 @@ shinyServer(function(input, output, session) {
       visEvents(type = "once", startStabilizing = "function() {
                 this.moveTo({scale:2})}") # to set the initial zoom (1 by default)
     
-    })
+  })
   
   #-------------------------------------------------------------------------
   #

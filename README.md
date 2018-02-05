@@ -29,7 +29,7 @@ I finally thanks: Dean Attali ([shinyjs](https://deanattali.com/shinyjs/)),
 Karline Soetaert and Thomas Petzoldt ([deSolve](http://desolve.r-forge.r-project.org)),
 Carson Sievert ([plotly](https://plot.ly/r/)), 
 the datastorm team ([visNetwork](http://datastorm-open.github.io/visNetwork/)),
-the dream R team ([shinyWidgets](https://dreamrs.github.io/shinyWidgets/index.html)),
+the dream R team, especially Victor Perrier ([shinyWidgets](https://dreamrs.github.io/shinyWidgets/index.html)),
 Hadley Wickham and the Tidyverse team ([purrr and stringr](https://www.tidyverse.org/packages/)),
 Eric Bailey ([shinyMenus and shinyBS](https://github.com/ebailey78)),
 Andrew Sali ([shinycssloaders](https://github.com/andrewsali/shinycssloaders)),
@@ -70,7 +70,7 @@ library(shinyFeedback)
 ## Changelog version 3 (global app)
 - major update of the design: new dashboard display
 - major update on the parameter display: now they are accessible
-by clicking on nodes (which contain parameters). The controbar on the right side
+by clicking on nodes (which contain parameters). The controlbar on the right side
 plays a crucial role to display parameters
 - add a notification in the header to remind the user which parameter is changed
 and how (is it increased? decreased?)
@@ -86,16 +86,22 @@ and how (is it increased? decreased?)
 - option to change the dashboard theme
 - new about section (credits)
 
+## Changelog version 3 (treatments app)
+- major update of the design: new dashboard display
+- major update on the parameter display: now they are accessible
+- refine some help text written in the zoom area
+- new about section (credits)
+
 # **To do** list
 
 ## General
 
-- set a load balancer (Ready to be done)
+- set a load balancer (Ready to be done).
 - <del>set authentication</del> (DONE).
-- <del>use a compiled model instead of only deSolve core<del> (DONE)
+- <del>use a compiled model instead of only deSolve core<del> (DONE).
 - <del>write "about" section for the staff</del> (DONE).
-- update the main website
-- refine video tutorials
+- <del>update the main website</del> (DONE).
+- refine video tutorials.
 - make animations on visnetwork (blinking,...)
 
 
@@ -103,23 +109,26 @@ and how (is it increased? decreased?)
 
 - improve the navigation between detailed zoom in the main app
 - <del>find another place to put the active slider(s), maybe in the navbar
-so that they are always visible</del> (DONE).
+so that they are always visible</del> (DONE)
 - <del>table of modified parameters to remind the user what is changed or not.</del> (DONE)
 - the size of the box should scale each screen (and file the whole half page, 
-which is not the case now).
-- <del>decrease navbar height</del> (DONE).
-- <del>improve help navigation</del> (DONE).
-- <del>adjust the human background</del> (DONE).
+which is not the case now)
+- <del>decrease navbar height</del> (DONE)
+- <del>improve help navigation</del> (DONE)
+- <del>adjust the human background</del> (DONE)
 
 ## Case studies App
 
-- check plot scaling when screen size is reduced.
+- check plot scaling when screen size is reduced
 - the size of the box should scale each screen (and file the whole half page, 
-which is not the case now).
-- <del>adjust the human background</del> (DONE).
-- <del>slider cursor on 1 by default for each simulation (need to set a reset)</del> (DONE).
-- <del>find a way to better user graphs</del> (DONE).
-- <del>include detailed zoom?</del> (DONE).
-- <del>improve help navigation</del> (DONE).
-- change title "steady-state" and "dynamics" simulations (too computational).
-- use "explanations"" instead of "notifications".
+which is not the case now)
+- <del>adjust the human background</del> (DONE)
+- <del>slider cursor on 1 by default for each simulation (need to set a reset)</del> (DONE)
+- <del>find a way to better user graphs</del> (DONE)
+- <del>include detailed zoom?</del> (DONE)
+- <del>improve help navigation</del> (DONE)
+- change title "steady-state" and "dynamics" simulations (too computational)
+- use "explanations"" instead of "notifications"
+
+## Treatments studies App
+- update the core to compiled code

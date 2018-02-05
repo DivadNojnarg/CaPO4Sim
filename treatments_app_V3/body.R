@@ -160,10 +160,10 @@ body <- dashboardBody(
                    box(
                      # classic id does not work with tabBox to reset values inside ...
                      title = tagList(shiny::icon("question-circle"), "Questions"), width = 12,
-                     "Put here the vignette text"
-                              
-                     )
+                     "Put the vignette text here "
+                     
                    )
+               )
         )
       )
     ),

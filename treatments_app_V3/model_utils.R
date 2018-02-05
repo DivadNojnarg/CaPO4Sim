@@ -3,7 +3,6 @@
 # take event argument, edges and network
 # This function is then called by flux_lighting
 # to update edges at the same time
-
 arrow_lighting <- function(events, edges, network) {
   
   if (network == "network_Ca") {
@@ -105,12 +104,12 @@ arrow_lighting_live <- function(out, edges, session, t_target) {
 }
 
 
+
 # Function that allows to light the graph when fluxes change:
 # arrows are in green when fluxes are increased and in
 # red when fluxes are decreased
 # takes edges, network (by default set to network_Ca), out and
 # events as arguments
-
 flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){ 
   
   # calculate the difference between live fluxes and base-case values
@@ -225,13 +224,12 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
 }
 
 
+
 # plot_node function will plot the concentrations or
 # quantities related to the latest selected node
 # nodes can be input$current_node_id and out is out()
 # Finally, also needs parameters_bis
-
 title_size <- list(size = 10)
-
 plot_node <- function(input, node, out, parms) {
   
   if (sum(node ==  c(1,5:7,9:10,12:16)) != 1) {
@@ -638,7 +636,6 @@ plot_edge <- function(edge, out) {
 # Takes a reset_table, network and edges as arguments
 # reset_table contains the state of reset button (0 if
 # not used) as well as the related sliders_id
-
 sliders_reset <- function(button_states, input) {
   
   # stock the previous state of buttons in
