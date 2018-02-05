@@ -152,7 +152,8 @@ body <- dashboardBody(
                           data.step = 4,
                           data.intro = help_text[4]
                         )
-                 )
+                 ),
+                 tableOutput("event_table")
                ),
                
                div(id = "boxinput", # values to be reset if needed

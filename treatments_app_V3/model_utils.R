@@ -70,6 +70,41 @@ arrow_lighting <- function(events, edges, network) {
 }
 
 
+
+# highlitght arrows for dynamic events
+# take out (result of integration by ode solver),
+# edges and session as arguments. Nothing special
+# is returned, except that the network is updated
+arrow_lighting_live <- function(out, edges, session, t_target) {
+  # restricted to the first 11 fluxes
+  calc_change_t <- round(calc_change(out, t_target)[1:11])
+  calc_change_t$X <- NULL # remove column X
+  
+  # calculate the difference between live fluxes and base-case values
+  # index of arrows in the graph (which are fluxes and not regulations)
+  index <- c(1,10,11,6,4,5,8,9,2,3,12) 
+  calc_change_t <- rbind(calc_change_t, index)
+  
+  # calculate which element in the sum table is different of 0 and store the index
+  flux_changed_index <- which(calc_change_t[1,] != 0) 
+  # convert to arrow index in the interactive diagramm
+  arrow_index <- as.numeric(t(calc_change_t[2, flux_changed_index])) 
+  print(arrow_index)
+  
+  if (!is.null(flux_changed_index)) {
+    for (i in (1:ncol(calc_change_t))) {
+      # change edge color according to an increase or decrease of the flux
+      arrow_index_i <- arrow_index[i] 
+      ifelse(calc_change_t[[i]][1] > 0,
+             edges$color.color[arrow_index_i] <- "green",
+             edges$color.color[arrow_index_i] <- "red")
+    }
+  }
+  visNetworkProxy("network_Ca") %>%
+    visUpdateEdges(edges = edges)
+}
+
+
 # Function that allows to light the graph when fluxes change:
 # arrows are in green when fluxes are increased and in
 # red when fluxes are decreased
@@ -197,7 +232,7 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
 
 title_size <- list(size = 10)
 
-plot_node <- function(node, out, parameters_bis) {
+plot_node <- function(input, node, out, parms) {
   
   if (sum(node ==  c(1,5:7,9:10,12:16)) != 1) {
     
@@ -222,7 +257,7 @@ plot_node <- function(node, out, parameters_bis) {
                   name = "PO4p (mM)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = FALSE) %>%
-        add_lines(y = round(out[,"PTH_p"]/parameters_bis["Vp"], 2),
+        add_lines(y = round(out[,"PTH_p"]/parms["Vp"], 2),
                   name = "PTHp (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
@@ -609,45 +644,10 @@ sliders_reset <- function(button_states, input) {
   # stock the previous state of buttons in
   # reactiveValues so as to compare with
   # the current state
-  button_states$values <- append(button_states$values, 
-                                 list(c(input$resetPTHsynthesis[1],
-                                        input$resetPTHexocytosis[1],
-                                        input$resetPTHexocytosisinhib[1],
-                                        input$resetD3inact[1],
-                                        input$resetD3deg[1],
-                                        input$resetFGFsynth[1],
-                                        input$resetCaintake[1],
-                                        input$resetPintake[1],
-                                        input$resetkpCa[1],
-                                        input$resetkfCa[1],
-                                        input$resetkpP[1],
-                                        input$resetkfP[1],
-                                        input$resetacCa[1],
-                                        input$resetresmin[1],
-                                        input$resetresmax[1],
-                                        input$resetkpc[1],
-                                        input$resetkcp[1],
-                                        input$reset_t_now[1])))         
+  button_states$values <- append(button_states$values, input$reset_t_now)         
   
   # associate each reset button to its related slider
-  reset_vector <- c("k_prod_PTHg", 
-                    "beta_exo_PTHg",
-                    "gamma_exo_PTHg",
-                    "D3_inact",
-                    "k_deg_D3",
-                    "k_prod_FGF",
-                    "I_Ca",
-                    "I_P",
-                    "k_p_Ca",
-                    "k_f_Ca",
-                    "k_p_P",
-                    "k_f_P",
-                    "Lambda_ac_Ca",
-                    "Lambda_res_min",
-                    "delta_res_max",
-                    "k_pc",
-                    "k_cp",
-                    "t_now")
+  reset_vector <- "t_now"
   
   # store the temp state of buttons
   states <- button_states$values

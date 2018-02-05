@@ -41,8 +41,8 @@ source("dashboardControlbar.R")
 source("cap_fixed_parameters.R")
 source("calcium_phosphate_core.R") # core model
 source("calc_change.R")
-#source("networks.R")
-#source("model_utils.R")
+source("networks.R")
+source("model_utils.R")
 
 # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
 state_php1 <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app_V3/init_php1.csv", # for local config
