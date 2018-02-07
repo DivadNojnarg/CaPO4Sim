@@ -26,22 +26,27 @@ sidebar <- dashboardSidebar(
       menuItem("Settings", tabName = "settings", icon = icon("sliders"),
                
                # show background or not
-               awesomeCheckboxGroup(inputId = "background_choice",
+               prettyCheckboxGroup(inputId = "background_choice",
                                     label = "Background",
+                                    animation = "pulse", thick = TRUE,
                                     choices = c("rat","human"), inline = TRUE,
                                     status = "primary"),
                
                # select the network
-               awesomeCheckboxGroup(inputId = "network_Ca_choice",
+               prettyCheckboxGroup(inputId = "network_Ca_choice",
                                     label = "Choose your network", 
+                                    animation = "pulse", thick = TRUE,
                                     selected = "Ca",
                                     choices = c("Ca","PO4"), inline = TRUE,
                                     status = "primary"),
                
                # selector for hormonal regulation
-               materialSwitch(inputId = "network_hormonal_choice", 
+               prettySwitch(inputId = "network_hormonal_choice", 
                               label = "Show regulations", 
                               status = "success",
+                              bigger = TRUE,
+                              fill = TRUE,
+                              #slim = TRUE,
                               value = FALSE),
                
                # maximum time of integration

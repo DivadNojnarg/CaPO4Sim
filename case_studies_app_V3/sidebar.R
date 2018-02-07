@@ -44,22 +44,28 @@ sidebar <- dashboardSidebar(
                         #                                  "25(OH)D deficiency"),
                         #                      status = "primary"),
                         
-                        awesomeCheckbox("run_php1",
+                        prettyCheckbox("run_php1",
                                         "Primary hyperparathyroidism",
                                         value = FALSE,
+                                        thick = TRUE,
+                                        animation = "pulse",
                                         status = "primary",
                                         width = NULL),
                         
-                        awesomeCheckbox("run_hypopara",
+                        prettyCheckbox("run_hypopara",
                                         "Hypoparathyroidism",
                                         value = FALSE,
+                                        thick = TRUE,
+                                        animation = "pulse",
                                         status = "primary",
                                         width = NULL), 
                         
                         
-                        awesomeCheckbox("run_hypoD3",
+                        prettyCheckbox("run_hypoD3",
                                         "25(OH)D deficiency",
                                         value = FALSE,
+                                        thick = TRUE,
+                                        animation = "pulse",
                                         status = "primary",
                                         width = NULL)), 
                
@@ -74,22 +80,28 @@ sidebar <- dashboardSidebar(
                         #                                  "PO4 gavage"),
                         #                      status = "primary"),
                         
-                        awesomeCheckbox("run_Ca_inject",
+                        prettyCheckbox("run_Ca_inject",
                                         "Ca/EGTA IV injection",
                                         value = FALSE,
+                                        thick = TRUE,
+                                        animation = "pulse",
                                         status = "primary",
                                         width = NULL),
                         
                         
-                        awesomeCheckbox("run_PO4_inject",
+                        prettyCheckbox("run_PO4_inject",
                                         "PO4 IV injection",
                                         value = FALSE,
+                                        thick = TRUE,
+                                        animation = "pulse",
                                         status = "primary",
                                         width = NULL),
                         
-                        awesomeCheckbox("run_PO4_gav",
+                        prettyCheckbox("run_PO4_gav",
                                         "PO4 gavage",
                                         value = FALSE,
+                                        thick = TRUE,
+                                        animation = "pulse",
                                         status = "primary",
                                         width = NULL))
                
@@ -98,28 +110,36 @@ sidebar <- dashboardSidebar(
       menuItem("Settings", tabName = "settings", icon = icon("sliders"),
                
                # show background or not
-               awesomeCheckboxGroup(inputId = "background_choice",
+               prettyCheckboxGroup(inputId = "background_choice",
                                     label = "Background",
+                                    thick = TRUE,
+                                    animation = "pulse",
                                     choices = c("rat","human"), inline = TRUE,
                                     status = "primary"),
                
                # select the network
-               awesomeCheckboxGroup(inputId = "network_Ca_choice",
+               prettyCheckboxGroup(inputId = "network_Ca_choice",
                                     label = "Choose your network", 
+                                    thick = TRUE,
+                                    animation = "pulse",
                                     selected = "Ca",
                                     choices = c("Ca","PO4"), inline = TRUE,
                                     status = "primary"),
                
                # notification for diagram and graph part
-               materialSwitch(inputId = "notif2_switch",
+               prettySwitch(inputId = "notif2_switch",
                               label = "Notifications?",
                               status = "success",
+                              bigger = TRUE,
+                              fill = TRUE,
                               value = TRUE),
                
                # selector for hormonal regulation
-               materialSwitch(inputId = "network_hormonal_choice", 
+               prettySwitch(inputId = "network_hormonal_choice", 
                               label = "Regulations?", 
                               status = "success",
+                              bigger = TRUE,
+                              fill = TRUE,
                               value = FALSE)
       )
     ),

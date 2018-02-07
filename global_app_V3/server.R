@@ -926,13 +926,20 @@ shinyServer(function(input, output, session) {
   output$dynamicFooter <- renderFooter({ 
     dashboardFooter(
       mainText = h5(
-        "2017, The interface Group, Zurich.",
-        br(),
+        "2017-2018,", 
+        img(src = "interface_logo.png", height = "30px"),
+        HTML("<span id=\"tab\"></span>"),
         "Built with", 
-        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30"),
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
         "by",
-        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30"), "."), 
-      subText = HTML("<b>Version</b> Beta 3")
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30px"),
+        HTML("<span id=\"tab\"></span>"),
+        "Funded by",
+        img(src = "nccr_logo.png", height = "50px"),
+        img(src = "uzh_logo.png", height = "30px"),
+        "and",
+        img(src = "unil_logo.png", height = "55px")), 
+      subText = HTML("<b>Version:</b> Beta 3")
     ) 
   })
   

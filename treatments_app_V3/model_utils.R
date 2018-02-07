@@ -88,7 +88,6 @@ arrow_lighting_live <- function(out, edges, session, t_target) {
   flux_changed_index <- which(calc_change_t[1,] != 0) 
   # convert to arrow index in the interactive diagramm
   arrow_index <- as.numeric(t(calc_change_t[2, flux_changed_index])) 
-  print(arrow_index)
   
   if (!is.null(flux_changed_index)) {
     for (i in (1:ncol(calc_change_t))) {

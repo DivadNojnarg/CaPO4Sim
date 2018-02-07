@@ -65,7 +65,7 @@ shinyServer(function(input, output, session) {
       } else if (input$disease_selected == "vitamin D3 deficiency") {
         state_hypoD3
       }
-    } else { # default initial state
+    } else {# default initial state
       c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, 
         "FGF_p" = 16.78112, "Ca_p" = 1.2061, "Ca_f" = 1.8363, 
         "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, 
@@ -254,7 +254,7 @@ shinyServer(function(input, output, session) {
   parameters_disease <- reactive({ 
     c("k_prod_PTHg" = ifelse(is.element("primary-hyperparathyroidism", input$disease_selected), 300*4.192, 
                              ifelse(is.element("hypoparathyroidism", input$disease_selected), 0, 4.192)), 
-      "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0, 2.5e-005),
+      "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0.5 * 2.5e-005, 2.5e-005),
       "PTX_coeff" = ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1),
       "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected), input$Ca_inject, 0), 
       "Ca_food" = ifelse(is.element("Ca supplementation", input$treatment_selected), input$Ca_food, 2.2e-003),
@@ -270,15 +270,15 @@ shinyServer(function(input, output, session) {
       showNotification("Cannot have primary hyperparathyroidism and 
                        hypoparathyroidism at the same time!",
                        type = "error", closeButton = TRUE)
-    } else if (is.element("primary-hyperparathyroidism", input$disease_selected) 
-               && is.element("vitamin D3 deficiency", input$disease_selected)) {
-      showNotification("Cannot select to diseases at the same time!",
-                       type = "error", closeButton = TRUE)
-    } else if (is.element("hypoparathyroidism", input$disease_selected) 
-               && is.element("vitamin D3 deficiency", input$disease_selected)) {
-      showNotification("Cannot select to diseases at the same time!",
-                       type = "error", closeButton = TRUE)
-    }
+    } #else if (is.element("primary-hyperparathyroidism", input$disease_selected) 
+    #            && is.element("vitamin D3 deficiency", input$disease_selected)) {
+    #   showNotification("Cannot select to diseases at the same time!",
+    #                    type = "error", closeButton = TRUE)
+    # } else if (is.element("hypoparathyroidism", input$disease_selected) 
+    #            && is.element("vitamin D3 deficiency", input$disease_selected)) {
+    #   showNotification("Cannot select to diseases at the same time!",
+    #                    type = "error", closeButton = TRUE)
+    # }
   })
   
   # make a vector of disease related parameters, fixed_parameters and parameters related to events
@@ -391,14 +391,6 @@ shinyServer(function(input, output, session) {
     plot_edge(edge = input$current_edge_id , out)
   })
   
-  #-------------------------------------------------------------------------
-  #
-  #  Events in the network, triggered by changing input,...
-  #
-  #
-  #-------------------------------------------------------------------------
-  
-  # To develop
   
   #-------------------------------------------------------------------------
   #
@@ -406,8 +398,9 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
-  # Change arrow color relatively to the value of fluxes for Ca injection/PO4 injection as well as PO4 gavage
-  observeEvent(input$play,{
+  # Change arrow color relatively to the value of fluxes for Ca injection/PO4 
+  # injection as well as PO4 gavage
+  observe({
     out <- out()
     edges_Ca <- edges_Ca()
     arrow_lighting_live(out, edges = edges_Ca, session, t_target = input$t_now)
@@ -594,13 +587,20 @@ shinyServer(function(input, output, session) {
   output$dynamicFooter <- renderFooter({ 
     dashboardFooter(
       mainText = h5(
-        "2017, The interface Group, Zurich.",
-        br(),
+        "2017-2018,", 
+        img(src = "interface_logo.png", height = "30px"),
+        HTML("<span id=\"tab\"></span>"),
         "Built with", 
-        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30"),
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
         "by",
-        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30"), "."), 
-      subText = HTML("<b>Version</b> Beta 3")
+        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30px"),
+        HTML("<span id=\"tab\"></span>"),
+        "Funded by",
+        img(src = "nccr_logo.png", height = "50px"),
+        img(src = "uzh_logo.png", height = "30px"),
+        "and",
+        img(src = "unil_logo.png", height = "55px")), 
+      subText = HTML("<b>Version:</b> Beta 3")
     ) 
   })
   

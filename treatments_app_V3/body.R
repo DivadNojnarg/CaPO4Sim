@@ -83,6 +83,11 @@ body <- dashboardBody(
                       max-height: 500px;
                       overflow-x: hidden;
                     }
+
+                    #tab { 
+                      display:inline-block; 
+                      margin-left: 400px; 
+                    }
                     
                     "))
   ),

@@ -93,6 +93,12 @@ body <- dashboardBody(
                       border-radius: 10px;
                       box-shadow: 6px 6px 0px black;
                     }
+
+                    #tab { 
+                      display:inline-block; 
+                      margin-left: 400px; 
+                    }
+
                     "))
   ),
   

@@ -117,8 +117,8 @@ calcium_phosphate_core <- function(t, state, parameters) {
     PTHg_synthesis_PO4_norm <- PO4_p^n_prod_Pho /
       ((K_prod_PTH_P / Pho_p_norm)^n_prod_Pho + PO4_p^n_prod_Pho)
     
-    PTHg_synthesis_norm <- PTHg_basal_synthesis_norm * PTHg_synthesis_D3_norm *
-      PTHg_synthesis_PO4_norm
+    PTHg_synthesis_norm <- PTX_coeff * PTHg_basal_synthesis_norm * 
+                           PTHg_synthesis_D3_norm * PTHg_synthesis_PO4_norm
     
     PTHg_degradation_norm <- k_deg_PTHg * PTH_g
     n_Ca_norm <- n1_exo / (1 + exp(-rho_exo * Ca_p_norm * (R / Ca_p_norm - Ca_p))) + n2_exo
@@ -438,5 +438,7 @@ calcium_phosphate_core <- function(t, state, parameters) {
            Reabs_PT_PO4_FGF = Reabs_PT_FGF_P_norm
       )
     ) 
+    
   })
+  
 }
