@@ -254,7 +254,7 @@ shinyServer(function(input, output, session) {
   parameters_disease <- reactive({ 
     c("k_prod_PTHg" = ifelse(is.element("primary-hyperparathyroidism", input$disease_selected), 300*4.192, 
                              ifelse(is.element("hypoparathyroidism", input$disease_selected), 0, 4.192)), 
-      "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0.5 * 2.5e-005, 2.5e-005),
+      "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0, 2.5e-005),
       "PTX_coeff" = ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1),
       "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected), input$Ca_inject, 0), 
       "Ca_food" = ifelse(is.element("Ca supplementation", input$treatment_selected), input$Ca_food, 2.2e-003),
@@ -587,19 +587,32 @@ shinyServer(function(input, output, session) {
   output$dynamicFooter <- renderFooter({ 
     dashboardFooter(
       mainText = h5(
-        "2017-2018,", 
-        img(src = "interface_logo.png", height = "30px"),
+        div(style = "display: inline",
+        div("2017-2018, the Interface Group", style = "display: inline",
+        a(href = "http://interfacegroup.ch/people/", target = "_blank",
+          img(src = "interface_logo.png", height = "30px")
+        )),
         HTML("<span id=\"tab\"></span>"),
-        "Built with", 
-        img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
+        div("Built with", style = "display: inline",
+        a(href = "https://shiny.rstudio.com", target = "_blank",
+          img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", 
+              height = "30px")
+        ),
         "by",
-        img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30px"),
+        a(href = "http://www.rstudio.com", target = "_blank",
+          img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", 
+              height = "30px"))),
         HTML("<span id=\"tab\"></span>"),
-        "Funded by",
-        img(src = "nccr_logo.png", height = "50px"),
-        img(src = "uzh_logo.png", height = "30px"),
+        div("Funded by", style = "display: inline",
+        a(href = "http://www.nccr-kidney.ch", target = "_blank", 
+          img(src = "nccr_logo.png", height = "50px")),
+        a(href = "http://www.uzh.ch/de.html", target = "_blank", 
+          img(src = "uzh_logo.png", height = "30px")),
         "and",
-        img(src = "unil_logo.png", height = "55px")), 
+        a(href = "https://www.unil.ch/fbm/fr/home.html", target = "_blank",
+          img(src = "unil_logo.png", height = "55px")
+        ))
+      )), 
       subText = HTML("<b>Version:</b> Beta 3")
     ) 
   })

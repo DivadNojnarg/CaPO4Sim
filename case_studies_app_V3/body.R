@@ -96,7 +96,7 @@ body <- dashboardBody(
 
                     #tab { 
                       display:inline-block; 
-                      margin-left: 400px; 
+                      margin-left: 100px; 
                     }
 
                     "))

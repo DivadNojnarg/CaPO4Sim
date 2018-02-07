@@ -246,23 +246,33 @@ plot_node <- function(input, node, out, parms) {
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
-        add_lines(y = round(out[,"Ca_p"], 4),
+        add_lines(y = round(out[,"Ca_p"], 1),
+                  ymin = 0.5 * min(out[,"Ca_p"]),
+                  ymax = 1.5 * max(out[,"Ca_p"]),
                   name = "Ca2+p (mM)",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = round(out[,"PO4_p"], 4), 
+        add_lines(y = round(out[,"PO4_p"], 1), 
+                  ymin = 0.5 * min(out[,"PO4_p"]),
+                  ymax = 1.5 * max(out[,"PO4_p"]),
                   name = "PO4p (mM)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = FALSE) %>%
-        add_lines(y = round(out[,"PTH_p"]/parms["Vp"], 2),
+        add_lines(y = round(out[,"PTH_p"]/parms["Vp"], 1),
+                  ymin = 0.5 * min(out[,"PTH_p"]),
+                  ymax = 1.5 * max(out[,"PTH_p"]),
                   name = "PTHp (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
         add_lines(y = round(out[,"D3_p"]),
+                  ymin = 0.5 * min(out[,"D3_p"]),
+                  ymax = 1.5 * max(out[,"D3_p"]),
                   name = "D3p (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
-        add_lines(y = round(out[,"FGF_p"], 2),
+        add_lines(y = round(out[,"FGF_p"], 1),
+                  ymin = 0.5 * min(out[,"FGF_p"]),
+                  ymax = 1.5 * max(out[,"FGF_p"]),
                   name = "FGFp (pM)",
                   line = list(color = 'black', width = 2),
                   visible = FALSE) %>%
@@ -311,10 +321,14 @@ plot_node <- function(input, node, out, parms) {
                    x = time, 
                    mode = "lines") %>%
         add_lines(y = round(out[,"Ca_f"], 3),
+                  ymin = 0.5 * min(out[,"Ca_f"]),
+                  ymax = 1.5 * max(out[,"Ca_f"]),
                   name = "Caf (mmol)",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
         add_lines(y = round(out[,"PO4_f"], 3), 
+                  ymin = 0.5 * min(out[,"PO4_f"]),
+                  ymax = 1.5 * max(out[,"PO4_f"]),
                   name = "PO4f (mmol)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
@@ -354,11 +368,15 @@ plot_node <- function(input, node, out, parms) {
       p <- plot_ly(out, 
                    x = time, 
                    mode = "lines") %>%
-        add_lines(y = round(out[,"Ca_b"],3),
+        add_lines(y = out[,"Ca_b"],
+                  ymin = 0.5 * min(out[,"Ca_b"]),
+                  ymax = 1.5 * max(out[,"Ca_b"]),
                   name = "Cab (mmol)",
                   line = list(color = 'rgb(27, 102, 244)', width = 2), 
                   visible = TRUE) %>%
-        add_lines(y = round(out[,"PO4_b"],3), 
+        add_lines(y = out[,"PO4_b"],
+                  ymin = 0.5 * min(out[,"PO4_b"]),
+                  ymax = 1.5 * max(out[,"PO4_b"]),
                   name = "PO4b (mmol)",
                   line = list(color = 'rgb(244, 27, 27)', width = 2), 
                   visible = TRUE) %>%
