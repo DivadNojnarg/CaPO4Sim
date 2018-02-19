@@ -67,6 +67,14 @@ library(shinyFeedback)
 *david.granjon_at_uzh.ch*
 (see the changelog file to access all versions)
 
+## Changelog version 3.1 (case studies app)
+- major update of the design: all options are now in the right sidebar
+- left sidebar is dedicated to menu
+- modals can now be hidden (via a switch)
+- userMenu in the header which displays the physiological state of the organism
+(sick, healthy, ...). It reacts to case studies...
+
+
 ## Changelog version 3 (global app)
 - major update of the design: new dashboard display
 - major update on the parameter display: now they are accessible

@@ -95,7 +95,7 @@ make_plot_php1 <- function(input) {
     add_lines(x = slidersteady_value, y = c(0, 2.5), 
               line = list(size = 6, color = 'orange', dash = "solid", width = 6),
               name = "PHP1 severity") %>%
-    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = 0.5))
+    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = -0.2))
   
   # gather all subplots
   plot_php1 <- subplot(plot_CaP_php1, plot_hormones_php1, plot_Ca_fluxes_php1, 
@@ -209,7 +209,7 @@ make_plot_hypoD3 <- function(input) {
     add_lines(x = slidersteady_value, y = c(0,4), 
               line = list(size = 6, color = 'orange', dash = "solid", width = 6),
               name = "HypoD3 severity") %>%
-    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = 0.52))
+    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = -0.2))
   
   # gather all subplots
   plot_hypoD3 <- subplot(plot_CaP_hypoD3, plot_hormones_hypoD3, plot_Ca_fluxes_hypoD3, 
@@ -338,7 +338,7 @@ make_plot_hypopara <- function(input) {
     add_lines(x = slidersteady_value, y = c(0,4), 
               line = list(size = 6, color = 'orange', dash = "solid", width = 6),
               name = "Hypopara severity") %>%
-    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = 0.52))
+    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = -0.2))
   
   # gather all subplots
   plot_hypopara <- subplot(plot_CaP_hypopara, plot_hormones_hypopara, 

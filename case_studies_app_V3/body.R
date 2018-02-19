@@ -115,6 +115,7 @@ body <- dashboardBody(
   introjsUI(),
   # make beautiful notifications, replace showNotifications by shiny
   useToastr(),
+  withMathJax(),
   
   use_bs_popover(),
   use_bs_tooltip(),
@@ -306,14 +307,7 @@ body <- dashboardBody(
                       border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
           #HTML(paste(tags$img(src = "about_us.jpg")))
       )
-    ),
-    
-    # Written tutorial for this app
-    tabItem(
-      tabName = "help",
-      h1("How to use this App?")
     )
-    
   )
 )
 

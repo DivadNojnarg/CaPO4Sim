@@ -190,10 +190,8 @@ shinyServer(function(input, output, session) {
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4 injection as well as PO4 gavage
   
   observe({
-    
     out <- out()
     edges_Ca <- edges_Ca()
-    
     arrow_lighting_live(out, edges = edges_Ca, session)
   })
   
@@ -221,6 +219,76 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  #------------------------------------------------------------------------- 
+  #  
+  #  Patient profile 
+  #
+  #-------------------------------------------------------------------------
+  
+  # generate a patient profile
+  create_userInfo <- reactive({
+    
+    head_user <- dashboardUser(
+      name = "Patient State",
+      image = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+        generate_userFields(input)$image
+      } else {
+        "happy.png"
+      },
+      description = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+        generate_userFields(input)$description
+      } else {
+        "healthy"
+      },
+      sub_description = if (input$run_php1) {
+        "Patient has primary-hyperparathyroidism"
+      } else if (input$run_hypopara) {
+        "Patient suffers from hypoparathyroidism"
+      } else if (input$run_hypoD3) {
+        "Patient has vitamin D3 defficiency"
+      } else {
+        "nothing to declare!"
+      }, 
+      stat1 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+        generate_userFields(input)$stat1
+      } else {
+        withMathJax(p("$$[Ca^{2+}]_p$$ = 1.2 mM"))
+      },
+      stat2 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+        generate_userFields(input)$stat2
+      } else {
+        withMathJax(p("$$[P_i]_p$$ = 1.5 mM"))
+      },
+      stat3 = "test"
+    )
+    
+    return(list(head_user = head_user))
+  })
+  
+  output$user <- renderUser({create_userInfo() %$% head_user})
+  
+  output$userbttn1 <- renderUI({
+    if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+      description <- generate_userFields(input)$description
+      if (description == "dead") {
+        tagList(
+          actionBttn(inputId = "cure", label = "Change Patient", 
+                     style = "fill", color = "success")
+        )
+      } else {
+        tagList(
+          actionBttn(inputId = "cure", label = "Cure Patient", 
+                     style = "fill", color = "success")
+        )
+      }
+    } else {
+      tagList(
+        actionBttn(inputId = "cure", label = "Cure Patient", 
+                   style = "fill", color = "success")
+      )
+    }
+  })
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -235,18 +303,24 @@ shinyServer(function(input, output, session) {
     
     if (input$run_php1 | input$run_hypopara | input$run_hypoD3 | input$help) {
       
-      sliderTextInput(inputId = paste("slider_", current_sim, sep = ""), 
-                      label = if (input$run_php1) {
-                        "PTH synthesis fold increase"
-                      } else if (input$run_hypopara) {
-                        "PTH synthesis fold decrease"
-                      } else if (input$run_hypoD3) {
-                        "25(OH)D stock"
-                      }, 
-                      choices = seq(from = ifelse(input$run_php1 | input$help, 1, 1), 
-                                    to = ifelse(input$run_php1 | input$help, 300, 0), 
-                                    by = ifelse(input$run_php1 | input$help, 20, -0.1)), 
-                      grid = TRUE)
+      sliderTextInput(
+        inputId = paste("slider_", current_sim, sep = ""), 
+        label = if (input$run_php1) {
+          "PTH synthesis fold increase"
+        } else if (input$run_hypopara) {
+          "PTH synthesis fold decrease"
+        } else if (input$run_hypoD3) {
+          "25(OH)D stock"
+        }, 
+        choices = if (input$run_php1 | input$help) {
+          c(20, 100, 200)
+        } else {
+          c(0.5, 0.1, 0)
+        },
+        selected = ifelse(
+          input$run_php1 | input$run_hypopara | input$run_hypoD3,
+          ifelse(input$run_php1, 100, 0), 1),
+        grid = TRUE)
     }
   })
   
@@ -336,7 +410,9 @@ shinyServer(function(input, output, session) {
                      str_replace("_", "")
                    
                    req(current_sim)
-                   showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
+                   if (input$modal_switch == TRUE) {
+                     showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
+                   }
                  })
   
   #------------------------------------------------------------------------- 
@@ -384,6 +460,11 @@ shinyServer(function(input, output, session) {
   #  Useful tasks such as save, reset, load ...
   #  
   #-------------------------------------------------------------------------
+  
+  # reset all parameters
+  observeEvent(input$cure,{
+    shinyjs::reset("sidebar_bis")
+  })
   
   # display or not display the network background
   observe({

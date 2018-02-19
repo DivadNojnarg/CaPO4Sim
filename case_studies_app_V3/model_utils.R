@@ -265,3 +265,65 @@ sliders_reset <- function(button_states, input) {
   shinyjs::reset(reset_vector[reset_target])
   
 }
+
+
+# Function that helps in generating 4 users fields,
+# image, stat1, stat2 and stat3, so as to reinject
+# them in the header userMenu. Takes input as arguments.
+# Returns a list.
+generate_userFields <- function(input) {
+  if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+    if (input$run_php1) {
+      req(input$slider_php1)
+      if (input$slider_php1 == 20) {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1.5 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.2 mM"))
+        image <- "sad.png"
+        state <- "sick"
+      } else if (input$slider_php1 == 100) {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 2 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1 mM"))
+        image <- "suffer.png"
+        state <- "sick"
+      } else {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 2 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1 mM"))
+        image <- "dead.png"
+        state <- "dead"
+      }
+    } else if (input$run_hypopara) {
+      req(input$slider_hypopara)
+      if (input$slider_hypopara == 0.5) {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1.2 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.5 mM"))
+        image <- "happy.png"
+        state <- "sick"
+      } else if (input$slider_hypopara == 0.1) {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.8 mM"))
+        image <- "sad.png"
+        state <- "sick"
+      } else {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 0.6 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.9 mM"))
+        image <- "suffer.png"
+        state <- "sick"
+      }
+    } else {
+      req(input$slider_hypoD3)
+      if (input$slider_hypoD3 %in% c(0.1, 0.5)) {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1.2 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.5 mM"))
+        image <- "happy.png"
+        state <- "sick"
+      } else {
+        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 0.8 mM"))
+        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.3 mM"))
+        image <- "bad.png"
+        state <- "sick"
+      }
+    }
+  }
+  return(list(image = image, stat1 = stat1, 
+              stat2 = stat2, description = state))
+}

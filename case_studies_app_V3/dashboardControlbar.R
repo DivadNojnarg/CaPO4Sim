@@ -1,44 +1,214 @@
-#-------------------------------------------------------------------------
-#  This code contains the controlsidebar of shinydashboard. It is the
-#  sidebar available on the left. Parameters are put in this sidebar.
-#  Sliders are handled via a conditionalPanel, but this can be disable
-#
-#  David Granjon, the Interface Group, Zurich
-#  December 4th, 2017
-#-------------------------------------------------------------------------
-
 dashboardControlbar <- function(ctrlHTML = NULL) {
   
   if ( is.null(ctrlHTML) ) {
-
+    
     HTML(paste0(
       '<!-- Control Sidebar -->
+      <div id="sidebar_bis">
       <aside class="control-sidebar control-sidebar-dark">
       <!-- Create the tabs -->
       <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-sliders"></i></a></li>
+      <li><a href="#control-sidebar-parms-tab" data-toggle="tab"><i class="fa fa-map-o"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-paint-brush"></i></a></li>
+      
       </ul>
+      
       <!-- Tab panes -->
       <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading">Parameters</h3>
+      <h3 class="control-sidebar-heading">Graph Options</h3>
+      
 
-      In development
+      <div id="background_choice" class="form-group shiny-input-checkboxgroup shiny-input-container shiny-input-container-inline">
+      <label class="control-label" for="background_choice">Background</label>
+      <div class="shiny-options-group">
+      <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="background_choice" value="rat"/>
+      <div class="state p-primary">
+      <label>
+      <span>rat</span>
+      </label>
+      </div>
+      </div>
+      <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="background_choice" value="human"/>
+      <div class="state p-primary">
+      <label>
+      <span>human</span>
+      </label>
+      </div>
+      </div>
+      </div>
+      </div>
+
+      <hr/>
+
+      <div id="network_Ca_choice" class="form-group shiny-input-checkboxgroup shiny-input-container shiny-input-container-inline">
+      <label class="control-label" for="network_Ca_choice">Choose your network</label>
+      <div class="shiny-options-group">
+      <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="network_Ca_choice" value="Ca" checked="checked"/>
+      <div class="state p-primary">
+      <label>
+      <span>Ca</span>
+      </label>
+      </div>
+      </div>
+      <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="network_Ca_choice" value="PO4"/>
+      <div class="state p-primary">
+      <label>
+      <span>PO4</span>
+      </label>
+      </div>
+      </div>
+      </div>
+      </div>
+
+      <hr/>
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-switch p-bigger p-slim">
+      <input id="notif2_switch" type="checkbox" checked="checked"/>
+      <div class="state p-success">
+      <label>
+      <span>Notifications?</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+      
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-switch p-bigger p-slim">
+      <input id="network_hormonal_choice" type="checkbox"/>
+      <div class="state p-success">
+      <label>
+      <span>Regulations?</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-switch p-bigger p-slim">
+      <input id="modal_switch" type="checkbox" checked="checked"/>
+      <div class="state p-success">
+      <label>
+      <span>Description?</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
       
       <!-- /.control-sidebar-menu -->
       </div>
       <!-- /.tab-pane -->
-      <!-- Stats tab content -->
+
+
+      <!-- Case Studies -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-parms-tab">
+      <h3 class="control-sidebar-heading">Case Studies</h3> 
+      
+      
+      <h6>Steady-State Simulations</h6>
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-thick p-pulse">
+      <input id="run_php1" type="checkbox"/>
+      <div class="state p-primary">
+      <label>
+      <span>Primary hyperparathyroidism</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-thick p-pulse">
+      <input id="run_hypopara" type="checkbox"/>
+      <div class="state p-primary">
+      <label>
+      <span>Hypoparathyroidism</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+      
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-thick p-pulse">
+      <input id="run_hypoD3" type="checkbox"/>
+      <div class="state p-primary">
+      <label>
+      <span>25(OH)D deficiency</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+      <hr/>
+
+
+      <h6>Dynamic Simulations</h6>
+      
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-thick p-pulse">
+      <input id="run_Ca_inject" type="checkbox"/>
+      <div class="state p-primary">
+      <label>
+      <span>Ca/EGTA IV injection</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+      
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-thick p-pulse">
+      <input id="run_PO4_inject" type="checkbox"/>
+      <div class="state p-primary">
+      <label>
+      <span>PO4 IV injection</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-thick p-pulse">
+      <input id="run_PO4_gav" type="checkbox"/>
+      <div class="state p-primary">
+      <label>
+      <span>PO4 gavage</span>
+      </label>
+      </div>
+      </div>
+      </div>
+    
+
+      </div>
+      <!-- /.Case Studies -->
+      
+
+      
+      <!-- Interface customization -->
       <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
       <div class="tab-pane" id="control-sidebar-settings-tab">
       <h3 class="control-sidebar-heading">Other Options</h3>
       
-      
-
+      <!-- Select input -->
       <div data-step="7" data-intro="Here you can change the global &lt;b&gt;theme&lt;/b&gt; &#10;of the dashboard" data-position="left">
       <div class="form-group shiny-input-container">
       <label class="control-label" for="skin">Select a skin:</label>
@@ -54,21 +224,23 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       </div>
       </div>
-
-
+      
+      
+      
       </div>
-      <!-- /.tab-pane -->
+      <!-- /.interface customization -->
       </div>
       </aside>
       <!-- /.control-sidebar -->
       <!-- Add the sidebar"s background. This div must be placed
       immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
+      </div>
       '))
-  
+    
   } else {
-
+    
     ctrlHTML
-
+    
   }
 }

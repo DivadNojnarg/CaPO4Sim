@@ -14,7 +14,16 @@ header <- dashboardHeader(
     '<img src= "online-learning.svg">'
   )),
   
-  titleWidth = 300#,
+  titleWidth = 300,
+  
+  user = userOutput("user"),
+  
+  tags$li(
+    title = "",
+    class = "dropdown",
+    actionBttn("help", label = "Help", icon = NULL, style = "fill",
+               color = "danger", size = "lg", block = FALSE, no_outline = TRUE)
+  )
   
   #dropdownMenuOutput("parameter_changed")
   
