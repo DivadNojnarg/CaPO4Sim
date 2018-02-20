@@ -251,7 +251,8 @@ generate_nodes_Ca <- function(input) {
       
     color = list(background = "#97C2FC", border = "#97C2FC", 
                  highlight = list(background = "orange", border = "orange")),
-    size = c(rep(70,5), 150, rep(70,2), rep(40,2), 70, rep(40,5)),
+    size = c(rep(input$size_organs,5), 150, rep(input$size_organs,2), 
+             rep(input$size_hormones,2), input$size_organs, rep(input$size_hormones,5)),
     #fixed = list("x" = TRUE, "y" = TRUE),
     physics = rep(FALSE,16),
     hidden = c(rep(FALSE,7),
@@ -272,7 +273,7 @@ res_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=25370&Menu=1079&
 CaSR_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0"
 
 generate_edges_Ca <- function(input) {
-  
+  req(input$width_organs, input$width_hormones)
   data.frame(
     from = c(1,2,3,rep(3,2),4,2,rep(5,2),rep(5,2),8,
              rep(9,3),rep(10,3),rep(11,2),12,rep(13,2),rep(14,2),rep(15,2),
@@ -289,7 +290,7 @@ generate_edges_Ca <- function(input) {
               "","+","+","-","+","-","+","+","+","-","-"),
     id = c("Abs_int","Net_Ca_pf","Net_PO4_pf","Ac_Ca","Ac_PO4","Res",7,"Reabs_Ca",
            "Reabs_PO4","U_Ca","U_PO4","Net_PO4_cells",13:29),
-    width = c(rep(8,12), rep(4,17)),
+    width = c(rep(input$width_organs,12), rep(input$width_hormones,17)),
     font.size = c(rep(25,12),rep(60,17)),
     font.align = c("","top","bottom","top","bottom",rep("",4),"bottom",
                    "top","bottom","bottom",rep("top",2),"top","top",

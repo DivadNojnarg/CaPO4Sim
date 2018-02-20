@@ -137,6 +137,7 @@ body <- dashboardBody(
                  id = "boxinfo", width = 12, solidHeader = TRUE,
                  
                  column(4, align = "left",
+                        verbatimTextOutput("id"),
                         conditionalPanel(
                           condition = "input.run_php1 | input.run_hypopara | 
                                        input.run_hypoD3 | input.help",

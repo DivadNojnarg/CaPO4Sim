@@ -115,6 +115,84 @@ shinyServer(function(input, output, session) {
       do.call(rbind, input$network_Ca_viewPosition)
   })
   
+  
+  # handle the size of organ and hormonal nodes
+  output$knob_size_nodes <- renderUI({
+    tagList(
+      fluidRow(
+        column(6,
+               knobInput("size_organs", 
+                         "Organs", 
+                         min = 50, 
+                         max = 100, 
+                         value = 70, 
+                         step = 5,
+                         displayPrevious = TRUE,
+                         fgColor = "#A9A9A9", 
+                         inputColor = "#A9A9A9",
+                         skin = "tron",
+                         width = "100px", 
+                         height = "100px")
+        ),
+        column(6,
+               knobInput("size_hormones", 
+                         "Hormones", 
+                         min = 20, 
+                         max = 60, 
+                         value = 40, 
+                         step = 5,
+                         displayPrevious = TRUE,
+                         fgColor = "#A9A9A9", 
+                         inputColor = "#A9A9A9",
+                         skin = "tron",
+                         width = "100px", 
+                         height = "100px")
+        )
+      )
+    )
+  })
+  
+  # control width of arrows
+  output$knob_width_arrows <- renderUI({
+    tagList(
+      fluidRow(
+        column(6,
+               knobInput("width_organs", 
+                         "Organs",
+                         angleOffset = -90,
+                         angleArc = 180,
+                         min = 4, 
+                         max = 14, 
+                         value = 8, 
+                         step = 1,
+                         displayPrevious = TRUE,
+                         fgColor = "#A9A9A9", 
+                         inputColor = "#A9A9A9",
+                         skin = NULL,
+                         width = "100px", 
+                         height = "100px")
+        ),
+        column(6,
+               knobInput("width_hormones", 
+                         "Hormones", 
+                         angleOffset = -90,
+                         angleArc = 180,
+                         min = 1, 
+                         max = 8, 
+                         value = 4, 
+                         step = 1,
+                         displayPrevious = TRUE,
+                         fgColor = "#A9A9A9", 
+                         inputColor = "#A9A9A9",
+                         skin = NULL,
+                         width = "100px", 
+                         height = "100px")
+        )
+      )
+    )
+  })
+  
+  
   #-------------------------------------------------------------------------
   #
   #  Navigation counter

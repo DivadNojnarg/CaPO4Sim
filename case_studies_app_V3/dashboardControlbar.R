@@ -18,7 +18,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading">Graph Options</h3>
+      <h3 class="control-sidebar-heading">CaPO4 Network Options</h3>
       
 
       <div id="background_choice" class="form-group shiny-input-checkboxgroup shiny-input-container shiny-input-container-inline">
@@ -69,17 +69,6 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
 
       <hr/>
 
-      <div class="form-group shiny-input-container">
-      <div class="pretty p-default p-switch p-bigger p-slim">
-      <input id="notif2_switch" type="checkbox" checked="checked"/>
-      <div class="state p-success">
-      <label>
-      <span>Notifications?</span>
-      </label>
-      </div>
-      </div>
-      </div>
-
       
       <div class="form-group shiny-input-container">
       <div class="pretty p-default p-switch p-bigger p-slim">
@@ -92,17 +81,13 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       </div>
 
+      <hr/>
+      
+      <h4>Nodes size</h4>
+      <div id="knob_size_nodes" class="shiny-html-output"></div>
 
-      <div class="form-group shiny-input-container">
-      <div class="pretty p-default p-switch p-bigger p-slim">
-      <input id="modal_switch" type="checkbox" checked="checked"/>
-      <div class="state p-success">
-      <label>
-      <span>Description?</span>
-      </label>
-      </div>
-      </div>
-      </div>
+      <h4>Arrow width</h4>
+      <div id="knob_width_arrows" class="shiny-html-output"></div>
 
       
       <!-- /.control-sidebar-menu -->
@@ -194,6 +179,35 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       </div>
       </div>
+
+
+      <hr/>
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-switch p-bigger p-slim">
+      <input id="notif2_switch" type="checkbox" checked="checked"/>
+      <div class="state p-success">
+      <label>
+      <span>Notifications?</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-switch p-bigger p-slim">
+      <input id="modal_switch" type="checkbox" checked="checked"/>
+      <div class="state p-success">
+      <label>
+      <span>Description?</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+
+
     
 
       </div>
