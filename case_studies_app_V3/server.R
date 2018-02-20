@@ -392,7 +392,7 @@ shinyServer(function(input, output, session) {
       HTML(paste("To print me, select a case study.", 
                  "They can be choosen in the", icon("map-o fa-2x"), 
                  "section, in the", "<mark><font color=\"#FF0000\"><b>", 
-                 "navigation bar.", "</b></font></mark>", sep = " "))
+                 "right sidebar.", "</b></font></mark>", sep = " "))
     } else {
       removeUI(selector = "info")
     }
