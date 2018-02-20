@@ -46,26 +46,50 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <hr/>
 
       <div id="network_Ca_choice" class="form-group shiny-input-checkboxgroup shiny-input-container shiny-input-container-inline">
-      <label class="control-label" for="network_Ca_choice">Choose your network</label>
-      <div class="shiny-options-group">
-      <div class="pretty p-default p-thick p-pulse">
+  <label class="control-label" for="network_Ca_choice">Choose your network</label>
+  <div class="shiny-options-group">
+    <div class="pretty p-default p-thick p-pulse">
       <input type="checkbox" name="network_Ca_choice" value="Ca" checked="checked"/>
       <div class="state p-primary">
-      <label>
-      <span>Ca</span>
-      </label>
+        <label>
+          <span>Ca</span>
+        </label>
       </div>
-      </div>
-      <div class="pretty p-default p-thick p-pulse">
+    </div>
+    <div class="pretty p-default p-thick p-pulse">
       <input type="checkbox" name="network_Ca_choice" value="PO4"/>
       <div class="state p-primary">
-      <label>
-      <span>PO4</span>
-      </label>
+        <label>
+          <span>PO4</span>
+        </label>
       </div>
+    </div>
+    <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="network_Ca_choice" value="PTH"/>
+      <div class="state p-primary">
+        <label>
+          <span>PTH</span>
+        </label>
       </div>
+    </div>
+    <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="network_Ca_choice" value="D3"/>
+      <div class="state p-primary">
+        <label>
+          <span>D3</span>
+        </label>
       </div>
+    </div>
+    <div class="pretty p-default p-thick p-pulse">
+      <input type="checkbox" name="network_Ca_choice" value="FGF23"/>
+      <div class="state p-primary">
+        <label>
+          <span>FGF23</span>
+        </label>
       </div>
+    </div>
+  </div>
+</div>
 
       <hr/>
 
@@ -76,6 +100,17 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div class="state p-success">
       <label>
       <span>Regulations?</span>
+      </label>
+      </div>
+      </div>
+      </div>
+
+      <div class="form-group shiny-input-container">
+      <div class="pretty p-default p-switch p-bigger p-slim">
+      <input id="network_organ_choice" type="checkbox" checked="checked"/>
+      <div class="state p-success">
+      <label>
+      <span>Organs?</span>
       </label>
       </div>
       </div>

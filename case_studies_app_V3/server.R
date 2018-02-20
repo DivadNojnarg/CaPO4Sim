@@ -585,21 +585,21 @@ shinyServer(function(input, output, session) {
   })
   
   # prevent user from unselecting all graph components
-  observeEvent(input$network_Ca_choice, {
-    
-    if (is.element("PO4", input$network_Ca_choice) && 
-        !is.element("Ca", input$network_Ca_choice)) {
-      disable(selector = "#network_Ca_choice input[value='PO4']")
-    } else {
-      enable(selector = "#network_Ca_choice input[value='PO4']")
-    }
-    if (is.element("Ca", input$network_Ca_choice) && 
-        !is.element("PO4", input$network_Ca_choice)) {
-      disable(selector = "#network_Ca_choice input[value='Ca']")
-    } else {
-      enable(selector = "#network_Ca_choice input[value='Ca']")
-    }
-  })
+  # observeEvent(input$network_Ca_choice, {
+  #   
+  #   if (is.element("PO4", input$network_Ca_choice) && 
+  #       !is.element("Ca", input$network_Ca_choice)) {
+  #     disable(selector = "#network_Ca_choice input[value='PO4']")
+  #   } else {
+  #     enable(selector = "#network_Ca_choice input[value='PO4']")
+  #   }
+  #   if (is.element("Ca", input$network_Ca_choice) && 
+  #       !is.element("PO4", input$network_Ca_choice)) {
+  #     disable(selector = "#network_Ca_choice input[value='Ca']")
+  #   } else {
+  #     enable(selector = "#network_Ca_choice input[value='Ca']")
+  #   }
+  # })
   
   # reset parameters individually
   button_states <- reactiveValues(values = list())

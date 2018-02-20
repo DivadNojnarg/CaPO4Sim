@@ -255,16 +255,39 @@ generate_nodes_Ca <- function(input) {
              rep(input$size_hormones,2), input$size_organs, rep(input$size_hormones,5)),
     #fixed = list("x" = TRUE, "y" = TRUE),
     physics = rep(FALSE,16),
-    hidden = c(rep(FALSE,7),
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               FALSE,
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               rep(FALSE,5),
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE)))
-  
+    hidden = c(
+      ## organs ##
+      rep(FALSE,7),
+      # PO4 Cells
+      ifelse(is.element("PO4", input$network_Ca_choice), 
+             ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      ## Hormones ##
+      # Ca plasma
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("Ca", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # PO4 plasma
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # PTHg
+      ifelse(input$network_hormonal_choice,
+      ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      
+      # PTH plasma
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # D3 plasma
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("D3", input$network_Ca_choice) & 
+                      is.element(c("Ca", "PTH", "PO4", "FGF23"), input$network_Ca_choice), FALSE, TRUE), TRUE),
+      ifelse(input$network_hormonal_choice,
+                 ifelse(is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # FGF23
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("FGF23", input$network_Ca_choice), FALSE, TRUE), TRUE)
+      )
+  )
 }
 
 # Generate edges for the CaPO4 network
@@ -320,36 +343,95 @@ generate_edges_Ca <- function(input) {
     smooth = c(rep(TRUE,29)),
     length = c(200,rep(300,2),rep(300,2),200,300,200,rep(300,4),rep(200,17)),
     # to show either Ca or PO4 or CaPO4 network arrows
-    hidden = c(FALSE, 
-               ifelse(is.element("Ca", input$network_Ca_choice), 
-                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               ifelse(is.element("Ca", input$network_Ca_choice), 
-                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               rep(FALSE,2),
-               ifelse(is.element("Ca", input$network_Ca_choice), 
-                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               ifelse(is.element("PO4", input$network_Ca_choice), 
-                      ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               ifelse(is.element("Ca", input$network_Ca_choice), 
-                      ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
-               rep(ifelse(is.element("PO4", input$network_Ca_choice), 
-                          ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),2),
-               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),3),
-               rep(ifelse(input$network_hormonal_choice == "TRUE", 
-                          ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
-                          TRUE),3),
-               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),4),
-               ifelse(input$network_hormonal_choice == "TRUE", 
-                      ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
-                      TRUE),
-               rep(ifelse(input$network_hormonal_choice == "TRUE", FALSE, TRUE),4),
-               rep(ifelse(input$network_hormonal_choice == "TRUE", 
-                          ifelse(is.element("PO4", input$network_Ca_choice), FALSE, TRUE), 
-                          TRUE),2)), 
+    hidden = c(
+      ## organ arrows ##
+      FALSE, 
+      ifelse(is.element("Ca", input$network_Ca_choice), 
+             ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE), 
+      ifelse(is.element("PO4", input$network_Ca_choice), 
+             ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      ifelse(is.element("Ca", input$network_Ca_choice), 
+             ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      ifelse(is.element("PO4", input$network_Ca_choice), 
+             ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      rep(FALSE,2),
+      ifelse(is.element("Ca", input$network_Ca_choice), 
+             ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      ifelse(is.element("PO4", input$network_Ca_choice), 
+             ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      ifelse(is.element("Ca", input$network_Ca_choice), 
+             ifelse(is.element("PO4", input$network_Ca_choice),FALSE,FALSE),TRUE),
+      rep(ifelse(is.element("PO4", input$network_Ca_choice), 
+                 ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE),2),
+      ## hormonal regulations arrows ##
+      # Ca regulation to PTH
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("PTH", input$network_Ca_choice) & 
+                      is.element("Ca", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # Ca to Kidney
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("Ca", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # Ca regulation to D3
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("D3", input$network_Ca_choice) & 
+                      is.element("Ca", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      
+      # PO4 regulation to PTH
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("PTH", input$network_Ca_choice) & 
+                      is.element("PO4", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # PO4 regulation to D3
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("D3", input$network_Ca_choice) & 
+                      is.element("PO4", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # PO4 regulation to FGF23
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("FGF23", input$network_Ca_choice) & 
+                      is.element("PO4", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      
+      # PTH regulation to kidney
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # PTH regulation to D3
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("D3", input$network_Ca_choice) & 
+                      is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # PTH regulation to bone
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      
+      
+      # D3 regulation to PTH
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("PTH", input$network_Ca_choice) & 
+                      is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # D3 regulation to FGF23
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("FGF23", input$network_Ca_choice) & 
+                      is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # D3 regulation to D3
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # D3 regulation to kidney
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # D3 regulation to bone
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # D3 regulation to intestine
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("D3", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      
+      
+      # FGF regulation to D3
+      ifelse(input$network_hormonal_choice,
+             ifelse(is.element("D3", input$network_Ca_choice) & 
+                      is.element("FGF23", input$network_Ca_choice), FALSE, TRUE), TRUE),
+      # FGF regulation to kidney
+      ifelse(input$network_hormonal_choice, 
+             ifelse(is.element("FGF23", input$network_Ca_choice), FALSE, TRUE), TRUE)
+
+      ), 
     stringsAsFactors = FALSE) 
   
 }
