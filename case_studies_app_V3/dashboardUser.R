@@ -12,6 +12,7 @@ dashboardUser <- function(name = "Guang Yang",
                           stat1 = "100 Posts",
                           stat2 = "2048 Followers",
                           stat3 = "1024 Following",
+                          stat4 = "Blabla",
                           btn1 = "Profile",
                           btn2 = "Sign Out") {
   
@@ -40,16 +41,24 @@ dashboardUser <- function(name = "Guang Yang",
         tags$div(
           class = "row",
           tags$div(
-            class = "col-xs-4 text-center",
+            class = "col-xs-6 text-center",
             tags$a(href = "#", stat1)
           ),
           tags$div(
-            class = "col-xs-4 text-center",
+            class = "col-xs-6 text-center",
             tags$a(href = "#", stat2)
+          )
+        ),
+        tags$hr(),
+        tags$div(
+          class = "row",
+          tags$div(
+            class = "col-xs-6 text-center",
+            tags$a(href = "#", stat3)
           ),
           tags$div(
-            class = "col-xs-4 text-center",
-            tags$a(href = "#", stat3)
+            class = "col-xs-6 text-center",
+            tags$a(href = "#", stat4)
           )
         )
       ),
@@ -57,12 +66,10 @@ dashboardUser <- function(name = "Guang Yang",
       tags$li(
         class = "user-footer",
         tags$div(
-          class = "pull-left",
-          uiOutput("userbttn1")
-        ),
-        tags$div(
-          class = "pull-right",
-          tags$a(id = "right-uid-button",href = "#", class = "btn btn-default btn-flat", btn2)
+          #class = "pull-left",
+          column(12, align = "center",
+            uiOutput("userbttn1")
+          )
         )
       )
     )

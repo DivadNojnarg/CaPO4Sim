@@ -252,14 +252,19 @@ shinyServer(function(input, output, session) {
       stat1 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
         generate_userFields(input)$stat1
       } else {
-        withMathJax(p("$$[Ca^{2+}]_p$$ = 1.2 mM"))
+        HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
       },
       stat2 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
         generate_userFields(input)$stat2
       } else {
-        withMathJax(p("$$[P_i]_p$$ = 1.5 mM"))
+        HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
       },
-      stat3 = "test"
+      stat3 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+        generate_userFields(input)$stat3
+      } else {
+        HTML(paste(withMathJax(p("$$[PTH]_p$$ 66 ng/l")), "<br/>", "(20-70 ng/l)"))
+      },
+      stat4 = NULL
     )
     
     return(list(head_user = head_user))
@@ -288,7 +293,7 @@ shinyServer(function(input, output, session) {
       )
     }
   })
-  
+
   
   #------------------------------------------------------------------------- 
   #  

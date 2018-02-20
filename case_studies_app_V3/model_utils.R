@@ -276,54 +276,104 @@ generate_userFields <- function(input) {
     if (input$run_php1) {
       req(input$slider_php1)
       if (input$slider_php1 == 20) {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1.5 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.2 mM"))
+        stat1 <- HTML(
+          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>", 
+                "1.5 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(
+          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>", 
+                "1.2 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
+                "107 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
         image <- "sad.png"
         state <- "sick"
       } else if (input$slider_php1 == 100) {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 2 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1 mM"))
+        stat1 <- HTML(
+          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>", 
+                "2 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(
+          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>", 
+                "1 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
+                "214 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
         image <- "suffer.png"
         state <- "sick"
       } else {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 2 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1 mM"))
+        stat1 <- HTML(
+          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>", 
+                "2 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(
+          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>", 
+                "1 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
+                "303 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
         image <- "dead.png"
         state <- "dead"
       }
     } else if (input$run_hypopara) {
       req(input$slider_hypopara)
       if (input$slider_hypopara == 0.5) {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1.2 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.5 mM"))
+        stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 63 ng/l")), "<br/>", "(20-70 ng/l)"))
         image <- "happy.png"
         state <- "sick"
       } else if (input$slider_hypopara == 0.1) {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.8 mM"))
+        stat1 <- HTML(
+          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>", 
+                "1 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(
+          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>", 
+                "1.8 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 41 ng/l")), "<br/>", "(20-70 ng/l)"))
         image <- "sad.png"
         state <- "sick"
       } else {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 0.6 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.9 mM"))
+        stat1 <- HTML(
+          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>", 
+                "0.6 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(
+          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>", 
+                "1.9 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#FF0000\"><b>", 
+                "0 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
         image <- "suffer.png"
         state <- "sick"
       }
     } else {
       req(input$slider_hypoD3)
-      if (input$slider_hypoD3 %in% c(0.1, 0.5)) {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 1.2 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.5 mM"))
-        image <- "happy.png"
+      if (input$slider_hypoD3 == 0.5) {
+        stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
+                "106 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
+        image <- "sad.png"
+        state <- "sick"
+      } else if (input$slider_hypoD3 == 0.1) {
+        stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
+                "180 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
+        image <- "sad.png"
         state <- "sick"
       } else {
-        stat1 <- withMathJax(p("$$[Ca^{2+}]_p$$ = 0.8 mM"))
-        stat2 <- withMathJax(p("$$[P_i]_p$$ = 1.3 mM"))
-        image <- "bad.png"
+        stat1 <- HTML(
+          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>", 
+                "0.8 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.3 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat3 <- HTML(
+          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
+                "231 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
+        image <- "sad.png"
         state <- "sick"
       }
     }
   }
   return(list(image = image, stat1 = stat1, 
-              stat2 = stat2, description = state))
+              stat2 = stat2, stat3 = stat3, description = state))
 }
