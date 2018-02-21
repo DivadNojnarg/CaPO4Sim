@@ -49,7 +49,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
   <label class="control-label" for="network_Ca_choice">Choose your network</label>
   <div class="shiny-options-group">
     <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="network_Ca_choice" value="Ca" checked="checked"/>
+      <input type="checkbox" name="network_Ca_choice" value="Ca"/>
       <div class="state p-primary">
         <label>
           <span>Ca</span>

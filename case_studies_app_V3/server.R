@@ -584,6 +584,20 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # when enable regulation is selected, activates all the checkboxes
+  observeEvent(input$network_hormonal_choice, {
+    if (input$network_hormonal_choice == TRUE) {
+      updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", 
+                                selected = c("Ca","PO4", "PTH", "D3", "FGF23"))
+    } 
+  })
+  
+  observeEvent(input$network_hormonal_choice, {
+    if (input$network_hormonal_choice == FALSE) {
+      updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", selected = NULL)
+    }
+  })
+  
   # prevent user from unselecting all graph components
   # observeEvent(input$network_Ca_choice, {
   #   
