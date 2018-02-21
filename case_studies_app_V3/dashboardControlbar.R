@@ -25,7 +25,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <label class="control-label" for="background_choice">Background</label>
       <div class="shiny-options-group">
       <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="background_choice" value="rat"/>
+      <input type="checkbox" name="background_choice" value="rat" checked = "checked"/>
       <div class="state p-primary">
       <label>
       <span>rat</span>

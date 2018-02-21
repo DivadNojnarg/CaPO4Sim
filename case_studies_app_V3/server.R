@@ -59,6 +59,7 @@ shinyServer(function(input, output, session) {
     
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
+    input$network_hormonal_choice
     
     generate_network(nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
       # simple click event to allow graph ploting
@@ -85,9 +86,8 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", beforeDrawing = "function() {
                 Shiny.onInputChange('browser', navigator.sayswho);
                 ;}") %>%
-      visEvents(type = "once", startStabilizing = "function() {
-                this.moveTo({scale:2})}") # to set the initial zoom (1 by default)
-    
+      visEvents(type = "on", beforeDrawing = "function() {
+                this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
   })
   
   output$id <- renderPrint({input$current_edge_id})
@@ -95,9 +95,9 @@ shinyServer(function(input, output, session) {
   output$background_choice <- renderPrint({input$background_choice})
   
   # node coordinates
-  # useful when developing to return x and y position
-  output$position <- renderPrint( vals$coords ) 
-  vals <- reactiveValues(coords = NULL, viewposition = NULL)
+  # useful when developing to return x and y position for each node
+  vals <- reactiveValues(coords = NULL, viewposition = NULL, scale = NULL)
+  output$position <- renderPrint({vals$coords})
   observe({
     invalidateLater(1000)
     visNetworkProxy("network_Ca") %>% visGetPositions()
@@ -113,6 +113,15 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_Ca") %>% visGetViewPosition()
     vals$viewposition <- if (!is.null(input$network_Ca_viewPosition))
       do.call(rbind, input$network_Ca_viewPosition)
+  })
+  
+  # scale (get the zoomView...)
+  output$scale <- renderPrint({vals$scale})
+  observe({
+    invalidateLater(1000)
+    visNetworkProxy("network_Ca") %>% visGetScale()
+    vals$scale <- if (!is.null(input$network_Ca_scale))
+      do.call(rbind, list(input$network_Ca_scale))
   })
   
   
@@ -585,17 +594,12 @@ shinyServer(function(input, output, session) {
   })
   
   # when enable regulation is selected, activates all the checkboxes
+  # the reverse case does not work for unknow reason 
   observeEvent(input$network_hormonal_choice, {
     if (input$network_hormonal_choice == TRUE) {
       updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", 
                                 selected = c("Ca","PO4", "PTH", "D3", "FGF23"))
     } 
-  })
-  
-  observeEvent(input$network_hormonal_choice, {
-    if (input$network_hormonal_choice == FALSE) {
-      updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", selected = NULL)
-    }
   })
   
   # prevent user from unselecting all graph components
