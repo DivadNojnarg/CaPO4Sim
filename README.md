@@ -73,6 +73,11 @@ library(shinyFeedback)
 - modals can now be hidden (via a switch)
 - userMenu in the header which displays the physiological state of the organism
 (sick, healthy, ...). It reacts to case studies...
+- improve the navigation in the main network: can filter what to display or not
+- change node size/arrow width
+- the graph scales automatically (use visEvent with beforeDrawing and scale = 0.6)
+when some components are added or removed
+- update the help section
 
 
 ## Changelog version 3 (global app)

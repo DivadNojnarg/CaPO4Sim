@@ -98,8 +98,8 @@ body <- dashboardBody(
                       display:inline-block; 
                       margin-left: 100px; 
                     }
-
-                    "))
+                    ")
+    )
   ),
   
   # notification that can be switched on or off as required
@@ -229,24 +229,7 @@ body <- dashboardBody(
                    data.step = 2,
                    data.intro = help_text[2],
                    data.position = "right"
-                 )#,
-                 # column(4, align = "left",
-                 #        verbatimTextOutput("position")
-                 # ),
-                 # column(4, align = "center",
-                 #        verbatimTextOutput("viewposition")
-                 # )
-                 #,
-                 # column(4, align = "left",
-                 #        verbatimTextOutput("counter_nav")
-                 # ),
-                 # column(4, align = "center",
-                 #        verbatimTextOutput("id_bis")
-                 # ),
-                 # column(4, align = "right",
-                 #        verbatimTextOutput("id")
-                 # )
-                 
+                 )
                ) 
         ),
         
@@ -310,7 +293,3 @@ body <- dashboardBody(
     )
   )
 )
-
-
-
-

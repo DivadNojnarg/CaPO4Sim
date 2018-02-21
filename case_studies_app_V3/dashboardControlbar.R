@@ -7,20 +7,23 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div id="sidebar_bis">
       <aside class="control-sidebar control-sidebar-dark">
       <!-- Create the tabs -->
+      <div data-step="8" data-intro="test">
       <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-sliders"></i></a></li>
       <li><a href="#control-sidebar-parms-tab" data-toggle="tab"><i class="fa fa-map-o"></i></a></li>
       <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-paint-brush"></i></a></li>
       
       </ul>
+      </div>
       
       <!-- Tab panes -->
       <div class="tab-content">
       <!-- Home tab content -->
+      <div data-step="9" data-intro="test">
       <div class="tab-pane active" id="control-sidebar-home-tab">
       <h3 class="control-sidebar-heading">CaPO4 Network Options</h3>
       
-
+      <div data-step="10" data-intro="test">
       <div id="background_choice" class="form-group shiny-input-checkboxgroup shiny-input-container shiny-input-container-inline">
       <label class="control-label" for="background_choice">Background</label>
       <div class="shiny-options-group">
@@ -38,6 +41,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <label>
       <span>human</span>
       </label>
+      </div>
       </div>
       </div>
       </div>
@@ -126,6 +130,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
 
       
       <!-- /.control-sidebar-menu -->
+      </div>
       </div>
       <!-- /.tab-pane -->
 

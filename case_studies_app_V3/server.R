@@ -396,8 +396,9 @@ shinyServer(function(input, output, session) {
     if (input$run_php1 | input$run_hypopara | input$run_hypoD3 | input$help) {
       
       sliderTextInput(
-        inputId = paste("slider_", current_sim, sep = ""), 
-        label = if (input$run_php1) {
+        inputId = ifelse(input$help, "slider_help",
+                         paste("slider_", current_sim, sep = "")), 
+        label = if (input$run_php1 | input$help) {
           "PTH synthesis fold increase"
         } else if (input$run_hypopara) {
           "PTH synthesis fold decrease"
@@ -409,9 +410,12 @@ shinyServer(function(input, output, session) {
         } else {
           c(0.5, 0.1, 0)
         },
-        selected = ifelse(
-          input$run_php1 | input$run_hypopara | input$run_hypoD3,
-          ifelse(input$run_php1, 100, 0), 1),
+        selected = if (input$help) {
+          100
+        } else {
+          ifelse(input$run_php1 | input$run_hypopara | input$run_hypoD3,
+                ifelse(input$run_php1, 100, 0), 1)
+        },
         grid = TRUE)
     }
   })
