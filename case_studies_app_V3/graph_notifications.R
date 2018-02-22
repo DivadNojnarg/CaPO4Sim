@@ -9,8 +9,7 @@ graph_notification_list <- list(
                "<mark><font color=\"#FF0000\"><b>", "normalized", 
                "</b></font></mark>", "compared to their initial equilibrium value 
                (namely when PTH production is normal). The case study starts with 
-               the slider set to <b>0</b>. Therefore, all normalized 
-               concentrations and fluxes are equal to 1.", sep = " "),
+               the slider set to <b>100</b>.", sep = " "),
   
   
   hypopara = paste("This is a simulation of hypoparathyroidism in the rat. 
@@ -29,7 +28,7 @@ graph_notification_list <- list(
                    the base-case</b>, while 0.5 corresponds to a division by a 
                    factor 2 of the PTH production rate and 0 represents a 
                    total inhition of PTH synthesis. The slider starts from the
-                   base case, namely 1.", sep = " "),
+                   worst case, namely 0.", sep = " "),
   
   hypoD3 = paste("This is a simulation of vitamin D\\(_3\\) deficiency in 
                   the rat. The concentration of inactive vitamin D (25(OH)D) 
@@ -47,5 +46,5 @@ graph_notification_list <- list(
                   1 represents the base-case</b>, while 0.5 corresponds to a 
                   division by a factor 2 of the 25(OH)D concentration
                   and 0 represents the absence of 25(OH)D. The slider starts from the
-                  base case, namely 1.", sep = " ")
+                  worst case, namely 0.", sep = " ")
 )

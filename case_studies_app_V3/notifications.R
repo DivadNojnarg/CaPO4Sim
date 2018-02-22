@@ -3,7 +3,7 @@ notification_list <- list(
                  "primary-hyperparathyroidism", "</b></font></mark>", "(PHP1) case study.",
                  "Before going further, make sure that <b>regulations</b> are enabled,
                  and that Ca and Pi homeostasis are selected (see below):",
-                 "<img src=\"before_casestudy.svg\">", "<br>",
+                 "<img src=\"before_casestudy.png\">", "<br>",
                  "To launch the simulation, click on <b>next</b> button above. At any time,
                  you can go back to the previous step by clicking on <b>back</b>.", 
                  "You can <b>hover</b> on", "<mark><font color=\"#FF0000\"><b>", "intestine,", 
@@ -61,7 +61,7 @@ notification_list <- list(
                      "hypoparathyroidism", "</b></font></mark>", "case study.",
                      "Before going further, make sure that <b>regulations</b> 
                      are enabled, and that Ca and Pi homeostasis are selected 
-                     (see below):", "<br>", "<img src=\"before_casestudy.svg\">",
+                     (see below):", "<br>", "<img src=\"before_casestudy.png\">",
                      "<br>", "To launch the simulation, click on <b>next</b> button above. 
                      At any time, you can go back to the previous step by clicking 
                      on <b>back</b>.", "You can <b>hover</b> on", 
@@ -115,7 +115,7 @@ notification_list <- list(
                    "vitamin D3 deficiency", "</b></font></mark>", "case study.",
                    "Before going further, make sure that <b>regulations</b> 
                    are enabled, and that Ca and Pi homeostasis are selected 
-                   (see below):", "<br>", "<img src=\"before_casestudy.svg\">",
+                   (see below):", "<br>", "<img src=\"before_casestudy.png\">",
                    "<br>","To launch the simulation, click on <b>next</b> button above. 
                    At any time, you can go back to the previous step by clicking 
                    on <b>back</b>.", "You can <b>hover</b> on", 

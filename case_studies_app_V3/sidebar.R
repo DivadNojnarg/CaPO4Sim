@@ -24,7 +24,8 @@ sidebar <- dashboardSidebar(
                                 fill = TRUE, value = TRUE, width = "0px")
                )
       ),
-      menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE)
+      menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE),
+      menuItem("Glossary", tabName = "glossary", icon = icon("search"))
     ),
     data.step = 1,
     data.intro = help_text[1]
