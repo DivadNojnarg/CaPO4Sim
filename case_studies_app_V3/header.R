@@ -7,7 +7,7 @@
 #  David Granjon, the Interface Group, Zurich
 #  December 4th, 2017
 #-------------------------------------------------------------------------
-
+source("help.R")
 header <- dashboardHeader(
   title = HTML(paste0(
     '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
@@ -21,8 +21,12 @@ header <- dashboardHeader(
   tags$li(
     title = "",
     class = "dropdown",
+    introBox(
     actionBttn("help", label = "Help", icon = NULL, style = "fill",
-               color = "danger", size = "lg", block = FALSE, no_outline = TRUE)
+               color = "danger", size = "lg", block = FALSE, no_outline = TRUE),
+    data.step = 7,
+    data.intro = help_text[7]
+    )
   )
   
   #dropdownMenuOutput("parameter_changed")

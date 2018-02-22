@@ -19,7 +19,7 @@ modal_php1 <- modalDialog(
     fluidRow(
       column(4, align = "left",
              tags$i("PTH synthesis and secretion are tightly regulated. Whereas
-                    1,25(OH) vitamin \\(D_3\\) inhibits PTH synthesis, PO4 is known to
+                    1,25(OH) vitamin \\(D_3\\) inhibits PTH synthesis, Pi is known to
                     increase PTH synthesis. Besides, \\([Ca^{2+}]_p\\) is able
                     to modulate PTH secretion through the calcium sensing receptor.
                     In case of hypercalcemia (elevated \\([Ca^{2+}]_p\\)),
@@ -41,8 +41,8 @@ modal_php1 <- modalDialog(
       ),
       column(6,
             tags$i("During PHP1, \\([Ca^{2+}]_p\\) is expected to be raised, while
-           \\([PO_4]_p\\) drops. PHP1 can be cured using cinacalcet which reduces
-            PTH secretion, thereby blunting its effect on Ca and PO4 homeostasis. 
+           \\([P_i]_p\\) drops. PHP1 can be cured using cinacalcet which reduces
+            PTH secretion, thereby blunting its effect on Ca and Pi homeostasis. 
            Ultimately, parathyroid surgery can be a definitive treatment. 
            Yet is it possible (but rare) that the tumor reappears."),
            tags$br(),
@@ -128,15 +128,15 @@ modal_Ca_inject <- modalDialog(
   size = "m"
 )
 
-# Modal for PO4 iv injection
+# Modal for Pi iv injection
 modal_PO4_inject <- modalDialog(
-  title = "About PO4 infusion",
+  title = "About Pi infusion",
   withMathJax("This is a simulation of intravenouse phosphate load in 
                250g-350g male wistar rats
                (https://www.ncbi.nlm.nih.gov/pubmed/28246304). 
-               A solution containing 0.5 mmol \\(Na_2HPO_4\\)
-               and \\(NaH_2PO_4\\) was infused during 2-3 minutes to rats. 
-               On the y-axis are represented \\([PO_4]_{tot}\\) 
+               A solution containing 0.5 mmol \\(Na_2HP_i\\)
+               and \\(NaH_2P_i\\) was infused during 2-3 minutes to rats. 
+               On the y-axis are represented \\([P_i]_{tot}\\) 
                (total plasma concentration of phosphate), normalized 
                \\([Ca^{2+}]_p\\) and \\([PTH]_p\\) as a function of time 
                (250 minutes). Experimental observations are shown as black
@@ -144,14 +144,14 @@ modal_PO4_inject <- modalDialog(
   size = "m"
 )
 
-# Modal for PO4 gavage
+# Modal for Pi gavage
 modal_PO4_gav <- modalDialog(
-  title = "About PO4 gavage",
+  title = "About Pi gavage",
   withMathJax("This is a simulation of phosphate gavage in 250g-350g male 
                wistar rats (https://www.ncbi.nlm.nih.gov/pubmed/28246304). 
-               A solution containing 0.5 mmol \\(Na_2HPO_4\\) and 
-               \\(NaH_2PO_4\\) was used. On the y-axis are represented 
-               \\([PO_4]_{tot}\\) (total plasma concentration of phosphate), 
+               A solution containing 0.5 mmol \\(Na_2HP_i\\) and 
+               \\(NaH_2P_i\\) was used. On the y-axis are represented 
+               \\([P_i]_{tot}\\) (total plasma concentration of phosphate), 
                normalized \\([Ca^{2+}]_p\\) and \\([PTH]_p\\) as a function of
                time (250 minutes). Experimental observations are shown as black 
                dots."),

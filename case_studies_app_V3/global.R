@@ -49,6 +49,7 @@ source("network.R")
 source("animations.R")
 source("modals.R")
 source("dashboardUser.R")
+source("dashboardHeader.R")
 
 # load the initial state of the model. Only needed for dynamic
 # simulation that is, Ca/EGTA injection, PO4 injection and

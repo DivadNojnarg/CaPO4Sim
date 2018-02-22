@@ -19,6 +19,7 @@ dashboardUser <- function(name = "Guang Yang",
   # create user account menu
   tags$li(
     class = "dropdown user user-menu",
+    style = "padding-right: 200px;",
     # menu toggle button
     tags$a(
       href = "#", class = "dropdown-toggle", `data-toggle` = "dropdown",
@@ -30,6 +31,7 @@ dashboardUser <- function(name = "Guang Yang",
     tags$ul(
       class = "dropdown-menu",
       # user img in the menu
+      introBox(
       tags$li(
         class = "user-header",
         tags$img(src = image, class = "img-circle", alt = "User Image"),
@@ -71,7 +73,10 @@ dashboardUser <- function(name = "Guang Yang",
             uiOutput("userbttn1")
           )
         )
-      )
+      ),
+      data.step = 8,
+      data.intro = help_text[8]
+    )
     )
   )
 }

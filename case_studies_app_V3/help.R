@@ -2,30 +2,16 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "</b></font></mark>", "You can control several options:", "<br>", "<ul>",
                      "<li>", icon("info-circle fa-2x"), "is the", "<font color=\"#0000FF\"><b>", 
                      "about", "</b></font>", "section containing informations
-                     about the development staff.", "</li>", "<li>", 
-                     icon("question-circle fa-2x"), "contains some", "<font color=\"#0000FF\"><b>", 
-                     "help", "</b></font>", "text as well as a review of all 
-                     features of this application you can trigger by pressing the 
-                     help button.", "</li>", "<li>", icon("youtube-play fa-2x"), "contains", 
+                     about the development staff.", "</li>",
+                     "<li>", icon("youtube-play fa-2x"), "contains", 
                      "<font color=\"#0000FF\"><b>", "video tutorial", "</b></font>", 
                      "showing how the application works.", "</li>", "<li>", icon("home fa-2x"), 
                      "is the", "<font color=\"#FF0000\"><b>", "main window", "</b></font>", 
-                     "containing the application.", "</li>", "<li>", icon("map-o fa-2x"), 
-                     "is dedicated to the", "<font color=\"#0000FF\"><b>", 
-                     "educational content", "</b></font>", "of the app. Go here if you
-                     want to select some case studies.", "</li>", "<li>", icon("sliders fa-2x"), 
-                     "is where you handle the", "<font color=\"#FF0000\"><b>", 
-                     "parameters", "</b></font>", "of this application 
-                     such as changing the background, display regulation
-                     mechanisms or not...", "</li>","</ul>", sep = " "),
+                     "containing the application.", "</li>","</ul>", sep = " "),
                
                paste("This is the", "<mark><font color=\"#FF0000\"><b>", "central part", 
                      "</b></font></mark>", "of the app: the network.", "<br>",
-                     "<ul>", "<li>","<img src=\"node_help.svg\">", "<br>", 
-                     "<font color=\"#0000FF\"><b>", "Organs", "</b></font>", 
-                     "are represented and displayed as they are in the body. 
-                     Put the mouse above and you will see some extra informations.",
-                     "</li>", "<li>", "<img src=\"arrow_help.svg\">", "<br>",
+                     "<ul>", "<li>", "<img src=\"arrow_help.svg\">", "<br>",
                      "Fluxes between all organs are depicted by black", 
                      "<font color=\"#0000FF\"><b>", "arrows", "</b></font>",
                      "which color may change as follows:",
@@ -33,15 +19,15 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "<br>", "if the flux is increased.", "</li>", 
                      "<li>", "<img src=\"red_arrow_help.svg\">", 
                      "<br>", "if the flux is decreased.", "</li>",
-                     "</ul>", "By default, only calcium fluxes are displayed. This can be
+                     "</ul>", "<br>", "By default, fluxes are not displayed. This can be
                      modified in the", icon("sliders fa-2x"), "section of
-                     the", "<mark><font color=\"#FF0000\"><b>", "navigation bar,", 
+                     the", "<mark><font color=\"#FF0000\"><b>", "right sidebar,", 
                      "</b></font></mark>", "by selecting calcium, phosphate or both.",
-                     "</li>", "<li>","<img src=\"regulation_help.svg\">", "<br>", 
+                     "</li>", "<br>", "<li>", 
                      "<font color=\"#0000FF\"><b>", "Hormones", "</b></font>", 
                      "and regulators are represented by light green nodes. They
                      can be enabled in the", icon("sliders fa-2x"), "section of
-                     the", "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
+                     the", "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
                      "</b></font></mark>",
                      "</li>", "<li>","<img src=\"dashed_arrow_help.svg\">", "<br>",
                      "<font color=\"#0000FF\"><b>", "Regulations", "</b></font>",
@@ -52,13 +38,13 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "The size increases if it is a stimulation, 
                      and inversely.", "</li>", "</ul>", "Perturbations can be 
                      selected via the", icon("map-o fa-2x"), "section, in the", 
-                     "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
+                     "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
                      "</b></font></mark>","</li>", "</ul>", sep = " "),
                
                paste("By clicking on next or back buttons, you can see animations
                      corresponding to the case studies available in the",
                      icon("map-o fa-2x"), "section of the", 
-                     "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
+                     "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
                      "</b></font></mark>", "Be careful, clicking on Next/Back 
                      without having selected a case study will not trigger anything.",
                      sep = " "),
@@ -69,12 +55,12 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "</b></font></mark>", "and not steady-state ones. Recall that
                      dynamic simulations can be selected in the", icon("map-o fa-2x"), 
                      "section, in the", "<mark><font color=\"#FF0000\"><b>", 
-                     "navigation bar.", "</b></font></mark>", sep = " "),
+                     "right sidebar.", "</b></font></mark>", sep = " "),
                
                paste("In this panel are displayed the graphs of each simulation. 
                       To see results, start by clicking on a case study in the",
                      icon("map-o fa-2x"), "section of the",
-                      "<mark><font color=\"#FF0000\"><b>", "navigation bar.", 
+                      "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
                       "</b></font></mark>", sep = " "),
                
                paste("This slider allows the user to control the", 
@@ -83,7 +69,7 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      hypoparathyroidism and 25(OH) vitamin D3 deficiency.",
                      "Recall that diseases can be selected in the", icon("map-o fa-2x"), 
                      "section, in the", "<mark><font color=\"#FF0000\"><b>", 
-                     "navigation bar.", "</b></font></mark>",
+                     "right sidebar.", "</b></font></mark>",
                      "For PHP1, when the slider is on 0, there is no disease.", "<br>",
                      "<img src=\"php1_min_help.svg\">", "<br>",
                      "Then, moving the slider to the right increases the severity 
@@ -96,8 +82,22 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "<img src=\"hypopara_min_help.svg\">", "<br>",
                      "<img src=\"hypopara_max_help.svg\">", sep = " "),
                
-               # as this help section is part of the controlbar, need
-               # to update it manually in dashboardControlbar.R
-               paste("Here you can change the global <b>theme</b> 
-                     of the dashboard", sep = " ")
+               paste(icon("question-circle fa-2x"), "contains some", 
+                     "<font color=\"#0000FF\"><b>", 
+                     "help", "</b></font>", "text as well as a review of all 
+                     features of this application you can trigger by pressing the 
+                     help button."),
+               
+               paste(icon("heartbeat fa-2x"), "allow you to have a feedback 
+                     on the patient state. Whenever you trigger a disease in the",
+                     icon("map-o fa-2x"), "section of the",
+                     "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
+                     "</b></font></mark>", "you can check calcium, phosphate,
+                     PTH and vitamin D3 concentration. (red: lower than base-case;
+                     green: higher than expected. If the disease is lethal, you
+                     are notified.")
+               
+               # as the remaining of the help section is part of the controlbar, 
+               # need to update it manually in dashboardControlbar.R
+               
 )

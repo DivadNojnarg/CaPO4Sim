@@ -126,78 +126,76 @@ shinyServer(function(input, output, session) {
   
   
   # handle the size of organ and hormonal nodes
-  output$knob_size_nodes <- renderUI({
+  output$size_nodes_organs <- renderUI({
     tagList(
-      fluidRow(
-        column(6,
-               knobInput("size_organs", 
-                         "Organs", 
-                         min = 50, 
-                         max = 100, 
-                         value = 70, 
-                         step = 5,
-                         displayPrevious = TRUE,
-                         fgColor = "#A9A9A9", 
-                         inputColor = "#A9A9A9",
-                         skin = "tron",
-                         width = "100px", 
-                         height = "100px")
-        ),
-        column(6,
-               knobInput("size_hormones", 
-                         "Hormones", 
-                         min = 20, 
-                         max = 60, 
-                         value = 40, 
-                         step = 5,
-                         displayPrevious = TRUE,
-                         fgColor = "#A9A9A9", 
-                         inputColor = "#A9A9A9",
-                         skin = "tron",
-                         width = "100px", 
-                         height = "100px")
-        )
-      )
+      knobInput("size_organs", 
+                "Organs", 
+                min = 50, 
+                max = 100, 
+                value = 70, 
+                step = 5,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = "tron",
+                width = "100px", 
+                height = "100px")
+    )
+  })
+  
+  output$size_nodes_hormones <- renderUI({
+    tagList(
+      knobInput("size_hormones", 
+                "Hormones", 
+                min = 20, 
+                max = 60, 
+                value = 40, 
+                step = 5,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = "tron",
+                width = "100px", 
+                height = "100px")
     )
   })
   
   # control width of arrows
-  output$knob_width_arrows <- renderUI({
+  output$width_arrows_organs <- renderUI({
     tagList(
-      fluidRow(
-        column(6,
-               knobInput("width_organs", 
-                         "Organs",
-                         angleOffset = -90,
-                         angleArc = 180,
-                         min = 4, 
-                         max = 14, 
-                         value = 8, 
-                         step = 1,
-                         displayPrevious = TRUE,
-                         fgColor = "#A9A9A9", 
-                         inputColor = "#A9A9A9",
-                         skin = NULL,
-                         width = "100px", 
-                         height = "100px")
-        ),
-        column(6,
-               knobInput("width_hormones", 
-                         "Hormones", 
-                         angleOffset = -90,
-                         angleArc = 180,
-                         min = 1, 
-                         max = 8, 
-                         value = 4, 
-                         step = 1,
-                         displayPrevious = TRUE,
-                         fgColor = "#A9A9A9", 
-                         inputColor = "#A9A9A9",
-                         skin = NULL,
-                         width = "100px", 
-                         height = "100px")
-        )
-      )
+      knobInput("width_organs", 
+                "Organs",
+                angleOffset = -90,
+                angleArc = 180,
+                min = 4, 
+                max = 14, 
+                value = 8, 
+                step = 1,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = NULL,
+                width = "100px", 
+                height = "100px")
+    )
+  })
+  
+  output$width_arrows_hormones <- renderUI({
+    tagList(
+      knobInput("width_hormones", 
+                "Hormones", 
+                angleOffset = -90,
+                angleArc = 180,
+                min = 1, 
+                max = 8, 
+                value = 4, 
+                step = 1,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = NULL,
+                width = "100px", 
+                height = "100px")
     )
   })
   
@@ -399,9 +397,9 @@ shinyServer(function(input, output, session) {
         inputId = ifelse(input$help, "slider_help",
                          paste("slider_", current_sim, sep = "")), 
         label = if (input$run_php1 | input$help) {
-          "PTH synthesis fold increase"
+          "PTH mRNA synthesis fold increase"
         } else if (input$run_hypopara) {
-          "PTH synthesis fold decrease"
+          "PTH mRNA synthesis fold decrease"
         } else if (input$run_hypoD3) {
           "25(OH)D stock"
         }, 
@@ -461,19 +459,25 @@ shinyServer(function(input, output, session) {
             options = list("nextLabel" = "Next step!",
                            "prevLabel" = "Did you forget something?",
                            "tooltipClass" = "newClass",
+                           #"highlightClass" = "newClass",
                            "showProgress" = TRUE,
                            "showBullets" = FALSE),
             events = list(# reset the session to hide sliders and back/next buttons
-              "oncomplete" = I('history.go(0)')))
-    
-    #   "onbeforechange" = I('
-    #                                  if (targetElement.getAttribute("data-step")==="2") {
-    #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
-    # } else {
-    #                        $(".newClass").css("max-width", "500px").css("min-width","500px");
-    # }'),
-    
+              "oncomplete" = I('history.go(0)'),
+              "onbeforchange" = I("function(steps) {
+                Shiny.onInputChange('current_step', steps.steps);
+                                  ;}")
+              # "onbeforechange" = I('
+              #     if (targetElement.getAttribute("data-step")==="2") {
+              #         $(".newClass").css("max-width", "800px").css("min-width","800px");
+              #     } else {
+              #         $(".newClass").css("max-width", "500px").css("min-width","500px");
+              #     }')
+              )
+            )
   })
+  
+  output$test <- renderPrint(input$current_step)
   
   # Print a short help text above the graph part
   # removeUI does not work
@@ -550,6 +554,11 @@ shinyServer(function(input, output, session) {
                          condition = input$help)
   })
   
+  observe({
+    shinyjs::toggleClass(id = "user",
+                         class = "user-menu open",
+                         condition = input$help)
+  })
   
   #------------------------------------------------------------------------- 
   #  

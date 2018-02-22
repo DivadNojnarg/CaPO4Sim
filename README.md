@@ -77,7 +77,12 @@ library(shinyFeedback)
 - change node size/arrow width
 - the graph scales automatically (use visEvent with beforeDrawing and scale = 0.6)
 when some components are added or removed
-- update the help section
+- update the help section with new elements (mainly in the right sidebar):
+still have a problem with the userMenu that is altered by the help.
+- replace PO4 by Pi everywhere (notifications, modals, graphs, graphs_notifications,
+checkboxes labels)
+- change Ca to Ca2+ and PO4 to Pi in the network (modified svg images)
+- the demo section is disabled as long as there is no content inside.
 
 
 ## Changelog version 3 (global app)

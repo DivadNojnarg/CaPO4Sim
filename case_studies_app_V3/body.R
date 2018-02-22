@@ -236,7 +236,7 @@ body <- dashboardBody(
         column(width = 6, offset = 0, style = 'padding:0px;',
                box(
                  id = "tabset1", width = 12, solidHeader = TRUE,
-                 
+                 verbatimTextOutput("test"),
                  uiOutput("info"),
                  
                  conditionalPanel(

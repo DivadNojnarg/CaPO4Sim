@@ -3,7 +3,7 @@ graph_notification_list <- list(
                <b>increased</b> several times its base case value (until 300 times).
                This can be achieved using the", "<mark><font color=\"#FF0000\"><b>",
                "orange slider", "</b></font></mark>", "below the graph window.
-               \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), 
+               \\([Ca^{2+}]_p\\), \\([P_i]_p\\), \\([PTH]_p\\), 
                \\([D_3]_p\\) and \\([FGF]_p\\), as well as calcium and 
                phosphate fluxes are calculated at <b>equilibrium</b> and", 
                "<mark><font color=\"#FF0000\"><b>", "normalized", 
@@ -18,7 +18,7 @@ graph_notification_list <- list(
                    times its base case value (until 0). This can be achieved using the", 
                    "<mark><font color=\"#FF0000\"><b>", "orange slider", 
                    "</b></font></mark>", "below the graph window. \\([Ca^{2+}]_p\\),
-                   \\([PO_4]_p\\), \\([PTH]_p\\), \\([D_3]_p\\) and \\([FGF]_p\\), 
+                   \\([P_i]_p\\), \\([PTH]_p\\), \\([D_3]_p\\) and \\([FGF]_p\\), 
                    as well as calcium and phosphate fluxes are calculated at 
                    <b>equilibrium</b> and", "<mark><font color=\"#FF0000\"><b>", 
                    "normalized", "</b></font></mark>", "compared to their initial
@@ -36,7 +36,7 @@ graph_notification_list <- list(
                   may be <b>decreased</b> several times its base case value (until 0). 
                   This can be achieved using the", "<mark><font color=\"#FF0000\"><b>", 
                  "orange slider", "</b></font></mark>", "below the graph window.
-                  \\([Ca^{2+}]_p\\), \\([PO_4]_p\\), \\([PTH]_p\\), 
+                  \\([Ca^{2+}]_p\\), \\([P_i]_p\\), \\([PTH]_p\\), 
                   \\([D_3]_p\\) and \\([FGF]_p\\), as well as calcium and 
                   phosphate fluxes are calculated at equilibrium and
                   normalized compared to their initial equilibrium value 

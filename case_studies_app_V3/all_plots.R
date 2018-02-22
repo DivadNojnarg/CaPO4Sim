@@ -26,7 +26,7 @@ make_plot_php1 <- function(input) {
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 2))
   yvar2 <- list(title = "Normalized concentrations", range = c(0,7))
   yvar3 <- list(title = "Normalized Ca fluxes", range = c(0,5))
-  yvar4 <- list(title = "Normalized PO4 fluxes", range = c(0,3))
+  yvar4 <- list(title = "Normalized Pi fluxes", range = c(0,3))
   
   # plot Ca and PO4 variables
   plot_CaP_php1 <- plot_ly(php1_table, x = php1_vec/php1_vec[1], 
@@ -39,7 +39,7 @@ make_plot_php1 <- function(input) {
     add_lines(x = slidersteady_value, y = c(0, 1.8), 
               line = list(size = 6, color = 'orange', dash = "solid", width = 6)) %>%
     add_annotations(x = 400, y = 2.6, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", showarrow = T) %>%
-    add_annotations(x = 400, y = 0.3, xref = "x", yref = "y",text = "<b>[PO4]p</b>", showarrow = T) %>%
+    add_annotations(x = 400, y = 0.3, xref = "x", yref = "y",text = "<b>[Pi]p</b>", showarrow = T) %>%
     layout(xaxis = NULL, yaxis = yvar1)
   
   # plot PTH, D3 and FGF23 concentrations
@@ -137,7 +137,7 @@ make_plot_hypoD3 <- function(input) {
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 1.1))
   yvar2 <- list(title = "Normalized concentrations", range = c(0,4))
   yvar3 <- list(title = "Normalized Ca fluxes", range = c(0,1.2))
-  yvar4 <- list(title = "Normalized PO4 fluxes", range = c(0,1.1))
+  yvar4 <- list(title = "Normalized Pi fluxes", range = c(0,1.1))
   
   # plot Ca and PO4 variables
   plot_CaP_hypoD3 <- plot_ly(hypoD3_table, x = hypoD3_vec/hypoD3_vec[1], 
@@ -151,7 +151,7 @@ make_plot_hypoD3 <- function(input) {
               line = list(size = 6, color = 'orange', dash = "solid", width = 6)) %>%
     add_annotations(x = 0.7, y = 0.95, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", 
                     showarrow = T, ax = -20, ay = 40) %>%
-    add_annotations(x = 0.4, y = 1.1, xref = "x", yref = "y",text = "<b>[PO4]p</b>", 
+    add_annotations(x = 0.4, y = 1.1, xref = "x", yref = "y",text = "<b>[Pi]p</b>", 
                     showarrow = T, ax = -20, ay = -20) %>%
     layout(xaxis = xvar_bis, yaxis = yvar1)
   
@@ -249,7 +249,7 @@ make_plot_hypopara <- function(input) {
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 1.4))
   yvar2 <- list(title = "Normalized concentrations", range = c(0,1))
   yvar3 <- list(title = "Normalized Ca fluxes", range = c(0,1))
-  yvar4 <- list(title = "Normalized PO4 fluxes", range = c(0,1.4))
+  yvar4 <- list(title = "Normalized Pi fluxes", range = c(0,1.4))
   
   # plot Ca and PO4 variables
   plot_CaP_hypopara <- plot_ly(hypopara_table, x = hypopara_vec/hypopara_vec[1], 
@@ -265,7 +265,7 @@ make_plot_hypopara <- function(input) {
               line = list(size = 6, color = 'orange', dash = "solid", width = 6)) %>%
     add_annotations(x = 0.5, y = 0.85, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>", 
                     showarrow = T, ax = -20, ay = 40) %>%
-    add_annotations(x = 0.1, y = 1.7, xref = "x", yref = "y",text = "<b>[PO4]p</b>", 
+    add_annotations(x = 0.1, y = 1.7, xref = "x", yref = "y",text = "<b>[Pi]p</b>", 
                     showarrow = T) %>%
     layout(xaxis = xvar_bis, yaxis = yvar1)
   
@@ -448,7 +448,7 @@ make_plot_PO4_inject <- function(input){
                              err_PTH = c(0.53, 1.40, 1.34, 0.88, 0.97, 0.93, 1.47, 1.42, 0.87))
   
   xvar <- list(title = "time (min)", range = c(0, max(PO4_iv_table[,1])))
-  yvar1 <- list(title = "[PO4]p (mM)", range = c(0,8))
+  yvar1 <- list(title = "[Pi]p (mM)", range = c(0,8))
   yvar2 <- list(title = "Normalized [Ca2+]p", range = c(0,2))
   yvar3 <- list(title = "Normalized [PTH]p", range = c(0,20))
   
@@ -540,7 +540,7 @@ make_plot_PO4_gav <- function(input){
                           err_PTH = c(0.16, 0.34, 0.40, 0.20, 0.29, 0.12, 0.19, 0.19, 0.14))
   
   xvar <- list(title = "time (min)", range = c(0, max(PO4_gav_table[,1])))
-  yvar1 <- list(title = "[PO4]p (mM)", range = c(0,8))
+  yvar1 <- list(title = "[Pi]p (mM)", range = c(0,8))
   yvar2 <- list(title = "Normalized [Ca2+]p", range = c(0,2))
   yvar3 <- list(title = "Normalized [PTH]p", range = c(0,20))
   
