@@ -72,10 +72,12 @@ library(shinyFeedback)
 - left sidebar is dedicated to menu
 - modals can now be hidden (via a switch)
 - userMenu in the header which displays the physiological state of the organism
-(sick, healthy, ...). It reacts to case studies...
+(sick, healthy, ...). It reacts to case studies... (sometimes does not want to
+open, need to fix it)
 - improve the navigation in the main network: can filter what to display or not
 - change node size/arrow width
 - the graph scales automatically (use visEvent with beforeDrawing and scale = 0.6)
+which prevents it from being generated outside the window...
 when some components are added or removed
 - update the help section with new elements (mainly in the right sidebar):
 still have a problem with the userMenu that is altered by the help.

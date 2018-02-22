@@ -311,51 +311,10 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # generate a patient profile
-  create_userInfo <- reactive({
-    
-    head_user <- dashboardUser(
-      name = "Patient State",
-      image = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-        generate_userFields(input)$image
-      } else {
-        "happy.png"
-      },
-      description = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-        generate_userFields(input)$description
-      } else {
-        "healthy"
-      },
-      sub_description = if (input$run_php1) {
-        "Patient has primary-hyperparathyroidism"
-      } else if (input$run_hypopara) {
-        "Patient suffers from hypoparathyroidism"
-      } else if (input$run_hypoD3) {
-        "Patient has vitamin D3 defficiency"
-      } else {
-        "nothing to declare!"
-      }, 
-      stat1 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-        generate_userFields(input)$stat1
-      } else {
-        HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
-      },
-      stat2 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-        generate_userFields(input)$stat2
-      } else {
-        HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
-      },
-      stat3 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-        generate_userFields(input)$stat3
-      } else {
-        HTML(paste(withMathJax(p("$$[PTH]_p$$ 66 ng/l")), "<br/>", "(20-70 ng/l)"))
-      },
-      stat4 = NULL
-    )
-    
-    return(list(head_user = head_user))
+  userInfo <- reactive({
+    create_userInfo(input)
   })
-  
-  output$user <- renderUser({create_userInfo() %$% head_user})
+  output$user <- renderUser({userInfo() %$% head_user})
   
   output$userbttn1 <- renderUI({
     if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
@@ -501,44 +460,7 @@ shinyServer(function(input, output, session) {
   
   # glossary 
   output$glossary <- renderDataTable({
-    m <- data.frame(
-      "abreviation" = c("Ca", "Pi", "PTH", "D3", "FGF23", 
-                        "PTHg", "CaSR", "VDR", "PHP1"),
-      "full name" = c("Ionized plasma calcium concentration",
-                      "Total plasma phosphate concentration",
-                      "Parathyroid hormone",
-                      "1,25 dihydroxy vitamin D3 (calcitriol)",
-                      "Fibroblast growth factor 23",
-                      "Parathyroid glands",
-                      "Calcium sensing receptor",
-                      "Vitamin D receptor",
-                      "Primary hyperparathyroidism"),
-      "units" = c("mM (mmol/l)", "mM", "ng/l", rep("", 6)),
-      "more informations (HSet)" = c(
-        "<a href=\"https://kidneynccr.bio-med.ch/cms/Default?
-          Page=23937&Menu=1079&backbar=0\" target=\"_blank\">More about Calcium</a>",
-        
-        "<a href=\"https://kidneynccr.bio-med.ch/cms/Default?Page=18891&Menu=1079&
-        backbar=0\" target=\"_blank\">More about Phosphate</a>",
-          
-        "<a href=\"https://kidneynccr.bio-med.ch/cms/Default?Page=23466&Menu=1079&
-        backbar=0\" target=\"_blank\">More about PTH</a>",
-  
-        "<a href=\"https://kidneynccr.bio-med.ch/cms/Default?Page=23484&Menu=1079&
-        backbar=0\" target=\"_blank\">More about vitamin D3</a>",
-        
-        "<a href=\"https://kidneynccr.bio-med.ch/cms/Default?Page=23408&Menu=1079&
-        backbar=0\" target=\"_blank\">More about FGF23</a>",
-        
-        "",
-        "<a href=\"https://kidneynccr.bio-med.ch/cms/Default?Page=23495&Menu=1079&
-        backbar=0\" target=\"_blank\">More about the CaSR</a>",
-        rep("", 2)
-      )
-    )
-    datatable(m, escape = c(rep(FALSE, 3), TRUE), options = list(dom = 't')) %>%
-      formatStyle('full.name',  color = 'black', backgroundColor = 'orange', 
-                  fontWeight = 'bold')
+    generate_glossary()
   })
   
   #------------------------------------------------------------------------- 
@@ -621,7 +543,6 @@ shinyServer(function(input, output, session) {
   
   # display or not display the network background
   observe({
-    
     if (!is_empty(input$background_choice)) {
       if (input$background_choice == "rat") {
         addClass(id = "network_cap", class = "network_caprat")
@@ -639,7 +560,6 @@ shinyServer(function(input, output, session) {
   
   # prevent user from selecting multiple background
   observe({
-    
     if (is.element("rat", input$background_choice) &&
         !is.element("human", input$background_choice)) {
       disable(selector = "#background_choice input[value='human']")
@@ -719,36 +639,7 @@ shinyServer(function(input, output, session) {
   
   # Custom footer
   output$dynamicFooter <- renderFooter({ 
-    dashboardFooter(
-      mainText = h5(
-        div(style = "display: inline",
-            div("2017-2018, the Interface Group", style = "display: inline",
-                a(href = "http://interfacegroup.ch/people/", target = "_blank",
-                  img(src = "interface_logo.png", height = "30px")
-                )),
-            HTML("<span id=\"tab\"></span>"),
-            div("Built with", style = "display: inline",
-                a(href = "https://shiny.rstudio.com", target = "_blank",
-                  img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", 
-                      height = "30px")
-                ),
-                "by",
-                a(href = "http://www.rstudio.com", target = "_blank",
-                  img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", 
-                      height = "30px"))),
-            HTML("<span id=\"tab\"></span>"),
-            div("Funded by", style = "display: inline",
-                a(href = "http://www.nccr-kidney.ch", target = "_blank", 
-                  img(src = "nccr_logo.png", height = "50px")),
-                a(href = "http://www.uzh.ch/de.html", target = "_blank", 
-                  img(src = "uzh_logo.png", height = "30px")),
-                "and",
-                a(href = "https://www.unil.ch/fbm/fr/home.html", target = "_blank",
-                  img(src = "unil_logo.png", height = "55px")
-                ))
-        )), 
-      subText = HTML("<b>Version:</b> Beta 3")
-    ) 
+    generate_dynamicFooter()
   })
   
 })

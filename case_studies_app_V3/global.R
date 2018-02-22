@@ -51,6 +51,9 @@ source("animations.R")
 source("modals.R")
 source("dashboardUser.R")
 source("dashboardHeader.R")
+source("create_userInfo.R")
+source("generate_glossary.R")
+source("generate_dynamicFooter.R")
 
 # load the initial state of the model. Only needed for dynamic
 # simulation that is, Ca/EGTA injection, PO4 injection and
