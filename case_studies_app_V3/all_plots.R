@@ -12,6 +12,10 @@ make_plot_php1 <- function(input) {
   
   slidersteady_value <- generate_slidersteady(input)
   
+  # define color palettes
+  colfuncCa <- colorRampPalette(c("darkblue", "lightblue", "green"))(20)
+  colfuncPO4 <- colorRampPalette(c("darkred", "pink", "yellow"))(20)
+  
   # load path to data
   path_to_php1 <- paste0(getwd(),"/www/php1.csv") 
   #path_to_php1 <- "/srv/shiny-server/capApp/case_studies_app/www/php1.csv" 
@@ -24,9 +28,9 @@ make_plot_php1 <- function(input) {
                range = c(min(php1_vec/php1_vec[1]), 
                          max(php1_vec)/php1_vec[1]))
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 2))
-  yvar2 <- list(title = "Normalized concentrations", range = c(0,7))
-  yvar3 <- list(title = "Normalized Ca fluxes", range = c(0,5))
-  yvar4 <- list(title = "Normalized Pi fluxes", range = c(0,3))
+  yvar2 <- list(title = "Normalized concentrations", range = c(0, 7))
+  yvar3 <- list(title = "Normalized Ca fluxes", range = c(0, 3.5))
+  yvar4 <- list(title = "Normalized Pi fluxes", range = c(0, 2))
   
   # plot Ca and PO4 variables
   plot_CaP_php1 <- plot_ly(php1_table, x = php1_vec/php1_vec[1], 
@@ -64,16 +68,20 @@ make_plot_php1 <- function(input) {
   plot_Ca_fluxes_php1 <- plot_ly(php1_table, x = php1_vec/php1_vec[1], 
                                  y = php1_table[,"U_Ca"]/php1_table[1,"U_Ca"],
                                  type = "scatter", mode = "lines", 
-                                 line = list(color = 'black', width = 2, dash = "dash"), 
-                                 showlegend = F) %>%
+                                 line = list(color = colfuncCa[1], width = 2, dash = "solid"), 
+                                 showlegend = FALSE, name = "Urinary Excretion") %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Abs_int_Ca"]/php1_table[1,"Abs_int_Ca"], 
-              line = list(color = 'black', width = 2, dash = "dot"), showlegend = F) %>%
+              line = list(color = colfuncCa[8], width = 2, dash = "solid"), showlegend = FALSE,
+              name = "Intestinal absorption") %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Res_Ca"]/php1_table[1,"Res_Ca"], 
-              line = list(color = 'black', width = 2, dash = "dashdot"), showlegend = F) %>%
+              line = list(color = colfuncCa[12], width = 2, dash = "solid"), showlegend = FALSE,
+              name = "Bone resorption") %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Ac_Ca"]/php1_table[1,"Ac_Ca"], 
-              line = list(color = 'black', width = 2, dash = "solid"), showlegend = F) %>%
+              line = list(color = colfuncCa[15], width = 2, dash = "solid"), showlegend = FALSE,
+              name = "FLux into bone") %>%
     add_lines(x = slidersteady_value, y = c(0,4), 
-              line = list(size = 6, color = 'orange', dash = "solid", width = 6)) %>%
+              line = list(size = 6, color = 'orange', dash = "solid", width = 6),
+              showlegend = FALSE, name = "PHP1 severity") %>%
     layout(xaxis = xvar, yaxis = yvar3)
   
   # plot PO4 fluxes: resorption, intestinal absorption, urinary excretion 
@@ -81,21 +89,23 @@ make_plot_php1 <- function(input) {
   plot_PO4_fluxes_php1 <- plot_ly(php1_table, x = php1_vec/php1_vec[1], 
                                   y = php1_table[,"U_PO4"]/php1_table[1,"U_PO4"],
                                   type = "scatter", mode = "lines", 
-                                  line = list(color = 'black', width = 2, dash = "dash"), 
-                                  name = "Urinary Excretion") %>%
+                                  line = list(color = colfuncPO4[1], width = 2, dash = "solid"), 
+                                  name = "Urinary Excretion", showlegend = FALSE) %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Abs_int_PO4"]/php1_table[1,"Abs_int_PO4"], 
-              line = list(color = 'black', width = 2, dash = "dot"), 
-              name = "Intestinal absorption") %>%
+              line = list(color = colfuncPO4[6], width = 2, dash = "solid"), 
+              name = "Intestinal absorption", showlegend = FALSE) %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Res_PO4"]/php1_table[1,"Res_PO4"], 
-              line = list(color = 'black', width = 2, dash = "dashdot"), 
-              name = "Bone resorption") %>%
+              line = list(color = colfuncPO4[10], width = 2, dash = "solid"), 
+              name = "Bone resorption", showlegend = FALSE) %>%
     add_lines(x = php1_vec/php1_vec[1], y = php1_table[,"Ac_PO4"]/php1_table[1,"Ac_PO4"], 
-              line = list(color = 'black', width = 2, dash = "solid"), 
-              name = "FLux into bone") %>%
+              line = list(color = colfuncPO4[13], width = 2, dash = "solid"), 
+              name = "FLux into bone", showlegend = FALSE) %>%
     add_lines(x = slidersteady_value, y = c(0, 2.5), 
               line = list(size = 6, color = 'orange', dash = "solid", width = 6),
-              name = "PHP1 severity") %>%
-    layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = -0.2))
+              name = "PHP1 severity", showlegend = FALSE) %>%
+    layout(xaxis = xvar, yaxis = yvar4)
+  # to display a legend see below
+  #layout(xaxis = xvar, yaxis = yvar4, legend = list(orientation = 'h', x = 100, y = -0.2))
   
   # gather all subplots
   plot_php1 <- subplot(plot_CaP_php1, plot_hormones_php1, plot_Ca_fluxes_php1, 
