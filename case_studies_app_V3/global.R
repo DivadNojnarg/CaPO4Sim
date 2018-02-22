@@ -27,6 +27,7 @@ library(purrr)
 library(rintrojs)
 library(shinyFeedback)
 library(magrittr)
+library(DT)
 
 # Load the template components
 source("header.R")

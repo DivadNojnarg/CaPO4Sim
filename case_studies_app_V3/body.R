@@ -236,7 +236,7 @@ body <- dashboardBody(
         column(width = 6, offset = 0, style = 'padding:0px;',
                box(
                  id = "tabset1", width = 12, solidHeader = TRUE,
-                 verbatimTextOutput("test"),
+                 #verbatimTextOutput("test"),
                  uiOutput("info"),
                  
                  conditionalPanel(
@@ -289,6 +289,15 @@ body <- dashboardBody(
           HTML(paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
                       border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
           #HTML(paste(tags$img(src = "about_us.jpg")))
+      )
+    ),
+    # Glossary Panel
+    tabItem(
+      tabName = "glossary",
+      div(id = "glossary",
+          box(id = "boxvideo", solidHeader = TRUE, width = 12, height = "50%",
+            dataTableOutput("glossary")
+          )
       )
     )
   )

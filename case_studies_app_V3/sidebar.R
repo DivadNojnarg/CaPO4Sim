@@ -16,6 +16,7 @@ sidebar <- dashboardSidebar(
       
       #menuSegment("MAIN NAVIGATION"),
       menuItem("About", tabName = "about", icon = icon("info-circle")), 
+      menuItem("Glossary", tabName = "glossary", icon = icon("search")),
       menuItem("Demo", tabName = "demo", icon = icon("youtube-play"),
                conditionalPanel(
                  condition = "input.help",
@@ -24,8 +25,7 @@ sidebar <- dashboardSidebar(
                                 fill = TRUE, value = TRUE, width = "0px")
                )
       ),
-      menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE),
-      menuItem("Glossary", tabName = "glossary", icon = icon("search"))
+      menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE)
     ),
     data.step = 1,
     data.intro = help_text[1]
