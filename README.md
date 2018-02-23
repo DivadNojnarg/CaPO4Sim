@@ -91,7 +91,7 @@ checkboxes labels)
 - the demo section is disabled as long as there is no content inside.
 - change the screenshot of the right sidebar in the notifications (will need to
 improve its quality)
-- add a glossary with all abreviations + link to HSet website
+- add a glossary with all abbreviations + link to HSet website
 
 
 ## Changelog version 3 (global app)

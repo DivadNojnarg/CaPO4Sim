@@ -122,6 +122,7 @@ body <- dashboardBody(
   
   # include the script for Hotjar tracking
   #tags$head(includeScript("www/hotjar.js")),
+  tags$head(includeScript("www/rintrojs_count.js")),
   
   # print feedback for input
   useShinyFeedback(),

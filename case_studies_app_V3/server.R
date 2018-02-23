@@ -338,7 +338,7 @@ shinyServer(function(input, output, session) {
       )
     }
   })
-
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -371,7 +371,7 @@ shinyServer(function(input, output, session) {
           100
         } else {
           ifelse(input$run_php1 | input$run_hypopara | input$run_hypoD3,
-                ifelse(input$run_php1, 100, 0), 1)
+                 ifelse(input$run_php1, 100, 0), 1)
         },
         grid = TRUE)
     }
@@ -427,7 +427,7 @@ shinyServer(function(input, output, session) {
         # reset the session to hide sliders and back/next buttons
         "oncomplete" = I('history.go(0)'),
         "onbeforchange" = I("function(steps) {
-                Shiny.onInputChange('current_step', steps.steps);
+                Shiny.onInputChange('current_step', data-stepnumber);
                                   ;}")
         # "onbeforechange" = I('
         #     if (targetElement.getAttribute("data-step")==="2") {
@@ -439,7 +439,7 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  output$test <- renderPrint(input$current_step)
+  output$test <- renderPrint(input$count)
   
   # Print a short help text above the graph part
   # removeUI does not work

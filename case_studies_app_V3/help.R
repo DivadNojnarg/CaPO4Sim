@@ -2,7 +2,10 @@ help_text <- c(paste("This is the", "<mark><font color=\"#FF0000\"><b>", "naviga
                      "</b></font></mark>", "You can control several options:", "<br>", "<ul>",
                      "<li>", icon("info-circle fa-2x"), "is the", "<font color=\"#0000FF\"><b>", 
                      "about", "</b></font>", "section containing informations
-                     about the development staff.", "</li>",
+                     about the development staff.", "</li>", "<li>", icon("search fa-2x"),
+                     "is the", "<font color=\"#0000FF\"><b>", 
+                     "glossary", "</b></font>", "section where you will find a definition",
+                     "of all the abbreviations in this app", "</li>",
                      "<li>", icon("youtube-play fa-2x"), "contains", 
                      "<font color=\"#0000FF\"><b>", "video tutorial", "</b></font>", 
                      "showing how the application works.", "</li>", "<li>", icon("home fa-2x"), 
