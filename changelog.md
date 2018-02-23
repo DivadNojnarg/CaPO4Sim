@@ -1,3 +1,35 @@
+## Changelog version 3.1 (case studies app)
++ interface
+  - major update of the design: all options are now in the right sidebar
+  - left sidebar is dedicated to menu
+  - modals can now be hidden (via a switch)
+  - userMenu in the header which displays the physiological state of the organism
+    (sick, healthy, ...). It reacts to case studies... (sometimes does not want to
+    open, need to fix it)
++ CAPO4 network
+  - improve the navigation in the main network: can filter what to display or not
+  - change node size/arrow width
+  - the CaPO4 network scales automatically (use visEvent with beforeDrawing and scale = 0.6)
+    which prevents it from being generated outside the window...
+    when some components are added or removed
++ Graphs
+  - replace PO4 by Pi everywhere (notifications, modals, graphs, graphs_notifications,
+    checkboxes labels)
+  - change Ca to Ca2+ and PO4 to Pi in the network (modified svg images)
+  - change color code for Ca and PO4 fluxes (a color gradient instead of dashed,
+    dot-dashed curves)
++ Others
+  - update the help section with new elements (mainly in the right sidebar):
+    still have a problem with the userMenu that is altered by the help, and 
+    the z position is not optimized (sometimes hidden, sometimes masking the
+    right sidebar,...)
+  - the demo section is disabled as long as there is no content inside.
+  - change the screenshot of the right sidebar in the notifications (will need to
+    improve its quality)
+  - add a glossary with all abbreviations + link to HSet website
+  - syntax improvements of server.R, and other codes
+
+
 ## Changelog version 3 (global app)
 - major update of the design: new dashboard display
 - major update on the parameter display: now they are accessible
