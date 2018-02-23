@@ -21,22 +21,19 @@ shinyServer(function(input, output, session) {
     
     if (input$run_Ca_inject == "TRUE") { # IV Ca injection followed by EGTA infusion
       times <- seq(0,input$tmaxCainj,by = 1)
-      out <- as.data.frame(ode(y = state, 
-                               times = times, 
-                               func = calcium_phosphate_Caiv, 
-                               parms = parameters))
+      out <- as.data.frame(
+        ode(y = state, times = times, func = calcium_phosphate_Caiv, parms = parameters)
+      )
     } else if (input$run_PO4_inject == "TRUE") { # PO4 injection 
       times <- seq(0,input$tmaxPO4inj,by = 1) 
-      out <- as.data.frame(ode(y = state, 
-                               times = times, 
-                               func = calcium_phosphate_PO4iv, 
-                               parms = parameters))
+      out <- as.data.frame(
+        ode(y = state, times = times, func = calcium_phosphate_PO4iv, parms = parameters)
+      )
     } else if (input$run_PO4_gav == "TRUE") { # PO4 gavage
       times <- seq(0,input$tmaxPO4gav,by = 1)
-      out <- as.data.frame(ode(y = state, 
-                               times = times, 
-                               func = calcium_phosphate_PO4gav, 
-                               parms = parameters))
+      out <- as.data.frame(
+        ode(y = state, times = times, func = calcium_phosphate_PO4gav, parms = parameters)
+      )
     }
   })
   
@@ -228,7 +225,7 @@ shinyServer(function(input, output, session) {
   })
   
   # reset also if another simulation is choosen
-  observeEvent(eval(parse(text = paste("input$", extract_running_sim(input)[[2]], sep = ""))),{
+  observeEvent(eval(parse(text = paste0("input$", extract_running_sim(input)[[2]]))),{
     counter_nav$diagram <- 0
     edges_Ca <- edges_Ca()
     edges_Ca$color <- "black"
@@ -255,7 +252,7 @@ shinyServer(function(input, output, session) {
     # dynamics simulations are excluded since calculations
     # are performed live contrary to steady-state simulations
     if (!is_empty(current_sim) &&  dynamic_sim) {
-      if (eval(parse(text = paste("input$", current_sim, sep = "")))) {
+      if (eval(parse(text = paste0("input$", current_sim)))) {
         arrow_lighting(edges = edges_Ca,
                        simulation = current_sim,
                        counter = counter_nav$diagram,
@@ -297,10 +294,14 @@ shinyServer(function(input, output, session) {
       str_replace("_", "")
     
     # avoid that plotly returns an error when current_sim is empty
-    req(current_sim)
+    #print(str_detect(names(unlist(reactiveValuesToList(input))), "slider_help"))
     
-    if (!is_empty(current_sim) | input$help) {
-      eval(parse(text = paste("make_plot_", current_sim, "(input)", sep = "")))    
+    if (!is_empty(current_sim)) {
+      eval(parse(text = paste0("make_plot_", current_sim, "(input)")))  
+    } else {
+      if (input$help) {
+        make_plot_php1(input)
+      } 
     }
   })
   
@@ -341,7 +342,7 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  # Generate sliders for php1, hypopara and hypoD3
+  # Generate sliders for php1, hypopara and hypoD3 and even help
   #  
   #-------------------------------------------------------------------------
   
@@ -353,8 +354,7 @@ shinyServer(function(input, output, session) {
     if (input$run_php1 | input$run_hypopara | input$run_hypoD3 | input$help) {
       
       sliderTextInput(
-        inputId = ifelse(input$help, "slider_help",
-                         paste("slider_", current_sim, sep = "")), 
+        inputId = ifelse(input$help, "slider_help", paste0("slider_", current_sim)), 
         label = if (input$run_php1 | input$help) {
           "PTH mRNA synthesis fold increase"
         } else if (input$run_hypopara) {
@@ -384,7 +384,7 @@ shinyServer(function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
-  observeEvent(eval(parse(text = paste("input$", extract_running_sim(input)[[2]], sep = ""))), {
+  observeEvent(eval(parse(text = paste0("input$", extract_running_sim(input)[[2]]))), {
     
     # extract the list of simulations and the current one as well as its index
     # to properly select boxes to enable/disable
@@ -394,7 +394,7 @@ shinyServer(function(input, output, session) {
     
     # if one simulation run, disable all boxes that are not related to that one
     if (!is_empty(current_simulation)) {
-      temp <- eval(parse(text = paste("input$", current_simulation, sep = "")))
+      temp <- eval(parse(text = paste0("input$", current_simulation)))
       if (temp == "TRUE") {
         map(sim_list[-index], disable)
       } 
@@ -414,26 +414,29 @@ shinyServer(function(input, output, session) {
   # Do not forget to wrap the event content in I('my_function')
   # otherwise it will fail
   observeEvent(input$help,{
-    introjs(session, 
-            options = list("nextLabel" = "Next step!",
-                           "prevLabel" = "Did you forget something?",
-                           "tooltipClass" = "newClass",
-                           #"highlightClass" = "newClass",
-                           "showProgress" = TRUE,
-                           "showBullets" = FALSE),
-            events = list(# reset the session to hide sliders and back/next buttons
-              "oncomplete" = I('history.go(0)'),
-              "onbeforchange" = I("function(steps) {
+    introjs(
+      session, 
+      options = list(
+        "nextLabel" = "Next step!",
+        "prevLabel" = "Did you forget something?",
+        "tooltipClass" = "newClass",
+        #"highlightClass" = "newClass",
+        "showProgress" = TRUE,
+        "showBullets" = FALSE),
+      events = list(
+        # reset the session to hide sliders and back/next buttons
+        "oncomplete" = I('history.go(0)'),
+        "onbeforchange" = I("function(steps) {
                 Shiny.onInputChange('current_step', steps.steps);
                                   ;}")
-              # "onbeforechange" = I('
-              #     if (targetElement.getAttribute("data-step")==="2") {
-              #         $(".newClass").css("max-width", "800px").css("min-width","800px");
-              #     } else {
-              #         $(".newClass").css("max-width", "500px").css("min-width","500px");
-              #     }')
-              )
-            )
+        # "onbeforechange" = I('
+        #     if (targetElement.getAttribute("data-step")==="2") {
+        #         $(".newClass").css("max-width", "800px").css("min-width","800px");
+        #     } else {
+        #         $(".newClass").css("max-width", "500px").css("min-width","500px");
+        #     }')
+      )
+    )
   })
   
   output$test <- renderPrint(input$current_step)

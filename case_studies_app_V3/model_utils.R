@@ -12,12 +12,12 @@ generate_notification <- function(simulation, counter, allowed) {
       # need to eval and deparse so as to paste message
       # need also to use HTML to handle html tags in the text
       # such as <b> >/b>, ...
-      HTML(eval(parse(text = paste("notification_list$", sim, "[idx+1]", sep = "")))),
+      HTML(eval(parse(text = paste0("notification_list$", sim, "[idx+1]")))),
       type = "message",
       duration = 9999
     )
     
-    notif <- eval(parse(text = paste("graph_notification_list$", sim, "[idx+1]", sep = "")))
+    notif <- eval(parse(text = paste0("graph_notification_list$", sim, "[idx+1]")))
     # this part ensures that the graph notif is only displayed
     # a the first iteration of the animation. 
     if (!is.na(notif)) {
@@ -84,8 +84,7 @@ extract_running_sim <- function(input) {
 extract_animation <- function(input) {
   # returns php1, hypopara, hypoD3
   current_sim <- extract_running_sim(input)[[1]]
-  current_animation <- paste("animation", str_extract(current_sim, 
-                                                      "_\\w+"), sep = "")
+  current_animation <- paste0("animation", str_extract(current_sim, "_\\w+"))
   return(current_animation)
 }
 
@@ -221,8 +220,12 @@ generate_slidersteady <- function(input){
     str_extract("_\\w+") %>%
     str_replace("_", "")
   
-  slider_name <- paste("slider_", current_sim, sep = "")
-  slider_value <- eval(parse(text = paste("input$", slider_name, sep = "")))
+  if (is_empty(current_sim)) {
+    slider_value <- eval(parse(text = "input$slider_help"))
+  } else {
+    slider_name <- paste("slider_", current_sim, sep = "")
+    slider_value <- eval(parse(text = paste0("input$", slider_name)))
+  }
   return(slider_value)
 }
 
