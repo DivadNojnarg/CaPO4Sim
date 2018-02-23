@@ -27,6 +27,6 @@ generate_dynamicFooter <- function() {
                 img(src = "unil_logo.png", height = "55px")
               ))
       )), 
-    subText = HTML("<b>Version:</b> Beta 3")
+    subText = HTML("<b>Version:</b> Beta 3.1")
   ) 
 } 
