@@ -22,10 +22,10 @@ header <- dashboardHeader(
     title = "",
     class = "dropdown",
     introBox(
-    actionBttn("help", label = "Help", icon = NULL, style = "fill",
-               color = "danger", size = "lg", block = FALSE, no_outline = TRUE),
-    data.step = 7,
-    data.intro = help_text[7]
+      actionBttn("help", label = "Help", icon = NULL, style = "fill",
+                 color = "danger", size = "lg", block = FALSE, no_outline = TRUE),
+      data.step = 7,
+      data.intro = help_text[7]
     )
   )
   
