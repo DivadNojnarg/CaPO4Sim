@@ -36,7 +36,6 @@ body <- dashboardBody(
         column(width = 6, offset = 0, style = 'padding:0px;',
                box(
                  id = "boxinfo", width = 12, solidHeader = TRUE,
-                 
                  introBox(
                    div(id = "network_cap",
                        
@@ -53,16 +52,7 @@ body <- dashboardBody(
         
         column(width = 6, offset = 0, style = 'padding:0px;',
                
-               generate_patient_info(),
-               
-               div(id = "boxinput", # values to be reset if needed
-                   box(
-                     # classic id does not work with tabBox to reset values inside ...
-                     title = tagList(shiny::icon("question-circle"), "Questions"), width = 12,
-                     "Put the vignette text here "
-                     
-                   )
-               )
+               generate_patient_info()
         )
       )
     ),
@@ -88,13 +78,6 @@ body <- dashboardBody(
                       border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
           #HTML(paste(tags$img(src = "about_us.jpg")))
       )
-    ),
-    
-    # Written tutorial for this app
-    tabItem(
-      tabName = "help",
-      h1("How to use this App?")
     )
-    
   )
 )

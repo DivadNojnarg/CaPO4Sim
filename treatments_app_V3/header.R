@@ -9,35 +9,58 @@
 #-------------------------------------------------------------------------
 
 header <- dashboardHeader(
-  title = HTML(paste0(
-    '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
-    '<img src= "online-learning.svg">'
-  )),
+  title = HTML(
+    paste0(
+      '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
+      '<img src= "online-learning.svg">'
+    )
+  ),
   
   titleWidth = 300,
   
   tags$li(
     title = "",
     class = "dropdown",
-    actionBttn(inputId = "play", 
-               label = "Run", 
-               style = "fill", 
-               color = "primary", 
-               icon = icon("play"))
+    actionBttn(
+      inputId = "play",
+      size = "lg",
+      label = "Run",
+      style = "fill",
+      color = "primary",
+      icon = icon("play")
+    )
     
   ),
   tags$li(
     title = "",
     class = "dropdown",
-    actionBttn(inputId = "resetAll",
-               label = " Reset", 
-               style = "fill",
-               color = "danger",
-               icon = icon("trash"))
+    actionBttn(
+      inputId = "resetAll",
+      size = "lg",
+      label = " Reset",
+      style = "fill",
+      color = "danger",
+      icon = icon("trash")
+    )
+  ),
+  
+  tags$li(
+    title = "",
+    class = "dropdown",
+    actionBttn(
+      "help",
+      label = "Help",
+      icon = NULL,
+      style = "fill",
+      color = "danger",
+      size = "lg",
+      block = FALSE,
+      no_outline = TRUE
+    )
   )
   
-    #dropdownMenuOutput("parameter_changed")
-
+  #dropdownMenuOutput("parameter_changed")
+  
   # dropdownMenu(
   #   tags$li(
   #     HTML(paste0(

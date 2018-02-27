@@ -343,6 +343,7 @@ shinyServer(function(input, output, session) {
     
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
+    input$network_hormonal_choice
     
     generate_network(nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
       # simple click event to allow graph ploting
@@ -369,9 +370,82 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", beforeDrawing = "function() {
                 Shiny.onInputChange('browser', navigator.sayswho);
                 ;}") %>%
-      visEvents(type = "once", startStabilizing = "function() {
-                this.moveTo({scale:2})}") # to set the initial zoom (1 by default)
-    
+      visEvents(type = "on", beforeDrawing = "function() {
+                this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
+  })
+  
+  # handle the size of organ and hormonal nodes
+  output$size_nodes_organs <- renderUI({
+    tagList(
+      knobInput("size_organs", 
+                "Organs", 
+                min = 50, 
+                max = 100, 
+                value = 70, 
+                step = 5,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = "tron",
+                width = "100px", 
+                height = "100px")
+    )
+  })
+  
+  output$size_nodes_hormones <- renderUI({
+    tagList(
+      knobInput("size_hormones", 
+                "Hormones", 
+                min = 20, 
+                max = 60, 
+                value = 40, 
+                step = 5,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = "tron",
+                width = "100px", 
+                height = "100px")
+    )
+  })
+  
+  # control width of arrows
+  output$width_arrows_organs <- renderUI({
+    tagList(
+      knobInput("width_organs", 
+                "Organs",
+                angleOffset = -90,
+                angleArc = 180,
+                min = 4, 
+                max = 14, 
+                value = 8, 
+                step = 1,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = NULL,
+                width = "100px", 
+                height = "100px")
+    )
+  })
+  
+  output$width_arrows_hormones <- renderUI({
+    tagList(
+      knobInput("width_hormones", 
+                "Hormones", 
+                angleOffset = -90,
+                angleArc = 180,
+                min = 1, 
+                max = 8, 
+                value = 4, 
+                step = 1,
+                displayPrevious = TRUE,
+                fgColor = "#A9A9A9", 
+                inputColor = "#A9A9A9",
+                skin = NULL,
+                width = "100px", 
+                height = "100px")
+    )
   })
   
   #-------------------------------------------------------------------------
@@ -514,21 +588,21 @@ shinyServer(function(input, output, session) {
     sliders_reset(button_states, input)
   })
   
-  # prevent user from unselecting all graph components
-  observeEvent(input$network_Ca_choice, {
-    if (is.element("PO4", input$network_Ca_choice) && 
-        !is.element("Ca", input$network_Ca_choice)) {
-      disable(selector = "#network_Ca_choice input[value='PO4']")
-    } else {
-      enable(selector = "#network_Ca_choice input[value='PO4']")
-    }
-    if (is.element("Ca", input$network_Ca_choice) && 
-        !is.element("PO4", input$network_Ca_choice)) {
-      disable(selector = "#network_Ca_choice input[value='Ca']")
-    } else {
-      enable(selector = "#network_Ca_choice input[value='Ca']")
-    }
-  })
+  # # prevent user from unselecting all graph components
+  # observeEvent(input$network_Ca_choice, {
+  #   if (is.element("PO4", input$network_Ca_choice) && 
+  #       !is.element("Ca", input$network_Ca_choice)) {
+  #     disable(selector = "#network_Ca_choice input[value='PO4']")
+  #   } else {
+  #     enable(selector = "#network_Ca_choice input[value='PO4']")
+  #   }
+  #   if (is.element("Ca", input$network_Ca_choice) && 
+  #       !is.element("PO4", input$network_Ca_choice)) {
+  #     disable(selector = "#network_Ca_choice input[value='Ca']")
+  #   } else {
+  #     enable(selector = "#network_Ca_choice input[value='Ca']")
+  #   }
+  # })
   
   # display or not display the network background
   observe({
@@ -561,6 +635,15 @@ shinyServer(function(input, output, session) {
     } else {
       enable(selector = "#background_choice input[value='rat']")
     }
+  })
+  
+  # when enable regulation is selected, activates all the checkboxes
+  # the reverse case does not work for unknow reason 
+  observeEvent(input$network_hormonal_choice, {
+    if (input$network_hormonal_choice == TRUE) {
+      updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", 
+                                selected = c("Ca","PO4", "PTH", "D3", "FGF23"))
+    } 
   })
   
   # change the dashboard skin
