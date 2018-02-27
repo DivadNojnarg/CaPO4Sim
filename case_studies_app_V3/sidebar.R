@@ -4,7 +4,6 @@
 #  David Granjon, the Interface Group, Zurich
 #  December 4th, 2017
 #-------------------------------------------------------------------------
-source("help.R")
 
 sidebar <- dashboardSidebar(
   width = 300,

@@ -280,9 +280,10 @@ generate_nodes_Ca <- function(input) {
       ifelse(input$network_hormonal_choice,
       ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE),
       # PTH plasma
-      ifelse(input$network_organ_choice, 
-             ifelse(input$network_hormonal_choice,
-                    ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE), TRUE),
+      TRUE,
+      # ifelse(input$network_organ_choice, 
+      #        ifelse(input$network_hormonal_choice,
+      #               ifelse(is.element("PTH", input$network_Ca_choice), FALSE, TRUE), TRUE), TRUE),
       # D3 regulation
       ifelse(input$network_hormonal_choice, 
              ifelse(is.element("D3", input$network_Ca_choice) & 
@@ -315,7 +316,7 @@ generate_edges_Ca <- function(input) {
   req(input$width_organs, input$width_hormones)
   data.frame(
     from = c(1,2,3,rep(3,2),4,2,rep(5,2),rep(5,2),8,
-             rep(9,3),rep(10,3),rep(11,2),12,rep(13,2),rep(14,2),rep(15,2),
+             rep(9,3),rep(10,3),rep(11,2),11,rep(13,2),rep(14,2),rep(15,2),
              rep(16,2)), 
     to = c(2,3,2,rep(4,2),2,5,rep(2,2),rep(7,2),2,11,5,
            13,11,13,16,5,13,4,11,16,14,5,4,1,13,5),
@@ -333,7 +334,7 @@ generate_edges_Ca <- function(input) {
     font.size = c(rep(25,12),rep(60,17)),
     font.align = c("","top","bottom","top","bottom",rep("",4),"bottom",
                    "top","bottom","bottom",rep("top",2),"top","top",
-                   "top","",rep("bottom",2),"top","bottom","bottom","top","top",
+                   "top","","bottom","top","top","bottom","bottom","top","top",
                    rep("top",2),"bottom"),
     color = list(color = c(rep("black", 29)), 
                  highlight = "yellow"),
@@ -357,7 +358,8 @@ generate_edges_Ca <- function(input) {
                       target = "_blank")),
               rep("",15)),
     smooth = c(rep(TRUE,29)),
-    length = c(200,rep(300,2),rep(300,2),200,300,200,rep(300,4),rep(200,17)),
+    length = c(200,rep(300,2),rep(300,2),200,300,
+               200,rep(300,4),rep(200,8), 1800, rep(200,8)),
     # to show either Ca or PO4 or CaPO4 network arrows
     hidden = c(
       ## organ arrows ##

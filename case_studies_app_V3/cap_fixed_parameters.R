@@ -188,7 +188,7 @@ parameters <- c(
   k_inject_D3 = 0,
   k_on_egta = 0,
   k_off_egta = 0,
-  k_inject_egta =0,
+  k_inject_egta = 0,
   
   # Supersaturation 
   
@@ -197,13 +197,15 @@ parameters <- c(
 )
 
 # calculated parameters
-parameters_calc <- with(list(parameters), 
-                        c( r = 10^(parameters["pH"]-parameters["pKa"]),
-                           a = 10^(parameters["pH"]-parameters["pKa"])/
-                             (1+10^(parameters["pH"]-parameters["pKa"])),
-                           b = 10^(parameters["pH"]-parameters["pKa"])/
-                             (1+10^(parameters["pH"]-parameters["pKa"]))/
-                             10^(parameters["pH"]-parameters["pKa"])))
+parameters_calc <- with(
+  list(parameters), 
+  c(r = 10^(parameters["pH"] - parameters["pKa"]),
+    a = 10^(parameters["pH"] - parameters["pKa"]) / 
+        (1 + 10^(parameters["pH"] - parameters["pKa"])),
+    b = 10^(parameters["pH"] - parameters["pKa"]) / 
+        (1 + 10^(parameters["pH"] - parameters["pKa"])) / 
+        10^(parameters["pH"] - parameters["pKa"]))
+)
 
 names(parameters_calc) <- c("r", "a", "b")
 

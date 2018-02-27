@@ -7,7 +7,7 @@
 #  David Granjon, the Interface Group, Zurich
 #  December 4th, 2017
 #-------------------------------------------------------------------------
-source("help.R")
+
 header <- dashboardHeader(
   title = HTML(paste0(
     '<span class = "logo-lg">CaPO4 Teaching Tool</span>',

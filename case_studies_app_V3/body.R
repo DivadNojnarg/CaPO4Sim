@@ -8,7 +8,6 @@
 #  David Granjon, the Interface Group, Zurich
 #  December 4th, 2017
 #-------------------------------------------------------------------------
-source("help.R")
 
 body <- dashboardBody(
   
@@ -236,7 +235,7 @@ body <- dashboardBody(
         
         column(width = 6, offset = 0, style = 'padding:0px;',
                box(
-                 id = "tabset1", width = 12, solidHeader = TRUE,
+                 id = "tabset1", width = 12, solidHeader = TRUE, height = "950px",
                  #verbatimTextOutput("test"),
                  uiOutput("info"),
                  
@@ -253,9 +252,9 @@ body <- dashboardBody(
                             data.intro = help_text[5]
                           )
                    ),
-                   br(),
                    column(4, align = "left"),
                    column(4, align = "center",
+                          br(), br(), br(), br(), br(),
                           introBox(
                             uiOutput("slider", class = "theme-orange"),
                             data.step = 6,
