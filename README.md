@@ -79,7 +79,7 @@ library(DT)
   - userMenu in the header which displays the physiological state of the organism
     (sick, healthy, ...). It reacts to case studies... (sometimes does not want to
     open, need to fix it)
-+ CAPO4 network
++ CaPO4 network
   - improve the navigation in the main network: can filter what to display or not
   - change node size/arrow width
   - the CaPO4 network scales automatically (use visEvent with beforeDrawing and scale = 0.6)
@@ -96,7 +96,7 @@ library(DT)
     still have a problem with the userMenu that is altered by the help, and 
     the z position is not optimized (sometimes hidden, sometimes masking the
     right sidebar,...)
-  - the demo section is disabled as long as there is no content inside.
+  - the demo section is disabled as long as there is no content inside
   - change the screenshot of the right sidebar in the notifications (will need to
     improve its quality)
   - add a glossary with all abbreviations + link to HSet website

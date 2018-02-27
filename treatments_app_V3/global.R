@@ -45,24 +45,21 @@ source("networks.R")
 source("model_utils.R")
 
 # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
-state_php1 <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app_V3/init_php1.csv", # for local config
+state_php1 <- read.csv(paste0(getwd(), "/www/init_php1.csv"),
                        stringsAsFactors = FALSE)
-# state_php1 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_php1.csv", # use in the server
-#                        stringsAsFactors = FALSE)
-state_php1 <- unlist(state_php1[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
+# need unlist to convert the dataframe in vector as required for the state variable
+state_php1 <- unlist(state_php1[,-1]) 
 
-state_hypopara <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app_V3/init_hypopara.csv", # for local config
+state_hypopara <- read.csv(paste0(getwd(),"/www/init_hypopara.csv"), 
                            stringsAsFactors = FALSE)
-# state_hypopara <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypopara.csv", # use in the server
-#                            stringsAsFactors = FALSE)
-state_hypopara <- unlist(state_hypopara[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
+# need unlist to convert the dataframe in vector as required for the state variable
+state_hypopara <- unlist(state_hypopara[,-1]) 
 
 
-state_hypoD3 <- read.csv("/Users/macdavidgranjon/Documents/WebApp_CaP_homeostasis/treatments_app_V3/init_hypoD3.csv", # for local config
+state_hypoD3 <- read.csv(paste0(getwd(),"/www/init_hypoD3.csv"), 
                          stringsAsFactors = FALSE)
-# state_hypoD3 <- read.csv("/srv/shiny-server/capApp/treatments_app/init_hypoD3.csv", # use in the server
-#                          stringsAsFactors = FALSE)
-state_hypoD3 <- unlist(state_hypoD3[,-1]) # need unlist to convert the dataframe in vector as required for the state variable
+# need unlist to convert the dataframe in vector as required for the state variable
+state_hypoD3 <- unlist(state_hypoD3[,-1]) 
 
 
 # Time extractor function for event handling
@@ -98,11 +95,15 @@ time_extractor <- function(event_table) {
     }
   }
   # return what is really important
-  return(list("t_start_Cainject" = t_start_Cainject, "t_stop_Cainject" = t_stop_Cainject, 
-              "t_start_Caintake" = t_start_Caintake, "t_stop_Caintake" = t_stop_Caintake,
-              "t_start_D3inject" = t_start_D3inject, "t_stop_D3inject" = t_stop_D3inject,
-              "t_start_Pinject" = t_start_Pinject, "t_stop_Pinject" = t_stop_Pinject,
-              "t_start_Pintake" = t_start_Pintake, "t_stop_Pintake" = t_stop_Pintake))
+  return(
+    list(
+      "t_start_Cainject" = t_start_Cainject, "t_stop_Cainject" = t_stop_Cainject, 
+      "t_start_Caintake" = t_start_Caintake, "t_stop_Caintake" = t_stop_Caintake,
+      "t_start_D3inject" = t_start_D3inject, "t_stop_D3inject" = t_stop_D3inject,
+      "t_start_Pinject" = t_start_Pinject, "t_stop_Pinject" = t_stop_Pinject,
+      "t_start_Pintake" = t_start_Pintake, "t_stop_Pintake" = t_stop_Pintake
+    )
+  )
 }
 
 # compile the C code containing equations
