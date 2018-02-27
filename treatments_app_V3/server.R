@@ -289,6 +289,11 @@ shinyServer(function(input, output, session) {
   # Render the event table
   output$event_table <- renderTable({event_table$df})
   
+  output$test <- renderPlot({
+    x <- 1:10
+    plot(x, log(x), type = 'l')
+  })
+  
   #------------------------------------------------------------------------- 
   #  
   #  Integrate equations using deSolve package to generate table
@@ -613,7 +618,7 @@ shinyServer(function(input, output, session) {
           img(src = "unil_logo.png", height = "55px")
         ))
       )), 
-      subText = HTML("<b>Version:</b> Beta 3")
+      subText = HTML("<b>Version:</b> Beta 3.1")
     ) 
   })
   

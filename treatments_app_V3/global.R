@@ -23,6 +23,8 @@ library(shinyWidgets)
 library(ygdashboard)
 
 # Load the template components of UI
+source("generate_patient_info.R")
+source("app_css.R")
 source("header.R")
 source("sidebar.R")
 source("body.R")
