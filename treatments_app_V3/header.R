@@ -22,7 +22,7 @@ header <- dashboardHeader(
     title = "",
     class = "dropdown",
     actionBttn(
-      inputId = "play",
+      inputId = "run",
       size = "lg",
       label = "Run",
       style = "fill",

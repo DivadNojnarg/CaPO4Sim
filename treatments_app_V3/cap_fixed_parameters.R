@@ -188,7 +188,7 @@ parameters_fixed <- c(
   #k_inject_D3 = 0,
   k_on_egta = 0,
   k_off_egta = 0,
-  k_inject_egta =0,
+  k_inject_egta = 0,
   
   # Supersaturation 
   
@@ -196,41 +196,17 @@ parameters_fixed <- c(
   
 )
 
-parameters_calc <- with(list(parameters_fixed), 
-                        c( r = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"]),
-                           a = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
-                             (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"])),
-                           b = 10^(parameters_fixed["pH"]-parameters_fixed["pKa"])/
-                             (1+10^(parameters_fixed["pH"]-parameters_fixed["pKa"]))/
-                             10^(parameters_fixed["pH"]-parameters_fixed["pKa"])
-                        ))
+parameters_calc <- with(
+  list(parameters_fixed), 
+  c( r = 10^(parameters_fixed["pH"] - parameters_fixed["pKa"]),
+     a = 10^(parameters_fixed["pH"] - parameters_fixed["pKa"]) /
+         (1 + 10^(parameters_fixed["pH"] - parameters_fixed["pKa"])),
+     b = 10^(parameters_fixed["pH"] - parameters_fixed["pKa"]) /
+         (1 + 10^(parameters_fixed["pH"] - parameters_fixed["pKa"])) /
+         10^(parameters_fixed["pH"] - parameters_fixed["pKa"])
+  )
+)
 
 names(parameters_calc) <- c("r", "a", "b")
 
 parameters_fixed <- c(parameters_fixed, parameters_calc)
-
-
-# param_calc <- function(parameters_fixed){
-#   
-#   r <- function(parameters_fixed){
-#     10^(parameters_fixed["pH"]-parameters_fixed["pKa"])
-#   }
-#   
-#   a <- function(parameters_fixed){
-#     r(parameters_fixed)/(1+r(parameters_fixed))
-#   }
-#   
-#   b <- function(parameters_fixed){
-#     a(parameters_fixed)/r(parameters_fixed)
-#   }
-#   
-#   vec <- c(r(parameters_fixed),
-#            a(parameters_fixed),
-#            b(parameters_fixed))
-#   
-#   names(vec) <- c("r", "a", "b")
-#   return(vec)
-#   
-# }
-# 
-# parameters_fixed <- c(parameters_fixed, param_calc(parameters_fixed))

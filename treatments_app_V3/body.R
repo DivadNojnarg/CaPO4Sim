@@ -29,6 +29,7 @@ body <- dashboardBody(
   useSweetAlert(),
   
   tabItems(
+    # Network panel
     tabItem(
       tabName = "main",
       
@@ -38,7 +39,6 @@ body <- dashboardBody(
                  id = "boxinfo", width = 12, solidHeader = TRUE,
                  introBox(
                    div(id = "network_cap",
-                       
                        withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
                                    size = 2, 
                                    type = 8, 
@@ -49,14 +49,11 @@ body <- dashboardBody(
                  )
                ) 
         ),
-        
         column(width = 6, offset = 0, style = 'padding:0px;',
-               
                generate_patient_info()
         )
       )
     ),
-    
     # Demonstration Panel
     tabItem(
       tabName = "demo",
@@ -69,7 +66,6 @@ body <- dashboardBody(
           )
       )
     ),
-    
     # About section Panel
     tabItem(
       tabName = "about",

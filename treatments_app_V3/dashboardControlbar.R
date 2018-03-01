@@ -210,6 +210,9 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <div style="height:3px;"></div>
       </div>
       </div>
+
+
+      <div id="button_add_disease" class="shiny-html-output"></div>
       
       <hr/>
       
@@ -217,7 +220,6 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       <i class="fa fa-user-md"></i><h6>Treatments</h6>
       
       
-      <div id="dropdown_treatment">
       <div id="treatment_selected" style="width: 100%;" class="form-group shiny-input-checkboxgroup shiny-input-container">
       <label class="control-label" for="treatment_selected">Select a treatment:</label>
       <div class="shiny-options-group">
@@ -232,7 +234,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       <div style="height:3px;"></div>
       <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="treatment_selected" value="vitamin D3 iv injection"/>
+      <input type="checkbox" name="treatment_selected" value="D3_inject"/>
       <div class="state p-info">
       <label>
       <span>vitamin D3 iv injection</span>
@@ -241,7 +243,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       <div style="height:3px;"></div>
       <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="treatment_selected" value="Ca supplementation"/>
+      <input type="checkbox" name="treatment_selected" value="Ca_food"/>
       <div class="state p-info">
       <label>
       <span>Ca supplementation</span>
@@ -250,7 +252,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       <div style="height:3px;"></div>
       <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="treatment_selected" value="Ca iv injection"/>
+      <input type="checkbox" name="treatment_selected" value="Ca_inject"/>
       <div class="state p-info">
       <label>
       <span>Ca iv injection</span>
@@ -259,7 +261,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       <div style="height:3px;"></div>
       <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="treatment_selected" value="PO4 supplementation"/>
+      <input type="checkbox" name="treatment_selected" value="P_food"/>
       <div class="state p-info">
       <label>
       <span>PO4 supplementation</span>
@@ -268,7 +270,7 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       <div style="height:3px;"></div>
       <div class="pretty p-default p-thick p-pulse">
-      <input type="checkbox" name="treatment_selected" value="PO4 iv injection"/>
+      <input type="checkbox" name="treatment_selected" value="P_inject"/>
       <div class="state p-info">
       <label>
       <span>PO4 iv injection</span>
@@ -286,192 +288,10 @@ dashboardControlbar <- function(ctrlHTML = NULL) {
       </div>
       <div style="height:3px;"></div>
       </div>
-      </div>
-      <div data-display-if="/Ca iv injection/.test(input.treatment_selected)" data-ns-prefix="">
-      <div class="form-group shiny-input-container">
-      <label class="control-label" for="Ca_inject" style="width:100%;">
-      $$ k_{inject}^{Ca} $$
-      <div class="pull-right">
-      <i class="fa fa-info" title="Rate of injection of calcium in plasma (μmol/min)" data-toggle="tooltip" data-placement="top"></i>
-      </div>
-      </label>
-      <input class="js-range-slider" id="Ca_inject" data-min="0" data-max="0.002" data-from="0.001" data-step="0.0001" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="5" data-data-type="number"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_start_Cainject">Time when begins the Ca iv injection:</label>
-      <input id="t_start_Cainject" type="number" class="form-control" value="0" min="0"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_stop_Cainject">Time,when stops the Ca iv injection:</label>
-      <input id="t_stop_Cainject" type="number" class="form-control" value="100" min="0"/>
-      </div>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-primary bttn-no-outline" id="add_newCaiv" type="button">
-      <i class="fa fa-plus"></i>
-      </button>
-      </div>
-      <br/>
-      <br/>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-danger bttn-no-outline" id="delete_oldCaiv" type="button">
-      <i class="fa fa-minus"></i>
-      </button>
-      </div>
-      <div class="col-sm-12" align="center">
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="delete_Caiv_id">Event to remove:</label>
-      <input id="delete_Caiv_id" type="number" class="form-control" value="1" min="1"/>
-      </div>
-      </div>
-      </div>
-      <div data-display-if="/Ca supplementation/.test(input.treatment_selected)" data-ns-prefix="">
-      <div class="form-group shiny-input-container">
-      <label class="control-label" for="Ca_food" style="width:100%;">
-      Ca intake
-      <div class="pull-right">
-      <i class="fa fa-info" title="Calcium intake (μmol/min)" data-toggle="tooltip" data-placement="top"></i>
-      </div>
-      </label>
-      <input class="js-range-slider" id="Ca_food" data-min="0" data-max="0.008" data-from="0.0022" data-step="0.0001" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1.25" data-data-type="number"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_start_Caintake">Time when begins the Ca supplementation:</label>
-      <input id="t_start_Caintake" type="number" class="form-control" value="0" min="0"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_stop_Caintake">Time when stops the Ca supplementation:</label>
-      <input id="t_stop_Caintake" type="number" class="form-control" value="100" min="0"/>
-      </div>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-primary bttn-no-outline" id="add_newCaintake" type="button">
-      <i class="fa fa-plus"></i>
-      </button>
-      </div>
-      <br/>
-      <br/>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-danger bttn-no-outline" id="delete_oldCaintake" type="button">
-      <i class="fa fa-minus"></i>
-      </button>
-      </div>
-      <div class="col-sm-12" align="center">
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="delete_oldCaintake_id">Event to remove:</label>
-      <input id="delete_oldCaintake_id" type="number" class="form-control" value="1" min="1"/>
-      </div>
-      </div>
-      </div>
-      <div data-display-if="/vitamin D3 iv injection/.test(input.treatment_selected)" data-ns-prefix="">
-      <div class="form-group shiny-input-container">
-      <label class="control-label" for="D3_inject" style="width:100%;">
-      D3 injection
-      <div class="pull-right">
-      <i class="fa fa-info" title="D3 injection (pmol/min)" data-toggle="tooltip" data-placement="top"></i>
-      </div>
-      </label>
-      <input class="js-range-slider" id="D3_inject" data-min="0" data-max="0.1" data-from="0.001" data-step="0.001" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_start_D3inject">Time when begins the D3 iv injection:</label>
-      <input id="t_start_D3inject" type="number" class="form-control" value="0" min="0"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_stop_D3inject">Time when stops the D3 iv injection:</label>
-      <input id="t_stop_D3inject" type="number" class="form-control" value="100" min="0"/>
-      </div>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-primary bttn-no-outline" id="add_newD3iv" type="button">
-      <i class="fa fa-plus"></i>
-      </button>
-      </div>
-      <br/>
-      <br/>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-danger bttn-no-outline" id="delete_oldD3iv" type="button">
-      <i class="fa fa-minus"></i>
-      </button>
-      </div>
-      <div class="col-sm-12" align="center">
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="delete_oldD3iv_id">Event to remove:</label>
-      <input id="delete_oldD3iv_id" type="number" class="form-control" value="1" min="1"/>
-      </div>
-      </div>
-      </div>
-      <div data-display-if="/PO4 iv injection/.test(input.treatment_selected)" data-ns-prefix="">
-      <div class="form-group shiny-input-container">
-      <label class="control-label" for="P_inject" style="width:100%;">
-      PO4 injection
-      <div class="pull-right">
-      <i class="fa fa-info" title="PO4 injection (μmol/min)" data-toggle="tooltip" data-placement="top"></i>
-      </div>
-      </label>
-      <input class="js-range-slider" id="P_inject" data-min="0" data-max="0.01" data-from="0.001" data-step="0.0001" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_start_Pinject">Time when begins the PO4 iv injection:</label>
-      <input id="t_start_Pinject" type="number" class="form-control" value="0" min="0"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_stop_Pinject">Time when stops the PO4 iv injection:</label>
-      <input id="t_stop_Pinject" type="number" class="form-control" value="100" min="0"/>
-      </div>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-primary bttn-no-outline" id="add_newPiv" type="button">
-      <i class="fa fa-plus"></i>
-      </button>
-      </div>
-      <br/>
-      <br/>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-danger bttn-no-outline" id="delete_oldPiv" type="button">
-      <i class="fa fa-minus"></i>
-      </button>
-      </div>
-      <div class="col-sm-12" align="center">
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="delete_oldPiv_id">Event to remove:</label>
-      <input id="delete_oldPiv_id" type="number" class="form-control" value="1" min="1"/>
-      </div>
-      </div>
-      </div>
-      <div data-display-if="/PO4 supplementation/.test(input.treatment_selected)" data-ns-prefix="">
-      <div class="form-group shiny-input-container">
-      <label class="control-label" for="P_food" style="width:100%;">
-      PO4 intake
-      <div class="pull-right">
-      <i class="fa fa-info" title="Phosphate intake (μmol/min)" data-toggle="tooltip" data-placement="top"></i>
-      </div>
-      </label>
-      <input class="js-range-slider" id="P_food" data-min="0" data-max="0.01" data-from="0.00155" data-step="0.0001" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-keyboard-step="1" data-data-type="number"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_start_Pintake">Time when begins the Ca supplementation:</label>
-      <input id="t_start_Pintake" type="number" class="form-control" value="0" min="0"/>
-      </div>
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="t_stop_Pintake">Time when stops the Ca supplementation:</label>
-      <input id="t_stop_Pintake" type="number" class="form-control" value="100" min="0"/>
-      </div>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-primary bttn-no-outline" id="add_newPintake" type="button">
-      <i class="fa fa-plus"></i>
-      </button>
-      </div>
-      <br/>
-      <br/>
-      <div class="col-sm-12" align="center">
-      <button class="action-button bttn-material-circle bttn-md bttn-danger bttn-no-outline" id="delete_oldPintake" type="button">
-      <i class="fa fa-minus"></i>
-      </button>
-      </div>
-      <div class="col-sm-12" align="center">
-      <div class="form-group shiny-input-container" style="width: 100%;">
-      <label for="delete_oldPintake_id">Event to remove:</label>
-      <input id="delete_oldPintake_id" type="number" class="form-control" value="1" min="1"/>
-      </div>
-      </div>
-      </div>
+
+      <div id="sliderInject" class="shiny-html-output"></div>
+
+      
       </div>
       
       <hr/>

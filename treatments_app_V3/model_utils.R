@@ -709,3 +709,51 @@ find_parameter_change <- function(parms) {
                                param_ratio, sep = " "))
   }
 }
+
+
+
+# to recover to_start and t_stop time when reading the event_table
+# Takes event table as argument and returns a list of all stored times
+time_extractor <- function(event_table) { 
+  for (i in 1:nrow(event_table)) {
+    if (is.element("Ca_iv", event_table[i,"event"])) {
+      t_start <- c(t_start, event_table[i,"start_time"])
+      t_stop <- c(t_stop, event_table[i,"stop_time"])
+    } else if (is.element("Ca_gavage", event_table[i,"event"])) {
+      t_start <- c(t_start, event_table[i,"start_time"])
+      t_stop <- c(t_stop, event_table[i,"stop_time"])
+    } else if (is.element("D3_iv", event_table[i,"event"])) {
+      t_start <- c(t_start, event_table[i,"start_time"])
+      t_stop <- c(t_stop, event_table[i,"stop_time"])
+    } else if (is.element("P_iv", event_table[i,"event"])) {
+      t_start <- c(t_start, event_table[i,"start_time"])
+      t_stop <- c(t_stop, event_table[i,"stop_time"])
+    } else if (is.element("P_gavage", event_table[i,"event"])) {
+      t_start <- c(t_start, event_table[i,"start_time"])
+      t_stop <- c(t_stop, event_table[i,"stop_time"])
+    }
+  }
+  # return what is really important
+  return(c("t_start" = t_start, "t_stop" = t_stop))
+}
+
+
+
+# Function to handle events
+# Takes input as argument.
+# Set the parameters corresponding to an injection/gavage
+trigger_event <- function(input) {
+  if (!is.null(t_start) && !is.null(t_stop)) {
+    if (!is.null(input$Ca_inject)) {
+      k_inject_Ca <- input$Ca_inject
+    } else if (!is.null(input$Ca_food)) {
+      I_Ca <- input$Ca_food
+    } else if (!is.null(input$D3_inject)) {
+      k_inject_D3 <- input$D3_inject * Vp
+    } else if (!is.null(input$P_inject)) {
+      k_inject_P <- input$P_inject
+    } else if (!is.null(input$P_food)) {
+      I_P <- input$P_food
+    }
+  }
+}

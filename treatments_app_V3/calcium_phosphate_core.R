@@ -24,79 +24,17 @@ calcium_phosphate_core <- function(t, state, parameters) {
     #   Simulations  #
     ##################
     
-    # Ca iv injection
-    
-    Ca_iv_inject <- 0
-    
-    if (!is.null(t_start_Cainject) && !is.null(t_stop_Cainject)) {
-      for (i in 1:length(t_start_Cainject)) {
-        
-        #ifelse(t > t_start_Cainject[[i]] && t < t_stop_Cainject[[i]], Ca_iv_inject <- k_inject_Ca, Ca_iv_inject <-0)
-        if (t > t_start_Cainject[[i]] && t < t_stop_Cainject[[i]]) {
-          
-          Ca_iv_inject <- k_inject_Ca
-          
-        }
-      }
-    }
-    
-    # Ca supplementation
-    
-    if (!is.null(t_start_Caintake) && !is.null(t_stop_Caintake)) {
-      for (i in 1:length(t_start_Caintake)) {
-        
-        #ifelse(t > t_start_Caintake && t < t_stop_Caintake, I_Ca <- Ca_food, I_Ca <- I_Ca)
-        if (t > t_start_Caintake[[i]] && t < t_stop_Caintake[[i]]) {
-          
-          I_Ca <- Ca_food
-          
-        }
-      }
-    }
-    
-    # D3 iv injection
-    
-    D3_iv_inject <- 0
-    
-    if (!is.null(t_start_D3inject) && !is.null(t_stop_D3inject)) {
-      for (i in 1:length(t_start_D3inject)) {
-        
-        #ifelse(t > t_start_D3inject && t < t_stop_D3inject, D3_iv_inject <- k_inject_D3/Vp, D3_iv_inject <-0) # ifelse does not work in this case
-        if (t > t_start_D3inject[[i]] && t < t_stop_D3inject[[i]]) {
-          
-          D3_iv_inject <- k_inject_D3/Vp
-          
-        }
-      }
-    }
-    
-    # PO4 iv injection
-    
-    P_iv_inject <- 0
-    
-    if (!is.null(t_start_Pinject) && !is.null(t_stop_Pinject)) {
-      for (i in 1:length(t_start_Pinject)) {
-        
-        #ifelse(t > t_start_Pinject && t < t_stop_Pinject, P_iv_inject <- k_inject_P, P_iv_inject <- 0)
-        if (t > t_start_Pinject[[i]] && t < t_stop_Pinject[[i]]) {
-          
-          P_iv_inject <- k_inject_P
-          
-        }
-      }
-    }
-    
-    # PO4 supplementation
-    
-    if (!is.null(t_start_Pintake) && !is.null(t_stop_Pintake)) {
-      for (i in 1:length(t_start_Pintake)) {
-        
-        #ifelse(t > t_start_Pintake && t < t_stop_Pintake, I_P <- P_food, I_P <- I_P)
-        if (t > t_start_Pintake[[i]] && t < t_stop_Pintake[[i]]) {
-          
-          I_P <- P_food
-          
-        }
+    if (!is.null(t_start) && !is.null(t_stop)) {
+      if (!is.null(input$Ca_inject)) {
+        k_inject_Ca <- input$Ca_inject
+      } else if (!is.null(input$Ca_food)) {
+        I_Ca <- input$Ca_food
+      } else if (!is.null(input$D3_inject)) {
+        k_inject_D3 <- input$D3_inject * Vp
+      } else if (!is.null(input$P_inject)) {
+        k_inject_P <- input$P_inject
+      } else if (!is.null(input$P_food)) {
+        I_P <- input$P_food
       }
     }
     
@@ -438,7 +376,5 @@ calcium_phosphate_core <- function(t, state, parameters) {
            Reabs_PT_PO4_FGF = Reabs_PT_FGF_P_norm
       )
     ) 
-    
   })
-  
 }
