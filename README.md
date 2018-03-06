@@ -71,6 +71,26 @@ library(DT)
 *david.granjon_at_uzh.ch*
 (see the changelog file to access all versions)
 
+## Changelog version 3.2 (case studies app)
+- change box size (plot area, height = 950px)
+- move slider at the bottom (plot area)
+- remove PTHp node in plasma and merge with PTHg
+- remove `source("help.R")` from all other code, except global.R
+- some code syntax correction
+
+## Changelog version 3.1 (treatments app)
++ interface
+  - major update of the design: all options are now in the right sidebar
+  - left sidebar is dedicated to menu
++ Patient file
+  - add a new patient CV where it is possible to see its name, age, symptomes,
+  history of treatments, ...
++ Disease Engine
+  - complete rework of this section to match the patient file
+  
+  
+  
+
 ## Changelog version 3.1 (case studies app)
 + interface
   - major update of the design: all options are now in the right sidebar
