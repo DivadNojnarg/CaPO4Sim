@@ -13,17 +13,20 @@ sidebar <- dashboardSidebar(
     sidebarMenu(
       id = "sidebar_main",
       
+      # this piece of code ensures that prettyWidgets are
+      # rendered correctly in the right sidebar.
+      # NEVER REMOVE !!!
+      # Shinyjs hide this div element at start of the application
+      div(id = "prettystuff",
+          prettyCheckbox(inputId = "checkbox3",  label = "",
+                         shape = "round", status = "danger",
+                         fill = TRUE, value = TRUE, width = "0px")
+      ),
+      
       #menuSegment("MAIN NAVIGATION"),
       menuItem("About", tabName = "about", icon = icon("info-circle")), 
       menuItem("Glossary", tabName = "glossary", icon = icon("search")),
-      menuItem("Demo", tabName = "demo", icon = icon("youtube-play"),
-               conditionalPanel(
-                 condition = "input.help",
-                 prettyCheckbox(inputId = "checkbox3",  label = "",
-                                shape = "round", status = "danger",
-                                fill = TRUE, value = TRUE, width = "0px")
-               )
-      ),
+      menuItem("Demo", tabName = "demo", icon = icon("youtube-play")),
       menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE)
     ),
     data.step = 1,

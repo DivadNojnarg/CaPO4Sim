@@ -96,3 +96,21 @@ To change slider theme in shiny, replace the theme used in bootstrap.R
 
 Make a copy of the real package before is better
 
+
+########## Shiny Server Pro 1 (130.60.24.79:3838) ##########
+users: shiny, ubuntu, david, dean
+passwd: david (admin)
+
+ShinyServer Pro interface (graphite) port 4151 by default:
+user -> admin
+passwd -> Awful_Nephrons
+
+to create a new user:
+sudo /opt/shiny-server/bin/sspasswd /etc/shiny-server/passwd admin
+
+user -> nccr
+passwd -> Beautiful_Nephrons
+
+RStudio Server Interface
+user -> David
+passwd -> admin

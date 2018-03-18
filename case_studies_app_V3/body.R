@@ -273,13 +273,31 @@ body <- dashboardBody(
     tabItem(
       tabName = "demo",
       
-      div(id = "boxvideo",
-          box(id = "boxvideo", solidHeader = TRUE,
-              HTML('<iframe width="560" height="315"
-                   src="https://www.youtube.com/embed/AKFyJfYdJhA"
-                   frameborder="0" allowfullscreen></iframe>')
-          )
-      )
+      fluidRow(
+               box(id = "ca_movie", solidHeader = TRUE,
+                   HTML('<iframe width="560" height="315" 
+                        src="https://youtube.com/embed/xkpu_W5Zs3c" 
+                        frameborder="0" allowfullscreen></iframe>')
+               ),
+               box(id = "PO4_movie", solidHeader = TRUE,
+                   HTML('<iframe width="560" height="315"
+                        src="https://youtube.com/embed/K7Bzo9nOJCk"
+                        frameborder="0" allowfullscreen></iframe>')
+               )
+        ),
+               box(id = "PTH_movie", solidHeader = TRUE,
+                   HTML('<iframe width="560" height="315"
+                        src="https://youtube.com/embed/QAORLwmNMNM"
+                        frameborder="0" allowfullscreen></iframe>')
+                   ),
+      fluidRow()
+      # div(id = "boxvideo",
+      #     box(id = "boxvideo", solidHeader = TRUE,
+      #         HTML('<iframe width="560" height="315"
+      #              src="https://www.youtube.com/embed/AKFyJfYdJhA"
+      #              frameborder="0" allowfullscreen></iframe>')
+      #     )
+      # )
     ),
     
     # About section Panel
@@ -295,7 +313,7 @@ body <- dashboardBody(
     tabItem(
       tabName = "glossary",
       div(id = "glossary",
-          box(id = "boxvideo", solidHeader = TRUE, width = 12, height = "50%",
+          box(id = "boxglossary", solidHeader = TRUE, width = 12, height = "50%",
             dataTableOutput("glossary")
           )
       )

@@ -584,6 +584,11 @@ shinyServer(function(input, output, session) {
     } 
   })
   
+  # Disable the private section
+  observe({
+    shinyjs::hide("prettystuff")
+  })
+  
   # prevent user from unselecting all graph components
   # observeEvent(input$network_Ca_choice, {
   #   
