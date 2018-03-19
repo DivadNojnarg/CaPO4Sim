@@ -274,22 +274,28 @@ body <- dashboardBody(
       tabName = "demo",
       
       fluidRow(
-               box(id = "ca_movie", solidHeader = TRUE,
-                   HTML('<iframe width="560" height="315" 
+        box(id = "ca_movie", solidHeader = TRUE,
+            column(12, align = "center", 
+                   HTML('<iframe width="560" height="315"
                         src="https://youtube.com/embed/xkpu_W5Zs3c" 
                         frameborder="0" allowfullscreen></iframe>')
-               ),
-               box(id = "PO4_movie", solidHeader = TRUE,
+            )
+        ),
+        box(id = "PO4_movie", solidHeader = TRUE,
+            column(12, align = "center",
                    HTML('<iframe width="560" height="315"
                         src="https://youtube.com/embed/K7Bzo9nOJCk"
                         frameborder="0" allowfullscreen></iframe>')
-               )
-        ),
-               box(id = "PTH_movie", solidHeader = TRUE,
-                   HTML('<iframe width="560" height="315"
+            )
+        )
+      ),
+      box(id = "PTH_movie", solidHeader = TRUE,
+          column(12, align = "center",
+                 HTML('<iframe width="560" height="315"
                         src="https://youtube.com/embed/QAORLwmNMNM"
                         frameborder="0" allowfullscreen></iframe>')
-                   ),
+          )
+      ),
       fluidRow()
       # div(id = "boxvideo",
       #     box(id = "boxvideo", solidHeader = TRUE,
