@@ -31,7 +31,6 @@ dashboardUser <- function(name = "Guang Yang",
     tags$ul(
       class = "dropdown-menu",
       # user img in the menu
-      introBox(
       tags$li(
         class = "user-header",
         tags$img(src = image, class = "img-circle", alt = "User Image"),
@@ -64,19 +63,18 @@ dashboardUser <- function(name = "Guang Yang",
           )
         )
       ),
-      # menu footer
-      tags$li(
-        class = "user-footer",
-        tags$div(
-          #class = "pull-left",
-          column(12, align = "center",
-            uiOutput("userbttn1")
+      # menu footer. Do not show if the patient is healthy
+      if (description %in% c("sick", "dead")) {
+        tags$li(
+          class = "user-footer",
+          tags$div(
+            #class = "pull-left",
+            column(12, align = "center",
+                   uiOutput("userbttn1")
+            )
           )
         )
-      ),
-      data.step = 8,
-      data.intro = help_text[8]
-    )
+      }
     )
   )
 }

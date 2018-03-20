@@ -525,11 +525,12 @@ shinyServer(function(input, output, session) {
                          condition = input$help)
   })
   
-  observe({
-    shinyjs::toggleClass(id = "user",
-                         class = "user-menu open",
-                         condition = input$help)
-  })
+  # Need to find a way to integrate the userMenu card to the help section
+  # observe({
+  #   shinyjs::toggleClass(id = "user",
+  #                        class = "user-menu open",
+  #                        condition = input$help)
+  # })
   
   #------------------------------------------------------------------------- 
   #  

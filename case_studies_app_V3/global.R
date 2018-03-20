@@ -31,6 +31,7 @@ library(DT)
 
 # Load the template components
 source("help.R")
+source("app_css.R")
 source("header.R")
 source("sidebar.R")
 source("body.R")
