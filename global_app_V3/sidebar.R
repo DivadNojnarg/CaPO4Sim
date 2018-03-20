@@ -4,7 +4,6 @@
 #  David Granjon, the Interface Group, Zurich
 #  December 4th, 2017
 #-------------------------------------------------------------------------
-source("help.R")
 
 sidebar <- dashboardSidebar(
   width = 300,
@@ -68,7 +67,8 @@ sidebar <- dashboardSidebar(
                      actionBttn(inputId = "reset_t_now",
                                 label = "", 
                                 color = "danger", 
-                                size = "xs"))
+                                size = "xs")
+                   )
       )
     ),
     data.step = 1,
