@@ -74,9 +74,11 @@ library(DT)
 ## Changelog version 3.2 (case studies app)
 - change box size (plot area, height = 950px)
 - move slider at the bottom (plot area)
-- remove PTHp node in plasma and merge with PTHg
+- remove PTHp node in plasma and merge with PTHg (does not fit well in humans)
 - remove `source("help.R")` from all other code, except global.R
 - some code syntax correction
+- fix the patient state issue in the header (and remove it from the help section)
+- add movies to the video section (Janine Meyer work)
 
 ## Changelog version 3.1 (treatments app)
 + interface
@@ -88,6 +90,9 @@ library(DT)
 + Disease Engine
   - complete rework of this section to match the patient file
   
++ Minor changes
+  - remove `source("help.R")` from all other code, except global.R
+  - some code syntax correction
   
   
 
