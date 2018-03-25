@@ -212,7 +212,6 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         edges$color.color[sel] <- "red"
       }
     }
-    
   } else {
     # no selection when the counter equals 0
     sel <- NULL
