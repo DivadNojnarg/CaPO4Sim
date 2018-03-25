@@ -107,9 +107,37 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
     
     # edge size might depend on the event
     if (simulation == "run_php1") {
-      ifelse(sum(is.element(c(1:4, 6), counter)) == 1,
-             edges$width[sel] <- 8,
-             edges$width[sel] <- 3)
+      if (sum(is.element(c(1:4, 6), counter)) == 1) {
+        edges$width[sel] <- 8
+        # make these edges blink
+        lapply(1:10, FUN = function(i){
+          if ((i %% 2) != 0) {
+            edges$hidden[sel] <- TRUE
+            visNetworkProxy("network_Ca") %>%
+              visUpdateEdges(edges = edges)
+          } else {
+            edges$hidden[sel] <- FALSE
+            visNetworkProxy("network_Ca") %>%
+              visUpdateEdges(edges = edges)
+          }
+          Sys.sleep(0.5)
+        })
+        # make these edges blink
+      } else {
+        edges$width[sel] <- 3
+        lapply(1:10, FUN = function(i){
+          if ((i %% 2) != 0) {
+            edges$hidden[sel] <- TRUE
+            visNetworkProxy("network_Ca") %>%
+              visUpdateEdges(edges = edges)
+          } else {
+            edges$hidden[sel] <- FALSE
+            visNetworkProxy("network_Ca") %>%
+              visUpdateEdges(edges = edges)
+          }
+          Sys.sleep(0.5)
+        })
+      }   
       if (counter == 6) {
         edges$color.color[sel] <- c(rep("red", 4), rep("green", 7))
       }

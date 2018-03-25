@@ -57,20 +57,25 @@ shinyServer(function(input, output, session) {
     input$network_hormonal_choice
     
     generate_network(nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
-      # simple click event to allow graph ploting
+      # simple click event to select a node
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);
                 ;}") %>% 
       # unselect node event
       visEvents(deselectNode = "function(nodes) {
-                Shiny.onInputChange('current_node_bis_id', 'null');
+                Shiny.onInputChange('current_node_id', 'null');
                 ;}") %>%
       # add the doubleclick function to handle zoom views
       visEvents(doubleClick = "function(nodes) {
                 Shiny.onInputChange('current_node_bis_id', nodes.nodes);
                 }") %>%  
+      # simple click event for selecting edges
       visEvents(selectEdge = "function(edges) {
                 Shiny.onInputChange('current_edge_id', edges.edges);
+                ;}") %>%
+      # unselect edge event
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_id', 'null');
                 ;}") %>%
       # very important: change the whole graph position after drawing
       visEvents(type = "on", afterDrawing = "function() {
@@ -195,6 +200,74 @@ shinyServer(function(input, output, session) {
   })
   
   
+  # change the selected node size to
+  # better highlight it
+  last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
+  
+  observeEvent(input$current_node_id, {
+    req(input$current_node_id)
+    selected_node <- input$current_node_id
+    nodes_Ca <- nodes_Ca()
+    # javascript return null instead of NULL
+    # cannot use is.null
+    if (!identical(selected_node, "null")) {
+      last$selected_node <- selected_node
+      # organ nodes
+      if (selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[selected_node] <- 100
+        # Kidney zoom node
+      } else if (selected_node == 6) {
+        nodes_Ca$size[selected_node] <- 214
+        # regulation nodes
+      } else {
+        nodes_Ca$size[selected_node] <- 57
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateNodes(nodes = nodes_Ca)
+      # reset the node size when unselected
+    } else {
+      if (last$selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[last$selected_node] <- 70
+      } else if (last$selected_node == 6) {
+        nodes_Ca$size[last$selected_node] <- 150
+      } else {
+        nodes_Ca$size[last$selected_node] <- 40
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateNodes(nodes = nodes_Ca)
+    }
+  })
+  
+  # change the selected edge size to
+  # better highlight it
+  observeEvent(input$current_edge_id,{
+    req(input$current_edge_id)
+    selected_edge <- input$current_edge_id
+    edges_Ca <- edges_Ca()
+    edge_id <- match(selected_edge, edges_Ca$id)
+    if (!identical(selected_edge, "null")) {
+      last$selected_edge <- edge_id
+      # organs edges
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 24
+        # regulations edges
+      } else {
+        edges_Ca$width[edge_id] <- 12
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateEdges(edges = edges_Ca)
+      # reset the edge size when unselected
+    } else {
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 8
+      } else {
+        edges_Ca$width[edge_id] <- 4
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateEdges(edges = edges_Ca)
+    }
+  })
+  
   #-------------------------------------------------------------------------
   #
   #  Navigation counter
@@ -251,6 +324,42 @@ shinyServer(function(input, output, session) {
     # are performed live contrary to steady-state simulations
     if (!is_empty(current_sim) &&  dynamic_sim) {
       if (eval(parse(text = paste0("input$", current_sim)))) {
+        
+        # the code below ensures that nodes related to
+        # perturbations, ie PTHg for php1 and hypopara
+        # D3 nodes for hypoD3, blink when the counter equals 1
+        if (counter_nav$diagram == 1) {
+          nodes_Ca <- nodes_Ca()
+          if (input$run_php1 == TRUE | input$run_hypopara == TRUE) {
+            lapply(1:10, FUN = function(i){
+              if ((i %% 2) != 0) {
+                nodes_Ca$hidden[11] <- TRUE
+                visNetworkProxy("network_Ca") %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              } else {
+                nodes_Ca$hidden[11] <- FALSE
+                visNetworkProxy("network_Ca") %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              }
+              Sys.sleep(0.5)
+            })
+          } else if (input$run_hypoD3 == TRUE) {
+            lapply(1:10, FUN = function(i){
+              if ((i %% 2) != 0) {
+                nodes_Ca$hidden[c(13:15)] <- TRUE
+                visNetworkProxy("network_Ca") %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              } else {
+                nodes_Ca$hidden[c(13:15)] <- FALSE
+                visNetworkProxy("network_Ca") %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              }
+              Sys.sleep(0.5)
+            })
+          }
+        }
+        
+        # make arrow yellow and blink
         arrow_lighting(edges = edges_Ca,
                        simulation = current_sim,
                        counter = counter_nav$diagram,
@@ -494,8 +603,7 @@ shinyServer(function(input, output, session) {
   
   
   observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3, 
-                 counter_nav$diagram, input$notif2_switch),{
-                   
+                 counter_nav$diagram, input$notif2_switch), {
                    current_simulation <- extract_running_sim(input)[[1]]
                    req(current_simulation)
                    
@@ -509,7 +617,7 @@ shinyServer(function(input, output, session) {
                      jqui_draggable(selector = "#shiny-notification-notifid")
                      jqui_draggable(selector = "#shiny-notification-graph_notif")
                    }
-                 })
+                 }, priority = 10)
   
   
   #------------------------------------------------------------------------- 

@@ -137,7 +137,7 @@ shinyServer(function(input, output, session) {
                 ;}") %>% 
       # unselect node event
       visEvents(deselectNode = "function(nodes) {
-                Shiny.onInputChange('current_node_bis_id', 'null');
+                Shiny.onInputChange('current_node_id', 'null');
                 ;}") %>%
       # add the doubleclick function to handle zoom views
       visEvents(doubleClick = "function(nodes) {
@@ -145,6 +145,10 @@ shinyServer(function(input, output, session) {
                 }") %>%  
       visEvents(selectEdge = "function(edges) {
                 Shiny.onInputChange('current_edge_id', edges.edges);
+                ;}") %>%
+      # unselect edge event
+      visEvents(deselectEdge = "function(edges) {
+                Shiny.onInputChange('current_edge_id', 'null');
                 ;}") %>%
       # very important: change the whole graph position after drawing
       visEvents(type = "on", afterDrawing = "function() {
@@ -161,11 +165,13 @@ shinyServer(function(input, output, session) {
     })
   
   # Handle Firefox images
-  observeEvent(input$browser, {
-    
+  # Firefox still fuck up when redrawing the network
+  # even with pngs!!!
+  observe({
+    req(input$browser)
     if (str_detect(input$browser, "Firefox")) {
       nodes_Ca <- nodes_Ca()
-      nodes_Ca$image <- c("intestine.png","plasma.png","rapid-bone.jpeg",
+      nodes_Ca$image <- c("intestine.png","plasma.png","rapid-bone.png",
                           "bone.png","kidney.png","kidney_zoom1.png","urine.png",
                           "cells.png","Cap.png","PO4.png","parathyroid_gland.png",
                           "PTH.png","D3.png","D3.png","D3.png","FGF23.png")
@@ -175,13 +181,79 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  output$browser <- renderPrint({input$browser})
+  # change the selected node size to
+  # better highlight it
+  last <- reactiveValues(selected_node = NULL)
   
+  observeEvent(input$current_node_id, {
+    req(input$current_node_id)
+    selected_node <- input$current_node_id
+    nodes_Ca <- nodes_Ca()
+    # javascript return null instead of NULL
+    # cannot use is.null
+    if (!identical(selected_node, "null")) {
+      last$selected_node <- selected_node
+      # organ nodes
+      if (selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[selected_node] <- 100
+        # Kidney zoom node
+      } else if (selected_node == 6) {
+        nodes_Ca$size[selected_node] <- 214
+        # regulation nodes
+      } else {
+        nodes_Ca$size[selected_node] <- 57
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateNodes(nodes = nodes_Ca)
+      # reset the node size when unselected
+    } else {
+      if (last$selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[last$selected_node] <- 70
+      } else if (last$selected_node == 6) {
+        nodes_Ca$size[last$selected_node] <- 150
+      } else {
+        nodes_Ca$size[last$selected_node] <- 40
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateNodes(nodes = nodes_Ca)
+    }
+  })
+  
+  # change the selected edge size to
+  # better highlight it
+  observeEvent(input$current_edge_id,{
+    req(input$current_edge_id)
+    selected_edge <- input$current_edge_id
+    edges_Ca <- edges_Ca()
+    edge_id <- match(selected_edge, edges_Ca$id)
+    if (!identical(selected_edge, "null")) {
+      last$selected_edge <- edge_id
+      # organs edges
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 24
+        # regulations edges
+      } else {
+        edges_Ca$width[edge_id] <- 12
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateEdges(edges = edges_Ca)
+      # reset the edge size when unselected
+    } else {
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 8
+      } else {
+        edges_Ca$width[edge_id] <- 4
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateEdges(edges = edges_Ca)
+    }
+  })
+  
+  
+  output$browser <- renderPrint({input$browser})
   output$id <- renderPrint({input$current_edge_id})
   output$id_bis <- renderPrint({input$current_node_id})
-  
   output$node_bis <- renderPrint({input$current_node_bis_id})
-  
   
   #------------------------------------------------------------------------- 
   #  
@@ -220,7 +292,8 @@ shinyServer(function(input, output, session) {
   # node coordinates
   # useful when developing to return x and y position
   output$position <- renderPrint( vals$coords ) 
-  vals <- reactiveValues(coords = NULL, viewposition = NULL)
+  vals <- reactiveValues(coords = NULL, viewposition = NULL,
+                         connected_edges = NULL)
   observe({
     invalidateLater(1000)
     visNetworkProxy("network_kidney_PT_PO4") %>% visGetPositions()
@@ -236,6 +309,17 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_kidney_PT_PO4") %>% visGetViewPosition()
     vals$viewposition <- if (!is.null(input$network_kidney_PT_PO4_viewPosition))
       do.call(rbind, input$network_kidney_PT_PO4_viewPosition)
+  })
+  
+  # get the connected edges to the selected node 
+  observe({
+    invalidateLater(1000)
+    req(input$current_node_id)
+    selected_node <- input$current_node_id
+    visNetworkProxy("network_Ca") %>%
+      visGetConnectedEdges(id = selected_node)
+    vals$connected_edges <- if (!is.null(input$network_Ca_connectedEdges)) 
+      do.call(rbind, list(input$network_Ca_connectedEdges))
   })
   
   #------------------------------------------------------------------------- 
@@ -494,21 +578,25 @@ shinyServer(function(input, output, session) {
   # Generate a graph when node is clicked. The graph corresponds to the node clicked
   
   output$plot_node <- renderPlotly({
-    
-    validate(need(input$current_node_id, "Select one node on the graph!"))
-    
+    # check if the current selected node is not NULL and not 'null'
+    # 'null' is given by the javascript code when the node is deselected
+    validate(need(
+      !identical(input$current_node_id, "null") & !is.null(input$current_node_id), 
+      "Select one node on the graph!")
+    )
     out <- out()
     parameters_bis <- parameters_bis()
-    
     plot_node(node = input$current_node_id , out, parameters_bis)
   })
   
   output$plot_edge <- renderPlotly({
-    
-    validate(need(input$current_edge_id, "Select one edge on the graph!"))
-    
+    # check if the current selected edge is not NULL and not 'null'
+    # 'null' is given by the javascript code when the edge is deselected
+    validate(need(
+      !identical(input$current_edge_id, "null") & !is.null(input$current_edge_id), 
+      "Select one edge on the graph!")
+    )
     out <- out()
-    
     # call the plot_edge() function defined in global.R
     plot_edge(edge = input$current_edge_id , out)
   })

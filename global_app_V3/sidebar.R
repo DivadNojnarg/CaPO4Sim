@@ -43,8 +43,7 @@ sidebar <- dashboardSidebar(
                prettySwitch(inputId = "network_hormonal_choice", 
                             label = "Show regulations", 
                             status = "success",
-                            bigger = TRUE,
-                            fill = TRUE,
+                            slim = TRUE,
                             value = FALSE),
                
                # maximum time of integration

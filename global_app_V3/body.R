@@ -38,7 +38,6 @@ body <- dashboardBody(
                  
                  introBox(
                    div(id = "network_cap",
-                       
                        withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
                                    size = 2, 
                                    type = 8, 
