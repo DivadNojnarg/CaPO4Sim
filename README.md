@@ -72,16 +72,37 @@ library(DT)
 (see the changelog file to access all versions)
 
 ## Changelog version 3.2 (case studies app)
-- change box size (plot area, height = 950px)
-- move slider at the bottom (plot area)
-- remove PTHp node in plasma and merge with PTHg (does not fit well in humans)
-- remove `source("help.R")` from all other code, except global.R
-- some code syntax correction
-- fix the patient state issue in the header (and remove it from the help section)
-- add movies to the video section (Janine Meyer work)
++ Interface
+  - add movies to the video section (Janine Meyer work)
+  - fix the patient state issue in the header (and remove it from the help section)
++ CaPO4 Network
+  - when a node is selected, its size is increased (and restored when deselected) 
+  - same thing for edges
+  - add a way to make edges blinking when a case study is selected
+  - when a case study is selected, the corresponding node is blinking
+    as long as the counter is equal to 1.
+  - remove PTHp node in plasma and merge with PTHg (does not fit well in humans)
++ Graphs
+  - change box size (plot area, height = 950px)
+  - move slider at the bottom (plot area)
++ Others
+  - remove `source("help.R")` from all other code, except global.R
+  - some code syntax correction
+  
+
+## Changelog version 3.1 (global app)
++ Interface
+  - correct a prettySwitch in the sidebar (slim = TRUE)
++ CaPO4 Network
+  - when a node is selected, its size is increased (and restored when deselected) 
+  - same thing for edges
++ Minor changes
+  - fix a wrong file name for a node (rapid-bone png)
+ 
+ 
 
 ## Changelog version 3.1 (treatments app)
-+ interface
++ Interface
   - major update of the design: all options are now in the right sidebar
   - left sidebar is dedicated to menu
 + Patient file
@@ -89,15 +110,14 @@ library(DT)
   history of treatments, ...
 + Disease Engine
   - complete rework of this section to match the patient file
-  
-+ Minor changes
++ Others
   - remove `source("help.R")` from all other code, except global.R
   - some code syntax correction
   
-  
+  ***
 
 ## Changelog version 3.1 (case studies app)
-+ interface
++ Interface
   - major update of the design: all options are now in the right sidebar
   - left sidebar is dedicated to menu
   - modals can now be hidden (via a switch)
