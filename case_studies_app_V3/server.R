@@ -620,6 +620,30 @@ shinyServer(function(input, output, session) {
                  }, priority = 10)
   
   
+  # indicates the user to enable regulations when he launches case studies
+  # if they are not already enabled
+  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
+    current_simulation <- extract_running_sim(input)[[1]]
+    input_current_simulation <- paste0("input$", extract_running_sim(input)[[1]])
+    if (!is_empty(current_simulation)) {
+      if (eval(parse(text = input_current_simulation)) & 
+          input$network_hormonal_choice == FALSE) {
+        sendSweetAlert(
+          session = session,
+          type = "error",
+          title = NULL,
+          text = HTML(
+            paste("Before going deeper in the case study, 
+                   please enable hormonal regulations 
+                   in the option part and select both Ca and Pi", 
+                   icon("sliders"))
+          ),
+          html = TRUE
+        )
+      }
+    }
+  })
+  
   #------------------------------------------------------------------------- 
   #  
   #  Toggle the sidebar when a user press the help button

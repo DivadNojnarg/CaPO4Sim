@@ -155,7 +155,7 @@ generate_nodes_Ca <- function(input) {
                    "<a href=\"php1_notif_Ca_PTreab.png\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_Ca_PTreab.png\"/></a>", 
-                  "</div>", "<div class=\"col-sm-6\">", 
+                   "</div>", "<div class=\"col-sm-6\">", 
                    "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>", 

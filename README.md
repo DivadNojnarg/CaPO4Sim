@@ -88,6 +88,8 @@ library(DT)
 + Others
   - remove `source("help.R")` from all other code, except global.R
   - some code syntax correction
+  - indicates the user to enable regulations when he launches case studies
+    if they are not already enabled
   
 
 ## Changelog version 3.1 (global app)
