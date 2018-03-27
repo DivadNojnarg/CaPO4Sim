@@ -2,7 +2,8 @@ generate_glossary <- function() {
   m <- data.frame(
     "abreviation" = c("Ca", "Pi", "PTH", "D3", "FGF23", 
                       "PTHg", "CaSR", "VDR", "PHP1"),
-    "full name" = c("Ionized plasma calcium concentration",
+    "full name" = c(
+      "Ionized plasma calcium concentration",
                     "Total plasma phosphate concentration",
                     "Parathyroid hormone",
                     "1,25 dihydroxy vitamin D3 (calcitriol)",

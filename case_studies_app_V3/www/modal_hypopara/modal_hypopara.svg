@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 560 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style>.cls-1{isolation:isolate;}.cls-2{fill:#fff;}.cls-3{fill:#fbf2f0;}.cls-10,.cls-13,.cls-15,.cls-18,.cls-20,.cls-22,.cls-30,.cls-4,.cls-5{fill:none;}.cls-10,.cls-12,.cls-13,.cls-14,.cls-15,.cls-4{stroke:#c34a29;}.cls-10,.cls-15,.cls-18,.cls-20,.cls-22,.cls-4,.cls-5{stroke-miterlimit:10;}.cls-4{stroke-width:4px;}.cls-5{stroke:#f1d3cc;stroke-width:2px;}.cls-6{fill:#edc9bf;}.cls-7{fill:#f2987f;stroke:#d55a51;}.cls-13,.cls-15,.cls-16,.cls-17,.cls-21,.cls-7,.cls-8{stroke-linecap:round;}.cls-12,.cls-13,.cls-14,.cls-16,.cls-17,.cls-21,.cls-7,.cls-8{stroke-linejoin:round;}.cls-8{fill:#cbd774;stroke:#798728;}.cls-9{fill:#f9ccbf;}.cls-11{fill:#fdeabf;}.cls-12{fill:#fbdcd4;}.cls-12,.cls-14,.cls-15{stroke-width:1.5px;}.cls-13{stroke-width:0.75px;}.cls-14{fill:#fde2a8;}.cls-15{stroke-dasharray:0 4.21;}.cls-16{fill:#92d6df;stroke:#39858e;}.cls-17{fill:#f1ac6a;}.cls-17,.cls-21{stroke:#d46f33;}.cls-18,.cls-20{stroke:#1a4554;}.cls-19,.cls-24,.cls-25,.cls-26,.cls-27{fill:#1a4554;}.cls-20{stroke-dasharray:2 2;}.cls-21{fill:#f7d3b0;}.cls-22{stroke:#ff4c00;}.cls-23{fill:#ff4c00;}.cls-24,.cls-25,.cls-26,.cls-27{font-size:20px;}.cls-24{font-family:ArialMT, Arial;}.cls-25,.cls-27{font-family:Arial-BoldMT, Arial;font-weight:700;}.cls-26{font-family:Arial-ItalicMT, Arial;font-style:italic;}.cls-27{letter-spacing:0.03em;}.cls-28{letter-spacing:-0.02em;}.cls-29{fill:#1c8843;}.cls-31{mix-blend-mode:multiply;}</style>
+  </defs>
+  <title>Napo_Zooms_170427Glandula 3.13</title>
+  <g class="cls-1">
+    <g id="Ebene_30" data-name="Ebene 30">
+      <g id="Rahmen-8" data-name="Rahmen">
+        <rect class="cls-2" width="560" height="500"/>
+      </g>
+    </g>
+    <g id="Zellen_HG" data-name="Zellen HG">
+      <path class="cls-3" d="M162.1,107.67c-77.47,48.15-114.73,147-70.53,230.84,22.43,42.54,62.25,70.61,109.26,80.63,47.94,10.21,124.31,16.66,173.7-1.34,29.12-10.61,50.82-51,57.83-93.53,8.18-49.63,20.61-96.62,4.42-146.24C422.22,133.38,386,102.91,333.28,90.3,275.78,76.54,200.67,83.69,162.1,107.67Z"/>
+      <path class="cls-4" d="M162.1,107.67c-77.47,48.15-114.73,147-70.53,230.84,22.43,42.54,62.25,70.61,109.26,80.63,47.94,10.21,124.31,16.66,173.7-1.34,29.12-10.61,50.82-51,57.83-93.53,8.18-49.63,20.61-96.62,4.42-146.24C422.22,133.38,386,102.91,333.28,90.3,275.78,76.54,200.67,83.69,162.1,107.67Z"/>
+      <path class="cls-5" d="M162.1,107.67c-77.47,48.15-114.73,147-70.53,230.84,22.43,42.54,62.25,70.61,109.26,80.63,47.94,10.21,124.31,16.66,173.7-1.34,29.12-10.61,50.82-51,57.83-93.53,8.18-49.63,20.61-96.62,4.42-146.24C422.22,133.38,386,102.91,333.28,90.3,275.78,76.54,200.67,83.69,162.1,107.67Z"/>
+      <circle class="cls-6" cx="154.99" cy="242.94" r="69.95"/>
+      <g id="CAP">
+        <circle class="cls-7" cx="408.29" cy="108.45" r="4.5"/>
+      </g>
+      <g id="CAP-2" data-name="CAP">
+        <circle class="cls-7" cx="382.83" cy="72.68" r="4.5"/>
+      </g>
+      <g id="CAP-3" data-name="CAP">
+        <circle class="cls-7" cx="408.47" cy="82.98" r="4.5"/>
+      </g>
+      <g id="CaSR">
+        <path class="cls-8" d="M373.14,127.23l-15.23-9.15a2.62,2.62,0,1,1,2.69-4.49l13,7.81,9.11-15.15-3.14-1.88-6.81,11.33a2.62,2.62,0,0,1-3.59.9L361.55,112a2.62,2.62,0,0,1-.9-3.59L372.33,89a2.6,2.6,0,0,1,3.58-.89l15.24,9.15a2.61,2.61,0,0,1-2.69,4.48l-13-7.81-9,15,3.13,1.88,6.81-11.33a2.62,2.62,0,0,1,3.59-.9l7.62,4.58a2.61,2.61,0,0,1,.89,3.59l-11.79,19.62A2.62,2.62,0,0,1,373.14,127.23Z"/>
+      </g>
+      <g id="CAP-4" data-name="CAP">
+        <circle class="cls-7" cx="392.04" cy="85.37" r="4.5"/>
+      </g>
+      <path class="cls-9" d="M458.46,225.82A1236.88,1236.88,0,0,1,492.08-26L569.87-7.3a1156.56,1156.56,0,0,0,0,540l-77.79,18.68a1236.34,1236.34,0,0,1-34-308.23"/>
+      <path class="cls-10" d="M458.46,225.82A1236.88,1236.88,0,0,1,492.08-26L569.87-7.3a1156.56,1156.56,0,0,0,0,540l-77.79,18.68a1236.34,1236.34,0,0,1-34-308.23"/>
+      <g id="PTH_klein-2" data-name="PTH klein">
+        <circle class="cls-11" cx="50" cy="50.09" r="30"/>
+        <path class="cls-12" d="M50,49.48a3.59,3.59,0,0,1,3.17,1.66C54,52.65,54.46,57.05,56,58c.57.34,1.33.16,1.86.29,0,0-1.23-10.35.39-17.09s5.29-16,9.12-15.33c3.67.61,2.22,6.58,4.44,12,1.36,3.28,7.29,12,5.91,20.59s-9.28,16-14.26,16c-5.15,0-5.75-5.43-7.82-8.41C54,63.63,50,63.7,50,63.7"/>
+        <path class="cls-13" d="M63,51.73a1.64,1.64,0,1,0,0-3.28"/>
+        <path class="cls-13" d="M66.27,58.27a1.64,1.64,0,1,0,0-3.28"/>
+        <path class="cls-13" d="M64.63,67.4a1.64,1.64,0,0,0,0-3.28"/>
+        <path class="cls-13" d="M61.31,61.55a1.64,1.64,0,1,0,0-3.28"/>
+        <path class="cls-13" d="M62.54,44a1.64,1.64,0,1,0,0-3.28"/>
+        <path class="cls-13" d="M66.8,39.34a1.64,1.64,0,0,0,0-3.28"/>
+        <path class="cls-13" d="M71.27,62.8a1.64,1.64,0,1,0,0-3.28"/>
+        <path class="cls-13" d="M69.11,47.8a1.64,1.64,0,1,0,0-3.28"/>
+        <path class="cls-13" d="M72.91,54.36a1.64,1.64,0,0,0,0-3.28"/>
+        <ellipse class="cls-14" cx="63.33" cy="41.87" rx="1.96" ry="3.68"/>
+        <path class="cls-12" d="M50,49.48a3.58,3.58,0,0,0-3.16,1.66C46,52.65,45.52,57.05,44,58c-.57.34-1.34.16-1.86.29,0,0,1.23-10.35-.39-17.09s-5.3-16-9.13-15.33c-3.67.61-2.21,6.58-4.43,12-1.36,3.28-7.3,12-5.92,20.59s9.29,16,14.27,16c5.14,0,5.75-5.43,7.82-8.41C45.94,63.63,50,63.7,50,63.7"/>
+        <path class="cls-13" d="M37,51.73a1.64,1.64,0,0,1,0-3.28"/>
+        <path class="cls-13" d="M33.71,58.27a1.64,1.64,0,0,1,0-3.28"/>
+        <path class="cls-13" d="M35.35,67.4a1.64,1.64,0,0,1,0-3.28"/>
+        <path class="cls-13" d="M38.66,61.55a1.64,1.64,0,1,1,0-3.28"/>
+        <path class="cls-13" d="M37.43,44a1.64,1.64,0,0,1,0-3.28"/>
+        <path class="cls-13" d="M33.18,39.34a1.64,1.64,0,1,1,0-3.28"/>
+        <path class="cls-13" d="M28.71,62.8a1.64,1.64,0,1,1,0-3.28"/>
+        <path class="cls-13" d="M30.87,47.8a1.64,1.64,0,0,1,0-3.28"/>
+        <path class="cls-13" d="M27.07,54.36a1.64,1.64,0,1,1,0-3.28"/>
+        <ellipse class="cls-14" cx="36.64" cy="41.87" rx="1.96" ry="3.68"/>
+      </g>
+    </g>
+    <g id="Icons">
+      <g id="Text">
+        <g id="OPG_2_" data-name="OPG 2?">
+          <g id="OPG-3" data-name="OPG" transform="matrix(1, 0, 0, 1, 0.830129, 6.087611)">
+            <path class="cls-2" d="M405.39,282.92c-1.61,3.14-4.73,3.87-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.63S407,279.77,405.39,282.92Z"/>
+            <path class="cls-15" d="M405.39,282.92c-1.61,3.14-4.73,3.87-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.63S407,279.77,405.39,282.92Z"/>
+          </g>
+        </g>
+        <g id="OPG_2_2" data-name="OPG 2?" transform="matrix(1, 0, 0, 1, -5.763916, 16.243763)">
+          <g id="OPG-4" data-name="OPG">
+            <path class="cls-2" d="M410.39,217.54c-1.61,3.15-4.73,3.88-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.62S412,214.4,410.39,217.54Z"/>
+            <path class="cls-15" d="M410.39,217.54c-1.61,3.15-4.73,3.88-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.62S412,214.4,410.39,217.54Z"/>
+          </g>
+        </g>
+        <g id="OPG_2_3" data-name="OPG 2?" transform="matrix(1, 0, 0, 1, -45.103661, 26.0107)">
+          <g id="OPG-5" data-name="OPG">
+            <path class="cls-2" d="M430.68,271.17c-1.61,3.14-4.72,3.87-7,1.63s-2.77-6.62-1.16-9.77,4.73-3.87,7-1.63S432.29,268,430.68,271.17Z"/>
+            <path class="cls-15" d="M430.68,271.17c-1.61,3.14-4.72,3.87-7,1.63s-2.77-6.62-1.16-9.77,4.73-3.87,7-1.63S432.29,268,430.68,271.17Z"/>
+          </g>
+        </g>
+        <g id="PTH_kugel-11" data-name="PTH kugel" transform="matrix(1, 0, 0, 1, 10.064351, 11.473361)">
+          <circle class="cls-16" cx="498.11" cy="252.94" r="4.5"/>
+        </g>
+        <g id="PTH_kugel-13" data-name="PTH kugel">
+          <circle class="cls-16" cx="304.5" cy="71.57" r="4.5"/>
+        </g>
+        <g id="PTH_kugel-14" data-name="PTH kugel">
+          <circle class="cls-16" cx="295" cy="59.01" r="4.5"/>
+        </g>
+        <g id="PTH_kugel-15" data-name="PTH kugel">
+          <circle class="cls-16" cx="272" cy="69.36" r="4.5"/>
+        </g>
+        <g id="D3-2" data-name="D3">
+          <path class="cls-17" d="M141,85.36a5.45,5.45,0,1,0,10.9,0V75.9h-11Z"/>
+        </g>
+        <g id="D3-3" data-name="D3">
+          <path class="cls-17" d="M140.55,162.13a5.45,5.45,0,0,0,10.9,0v-9.46h-11Z"/>
+        </g>
+        <g id="D3-4" data-name="D3">
+          <path class="cls-17" d="M163.05,63.55a5.46,5.46,0,0,0,10.91,0V54.1H163Z"/>
+        </g>
+        <line class="cls-18" x1="146.38" y1="96.61" x2="146.38" y2="145.56"/>
+        <polygon class="cls-19" points="142.7 142.58 143.35 141.97 146.38 145.22 149.4 141.97 150.06 142.58 146.38 146.54 142.7 142.58"/>
+        <line class="cls-20" x1="146.37" y1="253.29" x2="146.37" y2="225.84"/>
+        <rect class="cls-19" x="143.12" y="252.79" width="6.5" height="1"/>
+        <g id="Neues_Symbol_1-2" data-name="Neues Symbol 1">
+          <g id="VDR-3" data-name="VDR">
+            <path class="cls-21" d="M151.45,193.15v21.93a5.5,5.5,0,0,1-5.5,5.5h0a5.5,5.5,0,0,1-5.5-5.51l.07-21.92a5.47,5.47,0,0,0,10.93,0Z"/>
+          </g>
+          <g id="Deleted_Symbol-20" data-name="Deleted Symbol">
+            <path class="cls-17" d="M140.55,193a5.45,5.45,0,0,0,10.9,0v-9.46h-11Z"/>
+          </g>
+        </g>
+        <ellipse style="fill: rgb(216, 216, 216);" transform="matrix(-0.566529, 0.824042, -0.824041, -0.566528, 706.65475, 160.127838)" cx="265.305" cy="231.66" rx="32.129" ry="32.129"/>
+        <text transform="matrix(1, 0, 0, 0.999999, 6.618835, -1.654534)" style="fill: rgb(26, 69, 84); font-size: 20px; white-space: pre;" x="327.257" y="255.783">[PTH]c</text>
+        <text x="664.406" y="188.491" style="white-space: pre; fill: rgb(51, 51, 51); font-size: 24px;"> </text>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="233.468" y1="269.209" x2="314.197" y2="223.856" transform="matrix(0.869141, 0.494565, -0.494565, 0.869141, 157.759819, -103.166859)"/>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="310.423" y1="240.889" x2="320.325" y2="245.882" transform="matrix(0.975198, 0.221334, -0.221334, 0.975198, 61.061617, -64.153578)"/>
+        <g id="g-1" data-name="OPG 2?" transform="matrix(1, 0, 0, 1, -2.338448, 18.566402)">
+          <g id="g-2" data-name="OPG">
+            <path class="cls-2" d="M430.68,271.17c-1.61,3.14-4.72,3.87-7,1.63s-2.77-6.62-1.16-9.77,4.73-3.87,7-1.63S432.29,268,430.68,271.17Z" style="fill: rgb(255, 255, 255);"/>
+            <path class="cls-15" d="M430.68,271.17c-1.61,3.14-4.72,3.87-7,1.63s-2.77-6.62-1.16-9.77,4.73-3.87,7-1.63S432.29,268,430.68,271.17Z" style="fill: none; stroke: rgb(195, 74, 41); stroke-dasharray: 0px, 4.21px; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 1.5px;"/>
+          </g>
+        </g>
+        <g id="g-3" data-name="OPG 2?" transform="matrix(1, 0, 0, 1, -20.381508, -4.858695)">
+          <g id="g-4" data-name="OPG">
+            <path class="cls-2" d="M410.39,217.54c-1.61,3.15-4.73,3.88-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.62S412,214.4,410.39,217.54Z" style="fill: rgb(255, 255, 255);"/>
+            <path class="cls-15" d="M410.39,217.54c-1.61,3.15-4.73,3.88-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.62S412,214.4,410.39,217.54Z" style="fill: none; stroke: rgb(195, 74, 41); stroke-dasharray: 0px, 4.21px; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 1.5px;"/>
+          </g>
+        </g>
+        <g id="g-5" data-name="PTH kugel" transform="matrix(1, 0, 0, 1, 24.770931, -0.200999)">
+          <circle class="cls-16" cx="498.11" cy="252.94" r="4.5" style="fill: rgb(146, 214, 223); stroke: rgb(57, 133, 142); stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="407.03" y1="270.624" x2="493.796" y2="221.414" transform="matrix(0.869141, 0.494565, -0.494565, 0.869141, 180.613018, -190.564541)"/>
+        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="491.907" y1="238.285" x2="503.814" y2="245.856" transform="matrix(0.975198, 0.221334, -0.221334, 0.975198, 65.926274, -104.189563)"/>
+        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="490.306" y1="243.157" x2="502.213" y2="250.728" transform="matrix(0.194062, -0.980989, 0.980989, 0.194062, 159.394213, 688.293644)" bx:origin="0.696 0.526"/>
+        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="298.328" y1="336.455" x2="371.681" y2="293.689" transform="matrix(-0.856567, 0.516036, -0.516036, -0.856567, 784.546766, 412.077956)"/>
+        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="313.452" y1="347.532" x2="325.359" y2="355.103" transform="matrix(-0.669324, 0.742971, -0.742971, -0.669324, 794.209892, 349.153801)"/>
+        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="306.337" y1="345.499" x2="318.244" y2="353.07" transform="matrix(0.761341, 0.648352, -0.648352, 0.761341, 301.67488, -120.580301)" bx:origin="0.696 0.526"/>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="326.453" y1="270.7" x2="335.606" y2="278.677" transform="matrix(0.20478, -0.978808, 0.978808, 0.20478, -21.400982, 517.555931)" bx:origin="0.073 0.636"/>
+        <line style="fill: rgb(26, 69, 84); stroke-dasharray: 10px; stroke: rgb(255, 235, 4); stroke-width: 2;" x1="132.409" y1="189.453" x2="289.922" y2="109.551" transform="matrix(-0.00113, 0.999999, -0.999999, -0.00113, 360.905988, -61.49445)"/>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="241.029" y1="221.13" x2="260.874" y2="235.026" transform="matrix(0.444318, -0.895869, 0.895869, 0.444318, -63.041099, 355.243872)" bx:origin="0.696 0.526"/>
+        <line style="fill: rgb(26, 69, 84); stroke-dasharray: 10px; stroke: rgb(255, 235, 4); stroke-width: 12;" x1="213.965" y1="197.793" x2="350.137" y2="122.046" transform="matrix(-0.510014, 0.860166, -0.860166, -0.510014, 563.458238, -1.130101)"/>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 12;" x1="275.144" y1="212.991" x2="301.176" y2="231.878" transform="matrix(-0.238722, 0.971088, -0.971088, -0.238722, 572.953619, -4.294186)"/>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 12;" x1="258.67" y1="214.56" x2="285.237" y2="231.381" transform="matrix(0.977365, 0.211558, -0.211558, 0.977365, 53.53709, -53.578787)" bx:origin="0.696 0.526"/>
+        <line style="fill: rgb(26, 69, 84); stroke-dasharray: 10px; stroke: rgb(255, 235, 4); stroke-width: 2;" x1="352.595" y1="197.2" x2="466.607" y2="161.278" transform="matrix(-0.00113, 0.999999, -0.999999, -0.00113, 589.302784, -230.159182)"/>
+        <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="414.883" y1="223.638" x2="436.747" y2="238.401" transform="matrix(0.642848, -0.765994, 0.765994, 0.642848, -23.642327, 412.100294)" bx:origin="0.696 0.526"/>
+      </g>
+      <polyline class="cls-22" points="135.34 264.1 153.82 264.1 153.82 257.4 173.77 257.4"/>
+      <polygon class="cls-23" points="171.12 260.68 170.57 260.09 173.46 257.4 170.57 254.72 171.12 254.13 174.64 257.4 171.12 260.68"/>
+    </g>
+    <g id="Text-2" data-name="Text">
+      <text class="cls-24" transform="translate(324.96 149.57)" style="white-space: pre;">CaSR</text>
+      <text class="cls-24" transform="translate(397.17 63.82)" style="white-space: pre;">Ca²</text>
+      <text class="cls-25" transform="translate(429.4 57.16) scale(0.58)" style="white-space: pre;">+</text>
+      <text class="cls-24" transform="translate(436.21 63.82)" style="white-space: pre;"> </text>
+      <text class="cls-25" transform="translate(483.29 467.3)" style="white-space: pre;">blood <tspan x="-2.81" y="20">stream</tspan></text>
+      <text class="cls-25" transform="translate(209 454.06)" style="white-space: pre;">parathyroid cell</text>
+      <text class="cls-26" transform="translate(126.83 339.34)" style="white-space: pre;">Nucleus</text>
+      <text class="cls-26" transform="translate(213.36 405.14)" style="white-space: pre;">cytoplasm</text>
+      <text class="cls-24" transform="translate(474.55 195.77)" style="white-space: pre;">PTH</text>
+      <text class="cls-27" transform="translate(514.55 201.43) scale(0.58)" style="white-space: pre;">p</text>
+      <text class="cls-24" transform="translate(106.8 281.85)" style="white-space: pre;">PTH gene</text>
+      <text class="cls-24" transform="translate(117.04 42.55)" style="white-space: pre;"> </text>
+      <text class="cls-27" transform="translate(199.28 48.21) scale(0.58)" style="white-space: pre;"> </text>
+      <text class="cls-24" style="white-space: pre; font-size: 20px;" x="160.851" y="46.599">D</text>
+      <text class="cls-27" style="white-space: pre; font-size: 11.6px;" x="175.291" y="52.259">3</text>
+      <text class="cls-24" style="white-space: pre; font-size: 20px;" x="286.979" y="47.297">Pi</text>
+      <text class="cls-24" transform="translate(63.87 117.55)" style="white-space: pre;">di<tspan class="cls-28" x="15.57" y="0">f</tspan><tspan x="20.76" y="0">fusion</tspan></text>
+      <text class="cls-24" transform="translate(154.86 224.21)" style="white-space: pre;">VDR</text>
+      <g id="Minus-8" data-name="Minus" transform="matrix(1, 0, 0, 1, -10.941101, 3.217971)">
+        <circle class="cls-23" cx="242.3" cy="142.65" r="8"/>
+        <path class="cls-2" d="M237.8,143.81V141.5h9v2.31Z"/>
+      </g>
+      <g id="Minus-9" data-name="Minus" transform="matrix(1, 0, 0, 1, -4.77627, 7.483927)">
+        <circle class="cls-23" cx="396.32" cy="170.01" r="8"/>
+        <path class="cls-2" d="M391.82,171.17v-2.31h9v2.31Z"/>
+      </g>
+      <g id="Minus-10" data-name="Minus">
+        <circle class="cls-23" cx="158.47" cy="240.8" r="8"/>
+        <path class="cls-2" d="M154,242v-2.31h9V242Z"/>
+      </g>
+      <g id="Plus-22" data-name="Plus" transform="matrix(1, 0, 0, 1, -6.435942, 15.44626)">
+        <circle class="cls-29" cx="303.41" cy="141.57" r="8"/>
+        <path class="cls-2" d="M302.29,146.07v-3.35h-3.38v-2.31h3.38v-3.34h2.24v3.34h3.38v2.31h-3.38v3.35Z"/>
+      </g>
+      <text x="655.196" y="104.588" style="white-space: pre; fill: rgb(51, 51, 51); font-size: 24px;"> </text>
+    </g>
+    <g id="Zoom_Rahmen" data-name="Zoom Rahmen">
+      <g id="Neues_Symbol_2-9" data-name="Neues Symbol 2">
+        <g id="Kidney_klein-12" data-name="Kidney klein">
+          <circle class="cls-30" cx="50" cy="50" r="30"/>
+        </g>
+        <rect class="cls-30" width="560" height="500"/>
+      </g>
+    </g>
+    <text style="fill: rgb(251, 4, 4); font-size: 20px; white-space: pre;" x="232.972" y="285.849">synthesis</text>
+    <text x="468.904" y="124.647" style="white-space: pre; fill: rgb(51, 51, 51); font-size: 24px;"> </text>
+    <text style="fill: rgb(26, 69, 84); white-space: pre; font-size: 15px;" x="283.167" y="368.418">degradation</text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-size: 24px;" x="582.711" y="263.737"> </text>
+    <text style="fill: rgb(254, 5, 5); font-size: 20px; white-space: pre;" x="253.655" y="295.221" transform="matrix(0.999999, 0, 0, 1, 5.651873, 13.187325)">(1)</text>
+  </g>
+  <text transform="matrix(1, 0, 0, 1.000001, -17.432703, 14.446331)" style="fill: rgb(26, 69, 84); white-space: pre;" x="421.407" y="255.917">exocytosis</text>
+</svg>

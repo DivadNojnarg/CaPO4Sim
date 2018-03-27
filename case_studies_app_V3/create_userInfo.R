@@ -5,7 +5,7 @@ create_userInfo <- function(input) {
     image = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
       generate_userFields(input)$image
     } else {
-      "happy.png"
+      "/images_patient_info/happy.png"
     },
     description = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
       generate_userFields(input)$description

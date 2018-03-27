@@ -90,17 +90,21 @@ generate_nodes_Ca <- function(input) {
               ifelse(input$network_hormonal_choice == "TRUE","image","text"),
               ifelse(input$network_hormonal_choice == "TRUE","image","text"),
               ifelse(input$network_hormonal_choice == "TRUE","image","text")), 
-    image = c("intestine.svg","plasma.svg","rapid-bone.svg",
-              "bone.svg","kidney.svg","kidney_zoom1.svg","urine.svg",
-              "cells.svg","Cap.svg","PO4.svg",
+    image = c("/CaPO4_network/intestine.svg", "/CaPO4_network/plasma.svg",
+              "/CaPO4_network/rapid-bone.svg", "/CaPO4_network/bone.svg",
+              "/CaPO4_network/kidney.svg", "/CaPO4_network/kidney_zoom1.svg",
+              "/CaPO4_network/urine.svg", "/CaPO4_network/cells.svg", 
+              "/CaPO4_network/Cap.svg", "/CaPO4_network/PO4.svg",
               if (is.null(input$background_choice)) {
-                "parathyroid_gland.svg"
+                "/CaPO4_network/parathyroid_gland.svg"
               } else if (input$background_choice == "rat") {
-                "parathyroid_gland.svg"
+                "/CaPO4_network/parathyroid_gland.svg"
               } else {
-                "parathyroid_gland_human.svg"
+                "/CaPO4_network/parathyroid_gland_human.svg"
               }
-              ,"PTH.svg", "D3.svg","D3.svg","D3.svg","FGF23.svg"),
+              ,"/CaPO4_network/PTH.svg", "/CaPO4_network/D3.svg",
+              "/CaPO4_network/D3.svg", "/CaPO4_network/D3.svg",
+              "/CaPO4_network/FGF23.svg"),
     label = c(rep("", 6), rep("",10)),
     fixed = list("x" = TRUE, "y" = TRUE),
     

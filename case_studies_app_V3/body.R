@@ -217,7 +217,7 @@ body <- dashboardBody(
       tabName = "about",
       div(id = "about_us",
           HTML(paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
-                      border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
+                      border=\"0\" align=\"center\"  src=\"/logos/about_us.jpg\"/> "))#,
           #HTML(paste(tags$img(src = "about_us.jpg")))
       )
     ),

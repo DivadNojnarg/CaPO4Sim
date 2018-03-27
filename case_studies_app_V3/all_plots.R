@@ -14,7 +14,7 @@ colfuncPO4 <- colorRampPalette(c("darkred", "pink", "yellow"))(20)
 # .... #
 
 # load path to data
-path_to_php1 <- paste0(getwd(), "/www/php1.csv") 
+path_to_php1 <- paste0(getwd(), "/www/datas/php1.csv") 
 #path_to_php1 <- "/srv/shiny-server/capApp/case_studies_app/www/php1.csv" 
 php1_table <- read.csv(path_to_php1)
 # create the sequence of PTH production rate
@@ -180,7 +180,7 @@ make_plot_php1 <- function(input) {
 # .......#
 
 # load path to data
-path_to_hypoD3 <- paste0(getwd(), "/www/hypoD3.csv")
+path_to_hypoD3 <- paste0(getwd(), "/www/datas/hypoD3.csv")
 #path_to_hypoD3 <- "/srv/shiny-server/capApp/case_studies_app/www/hypoD3.csv"
 hypoD3_table <- read.csv(path_to_hypoD3)
 # create the sequence of D3 inact and reverse the vector
@@ -361,7 +361,7 @@ make_plot_hypoD3 <- function(input) {
 # ........ #
 
 # path to data
-path_to_hypopara <- paste0(getwd(),"/www/hypopara.csv")
+path_to_hypopara <- paste0(getwd(),"/www/datas/hypopara.csv")
 #path_to_hypopara <- "/srv/shiny-server/capApp/case_studies_app/www/hypopara.csv"
 hypopara_table <- read.csv(path_to_hypopara)
 hypopara_vec <- rev(4.192 * seq(0, 1, by = 0.01)) # create the sequence of PTH production rate
@@ -544,7 +544,7 @@ make_plot_hypopara <- function(input) {
 # .... #
 
 # path to data
-path_to_Ca_iv <- paste0(getwd(),"/www/iv_Ca.csv")
+path_to_Ca_iv <- paste0(getwd(),"/www/datas/iv_Ca.csv")
 #path_to_Ca_iv <- "/srv/shiny-server/capApp/case_studies_app/www/iv_Ca.csv"
 Ca_iv_table <- read.csv(path_to_Ca_iv)
 
@@ -639,7 +639,7 @@ make_plot_Ca_inject <- function(input){
 # .... #
 
 # path to data
-path_to_PO4_iv <- paste0(getwd(),"/www/iv_PO4.csv")
+path_to_PO4_iv <- paste0(getwd(),"/www/datas/iv_PO4.csv")
 #path_to_PO4_iv <- "/srv/shiny-server/capApp/case_studies_app/www/iv_PO4.csv"
 PO4_iv_table <- read.csv(path_to_PO4_iv)
 
@@ -752,7 +752,7 @@ make_plot_PO4_inject <- function(input){
 # .... #
 
 # path to data
-path_to_PO4_gav <- paste0(getwd(),"/www/gav_PO4.csv")
+path_to_PO4_gav <- paste0(getwd(),"/www/datas/gav_PO4.csv")
 #path_to_PO4_gav <- "/srv/shiny-server/capApp/case_studies_app/www/gav_PO4.csv"
 PO4_gav_table <- read.csv(path_to_PO4_gav)
 

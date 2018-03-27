@@ -38,7 +38,7 @@ app_css <- function() {
               .network_caprat{
                 padding-left: 0; 
                 padding-right: 0;
-                background-image:url('rat_wholebody.svg');
+                background-image:url('/CaPO4_network/rat_wholebody.svg');
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center;
@@ -48,7 +48,7 @@ app_css <- function() {
               .network_caphuman{
                 padding-left: 0; 
                 padding-right: 0;
-                background-image:url('human_wholebody.svg');
+                background-image:url('/CaPO4_network/human_wholebody.svg');
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center;

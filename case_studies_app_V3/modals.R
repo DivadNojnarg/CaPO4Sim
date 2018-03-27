@@ -7,7 +7,7 @@ modal_php1 <- modalDialog(
     tags$br(), tags$br(),
     fluidRow(
       column(2, align = "left",
-             tags$img(src = "php1_notif_1-1.svg")
+             tags$img(src = "/modal_php1/modal_php1_1.svg")
       ),
       column(4,
              tags$i("Notice that in rats, there are only 2 parathyroid glands 
@@ -27,7 +27,7 @@ modal_php1 <- modalDialog(
                     PTH secretion is stimulated.")
       ),
       column(8, align = "right",
-             tags$img(src = "php1_notif_1-2.svg")
+             tags$img(src = "/modal_php1/modal_php1_2.svg")
       )
     ),
     "The relationship between PTH secretion and \\([Ca^{2+}]_p\\) is defined 
@@ -37,7 +37,7 @@ modal_php1 <- modalDialog(
     
     fluidRow(
       column(6, align = "left",
-             tags$img(src = "php1_notif_1-3.svg")
+             tags$img(src = "/modal_php1/modal_php1_3.svg")
       ),
       column(6,
             tags$i("During PHP1, \\([Ca^{2+}]_p\\) is expected to be raised, while
@@ -74,7 +74,7 @@ modal_hypopara <- modalDialog(
   and the faster). Besides, diuretics help in avoiding the hypercalciuria due to
   vitamin D3 supplementation. Indeed, PTH effect on renal calcium reabsorption is
   significantly lowered. Hyperphosphatemia is cured by reducing phosphate intake.",
-  tags$img(src = "hypopara_notif_1-1.svg"),
+  tags$img(src = "/modal_hypopara/modal_hypopara.svg"),
   "In the following case-study, you will be explained why all these symptoms appear.
   Finally, be careful not to mingle hypoparathyroidism and pseudo-hypoparathyroidism,
   the later being associated with a resistance to the parathyroid hormone action.",
@@ -95,7 +95,7 @@ modal_hypoD3 <- modalDialog(
   which may be due to a reduced skin synthesis, a decreased intake, liver failure, 
   chronic kidney disease, nephrotic syndrom.
   About 1 billion of people on earth have vitamin D deficiency.",
-  tags$img(src = "hypoD3_notif_1-1.svg"),
+  tags$img(src = "/modal_hypoD3/modal_hypoD3.svg"),
   "Vitamin D deficiency causes hypocalcemia, hypophosphatemia as well as high PTH levels 
   (secondary hyperparathyroidism).
   This may result in bone diseases such as osteoporosis as well as osteopenia.
