@@ -82,6 +82,7 @@ library(DT)
   - when a case study is selected, the corresponding node is blinking
     as long as the counter is equal to 1.
   - remove PTHp node in plasma and merge with PTHg (does not fit well in humans)
+  - replace all png detailed pictures by svgs for all case studies
 + Graphs
   - change box size (plot area, height = 950px)
   - move slider at the bottom (plot area)
@@ -90,6 +91,7 @@ library(DT)
   - some code syntax correction
   - indicates the user to enable regulations when he launches case studies
     if they are not already enabled
+  - sort files in the www folder
   
 
 ## Changelog version 3.1 (global app)
