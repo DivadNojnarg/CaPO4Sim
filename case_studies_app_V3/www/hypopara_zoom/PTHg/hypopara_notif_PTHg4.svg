@@ -129,17 +129,17 @@
             <path class="cls-15" d="M410.39,217.54c-1.61,3.15-4.73,3.88-7,1.63s-2.77-6.62-1.16-9.77,4.72-3.87,7-1.62S412,214.4,410.39,217.54Z" style="fill: none; stroke: rgb(195, 74, 41); stroke-dasharray: 0px, 4.21px; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 1.5px;"/>
           </g>
         </g>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="407.03" y1="270.624" x2="493.796" y2="221.414" transform="matrix(0.869141, 0.494565, -0.494565, 0.869141, 180.613018, -190.564541)"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="491.907" y1="238.285" x2="503.814" y2="245.856" transform="matrix(0.975198, 0.221334, -0.221334, 0.975198, 65.926274, -104.189563)"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="490.306" y1="243.157" x2="502.213" y2="250.728" transform="matrix(0.194062, -0.980989, 0.980989, 0.194062, 159.394213, 688.293644)" bx:origin="0.696 0.526"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="298.328" y1="336.455" x2="371.681" y2="293.689" transform="matrix(-0.856567, 0.516036, -0.516036, -0.856567, 784.546766, 412.077956)"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="313.452" y1="347.532" x2="325.359" y2="355.103" transform="matrix(-0.669324, 0.742971, -0.742971, -0.669324, 794.209892, 349.153801)"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="306.337" y1="345.499" x2="318.244" y2="353.07" transform="matrix(0.761341, 0.648352, -0.648352, 0.761341, 301.67488, -120.580301)" bx:origin="0.696 0.526"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="407.03" y1="270.624" x2="493.796" y2="221.414" transform="matrix(0.869141, 0.494565, -0.494565, 0.869141, 180.613018, -190.564541)"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="491.907" y1="238.285" x2="503.814" y2="245.856" transform="matrix(0.975198, 0.221334, -0.221334, 0.975198, 65.926274, -104.189563)"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="490.306" y1="243.157" x2="502.213" y2="250.728" transform="matrix(0.194062, -0.980989, 0.980989, 0.194062, 159.394213, 688.293644)" bx:origin="0.696 0.526"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="298.328" y1="336.455" x2="371.681" y2="293.689" transform="matrix(-0.856567, 0.516036, -0.516036, -0.856567, 784.546766, 412.077956)"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="313.452" y1="347.532" x2="325.359" y2="355.103" transform="matrix(-0.669324, 0.742971, -0.742971, -0.669324, 794.209892, 349.153801)"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="306.337" y1="345.499" x2="318.244" y2="353.07" transform="matrix(0.761341, 0.648352, -0.648352, 0.761341, 301.67488, -120.580301)" bx:origin="0.696 0.526"/>
         <line style="fill: rgb(26, 69, 84); stroke-dasharray: 10px; stroke: rgb(255, 235, 4); stroke-width: 2;" x1="349.876" y1="192.554" x2="463.889" y2="156.632" transform="matrix(-0.00113, 0.999999, -0.999999, -0.00113, 578.773515, -228.926971)"/>
         <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="409.003" y1="222.157" x2="430.867" y2="236.92" transform="matrix(0.642848, -0.765994, 0.765994, 0.642848, -24.607905, 407.067425)" bx:origin="0.696 0.526"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px;" x1="216.664" y1="186.138" x2="352.836" y2="110.391" transform="matrix(-0.510014, 0.860166, -0.860166, -0.510014, 557.508551, -21.050907)"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="280.344" y1="221.441" x2="292.251" y2="229.012" transform="matrix(-0.238722, 0.971088, -0.971088, -0.238722, 573.357696, 0.972924)"/>
-        <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="272.929" y1="221.886" x2="284.836" y2="229.457" transform="matrix(0.977365, 0.211558, -0.211558, 0.977365, 54.149481, -54.38114)" bx:origin="0.696 0.526"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(26, 69, 84);" x1="216.664" y1="186.138" x2="352.836" y2="110.391" transform="matrix(-0.510014, 0.860166, -0.860166, -0.510014, 557.508551, -21.050907)"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="280.344" y1="221.441" x2="292.251" y2="229.012" transform="matrix(-0.238722, 0.971088, -0.971088, -0.238722, 573.357696, 0.972924)"/>
+        <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="272.929" y1="221.886" x2="284.836" y2="229.457" transform="matrix(0.977365, 0.211558, -0.211558, 0.977365, 54.149481, -54.38114)" bx:origin="0.696 0.526"/>
         <line style="fill: rgb(26, 69, 84); stroke-width: 2; stroke: rgb(26, 69, 84);" x1="237.638" y1="272.339" x2="318.367" y2="226.986" transform="matrix(0.869141, 0.494565, -0.494565, 0.869141, 159.853438, -104.81959)"/>
         <line style="fill: rgb(26, 69, 84); stroke-width: 2; stroke: rgb(26, 69, 84);" x1="313.963" y1="243.632" x2="323.865" y2="248.625" transform="matrix(0.975198, 0.221334, -0.221334, 0.975198, 62.386275, -64.482033)"/>
         <line style="fill: rgb(26, 69, 84); stroke-width: 2; stroke: rgb(26, 69, 84);" x1="319.017" y1="251.897" x2="328.17" y2="259.874" transform="matrix(0.20478, -0.978808, 0.978808, 0.20478, 2.695369, 517.258363)" bx:origin="0.073 0.636"/>
@@ -199,6 +199,6 @@
     <text transform="matrix(0.999999, 0, 0, 1, 158.772247, -112.634903)" style="fill: rgb(254, 5, 5); font-size: 20px; white-space: pre;" x="253.655" y="295.221">(4)</text>
   </g>
   <text transform="matrix(1, 0, 0, 1.000001, -17.432703, 12.446331)" style="fill: rgb(26, 69, 84); white-space: pre;" x="421.407" y="255.917">exocytosis</text>
-  <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px;" x1="132.76" y1="192.808" x2="294.992" y2="109.527" transform="matrix(-0.00113, 0.999999, -0.999999, -0.00113, 365.285092, -62.537546)"/>
-  <line style="stroke: rgb(0, 0, 0); stroke-width: 4; fill: rgb(26, 69, 84);" x1="247.862" y1="225.738" x2="259.578" y2="233.876" transform="matrix(0.444318, -0.895869, 0.895869, 0.444318, -63.802925, 357.174278)" bx:origin="0.696 0.526"/>
+  <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(26, 69, 84);" x1="132.76" y1="192.808" x2="294.992" y2="109.527" transform="matrix(-0.00113, 0.999999, -0.999999, -0.00113, 365.285092, -62.537546)"/>
+  <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="247.862" y1="225.738" x2="259.578" y2="233.876" transform="matrix(0.444318, -0.895869, 0.895869, 0.444318, -63.802925, 357.174278)" bx:origin="0.696 0.526"/>
 </svg>
