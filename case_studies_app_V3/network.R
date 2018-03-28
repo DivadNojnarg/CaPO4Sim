@@ -482,15 +482,83 @@ CaSR_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079
 generate_edges_Ca <- function(input) {
   req(input$width_organs, input$width_hormones)
   data.frame(
-    from = c(1,2,3,rep(3,2),4,2,rep(5,2),rep(5,2),8,
-             rep(9,3),rep(10,3),rep(11,2),11,rep(13,2),rep(14,2),rep(15,2),
-             rep(16,2)), 
-    to = c(2,3,2,rep(4,2),2,5,rep(2,2),rep(7,2),2,11,5,
+    from = c(1, 
+             # change the from direction depending on the net flux result
+             if (input$run_php1) {
+                2
+             } else if (input$run_hypopara) {
+              3
+             } else if (input$run_hypoD3) {
+              3
+            } else {
+              2
+            },
+            if (input$run_php1) {
+              2
+            } else if (input$run_hypopara) {
+              3
+            } else if (input$run_hypoD3) {
+              3
+            } else {
+              2
+            },
+            rep(3,2),4,2,rep(5,2),rep(5,2),
+            if (input$run_php1) {
+              2
+            } else if (input$run_hypopara) {
+              8
+            } else if (input$run_hypoD3) {
+              8
+            } else {
+              2
+            },
+            rep(9,3),rep(10,3),rep(11,2),11,rep(13,2),rep(14,2),rep(15,2),
+            rep(16,2)), 
+    to = c(2,
+           if (input$run_php1) {
+             3
+           } else if (input$run_hypopara) {
+             2
+           } else if (input$run_hypoD3) {
+             2
+           } else {
+             3
+           },
+           if (input$run_php1) {
+             3
+           } else if (input$run_hypopara) {
+             2
+           } else if (input$run_hypoD3) {
+             2
+           } else {
+             3
+           },
+           rep(4,2),2,5,rep(2,2),rep(7,2),
+           if (input$run_php1) {
+             8
+           } else if (input$run_hypopara) {
+             2
+           } else if (input$run_hypoD3) {
+             2
+           } else {
+             8
+           },
+           11,5,
            13,11,13,16,5,13,4,11,16,14,5,4,1,13,5),
     
-    arrows = list(to = list(enabled = c(TRUE, rep(FALSE,2), rep(TRUE,8), FALSE, rep(TRUE,17)), 
-                            scaleFactor = 1, 
-                            type = "arrow")),
+    arrows = list(
+      to = list(
+        enabled = c(
+          TRUE, 
+          # show or hode arrow symbol depending on the net flux result
+          rep(if (input$run_php1 | input$run_hypopara | input$run_hypoD3) TRUE else FALSE, 2), 
+          rep(TRUE,8), 
+          if (input$run_php1 | input$run_hypopara | input$run_hypoD3) TRUE else FALSE, 
+          rep(TRUE,17)
+        ), 
+      scaleFactor = 1, 
+      type = "arrow")
+    ),
     
     label = c("","Net Ca","Net PO4","Ca","PO4",rep("",2),"Ca","PO4",
               "Ca","PO4", "Net PO4",rep("-",3),"+","-","+",
@@ -499,7 +567,9 @@ generate_edges_Ca <- function(input) {
            "Reabs_PO4","U_Ca","U_PO4","Net_PO4_cells",13:29),
     width = c(rep(input$width_organs,12), rep(input$width_hormones,17)),
     font.size = c(rep(25,12),rep(60,17)),
-    font.align = c("","top","bottom","top","bottom",rep("",4),"bottom",
+    font.align = c("", if (!input$run_hypopara | !input$run_hypoD3) "bottom" else "top", 
+                   if (!input$run_hypopara | !input$run_hypoD3) "bottom" else "top",
+                   "top","bottom",rep("",4),"bottom",
                    "top","bottom","bottom",rep("top",2),"top","top",
                    "top","","bottom","top","top","bottom","bottom","top","top",
                    rep("top",2),"bottom"),
