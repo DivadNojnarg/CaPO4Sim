@@ -184,9 +184,9 @@ generate_nodes_Ca <- function(input) {
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"/php1_zoom/kidney/php1_notif_kidney1.svg\"/></a>", 
                    "</div>", "<div class=\"col-sm-6\">", 
-                   "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
+                   "<a href=\"/php1_zoom/kidney/php1_notif_kidney2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>", 
+                   align=\"center\"  src=\"/php1_zoom/kidney/php1_notif_kidney2.svg\"/></a>", 
                    "</div>", "</div>", "<br>",
                    "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                    "<a href=\"/php1_zoom/kidney/php1_notif_kidney3.svg\" target=\"_blank\">
@@ -205,9 +205,9 @@ generate_nodes_Ca <- function(input) {
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"/hypopara_zoom/kidney/hypopara_notif_kidney1.svg\"/></a>", 
                    "</div>", "<div class=\"col-sm-6\">", 
-                   "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
+                   "<a href=\"/hypopara_zoom/kidney/hypopara_notif_kidney2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>", 
+                   align=\"center\"  src=\"/hypopara_zoom/kidney/hypopara_notif_kidney2.svg\"/></a>", 
                    "</div>", "</div>", "<br>",
                    "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                    "<a href=\"/hypopara_zoom/kidney/hypopara_notif_kidney3.svg\" target=\"_blank\">
@@ -226,9 +226,9 @@ generate_nodes_Ca <- function(input) {
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                    align=\"center\"  src=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney1.svg\"/></a>", 
                    "</div>", "<div class=\"col-sm-6\">", 
-                   "<a href=\"php1_notif_PO4_PTreab.png\" target=\"_blank\">
+                   "<a href=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"php1_notif_PO4_PTreab.png\"/></a>", 
+                   align=\"center\"  src=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney2.svg\"/></a>", 
                    "</div>", "</div>", "<br>",
                    "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                    "<a href=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney3.svg\" target=\"_blank\">
