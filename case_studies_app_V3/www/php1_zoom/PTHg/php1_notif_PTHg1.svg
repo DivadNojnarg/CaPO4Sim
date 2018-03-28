@@ -84,15 +84,7 @@
         <g id="PTH_kugel-12" data-name="PTH kugel">
           <circle class="cls-16" cx="498.11" cy="215.59" r="4.5"/>
         </g>
-        <g id="PTH_kugel-13" data-name="PTH kugel">
-          <circle class="cls-16" cx="304.5" cy="71.57" r="4.5"/>
-        </g>
-        <g id="PTH_kugel-14" data-name="PTH kugel">
-          <circle class="cls-16" cx="295" cy="59.01" r="4.5"/>
-        </g>
-        <g id="PTH_kugel-15" data-name="PTH kugel">
-          <circle class="cls-16" cx="272" cy="69.36" r="4.5"/>
-        </g>
+        <g id="PTH_kugel-13" data-name="PTH kugel"/>
         <g id="PTH_kugel-16" data-name="PTH kugel">
           <circle class="cls-16" cx="516.69" cy="234.46" r="4.5"/>
         </g>
@@ -151,6 +143,15 @@
         <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(26, 69, 84);" x1="343.553" y1="192.561" x2="463.889" y2="156.632" transform="matrix(-0.00113, 0.999999, -0.999999, -0.00113, 578.773515, -228.926971)"/>
         <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(26, 69, 84);" x1="414.831" y1="229.867" x2="426.547" y2="238.004" transform="matrix(0.642848, -0.765994, 0.765994, 0.642848, -28.28512, 407.630251)" bx:origin="0.696 0.526"/>
         <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="310.005" y1="250.44" x2="339.979" y2="268.924" transform="matrix(0.20478, -0.978808, 0.978808, 0.20478, -5.564351, 518.925882)" bx:origin="0.073 0.636"/>
+        <g id="g-7" data-name="D3" transform="matrix(1, 0, 0, 1, -16.624239, -3.173166)">
+          <path class="cls-17" d="M163.05,63.55a5.46,5.46,0,0,0,10.91,0V54.1H163Z" style="fill: rgb(241, 172, 106); stroke: rgb(212, 111, 51); stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+        <g id="g-8" data-name="D3" transform="matrix(1, 0, 0, 1, -1.207014, 19.218519)">
+          <path class="cls-17" d="M163.05,63.55a5.46,5.46,0,0,0,10.91,0V54.1H163Z" style="fill: rgb(241, 172, 106); stroke: rgb(212, 111, 51); stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+        <g id="_Gruppe_14" data-name="&lt;Gruppe&gt;" transform="matrix(1, 0, 0, 1, -217.576614, -218.861237)">
+          <circle class="cls-26" cx="503.65" cy="282.7" r="4.5" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
       </g>
       <polyline class="cls-22" points="135.34 264.1 153.82 264.1 153.82 257.4 173.77 257.4"/>
       <polygon class="cls-23" points="171.12 260.68 170.57 260.09 173.46 257.4 170.57 254.72 171.12 254.13 174.64 257.4 171.12 260.68"/>

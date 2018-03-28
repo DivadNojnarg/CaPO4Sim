@@ -15,15 +15,6 @@
       <path class="cls-4" d="M162.1,107.67c-77.47,48.15-114.73,147-70.53,230.84,22.43,42.54,62.25,70.61,109.26,80.63,47.94,10.21,124.31,16.66,173.7-1.34,29.12-10.61,50.82-51,57.83-93.53,8.18-49.63,20.61-96.62,4.42-146.24C422.22,133.38,386,102.91,333.28,90.3,275.78,76.54,200.67,83.69,162.1,107.67Z"/>
       <path class="cls-5" d="M162.1,107.67c-77.47,48.15-114.73,147-70.53,230.84,22.43,42.54,62.25,70.61,109.26,80.63,47.94,10.21,124.31,16.66,173.7-1.34,29.12-10.61,50.82-51,57.83-93.53,8.18-49.63,20.61-96.62,4.42-146.24C422.22,133.38,386,102.91,333.28,90.3,275.78,76.54,200.67,83.69,162.1,107.67Z"/>
       <circle class="cls-6" cx="154.99" cy="242.94" r="69.95"/>
-      <g id="CAP">
-        <circle class="cls-7" cx="408.29" cy="108.45" r="4.5"/>
-      </g>
-      <g id="CAP-2" data-name="CAP">
-        <circle class="cls-7" cx="382.83" cy="72.68" r="4.5"/>
-      </g>
-      <g id="CAP-3" data-name="CAP">
-        <circle class="cls-7" cx="408.47" cy="82.98" r="4.5"/>
-      </g>
       <g id="CaSR">
         <path class="cls-8" d="M373.14,127.23l-15.23-9.15a2.62,2.62,0,1,1,2.69-4.49l13,7.81,9.11-15.15-3.14-1.88-6.81,11.33a2.62,2.62,0,0,1-3.59.9L361.55,112a2.62,2.62,0,0,1-.9-3.59L372.33,89a2.6,2.6,0,0,1,3.58-.89l15.24,9.15a2.61,2.61,0,0,1-2.69,4.48l-13-7.81-9,15,3.13,1.88,6.81-11.33a2.62,2.62,0,0,1,3.59-.9l7.62,4.58a2.61,2.61,0,0,1,.89,3.59l-11.79,19.62A2.62,2.62,0,0,1,373.14,127.23Z"/>
       </g>
@@ -81,15 +72,6 @@
         <g id="PTH_kugel-12" data-name="PTH kugel">
           <circle class="cls-16" cx="498.11" cy="215.59" r="4.5"/>
         </g>
-        <g id="PTH_kugel-13" data-name="PTH kugel">
-          <circle class="cls-16" cx="304.5" cy="71.57" r="4.5"/>
-        </g>
-        <g id="PTH_kugel-14" data-name="PTH kugel">
-          <circle class="cls-16" cx="295" cy="59.01" r="4.5"/>
-        </g>
-        <g id="PTH_kugel-15" data-name="PTH kugel">
-          <circle class="cls-16" cx="272" cy="69.36" r="4.5"/>
-        </g>
         <g id="PTH_kugel-16" data-name="PTH kugel">
           <circle class="cls-16" cx="516.69" cy="234.46" r="4.5"/>
         </g>
@@ -143,6 +125,15 @@
         <line style="fill: rgb(26, 69, 84); stroke-width: 2; stroke: rgb(26, 69, 84);" x1="237.638" y1="272.339" x2="318.367" y2="226.986" transform="matrix(0.869141, 0.494565, -0.494565, 0.869141, 159.853438, -104.81959)"/>
         <line style="fill: rgb(26, 69, 84); stroke-width: 2; stroke: rgb(26, 69, 84);" x1="313.963" y1="243.632" x2="323.865" y2="248.625" transform="matrix(0.975198, 0.221334, -0.221334, 0.975198, 62.386275, -64.482033)"/>
         <line style="fill: rgb(26, 69, 84); stroke-width: 2; stroke: rgb(26, 69, 84);" x1="319.017" y1="251.897" x2="328.17" y2="259.874" transform="matrix(0.20478, -0.978808, 0.978808, 0.20478, 2.695369, 517.258363)" bx:origin="0.073 0.636"/>
+        <g id="_Gruppe_14" data-name="&lt;Gruppe&gt;" transform="matrix(1, 0, 0, 1, -231.003113, -223.84845)">
+          <circle class="cls-26" cx="503.65" cy="282.7" r="4.5" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round; font-family: Arial-ItalicMT, Arial; font-size: 20px; font-style: italic; line-height: 32px;"/>
+        </g>
+        <g id="g-6" data-name="&lt;Gruppe&gt;" transform="matrix(1, 0, 0, 1, -215.527603, -219.114532)">
+          <circle class="cls-26" cx="503.65" cy="282.7" r="4.5" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round; font-family: Arial-ItalicMT, Arial; font-size: 20px; font-style: italic; line-height: 32px;"/>
+        </g>
+        <g id="g-7" data-name="&lt;Gruppe&gt;" transform="matrix(1, 0, 0, 1, -200.048569, -227.527054)">
+          <circle class="cls-26" cx="503.65" cy="282.7" r="4.5" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round; font-family: Arial-ItalicMT, Arial; font-size: 20px; font-style: italic; line-height: 32px;"/>
+        </g>
       </g>
       <polyline class="cls-22" points="135.34 264.1 153.82 264.1 153.82 257.4 173.77 257.4"/>
       <polygon class="cls-23" points="171.12 260.68 170.57 260.09 173.46 257.4 170.57 254.72 171.12 254.13 174.64 257.4 171.12 260.68"/>

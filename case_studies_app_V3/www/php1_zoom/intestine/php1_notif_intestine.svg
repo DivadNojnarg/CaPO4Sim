@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 -5.831 560 625.717" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+<svg viewBox="0 -5.831 560 670.471" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <defs>
     <style>.cls-1{isolation:isolate;}.cls-15,.cls-2{fill:#fff;}.cls-3{fill:#fbf2f0;}.cls-20,.cls-23,.cls-32,.cls-33,.cls-4,.cls-5,.cls-6,.cls-8,.cls-9{fill:none;}.cls-11,.cls-15,.cls-19,.cls-31,.cls-33,.cls-4,.cls-8{stroke:#c34a29;}.cls-11,.cls-15,.cls-16,.cls-19,.cls-20,.cls-4,.cls-5,.cls-6,.cls-8,.cls-9{stroke-miterlimit:10;}.cls-4{stroke-width:4px;}.cls-5{stroke:#efd0c7;}.cls-5,.cls-6{stroke-width:2px;}.cls-6{stroke:#f1d3cc;}.cls-7{fill:#f9ccbf;}.cls-9{stroke:#1a4554;}.cls-10,.cls-18,.cls-22,.cls-26{fill:#1a4554;}.cls-11{fill:#f7e6e1;}.cls-12{fill:#1c8843;}.cls-13{fill:url(#Unbenannter_Verlauf_4);}.cls-14{fill:#f2987f;stroke:#d55a51;}.cls-14,.cls-24,.cls-25,.cls-31,.cls-33{stroke-linecap:round;stroke-linejoin:round;}.cls-16{fill:#c4d262;stroke:#798728;}.cls-17{fill:#f1d5ce;}.cls-18,.cls-22,.cls-23,.cls-26{font-size:20px;}.cls-18{font-family:ArialMT, Arial;}.cls-19{fill:#d47e67;}.cls-20{stroke:#ff4c00;}.cls-21{fill:#ff4c00;}.cls-22,.cls-23,.cls-26{font-family:Arial-BoldMT, Arial;font-weight:700;}.cls-23{stroke:#fff;stroke-width:3px;}.cls-24{fill:#f1ac6a;}.cls-24,.cls-25{stroke:#d46f33;}.cls-25{fill:#f7d3b0;}.cls-26{letter-spacing:0.03em;}.cls-27{letter-spacing:-0.07em;}.cls-28{letter-spacing:-0.02em;}.cls-29{letter-spacing:-0.06em;}.cls-30{fill:#fdeabf;}.cls-31{fill:#e2e9b2;stroke-width:1.5px;}.cls-33{stroke-width:0.75px;}.cls-34{mix-blend-mode:multiply;}</style>
     <linearGradient id="Unbenannter_Verlauf_4" x1="225.17" y1="24.89" x2="387.22" y2="24.89" gradientUnits="userSpaceOnUse">
@@ -60,7 +60,7 @@
         <circle class="cls-12" cx="397.94" cy="414.26" r="8"/>
         <path class="cls-2" d="M396.81,418.76v-3.34h-3.37v-2.31h3.37v-3.35h2.25v3.35h3.38v2.31h-3.38v3.34Z"/>
       </g>
-      <g id="Plus-6" data-name="Plus">
+      <g id="Plus-6" data-name="Plus" transform="matrix(1, 0, 0, 1, 18.416298, -7.059581)">
         <circle class="cls-12" cx="216.78" cy="301.38" r="8"/>
         <path class="cls-2" d="M215.65,305.88v-3.34h-3.37v-2.31h3.37v-3.35h2.25v3.35h3.38v2.31H217.9v3.34Z"/>
       </g>
@@ -71,9 +71,9 @@
       <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(36, 122, 2);" x1="242.184" y1="276.745" x2="278.824" y2="245.874" transform="matrix(0.633749, -0.773539, 0.773539, 0.633749, -106.723171, 297.214957)"/>
       <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="251.999" y1="234.334" x2="261.062" y2="241.741" transform="matrix(0.286669, -0.95803, 0.95803, 0.286669, -45.055873, 415.563301)"/>
       <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="253.693" y1="234.902" x2="264.852" y2="239.844" transform="matrix(-0.993364, -0.115013, 0.115013, -0.993364, 493.86864, 503.498042)" bx:origin="0.696 0.526"/>
-      <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(36, 122, 2);" x1="204.915" y1="329.738" x2="241.555" y2="298.867" transform="matrix(-0.770483, -0.63746, 0.63746, -0.770483, 194.878395, 698.770728)"/>
-      <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="195.413" y1="314.46" x2="204.476" y2="321.867" transform="matrix(-0.956641, -0.291271, 0.291271, -0.956641, 298.547712, 680.769659)"/>
-      <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="191.665" y1="310.633" x2="202.824" y2="315.575" transform="matrix(-0.119787, 0.9928, -0.9928, -0.119787, 534.298077, 152.757969)" bx:origin="0.696 0.526"/>
+      <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(36, 122, 2);" x1="221.915" y1="329.738" x2="258.555" y2="298.867" transform="matrix(-0.770483, -0.63746, 0.63746, -0.770483, 224.97664, 709.607548)"/>
+      <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="212.413" y1="314.46" x2="221.476" y2="321.867" transform="matrix(-0.956641, -0.291271, 0.291271, -0.956641, 331.810592, 685.721289)"/>
+      <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="208.665" y1="310.633" x2="219.824" y2="315.575" transform="matrix(-0.119787, 0.9928, -0.9928, -0.119787, 553.334461, 135.880394)" bx:origin="0.696 0.526"/>
       <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(36, 122, 2);" x1="232.183" y1="400.796" x2="278.511" y2="361.106" transform="matrix(-0.648999, 0.760789, -0.760789, -0.648999, 715.523382, 422.966201)"/>
       <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="259.167" y1="396.184" x2="268.23" y2="403.591" transform="matrix(-0.305654, 0.952143, -0.952143, -0.305654, 725.048935, 271.036122)"/>
       <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="250.995" y1="397.727" x2="262.154" y2="402.669" transform="matrix(0.990882, 0.134735, -0.134735, 0.990882, 56.297502, -31.21396)" bx:origin="0.696 0.526"/>
@@ -87,10 +87,6 @@
         <g id="_Gruppe_2" data-name="&lt;Gruppe&gt;">
           <circle class="cls-14" cx="150.68" cy="222.98" r="4.5"/>
         </g>
-        <ellipse class="cls-15" cx="159.95" cy="314.6" rx="7.05" ry="16"/>
-        <path class="cls-2" d="M188.93,298.6h-29c3.9,0,7.06,7.16,7.06,16s-3.16,16-7.06,16h29c3.9,0,7.06-7.16,7.06-16S192.83,298.6,188.93,298.6Z"/>
-        <path class="cls-2" d="M188.93,298.6h-29c3.9,0,7.06,7.16,7.06,16s-3.16,16-7.06,16h29c3.9,0,7.06-7.16,7.06-16S192.83,298.6,188.93,298.6Z"/>
-        <path class="cls-8" d="M188.93,298.6h-29c3.9,0,7.06,7.16,7.06,16s-3.16,16-7.06,16h29c3.9,0,7.06-7.16,7.06-16S192.83,298.6,188.93,298.6Z"/>
         <g id="CaBD-3" data-name="CaBD">
           <polygon class="cls-16" points="260.19 407.69 262.51 412.39 267.69 413.14 263.94 416.8 264.83 421.96 260.19 419.52 255.56 421.96 256.44 416.8 252.69 413.14 257.88 412.39 260.19 407.69"/>
         </g>
@@ -103,12 +99,6 @@
             <polyline class="cls-20" points="293.38 303.38 315.23 303.38 315.23 297.79 333.99 297.79"/>
             <polygon class="cls-21" points="331.33 301.06 330.79 300.47 333.68 297.79 330.79 295.1 331.33 294.52 334.85 297.79 331.33 301.06"/>
           </g>
-        </g>
-        <g id="Kreis_Zellwand" data-name="Kreis Zellwand">
-          <circle class="cls-15" cx="434.09" cy="335.99" r="16.5"/>
-        </g>
-        <g id="Kreis_Zellwand-2" data-name="Kreis Zellwand">
-          <circle class="cls-15" cx="434.09" cy="290.19" r="16.5"/>
         </g>
       </g>
     </g>
@@ -234,6 +224,14 @@
       <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="325.955" y1="422.502" x2="389.33" y2="387.442" transform="matrix(0.478438, -0.878121, 0.878121, 0.478438, -197.619972, 508.616563)"/>
       <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="306.734" y1="347.773" x2="335.557" y2="366.445" transform="matrix(0.203297, -0.979117, 0.979117, 0.203297, -93.793942, 598.948904)"/>
       <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="347.03" y1="345.099" x2="377.004" y2="363.583" transform="matrix(-0.982421, -0.186679, 0.186679, -0.982421, 625.679853, 772.628272)" bx:origin="0.073 0.636"/>
+      <circle class="cls-15" cx="447.148" cy="280.913" r="34" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-miterlimit: 10;"/>
+      <circle class="cls-15" cx="444.327" cy="360.468" r="34" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-miterlimit: 10;"/>
+      <text class="cls-18" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 57.7969px; perspective-origin: 28.8906px 0px; fill: rgb(26, 69, 84);" x="414.864" y="370.618">PMC<tspan class="cls-29" x="459.304" y="370.618" style="letter-spacing: -1.2px; font-size: 20px; word-spacing: 0px;">A</tspan></text>
+      <text class="cls-18" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 53.3281px; perspective-origin: 26.6562px 0px; fill: rgb(26, 69, 84);" x="420.484" y="288.807">NCX1</text>
+      <ellipse class="cls-15" cx="164.32" cy="90.33" rx="7.05" ry="16" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-miterlimit: 10;" transform="matrix(1.000001, 0, 0, 1, -41.816332, 225.794571)"/>
+      <path class="cls-2" d="M 202.854 300.125 L 122.504 300.125 C 126.404 300.125 129.554 307.285 129.554 316.125 C 129.554 324.965 126.404 332.125 122.504 332.125 L 202.854 332.125 C 206.754 332.125 209.914 324.975 209.914 316.125 C 209.914 307.275 206.754 300.125 202.854 300.125 Z" style="fill: rgb(255, 255, 255);"/>
+      <path class="cls-8" d="M 202.854 300.125 L 122.504 300.125 C 126.404 300.125 129.554 307.285 129.554 316.125 C 129.554 324.965 126.404 332.125 122.504 332.125 L 202.854 332.125 C 206.754 332.125 209.914 324.975 209.914 316.125 C 209.914 307.275 206.754 300.125 202.854 300.125 Z" style="fill: none; stroke: rgb(195, 74, 41); stroke-miterlimit: 10;"/>
+      <text class="cls-18" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 64.4219px; perspective-origin: 32.2031px 0px; fill: rgb(26, 69, 84);" x="133.974" y="323.255">TRPV6</text>
     </g>
     <g id="Zoom_Rahmen" data-name="Zoom Rahmen">
       <g id="Neues_Symbol_2-5" data-name="Neues Symbol 2">
@@ -250,6 +248,10 @@
   <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke-dasharray: 4px; stroke: rgb(36, 122, 2);" x1="364.743" y1="347.36" x2="405.639" y2="313.259" transform="matrix(0.56451, 0.825427, -0.825427, 0.56451, 439.986877, -176.560057)"/>
   <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="406.241" y1="327.711" x2="415.304" y2="335.118" transform="matrix(0.839021, 0.544099, -0.544099, 0.839021, 246.448063, -170.150153)"/>
   <line style="stroke-width: 4; fill: rgb(26, 69, 84); stroke: rgb(36, 122, 2);" x1="402.136" y1="333.695" x2="413.295" y2="338.637" transform="matrix(0.389267, -0.921125, 0.921125, 0.389267, -59.428125, 582.957799)" bx:origin="0.696 0.526"/>
-  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="116.676" y="575.478">VDR: vitamin D receptor</text>
-  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="115.781" y="608.198">CaBD: calbindin</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="15.676" y="575.478">VDR: vitamin D receptor</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="14.781" y="608.198">CaBD: calbindin</text>
+  <text transform="matrix(1, 0, 0, 0.999999, -19.421722, 8.444364)" style="fill: rgb(51, 51, 51); white-space: pre;" x="297.237" y="238.207">claudines</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="277.815" y="576.821">NCX1: Ca/Na exchanger</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" transform="matrix(1, 0, 0, 1, -41.376694, 10.97749)"><tspan x="318.347" y="597.931">PMCA: plasma membrane <tspan x="318.34698486328125" dy="1em">​</tspan>            Ca ATPase</tspan><tspan x="318.34698486328125" dy="1em">​</tspan><tspan x="318.34698486328125" dy="1em">​</tspan></text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="54.043" y="640.997" transform="matrix(1, 0, 0, 1, -39.687851, -0.844422)">TRPV: transient receptor <tspan x="54.042999267578125" dy="1em">​</tspan>            potential </text>
 </svg>

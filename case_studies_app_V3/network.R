@@ -151,42 +151,42 @@ generate_nodes_Ca <- function(input) {
       if (input$run_php1) {
         HTML(paste("<div class=\"row\"> <div class=\"col-sm-6\">
                    Effect of PTH on bone <hr>
-                   <a href=\"/php1_zoom/bone/php1_notif_bone.svg\" target=\"_blank\">
+                   <a href=\"/php1_zoom/bone/php1_notif_bone1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/php1_zoom/bone/php1_notif_bone.svg\"/></a>
+                   align=\"center\"  src=\"/php1_zoom/bone/php1_notif_bone1.svg\"/></a>
                    </div><div class=\"col-sm-6\">
                    Effect of D3 on bone <hr>
-                   <a href=\"/php1_zoom/bone/php1_notif_bone.svg\" target=\"_blank\">
+                   <a href=\"/php1_zoom/bone/php1_notif_bone2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/php1_zoom/bone/php1_notif_bone.svg\"/></a>
+                   align=\"center\"  src=\"/php1_zoom/bone/php1_notif_bone2.svg\"/></a>
                    </div></div>"
             )
         )
       } else if (input$run_hypopara) {
         HTML(paste("<div class=\"row\"> <div class=\"col-sm-6\">
                    Effect of PTH on bone <hr>
-                   <a href=\"/hypopara_zoom/bone/hypopara_notif_bone.svg\" target=\"_blank\">
+                   <a href=\"/hypopara_zoom/bone/hypopara_notif_bone1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypopara_zoom/bone/hypopara_notif_bone.svg\"/></a>
+                   align=\"center\"  src=\"/hypopara_zoom/bone/hypopara_notif_bone1.svg\"/></a>
                    </div><div class=\"col-sm-6\">
                    Effect of D3 on bone <hr>
-                   <a href=\"/hypopara_zoom/bone/hypopara_notif_bone.svg\" target=\"_blank\">
+                   <a href=\"/hypopara_zoom/bone/hypopara_notif_bone2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypopara_zoom/bone/hypopara_notif_bone.svg\"/></a>
+                   align=\"center\"  src=\"/hypopara_zoom/bone/hypopara_notif_bone2.svg\"/></a>
                    </div></div>"
           )
         )
       } else if (input$run_hypoD3) {
         HTML(paste("<div class=\"row\"> <div class=\"col-sm-6\">
                    Effect of PTH on bone <hr>
-                   <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone.svg\" target=\"_blank\">
+                   <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone.svg\"/></a>
+                   align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\"/></a>
                    </div><div class=\"col-sm-6\">
                    Effect of D3 on bone <hr>
-                   <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone.svg\" target=\"_blank\">
+                   <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone.svg\"/></a>
+                   align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone2.svg\"/></a>
                    </div></div>"
           )
         )

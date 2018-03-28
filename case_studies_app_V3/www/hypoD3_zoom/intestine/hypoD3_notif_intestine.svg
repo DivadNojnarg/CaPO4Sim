@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 -5.831 560 625.717" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+<svg viewBox="0 -5.831 560 667.938" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <defs>
     <style>.cls-1{isolation:isolate;}.cls-15,.cls-2{fill:#fff;}.cls-3{fill:#fbf2f0;}.cls-20,.cls-23,.cls-32,.cls-33,.cls-4,.cls-5,.cls-6,.cls-8,.cls-9{fill:none;}.cls-11,.cls-15,.cls-19,.cls-31,.cls-33,.cls-4,.cls-8{stroke:#c34a29;}.cls-11,.cls-15,.cls-16,.cls-19,.cls-20,.cls-4,.cls-5,.cls-6,.cls-8,.cls-9{stroke-miterlimit:10;}.cls-4{stroke-width:4px;}.cls-5{stroke:#efd0c7;}.cls-5,.cls-6{stroke-width:2px;}.cls-6{stroke:#f1d3cc;}.cls-7{fill:#f9ccbf;}.cls-9{stroke:#1a4554;}.cls-10,.cls-18,.cls-22,.cls-26{fill:#1a4554;}.cls-11{fill:#f7e6e1;}.cls-12{fill:#1c8843;}.cls-13{fill:url(#Unbenannter_Verlauf_4);}.cls-14{fill:#f2987f;stroke:#d55a51;}.cls-14,.cls-24,.cls-25,.cls-31,.cls-33{stroke-linecap:round;stroke-linejoin:round;}.cls-16{fill:#c4d262;stroke:#798728;}.cls-17{fill:#f1d5ce;}.cls-18,.cls-22,.cls-23,.cls-26{font-size:20px;}.cls-18{font-family:ArialMT, Arial;}.cls-19{fill:#d47e67;}.cls-20{stroke:#ff4c00;}.cls-21{fill:#ff4c00;}.cls-22,.cls-23,.cls-26{font-family:Arial-BoldMT, Arial;font-weight:700;}.cls-23{stroke:#fff;stroke-width:3px;}.cls-24{fill:#f1ac6a;}.cls-24,.cls-25{stroke:#d46f33;}.cls-25{fill:#f7d3b0;}.cls-26{letter-spacing:0.03em;}.cls-27{letter-spacing:-0.07em;}.cls-28{letter-spacing:-0.02em;}.cls-29{letter-spacing:-0.06em;}.cls-30{fill:#fdeabf;}.cls-31{fill:#e2e9b2;stroke-width:1.5px;}.cls-33{stroke-width:0.75px;}.cls-34{mix-blend-mode:multiply;}</style>
     <linearGradient id="Unbenannter_Verlauf_4" x1="225.17" y1="24.89" x2="387.22" y2="24.89" gradientUnits="userSpaceOnUse">
@@ -60,7 +60,7 @@
         <circle class="cls-12" cx="397.94" cy="414.26" r="8"/>
         <path class="cls-2" d="M396.81,418.76v-3.34h-3.37v-2.31h3.37v-3.35h2.25v3.35h3.38v2.31h-3.38v3.34Z"/>
       </g>
-      <g id="Plus-6" data-name="Plus">
+      <g id="Plus-6" data-name="Plus" transform="matrix(1, 0, 0, 1, 20.352823, -3.610985)">
         <circle class="cls-12" cx="216.78" cy="301.38" r="8"/>
         <path class="cls-2" d="M215.65,305.88v-3.34h-3.37v-2.31h3.37v-3.35h2.25v3.35h3.38v2.31H217.9v3.34Z"/>
       </g>
@@ -71,12 +71,14 @@
       <line style="stroke-width: 4; stroke-dasharray: 4px; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="242.184" y1="276.745" x2="278.824" y2="245.874" transform="matrix(0.633749, -0.773539, 0.773539, 0.633749, -106.723171, 297.214957)"/>
       <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="251.999" y1="234.334" x2="261.062" y2="241.741" transform="matrix(0.286669, -0.95803, 0.95803, 0.286669, -45.055873, 415.563301)"/>
       <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="253.693" y1="234.902" x2="264.852" y2="239.844" transform="matrix(-0.993364, -0.115013, 0.115013, -0.993364, 493.86864, 503.498042)" bx:origin="0.696 0.526"/>
-      <line style="stroke-width: 4; stroke-dasharray: 4px; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="204.915" y1="329.738" x2="241.555" y2="298.867" transform="matrix(-0.770483, -0.63746, 0.63746, -0.770483, 194.878395, 698.770728)"/>
-      <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="195.413" y1="314.46" x2="204.476" y2="321.867" transform="matrix(-0.956641, -0.291271, 0.291271, -0.956641, 298.547712, 680.769659)"/>
-      <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="191.665" y1="310.633" x2="202.824" y2="315.575" transform="matrix(-0.119787, 0.9928, -0.9928, -0.119787, 534.298077, 152.757969)" bx:origin="0.696 0.526"/>
+      <line style="stroke-width: 4; stroke-dasharray: 4px; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="223.915" y1="329.738" x2="260.555" y2="298.867" transform="matrix(-0.770483, -0.63746, 0.63746, -0.770483, 228.517603, 710.882458)"/>
+      <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="214.413" y1="314.46" x2="223.476" y2="321.867" transform="matrix(-0.956641, -0.291271, 0.291271, -0.956641, 335.723877, 686.303816)"/>
+      <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="210.665" y1="310.633" x2="221.824" y2="315.575" transform="matrix(-0.119787, 0.9928, -0.9928, -0.119787, 555.574023, 133.894756)" bx:origin="0.696 0.526"/>
       <line style="stroke-width: 4; stroke-dasharray: 4px; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="232.183" y1="400.796" x2="278.511" y2="361.106" transform="matrix(-0.648999, 0.760789, -0.760789, -0.648999, 715.523382, 422.966201)"/>
       <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="259.167" y1="396.184" x2="268.23" y2="403.591" transform="matrix(-0.305654, 0.952143, -0.952143, -0.305654, 725.048935, 271.036122)"/>
       <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="250.995" y1="397.727" x2="262.154" y2="402.669" transform="matrix(0.990882, 0.134735, -0.134735, 0.990882, 56.297502, -31.21396)" bx:origin="0.696 0.526"/>
+      <ellipse class="cls-15" cx="125.192" cy="315.498" rx="7.05" ry="16" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-miterlimit: 10;" transform="matrix(1.000001, 0, 0, 1, -2.988653, 0.909119)"/>
+      <path class="cls-2" d="M 203.324 300.349 L 122.974 300.349 C 126.874 300.349 130.024 307.509 130.024 316.349 C 130.024 325.189 126.874 332.349 122.974 332.349 L 203.324 332.349 C 207.224 332.349 210.384 325.199 210.384 316.349 C 210.384 307.499 207.224 300.349 203.324 300.349 Z" style="fill: rgb(255, 255, 255);"/>
     </g>
     <g id="Icons">
       <g id="Text">
@@ -87,10 +89,6 @@
         <g id="_Gruppe_2" data-name="&lt;Gruppe&gt;">
           <circle class="cls-14" cx="150.68" cy="222.98" r="4.5"/>
         </g>
-        <ellipse class="cls-15" cx="159.95" cy="314.6" rx="7.05" ry="16"/>
-        <path class="cls-2" d="M188.93,298.6h-29c3.9,0,7.06,7.16,7.06,16s-3.16,16-7.06,16h29c3.9,0,7.06-7.16,7.06-16S192.83,298.6,188.93,298.6Z"/>
-        <path class="cls-2" d="M188.93,298.6h-29c3.9,0,7.06,7.16,7.06,16s-3.16,16-7.06,16h29c3.9,0,7.06-7.16,7.06-16S192.83,298.6,188.93,298.6Z"/>
-        <path class="cls-8" d="M188.93,298.6h-29c3.9,0,7.06,7.16,7.06,16s-3.16,16-7.06,16h29c3.9,0,7.06-7.16,7.06-16S192.83,298.6,188.93,298.6Z"/>
         <g id="CaBD-3" data-name="CaBD">
           <polygon class="cls-16" points="260.19 407.69 262.51 412.39 267.69 413.14 263.94 416.8 264.83 421.96 260.19 419.52 255.56 421.96 256.44 416.8 252.69 413.14 257.88 412.39 260.19 407.69"/>
         </g>
@@ -103,12 +101,6 @@
             <polyline class="cls-20" points="293.38 303.38 315.23 303.38 315.23 297.79 333.99 297.79"/>
             <polygon class="cls-21" points="331.33 301.06 330.79 300.47 333.68 297.79 330.79 295.1 331.33 294.52 334.85 297.79 331.33 301.06"/>
           </g>
-        </g>
-        <g id="Kreis_Zellwand" data-name="Kreis Zellwand">
-          <circle class="cls-15" cx="434.09" cy="335.99" r="16.5"/>
-        </g>
-        <g id="Kreis_Zellwand-2" data-name="Kreis Zellwand">
-          <circle class="cls-15" cx="434.09" cy="290.19" r="16.5"/>
         </g>
       </g>
     </g>
@@ -123,12 +115,6 @@
       <text class="cls-18" transform="translate(73.16 402.48) rotate(-90)" style="white-space: pre;">hormone <tspan x="-1.67" y="20">regulation</tspan></text>
       <g id="_Gruppe_5" data-name="&lt;Gruppe&gt;">
         <path class="cls-24" d="M510,427.1a5.45,5.45,0,0,0,0,10.9h9.45V427Z"/>
-      </g>
-      <g id="_Gruppe_6" data-name="&lt;Gruppe&gt;">
-        <path class="cls-24" d="M535.3,421.37a5.45,5.45,0,1,0,0,10.9h9.46v-11Z"/>
-      </g>
-      <g id="_Gruppe_7" data-name="&lt;Gruppe&gt;">
-        <path class="cls-24" d="M515.47,409.32a5.45,5.45,0,1,0,0,10.9h9.45v-11Z"/>
       </g>
       <g id="_Gruppe_8" data-name="&lt;Gruppe&gt;">
         <path class="cls-25" d="M338.67,438.8H316.73a5.5,5.5,0,0,1-5.5-5.5h0a5.49,5.49,0,0,1,5.51-5.5l21.93.06a5.47,5.47,0,0,0,0,10.94Z"/>
@@ -243,6 +229,9 @@
         <rect class="cls-32" width="560" height="500"/>
       </g>
     </g>
+    <path class="cls-8" d="M 202.368 300.378 L 122.018 300.378 C 125.918 300.378 129.068 307.538 129.068 316.378 C 129.068 325.218 125.918 332.378 122.018 332.378 L 202.368 332.378 C 206.268 332.378 209.428 325.228 209.428 316.378 C 209.428 307.528 206.268 300.378 202.368 300.378 Z" style="fill: none; stroke: rgb(195, 74, 41); stroke-miterlimit: 10;"/>
+    <text class="cls-18" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 64.4219px; perspective-origin: 32.2031px 0px; fill: rgb(26, 69, 84);" x="134.158" y="323.282">TRPV6</text>
+    <text transform="matrix(1, 0, 0, 0.999999, -19.580206, 10.736089)" style="fill: rgb(51, 51, 51); white-space: pre;" x="297.237" y="238.207">claudines</text>
   </g>
   <line style="stroke-width: 4; stroke-dasharray: 4px; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="364.218" y1="316.299" x2="405.93" y2="281.539" transform="matrix(0.867022, 0.49827, -0.49827, 0.867022, 199.517064, -153.643308)"/>
   <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="405.385" y1="285.533" x2="414.448" y2="292.94" transform="matrix(0.992078, 0.125627, -0.125627, 0.992078, 39.583488, -49.205146)"/>
@@ -250,6 +239,13 @@
   <line style="stroke-width: 4; stroke-dasharray: 4px; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="364.743" y1="347.36" x2="405.639" y2="313.259" transform="matrix(0.56451, 0.825427, -0.825427, 0.56451, 439.986877, -176.560057)"/>
   <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="406.241" y1="327.711" x2="415.304" y2="335.118" transform="matrix(0.839021, 0.544099, -0.544099, 0.839021, 246.448063, -170.150153)"/>
   <line style="stroke-width: 4; fill: rgb(84, 26, 26); stroke: rgb(255, 0, 0);" x1="402.136" y1="333.695" x2="413.295" y2="338.637" transform="matrix(0.389267, -0.921125, 0.921125, 0.389267, -59.428125, 582.957799)" bx:origin="0.696 0.526"/>
-  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="116.676" y="575.478">VDR: vitamin D receptor</text>
-  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="115.781" y="608.198">CaBD: calbindin</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="22.623" y="572.279">VDR: vitamin D receptor</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="21.728" y="604.999">CaBD: calbindin</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="284.762" y="573.622">NCX1: Ca/Na exchanger</text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" transform="matrix(1, 0, 0, 1, -34.430412, 7.777895)"><tspan x="318.347" y="597.931">PMCA: plasma membrane <tspan x="318.34698486328125" dy="1em">​</tspan>            Ca ATPase</tspan><tspan x="318.34698486328125" dy="1em">​</tspan><tspan x="318.34698486328125" dy="1em">​</tspan></text>
+  <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="54.043" y="640.997" transform="matrix(1, 0, 0, 1, -32.74157, -4.044035)">TRPV: transient receptor <tspan x="54.042999267578125" dy="1em">​</tspan>            potential </text>
+  <circle class="cls-15" cx="448.104" cy="275.706" r="34" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-miterlimit: 10;"/>
+  <circle class="cls-15" cx="449.898" cy="347.877" r="34" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-miterlimit: 10;"/>
+  <text class="cls-18" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 57.7969px; perspective-origin: 28.8906px 0px; fill: rgb(26, 69, 84);" x="419.589" y="356.104">PMC<tspan class="cls-29" x="464.029" y="356.104" style="letter-spacing: -1.2px; font-size: 20px; word-spacing: 0px;">A</tspan></text>
+  <text class="cls-18" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 53.3281px; perspective-origin: 26.6562px 0px; fill: rgb(26, 69, 84);" x="421.44" y="283.6">NCX1</text>
 </svg>
