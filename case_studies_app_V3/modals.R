@@ -56,18 +56,19 @@ modal_php1 <- modalDialog(
     ),
     
     tags$br(),
-           tags$i("During PHP1, \\([Ca^{2+}]_p\\) is expected to rise, while
+    tags$i("During PHP1, \\([Ca^{2+}]_p\\) is expected to rise, while
            \\([P_i]_p\\) drops. PHP1 can be cured using cinacalcet which reduces
            PTH secretion, thereby blunting its effect on Ca and Pi homeostasis. 
            Ultimately, parathyroid surgery can be a definitive treatment. 
            Yet is it possible (but rare) that the tumor reappears."),
-           tags$br(),
-           tags$br(),
-           tags$i("In the following case study, you will be able to explore 
+    tags$br(),
+    tags$br(),
+    tags$i("In the following case study, you will be able to explore 
            the regulation mechanisms and consequences of PHP1. Note that
            a rat model of primary hyperparathyroidism already exists
            and can be found here."),
-          tags$a("https://www.ncbi.nlm.nih.gov/pubmed/3591940")
+    tags$a(href = "https://www.ncbi.nlm.nih.gov/pubmed/3591940", target = "_blank",
+           "https://www.ncbi.nlm.nih.gov/pubmed/3591940")
   ),
   size = "m"
 )
@@ -88,14 +89,17 @@ modal_hypopara <- modalDialog(
   and the faster). Besides, diuretics help in avoiding the hypercalciuria due to
   vitamin D3 supplementation. Indeed, PTH effect on renal calcium reabsorption is
   significantly lowered. Hyperphosphatemia is cured by reducing phosphate intake.",
-  tags$img(src = "/modal_hypopara/modal_hypopara.svg"),
+  tags$a(href = "/modal_hypopara/modal_hypopara.svg", target = "_blank",
+    tags$img(src = "/modal_hypopara/modal_hypopara.svg")
+  ),
   "In the following case study, you will be able to explore the regulation 
   mechanisms and consequences of hypoparathyroidism.
   Finally, be careful not to mingle hypoparathyroidism and pseudo-hypoparathyroidism,
   the later being associated with a resistance to the parathyroid hormone action.",
   "You can find extra informations here:",
   tags$br(),
-  tags$a("http://www.nejm.org/doi/full/10.1056/NEJMcp0803050"),
+  tags$a(href = "http://www.nejm.org/doi/full/10.1056/NEJMcp0803050", target = "_blank",
+         "http://www.nejm.org/doi/full/10.1056/NEJMcp0803050"),
   size = "m"
 )
 
@@ -110,7 +114,9 @@ modal_hypoD3 <- modalDialog(
   which may be due to a reduced skin synthesis, a decreased intake, liver failure, 
   chronic kidney disease, nephrotic syndrom.
   About 1 billion of people on earth have vitamin D deficiency.",
-  tags$img(src = "/modal_hypoD3/modal_hypoD3.svg"),
+  tags$a(href = "/modal_hypoD3/modal_hypoD3.svg", target = "_blank",
+    tags$img(src = "/modal_hypoD3/modal_hypoD3.svg")
+  ),
   "Vitamin D deficiency causes hypocalcemia, hypophosphatemia as well as high PTH levels 
   (secondary hyperparathyroidism).
   This may result in bone diseases such as osteoporosis as well as osteopenia.
@@ -121,9 +127,12 @@ modal_hypoD3 <- modalDialog(
   involved during vitamin D3 deficiency.",
   "You can find extra informations here:",
   tags$br(),
-  tags$a("http://www.nejm.org/doi/full/10.1056/NEJMra070553"),
-  tags$a("http://www.nejm.org/doi/pdf/10.1056/NEJMp1608005"),
-  tags$a("http://www.nejm.org/doi/full/10.1056/NEJMc063341#t=article"),
+  tags$a(href = "http://www.nejm.org/doi/full/10.1056/NEJMra070553", target = "_blank", 
+         "http://www.nejm.org/doi/full/10.1056/NEJMra070553"),
+  tags$a(href = "http://www.nejm.org/doi/pdf/10.1056/NEJMp1608005", target = "_blank",
+         "http://www.nejm.org/doi/pdf/10.1056/NEJMp1608005"),
+  tags$a(href = "http://www.nejm.org/doi/full/10.1056/NEJMc063341#t=article", target = "_blank",
+         "http://www.nejm.org/doi/full/10.1056/NEJMc063341#t=article"),
   size = "m"
 )
 
