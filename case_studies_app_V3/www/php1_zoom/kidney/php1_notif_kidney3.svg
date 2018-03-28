@@ -258,7 +258,7 @@
   <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="290.102" y1="188.355" x2="413.352" y2="115.326" transform="matrix(-0.855531, -0.517751, 0.517751, -0.855531, 574.024792, 463.851899)"/>
   <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="270.335" y1="149.786" x2="299.158" y2="168.459" transform="matrix(-0.968896, -0.24747, 0.24747, -0.968896, 521.258059, 383.761798)"/>
   <line style="fill: rgb(26, 69, 84); stroke-width: 14; stroke: rgb(255, 235, 4);" x1="283.579" y1="119.312" x2="313.553" y2="137.796" transform="matrix(-0.231019, 0.972949, -0.972949, -0.231019, 479.30711, -116.689894)" bx:origin="0.073 0.636"/>
-  <use width="161.72" height="202.21" transform="matrix(1.01488, 0, 0, 1.12613, -140.002228, 6.331144)" xlink:href="#Kidey_zoom"/>
+  <use width="161.72" height="202.21" transform="matrix(1.0148799419403076, 0, 0, 1.1261299848556519, -140.00222778320312, 6.331143856048584)" xlink:href="#Kidey_zoom"/>
   <rect x="-69.236" y="121.26" width="21.703" height="53.076" style="fill-opacity: 0.7; fill: rgb(88, 82, 82);"/>
   <g id="Ebene_13" data-name="Ebene 13" transform="matrix(1.596673, -0.406514, -0.376244, -1.477785, -19.669735, 286.073456)">
     <use width="70" height="77.95" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Pfeil"/>

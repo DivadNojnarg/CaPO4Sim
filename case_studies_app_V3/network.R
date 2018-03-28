@@ -203,7 +203,7 @@ generate_nodes_Ca <- function(input) {
                  align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\"/></a>
                  </div><div class=\"col-sm-6\">
                  Effect of D3 on bone <hr>
-                 <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\" target=\"_blank\">
+                 <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone2.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                  align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone2.svg\"/></a>
                  </div></div>"

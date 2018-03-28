@@ -143,7 +143,7 @@
       <text class="cls-24" transform="translate(504.57 412.88)" style="white-space: pre;">PTH</text>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 400.9116516113281, 399.9161682128906)" xlink:href="#PTH_kugel-2"/>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 518.6599731445312, 378.3299865722656)" xlink:href="#PTH_kugel-2"/>
-      <use width="16.09" height="31.05" transform="matrix(0.9178692102432251, 0.39688706398010254, -0.39688706398010254, 0.9178692102432251, 392.36090087890625, 383.61212158203125)" xlink:href="#PTH_Rezeptor_klein"/>
+      <use width="16.09" height="31.05" transform="matrix(0.9178692698478699, 0.3968870937824249, -0.3968870937824249, 0.9178692698478699, 392.36090087890625, 383.61212158203125)" xlink:href="#PTH_Rezeptor_klein"/>
       <text class="cls-24" transform="translate(341.02 277.27)" style="white-space: pre;">FGFr</text>
       <text class="cls-26" transform="translate(387.67 282.93) scale(0.58)" style="white-space: pre;">1</text>
       <text class="cls-24" transform="translate(411.51 266.69)" style="white-space: pre;">Klotho</text>
@@ -242,7 +242,7 @@
   <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="248.264" y1="366.679" x2="279.919" y2="359.803" transform="matrix(0.149334, 0.988787, -0.988787, 0.149334, 573.248036, 62.027162)" bx:origin="0.073 0.636"/>
   <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="253.721" y1="396.914" x2="376.971" y2="323.886" transform="matrix(-0.66042, -0.750897, 0.750897, -0.66042, 252.983567, 835.207522)"/>
   <line style="fill: rgb(26, 69, 84); stroke: rgb(255, 235, 4); stroke-width: 2;" x1="251.596" y1="328.626" x2="283.251" y2="321.75" transform="matrix(-0.512698, 0.858569, -0.858569, -0.512698, 664.083544, 275.329229)" bx:origin="0.073 0.636"/>
-  <use width="161.72" height="202.21" transform="matrix(1.01488, 0, 0, 1.12613, -198.433426, 15.10826)" xlink:href="#Kidey_zoom"/>
+  <use width="161.72" height="202.21" transform="matrix(1.0148799419403076, 0, 0, 1.1261299848556519, -198.4334259033203, 15.108260154724121)" xlink:href="#Kidey_zoom"/>
   <rect x="-160.035" y="60.175" width="41.496" height="53.076" style="fill-opacity: 0.7; fill: rgb(88, 82, 82);"/>
   <g id="Ebene_13" data-name="Ebene 13" transform="matrix(1.636384, 0.192003, 0.177707, -1.514539, -132.543976, 226.878143)">
     <use width="70" height="77.95" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Pfeil"/>
@@ -252,4 +252,5 @@
   <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="-102.44" y="599.206" transform="matrix(1, 0, 0, 1, -37.37162, 8.530853)">FGFr1: FGF receptor 1<tspan x="-102.44000244140625" dy="1em">​</tspan></text>
   <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="-102.44" y="599.206" transform="matrix(1, 0, 0, 1, -34.751595, 36.396427)">NaPi: sodium/phosphate cotransporter<tspan x="-102.44000244140625" dy="1em">​</tspan></text>
   <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="-137.111" y="554.676">PT: proximal tubule</text>
+  <text class="cls-24" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 39.9844px; perspective-origin: 19.9844px 0px; fill: rgb(26, 69, 84);" x="487.529" y="334.625">FGF23</text>
 </svg>

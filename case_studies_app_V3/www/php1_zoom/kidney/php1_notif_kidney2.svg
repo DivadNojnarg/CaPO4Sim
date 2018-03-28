@@ -143,7 +143,7 @@
       <text class="cls-24" transform="translate(504.57 412.88)" style="white-space: pre;">PTH</text>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 400.9116516113281, 399.9161682128906)" xlink:href="#PTH_kugel-2"/>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 518.6599731445312, 378.3299865722656)" xlink:href="#PTH_kugel-2"/>
-      <use width="16.09" height="31.05" transform="matrix(0.9178692102432251, 0.39688706398010254, -0.39688706398010254, 0.9178692102432251, 392.36090087890625, 383.61212158203125)" xlink:href="#PTH_Rezeptor_klein"/>
+      <use width="16.09" height="31.05" transform="matrix(0.9178692698478699, 0.3968870937824249, -0.3968870937824249, 0.9178692698478699, 392.36090087890625, 383.61212158203125)" xlink:href="#PTH_Rezeptor_klein"/>
       <text class="cls-24" transform="translate(341.02 277.27)" style="white-space: pre;">FGFr</text>
       <text class="cls-26" transform="translate(387.67 282.93) scale(0.58)" style="white-space: pre;">1</text>
       <text class="cls-24" transform="translate(411.51 266.69)" style="white-space: pre;">Klotho</text>
@@ -151,12 +151,13 @@
       <use id="FGF-3" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 427.8999938964844, 301.8900146484375)" xlink:href="#FGF"/>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 521.9099731445312, 301.8900146484375)" xlink:href="#FGF"/>
       <use width="22.42" height="25.05" transform="matrix(1, 0, 0, 1, 390.2799987792969, 294.3599853515625)" xlink:href="#FGF_Rezeptor"/>
-      <use id="use-1" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 420.253143, 315.112335)" xlink:href="#FGF"/>
-      <use id="use-2" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 434.311646, 313.987671)" xlink:href="#FGF"/>
-      <use id="use-3" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 432.624634, 328.046143)" xlink:href="#FGF"/>
-      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 407.881714, 388.497589)" xlink:href="#PTH_kugel-2"/>
-      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 416.316803, 398.057373)" xlink:href="#PTH_kugel-2"/>
-      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 413.786285, 411.834686)" xlink:href="#PTH_kugel-2"/>
+      <use id="use-1" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 420.2531433105469, 315.1123352050781)" xlink:href="#FGF"/>
+      <use id="use-2" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 434.3116455078125, 313.9876708984375)" xlink:href="#FGF"/>
+      <use id="use-3" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 432.6246337890625, 328.046142578125)" xlink:href="#FGF"/>
+      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 407.8817138671875, 388.4975891113281)" xlink:href="#PTH_kugel-2"/>
+      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 416.3168029785156, 398.057373046875)" xlink:href="#PTH_kugel-2"/>
+      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 413.7862854003906, 411.8346862792969)" xlink:href="#PTH_kugel-2"/>
+      <text class="cls-24" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 39.9844px; perspective-origin: 19.9844px 0px; fill: rgb(26, 69, 84);" x="489.212" y="335.305">FGF23</text>
     </g>
     <g id="Zoom_Rahmen" data-name="Zoom Rahmen">
       <use width="560" height="500" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Neues_Symbol_2-2"/>

@@ -84,6 +84,7 @@ library(DT)
   - remove PTHp node in plasma and merge with PTHg (does not fit well in humans)
   - replace all png detailed pictures by svgs for all case studies
   - add captions to detailed pictures
+  - fix the net flux issue between plasma/rapid bone pool and plasma/cells
 + Graphs
   - change box size (plot area, height = 950px)
   - move slider at the bottom (plot area)

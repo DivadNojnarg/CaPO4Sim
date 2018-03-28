@@ -143,7 +143,7 @@
       <text class="cls-24" transform="translate(504.57 412.88)" style="white-space: pre;">PTH</text>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 400.9116516113281, 399.9161682128906)" xlink:href="#PTH_kugel-2"/>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 518.6599731445312, 378.3299865722656)" xlink:href="#PTH_kugel-2"/>
-      <use width="16.09" height="31.05" transform="matrix(0.9178692698478699, 0.3968870937824249, -0.3968870937824249, 0.9178692698478699, 392.36090087890625, 383.61212158203125)" xlink:href="#PTH_Rezeptor_klein"/>
+      <use width="16.09" height="31.05" transform="matrix(0.9178693294525146, 0.3968871235847473, -0.3968871235847473, 0.9178693294525146, 392.36090087890625, 383.61212158203125)" xlink:href="#PTH_Rezeptor_klein"/>
       <text class="cls-24" transform="translate(341.02 277.27)" style="white-space: pre;">FGFr</text>
       <text class="cls-26" transform="translate(387.67 282.93) scale(0.58)" style="white-space: pre;">1</text>
       <text class="cls-24" transform="translate(411.51 266.69)" style="white-space: pre;">Klotho</text>
@@ -151,9 +151,9 @@
       <use id="FGF-3" data-name="FGF" width="10" height="10" transform="matrix(1, 0, 0, 1, 427.8999938964844, 301.8900146484375)" xlink:href="#FGF"/>
       <use width="10" height="10" transform="matrix(1, 0, 0, 1, 521.9099731445312, 301.8900146484375)" xlink:href="#FGF"/>
       <use width="22.42" height="25.05" transform="matrix(1, 0, 0, 1, 390.2799987792969, 294.3599853515625)" xlink:href="#FGF_Rezeptor"/>
-      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 414.928009, 392.037567)" xlink:href="#PTH_kugel-2"/>
-      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 413.827667, 407.442139)" xlink:href="#PTH_kugel-2"/>
-      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 428.865509, 398.272766)" xlink:href="#PTH_kugel-2"/>
+      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 414.9280090332031, 392.0375671386719)" xlink:href="#PTH_kugel-2"/>
+      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 413.8276672363281, 407.442138671875)" xlink:href="#PTH_kugel-2"/>
+      <use width="10" height="10" transform="matrix(1, 0, 0, 1, 428.8655090332031, 398.27276611328125)" xlink:href="#PTH_kugel-2"/>
     </g>
     <g id="Zoom_Rahmen" data-name="Zoom Rahmen">
       <use width="560" height="500" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Neues_Symbol_2-2"/>
@@ -255,4 +255,5 @@
   <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="-102.44" y="599.206" transform="matrix(1, 0, 0, 1, -24.731146, 2.563566)">FGFr1: FGF receptor 1<tspan x="-102.44000244140625" dy="1em">​</tspan></text>
   <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="-102.44" y="599.206" transform="matrix(1, 0, 0, 1, -22.11112, 30.429136)">NaPi: sodium/phosphate cotransporter<tspan x="-102.44000244140625" dy="1em">​</tspan></text>
   <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="-124.471" y="548.708">PT: proximal tubule</text>
+  <text class="cls-24" style="white-space: pre; font-family: ArialMT, Arial; font-size: 20px; line-height: 32px; width: 39.9844px; perspective-origin: 19.9844px 0px; fill: rgb(26, 69, 84);" x="486.087" y="335.2">FGF23</text>
 </svg>

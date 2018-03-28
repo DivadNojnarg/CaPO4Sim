@@ -105,7 +105,7 @@
         </g>
         <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="86.534" y="542.426">OPG: osteoprotegerin</text>
         <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="87.826" y="575.151">RANK: receptor activator of NFkB </text>
-        <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="86.512" y="608.425">RANK: RANK ligand </text>
+        <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="86.512" y="608.425">RANK-L: RANK ligand </text>
         <text style="fill: rgb(51, 51, 51); font-size: 20px; white-space: pre;" x="85.512" y="638.426">PTHr: PTH receptor</text>
         <g id="g-11" data-name="RANKL" transform="matrix(1, 0, 0, 1, -43.834362, -82.005737)">
           <path class="cls-12" d="M154.25,196.37a5,5,0,1,1-1.17-7A5,5,0,0,1,154.25,196.37Z" style="fill: rgb(0, 55, 255); stroke-miterlimit: 10; stroke: rgb(0, 23, 107);"/>
