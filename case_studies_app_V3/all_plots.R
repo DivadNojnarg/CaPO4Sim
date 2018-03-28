@@ -40,7 +40,7 @@ make_plot_php1 <- function(input) {
   plot_CaP_php1 <- plot_ly(
     php1_table, x = php1_vec / php1_vec[1], 
     y = php1_table[,"Ca_p"] / php1_table[1,"Ca_p"],
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[Ca2+]p</b>",
     line = list(color = 'rgb(27, 27, 244)', width = 2), 
     showlegend = FALSE
     ) %>%
@@ -48,6 +48,7 @@ make_plot_php1 <- function(input) {
       x = php1_vec / php1_vec[1], 
       y = php1_table[,"PO4_p"] / php1_table[1,"PO4_p"], 
       line = list(color = 'rgb(244, 27, 27)', width = 2), 
+      name = "<b>[Pi]p</b>",
       showlegend = FALSE
       ) %>%
     add_lines(
@@ -213,7 +214,7 @@ make_plot_hypoD3 <- function(input) {
   plot_CaP_hypoD3 <- plot_ly(
     hypoD3_table, x = hypoD3_vec / hypoD3_vec[1], 
     y = hypoD3_table[,"Ca_p"] / hypoD3_table[1,"Ca_p"],
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[Ca2+]p</b>",
     line = list(color = 'rgb(27, 27, 244)', width = 2), 
     showlegend = FALSE
   ) %>%
@@ -221,6 +222,7 @@ make_plot_hypoD3 <- function(input) {
       x = hypoD3_vec / hypoD3_vec[1], 
       y = hypoD3_table[,"PO4_p"] / hypoD3_table[1,"PO4_p"], 
       line = list(color = 'rgb(244, 27, 27)', width = 2), 
+      name = "<b>[Pi]p</b>",
       showlegend = FALSE
       ) %>%
     add_lines(
@@ -393,7 +395,7 @@ make_plot_hypopara <- function(input) {
   plot_CaP_hypopara <- plot_ly(
     hypopara_table, x = hypopara_vec / hypopara_vec[1], 
     y = hypopara_table[,"Ca_p"] / hypopara_table[1,"Ca_p"],
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[Ca2+]p</b>",
     line = list(color = 'rgb(27, 27, 244)', width = 2), 
     showlegend = FALSE
   ) %>%
@@ -401,6 +403,7 @@ make_plot_hypopara <- function(input) {
       x = hypopara_vec/hypopara_vec[1], 
       y = hypopara_table[,"PO4_p"] / hypopara_table[1,"PO4_p"], 
       line = list(color = 'rgb(244, 27, 27)', width = 2), 
+      name = "<b>[Pi]p</b>",
       showlegend = FALSE
     ) %>%
     add_lines(
@@ -581,11 +584,11 @@ make_plot_Ca_inject <- function(input){
     add_lines(
       x = Ca_iv_table[, 1], 
       y = Ca_iv_table[,"Ca_p"] / Ca_iv_table[1,"Ca_p"], 
-      type = "scatter", mode = "lines", 
+      type = "scatter", mode = "lines", name = "<b>[Ca2+]p</b>",
       line = list(color = 'rgb(27, 27, 244)', width = 2)
     ) %>%
     add_lines(
-      x = input$tmaxCainj, y = c(0, 2), 
+      x = input$tmaxCainj, y = c(0, 2),
       line = list(size = 6, color = 'orange', 
                   dashed = "dashdot", width = 6)
     ) %>%
@@ -614,7 +617,7 @@ make_plot_Ca_inject <- function(input){
     add_lines(
       x = Ca_iv_table[, 1], 
       y = Ca_iv_table[,"PTH_p"] / Ca_iv_table[1,"PTH_p"], 
-      type = "scatter", mode = "lines",
+      type = "scatter", mode = "lines", name = "<b>[PTH]p</b>",
       line = list(color = 'black', width = 2)
     ) %>%
     add_lines(
@@ -666,7 +669,8 @@ make_plot_PO4_inject <- function(input){
   p1 <- plot_ly(
     PO4_iv_table, x = PO4_iv_table[, 1], 
     y = PO4_iv_table[,"PO4_tot"], type = "scatter", mode = "lines", 
-    line = list(color = 'rgb(244, 27, 27)', width = 2)
+    line = list(color = 'rgb(244, 27, 27)', width = 2),
+    name = "<b>[Pi]p</b>"
   ) %>%
     # add_markers(x = injectevents$times, 
     #             y = injectevents$PO4_val, mode = 'markers', symbols = "o", 
@@ -689,7 +693,7 @@ make_plot_PO4_inject <- function(input){
   p2 <- plot_ly(
     PO4_iv_table, x = PO4_iv_table[, 1], 
     y = PO4_iv_table[,"Ca_tot"] / PO4_iv_table[1,"Ca_tot"], 
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[Ca2+]p</b>",
     line = list(color = 'rgb(27, 27, 244)', width = 2)
   ) %>%
     # add_markers(x = injectevents$times, 
@@ -715,7 +719,7 @@ make_plot_PO4_inject <- function(input){
   p3 <- plot_ly(
     data = PO4_iv_table, x = PO4_iv_table[, 1], 
     y = PO4_iv_table[,"PTH_p"] / PO4_iv_table[1,"PTH_p"],
-    type = "scatter", mode = "lines",
+    type = "scatter", mode = "lines", name = "<b>[PTH]p</b>",
     line = list(color = 'black', width = 2)
   ) %>%
     # add_trace(x = injectevents$times, 
@@ -779,7 +783,8 @@ make_plot_PO4_gav <- function(input){
   p1 <- plot_ly(
     PO4_gav_table, x = PO4_gav_table[, 1], 
     y = PO4_gav_table[,"PO4_tot"], type = "scatter", mode = "lines", 
-    line = list(color = 'rgb(244, 27, 27)', width = 2)
+    line = list(color = 'rgb(244, 27, 27)', width = 2),
+    name = "<b>[Pi]p</b>"
   ) %>%
     #add_markers(x = gavevents$times, 
     #            y = gavevents$PO4_val, mode = 'markers', symbols = "o", 
@@ -802,7 +807,7 @@ make_plot_PO4_gav <- function(input){
   p2 <- plot_ly(
     PO4_gav_table, x = PO4_gav_table[, 1], 
     y = PO4_gav_table[,"Ca_tot"] / PO4_gav_table[1,"Ca_tot"], 
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[Ca2+]p</b>",
     line = list(color = 'rgb(27, 27, 244)', width = 2)
   ) %>%
     # add_markers(x = gavevents$times, 
@@ -827,7 +832,7 @@ make_plot_PO4_gav <- function(input){
   p3 <- plot_ly(
     data = PO4_gav_table, x = PO4_gav_table[, 1], 
     y = PO4_gav_table[,"PTH_p"] / PO4_gav_table[1,"PTH_p"], type = "scatter", 
-    mode = "lines", line = list(color = 'black', width = 2)
+    mode = "lines", line = list(color = 'black', width = 2), name = "<b>[PTH]p</b>"
   ) %>%
     # add_trace(x = gavevents$times, 
     #           y = gavevents$PTH_val, mode = 'markers', symbols = "o", 
