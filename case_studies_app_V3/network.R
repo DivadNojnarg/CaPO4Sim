@@ -342,7 +342,7 @@ generate_nodes_Ca <- function(input) {
           )
         )
       } else if (input$run_hypoD3) {
-        HTML(paste("Detailed PTH mechanisms 
+        HTML(paste("Detailed PTH mechanisms <hr>
                    <a href=\"/hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
                    align=\"center\"  src=\"/hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg\"/></a>"

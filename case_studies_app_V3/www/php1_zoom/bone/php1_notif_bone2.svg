@@ -212,14 +212,6 @@
       </g>
       <line class="cls-18" x1="201.797" y1="117.023" x2="201.056" y2="86.046" transform="matrix(0.761533, -0.648126, 0.648126, 0.761533, -15.464841, 153.640333)"/>
       <polygon class="cls-19" points="197.94 91.526 197.28 92.136 194.26 88.886 191.24 92.136 190.58 91.526 194.26 87.566 197.94 91.526" transform="matrix(0.761533, -0.648126, 0.648126, 0.761533, -11.910172, 147.331509)"/>
-      <g id="g-4" data-name="Plus" transform="matrix(1, 0, 0, 1, 173.776962, -105.476921)">
-        <circle class="cls-33" cx="150.18" cy="171.1" r="8" style="fill: rgb(28, 136, 67);"/>
-        <path class="cls-10" d="M149.05,175.6v-3.35h-3.37v-2.31h3.37V166.6h2.25v3.34h3.38v2.31H151.3v3.35Z" style="fill: rgb(255, 255, 255);"/>
-      </g>
-      <g id="g-5" data-name="Plus" transform="matrix(1, 0, 0, 1, 284.287811, -64.89872)">
-        <circle class="cls-33" cx="150.18" cy="171.1" r="8" style="fill: rgb(28, 136, 67);"/>
-        <path class="cls-10" d="M149.05,175.6v-3.35h-3.37v-2.31h3.37V166.6h2.25v3.34h3.38v2.31H151.3v3.35Z" style="fill: rgb(255, 255, 255);"/>
-      </g>
       <g id="g-6" data-name="Plus" transform="matrix(1, 0, 0, 1, 18.802767, -100.728401)">
         <circle class="cls-33" cx="150.18" cy="171.1" r="8" style="fill: rgb(28, 136, 67);"/>
         <path class="cls-10" d="M149.05,175.6v-3.35h-3.37v-2.31h3.37V166.6h2.25v3.34h3.38v2.31H151.3v3.35Z" style="fill: rgb(255, 255, 255);"/>
