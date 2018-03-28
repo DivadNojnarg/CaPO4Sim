@@ -83,14 +83,18 @@ library(DT)
     as long as the counter is equal to 1.
   - remove PTHp node in plasma and merge with PTHg (does not fit well in humans)
   - replace all png detailed pictures by svgs for all case studies
+  - add captions to detailed pictures
 + Graphs
   - change box size (plot area, height = 950px)
   - move slider at the bottom (plot area)
++ Educational Content
+  - update all modals for php1, hypopara, hypoD3
+  - update network notifications as well as graph notifications
 + Others
   - remove `source("help.R")` from all other code, except global.R
   - some code syntax correction
   - indicates the user to enable regulations when he launches case studies
-    if they are not already enabled
+    if they are not already enabled (sweetAlert)
   - sort files in the www folder
   
 
