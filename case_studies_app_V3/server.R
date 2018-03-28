@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
   #------------------------------------------------------------------------- 
   #  
   #  Integrate equations using deSolve package to generate table.
-  #  out is a reactive intermediate component that is called by
+  #  out is a reactive intermediate component that is called
   #  to make plots or other stuffs
   #
   #-------------------------------------------------------------------------
@@ -65,7 +65,7 @@ shinyServer(function(input, output, session) {
       visEvents(deselectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', 'null');
                 ;}") %>%
-      # add the doubleclick function to handle zoom views
+      # add the doubleclick for nodes
       visEvents(doubleClick = "function(nodes) {
                 Shiny.onInputChange('current_node_bis_id', nodes.nodes);
                 }") %>%  
@@ -89,6 +89,12 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", beforeDrawing = "function() {
                 this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
   })
+  
+  # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #
+  #
+  # Only for development purpose
+  #
+  # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #
   
   output$id <- renderPrint({input$current_edge_id})
   output$id_bis <- renderPrint({input$current_node_id})
@@ -125,79 +131,9 @@ shinyServer(function(input, output, session) {
   })
   
   
-  # handle the size of organ and hormonal nodes
-  output$size_nodes_organs <- renderUI({
-    tagList(
-      knobInput("size_organs", 
-                "Organs", 
-                min = 50, 
-                max = 100, 
-                value = 70, 
-                step = 5,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = "tron",
-                width = "100px", 
-                height = "100px")
-    )
-  })
-  
-  output$size_nodes_hormones <- renderUI({
-    tagList(
-      knobInput("size_hormones", 
-                "Hormones", 
-                min = 20, 
-                max = 60, 
-                value = 40, 
-                step = 5,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = "tron",
-                width = "100px", 
-                height = "100px")
-    )
-  })
-  
-  # control width of arrows
-  output$width_arrows_organs <- renderUI({
-    tagList(
-      knobInput("width_organs", 
-                "Organs",
-                angleOffset = -90,
-                angleArc = 180,
-                min = 4, 
-                max = 14, 
-                value = 8, 
-                step = 1,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = NULL,
-                width = "100px", 
-                height = "100px")
-    )
-  })
-  
-  output$width_arrows_hormones <- renderUI({
-    tagList(
-      knobInput("width_hormones", 
-                "Hormones", 
-                angleOffset = -90,
-                angleArc = 180,
-                min = 1, 
-                max = 8, 
-                value = 4, 
-                step = 1,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = NULL,
-                width = "100px", 
-                height = "100px")
-    )
-  })
+  # generate the knob to control 
+  # node and edges properties
+  generate_network_knobs(input, output, session)
   
   
   # change the selected node size to
@@ -360,6 +296,7 @@ shinyServer(function(input, output, session) {
         }
         
         # make arrow yellow and blink
+        # (see model_utils.R)
         arrow_lighting(edges = edges_Ca,
                        simulation = current_sim,
                        counter = counter_nav$diagram,
@@ -420,7 +357,7 @@ shinyServer(function(input, output, session) {
   
   # generate a patient profile
   userInfo <- reactive({
-    create_userInfo(input)
+    generate_userInfo(input)
   })
   output$user <- renderUser({userInfo() %$% head_user})
   

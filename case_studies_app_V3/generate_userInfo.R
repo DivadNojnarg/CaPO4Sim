@@ -1,4 +1,4 @@
-create_userInfo <- function(input) {
+generate_userInfo <- function(input) {
   
   head_user <- dashboardUser(
     name = "Patient State",
