@@ -2,58 +2,72 @@
 modal_php1 <- modalDialog(
   title = "About Primary Hyperparathyroidism",
   withMathJax(
-    "This is a simulation of", tags$b("primary hyperparathyroidism"), "(PHP1) in the rat. 
-    PHP1 is due to a tumor in parathyroid glands.",
+    
+    tags$i(
+      "As shown in the figure, parathyroid hormone (PTH)", 
+      HTML(paste0("<b>synthesis</b>")), "and", HTML(paste0("<b>secretion</b>")), "are 
+      tightly regulated. Known regulators of PTH synthesis include plasma 
+      levels of 1,25(OH) vitamin  D3 (\\([D_3]_p\\)), 
+      which inhibit PTH synthesis, and  plasma levels of phosphate (\\([P_i]_p\\)) 
+      that promote it. Plasma levels of calcium (\\([Ca^{2+}]_p\\)) 
+      further modulate (inhibit) PTH secretion into the blood stream through 
+      the action of the calcium sensing receptor (CaSR). As a result PTH secretion 
+      is blunted in hypercalcemia (elevated  \\([Ca^{2+}]_p\\)) while it is 
+      stimulated in hypocalcemia. The relationship between PTH secretion 
+      and \\([Ca^{2+}]_p\\) is defined by a sigmoidal decreasing curve, 
+      according to the figure below."
+    ),
+    
     tags$br(), tags$br(),
-    fluidRow(
-      column(2, align = "left",
-             tags$img(src = "/modal_php1/modal_php1_1.svg")
-      ),
-      column(4,
-             tags$i("Notice that in rats, there are only 2 parathyroid glands 
-                    (PTHg), whereas humans have 4.")
-      )
-    ),
-    tags$br(),
-    
-    fluidRow(
-      column(4, align = "left",
-             tags$i("PTH synthesis and secretion are tightly regulated. Whereas
-                    1,25(OH) vitamin \\(D_3\\) inhibits PTH synthesis, Pi is known to
-                    increase PTH synthesis. Besides, \\([Ca^{2+}]_p\\) is able
-                    to modulate PTH secretion through the calcium sensing receptor.
-                    In case of hypercalcemia (elevated \\([Ca^{2+}]_p\\)),
-                    PTH secretion is blunted. Inversely, during hypocalcemia,
-                    PTH secretion is stimulated.")
-      ),
-      column(8, align = "right",
-             tags$img(src = "/modal_php1/modal_php1_2.svg")
-      )
-    ),
-    "The relationship between PTH secretion and \\([Ca^{2+}]_p\\) is defined 
-    by a sigmoidal decreasing curve, according to the figure below.",
-    
-    tags$br(),
     
     fluidRow(
       column(6, align = "left",
-             tags$img(src = "/modal_php1/modal_php1_3.svg")
+        tags$a(href = "/modal_php1/modal_php1_2.svg", target = "_blank",
+          tags$img(src = "/modal_php1/modal_php1_2.svg")
+        )
       ),
-      column(6,
-            tags$i("During PHP1, \\([Ca^{2+}]_p\\) is expected to be raised, while
+      column(6, align = "right",
+        tags$a(href = "/modal_php1/modal_php1_3.svg", target = "_blank",
+          tags$img(src = "/modal_php1/modal_php1_3.svg")
+          )
+      )
+    ),
+    
+    tags$br(),
+    
+    fluidRow(
+      column(2, align = "left",
+        tags$a(href = "/modal_php1/modal_php1_1.svg", target = "_blank",
+             tags$img(src = "/modal_php1/modal_php1_1.svg")
+        )
+      ),
+      column(10,
+             tags$i(
+               "Contrary to humans who have 4 parathyroid glands 
+                (PTHg), rats have only 2. Primary hyperparathyroidism
+                (PHP1), is characterized by an oversecretion of PTH despite
+                elevated \\([Ca^{2+}]_p\\) (which should normally abolish
+                its secretion). PHP1 can be due to a solitary 
+                adenoma in parathyroid glands, which is the
+                case in 90-95% of clinical cases. However, this can be 
+                sometimes due to familial genetic disorders 
+                (5%) or parathyroid carcinoma (1%).")
+      )
+    ),
+    
+    tags$br(),
+           tags$i("During PHP1, \\([Ca^{2+}]_p\\) is expected to rise, while
            \\([P_i]_p\\) drops. PHP1 can be cured using cinacalcet which reduces
-            PTH secretion, thereby blunting its effect on Ca and Pi homeostasis. 
+           PTH secretion, thereby blunting its effect on Ca and Pi homeostasis. 
            Ultimately, parathyroid surgery can be a definitive treatment. 
            Yet is it possible (but rare) that the tumor reappears."),
            tags$br(),
            tags$br(),
-           tags$i("In the following case study, you will 
-           be explained all regulation mechanisms involved during PHP1. Note that
+           tags$i("In the following case study, you will be able to explore 
+           the regulation mechanisms and consequences of PHP1. Note that
            a rat model of primary hyperparathyroidism already exists
            and can be found here."),
           tags$a("https://www.ncbi.nlm.nih.gov/pubmed/3591940")
-      )
-    )
   ),
   size = "m"
 )
@@ -75,7 +89,8 @@ modal_hypopara <- modalDialog(
   vitamin D3 supplementation. Indeed, PTH effect on renal calcium reabsorption is
   significantly lowered. Hyperphosphatemia is cured by reducing phosphate intake.",
   tags$img(src = "/modal_hypopara/modal_hypopara.svg"),
-  "In the following case-study, you will be explained why all these symptoms appear.
+  "In the following case study, you will be able to explore the regulation 
+  mechanisms and consequences of hypoparathyroidism.
   Finally, be careful not to mingle hypoparathyroidism and pseudo-hypoparathyroidism,
   the later being associated with a resistance to the parathyroid hormone action.",
   "You can find extra informations here:",
@@ -102,7 +117,7 @@ modal_hypoD3 <- modalDialog(
   To treat vitamin D deficiency, a common approach is to use vitamin D supplements.
   However, inadequat treatment may result in massive hypercalcemia, hypercalciuria,
   with the risk of kidney stones formation, mainly if the treatment is extended.
-  In the following case study, you will be explained all consequences and mechanisms
+  In the following case study, you will be explained all mechanisms and consequences
   involved during vitamin D3 deficiency.",
   "You can find extra informations here:",
   tags$br(),

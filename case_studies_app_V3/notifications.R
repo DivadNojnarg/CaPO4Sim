@@ -1,7 +1,7 @@
 notification_list <- list(
   php1 = c(
     paste(
-      "Welcome on the",
+      "Welcome to the",
       "<mark><font color=\"#FF0000\"><b>",
       "primary-hyperparathyroidism",
       "</b></font></mark>",
@@ -9,9 +9,9 @@ notification_list <- list(
       "Before going further, make sure that <b>regulations</b> are enabled,
       and that Ca and Pi homeostasis are selected.",
       "<hr>",
-      "To launch the simulation, click on <b>next</b> button above. At any time,
-      you can go back to the previous step by clicking on <b>back</b>.",
-      "You can <b>hover</b> on",
+      "The <b>next</b> and <b>back</b> buttons will walk you through the 
+      consequences of PTH overproduction and regulatory pathways involved.",
+      "You can <b>hover</b> over",
       "<mark><font color=\"#FF0000\"><b>",
       "intestine,",
       "</b></font></mark>",
@@ -25,11 +25,9 @@ notification_list <- list(
       "<mark><font color=\"#FF0000\"><b>",
       "PTHg",
       "</b></font></mark>",
-      "nodes to display details.",
-      "It will display
-      (when available) additional content. However, you need to have an HSeT account.
-      More informations here: ",
-      tags$b(tags$a("https://hset.org/contact/")),
+      "nodes to display detailed views at the cellular levels.",
+      "External links to related content from <b>HSeT</b> are also provided 
+      where appropriate (HSeT log-in required)",
       sep = " "
     ),
     
@@ -79,8 +77,8 @@ notification_list <- list(
       "<mark><font color=\"#FF0000\"><b>",
       "widely increased",
       "</b></font></mark>",
-      "during, PHP1,
-      mainly because of an higher intestinal absorption, resorption
+      "during PHP1,
+      mainly because of a higher intestinal absorption, bone resorption
       and reabsorption in kidney. Inversely, Pi plasma concentration is",
       "<mark><font color=\"#FF0000\"><b>",
       "significantly reduced",
@@ -94,18 +92,17 @@ notification_list <- list(
   
   hypopara = c(
     paste(
-      "Welcome on the",
+      "Welcome to the",
       "<mark><font color=\"#FF0000\"><b>",
       "hypoparathyroidism",
       "</b></font></mark>",
-      "case study.",
-      "Before going further, make sure that <b>regulations</b>
-      are enabled, and that Ca and Pi homeostasis are selected.",
+      "(PHP1) case study.",
+      "Before going further, make sure that <b>regulations</b> are enabled,
+      and that Ca and Pi homeostasis are selected.",
       "<hr>",
-      "To launch the simulation, click on <b>next</b> button above.
-      At any time, you can go back to the previous step by clicking
-      on <b>back</b>.",
-      "You can <b>hover</b> on",
+      "The <b>next</b> and <b>back</b> buttons will walk you through the 
+      consequences of PTH deficiency and regulatory pathways involved.",
+      "You can <b>hover</b> over",
       "<mark><font color=\"#FF0000\"><b>",
       "intestine,",
       "</b></font></mark>",
@@ -119,11 +116,9 @@ notification_list <- list(
       "<mark><font color=\"#FF0000\"><b>",
       "PTHg",
       "</b></font></mark>",
-      "nodes to display details.",
-      "It will display
-      (when available) additional content. However, you need to
-      have an HSeT account. More informations here: ",
-      tags$b(tags$a("https://hset.org/contact/")),
+      "nodes to display detailed views at the cellular levels.",
+      "External links to related content from <b>HSeT</b> are also provided 
+      where appropriate (HSeT log-in required)",
       sep = " "
     ),
     
@@ -181,18 +176,17 @@ notification_list <- list(
   
   hypoD3 = c(
     paste(
-      "Welcome on the",
+      "Welcome to the",
       "<mark><font color=\"#FF0000\"><b>",
       "vitamin D3 deficiency",
       "</b></font></mark>",
-      "case study.",
-      "Before going further, make sure that <b>regulations</b>
-      are enabled, and that Ca and Pi homeostasis are selected.",
+      "(PHP1) case study.",
+      "Before going further, make sure that <b>regulations</b> are enabled,
+      and that Ca and Pi homeostasis are selected.",
       "<hr>",
-      "To launch the simulation, click on <b>next</b> button above.
-      At any time, you can go back to the previous step by clicking
-      on <b>back</b>.",
-      "You can <b>hover</b> on",
+      "The <b>next</b> and <b>back</b> buttons will walk you through the 
+      consequences of vitamin D3 deficiency and regulatory pathways involved.",
+      "You can <b>hover</b> over",
       "<mark><font color=\"#FF0000\"><b>",
       "intestine,",
       "</b></font></mark>",
@@ -206,10 +200,9 @@ notification_list <- list(
       "<mark><font color=\"#FF0000\"><b>",
       "PTHg",
       "</b></font></mark>",
-      "nodes to display details.",
-      "It will display (when available) additional content. However,
-      you need to have an HSeT account. More informations here: ",
-      tags$b(tags$a("https://hset.org/contact/")),
+      "nodes to display detailed views at the cellular levels.",
+      "External links to related content from <b>HSeT</b> are also provided 
+      where appropriate (HSeT log-in required)",
       sep = " "
     ),
     
