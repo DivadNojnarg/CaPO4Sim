@@ -1,9 +1,23 @@
-#-------------------------------------------------------------------------
-#
-#  This is the model core containing all equations and fluxes,
-#  it is translated from a previous Matlab code
-#
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: calcium_phosphate_PO4gav.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This is the model core containing all equations and fluxes
+# |           for PO4 gavage
+#             it is translated from a previous Matlab code
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  lag settings
+# |  PART 2:  Simulations
+# |  PART 3:  Equations
+# |  PART 4:  Rates of change
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 calcium_phosphate_PO4gav <- function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
@@ -25,11 +39,11 @@ calcium_phosphate_PO4gav <- function(t, state, parameters) {
     
     #---- PO4gavage ----#
     
-    if  (t>=0 && t<=25) {
+    if  (t >= 0 && t <= 25) {
       I_P = 0.018 - 0.000008*t
-    } else if (t>25 && t<=160) {
+    } else if (t > 25 && t <= 160) {
       I_P =  0.0041 - 4.2e-005*t
-    } else if (t>160 && t<=250) {
+    } else if (t > 160 && t <= 250) {
       I_P = 0.0016
     } else {
       I_P = 0.00155

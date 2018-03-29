@@ -1,3 +1,17 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: generate_glossary.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the glossary of the dashboard 
+# *-----------------------------------------------------------------
+# | DATA USED:  links to HSet website    
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 generate_glossary <- function() {
   m <- data.frame(
     "abreviation" = c("Ca", "Pi", "PTH", "D3", "FGF23", 

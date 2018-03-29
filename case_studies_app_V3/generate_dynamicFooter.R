@@ -1,3 +1,17 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: generate_dynamicFooter.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the footer of the dashboard 
+# *-----------------------------------------------------------------
+# | DATA USED:  logos from the /logos folder and from the web    
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 generate_dynamicFooter <- function() {
   dashboardFooter(
     mainText = h5(

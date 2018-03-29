@@ -1,19 +1,37 @@
-#-------------------------------------------------------------------------
-#  This application is a R-Shiny implementation of a calcium and phosphate 
-#  homeostasis model. It aims at being used by medical students but also
-#  researchers. See https://divadnojnarg.github.io for more informations
-#
-#  David Granjon, the Interface Group, Zurich
-#  June 12th, 2017
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: server.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the global UI of the application. 
+# |           It calls header, body, both sidebars and the footer 
+# *-----------------------------------------------------------------
+# | DATA USED:  state (global.R)
+# |             parameters.R     
+# |
+# |
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1: ODE intregration (when needed)
+# |  PART 2: CaPO4 network generation (highlight, blink, nodes, edges, ...)
+# |  PART 3: Ploting part
+# |  PART 4: Educational content (modals, notifications, glossary, userInfo)
+# |  PART 5: Useful tasks
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  Integrate equations using deSolve package to generate table.
-  #  out is a reactive intermediate component that is called
-  #  to make plots or other stuffs
+  #  1) Integrate equations using deSolve package to generate table.
+  #     out is a reactive intermediate component that is called
+  #     to make plots or other stuffs. This part is only needed when
+  #     doing dynamic case studies
   #
   #-------------------------------------------------------------------------
   
@@ -39,8 +57,8 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  The network part: make interactive diagramms of Ca and PO4 homeostasis
-  #  as well as regulation by hormones such as PTH, vitamin D3 and FGF23
+  #  2) The network part: make interactive diagramms of Ca and PO4 homeostasis
+  #     as well as regulation by hormones such as PTH, vitamin D3 and FGF23
   #  
   #
   #-------------------------------------------------------------------------
@@ -204,12 +222,8 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  #-------------------------------------------------------------------------
-  #
-  #  Navigation counter
-  #
-  #-------------------------------------------------------------------------
-  
+
+  # Navigation counter
   # create a navigation counter to trigger sequential graph animation
   counter_nav <- reactiveValues(diagram = 0) 
   
@@ -243,12 +257,8 @@ shinyServer(function(input, output, session) {
   
   output$counter_nav <- renderPrint({counter_nav$diagram}) 
   
-  #------------------------------------------------------------------------- 
-  #  
-  #  Animations of arrows when event occurs (php1, hypopara, hypoD3)
-  #  
-  #-------------------------------------------------------------------------
   
+  # Animations of arrows when event occurs (php1, hypopara, hypoD3)
   observeEvent(input$next1 | input$back1 ,{
     
     edges_Ca <- edges_Ca()
@@ -307,14 +317,9 @@ shinyServer(function(input, output, session) {
   })
   
   
-  #------------------------------------------------------------------------- 
-  #  
   #  Events for the CaPO4 Homeostasis diagramm whenever a flux change
-  #  
-  #-------------------------------------------------------------------------
-  
-  # Change arrow color relatively to the value of fluxes for Ca injection/PO4 injection as well as PO4 gavage
-  
+  # Change arrow color relatively to the value of 
+  # fluxes for Ca injection/PO4 injection as well as PO4 gavage
   observe({
     out <- out()
     edges_Ca <- edges_Ca()
@@ -323,9 +328,9 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  
-  #  Make interactive plot by loading tables of diseases
-  #  be careful when put on webserver to change the path of table to avoid
-  #  reading errors (see all_plot.R script)
+  #  3) Make interactive plot by loading tables of diseases
+  #     be careful when put on webserver to change the path of table to avoid
+  #     reading errors (see all_plot.R script)
   #-------------------------------------------------------------------------
   
   # draw each of the 6 plots as a function of the selected simulation
@@ -349,47 +354,8 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  #------------------------------------------------------------------------- 
-  #  
-  #  Patient profile 
-  #
-  #-------------------------------------------------------------------------
-  
-  # generate a patient profile
-  userInfo <- reactive({
-    generate_userInfo(input)
-  })
-  output$user <- renderUser({userInfo() %$% head_user})
-  
-  output$userbttn1 <- renderUI({
-    if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-      description <- generate_userFields(input)$description
-      if (description == "dead") {
-        tagList(
-          actionBttn(inputId = "cure", label = "Change Patient", 
-                     style = "fill", color = "success")
-        )
-      } else {
-        tagList(
-          actionBttn(inputId = "cure", label = "Cure Patient", 
-                     style = "fill", color = "success")
-        )
-      }
-    } else {
-      tagList(
-        actionBttn(inputId = "cure", label = "Cure Patient", 
-                   style = "fill", color = "success")
-      )
-    }
-  })
-  
-  
-  #------------------------------------------------------------------------- 
-  #  
+ 
   # Generate sliders for php1, hypopara and hypoD3 and even help
-  #  
-  #-------------------------------------------------------------------------
-  
   output$slider <- renderUI({
     current_sim <- extract_running_sim(input)[[1]] %>%
       str_extract("_\\w+") %>%
@@ -421,13 +387,124 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  #------------------------------------------------------------------------- 
+  #  
+  #  4) Educational content: modals, network and graph notifications,
+  #     glossary
+  #
+  #-------------------------------------------------------------------------
+  
+  # glossary 
+  output$glossary <- renderDataTable({
+    generate_glossary()
+  })
+  
+  
+  
+  # generate a patient profile
+  userInfo <- reactive({
+    generate_userInfo(input)
+  })
+  output$user <- renderUser({userInfo() %$% head_user})
+  
+  output$userbttn1 <- renderUI({
+    if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
+      description <- generate_userFields(input)$description
+      if (description == "dead") {
+        tagList(
+          actionBttn(inputId = "cure", label = "Change Patient", 
+                     style = "fill", color = "success")
+        )
+      } else {
+        tagList(
+          actionBttn(inputId = "cure", label = "Cure Patient", 
+                     style = "fill", color = "success")
+        )
+      }
+    } else {
+      tagList(
+        actionBttn(inputId = "cure", label = "Cure Patient", 
+                   style = "fill", color = "success")
+      )
+    }
+  })
+  
+  
+  
+  # Modal for primary hyperparathyroidism, hypopara, ...
+  # gives the user some extr information
+  observeEvent(
+    c(input$run_php1, input$run_hypopara, input$run_hypoD3,
+      input$run_Ca_inject, input$run_PO4_inject, input$run_PO4_gav),{
+        
+        # extract only the last part of the simulation
+        # so gives php1, hypopara, hypoD3, ...
+        current_sim <- extract_running_sim(input)[[1]] %>%
+          str_extract("_\\w+") %>%
+          str_replace("_", "")
+        
+        req(current_sim)
+        if (input$modal_switch == TRUE) {
+          showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
+        }
+      })
+  
+  
+  # Notification events for PHP1, hypoD3 and hypopara in the CaPO4 network
+  # as well as the graph
+  observeEvent(
+    c(input$run_php1, input$run_hypopara, input$run_hypoD3, 
+      counter_nav$diagram, input$notif2_switch), {
+        
+        current_simulation <- extract_running_sim(input)[[1]]
+        req(current_simulation)
+        
+        if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" | 
+            input$run_hypoD3 == "TRUE") {
+          
+          generate_notification(counter = counter_nav$diagram, 
+                                simulation = current_simulation,
+                                allowed = input$notif2_switch)
+          # make it draggable
+          jqui_draggable(selector = "#shiny-notification-notifid")
+          jqui_draggable(selector = "#shiny-notification-graph_notif")
+        }
+      }, priority = 10)
+  
+  
+  # indicates the user to enable regulations when he launches case studies
+  # if they are not already enabled
+  observeEvent(
+    c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
+      
+      current_simulation <- extract_running_sim(input)[[1]]
+      input_current_simulation <- paste0("input$", extract_running_sim(input)[[1]])
+      if (!is_empty(current_simulation)) {
+        if (eval(parse(text = input_current_simulation)) & 
+            input$network_hormonal_choice == FALSE) {
+          sendSweetAlert(
+            session = session,
+            type = "error",
+            title = NULL,
+            text = HTML(
+              paste("Before going deeper in the case study, 
+                    please enable hormonal regulations 
+                    in the option part and select both Ca and Pi", 
+                    icon("sliders"))
+            ),
+            html = TRUE
+            )
+        }
+      }
+    })
   
   #------------------------------------------------------------------------- 
   #  
-  #  Prevent user from selecting multiple boxes using shinyjs functions
+  #  5) Useful functions: show/hide/reset/...
   #  
   #-------------------------------------------------------------------------
   
+  #  Prevent user from selecting multiple boxes using shinyjs functions
   observeEvent(eval(parse(text = paste0("input$", extract_running_sim(input)[[2]]))), {
     
     # extract the list of simulations and the current one as well as its index
@@ -447,11 +524,7 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  #------------------------------------------------------------------------- 
-  #  
-  #  Notification events to explain the user how to play with the app
-  #
-  #-------------------------------------------------------------------------
+  
   
   # help animation with introjs
   # options are provided to control the size of the help
@@ -471,19 +544,21 @@ shinyServer(function(input, output, session) {
         # reset the session to hide sliders and back/next buttons
         "oncomplete" = I('history.go(0)'),
         "onbeforchange" = I("function(steps) {
-                Shiny.onInputChange('current_step', data-stepnumber);
-                                  ;}")
+                            Shiny.onInputChange('current_step', data-stepnumber);
+                            ;}")
         # "onbeforechange" = I('
         #     if (targetElement.getAttribute("data-step")==="2") {
         #         $(".newClass").css("max-width", "800px").css("min-width","800px");
         #     } else {
         #         $(".newClass").css("max-width", "500px").css("min-width","500px");
         #     }')
+        )
       )
-    )
   })
   
   output$test <- renderPrint(input$count)
+  
+  
   
   # Print a short help text above the graph part
   # removeUI does not work
@@ -499,95 +574,9 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  #------------------------------------------------------------------------- 
-  #  
-  #  Generate a glossary of all abreviations
-  #
-  #-------------------------------------------------------------------------
-  
-  # glossary 
-  output$glossary <- renderDataTable({
-    generate_glossary()
-  })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Modal for primary hyperparathyroidism, hypopara, ...
-  #  gives the user some extr information
-  #
-  #-------------------------------------------------------------------------
-  
-  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3,
-                 input$run_Ca_inject, input$run_PO4_inject, input$run_PO4_gav),{
-                   
-                   # extract only the last part of the simulation
-                   # so gives php1, hypopara, hypoD3, ...
-                   current_sim <- extract_running_sim(input)[[1]] %>%
-                     str_extract("_\\w+") %>%
-                     str_replace("_", "")
-                   
-                   req(current_sim)
-                   if (input$modal_switch == TRUE) {
-                     showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
-                   }
-                 })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Notification events for PHP1, hypoD3 and hypopara
-  #
-  #-------------------------------------------------------------------------
   
   
-  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3, 
-                 counter_nav$diagram, input$notif2_switch), {
-                   current_simulation <- extract_running_sim(input)[[1]]
-                   req(current_simulation)
-                   
-                   if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" | 
-                       input$run_hypoD3 == "TRUE") {
-                     
-                     generate_notification(counter = counter_nav$diagram, 
-                                           simulation = current_simulation,
-                                           allowed = input$notif2_switch)
-                     # make it draggable
-                     jqui_draggable(selector = "#shiny-notification-notifid")
-                     jqui_draggable(selector = "#shiny-notification-graph_notif")
-                   }
-                 }, priority = 10)
-  
-  
-  # indicates the user to enable regulations when he launches case studies
-  # if they are not already enabled
-  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
-    current_simulation <- extract_running_sim(input)[[1]]
-    input_current_simulation <- paste0("input$", extract_running_sim(input)[[1]])
-    if (!is_empty(current_simulation)) {
-      if (eval(parse(text = input_current_simulation)) & 
-          input$network_hormonal_choice == FALSE) {
-        sendSweetAlert(
-          session = session,
-          type = "error",
-          title = NULL,
-          text = HTML(
-            paste("Before going deeper in the case study, 
-                   please enable hormonal regulations 
-                   in the option part and select both Ca and Pi", 
-                   icon("sliders"))
-          ),
-          html = TRUE
-        )
-      }
-    }
-  })
-  
-  #------------------------------------------------------------------------- 
-  #  
   #  Toggle the sidebar when a user press the help button
-  #
-  #-------------------------------------------------------------------------
-  
-  
   observe({
     shinyjs::toggleClass(id = "controlbar", 
                          class = "control-sidebar-open",
@@ -601,11 +590,6 @@ shinyServer(function(input, output, session) {
   #                        condition = input$help)
   # })
   
-  #------------------------------------------------------------------------- 
-  #  
-  #  Useful tasks such as save, reset, load ...
-  #  
-  #-------------------------------------------------------------------------
   
   # reset all parameters
   observeEvent(input$cure,{
@@ -644,6 +628,13 @@ shinyServer(function(input, output, session) {
   #     enable(selector = "#background_choice input[value='rat']")
   #   }
   # })
+  
+  # disable dynamic case studies
+  observe({
+    shinyjs::hide(id = "run_Ca_inject")
+    shinyjs::hide(id = "run_PO4_inject")
+    shinyjs::hide(id = "run_PO4_gav")
+  })
   
   # disable the human background
   observe({
@@ -709,8 +700,12 @@ shinyServer(function(input, output, session) {
         NULL
       } else {
         # otherwise, remove the old CSS class and add the new one
-        shinyjs::removeClass(selector = "body", class = paste("skin", previous_skin$color, sep = "-"))
-        shinyjs::addClass(selector = "body", class = paste("skin", current_skin$color, sep = "-"))
+        shinyjs::removeClass(
+          selector = "body", 
+          class = paste("skin", previous_skin$color, sep = "-"))
+        shinyjs::addClass(
+          selector = "body", 
+          class = paste("skin", current_skin$color, sep = "-"))
         # the current skin is added to previous_skin to be ready for
         # the next change
         previous_skin$color <- c(previous_skin$color, current_skin$color)[-1]

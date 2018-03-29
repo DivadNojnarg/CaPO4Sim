@@ -1,8 +1,31 @@
-#------------------------------------------------------------------------- 
-#  This codes contains all elements regarding PHP1, hypoD3, hypopara
-#  and dynamic simulations plots
-#
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: all_plots.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains all plots of php1, hypopara and
+# |           hypoD3. Calls generate_slidersteady(input) to generate
+# |           the slider corresponding to the running simulation
+# |*------------------------------------------------------------------
+# | DATA USED:  php1.csv, hypopara.csv, hypoD3.csv, iv_Ca.csv,
+# |             iv_PO4.csv, gav_PO4.csv
+# |
+# |
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  PHP1
+# |  PART 2:  HYPOPARA
+# |  PART 3:  HYPOD3
+# |  PART 4: Ca inject
+# |  PART 5: PO4 inject
+# |  PART 6: PO4 gavage
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 
 # define color palettes
 colfuncCa <- colorRampPalette(c("darkblue", "lightblue", "green"))(20)

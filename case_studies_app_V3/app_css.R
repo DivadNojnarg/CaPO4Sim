@@ -1,3 +1,19 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: apps_css.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  Contains all the CSS code to customize some parts
+# |*------------------------------------------------------------------
+# | DATA USED:  /CaPO4_network/rat_wholebody.svg 
+# |             /CaPO4_network/human_wholebody.svg
+# |
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 app_css <- function() {
   tags$head(
     tags$style(

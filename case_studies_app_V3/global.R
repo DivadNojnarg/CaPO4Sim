@@ -1,11 +1,24 @@
-#------------------------------------------------------------------------- 
-#  This codes loads all packages needed by the application.
-#  Moreover, it contains all mandatory UI and server elements. 
-#  Some useful functions are defined here so as to lighten
-#  the server code
-#
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: global.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This codes loads all packages needed by the application             
+# |           Moreover, it contains all mandatory UI and server elements
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  packages
+# |  PART 2:  UI elements
+# |  PART 3: server components
+# |  PART 4:  server datas (state vector)
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
+# 1) load all packages
 library(shiny)
 library(ygdashboard)
 require(visNetwork)
@@ -29,7 +42,7 @@ library(shinyFeedback)
 library(magrittr)
 library(DT)
 
-# Load the template components
+# 2) Load the template components
 source("help.R")
 source("app_css.R")
 source("header.R")
@@ -38,7 +51,7 @@ source("network_box.R")
 source("graph_box.R")
 source("body.R")
 
-# Load server components and functions
+# 3) Load server components and functions
 source("utils.R")
 source("model_utils.R")
 source("dashboardControlbar.R")
@@ -58,10 +71,13 @@ source("generate_network_knobs.R")
 source("generate_userInfo.R")
 source("generate_glossary.R")
 source("generate_dynamicFooter.R")
+# all plot requires generate_slidersteady and extract_running_sim
+# to run properly. Therefore, it is loaded in the end
+source("all_plots.R")
 
-# load the initial state of the model. Only needed for dynamic
-# simulation that is, Ca/EGTA injection, PO4 injection and
-# PO4 gavage
+# 4) load the initial state of the model. Only needed for dynamic
+#    simulation that is, Ca/EGTA injection, PO4 injection and
+#    PO4 gavage
 state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, 
            "FGF_p" = 16.78112, "Ca_p" = 1.2061, # initial conditions
            "Ca_f" = 1.8363, "Ca_b" = 250, "PO4_p" = 1.4784, 
@@ -71,7 +87,3 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664,
            "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,
            "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
            "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
-
-# all plot requires generate_slidersteady and extract_running_sim
-# to run properly. Therefore, it is loaded in the end
-source("all_plots.R")

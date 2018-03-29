@@ -1,18 +1,15 @@
-#-------------------------------------------------------------------------
-#  This UI code contains the global UI of the application. It calls
-#  header, body and sidebar (which is NULL in this case) and load all
-#  javascript libraries such as shinyJS, extendShinyjs, MathJax... as well
-#  as the theme by default which is cerulean (can be changed with theme selector)
-#
-#  David Granjon, the Interface Group, Zurich
-#  December 4th, 2017
-#
-#  bsplus only works with R > 3.3, so pay attention to update R before installing
-#  other packages. On shiny-server, always install R packages by running R in the
-#  shiny folder. Put the app in src/shiny-server/myApp and access via:
-#  server_ip:3838/myApp
-#
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: ui.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the global UI of the application. 
+# |           It calls header, body, both sidebars and the footer 
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 # Define UI
 dashboardPage(

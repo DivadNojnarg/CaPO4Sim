@@ -1,9 +1,23 @@
-#-------------------------------------------------------------------------
-#
-#  This is the model core containing all equations and fluxes,
-#  it is translated from a previous Matlab code
-#
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: calcium_phosphate_PO4iv.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This is the model core containing all equations and fluxes
+# |           for intravenous injection of phosphate
+#             it is translated from a previous Matlab code
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  lag settings
+# |  PART 2:  Simulations
+# |  PART 3:  Equations
+# |  PART 4:  Rates of change
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 calcium_phosphate_PO4iv <- function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
@@ -25,12 +39,12 @@ calcium_phosphate_PO4iv <- function(t, state, parameters) {
     
     #---- iv injection of PO4 ----#
     
-    if (t<=10) {
-      k_inject_P = 0.15-1e-003*t
-      GFR = 0.002+8*10^-4*t
+    if (t <= 10) {
+      k_inject_P = 0.15 - 1e-003*t
+      GFR = 0.002 + 8*10^-4*t
       Vp = 0.011
-    } else if (t>10 && t<=50) {
-      GFR = 0.01-8*10^-5*t
+    } else if (t > 10 && t <= 50) {
+      GFR = 0.01 - 8*10^-5*t
       Vp = 0.011
     } else {
       GFR = 0.006

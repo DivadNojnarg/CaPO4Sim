@@ -1,10 +1,28 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: dashboardControlbar.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the right dashboard code 
+# |           
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 dashboardControlbar <- function() {
   withTags(
     div(
       id = "sidebar_bis",
       # Control Sidebar Open
       aside(class = "control-sidebar control-sidebar-dark",
-            # Create the tabs
+            
+            # # # # # # # #
+            #
+            # Navigation tabs
+            #
+            # # # # # # # #
             introBox(
               data.step = 9, data.intro = help_text[9],
               ul(class = "nav nav-tabs nav-justified control-sidebar-tabs",
@@ -28,15 +46,24 @@ dashboardControlbar <- function() {
                  )
               )
             ),
+            
+            # # # # # # # #
+            #
             # Tab Panels
+            #
+            # # # # # # # # 
             div(class = "tab-content",
-                # Parms tab content
+                
+                #########################
+                #  Options tab content  #
+                #########################
                 div(class = "tab-pane active", id = "control-sidebar-parms-tab",
                     h3(class = "control-sidebar-heading", "CaPO4 Network Options"),
                     
                     # background choice
                     introBox(
-                      data.step = 10, data.intro = help_text[10],
+                      data.step = 10, 
+                      data.intro = help_text[10],
                       prettyCheckboxGroup(
                         inputId = "background_choice",
                         label = "Background",
@@ -53,7 +80,8 @@ dashboardControlbar <- function() {
                     
                     # enable hormones?
                     introBox(
-                      data.step = 11, data.intro = help_text[11],
+                      data.step = 11, 
+                      data.intro = help_text[11],
                       prettySwitch(
                         inputId = "network_hormonal_choice",
                         label = "Regulations?",
@@ -76,7 +104,8 @@ dashboardControlbar <- function() {
                     
                     # filter elements to display
                     introBox(
-                      data.step = 12, data.intro = help_text[12],
+                      data.step = 12, 
+                      data.intro = help_text[12],
                       prettyCheckboxGroup(
                         inputId = "network_Ca_choice",
                         label = "Choose your Network",
@@ -93,15 +122,16 @@ dashboardControlbar <- function() {
                     # Control Nodes size
                     h4("Nodes size"),
                     introBox(
-                      data.step = 13, data.intro = help_text[13],
+                      data.step = 13, 
+                      data.intro = help_text[13],
                       fluidRow(
                         column(
                           width = 6,
-                          uiOutput("size_nodes_organs")
+                          uiOutput(outputId = "size_nodes_organs")
                         ),
                         column(
                           width = 6,
-                          uiOutput("size_nodes_hormones")
+                          uiOutput(outputId = "size_nodes_hormones")
                         )
                       )
                     ),
@@ -109,24 +139,29 @@ dashboardControlbar <- function() {
                     # Control arrow properties
                     h4("Arrow width"),
                     introBox(
-                      data.step = 14, data.intro = help_text[14],
+                      data.step = 14, 
+                      data.intro = help_text[14],
                       fluidRow(
                         column(
                           width = 6,
-                          uiOutput("width_arrows_organs")
+                          uiOutput(outputId = "width_arrows_organs")
                         ),
                         column(
                           width = 6,
-                          uiOutput("width_arrows_hormones")
+                          uiOutput(outputId = "width_arrows_hormones")
                         )
                       )
                     )
                 ),
-                # Education tab content
+                
+
+                #########################
+                # Education tab content #
+                #########################
                 div(class = "tab-pane", id = "control-sidebar-education-tab", 
                     h3(class = "control-sidebar-heading", "Case Studies"),
                     
-                    h6("Steady-state simulation"),
+                    h6("Steady-state simulations"),
                     
                     # primary hyperparathyroidism
                     prettyCheckbox(
@@ -158,9 +193,7 @@ dashboardControlbar <- function() {
                       status = "primary"
                     ),
                     
-                    hr(),
-                    
-                    h6("Steady-state simulation"),
+                    #h6("Dynamic simulations"),
                     
                     # Ca intraveinous injection/ EGTA injection
                     prettyCheckbox(
@@ -212,7 +245,10 @@ dashboardControlbar <- function() {
                       bigger = TRUE
                     )
                 ),
-                # Interface management tab content
+                
+                #########################
+                # Interface tab content #
+                #########################
                 div(class = "tab-pane", id = "control-sidebar-interface-tab",
                     
                     # change the dashboard main theme

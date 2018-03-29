@@ -1,3 +1,18 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: notifications.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the datas to generate all
+# |           notifications in the network part. Needed by the
+# |           function generate_notification() of model_utils.R
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
+
 notification_list <- list(
   php1 = c(
     paste(

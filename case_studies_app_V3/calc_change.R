@@ -1,17 +1,21 @@
-#-------------------------------------------------------------------------
-#  This code contains the function that calculates the percentage of 
-#  change of each flux, which is then needed to change the color of arrows
-#  depending on the resulting variation. Green for increase and red
-#  for decrease.
-#
-#  David Granjon, the Interface Group, Zurich
-#  July 10th, 2017
-#-------------------------------------------------------------------------
-
+# *------------------------------------------------------------------
+# | PROGRAM NAME: calc_change.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This code contains the function that calculates the percentage of 
+# |           change of each flux, which is then needed to change the color of arrows
+# |           depending on the resulting variation. Green for increase and red
+# |           for decrease.
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 calc_change <- function(out) {
   
-  Abs_int_change <- 0.5*( (out[nrow(out),"Abs_int_Ca"] - 
+  Abs_int_change <- 0.5*((out[nrow(out),"Abs_int_Ca"] - 
                              out[1,"Abs_int_Ca"])/out[1,"Abs_int_Ca"]*100 +
                             (out[nrow(out),"Abs_int_PO4"] - 
                                out[1,"Abs_int_PO4"])/out[1,"Abs_int_PO4"]*100 )

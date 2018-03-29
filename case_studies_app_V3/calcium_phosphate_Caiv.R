@@ -1,9 +1,24 @@
-#-------------------------------------------------------------------------
-#
-#  This is the model core containing all equations and fluxes,
-#  it is translated from a previous Matlab code
-#
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: calcium_phosphate_Caiv.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This is the model core containing all equations and fluxes
+# |           for intravenous injection of calcium
+#             it is translated from a previous Matlab code
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  lag settings
+# |  PART 2:  Simulations
+# |  PART 3:  Equations
+# |  PART 4:  Rates of change
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 
 calcium_phosphate_Caiv <- function(t, state, parameters) {
   with(as.list(c(state, parameters)),{
@@ -25,9 +40,9 @@ calcium_phosphate_Caiv <- function(t, state, parameters) {
     
     #---- Hypercalcemia + Hypocalcemia  Gravesen ----#
     
-    if (t>=0 && t<60) {
+    if (t >= 0 && t < 60) {
       k_inject_Ca = 5e-004
-    } else if (t>=60 && t<120) {
+    } else if (t >= 60 && t < 120) {
       k_inject_egta = 1e-003
       k_on_egta = 9e004
       k_off_egta = 18

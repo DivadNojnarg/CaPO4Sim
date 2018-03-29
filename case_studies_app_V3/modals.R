@@ -1,3 +1,16 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: modals.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This code provide all modals needed to generate the
+# |           introduction to each case study
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 # Modal for primary hyperparathyroidism
 modal_php1 <- modalDialog(
   title = "About Primary Hyperparathyroidism",

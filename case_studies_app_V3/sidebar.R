@@ -1,9 +1,15 @@
-#-------------------------------------------------------------------------
-#  This code contains the sidebar of shinydashboard. 
-#
-#  David Granjon, the Interface Group, Zurich
-#  December 4th, 2017
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: sidebar.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the left dashboard code 
+# |           
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 sidebar <- dashboardSidebar(
   width = 300,

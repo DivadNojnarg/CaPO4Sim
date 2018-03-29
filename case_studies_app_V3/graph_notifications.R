@@ -1,3 +1,17 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: graph_notifications.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the datas to generate all
+# |           notifications in the graph part. Needed by the
+# |           function generate_notification() of model_utils.R
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
 graph_notification_list <- list(
   php1 = paste(
     "Graphs display  \\([Ca^{2+}]_p\\), \\([P_i]_p\\), \\([PTH]_p\\),

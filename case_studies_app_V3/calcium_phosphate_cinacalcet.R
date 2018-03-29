@@ -1,11 +1,23 @@
-#-------------------------------------------------------------------------
-#
-#  This is the model core containing all equations and fluxes,
-#  it is translated from a previous Matlab code
-#
-#  David Granjon, the Interface Group, Zurich
-#  June 12th, 2017
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: calcium_phosphate_cinacalcet.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This is the model core containing all equations and fluxes
+# |           for cinacalcet treatment
+#             it is translated from a previous Matlab code
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  lag settings
+# |  PART 2:  Simulations
+# |  PART 3:  Equations
+# |  PART 4:  Rates of change
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 calcium_phosphate_core <- function(t, state, parameters) {
   with(as.list(c(state, parameters)),{

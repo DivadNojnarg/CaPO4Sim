@@ -1,15 +1,31 @@
-#------------------------------------------------------------------------- 
-#  This codes contains all network skeletons for CaPO4, PTH, ...
-#  For each network, we define two dataframe: node contains all informations
-#  related to nodes and edges to edges...
-#
-#-------------------------------------------------------------------------
-
+# *------------------------------------------------------------------
+# | PROGRAM NAME: network.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This codes contains all network skeletons for CaPO4, PTH, .. 
+# |           For each network, we define two dataframe: 
+# |            node contains all informations
+# |           related to nodes and edges to edges...
+# *-----------------------------------------------------------------
+# | DATA USED:  svg images from /CaPO4_network, external links from HSet
+# |             svg images from /php1_zoom, /hypoD3_zoom and /hypopara_zoom
+# |
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1: generate the network
+# |  PART 2: generate nodes
+# |  PART 3: generate edges
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 # This function is used to generate a network as well
 # as basic options such as physics, manipulations,
 # selection
-
 generate_network <- function(nodes, edges, usephysics = FALSE) {
   
   visNetwork(
@@ -73,7 +89,6 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
 # % % % % #
 
 # Generate nodes for the CaPO4 network
-
 Ca_int_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23937&Menu=1079&backbar=0"
 PO4_int_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0)"
 rapid_bone_web <- "https://academic.oup.com/ndt/article/26/8/2438/1917340/The-exchangeable-calcium-pool-physiology-and"

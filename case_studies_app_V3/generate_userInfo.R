@@ -1,3 +1,20 @@
+# *------------------------------------------------------------------
+# | PROGRAM NAME: generate_userInfo.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  This UI code contains the userInfo header card
+# |   
+# *-----------------------------------------------------------------
+# | DATA USED:  images from /images_patient_info/ folder
+# |
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
+
+
 generate_userInfo <- function(input) {
   
   head_user <- dashboardUser(

@@ -1,13 +1,28 @@
-#-------------------------------------------------------------------------
-#  This code contains the body of shinydashboard. It is an advanced dashboard
-#  using several advanced javascript properties such as MathJax display,
-#  organize each Boxes relatively to each others via jqui commands (shinyjqui), 
-#  trigger some help modals when required. 
-#
-#
-#  David Granjon, the Interface Group, Zurich
-#  December 4th, 2017
-#-------------------------------------------------------------------------
+# *------------------------------------------------------------------
+# | PROGRAM NAME: body.R
+# | DATE: 29/03/2018 
+# | CREATED BY:  David Granjon
+# *----------------------------------------------------------------
+# | PURPOSE:  Contains the dashboard body
+# |*------------------------------------------------------------------
+# | DATA USED:  /www/rintrojs_count.js
+# |             /www/hotjar.js
+# |             3 youtube links for movies
+# |             /logos/about_us.jpg
+# |
+# |*------------------------------------------------------------------
+# | CONTENTS:               
+# |
+# |  PART 1:  load CSS, shinyjs, introjs, MathJax, bs_popovers, bs_tooltips
+# |           shinyFeedback, sweetalerts
+# |  PART 2:  load js scripts (hotjar tracking, ...)
+# |  PART 3:  main network_box, graph_box, load other tabPanels
+# |           like movies, glossary, about_section
+# *-----------------------------------------------------------------
+# | UPDATES: 29/03/2018 (last update)          
+# |
+# |
+# *------------------------------------------------------------------
 
 body <- dashboardBody(
   
@@ -23,16 +38,16 @@ body <- dashboardBody(
   use_bs_popover(),
   use_bs_tooltip(),
   
+  # print feedback for input
+  useShinyFeedback(),
+  useSweetAlert(),
+  
   # include the script for Hotjar tracking
   #tags$head(includeScript("www/hotjar.js")),
   tags$head(includeScript("www/rintrojs_count.js")),
   
   # include hotjar tracking
   tags$head(includeScript("www/hotjar.js")),
-  
-  # print feedback for input
-  useShinyFeedback(),
-  useSweetAlert(),
   
   # Main application Panel
   tabItems(
@@ -51,6 +66,7 @@ body <- dashboardBody(
       tabName = "demo",
       
       fluidRow(
+        # Ca movie
         box(id = "ca_movie", solidHeader = TRUE,
             column(12, align = "center", 
                    HTML('<iframe width="560" height="315"
@@ -58,6 +74,7 @@ body <- dashboardBody(
                         frameborder="0" allowfullscreen></iframe>')
             )
         ),
+        # PO4 movie
         box(id = "PO4_movie", solidHeader = TRUE,
             column(12, align = "center",
                    HTML('<iframe width="560" height="315"
@@ -67,6 +84,7 @@ body <- dashboardBody(
         )
       ),
       fluidRow(
+        # PTH movie
         box(id = "PTH_movie", solidHeader = TRUE,
             column(12, align = "center",
                    HTML('<iframe width="560" height="315"
