@@ -490,7 +490,8 @@ shinyServer(function(input, output, session) {
               paste("Before going deeper in the case study, 
                     please enable hormonal regulations 
                     in the option part and select both Ca and Pi", 
-                    icon("sliders"))
+                    icon("sliders")
+              )
             ),
             html = TRUE
             )
