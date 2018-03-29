@@ -35,13 +35,13 @@ modal_php1 <- modalDialog(
     
     fluidRow(
       column(6, align = "left",
-        tags$a(href = "/modal_php1/modal_php1_2.svg", target = "_blank",
-          tags$img(src = "/modal_php1/modal_php1_2.svg")
+        tags$a(href = "modal_php1/modal_php1_2.svg", target = "_blank",
+          tags$img(src = "modal_php1/modal_php1_2.svg")
         )
       ),
       column(6, align = "right",
-        tags$a(href = "/modal_php1/modal_php1_3.svg", target = "_blank",
-          tags$img(src = "/modal_php1/modal_php1_3.svg")
+        tags$a(href = "modal_php1/modal_php1_3.svg", target = "_blank",
+          tags$img(src = "modal_php1/modal_php1_3.svg")
           )
       )
     ),
@@ -50,8 +50,8 @@ modal_php1 <- modalDialog(
     
     fluidRow(
       column(2, align = "left",
-        tags$a(href = "/modal_php1/modal_php1_1.svg", target = "_blank",
-             tags$img(src = "/modal_php1/modal_php1_1.svg")
+        tags$a(href = "modal_php1/modal_php1_1.svg", target = "_blank",
+             tags$img(src = "modal_php1/modal_php1_1.svg")
         )
       ),
       column(10,
@@ -102,8 +102,8 @@ modal_hypopara <- modalDialog(
   and the faster). Besides, diuretics help in avoiding the hypercalciuria due to
   vitamin D3 supplementation. Indeed, PTH effect on renal calcium reabsorption is
   significantly lowered. Hyperphosphatemia is cured by reducing phosphate intake.",
-  tags$a(href = "/modal_hypopara/modal_hypopara.svg", target = "_blank",
-    tags$img(src = "/modal_hypopara/modal_hypopara.svg")
+  tags$a(href = "modal_hypopara/modal_hypopara.svg", target = "_blank",
+    tags$img(src = "modal_hypopara/modal_hypopara.svg")
   ),
   "In the following case study, you will be able to explore the regulation 
   mechanisms and consequences of hypoparathyroidism.
@@ -127,8 +127,8 @@ modal_hypoD3 <- modalDialog(
   which may be due to a reduced skin synthesis, a decreased intake, liver failure, 
   chronic kidney disease, nephrotic syndrom.
   About 1 billion of people on earth have vitamin D deficiency.",
-  tags$a(href = "/modal_hypoD3/modal_hypoD3.svg", target = "_blank",
-    tags$img(src = "/modal_hypoD3/modal_hypoD3.svg")
+  tags$a(href = "modal_hypoD3/modal_hypoD3.svg", target = "_blank",
+    tags$img(src = "modal_hypoD3/modal_hypoD3.svg")
   ),
   "Vitamin D deficiency causes hypocalcemia, hypophosphatemia as well as high PTH levels 
   (secondary hyperparathyroidism).

@@ -117,21 +117,21 @@ generate_nodes_Ca <- function(input) {
       ifelse(input$network_hormonal_choice == "TRUE","image","text")
     ), 
     image = c(
-      "/CaPO4_network/intestine.svg", "/CaPO4_network/plasma.svg",
-      "/CaPO4_network/rapid-bone.svg", "/CaPO4_network/bone.svg",
-      "/CaPO4_network/kidney.svg", "/CaPO4_network/kidney_zoom1.svg",
-      "/CaPO4_network/urine.svg", "/CaPO4_network/cells.svg", 
-      "/CaPO4_network/Cap.svg", "/CaPO4_network/PO4.svg",
+      "CaPO4_network/intestine.svg", "CaPO4_network/plasma.svg",
+      "CaPO4_network/rapid-bone.svg", "CaPO4_network/bone.svg",
+      "CaPO4_network/kidney.svg", "CaPO4_network/kidney_zoom1.svg",
+      "CaPO4_network/urine.svg", "CaPO4_network/cells.svg", 
+      "CaPO4_network/Cap.svg", "CaPO4_network/PO4.svg",
       if (is.null(input$background_choice)) {
-        "/CaPO4_network/parathyroid_gland.svg"
+        "CaPO4_network/parathyroid_gland.svg"
       } else if (input$background_choice == "rat") {
-        "/CaPO4_network/parathyroid_gland.svg"
+        "CaPO4_network/parathyroid_gland.svg"
       } else {
-        "/CaPO4_network/parathyroid_gland_human.svg"
+        "CaPO4_network/parathyroid_gland_human.svg"
       }
-      ,"/CaPO4_network/PTH.svg", "/CaPO4_network/D3.svg",
-      "/CaPO4_network/D3.svg", "/CaPO4_network/D3.svg",
-      "/CaPO4_network/FGF23.svg"
+      ,"CaPO4_network/PTH.svg", "CaPO4_network/D3.svg",
+      "CaPO4_network/D3.svg", "CaPO4_network/D3.svg",
+      "CaPO4_network/FGF23.svg"
     ),
     label = c(rep("", 6), rep("",10)),
     fixed = list("x" = TRUE, "y" = TRUE),
@@ -142,25 +142,25 @@ generate_nodes_Ca <- function(input) {
       if (input$run_php1) {
         HTML(
           paste("Detailed Ca intestinal absorption <hr>
-                <a href=\"/php1_zoom/intestine/php1_notif_intestine.svg\" target=\"_blank\">
+                <a href=\"php1_zoom/intestine/php1_notif_intestine.svg\" target=\"_blank\">
                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                align=\"center\"  src=\"/php1_zoom/intestine/php1_notif_intestine.svg\"/></a>"
+                align=\"center\"  src=\"php1_zoom/intestine/php1_notif_intestine.svg\"/></a>"
           )
         )
       } else if (input$run_hypopara) {
         HTML(
           paste("Detailed Ca intestinal absorption <hr>
-                <a href=\"/hypopara_zoom/intestine/hypopara_notif_intestine.svg\" target=\"_blank\">
+                <a href=\"hypopara_zoom/intestine/hypopara_notif_intestine.svg\" target=\"_blank\">
                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                align=\"center\"  src=\"/hypopara_zoom/intestine/hypopara_notif_intestine.svg\"/></a>"
+                align=\"center\"  src=\"hypopara_zoom/intestine/hypopara_notif_intestine.svg\"/></a>"
           )
         )
       } else if (input$run_hypoD3) {
         HTML(
           paste("Detailed Ca intestinal absorption <hr>
-                <a href=\"/hypoD3_zoom/intestine/hypoD3_notif_intestine.svg\" target=\"_blank\">
+                <a href=\"hypoD3_zoom/intestine/hypoD3_notif_intestine.svg\" target=\"_blank\">
                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                align=\"center\"  src=\"/hypoD3_zoom/intestine/hypoD3_notif_intestine.svg\"/></a>"
+                align=\"center\"  src=\"hypoD3_zoom/intestine/hypoD3_notif_intestine.svg\"/></a>"
           )
         )
         } else {
@@ -183,14 +183,14 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\"> <div class=\"col-sm-6\">
                  Effect of PTH on bone <hr>
-                 <a href=\"/php1_zoom/bone/php1_notif_bone1.svg\" target=\"_blank\">
+                 <a href=\"php1_zoom/bone/php1_notif_bone1.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                 align=\"center\"  src=\"/php1_zoom/bone/php1_notif_bone1.svg\"/></a>
+                 align=\"center\"  src=\"php1_zoom/bone/php1_notif_bone1.svg\"/></a>
                  </div><div class=\"col-sm-6\">
                  Effect of D3 on bone <hr>
-                 <a href=\"/php1_zoom/bone/php1_notif_bone2.svg\" target=\"_blank\">
+                 <a href=\"php1_zoom/bone/php1_notif_bone2.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                 align=\"center\"  src=\"/php1_zoom/bone/php1_notif_bone2.svg\"/></a>
+                 align=\"center\"  src=\"php1_zoom/bone/php1_notif_bone2.svg\"/></a>
                  </div></div>"
           )
         )
@@ -198,14 +198,14 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\"> <div class=\"col-sm-6\">
                  Effect of PTH on bone <hr>
-                 <a href=\"/hypopara_zoom/bone/hypopara_notif_bone1.svg\" target=\"_blank\">
+                 <a href=\"hypopara_zoom/bone/hypopara_notif_bone1.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                 align=\"center\"  src=\"/hypopara_zoom/bone/hypopara_notif_bone1.svg\"/></a>
+                 align=\"center\"  src=\"hypopara_zoom/bone/hypopara_notif_bone1.svg\"/></a>
                  </div><div class=\"col-sm-6\">
                  Effect of D3 on bone <hr>
-                 <a href=\"/hypopara_zoom/bone/hypopara_notif_bone2.svg\" target=\"_blank\">
+                 <a href=\"hypopara_zoom/bone/hypopara_notif_bone2.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                 align=\"center\"  src=\"/hypopara_zoom/bone/hypopara_notif_bone2.svg\"/></a>
+                 align=\"center\"  src=\"hypopara_zoom/bone/hypopara_notif_bone2.svg\"/></a>
                  </div></div>"
           )
         )
@@ -213,14 +213,14 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\"> <div class=\"col-sm-6\">
                  Effect of PTH on bone <hr>
-                 <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\" target=\"_blank\">
+                 <a href=\"hypoD3_zoom/bone/hypoD3_notif_bone1.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                 align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone1.svg\"/></a>
+                 align=\"center\"  src=\"hypoD3_zoom/bone/hypoD3_notif_bone1.svg\"/></a>
                  </div><div class=\"col-sm-6\">
                  Effect of D3 on bone <hr>
-                 <a href=\"/hypoD3_zoom/bone/hypoD3_notif_bone2.svg\" target=\"_blank\">
+                 <a href=\"hypoD3_zoom/bone/hypoD3_notif_bone2.svg\" target=\"_blank\">
                  <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                 align=\"center\"  src=\"/hypoD3_zoom/bone/hypoD3_notif_bone2.svg\"/></a>
+                 align=\"center\"  src=\"hypoD3_zoom/bone/hypoD3_notif_bone2.svg\"/></a>
                  </div></div>"
           )
         )
@@ -243,25 +243,25 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
                 "Detailed Ca PT reabsorption", "<hr>",
-                "<a href=\"/php1_zoom/kidney/php1_notif_kidney1.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/kidney/php1_notif_kidney1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/php1_zoom/kidney/php1_notif_kidney1.svg\"/></a>", 
+                   align=\"center\"  src=\"php1_zoom/kidney/php1_notif_kidney1.svg\"/></a>", 
                 "</div>", "<div class=\"col-sm-6\">",
                 "Detailed Pi PT reabsorption", "<hr>",
-                "<a href=\"/php1_zoom/kidney/php1_notif_kidney2.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/kidney/php1_notif_kidney2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/php1_zoom/kidney/php1_notif_kidney2.svg\"/></a>", 
+                   align=\"center\"  src=\"php1_zoom/kidney/php1_notif_kidney2.svg\"/></a>", 
                 "</div>", "</div>", "<br>",
                 "<div class=\"row\">", "<div class=\"col-sm-6\">",
                 "Detailed Ca TAL reabsorption", "<hr>",
-                "<a href=\"/php1_zoom/kidney/php1_notif_kidney3.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/kidney/php1_notif_kidney3.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/php1_zoom/kidney/php1_notif_kidney3.svg\"/></a>", 
+                   align=\"center\"  src=\"php1_zoom/kidney/php1_notif_kidney3.svg\"/></a>", 
                 "</div>", "<div class=\"col-sm-6\">", 
                 "Detailed Ca DCT reabsorption", "<hr>",
-                "<a href=\"/php1_zoom/kidney/php1_notif_kidney4.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/kidney/php1_notif_kidney4.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/php1_zoom/kidney/php1_notif_kidney4.svg\"/></a>", 
+                   align=\"center\"  src=\"php1_zoom/kidney/php1_notif_kidney4.svg\"/></a>", 
                 "</div>", "</div>"
           )
         )
@@ -269,25 +269,25 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
                 "Detailed Ca PT reabsorption", "<hr>",
-                "<a href=\"/hypopara_zoom/kidney/hypopara_notif_kidney1.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/kidney/hypopara_notif_kidney1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypopara_zoom/kidney/hypopara_notif_kidney1.svg\"/></a>", 
+                   align=\"center\"  src=\"hypopara_zoom/kidney/hypopara_notif_kidney1.svg\"/></a>", 
                 "</div>", "<div class=\"col-sm-6\">", 
                 "Detailed Pi PT reabsorption", "<hr>",
-                "<a href=\"/hypopara_zoom/kidney/hypopara_notif_kidney2.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/kidney/hypopara_notif_kidney2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypopara_zoom/kidney/hypopara_notif_kidney2.svg\"/></a>", 
+                   align=\"center\"  src=\"hypopara_zoom/kidney/hypopara_notif_kidney2.svg\"/></a>", 
                 "</div>", "</div>", "<br>",
                 "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                 "Detailed Ca TAL reabsorption", "<hr>",
-                "<a href=\"/hypopara_zoom/kidney/hypopara_notif_kidney3.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/kidney/hypopara_notif_kidney3.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypopara_zoom/kidney/hypopara_notif_kidney3.svg\"/></a>", 
+                   align=\"center\"  src=\"hypopara_zoom/kidney/hypopara_notif_kidney3.svg\"/></a>", 
                 "</div>", "<div class=\"col-sm-6\">", 
                 "Detailed Ca DCT reabsorption", "<hr>",
-                "<a href=\"/hypopara_zoom/kidney/hypopara_notif_kidney4.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/kidney/hypopara_notif_kidney4.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypopara_zoom/kidney/hypopara_notif_kidney4.svg\"/></a>", 
+                   align=\"center\"  src=\"hypopara_zoom/kidney/hypopara_notif_kidney4.svg\"/></a>", 
                 "</div>", "</div>"
           )
         )
@@ -295,25 +295,25 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
                 "Detailed Ca PT reabsorption", "<hr>",
-                "<a href=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney1.svg\" target=\"_blank\">
+                "<a href=\"hypoD3_zoom/kidney/hypoD3_notif_kidney1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney1.svg\"/></a>", 
+                   align=\"center\"  src=\"hypoD3_zoom/kidney/hypoD3_notif_kidney1.svg\"/></a>", 
                 "</div>", "<div class=\"col-sm-6\">", 
                 "Detailed Pi PT reabsorption", "<hr>",
-                "<a href=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney2.svg\" target=\"_blank\">
+                "<a href=\"hypoD3_zoom/kidney/hypoD3_notif_kidney2.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney2.svg\"/></a>", 
+                   align=\"center\"  src=\"hypoD3_zoom/kidney/hypoD3_notif_kidney2.svg\"/></a>", 
                 "</div>", "</div>", "<br>",
                 "<div class=\"row\">", "<div class=\"col-sm-6\">", 
                 "Detailed Ca TAL reabsorption", "<hr>",
-                "<a href=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney3.svg\" target=\"_blank\">
+                "<a href=\"hypoD3_zoom/kidney/hypoD3_notif_kidney3.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney3.svg\"/></a>", 
+                   align=\"center\"  src=\"hypoD3_zoom/kidney/hypoD3_notif_kidney3.svg\"/></a>", 
                 "</div>", "<div class=\"col-sm-6\">", 
                 "Detailed Ca DCT reabsorption", "<hr>",
-                "<a href=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney4.svg\" target=\"_blank\">
+                "<a href=\"hypoD3_zoom/kidney/hypoD3_notif_kidney4.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
-                   align=\"center\"  src=\"/hypoD3_zoom/kidney/hypoD3_notif_kidney4.svg\"/></a>", 
+                   align=\"center\"  src=\"hypoD3_zoom/kidney/hypoD3_notif_kidney4.svg\"/></a>", 
                 "</div>", "</div>"
           )
         )
@@ -336,19 +336,19 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\">", "<div class=\"col-sm-6\">",
                 "Detailed PTH mechanisms", "<hr>",
-                "<a href=\"/php1_zoom/PTHg/php1_notif_PTHg1.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/PTHg/php1_notif_PTHg1.svg\" target=\"_blank\">
                     <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                    align=\"center\"  src=\"/php1_zoom/PTHg/php1_notif_PTHg1.svg\"/></a>",
+                    align=\"center\"  src=\"php1_zoom/PTHg/php1_notif_PTHg1.svg\"/></a>",
                 "</div>", "<div class=\"col-sm-6\">",
                 "Effect of D3 on PTH synthesis", "<hr>",
-                "<a href=\"/php1_zoom/PTHg/php1_notif_PTHg2.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/PTHg/php1_notif_PTHg2.svg\" target=\"_blank\">
                     <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                   align=\"center\"  src=\"/php1_zoom/PTHg/php1_notif_PTHg2.svg\"/></a>",
+                   align=\"center\"  src=\"php1_zoom/PTHg/php1_notif_PTHg2.svg\"/></a>",
                 "</div>", "</div>", "<br>","<div class=\"row\">", "<div class=\"col-sm-6\">",
                 "Effect of Pi on PTH synthesis", "<hr>",
-                "<a href=\"/php1_zoom/PTHg/php1_notif_PTHg3.svg\" target=\"_blank\">
+                "<a href=\"php1_zoom/PTHg/php1_notif_PTHg3.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                   align=\"center\"  src=\"/php1_zoom/PTHg/php1_notif_PTHg3.svg\"/></a>",
+                   align=\"center\"  src=\"php1_zoom/PTHg/php1_notif_PTHg3.svg\"/></a>",
                 "</div>", "<div class=\"col-sm-6\">", "Effect of Ca on PTH secretion", "<hr>",
                 "<a href=\"php1_zoom/PTHg/php1_notif_PTHg4.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
@@ -360,19 +360,19 @@ generate_nodes_Ca <- function(input) {
         HTML(
           paste("<div class=\"row\">", "<div class=\"col-sm-6\">",
                 "Detailed PTH mechanisms", "<hr>",
-                "<a href=\"/hypopara_zoom/PTHg/hypopara_notif_PTHg1.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/PTHg/hypopara_notif_PTHg1.svg\" target=\"_blank\">
                     <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                    align=\"center\"  src=\"/hypopara_zoom/PTHg/hypopara_notif_PTHg1.svg\"/></a>",
+                    align=\"center\"  src=\"hypopara_zoom/PTHg/hypopara_notif_PTHg1.svg\"/></a>",
                 "</div>", "<div class=\"col-sm-6\">",
                 "Effect of D3 on PTH synthesis", "<hr>",
-                "<a href=\"/hypopara_zoom/PTHg/hypopara_notif_PTHg2.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/PTHg/hypopara_notif_PTHg2.svg\" target=\"_blank\">
                     <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                   align=\"center\"  src=\"/hypopara_zoom/PTHg/hypopara_notif_PTHg2.svg\"/></a>",
+                   align=\"center\"  src=\"hypopara_zoom/PTHg/hypopara_notif_PTHg2.svg\"/></a>",
                 "</div>", "</div>", "<br>","<div class=\"row\">", "<div class=\"col-sm-6\">",
                 "Effect of Pi on PTH synthesis", "<hr>",
-                "<a href=\"/hypopara_zoom/PTHg/hypopara_notif_PTHg3.svg\" target=\"_blank\">
+                "<a href=\"hypopara_zoom/PTHg/hypopara_notif_PTHg3.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                   align=\"center\"  src=\"/hypopara_zoom/PTHg/hypopara_notif_PTHg3.svg\"/></a>",
+                   align=\"center\"  src=\"hypopara_zoom/PTHg/hypopara_notif_PTHg3.svg\"/></a>",
                 "</div>", "<div class=\"col-sm-6\">", "Effect of Ca on PTH secretion", "<hr>",
                 "<a href=\"hypopara_zoom/PTHg/hypopara_notif_PTHg4.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
@@ -383,9 +383,9 @@ generate_nodes_Ca <- function(input) {
       } else if (input$run_hypoD3) {
         HTML(
           paste("Detailed PTH mechanisms <hr>
-                   <a href=\"/hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg\" target=\"_blank\">
+                   <a href=\"hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg\" target=\"_blank\">
                    <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\"
-                   align=\"center\"  src=\"/hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg\"/></a>"
+                   align=\"center\"  src=\"hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg\"/></a>"
           )
         )
       } else {

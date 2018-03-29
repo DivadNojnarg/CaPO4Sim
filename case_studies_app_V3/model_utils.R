@@ -401,7 +401,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "107 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/sad.png"
+        image <- "images_patient_info/sad.png"
         state <- "sick"
       } else if (input$slider_php1 == 100) {
         stat1 <- HTML(
@@ -413,7 +413,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "214 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/suffer.png"
+        image <- "images_patient_info/suffer.png"
         state <- "sick"
       } else {
         stat1 <- HTML(
@@ -425,7 +425,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "303 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/dead.png"
+        image <- "images_patient_info/dead.png"
         state <- "dead"
       }
     } else if (input$run_hypopara) {
@@ -434,7 +434,7 @@ generate_userFields <- function(input) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 63 ng/l")), "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/happy.png"
+        image <- "images_patient_info/happy.png"
         state <- "sick"
       } else if (input$slider_hypopara == 0.1) {
         stat1 <- HTML(
@@ -444,7 +444,7 @@ generate_userFields <- function(input) {
           paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>", 
                 "3.6 mM", "</b></font>", "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 41 ng/l")), "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/sad.png"
+        image <- "images_patient_info/sad.png"
         state <- "sick"
       } else {
         stat1 <- HTML(
@@ -456,7 +456,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#FF0000\"><b>", 
                 "0 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/suffer.png"
+        image <- "images_patient_info/suffer.png"
         state <- "sick"
       }
     } else {
@@ -467,7 +467,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "106 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/sad.png"
+        image <- "images_patient_info/sad.png"
         state <- "sick"
       } else if (input$slider_hypoD3 == 0.1) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
@@ -475,7 +475,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "180 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/sad.png"
+        image <- "images_patient_info/sad.png"
         state <- "sick"
       } else {
         stat1 <- HTML(
@@ -485,7 +485,7 @@ generate_userFields <- function(input) {
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "231 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
-        image <- "/images_patient_info/sad.png"
+        image <- "images_patient_info/sad.png"
         state <- "sick"
       }
     }

@@ -31,13 +31,13 @@ help_text <- c(
   paste(
     "This is the", "<mark><font color=\"#FF0000\"><b>", "central part", 
     "</b></font></mark>", "of the app: the network.", "<br>",
-    "<ul>", "<li>", "<img src=\"/rintrojs_help/arrow_help.svg\">", "<br>",
+    "<ul>", "<li>", "<img src=\"rintrojs_help/arrow_help.svg\">", "<br>",
     "Fluxes between all organs are depicted by black", 
     "<font color=\"#0000FF\"><b>", "arrows", "</b></font>",
     "which color may change as follows:",
-    "<br>", "<ul>", "<li>", "<img src=\"/rintrojs_help/green_arrow_help.svg\">", 
+    "<br>", "<ul>", "<li>", "<img src=\"rintrojs_help/green_arrow_help.svg\">", 
     "<br>", "if the flux is increased.", "</li>", 
-    "<li>", "<img src=\"/rintrojs_help/red_arrow_help.svg\">", 
+    "<li>", "<img src=\"rintrojs_help/red_arrow_help.svg\">", 
     "<br>", "if the flux is decreased.", "</li>",
     "</ul>", "<br>", "By default, fluxes are not displayed. This can be
     modified in the", icon("sliders fa-2x"), "section of
@@ -49,10 +49,10 @@ help_text <- c(
     can be enabled in the", icon("sliders fa-2x"), "section of
     the", "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
     "</b></font></mark>",
-    "</li>", "<li>","<img src=\"/rintrojs_help/dashed_arrow_help.svg\">", "<br>",
+    "</li>", "<li>","<img src=\"rintrojs_help/dashed_arrow_help.svg\">", "<br>",
     "<font color=\"#0000FF\"><b>", "Regulations", "</b></font>",
     "are depicted by black dashed arrows", "<ul>", 
-    "<li>", "<img src=\"/rintrojs_help/yellow_arrow_help.svg\">", 
+    "<li>", "<img src=\"rintrojs_help/yellow_arrow_help.svg\">", 
     "<br>", "They are highlighted in yellow, in response to a", 
     "<font color=\"#0000FF\"><b>" ,"perturbation.", "</b></font>", 
     "The size increases if it is a stimulation, 
@@ -99,16 +99,16 @@ help_text <- c(
     "section, in the", "<mark><font color=\"#FF0000\"><b>", 
     "right sidebar.", "</b></font></mark>",
     "For PHP1, when the slider is on 0, there is no disease.", "<br>",
-    "<img src=\"/rintrojs_help/php1_min_help.svg\">", "<br>",
+    "<img src=\"rintrojs_help/php1_min_help.svg\">", "<br>",
     "Then, moving the slider to the right increases the severity 
     of PHP1 (see below).", "<br>",
-    "<img src=\"/rintrojs_help/php1_max_help.svg\">", "<br>",
+    "<img src=\"rintrojs_help/php1_max_help.svg\">", "<br>",
     "For hypoparathyroidism or 25(OH) vitamin D3 deficiency,
     the slider starts on 1 (no disease) and 0 represents when
     PTH synthesis is abolished and 25(OH) vitamin D3 stock is 0,
     respectively. Below, an example for hypoparathyroidism.", "<br>",
-    "<img src=\"/rintrojs_help/hypopara_min_help.svg\">", "<br>",
-    "<img src=\"/rintrojs_help/hypopara_max_help.svg\">", sep = " "),
+    "<img src=\"rintrojs_help/hypopara_min_help.svg\">", "<br>",
+    "<img src=\"rintrojs_help/hypopara_max_help.svg\">", sep = " "),
   
   paste(
     icon("question-circle fa-2x"), "contains some", 
@@ -129,14 +129,14 @@ help_text <- c(
   
   paste(
     "<ul>
-    <li> <i class=\"fa fa-slider\"></i>  is where you handle the 
+    <li> <i class=\"fa fa-sliders\"></i>  is where you handle the 
     <font color=\"#0000FF\"><b>parameters</b></font>
     of this application such as changing the background, 
     display regulation mechanisms or not...</li>
     <li> <i class=\"fa fa-map\"></i> is dedicated to the 
     <font color=\"#0000FF\"><b>educational content</b></font> of the app. 
     Go here if you want to select some case studies</li>
-    <li> <i class=\"fa fa-brush\"></i> 
+    <li> <i class=\"fa fa-paint-brush\"></i> 
     Here you can change the global 
     <font color=\"#0000FF\"><b>theme</b></font> of the dashboard</li>
     </ul>"),

@@ -18,7 +18,7 @@ generate_dynamicFooter <- function() {
       div(style = "display: inline",
           div("2017-2018, the Interface Group", style = "display: inline",
               a(href = "http://interfacegroup.ch/people/", target = "_blank",
-                img(src = "/logos/interface_logo.png", height = "30px")
+                img(src = "logos/interface_logo.png", height = "30px")
               )),
           HTML("<span id=\"tab\"></span>"),
           div("Built with", style = "display: inline",
@@ -33,12 +33,12 @@ generate_dynamicFooter <- function() {
           HTML("<span id=\"tab\"></span>"),
           div("Funded by", style = "display: inline",
               a(href = "http://www.nccr-kidney.ch", target = "_blank", 
-                img(src = "/logos/nccr_logo.png", height = "50px")),
+                img(src = "logos/nccr_logo.png", height = "50px")),
               a(href = "http://www.uzh.ch/de.html", target = "_blank", 
-                img(src = "/logos/uzh_logo.png", height = "30px")),
+                img(src = "logos/uzh_logo.png", height = "30px")),
               "and",
               a(href = "https://www.unil.ch/fbm/fr/home.html", target = "_blank",
-                img(src = "/logos/unil_logo.png", height = "55px")
+                img(src = "logos/unil_logo.png", height = "55px")
               ))
       )), 
     subText = HTML("<b>Version:</b> Beta 3.2")

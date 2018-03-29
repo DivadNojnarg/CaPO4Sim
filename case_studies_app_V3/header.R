@@ -15,7 +15,7 @@
 header <- dashboardHeader(
   title = HTML(paste0(
     '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
-    '<img src= "/logos/online-learning.svg">'
+    '<img src= "logos/online-learning.svg">'
   )),
   
   titleWidth = 300,
