@@ -92,6 +92,7 @@ library(DT)
 + Educational Content
   - update all modals for php1, hypopara, hypoD3
   - update network notifications as well as graph notifications
+  - disable dynamic case studies (will be released later)
 + Patient/Rat Status box
   - change patient by rat 
   - change concentrations according to the rat
@@ -104,6 +105,7 @@ library(DT)
   - reorder ui files
   - rewrite the dashboardControbar code in pure R
   - add hotjar tracking to recover datas of users
+  - redo the whole comment section for each file
   
 
 ## Changelog version 3.1 (global app)

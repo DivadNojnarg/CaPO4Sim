@@ -412,18 +412,18 @@ shinyServer(function(input, output, session) {
       description <- generate_userFields(input)$description
       if (description == "dead") {
         tagList(
-          actionBttn(inputId = "cure", label = "Change Patient", 
+          actionBttn(inputId = "cure", label = "Change Rat", 
                      style = "fill", color = "success")
         )
       } else {
         tagList(
-          actionBttn(inputId = "cure", label = "Cure Patient", 
+          actionBttn(inputId = "cure", label = "Cure Rat", 
                      style = "fill", color = "success")
         )
       }
     } else {
       tagList(
-        actionBttn(inputId = "cure", label = "Cure Patient", 
+        actionBttn(inputId = "cure", label = "Cure Rat", 
                    style = "fill", color = "success")
       )
     }
