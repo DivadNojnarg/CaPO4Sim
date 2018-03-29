@@ -130,15 +130,15 @@ help_text <- c(
   paste(
     "<ul>
     <li> <i class=\"fa fa-sliders fa-2x\"></i>  is where you handle the 
-    <font color=\"#0000FF\"><b>parameters</b></font>
+    <font color=\"#FF0000\"><b>parameters</b></font>
     of this application such as changing the background, 
     display regulation mechanisms or not...</li>
     <li> <i class=\"fa fa-map fa-2x\"></i> is dedicated to the 
-    <font color=\"#0000FF\"><b>educational content</b></font> of the app. 
+    <font color=\"#FF0000\"><b>educational content</b></font> of the app. 
     Go here if you want to select some case studies</li>
     <li> <i class=\"fa fa-paint-brush fa-2x\"></i> 
     Here you can change the global 
-    <font color=\"#0000FF\"><b>theme</b></font> of the dashboard</li>
+    <font color=\"#FF0000\"><b>theme</b></font> of the dashboard</li>
     </ul>"),
   
   paste("Choose your <font color=\"#FF0000\"><b> background </b></font> (Rat by default)."),
