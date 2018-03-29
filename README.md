@@ -75,6 +75,7 @@ library(DT)
 + Interface
   - add movies to the video section (Janine Meyer work)
   - fix the patient state issue in the header (and remove it from the help section)
+  - disable human background (for the moment)
 + CaPO4 Network
   - when a node is selected, its size is increased (and restored when deselected) 
   - same thing for edges
@@ -91,6 +92,9 @@ library(DT)
 + Educational Content
   - update all modals for php1, hypopara, hypoD3
   - update network notifications as well as graph notifications
++ Patient/Rat Status box
+  - change patient by rat 
+  - change concentrations according to the rat.
 + Others
   - remove `source("help.R")` from all other code, except global.R
   - some code syntax correction
