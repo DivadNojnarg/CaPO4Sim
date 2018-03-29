@@ -1,7 +1,7 @@
 generate_userInfo <- function(input) {
   
   head_user <- dashboardUser(
-    name = "Patient State",
+    name = "Rat State",
     image = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
       generate_userFields(input)$image
     } else {
@@ -13,11 +13,11 @@ generate_userInfo <- function(input) {
       "healthy"
     },
     sub_description = if (input$run_php1) {
-      "Patient has primary-hyperparathyroidism"
+      "Rat has primary-hyperparathyroidism"
     } else if (input$run_hypopara) {
-      "Patient suffers from hypoparathyroidism"
+      "Rat suffers from hypoparathyroidism"
     } else if (input$run_hypoD3) {
-      "Patient has vitamin D3 defficiency"
+      "Rat has vitamin D3 defficiency"
     } else {
       "nothing to declare!"
     }, 
@@ -29,7 +29,7 @@ generate_userInfo <- function(input) {
     stat2 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
       generate_userFields(input)$stat2
     } else {
-      HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+      HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
     },
     stat3 = if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
       generate_userFields(input)$stat3

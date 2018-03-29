@@ -630,19 +630,24 @@ shinyServer(function(input, output, session) {
   })
   
   # prevent user from selecting multiple background
+  # observe({
+  #   if (is.element("rat", input$background_choice) &&
+  #       !is.element("human", input$background_choice)) {
+  #     disable(selector = "#background_choice input[value='human']")
+  #   } else {
+  #     enable(selector = "#background_choice input[value='human']")
+  #   }
+  #   if (is.element("human", input$background_choice) && 
+  #       !is.element("rat", input$background_choice)) {
+  #     disable(selector = "#background_choice input[value='rat']")
+  #   } else {
+  #     enable(selector = "#background_choice input[value='rat']")
+  #   }
+  # })
+  
+  # disable the human background
   observe({
-    if (is.element("rat", input$background_choice) &&
-        !is.element("human", input$background_choice)) {
-      disable(selector = "#background_choice input[value='human']")
-    } else {
-      enable(selector = "#background_choice input[value='human']")
-    }
-    if (is.element("human", input$background_choice) && 
-        !is.element("rat", input$background_choice)) {
-      disable(selector = "#background_choice input[value='rat']")
-    } else {
-      enable(selector = "#background_choice input[value='rat']")
-    }
+    shinyjs::disable(selector = "#background_choice input[value='human']")
   })
   
   # when enable regulation is selected, activates all the checkboxes

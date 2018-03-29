@@ -367,7 +367,7 @@ generate_userFields <- function(input) {
                 "1.5 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(
           paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>", 
-                "1.2 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+                "2.3 mM", "</b></font>", "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "107 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
@@ -379,7 +379,7 @@ generate_userFields <- function(input) {
                 "2 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(
           paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>", 
-                "1 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+                "2 mM", "</b></font>", "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "214 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
@@ -391,7 +391,7 @@ generate_userFields <- function(input) {
                 "2 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(
           paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>", 
-                "1 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+                "1.9 mM", "</b></font>", "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "303 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
@@ -402,7 +402,7 @@ generate_userFields <- function(input) {
       req(input$slider_hypopara)
       if (input$slider_hypopara == 0.5) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 63 ng/l")), "<br/>", "(20-70 ng/l)"))
         image <- "/images_patient_info/happy.png"
         state <- "sick"
@@ -412,7 +412,7 @@ generate_userFields <- function(input) {
                 "1 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(
           paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>", 
-                "1.8 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+                "3.6 mM", "</b></font>", "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 41 ng/l")), "<br/>", "(20-70 ng/l)"))
         image <- "/images_patient_info/sad.png"
         state <- "sick"
@@ -422,7 +422,7 @@ generate_userFields <- function(input) {
                 "0.6 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(
           paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>", 
-                "1.9 mM", "</b></font>", "<br/>", "(0.8-1.6 mM)"))
+                "3.8 mM", "</b></font>", "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#FF0000\"><b>", 
                 "0 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
@@ -433,7 +433,7 @@ generate_userFields <- function(input) {
       req(input$slider_hypoD3)
       if (input$slider_hypoD3 == 0.5) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "106 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
@@ -441,7 +441,7 @@ generate_userFields <- function(input) {
         state <- "sick"
       } else if (input$slider_hypoD3 == 0.1) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.5 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "180 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
@@ -451,7 +451,7 @@ generate_userFields <- function(input) {
         stat1 <- HTML(
           paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>", 
                 "0.8 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 1.3 mM")), "<br/>", "(0.8-1.6 mM)"))
+        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 2.5 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
           paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>", 
                 "231 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
