@@ -200,8 +200,8 @@ and how (is it increased? decreased?)
 - <del>use a compiled model instead of only deSolve core<del> (DONE).
 - <del>write "about" section for the staff</del> (DONE).
 - <del>update the main website</del> (DONE).
-- refine video tutorials.
-- make animations on visnetwork (blinking,...)
+- <del>refine video tutorials</del> (DONE).
+- <del>make animations on visnetwork (blinking,...)</del> (DONE).
 
 
 ## Global App

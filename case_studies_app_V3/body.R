@@ -44,10 +44,10 @@ body <- dashboardBody(
   
   # include the script for Hotjar tracking
   #tags$head(includeScript("www/hotjar.js")),
-  tags$head(includeScript("www/rintrojs_count.js")),
+  tags$head(includeScript(paste0(getwd(), "/www/rintrojs_count.js"))),
   
   # include hotjar tracking
-  tags$head(includeScript("www/hotjar.js")),
+  tags$head(includeScript(paste0(getwd(), "/www/hotjar.js"))),
   
   # Main application Panel
   tabItems(
