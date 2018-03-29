@@ -34,6 +34,8 @@ source("help.R")
 source("app_css.R")
 source("header.R")
 source("sidebar.R")
+source("network_box.R")
+source("graph_box.R")
 source("body.R")
 
 # Load server components and functions

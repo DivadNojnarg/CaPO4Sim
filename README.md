@@ -94,13 +94,16 @@ library(DT)
   - update network notifications as well as graph notifications
 + Patient/Rat Status box
   - change patient by rat 
-  - change concentrations according to the rat.
+  - change concentrations according to the rat
 + Others
   - remove `source("help.R")` from all other code, except global.R
   - some code syntax correction
   - indicates the user to enable regulations when he launches case studies
     if they are not already enabled (sweetAlert)
   - sort files in the www folder
+  - reorder ui files
+  - rewrite the dashboardControbar code in pure R
+  - add hotjar tracking to recover datas of users
   
 
 ## Changelog version 3.1 (global app)
