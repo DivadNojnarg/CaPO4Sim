@@ -21,10 +21,12 @@ library(stringr)
 library(shinyFeedback)
 library(shinyWidgets)
 library(ygdashboard)
+library(shinydashboardPlus)
 
 # Load the template components of UI
 source("generate_patient_info.R")
 source("app_css.R")
+source("help.R")
 source("header.R")
 source("sidebar.R")
 source("body.R")
@@ -65,7 +67,15 @@ state_hypoD3 <- read.csv(paste0(getwd(),"/www/init_hypoD3.csv"),
 # need unlist to convert the dataframe in vector as required for the state variable
 state_hypoD3 <- unlist(state_hypoD3[,-1]) 
 
-
+# initial conditions
+state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
+           "D3_p" = 564.2664, "FGF_p" = 16.78112, 
+           "Ca_p" = 1.2061,"Ca_f" = 1.8363, "Ca_b" = 250, 
+           "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, 
+           "PO4_c" = 2.7719,"CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, 
+           "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, 
+           "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
+           "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
 
 # below is needed to handle disease and treatments events
 disease_choices <- c(
@@ -83,8 +93,14 @@ treatment_choices <- c(
   "cinacalcet"
 )
 
+# initialization of event parameters
 t_start <- NULL
 t_stop <- NULL
+Ca_inject <- NULL
+Ca_food <- NULL
+P_inject <- NULL
+P_food <- NULL
+D3_inject <- NULL
 
 
 # compile the C code containing equations
