@@ -18,7 +18,7 @@ generate_dynamicFooter <- function() {
       div(style = "display: inline",
           div("2017-2018, the Interface Group", style = "display: inline",
               a(href = "http://interfacegroup.ch/people/", target = "_blank",
-                img(src = "logos/interface_logo.png", height = "30px")
+                img(src = "logos/interface_logo.jpeg", height = "30px")
               )),
           HTML("<span id=\"tab\"></span>"),
           div("Built with", style = "display: inline",
