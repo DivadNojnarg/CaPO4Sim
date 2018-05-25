@@ -70,7 +70,7 @@ body <- dashboardBody(
         box(id = "ca_movie", solidHeader = TRUE,
             column(12, align = "center", 
                    HTML('<iframe width="560" height="315"
-                        src="https://youtube.com/embed/wdWSedADgRw" 
+                        src="https://youtube.com/embed/9x2QFK6_IkQ" 
                         frameborder="0" allowfullscreen></iframe>')
             )
         ),
@@ -78,7 +78,7 @@ body <- dashboardBody(
         box(id = "PO4_movie", solidHeader = TRUE,
             column(12, align = "center",
                    HTML('<iframe width="560" height="315"
-                        src="https://youtube.com/embed/z5A33wEYgbw"
+                        src="https://youtube.com/embed/1eh5VF6poWo"
                         frameborder="0" allowfullscreen></iframe>')
             )
         )
@@ -88,7 +88,7 @@ body <- dashboardBody(
         box(id = "PTH_movie", solidHeader = TRUE,
             column(12, align = "center",
                    HTML('<iframe width="560" height="315"
-                        src="https://youtube.com/embed/TiibPBsxV0E"
+                        src="https://youtube.com/embed/5OEenuXMjyg"
                         frameborder="0" allowfullscreen></iframe>')
             )
         )
