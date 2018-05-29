@@ -6,7 +6,7 @@
 # | PURPOSE:  This UI code contains the right dashboard code 
 # |           
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -67,7 +67,7 @@ dashboardControlbar <- function() {
                       prettyCheckboxGroup(
                         inputId = "background_choice",
                         label = "Background",
-                        choices = c("rat", "human"),
+                        choices = "rat", #c("rat", "human")
                         animation = "pulse",
                         thick = TRUE,
                         status = "primary",
@@ -85,7 +85,7 @@ dashboardControlbar <- function() {
                       prettySwitch(
                         inputId = "network_hormonal_choice",
                         label = "Regulations?",
-                        value = FALSE,
+                        value = TRUE,
                         status = "success",
                         slim = TRUE,
                         bigger = TRUE

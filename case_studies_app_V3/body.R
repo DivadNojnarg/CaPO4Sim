@@ -19,7 +19,7 @@
 # |  PART 3:  main network_box, graph_box, load other tabPanels
 # |           like movies, glossary, about_section
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -63,7 +63,7 @@ body <- dashboardBody(
     
     # Video panels
     tabItem(
-      tabName = "demo",
+      tabName = "video",
       
       fluidRow(
         # Ca movie

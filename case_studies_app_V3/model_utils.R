@@ -21,7 +21,7 @@
 # |  PART 7: sliders_reset(button_states, input)
 # |  PART 8: generate_userFields(input)
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -140,7 +140,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
       if (sum(is.element(c(1:4, 6), counter)) == 1) {
         edges$width[sel] <- 8
         # make these edges blink
-        lapply(1:10, FUN = function(i){
+        lapply(1:4, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%
@@ -155,7 +155,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         # make these edges blink
       } else {
         edges$width[sel] <- 3
-        lapply(1:10, FUN = function(i){
+        lapply(1:4, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%

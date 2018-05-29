@@ -13,7 +13,7 @@
 # |  PART 3: server components
 # |  PART 4:  server datas (state vector)
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -34,7 +34,6 @@ library(shinyjqui)
 library(bsplus)
 library(sweetalertR)
 library(shinytoastr)
-library(shinyMenus)
 library(stringr)
 library(purrr)
 library(rintrojs)
@@ -63,6 +62,7 @@ source("calc_change.R")
 source("notifications.R")
 source("graph_notifications.R")
 source("network.R")
+source("getting_started.R")
 source("animations.R")
 source("modals.R")
 source("dashboardUser.R")

@@ -5,7 +5,7 @@
 # *----------------------------------------------------------------
 # | PURPOSE:  This codes generates the network_box
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -40,6 +40,7 @@ network_box <- function() {
       # slider input for dynamic case studies
       column(
         width = 4, align = "center",
+        uiOutput("counter_progress"),
         conditionalPanel(
           # this panel is also available in help
           condition = "input.run_Ca_inject | input.help",

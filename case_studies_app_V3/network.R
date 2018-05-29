@@ -18,7 +18,7 @@
 # |  PART 2: generate nodes
 # |  PART 3: generate edges
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -89,18 +89,6 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
 # % % % % #
 
 # Generate nodes for the CaPO4 network
-Ca_int_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23937&Menu=1079&backbar=0"
-PO4_int_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0)"
-rapid_bone_web <- "https://academic.oup.com/ndt/article/26/8/2438/1917340/The-exchangeable-calcium-pool-physiology-and"
-bone_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24035&Menu=1079&backbar=0"
-Ca_kidney_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0"
-PO4_kidney_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23410&Menu=1079&backbar=0"
-Ca_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18891&Menu=1079&backbar=0"
-PO4_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0"
-PTH_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23466&Menu=1079&backbar=0"
-D3_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0"
-FGF23_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0"
-
 generate_nodes_Ca <- function(input) {
   
   data.frame(
@@ -163,20 +151,19 @@ generate_nodes_Ca <- function(input) {
                 align=\"center\"  src=\"hypoD3_zoom/intestine/hypoD3_notif_intestine.svg\"/></a>"
           )
         )
-        } else {
-          paste(a("About intestinal Ca absorption", 
-                  href = Ca_int_web,
-                  target = "_blank"),br(),
-                a("About intestinal PO4 absorption", 
-                  href = PO4_int_web,
-                  target = "_blank"))
-        },
-      "",
+      } else {
+        HTML(
+          paste("Detailed Ca intestinal absorption <hr>
+                <a href=\"base_case_zom/intestine/base_case_notif_intestine.svg\" target=\"_blank\">
+                <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                align=\"center\"  src=\"base_case_zoom/intestine/base_case_notif_intestine.svg\"/></a>"
+          )
+        ) 
+      },
+      NA,
       
       # rapid bone pool tooltip
-      paste(a("About rapid bone pool", 
-              href = rapid_bone_web,
-              target = "_blank")),
+      NA,
       
       # deep bone zoom tooltip
       if (input$run_php1) {
@@ -225,18 +212,24 @@ generate_nodes_Ca <- function(input) {
           )
         )
       } else {
-        paste(a("About bone", 
-                href = bone_web,
-                target = "_blank"))
+        HTML(
+          paste("<div class=\"row\"> <div class=\"col-sm-6\">
+                 Effect of PTH on bone <hr>
+                 <a href=\"base_case_zoom/bone/base_case_notif_bone1.svg\" target=\"_blank\">
+                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                 align=\"center\"  src=\"base_case_zoom/bone/base_case_notif_bone1.svg\"/></a>
+                 </div><div class=\"col-sm-6\">
+                 Effect of D3 on bone <hr>
+                 <a href=\"base_case_zoom/bone/base_case_notif_bone2.svg\" target=\"_blank\">
+                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                 align=\"center\"  src=\"base_case_zoom/bone/base_case_notif_bone2.svg\"/></a>
+                 </div></div>"
+          )
+        )
       },
       
       # kidney tooltip
-      paste(a("About Ca kidney handling", 
-              href = Ca_kidney_web,
-              target = "_blank"), br(),
-            a("About PO4 kidney handling", 
-              href = PO4_kidney_web,
-              target = "_blank")),
+      NA,
       
       # kidney_zoom tooltip
       if (input$run_php1) {
@@ -318,18 +311,38 @@ generate_nodes_Ca <- function(input) {
           )
         )
       } else {
-        ""
+        HTML(
+          paste("<div class=\"row\">", "<div class=\"col-sm-6\">", 
+                "Detailed Ca PT reabsorption", "<hr>",
+                "<a href=\"base_case_zoom/kidney/base_case_notif_kidney1.svg\" target=\"_blank\">
+                <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                align=\"center\"  src=\"base_case_zoom/kidney/base_case_notif_kidney1.svg\"/></a>", 
+                "</div>", "<div class=\"col-sm-6\">", 
+                "Detailed Pi PT reabsorption", "<hr>",
+                "<a href=\"base_case_zoom/kidney/base_case_notif_kidney2.svg\" target=\"_blank\">
+                <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                align=\"center\"  src=\"base_case_zoom/kidney/base_case_notif_kidney2.svg\"/></a>", 
+                "</div>", "</div>", "<br>",
+                "<div class=\"row\">", "<div class=\"col-sm-6\">", 
+                "Detailed Ca TAL reabsorption", "<hr>",
+                "<a href=\"base_case_zoom/kidney/base_case_notif_kidney3.svg\" target=\"_blank\">
+                <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                align=\"center\"  src=\"base_case_zoom/kidney/base_case_notif_kidney3.svg\"/></a>", 
+                "</div>", "<div class=\"col-sm-6\">", 
+                "Detailed Ca DCT reabsorption", "<hr>",
+                "<a href=\"base_case_zoom/kidney/base_case_notif_kidney4.svg\" target=\"_blank\">
+                <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                align=\"center\"  src=\"base_case_zoom/kidney/base_case_notif_kidney4.svg\"/></a>", 
+                "</div>", "</div>"
+          )
+        )
       },
-      rep("",2),
+      rep(NA,2),
       
       # calcium tooltip
-      paste(a("About Calcium", 
-              href = Ca_web,
-              target = "_blank")),
+      NA,
       # PO4 tooltip
-      paste(a("About Phosphate", 
-              href = PO4_web,
-              target = "_blank")),
+      NA,
       
       # PTH synthesis zoom
       if (input$run_php1) {
@@ -389,30 +402,24 @@ generate_nodes_Ca <- function(input) {
           )
         )
       } else {
-        paste(a("About PTH", 
-                href = PTH_web, 
-                target = "_blank"))
+        HTML(
+          paste("Detailed PTH mechanisms <hr>
+                <a href=\"base_case_zom/PTHg/base_case_notif_PTHg.svg\" target=\"_blank\">
+                <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
+                align=\"center\"  src=\"base_case_zoom/PTHg/base_case_notif_PTHg.svg\"/></a>"
+          )
+        ) 
       },
       # PTH tooltip
-      paste(a("About PTH", 
-              href = PTH_web, 
-              target = "_blank")),
+      NA,
       # D3 tooltip
-      paste(a("About vitamin D3", 
-              href = D3_web,
-              target = "_blank")),
+      NA,
       # D3 tooltip
-      paste(a("About vitamin D3", 
-              href = D3_web,
-              target = "_blank")),
+      NA,
       # D3 tooltip
-      paste(a("About vitamin D3", 
-              href = D3_web,
-              target = "_blank")),
+      NA,
       # FGF23 tooltip
-      paste(a("About FGF23", 
-              href = FGF23_web,
-              target = "_blank"))
+      NA
     ),
     
     x = if (is.null(input$background_choice)) {
@@ -489,11 +496,9 @@ generate_nodes_Ca <- function(input) {
   )
 }
 
-# Generate edges for the CaPO4 network
-ac_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0"
-res_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=25370&Menu=1079&backbar=0"
-CaSR_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0"
 
+
+# Generate edges for the CaPO4 network
 generate_edges_Ca <- function(input) {
   req(input$width_organs, input$width_hormones)
   data.frame(
@@ -591,24 +596,10 @@ generate_edges_Ca <- function(input) {
     color = list(color = c(rep("black", 29)), 
                  highlight = "yellow"),
     dashes = c(rep(FALSE,12), rep(TRUE,17)),
-    title = c(rep("",3),
-              paste(a("About bone formation", 
-                      href = ac_web ,
-                      target = "_blank")),
-              paste(a("About bone formation", 
-                      href = ac_web,
-                      target = "_blank")),
-              paste(a("About bone resorption", 
-                      href = res_web,
-                      target = "_blank")),
-              rep("",6),
-              paste(a("About the Calcium Sensing Receptor", 
-                      href = CaSR_web,
-                      target = "_blank")),
-              paste(a("About the Calcium Sensing Receptor", 
-                      href = CaSR_web,
-                      target = "_blank")),
-              rep("",15)),
+    title = c(rep(NA,3),
+              rep(NA, 9),
+              rep(NA, 2),
+              rep(NA,15)),
     smooth = c(rep(TRUE,29)),
     length = c(200,rep(300,2),rep(300,2),200,300,
                200,rep(300,4),rep(200,8), 1800, rep(200,8)),

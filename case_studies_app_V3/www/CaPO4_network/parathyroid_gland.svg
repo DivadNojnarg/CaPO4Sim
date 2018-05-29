@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 90 96.87" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="-11.444 0 113.742 100.771" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <style>.cls-1{fill:#faf1ce;}.cls-2{fill:#f3e0d8;}.cls-2,.cls-3,.cls-4{stroke:#ae5536;stroke-linejoin:round;}.cls-2,.cls-4{stroke-width:2px;}.cls-3{fill:none;stroke-linecap:round;}.cls-4{fill:#f8ecbc;}.cls-5{font-size:14px;font-family:Arial-BoldMT, Arial;font-weight:700;}</style>
     <symbol id="PTH" data-name="PTH" viewBox="0 0 90 96.87">
@@ -26,7 +26,7 @@
       <path class="cls-3" d="M16.3,34a2.46,2.46,0,0,1,0-4.92"/>
       <path class="cls-3" d="M10.6,43.81a2.46,2.46,0,0,1,0-4.92"/>
       <ellipse class="cls-4" cx="24.97" cy="25.07" rx="2.94" ry="5.53"/>
-      <text class="cls-5" transform="translate(31.89 87.2)" style="white-space: pre;">PTHg</text>
+      <text class="cls-5" style="white-space: pre; font-size: 14px;" x="30.07" y="82.649">PTHg</text>
       <text x="114.112" y="72.653" style="white-space: pre; fill: rgb(51, 51, 51); font-family: sans-serif; font-size: 24px;"> </text>
     </symbol>
     <symbol id="CaSR-" data-name="CaSR-" viewBox="0 0 55 77.35">
@@ -68,6 +68,9 @@
       </g>
       <text class="cls-2" x="1.55" y="31.736" style="fill: rgb(133, 146, 53); font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: bold; stroke: none; white-space: pre;">CaSR(-)</text>
     </symbol>
+    <symbol id="Neues_Symbol_1" data-name="Neues Symbol 1" viewBox="0 0 55 55">
+      <circle class="cls-4" cx="27.5" cy="27.5" r="27.5" style="fill: rgb(229, 243, 234); stroke: rgb(229, 243, 234);"/>
+    </symbol>
   </defs>
   <title>NaPo4_170904_PTH Icon</title>
   <g id="Bild">
@@ -76,6 +79,21 @@
     </g>
   </g>
   <g id="g-4" transform="matrix(0.468905, 0, 0, 0.467831, 29.598352, 15.12596)">
-    <use width="55" height="77.3499984741211" transform="matrix(0.9026902914047241, 0, 0, 0.9183127284049988, 7.6599836349487305, -26.939800262451172)" xlink:href="#symbol-3"/>
+    <use width="55" height="77.3499984741211" transform="matrix(0.9026902914047241, 0, 0, 0.9183127880096436, 7.6599836349487305, -26.939800262451172)" xlink:href="#symbol-3"/>
   </g>
+  <use id="Neues_Symbol_1-15" data-name="Neues Symbol 1" width="55" height="55" transform="matrix(0.306172, 0, 0, 0.301193, 43.166267, 83.899834)" style="fill: rgb(151, 106, 106);" xlink:href="#Neues_Symbol_1"/>
+  <circle class="cls-33" cx="116.577" cy="23.877" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(0.306172, 0, 0, 0.301193, 11.098929, 80.74086)"/>
+  <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(0.306172, 0, 0, 0.301194, -105.98539, 78.896713)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(0.306172, 0, 0, 0.301192, -106.291565, 79.197952)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <text class="cls-35" style="white-space: pre; font-size: 14px; font-family: Arial-BoldMT, Arial; font-weight: bold; width: 202.969px; perspective-origin: 101.484px 0px; fill: rgb(94, 118, 88);" x="110.276" y="43.691" transform="matrix(0.306172, 0, 0, 0.301193, 11.098929, 80.74086)">[PTH]p</text>
+  <use id="use-1" data-name="Neues Symbol 1" width="55" height="55" transform="matrix(0.306172, 0, 0, 0.301193, 84.55407, 54.549942)" style="fill: rgb(151, 106, 106);" xlink:href="#Neues_Symbol_1"/>
+  <circle class="cls-33" cx="116.577" cy="23.877" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(0.306172, 0, 0, 0.301193, 52.486729, 51.390968)"/>
+  <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(0.306172, 0, 0, 0.301194, -64.597595, 49.546822)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(0.306172, 0, 0, 0.301192, -64.90377, 49.848061)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <text class="cls-35" style="white-space: pre; font-size: 14px; font-family: Arial-BoldMT, Arial; font-weight: bold; width: 202.969px; perspective-origin: 101.484px 0px; fill: rgb(94, 118, 88);" x="110.276" y="43.691" transform="matrix(0.306172, 0, 0, 0.301193, 52.486729, 51.390968)">[PTH]p</text>
+  <use id="use-2" data-name="Neues Symbol 1" width="55" height="55" transform="matrix(0.306172, 0, 0, 0.301193, -9.217182, 58.820038)" style="fill: rgb(151, 106, 106);" xlink:href="#Neues_Symbol_1"/>
+  <circle class="cls-33" cx="116.577" cy="23.877" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(0.306172, 0, 0, 0.301193, -41.284523, 55.661064)"/>
+  <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(0.306172, 0, 0, 0.301194, -158.368835, 53.816917)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(0.306172, 0, 0, 0.301192, -158.675018, 54.118156)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <text class="cls-35" style="white-space: pre; font-size: 14px; font-family: Arial-BoldMT, Arial; font-weight: bold; width: 202.969px; perspective-origin: 101.484px 0px; fill: rgb(94, 118, 88);" x="110.276" y="43.691" transform="matrix(0.306172, 0, 0, 0.301193, -41.284523, 55.661064)">[PTH]p</text>
 </svg>

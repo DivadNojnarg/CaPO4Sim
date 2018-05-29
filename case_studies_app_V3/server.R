@@ -257,6 +257,29 @@ shinyServer(function(input, output, session) {
   
   output$counter_nav <- renderPrint({counter_nav$diagram}) 
   
+  # generate a progress bar
+  output$counter_progress <- renderUI({
+    if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" | 
+        input$run_hypoD3 == "TRUE") {
+      progressBar(
+        id = "counter_progress",
+        value = counter_nav$diagram,
+        total = 6,
+        title = "Progress",
+        size = "s",
+        striped = TRUE,
+        status = if (counter_nav$diagram <= 1) {
+          "danger"
+        } else if (counter_nav$diagram >= 2 & counter_nav$diagram <= 5) {
+          "warning"
+        } else {
+          "success"
+        },
+        display_pct = FALSE
+      )
+    }
+  })
+  
   
   # Animations of arrows when event occurs (php1, hypopara, hypoD3)
   observeEvent(input$next1 | input$back1 ,{
@@ -277,7 +300,7 @@ shinyServer(function(input, output, session) {
         if (counter_nav$diagram == 1) {
           nodes_Ca <- nodes_Ca()
           if (input$run_php1 == TRUE | input$run_hypopara == TRUE) {
-            lapply(1:10, FUN = function(i){
+            lapply(1:4, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes_Ca$hidden[11] <- TRUE
                 visNetworkProxy("network_Ca") %>%
@@ -290,7 +313,7 @@ shinyServer(function(input, output, session) {
               Sys.sleep(0.5)
             })
           } else if (input$run_hypoD3 == TRUE) {
-            lapply(1:10, FUN = function(i){
+            lapply(1:4, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes_Ca$hidden[c(13:15)] <- TRUE
                 visNetworkProxy("network_Ca") %>%
@@ -559,20 +582,15 @@ shinyServer(function(input, output, session) {
   
   output$test <- renderPrint(input$count)
   
-  
+  observe({
+    print(c(input$run_php1, input$run_hypopara, input$run_hypoD3))
+  })
   
   # Print a short help text above the graph part
-  # removeUI does not work
   output$info <- renderUI({
-    if (is_empty(input$php1) | is_empty(input$hypopara) | is_empty(input$hypoD3) |
-        is_empty(input$Ca_inject) | is_empty(input$PO4_inject) | is_empty(input$PO4_gav)) {
-      HTML(paste("To print me, select a case study.", 
-                 "They can be choosen in the", icon("map-o fa-2x"), 
-                 "section, in the", "<mark><font color=\"#FF0000\"><b>", 
-                 "right sidebar.", "</b></font></mark>", sep = " "))
-    } else {
-      removeUI(selector = "info")
-    }
+    if (sum(c(input$run_php1, input$run_hypopara, input$run_hypoD3)) == 0) {
+      getting_started()
+    } 
   })
   
   

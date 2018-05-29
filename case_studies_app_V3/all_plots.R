@@ -21,7 +21,7 @@
 # |  PART 5: PO4 inject
 # |  PART 6: PO4 gavage
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -90,19 +90,21 @@ make_plot_php1 <- function(input) {
   plot_hormones_php1 <- plot_ly(
     php1_table, x = php1_vec / php1_vec[1], 
     y = php1_table[,"PTH_p"] / php1_table[1,"PTH_p"],
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[PTH]p</b>",
     line = list(color = 'black', width = 2, dash = "dash"), 
     showlegend = FALSE
     ) %>%
     add_lines(
       x = php1_vec / php1_vec[1], 
       y = php1_table[,"D3_p"] / php1_table[1,"D3_p"], 
+      name = "<b>[D3]p</b>",
       line = list(color = 'black', width = 2, dash = "dot"), 
       showlegend = FALSE
       ) %>%
     add_lines(
       x = php1_vec / php1_vec[1], 
       y = php1_table[,"FGF_p"] / php1_table[1,"FGF_p"], 
+      name = "<b>[FGF23]p</b>",
       line = list(color = 'black', width = 2, dash = "solid"), 
       showlegend = FALSE
       ) %>%
@@ -268,19 +270,21 @@ make_plot_hypoD3 <- function(input) {
   plot_hormones_hypoD3 <- plot_ly(
     hypoD3_table, x = hypoD3_vec / hypoD3_vec[1], 
     y = hypoD3_table[,"PTH_p"] / hypoD3_table[1,"PTH_p"],
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[PTH]p</b>",
     line = list(color = 'black', width = 2, dash = "dash"), 
     showlegend = FALSE
   ) %>%
     add_lines(
       x = hypoD3_vec / hypoD3_vec[1], 
       y = hypoD3_table[,"D3_p"] / hypoD3_table[1,"D3_p"], 
+      name = "<b>[D3]p</b>",
       line = list(color = 'black', width = 2, dash = "dot"), 
       showlegend = FALSE
       ) %>%
     add_lines(
       x = hypoD3_vec / hypoD3_vec[1], 
       y = hypoD3_table[,"FGF_p"] / hypoD3_table[1,"FGF_p"], 
+      name = "<b>[FGF23]p</b>",
       line = list(color = 'black', width = 2, dash = "solid"), 
       showlegend = FALSE
       ) %>%
@@ -447,19 +451,21 @@ make_plot_hypopara <- function(input) {
   plot_hormones_hypopara <- plot_ly(
     hypopara_table, x = hypopara_vec / hypopara_vec[1], 
     y = hypopara_table[,"PTH_p"] / hypopara_table[1,"PTH_p"],
-    type = "scatter", mode = "lines", 
+    type = "scatter", mode = "lines", name = "<b>[PTH]p</b>",
     line = list(color = 'black', width = 2, dash = "dash"), 
     showlegend = FALSE
   ) %>%
     add_lines(
       x = hypopara_vec / hypopara_vec[1], 
       y = hypopara_table[,"D3_p"] / hypopara_table[1,"D3_p"], 
+      name = "<b>[D3]p</b>",
       line = list(color = 'black', width = 2, dash = "dot"), 
       showlegend = FALSE
     ) %>%
     add_lines(
       x = hypopara_vec/hypopara_vec[1], 
       y = hypopara_table[,"FGF_p"]/hypopara_table[1,"FGF_p"], 
+      name = "<b>[FGF23]p</b>",
       line = list(color = 'black', width = 2, dash = "solid"), 
       showlegend = FALSE
     ) %>%

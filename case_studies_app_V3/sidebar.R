@@ -6,7 +6,7 @@
 # | PURPOSE:  This UI code contains the left dashboard code 
 # |           
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -32,7 +32,7 @@ sidebar <- dashboardSidebar(
       #menuSegment("MAIN NAVIGATION"),
       menuItem("About", tabName = "about", icon = icon("info-circle")), 
       menuItem("Glossary", tabName = "glossary", icon = icon("search")),
-      menuItem("Demo", tabName = "demo", icon = icon("youtube-play")),
+      menuItem("Video", tabName = "video", icon = icon("youtube-play")),
       menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE)
     ),
     data.step = 1,

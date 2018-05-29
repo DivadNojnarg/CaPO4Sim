@@ -6,14 +6,24 @@
 # | PURPOSE:  This code provide all modals needed to generate the
 # |           introduction to each case study
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
 
 # Modal for primary hyperparathyroidism
 modal_php1 <- modalDialog(
-  title = "About Primary Hyperparathyroidism",
+  title = tagList(
+    "About Primary Hyperparathyroidism",
+    HTML(
+      paste0(
+        '<button type="button" class="btn btn-default pull-right" data-dismiss="modal">
+         <i class="fa fa-close"></i>
+         Dismiss
+        </button>'
+      )
+    )
+  ),
   withMathJax(
     
     tags$i(
@@ -83,12 +93,23 @@ modal_php1 <- modalDialog(
     tags$a(href = "https://www.ncbi.nlm.nih.gov/pubmed/3591940", target = "_blank",
            "https://www.ncbi.nlm.nih.gov/pubmed/3591940")
   ),
-  size = "m"
+  size = "m",
+  footer = NULL
 )
 
 # Modal for hypoparathyroidism
 modal_hypopara <- modalDialog(
-  title = "About hypoparathyroidism",
+  title = tagList(
+    "About hypoparathyroidism",
+    HTML(
+      paste0(
+        '<button type="button" class="btn btn-default pull-right" data-dismiss="modal">
+        <i class="fa fa-close"></i>
+        Dismiss
+        </button>'
+      )
+    )
+  ),
   "This is the reverse situation of primary hyperparathyroidism. Therefore, it is
   characterized by a loss of function of parathyroid gland, which can be congenital,
   due to a surgery in the thyroid area (thyroidectomy), or to an immune disease. 
@@ -113,12 +134,23 @@ modal_hypopara <- modalDialog(
   tags$br(),
   tags$a(href = "http://www.nejm.org/doi/full/10.1056/NEJMcp0803050", target = "_blank",
          "http://www.nejm.org/doi/full/10.1056/NEJMcp0803050"),
-  size = "m"
+  size = "m",
+  footer = NULL
 )
 
 # Modal for vitamin D3 deficiency
 modal_hypoD3 <- modalDialog(
-  title = "About vitamin D3 deficiency",
+  title = tagList(
+    "About vitamin D3 deficiency",
+    HTML(
+      paste0(
+        '<button type="button" class="btn btn-default pull-right" data-dismiss="modal">
+        <i class="fa fa-close"></i>
+        Dismiss
+        </button>'
+      )
+    )
+  ),
   "As shown in the figure below, vitamin D3 synthesis's pathway is complex and has
   two main origins: a reaction between UV rays and skin and from the food (vitamin D3,
   vitamin D2). The storage form of vitamin D is 25(OH)D, also known as calcidiol, whose
@@ -146,7 +178,8 @@ modal_hypoD3 <- modalDialog(
          "http://www.nejm.org/doi/pdf/10.1056/NEJMp1608005"),
   tags$a(href = "http://www.nejm.org/doi/full/10.1056/NEJMc063341#t=article", target = "_blank",
          "http://www.nejm.org/doi/full/10.1056/NEJMc063341#t=article"),
-  size = "m"
+  size = "m",
+  footer = NULL
 )
 
 # Modal for Ca iv injection
