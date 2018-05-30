@@ -27,7 +27,7 @@ network_box <- function() {
               inputId = "back1", 
               label = "Back", 
               style = "stretch", 
-              color = "primary", 
+              color = "danger", 
               size = "md", 
               icon = icon("step-backward")
             ),
@@ -40,70 +40,10 @@ network_box <- function() {
       # slider input for dynamic case studies
       column(
         width = 4, align = "center",
-        uiOutput("counter_progress"),
-        conditionalPanel(
-          # this panel is also available in help
-          condition = "input.run_Ca_inject | input.help",
-          introBox(
-            sliderInput(
-              inputId = "tmaxCainj", 
-              label = "Current Time", 
-              min = 1, 
-              max = 120, 
-              value = 1, 
-              step = 1) %>%
-              shinyInput_label_embed(
-                icon("undo") %>%
-                  actionBttn(
-                    inputId = "reset_tmaxCainj",
-                    label = "", 
-                    color = "danger", 
-                    size = "xs"
-                  )
-              ),
-            data.step = 4,
-            data.intro = help_text[4]
-          )
-        ),
-        conditionalPanel(
-          condition = "input.run_PO4_inject",
-          
-          sliderInput(
-            inputId = "tmaxPO4inj", 
-            label = "Current Time", 
-            min = 1, 
-            max = 250, 
-            value = 1, 
-            step = 1) %>%
-            shinyInput_label_embed(
-              icon("undo") %>%
-                actionBttn(
-                  inputId = "reset_tmaxPO4inj",
-                  label = "", 
-                  color = "danger", 
-                  size = "xs"
-                )
-            )
-        ),
-        conditionalPanel(
-          condition = "input.run_PO4_gav",
-          
-          sliderInput(
-            inputId = "tmaxPO4gav", 
-            label = "Current Time",
-            min = 1,
-            max = 250, 
-            value = 1, 
-            step = 1) %>%
-            shinyInput_label_embed(
-              icon("undo") %>%
-                actionBttn(
-                  inputId = "reset_tmaxPO4gav",
-                  label = "", 
-                  color = "danger", 
-                  size = "xs"
-                )
-            )
+        introBox(
+          uiOutput("counter_progress"),
+          data.step = 4,
+          data.intro = help_text[4]
         )
       ),
       
@@ -117,7 +57,7 @@ network_box <- function() {
             inputId = "next1", 
             label = "Next", 
             style = "stretch", 
-            color = "primary", 
+            color = "danger", 
             size = "md", 
             icon = icon("step-forward")
           )

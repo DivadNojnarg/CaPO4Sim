@@ -9,7 +9,7 @@
 # |             /CaPO4_network/human_wholebody.svg
 # |
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -118,6 +118,37 @@ app_css <- function() {
                 width: 20em; 
                 opacity: 1; 
                 z-index:100;
+              }
+
+              .blinking-button {
+                -webkit-animation: glowing 1500ms infinite;
+                -moz-animation: glowing 1500ms infinite;
+                -o-animation: glowing 1500ms infinite;
+                animation: glowing 1500ms infinite;
+              }
+
+              @-webkit-keyframes glowing {
+                0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+                50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+                100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+              }
+              
+              @-moz-keyframes glowing {
+                0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+                50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+                100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+              }
+              
+              @-o-keyframes glowing {
+                0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+                50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+                100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+              }
+              
+              @keyframes glowing {
+                0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+                50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+                100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
               }
               ")
     )

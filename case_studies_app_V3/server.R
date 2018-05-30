@@ -19,7 +19,7 @@
 # |  PART 4: Educational content (modals, notifications, glossary, userInfo)
 # |  PART 5: Useful tasks
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/05/2018 (last update)          
 # |
 # |
 # *------------------------------------------------------------------
@@ -35,25 +35,25 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
-  out <- reactive({
-    
-    if (input$run_Ca_inject == "TRUE") { # IV Ca injection followed by EGTA infusion
-      times <- seq(0,input$tmaxCainj,by = 1)
-      out <- as.data.frame(
-        ode(y = state, times = times, func = calcium_phosphate_Caiv, parms = parameters)
-      )
-    } else if (input$run_PO4_inject == "TRUE") { # PO4 injection 
-      times <- seq(0,input$tmaxPO4inj,by = 1) 
-      out <- as.data.frame(
-        ode(y = state, times = times, func = calcium_phosphate_PO4iv, parms = parameters)
-      )
-    } else if (input$run_PO4_gav == "TRUE") { # PO4 gavage
-      times <- seq(0,input$tmaxPO4gav,by = 1)
-      out <- as.data.frame(
-        ode(y = state, times = times, func = calcium_phosphate_PO4gav, parms = parameters)
-      )
-    }
-  })
+  # out <- reactive({
+  #   
+  #   if (input$run_Ca_inject == "TRUE") { # IV Ca injection followed by EGTA infusion
+  #     times <- seq(0,input$tmaxCainj,by = 1)
+  #     out <- as.data.frame(
+  #       ode(y = state, times = times, func = calcium_phosphate_Caiv, parms = parameters)
+  #     )
+  #   } else if (input$run_PO4_inject == "TRUE") { # PO4 injection 
+  #     times <- seq(0,input$tmaxPO4inj,by = 1) 
+  #     out <- as.data.frame(
+  #       ode(y = state, times = times, func = calcium_phosphate_PO4iv, parms = parameters)
+  #     )
+  #   } else if (input$run_PO4_gav == "TRUE") { # PO4 gavage
+  #     times <- seq(0,input$tmaxPO4gav,by = 1)
+  #     out <- as.data.frame(
+  #       ode(y = state, times = times, func = calcium_phosphate_PO4gav, parms = parameters)
+  #     )
+  #   }
+  # })
   
   #------------------------------------------------------------------------- 
   #  
@@ -260,7 +260,7 @@ shinyServer(function(input, output, session) {
   # generate a progress bar
   output$counter_progress <- renderUI({
     if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" | 
-        input$run_hypoD3 == "TRUE") {
+        input$run_hypoD3 == "TRUE" | input$help) {
       progressBar(
         id = "counter_progress",
         value = counter_nav$diagram,
@@ -300,7 +300,7 @@ shinyServer(function(input, output, session) {
         if (counter_nav$diagram == 1) {
           nodes_Ca <- nodes_Ca()
           if (input$run_php1 == TRUE | input$run_hypopara == TRUE) {
-            lapply(1:4, FUN = function(i){
+            lapply(1:2, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes_Ca$hidden[11] <- TRUE
                 visNetworkProxy("network_Ca") %>%
@@ -313,7 +313,7 @@ shinyServer(function(input, output, session) {
               Sys.sleep(0.5)
             })
           } else if (input$run_hypoD3 == TRUE) {
-            lapply(1:4, FUN = function(i){
+            lapply(1:2, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes_Ca$hidden[c(13:15)] <- TRUE
                 visNetworkProxy("network_Ca") %>%
@@ -343,11 +343,11 @@ shinyServer(function(input, output, session) {
   #  Events for the CaPO4 Homeostasis diagramm whenever a flux change
   # Change arrow color relatively to the value of 
   # fluxes for Ca injection/PO4 injection as well as PO4 gavage
-  observe({
-    out <- out()
-    edges_Ca <- edges_Ca()
-    arrow_lighting_live(out, edges = edges_Ca, session)
-  })
+  # observe({
+  #   out <- out()
+  #   edges_Ca <- edges_Ca()
+  #   arrow_lighting_live(out, edges = edges_Ca, session)
+  # })
   
   #------------------------------------------------------------------------- 
   #  
@@ -490,7 +490,6 @@ shinyServer(function(input, output, session) {
                                 allowed = input$notif2_switch)
           # make it draggable
           jqui_draggable(selector = "#shiny-notification-notifid")
-          jqui_draggable(selector = "#shiny-notification-graph_notif")
         }
       }, priority = 10)
   
@@ -521,6 +520,30 @@ shinyServer(function(input, output, session) {
         }
       }
     })
+  
+  # indicate when a user has finished the current activity
+  observe({
+    if (counter_nav$diagram == 6) {
+      current_simulation <- extract_running_sim(input)[[1]] %>%
+        str_extract("_\\w+") %>%
+        str_replace("_", "")
+      input_current_simulation <- paste0("input$", extract_running_sim(input)[[1]])
+      sendSweetAlert(
+        session = session,
+        type = "success",
+        title = NULL,
+        text = HTML(
+          paste("You just finished", current_simulation, "activity.
+                You are free to replay the animation or choose another
+                activity. Click on the <b>next</b> button again to reset the current
+                activity" 
+          )
+        ),
+        html = TRUE
+      )
+    }
+  })
+  
   
   #------------------------------------------------------------------------- 
   #  
@@ -580,15 +603,11 @@ shinyServer(function(input, output, session) {
       )
   })
   
-  output$test <- renderPrint(input$count)
   
-  observe({
-    print(c(input$run_php1, input$run_hypopara, input$run_hypoD3))
-  })
-  
-  # Print a short help text above the graph part
+  # Print a short help text in the graph part
   output$info <- renderUI({
-    if (sum(c(input$run_php1, input$run_hypopara, input$run_hypoD3)) == 0) {
+    if (sum(c(input$run_php1, input$run_hypopara, input$run_hypoD3)) == 0 &&
+        input$help == 0) {
       getting_started()
     } 
   })
@@ -629,6 +648,16 @@ shinyServer(function(input, output, session) {
       addClass(id = "network_cap", class = "network_capnone")
       removeClass(id = "network_cap", class = "network_caphuman")
       removeClass(id = "network_cap", class = "network_caprat")
+    }
+  })
+  
+  
+  # add the blinking button class to the next button in animations
+  observe({
+    if (input$next1 == 0) {
+      addClass(id = "next1", class = "blinking-button")
+    } else {
+      removeClass(id = "next1", class = "blinking-button")
     }
   })
   

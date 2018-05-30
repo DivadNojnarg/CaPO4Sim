@@ -8,7 +8,7 @@ getting_started <- function() {
             height = "70px", width = "70px"), 
         "Organs involved in Ca and \\(P_i\\) metabolism", br(),
         img(src = "rintrojs_help/regulation_help.svg", 
-            height = "70px", width = "70px"), 
+            height = "60px", width = "60px"), 
         "Regulatory hormones and ions", br(),
         img(src = "rintrojs_help/dashed_arrow_help_promotor.svg", 
             height = "70px", width = "70px"), 
@@ -19,7 +19,8 @@ getting_started <- function() {
         img(src = "rintrojs_help/dashed_arrow_help.svg", 
             height = "70px", width = "70px"), 
         "Mixed effect or opposite effects on \\([Ca]_p\\) and \\([P_i]_p\\). 
-        Click on the detailed cellular view to see individual actions", br(),
+        Click on the detailed cellular view to see individual actions", br(), br(),
+        "2) FLuxes and concentrations:", br(),
         "\\([...]_p\\)", "Plasma concentrations", br(),
         img(src = "rintrojs_help/arrow_help.svg", 
             height = "70px", width = "70px"), 
@@ -43,21 +44,16 @@ getting_started <- function() {
               the regulation is stronger, decreases if it is weaker")
           ),
           shiny::tags$li(
-            "Visualize changes in Ca and \\(P_i\\) fluxes",
-            shiny::tags$ul(
-              shiny::tags$li(
-                img(src = "rintrojs_help/red_arrow_help.svg", 
-                    height = "70px", width = "70px"),
-                "if the flux is decreased"), br(),
-              shiny::tags$li(
-                img(src = "rintrojs_help/arrow_help.svg", 
-                    height = "70px", width = "70px"),
-                "if the flux is unaltered"), br(),
-              shiny::tags$li(
-                img(src = "rintrojs_help/green_arrow_help.svg", 
-                    height = "70px", width = "70px"),
-                "if the flux is increased"), br()
-            )
+            "Visualize changes in Ca and \\(P_i\\) fluxes", br(),
+            img(src = "rintrojs_help/red_arrow_help.svg", 
+                height = "70px", width = "70px"),
+            "if the flux is decreased", ",",
+            img(src = "rintrojs_help/arrow_help.svg", 
+                height = "70px", width = "70px"),
+            "if it is unaltered", "or",
+            img(src = "rintrojs_help/green_arrow_help.svg", 
+                height = "70px", width = "70px"),
+            "if it is increased."
           )
         )
       )

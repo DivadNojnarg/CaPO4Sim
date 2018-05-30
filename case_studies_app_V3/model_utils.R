@@ -37,29 +37,18 @@ generate_notification <- function(simulation, counter, allowed) {
   sim <- str_split(simulation, pattern = "_")[[1]][2]
   # print only if notifications are allowed
   if (allowed == TRUE) {
-    showNotification(
-      id = "notifid",
-      # need to eval and deparse so as to paste message
-      # need also to use HTML to handle html tags in the text
-      # such as <b> >/b>, ...
-      HTML(eval(parse(text = paste0("notification_list$", sim, "[idx+1]")))),
-      type = "message",
-      duration = 9999
-    )
-    
-    notif <- eval(parse(text = paste0("graph_notification_list$", sim, "[idx+1]")))
-    # this part ensures that the graph notif is only displayed
-    # a the first iteration of the animation. 
-    if (!is.na(notif)) {
+    if (counter > 0) {
       showNotification(
-        id = "graph_notif",
+        id = "notifid",
         # need to eval and deparse so as to paste message
-        withMathJax(HTML(notif)),
-        type = "warning",
+        # need also to use HTML to handle html tags in the text
+        # such as <b> >/b>, ...
+        HTML(eval(parse(text = paste0("notification_list$", sim, "[idx+1]")))),
+        type = "message",
         duration = 9999
       )
     } else {
-      removeNotification(id = "graph_notif")
+      removeNotification(id = "notifid")
     }
     
     # toastr is interesting but need to be improved!
@@ -79,7 +68,6 @@ generate_notification <- function(simulation, counter, allowed) {
     
   } else {
     removeNotification(id = "notifid")
-    removeNotification(id = "graph_notif")
     #toastr_clear_all(with_animation = TRUE)
   }
 }
@@ -140,7 +128,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
       if (sum(is.element(c(1:4, 6), counter)) == 1) {
         edges$width[sel] <- 8
         # make these edges blink
-        lapply(1:4, FUN = function(i){
+        lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%
@@ -155,7 +143,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         # make these edges blink
       } else {
         edges$width[sel] <- 3
-        lapply(1:4, FUN = function(i){
+        lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%
@@ -175,7 +163,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
       if (sum(is.element(c(1:4, 6), counter)) == 1) {
         edges$width[sel] <- 3
         # make these edges blink
-        lapply(1:10, FUN = function(i){
+        lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%
@@ -190,7 +178,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         # make these edges blink
       } else {
         edges$width[sel] <- 8
-        lapply(1:10, FUN = function(i){
+        lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%
@@ -210,7 +198,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
       if (sum(is.element(c(1, 3, 4, 5), counter)) == 1) {
         edges$width[sel] <- 3
         # make these edges blink
-        lapply(1:10, FUN = function(i){
+        lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%
@@ -225,7 +213,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         # make these edges blink
       } else {
         edges$width[sel] <- 8
-        lapply(1:10, FUN = function(i){
+        lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
             visNetworkProxy("network_Ca") %>%

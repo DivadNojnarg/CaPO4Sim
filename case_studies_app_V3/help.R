@@ -29,37 +29,33 @@ help_text <- c(
     "containing the application.", "</li>","</ul>", sep = " "),
   
   paste(
-    "This is the", "<mark><font color=\"#FF0000\"><b>", "central part", 
-    "</b></font></mark>", "of the app: the network.", "<br>",
-    "<ul>", "<li>", "<img src=\"rintrojs_help/arrow_help.svg\">", "<br>",
+    "The network is the", "<mark><font color=\"#FF0000\"><b>", "central part", 
+    "</b></font></mark>", "of the app.", "<br>",
+    "<ul>", "<li>", img(src = "rintrojs_help/arrow_help.svg", height = "50px", width = "50px"),
     "Fluxes between all organs are depicted by black", 
     "<font color=\"#0000FF\"><b>", "arrows", "</b></font>",
     "which color may change as follows:",
-    "<br>", "<ul>", "<li>", "<img src=\"rintrojs_help/green_arrow_help.svg\">", 
+    "<br>", "<ul>", "<li>", img(src = "rintrojs_help/green_arrow_help.svg", height = "50px", width = "50px"), 
     "<br>", "if the flux is increased.", "</li>", 
-    "<li>", "<img src=\"rintrojs_help/red_arrow_help.svg\">", 
+    "<li>", img(src = "rintrojs_help/red_arrow_help.svg", height = "50px", width = "50px"), 
     "<br>", "if the flux is decreased.", "</li>",
-    "</ul>", "<br>", "By default, fluxes are not displayed. This can be
-    modified in the", icon("sliders fa-2x"), "section of
-    the", "<mark><font color=\"#FF0000\"><b>", "right sidebar,", 
-    "</b></font></mark>", "by selecting calcium, phosphate or both.",
-    "</li>", "<br>", "<li>", 
+    "</ul>", "<li>", 
     "<font color=\"#0000FF\"><b>", "Hormones", "</b></font>", 
     "and regulators are represented by light green nodes. They
-    can be enabled in the", icon("sliders fa-2x"), "section of
-    the", "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
-    "</b></font></mark>",
-    "</li>", "<li>","<img src=\"rintrojs_help/dashed_arrow_help.svg\">", "<br>",
+    can be enabled in the", icon("sliders"), "section of
+    the", "<mark><font color=\"#FF0000\"><b>", "right sidebar",  
+    "</b></font></mark>", icon("gears"), ".",
+    "</li>", "<li>", img(src = "rintrojs_help/dashed_arrow_help.svg", height = "50px", width = "50px"),
     "<font color=\"#0000FF\"><b>", "Regulations", "</b></font>",
-    "are depicted by black dashed arrows", "<ul>", 
-    "<li>", "<img src=\"rintrojs_help/yellow_arrow_help.svg\">", 
-    "<br>", "They are highlighted in yellow, in response to a", 
-    "<font color=\"#0000FF\"><b>" ,"perturbation.", "</b></font>", 
+    "are depicted by black dashed arrows:", "<ul>", 
+    "<li>", img(src = "rintrojs_help/yellow_arrow_help.svg", height = "50px", width = "50px"), 
+    "They are highlighted in yellow, in response to a", 
+    "<font color=\"#0000FF\"><b>" ,"perturbation", "</b></font>", 
+    "(see", icon("map-o"), "section, in the", 
+    "<mark><font color=\"#FF0000\"><b>", "right sidebar", 
+    "</b></font></mark>", icon("gears"), ").",
     "The size increases if it is a stimulation, 
-    and inversely.", "</li>", "</ul>", "Perturbations can be 
-    selected via the", icon("map-o fa-2x"), "section, in the", 
-    "<mark><font color=\"#FF0000\"><b>", "right sidebar.", 
-    "</b></font></mark>","</li>", "</ul>", sep = " "
+    and inversely.", "</li>", "</ul>", "</li>", "</ul>", sep = " "
     ),
   
   paste(
@@ -73,13 +69,8 @@ help_text <- c(
     ),
   
   paste(
-    "By moving this slider, you can control the current time 
-    of the simulation (orange vertical line in the graph). It only works
-    for", "<mark><font color=\"#FF0000\"><b>", "dynamic simulations", 
-    "</b></font></mark>", "and not steady-state ones. Recall that
-    dynamic simulations can be selected in the", icon("map-o fa-2x"), 
-    "section, in the", "<mark><font color=\"#FF0000\"><b>", 
-    "right sidebar.", "</b></font></mark>", sep = " "
+    "This is the progress bar showing your current position in the
+    selected case study.", sep = " "
     ),
   
   paste(

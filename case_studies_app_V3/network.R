@@ -154,7 +154,7 @@ generate_nodes_Ca <- function(input) {
       } else {
         HTML(
           paste("Detailed Ca intestinal absorption <hr>
-                <a href=\"base_case_zom/intestine/base_case_notif_intestine.svg\" target=\"_blank\">
+                <a href=\"base_case_zoom/intestine/base_case_notif_intestine.svg\" target=\"_blank\">
                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                 align=\"center\"  src=\"base_case_zoom/intestine/base_case_notif_intestine.svg\"/></a>"
           )
@@ -404,7 +404,7 @@ generate_nodes_Ca <- function(input) {
       } else {
         HTML(
           paste("Detailed PTH mechanisms <hr>
-                <a href=\"base_case_zom/PTHg/base_case_notif_PTHg.svg\" target=\"_blank\">
+                <a href=\"base_case_zoom/PTHg/base_case_notif_PTHg.svg\" target=\"_blank\">
                 <img id = \"zoom_image\" width=\"220\" height=\"220\" border=\"0\" 
                 align=\"center\"  src=\"base_case_zoom/PTHg/base_case_notif_PTHg.svg\"/></a>"
           )
