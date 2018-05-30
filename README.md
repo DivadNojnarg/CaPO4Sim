@@ -76,6 +76,8 @@ library(DT)
   - add movies to the video section (Janine Meyer work)
   - fix the patient state issue in the header (and remove it from the help section)
   - disable human background (for the moment)
+  - remove human background from options
+  - rename « demo » to «  video »
 + CaPO4 Network
   - when a node is selected, its size is increased (and restored when deselected) 
   - same thing for edges
@@ -86,13 +88,25 @@ library(DT)
   - replace all png detailed pictures by svgs for all case studies
   - add captions to detailed pictures
   - fix the net flux issue between plasma/rapid bone pool and plasma/cells
+  - add blinking to the next button in animations (when it was not clicked before)
+  - nodes and edges only blink once in the CAPO4 interactive diagram (do not waste time)
+  - set a progress bar for animations
+  - add cellular views for baseline
+  - remove Hset links in the CaPO4 interactive diagram
+  - change the parathyroid gland svg file (include 3 PTH balls inside)
 + Graphs
   - change box size (plot area, height = 950px)
   - move slider at the bottom (plot area)
+  - add a nice « getting started » section in the right panel, where the graph are displayed for case studies
+  - change Trace elements in graphs (PTH, D3 and FGF23)
+  - Add indications when case studies are selected (how to use the slider, …)
 + Educational Content
   - update all modals for php1, hypopara, hypoD3
   - update network notifications as well as graph notifications
   - disable dynamic case studies (will be released later)
+  - trigger an alert when user finishes a case study (he can either restart or choose another case study)
+  - set a close button in modals at the top (instead of bottom, better for small screens)
+  - remove HSet links from the glossary
 + Patient/Rat Status box
   - change patient by rat 
   - change concentrations according to the rat
@@ -106,6 +120,10 @@ library(DT)
   - rewrite the dashboardControbar code in pure R
   - add hotjar tracking to recover datas of users
   - redo the whole comment section for each file
+  - remove the first blue and yellow notifications when a case study is selected 
+  - Update the help section (synchronization with the current interface)
++ Hardware
+  - The server is going to switch from 8 cores/32 GB RAM to 16 cores and 64GB RAM to further support the load
   
 
 ## Changelog version 3.1 (global app)

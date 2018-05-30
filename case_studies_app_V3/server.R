@@ -230,7 +230,10 @@ shinyServer(function(input, output, session) {
   # counter decrease
   observeEvent(input$back1,{
     if (counter_nav$diagram == 0) {
-    } else {counter_nav$diagram <- counter_nav$diagram - 1}
+      NULL
+    } else {
+      counter_nav$diagram <- counter_nav$diagram - 1
+    }
   })
   
   # counter incrementation
@@ -254,8 +257,6 @@ shinyServer(function(input, output, session) {
     visNetworkProxy("network_Ca", session) %>%  # then reset the graph
       visUpdateEdges(edges = edges_Ca)
   })
-  
-  output$counter_nav <- renderPrint({counter_nav$diagram}) 
   
   # generate a progress bar
   output$counter_progress <- renderUI({
