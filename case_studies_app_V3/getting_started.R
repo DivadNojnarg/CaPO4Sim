@@ -3,7 +3,7 @@ getting_started <- function() {
     HTML(
       paste(
         "<u><b>Mathematical model of calcium and phosphate homeostasis in the rat:</b></u>", br(), br(),
-        "1) Regulatory mechanisms:", br(),
+        "<b>1) Regulatory mechanisms:</b>", br(),
         img(src = "rintrojs_help/node_help.svg", 
             height = "70px", width = "70px"), 
         "Organs involved in Ca and \\(P_i\\) metabolism", br(),
@@ -20,16 +20,16 @@ getting_started <- function() {
             height = "70px", width = "70px"), 
         "Mixed effect or opposite effects on \\([Ca]_p\\) and \\([P_i]_p\\). 
         Click on the detailed cellular view to see individual actions", br(), br(),
-        "2) FLuxes and concentrations:", br(),
+        "<b>2) FLuxes and concentrations:</b>", br(),
         "\\([...]_p\\)", "Plasma concentrations", br(),
         img(src = "rintrojs_help/arrow_help.svg", 
             height = "70px", width = "70px"), 
         "Ca and \\(P_i\\) fluxes", br(), br(),
-        "2) <mark><font color=\"#FF0000\"><b>Mouse over</b></font></mark> the organs to visualize detailed 
-        intra-cellular regulatory pathways.", br(), br(),
-        "3) Visualize the consequences of selected 
-        <mark><font color=\"#FF0000\"><b>pathological 
-        disorders</b></font></mark>", br(),
+        "<b>3) <mark><font color=\"#FF0000\">Mouse over</font></mark> the organs to visualize detailed 
+        intra-cellular regulatory pathways.</b>", br(), br(),
+        "<b>4) Visualize the consequences of selected 
+        <mark><font color=\"#FF0000\">pathological 
+        disorders</font></mark></b>", br(),
         shiny::tags$ul(
           shiny::tags$li(
             HTML(
