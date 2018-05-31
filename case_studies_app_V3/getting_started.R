@@ -25,17 +25,24 @@ getting_started <- function() {
         img(src = "rintrojs_help/arrow_help.svg", 
             height = "70px", width = "70px"), 
         "Ca and \\(P_i\\) fluxes", br(), br(),
-        "<b>3) <mark><font color=\"#FF0000\">Mouse over</font></mark> the organs to visualize detailed 
-        intra-cellular regulatory pathways.</b>", br(), br(),
-        "<b>4) <mark><font color=\"#FF0000\">Explore</font></mark> the application:</b>", br(),
+        "<b>3) Explore <mark><font color=\"#FF0000\">regulatory pathways</font></mark>:</b>", br(),
         shiny::tags$ul(
+          shiny::tags$li(
+            HTML(
+              paste(
+                "<b><mark><font color=\"#FF0000\">Mouse 
+                over</font></mark></b> the organs to visualize detailed 
+                intra-cellular regulatory pathways</b>"
+              )
+            )
+          ),
           shiny::tags$li(HTML(paste("Open the right sidebar by clicking on", icon("gears")))),
           shiny::tags$li(HTML(paste("Select the first tab", icon("sliders")))),
           shiny::tags$li(paste("Play with the different options (enable/disable regulations,
-        display/hide organs)."))
+        display/hide organs)"))
         ),
         br(), br(),
-        "<b>5) Visualize the consequences of selected 
+        "<b>4) Visualize the consequences of selected 
         <mark><font color=\"#FF0000\">pathological 
         disorders</font></mark>:</b>", br(),
         shiny::tags$ul(
