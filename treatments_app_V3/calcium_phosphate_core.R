@@ -23,20 +23,39 @@ calcium_phosphate_core <- function(t, state, parameters) {
     #                #
     #   Simulations  #
     ##################
-    
-    if (!is.null(t_start) && !is.null(t_stop)) {
-      if (!is.null(input$Ca_inject)) {
-        k_inject_Ca <- input$Ca_inject
-      } else if (!is.null(input$Ca_food)) {
-        I_Ca <- input$Ca_food
-      } else if (!is.null(input$D3_inject)) {
-        k_inject_D3 <- input$D3_inject * Vp
-      } else if (!is.null(input$P_inject)) {
-        k_inject_P <- input$P_inject
-      } else if (!is.null(input$P_food)) {
-        I_P <- input$P_food
+    if (!is.null(event)) {
+      event_table <- event$table
+      event <- event_table$event
+      t_start <- event_table$start_time
+      t_stop <- event_table$stop_time
+      if (!is.null(event)) {
+        if (event == "Ca_inject") {
+          if (t > t_start && t < t_stop) {
+            k_inject_Ca <- Ca_inject
+          }
+        }
       }
     }
+    
+    # if (!is.null(t_start) & !is.null(t_stop)) {
+    #   if (!is.null(Ca_inject)) {
+    #     if (t > t_start && t < t_stop) {
+    #       k_inject_Ca <- Ca_inject
+    #     }
+    #   } else if (!is.null(Ca_food)) {
+    #     I_Ca <- Ca_food
+    #   } else if (!is.null(D3_inject)) {
+    #     if (t > t_start && t < t_stop) {
+    #       k_inject_D3 <- D3_inject * Vp
+    #     }
+    #   } else if (!is.null(P_inject)) {
+    #     if (t > t_start && t < t_stop) {
+    #       k_inject_P <- P_inject
+    #     }
+    #   } else if (!is.null(P_food)) {
+    #     I_P <- P_food
+    #   }
+    # }
     
     ##################
     #                #

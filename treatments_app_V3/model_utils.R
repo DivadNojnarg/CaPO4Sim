@@ -712,29 +712,46 @@ find_parameter_change <- function(parms) {
 
 
 
-# to recover to_start and t_stop time when reading the event_table
-# Takes event table as argument and returns a list of all stored times
-time_extractor <- function(event_table) { 
+# Recover to_start and t_stop time when reading the event_table
+# Takes event table as argument and returns a vector of the 
+# corresponding event parameters (t_start, t_stop and the rate of injection/gavage)
+generate_event_parms <- function(event_table) { 
   for (i in 1:nrow(event_table)) {
-    if (is.element("Ca_iv", event_table[i,"event"])) {
-      t_start <- c(t_start, event_table[i,"start_time"])
-      t_stop <- c(t_stop, event_table[i,"stop_time"])
-    } else if (is.element("Ca_gavage", event_table[i,"event"])) {
-      t_start <- c(t_start, event_table[i,"start_time"])
-      t_stop <- c(t_stop, event_table[i,"stop_time"])
-    } else if (is.element("D3_iv", event_table[i,"event"])) {
-      t_start <- c(t_start, event_table[i,"start_time"])
-      t_stop <- c(t_stop, event_table[i,"stop_time"])
-    } else if (is.element("P_iv", event_table[i,"event"])) {
-      t_start <- c(t_start, event_table[i,"start_time"])
-      t_stop <- c(t_stop, event_table[i,"stop_time"])
-    } else if (is.element("P_gavage", event_table[i,"event"])) {
-      t_start <- c(t_start, event_table[i,"start_time"])
-      t_stop <- c(t_stop, event_table[i,"stop_time"])
+    if (is.element("Ca_inject", event_table[i,"event"])) {
+      t_start <- event_table[i,"start_time"]
+      t_stop <- event_table[i,"stop_time"]
+      Ca_inject <- event_table[i, "rate"]
+    } else if (is.element("Ca_food", event_table[i,"event"])) {
+      t_start <- event_table[i,"start_time"]
+      t_stop <- event_table[i,"stop_time"]
+      Ca_food <- event_table[i, "rate"]
+    } else if (is.element("D3_inject", event_table[i,"event"])) {
+      t_start <- event_table[i,"start_time"]
+      t_stop <- event_table[i,"stop_time"]
+      D3_inject <- event_table[i, "rate"]
+    } else if (is.element("P_inject", event_table[i,"event"])) {
+      t_start <- event_table[i,"start_time"]
+      t_stop <- event_table[i,"stop_time"]
+      P_inject <- c(P_inject, event_table[i, "rate"])
+    } else if (is.element("P_food", event_table[i,"event"])) {
+      t_start <- event_table[i,"start_time"]
+      t_stop <- event_table[i,"stop_time"]
+      P_food <- event_table[i, "rate"]
+    } else {
+      t_start <- NULL
+      t_stop <- NULL
+      Ca_inject <- NULL
+      Ca_food <- NULL
+      D3_inject <- NULL
+      P_inject <- NULL
+      P_food <- NULL
     }
   }
-  # return what is really important
-  return(c("t_start" = t_start, "t_stop" = t_stop))
+  # return t_start, t_stop and the rate of the treatment
+  return(c("t_start" = t_start, "t_stop" = t_stop,
+           "Ca_inject" = Ca_inject, "Ca_food" = Ca_food,
+           "D3_inject" = D3_inject, "P_inject" = P_inject,
+           "P_food" = P_food))
 }
 
 

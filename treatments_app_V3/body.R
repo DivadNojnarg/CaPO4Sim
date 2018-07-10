@@ -26,6 +26,7 @@ body <- dashboardBody(
   # print feedback for input
   useShinyFeedback(),
   useSweetAlert(),
+  setShadow("box"),
   
   tabItems(
     # Network panel
@@ -40,95 +41,9 @@ body <- dashboardBody(
           style = 'padding:0px;',
           
           # profile box
-          boxPlus(
-            width = 12, solidHeader = FALSE, status = "primary", collapsible = TRUE,
-            closable = FALSE,
-            boxProfile(
-              src = "https://i.pinimg.com/originals/f6/64/69/f66469f759bb4e11898fd14136e8e21b.jpg",
-              title = "Mr Rat",
-              subtitle = "Lazy and greedy",
-              boxProfileItemList(
-                bordered = FALSE,
-                boxProfileItem(
-                  title = "Age",
-                  description = 22
-                ),
-                boxProfileItem(
-                  title = "Height",
-                  description = "170 cm"
-                ),
-                boxProfileItem(
-                  title = "Friends",
-                  description = "80 kg"
-                )
-              )
-            )
-          ),
-          
+          uiOutput("patient_info"),
           # info box (previous diseases, treatements)
-          boxPlus(
-            width = 12, solidHeader = FALSE, status = "primary",
-            title = "Medical History", collapsible = TRUE, closable = FALSE,
-            enable_label = TRUE,
-            label_text = 2,
-            label_status = "danger",
-            userPost(
-              id = 1,
-              src = "https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg",
-              author = "By Pr. Jonathan Burke",
-              description = "14/05/2018 - 10 AM",
-              "Kidney stone disease , also known as
-              urolithiasis , is when a solid piece of 
-              material (kidney stone) occurs in the urinary tract . 
-              Kidney stones typically form in the kidney and leave 
-              the body in the urine stream. A small stone may pass 
-              without causing symptoms. If a stone grows to more 
-              than 5 millimeters (0.2 in) it can cause blockage of 
-              the ureter resulting in severe pain in the lower 
-              back or abdomen. A stone may also result in blood in 
-              the urine, vomiting, or painful urination.",
-              userPostToolItemList(
-                userPostToolItem(dashboardLabel("item 1")),
-                userPostToolItem(dashboardLabel("item 2", status = "danger"), side = "right")
-              )
-            ),
-            userPost(
-              id = 2,
-              src = "https://adminlte.io/themes/AdminLTE/dist/img/user6-128x128.jpg",
-              author = "By Dr.Adam Jones",
-              description = "5 days ago",
-              userPostMedia(src = "https://steemitimages.com/0x0/https://img.esteem.ws/4dssd1ydr0.jpg"),
-              userPostToolItemList(
-                userPostToolItem(dashboardLabel("item 1")),
-                userPostToolItem(dashboardLabel("item 2", status = "danger"), side = "right")
-              )
-            )
-          ),
-          
-          # task list, examinations
-          boxPlus(
-            width = 12, solidHeader = FALSE, status = "primary",
-            title = "Task List", collapsible = TRUE, closable = FALSE,
-            enable_label = TRUE,
-            label_text = 3,
-            label_status = "danger",
-            todoList(
-              sortable = FALSE,
-              todoListItem(
-                label = "Design a nice theme",
-                "Some text here"
-              ),
-              todoListItem(
-                label = "Make the theme responsive",
-                "Some text here"
-              ),
-              todoListItem(
-                checked = TRUE,
-                label = "Let theme shine like a star"
-              )
-            )
-          )
-          
+          uiOutput("patient_history")
         ),
         
         
@@ -138,29 +53,118 @@ body <- dashboardBody(
           style = 'padding:0px;',
           
           widgetUserBox(
-            title = "Examination Table", closable = FALSE,
-            subtitle = starBlock(grade = 5, color = "blue"),
+            title = "Examination Table",
+            subtitle = tagList(
+              #starBlock(grade = 5, color = "blue"),
+              actionBttn(
+                inputId = "run",
+                size = "lg",
+                label = "Run",
+                style = "fill",
+                color = "primary",
+                icon = icon("play")
+              ),
+              actionBttn(
+                inputId = "resetAll",
+                size = "lg",
+                label = " Reset",
+                style = "fill",
+                color = "danger",
+                icon = icon("trash")
+              )
+            ),
             type = NULL,
             width = 12,
             src = "https://thumbs.dreamstime.com/b/red-heart-pulse-heart-rate-athlete-gym-workout-single-icon-cartoon-style-vector-symbol-stock-web-90353642.jpg",
             color = "yellow",
-            introBox(
-              div(id = "network_cap",
-                  withSpinner(visNetworkOutput("network_Ca", height = "900px"), 
-                              size = 2, 
-                              type = 8, 
-                              color = "#000000")
+            closable = TRUE,
+            fluidRow(
+              column(
+                width = 3,
+                boxPad(
+                  color = NULL,
+                  prettyCheckboxGroup(
+                    inputId = "background_choice",
+                    label = "Network background",
+                    choices = c("rat", "human"),
+                    thick = TRUE,
+                    animation = "pulse",
+                    selected = "rat",
+                    inline = TRUE
+                  ),
+                  prettyCheckboxGroup(
+                    inputId = "network_Ca_choice",
+                    label = "Select a network",
+                    choices = c(
+                      "Ca" = "Ca",
+                      "Pi" = "PO4",
+                      "PTH" = "PTH",
+                      "D3" = "D3",
+                      "FGF23" = "FGF23"
+                    ),
+                    thick = TRUE,
+                    animation = "pulse",
+                    selected = "rat",
+                    inline = TRUE
+                  ),
+                  prettySwitch(
+                    inputId = "network_hormonal_choice",
+                    label = "Hormonal regulation",
+                    value = TRUE,
+                    slim = TRUE,
+                    bigger = TRUE
+                  ),
+                  prettySwitch(
+                    inputId = "network_organ_choice",
+                    label = "Display organs",
+                    value = TRUE,
+                    slim = TRUE,
+                    bigger = TRUE
+                  ),
+                  hr(),
+                  prettyCheckboxGroup(
+                    inputId = "treatment_selected",
+                    label = "Select a treatment",
+                    choices = c(
+                      "parathyroid surgery" = "PTX",
+                      "D3 iv injection" = "D3_inject",
+                      "Ca supplementation" = "Ca_food",
+                      "Ca iv injection" = "Ca_inject",
+                      "Pi iv injection" = "P_inject",
+                      "Pi supplementation" = "P_food",
+                      "cinacalcet" = "cinacalcet" 
+                    ),
+                    thick = TRUE,
+                    animation = "pulse",
+                    inline = TRUE
+                  ),
+                  uiOutput(outputId = "sliderInject")
+                )
               ),
-              data.step = 2,
-              data.intro = help_text[2]
+              column(
+                width = 9,
+                introBox(
+                  div(
+                    id = "network_cap",
+                    withSpinner(
+                      visNetworkOutput("network_Ca", height = "900px"), 
+                      size = 2, 
+                      type = 8, 
+                      color = "#000000"
+                    )
+                  ),
+                  data.step = 2,
+                  data.intro = help_text[2]
+                )
+              )
             ),
-            footer = tagList(
-              dashboardLabel("Label 1", status = "info"),
-              dashboardLabel("Label 2", status = "success"),
-              dashboardLabel("Label 3", status = "warning"),
-              dashboardLabel("Label 4", status = "primary"),
-              dashboardLabel("Label 5", status = "danger")
-            )
+            footer = NULL #tagList(
+              #dashboardLabel("Label 1", status = "info"),
+              #dashboardLabel("Label 2", status = "success"),
+              #dashboardLabel("Label 3", status = "warning"),
+              #dashboardLabel("Label 4", status = "primary"),
+              #dashboardLabel("Label 5", status = "danger")
+            #)
           )
         ),
         
@@ -172,7 +176,6 @@ body <- dashboardBody(
           # results box
           boxPlus(
             width = 12, solidHeader = FALSE, status = "primary", collapsible = TRUE,
-            closable = FALSE,
             withSpinner(
               plotlyOutput("plot_node", height = "300px", width = "300px"),
               size = 2,
@@ -184,7 +187,6 @@ body <- dashboardBody(
           # timeline event box
           boxPlus(
             width = 12, solidHeader = FALSE, status = "primary",
-            closable = FALSE,
             collapsible = TRUE,
             enable_label = TRUE,
             label_text = 3,
@@ -192,29 +194,49 @@ body <- dashboardBody(
             style = "overflow-y: scroll;",
             title = "Recent Events",
             timelineBlock(
-              style = "height: 300px",
+              style = "height: 600px",
               timelineEnd(color = "danger"),
               timelineLabel(2018, color = "teal"),
-              timelineItem(
-                title = "Item 1",
-                icon = "gears",
-                color = "olive",
-                time = "now",
-                timelineItemMedia(src = "pills.svg"),
-                hr(),
-                footer = "Here is the footer"
+              tagAppendAttributes(
+                timelineItem(
+                 title = "Item 1",
+                 icon = "gears",
+                 color = "olive",
+                 time = "now",
+                 timelineItemMedia(
+                  src = "pills.svg",
+                  width = "40", 
+                  height = "40"
+                 ),
+                 footer = "Vitamin D3 supplementation"
+                ),
+                align = "middle"
               ),
-              timelineItem(
-                title = "Item 2",
-                timelineItemMedia(src = "syringe.svg"),
-                border = FALSE
+              tagAppendAttributes(
+                timelineItem(
+                  title = "Item 2",
+                  timelineItemMedia(
+                    src = "syringe.svg", 
+                    width = "40", 
+                    height = "40"
+                  ),
+                  border = FALSE
+                ),
+                align = "middle"
               ),
               timelineLabel(2015, color = "orange"),
-              timelineItem(
-                title = "Item 3",
-                icon = "paint-brush",
-                color = "maroon",
-                timelineItemMedia(src = "medicine.svg")
+              tagAppendAttributes(
+                timelineItem(
+                  title = "Item 3",
+                  icon = "paint-brush",
+                  color = "maroon",
+                  timelineItemMedia(
+                    src = "medicine.svg", 
+                    width = "40", 
+                    height = "40"
+                  )
+                ),
+                align = "middle"
               ),
               timelineStart(color = "gray")
             )
@@ -223,18 +245,6 @@ body <- dashboardBody(
         )
       )
       
-    ),
-    # Demonstration Panel
-    tabItem(
-      tabName = "demo",
-      
-      div(id = "boxvideo",
-          box(id = "boxvideo", solidHeader = TRUE,
-              HTML('<iframe width="560" height="315"
-                   src="https://www.youtube.com/embed/AKFyJfYdJhA"
-                   frameborder="0" allowfullscreen></iframe>')
-          )
-      )
     ),
     # About section Panel
     tabItem(

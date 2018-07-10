@@ -20,11 +20,12 @@ library(purrr)
 library(stringr)
 library(shinyFeedback)
 library(shinyWidgets)
-library(ygdashboard)
+library(shinydashboard)
 library(shinydashboardPlus)
 
 # Load the template components of UI
-source("generate_patient_info.R")
+source("patient_generator.R")
+source("patient_selector.R")
 source("app_css.R")
 source("help.R")
 source("header.R")
@@ -50,22 +51,15 @@ source("model_utils.R")
 source("generate_slider_events.R")
 source("generate_dynamicFooter.R")
 
+
+# load patient files
+patient_datas <- patient_selector()
+
 # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
-state_php1 <- read.csv(paste0(getwd(), "/www/init_php1.csv"),
-                       stringsAsFactors = FALSE)
-# need unlist to convert the dataframe in vector as required for the state variable
-state_php1 <- unlist(state_php1[,-1]) 
+patient_state_0 <- patient_datas$initial_conditions
 
-state_hypopara <- read.csv(paste0(getwd(),"/www/init_hypopara.csv"), 
-                           stringsAsFactors = FALSE)
-# need unlist to convert the dataframe in vector as required for the state variable
-state_hypopara <- unlist(state_hypopara[,-1]) 
-
-
-state_hypoD3 <- read.csv(paste0(getwd(),"/www/init_hypoD3.csv"), 
-                         stringsAsFactors = FALSE)
-# need unlist to convert the dataframe in vector as required for the state variable
-state_hypoD3 <- unlist(state_hypoD3[,-1]) 
+# patient disease
+patient_disease <- patient_datas$disease_id
 
 # initial conditions
 state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
@@ -77,14 +71,9 @@ state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687,
            "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
            "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
 
-# below is needed to handle disease and treatments events
-disease_choices <- c(
-  "primary-hyperparathyroidism", 
-  "hypoparathyroidism", 
-  "vitamin D3 deficiency"
-)
+# below is needed to handle treatments events
 treatment_choices <- c(
-  "parathyroid surgery",
+  "PTX",
   "D3_inject",
   "Ca_food",
   "Ca_inject",

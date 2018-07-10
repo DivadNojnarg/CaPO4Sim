@@ -8,7 +8,6 @@
 #-------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
-  
   #------------------------------------------------------------------------- 
   #  Store times, state and parameters in reactive values that can
   #  react to user inputs
@@ -55,79 +54,138 @@ shinyServer(function(input, output, session) {
   # 
   # })
   
-  # set up initial conditions for solving ODEs
-  states <- reactiveValues(
-    val = list(c("PTH_g" = 1288.19, "PTH_p" = 0.0687, "D3_p" = 564.2664, 
-                 "FGF_p" = 16.78112, "Ca_p" = 1.2061, "Ca_f" = 1.8363, 
-                 "Ca_b" = 250, "PO4_p" = 1.4784, "PO4_f" = 0.7922, 
-                 "PO4_b" = 90, "PO4_c" = 2.7719, "CaHPO4_p" = 0.1059, 
-                 "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, 
-                 "CaH2PO4_f" = 0.0031, "CaProt_p" = 1.4518,"NaPO4_p" = 0.9135, 
-                 "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, "EGTA_p" = 0, 
-                 "CaEGTA_p" = 0)), 
-    counter = 1)
   
-  # update initial conditions to the last state of the system each time an event
-  # has occured. Do not update if the same disease is triggered twice ...
-  observeEvent(input$run,{
-    req(input$disease_selected)
-    if (is.na(match(input$disease_selected, event$table$event))) {
-      out <- out()
-      temp_state <- c(
-        "PTH_g" = out[nrow(out),"PTH_g"], "PTH_p" = out[nrow(out),"PTH_p"], 
-        "D3_p" = out[nrow(out),"D3_p"], "FGF_p" = out[nrow(out),"FGF_p"], 
-        "Ca_p" = out[nrow(out),"Ca_p"], "Ca_f" = out[nrow(out),"Ca_f"], 
-        "Ca_b" = out[nrow(out),"Ca_b"], "PO4_p" = out[nrow(out),"PO4_p"], 
-        "PO4_f" = out[nrow(out),"PO4_f"], "PO4_b" = out[nrow(out),"PO4_b"], 
-        "PO4_c" = out[nrow(out),"PO4_c"], "CaHPO4_p" = out[nrow(out),"CaHPO4_p"], 
-        "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], "CPP_p" = out[nrow(out),"CPP_p"], 
-        "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"], 
-        "CaProt_p" = out[nrow(out),"CaProt_p"],"NaPO4_p" = out[nrow(out),"NaPO4_p"], 
-        "Ca_tot" = out[nrow(out),"Ca_tot"], "PO4_tot" = out[nrow(out),"PO4_tot"], 
-        "EGTA_p" = out[nrow(out),"EGTA_p"], "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
-      )
-      states$val[[states$counter]] <- temp_state
-      states$counter <- states$counter + 1
-      
-    } else {
-      NULL
-    }
-  })
+  #------------------------------------------------------------------------- 
+  #  Render Patient boxes
+  #  
+  #-------------------------------------------------------------------------
   
-  # Event to be added in the timeLine
-  output$current_event <- renderUI({
-    req(input$disease_selected)
-    if (input$disease_selected == "primary-hyperparathyroidism") {
-      tagList(
-        timelineBox(
-          #title
-          timelineLabel(
-            text = HTML(paste("<b>", Sys.Date(),"</b>")), color = "purple"
+  # patient info box
+  output$patient_info <- renderUI({
+    boxPlus(
+      width = 12, 
+      solidHeader = FALSE, 
+      status = "primary", 
+      collapsible = TRUE,
+      boxProfile(
+        src = patient_datas$picture,
+        title = patient_datas$name,
+        subtitle = NULL,
+        boxProfileItemList(
+          bordered = FALSE,
+          boxProfileItem(
+            title = "Age",
+            description = patient_datas$age
           ),
-          # body
-          timelineItem(
-            icon = shiny::icon("heartbeat bg-purple"),
-            header = HTML('<strong><a href="#">Primary-Hyperparathyroidism</strong>'),
-            body = "patient has primary hyperparathyroidism.",
-            footer = HTML('<a class="btn btn-primary btn-xs">Read more</a>',
-                          '<a class="btn btn-danger btn-xs">Delete</a>'),
-            itemText = paste(Sys.time())
+          boxProfileItem(
+            title = "Height",
+            description = patient_datas$height
+          ),
+          boxProfileItem(
+            title = "Weight",
+            description = patient_datas$weight
           )
         )
       )
+    )
+  })
+  
+  # patient medical history
+  output$patient_history <- renderUI({
+    medical_history <- patient_datas$medical_history
+    len <- length(medical_history$pathologies)
+    
+    boxPlus(
+      width = 12, 
+      solidHeader = FALSE, 
+      status = "primary",
+      title = "Medical History", 
+      collapsible = TRUE,
+      enable_label = TRUE,
+      label_text = len,
+      label_status = "danger",
+      
+      lapply(1:len, FUN = function(i){
+        userPost(
+          id = i,
+          src = medical_history$doctors_avatars[[i]],
+          author = medical_history$doctors[[i]],
+          description = strong(medical_history$pathologies[[i]]),
+          paste(medical_history$disease_description[[i]]),
+          if (!is.null(medical_history$disease_image[[i]])) {
+            userPostMedia(
+              src = medical_history$disease_image[[i]],
+              width = "300", 
+              height = "300"
+            )
+          },
+          userPostToolItemList(
+            userPostToolItem(
+              dashboardLabel(
+                medical_history$examination_dates[[i]], 
+                status = "danger"
+              ), 
+              side = "right"
+            )
+          ),
+          br()
+        )
+      })
+    )
+  })
+  
+  
+  #------------------------------------------------------------------------- 
+  #  TO DO
+  #  
+  #-------------------------------------------------------------------------
+  
+  
+  states <- reactiveValues(
+    val = list(), 
+    counter = 1,
+    name = "start_case")
+  
+  # counter to trigger sweetAlert R
+  counter <- reactiveValues(alert = 0)
+  
+  # When the counter is equal to 0, each time the session is opened, 
+  # show the how to start sweetAlert
+  observe({
+    if (counter$alert == 0) {
+      sendSweetAlert(
+        session, 
+        title = "How to start?",
+        text = HTML(
+          paste(
+            "Welcome to the virtual CaPO4 patient simulator.
+             To start a case study in the", icon("map-o"), 
+             "section of the right sidebar."
+          )
+        ),
+        type = "warning",
+        html = TRUE
+      )
     }
+  })
+  
+  
+  # Event to be added in the timeLine
+  output$current_event <- renderUI({
+    # TO DO
   })
   
   
   # Set events parameters in reactiveValues so as to modify them later
-  event <- reactiveValues(
+  event <<- reactiveValues(
     table = data.frame(
       id = NULL,
       event = NULL,
       rate = NULL,
       start_time = NULL,
       stop_time = NULL,
-      status = NULL
+      status = NULL,
+      stringsAsFactors = FALSE
     ),
     counter = 1
   )
@@ -138,42 +196,50 @@ shinyServer(function(input, output, session) {
     generate_slider_events(input)
   })
   
-  # create an "add_disease" button
-  output$button_add_disease <- renderUI({
-    req(input$disease_selected)
-    actionBttn(inputId = "add_disease", 
-               label = NULL, 
-               style = "material-circle", 
-               color = "danger", 
-               icon = icon("plus"))
-  })
-  
-  # Add/Remove treatments to the event list
+  # Add treatments to the event list
   observeEvent(input$add_treatment,{
     # the same treatment can be added
     # multiple times. However, parathyroidectomy
     # cannot be performed more than once
-      if (input$treatment_selected != "parathyroid surgery" &
+      if (input$treatment_selected != "PTX" &
           input$treatment_selected != "cinacalcet") {
-        temp_event <- data.frame(
-          id = event$counter,
-          event = input$treatment_selected,
-          rate = input[[paste(input$treatment_selected)]],
-          start_time = input$t_start,
-          stop_time = input$t_stop,
-          status = "active"
-        )
+        if (nrow(event$table) == 0) {
+          temp_event <- data.frame(
+            id = event$counter,
+            real_time = Sys.time(),
+            event = input$treatment_selected,
+            rate = input[[paste(input$treatment_selected)]],
+            start_time = 0,
+            stop_time = input$t_stop,
+            status = "active",
+            stringsAsFactors = FALSE
+          )
+        } else {
+          #old_time <- event$table$real_time[nrow(event$table)]
+          temp_event <- data.frame(
+            id = event$counter,
+            real_time = Sys.time() + input$t_stop,
+            event = input$treatment_selected,
+            rate = input[[paste(input$treatment_selected)]],
+            start_time = 0,
+            stop_time = input$t_stop,
+            status = "active",
+            stringsAsFactors = FALSE
+          )
+        }
         event$table <- rbind(event$table, temp_event)
         event$counter <- event$counter + 1
       } else {
-        if (is.na(match("parathyroid surgery", event$table$event))) {
+        if (is.na(match("PTX", event$table$event))) {
           temp_event <- data.frame(
             id = event$counter,
+            real_time = Sys.time(),
             event = input$treatment_selected,
             rate = "undefined", 
             start_time = "undefined",
             stop_time = "undefined",
-            status = "active"
+            status = "active",
+            stringsAsFactors = FALSE
           )
           event$table <- rbind(event$table, temp_event)
           event$counter <- event$counter + 1
@@ -186,67 +252,33 @@ shinyServer(function(input, output, session) {
   
   observe({
     print(event$table)
-  })
-  
-  # Add/Remove diseases to the event list
-  observeEvent(input$add_disease, {
-    # check if the disease is already present or not
-    if (is.na(match(input$disease_selected, event$table$event))) {
-      temp_event <- data.frame(
-        id = event$counter,
-        event = input$disease_selected,
-        rate = "undefined",
-        start_time = "undefined",
-        stop_time = "undefined",
-        status = "active"
-      )
-      event$table <- rbind(event$table, temp_event)
-      event$counter <- event$counter + 1
-    } else {
-      showNotification("Cannot add the same disease twice!",
-                       type = "error", closeButton = TRUE)
-    }
+    print(input$t_stop)
+    print(patient_datas)
+    #print(patient_state_0)
+    #print(input$treatment_selected)
   })
   
   
   # storing parameters event from the data frame to a reactive list
-  parameters_event <- reactive({time_extractor(event$table)})
+  parameters_event <- reactive({generate_event_parms(event$table)})
   
-  # Create parameters sets for all diseases an treatments
-  # need to write && !is.null(input$Ca_inject) since 
-  # input$Ca_inject does not exist before Ca_inject is selected
-  parameters_disease <- reactive({ 
-    c("k_prod_PTHg" = ifelse(is.element("primary-hyperparathyroidism", input$disease_selected), 300*4.192, 
-                             ifelse(is.element("hypoparathyroidism", input$disease_selected), 0, 4.192)), 
-      "D3_inact" = ifelse(is.element("vitamin D3 deficiency", input$disease_selected), 0, 2.5e-005),
-      "PTX_coeff" = ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1),
-      "k_inject_Ca" = ifelse(is.element("Ca iv injection", input$treatment_selected), input$Ca_inject, 0), 
-      "Ca_food" = ifelse(is.element("Ca supplementation", input$treatment_selected), input$Ca_food, 2.2e-003),
-      "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", input$treatment_selected), input$D3_inject, 0),
-      "k_inject_P" = ifelse(is.element("PO4 iv injection", input$treatment_selected), input$P_inject, 0),
-      "P_food" = ifelse(is.element("PO4 supplementation", input$treatment_selected), input$P_food, 1.55e-003))
+  # Create parameters sets for all diseases and treatments
+  parameters_disease <- reactive({
+    c("k_prod_PTHg" = ifelse(
+      patient_disease == "php1", 300*4.192, 
+      ifelse(patient_disease == "hypopara", 0, 4.192)
+      ), 
+      "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005),
+      # once PTX is done, it is forever!
+      "PTX_coeff" = ifelse(is.element("parathyroid surgery", event$table$event), 0, 
+                           ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1)),
+      "k_inject_Ca" = ifelse(is.element("Ca iv injection", event$table$event), input$Ca_inject, 0), 
+      "Ca_food" = ifelse(is.element("Ca supplementation", event$table$event), input$Ca_food, 2.2e-003),
+      "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", event$table$event), input$D3_inject, 0),
+      "k_inject_P" = ifelse(is.element("PO4 iv injection", event$table$event), input$P_inject, 0),
+      "P_food" = ifelse(is.element("PO4 supplementation", event$table$event), input$P_food, 1.55e-003))
   })
   
-  # Alert user from forbidden couples
-  observeEvent(input$disease_selected, {
-    if ((!is.na(match("primary-hyperparathyroidism", event$table$event)) &
-        input$disease_selected == "hypoparathyroidism") |
-        (!is.na(match("hypoparathyroidism", event$table$event)) &
-         input$disease_selected == "primary-hyperparathyroidism")) { 
-      showNotification("Cannot have primary hyperparathyroidism and 
-                       hypoparathyroidism at the same time!",
-                       type = "error", closeButton = TRUE)
-      disable(id = "add_disease")
-    } #else if (is.element("primary-hyperparathyroidism", input$disease_selected) 
-    #            && is.element("vitamin D3 deficiency", input$disease_selected)) {
-    #   showNotification("Cannot select to diseases at the same time!",
-    #                    type = "error", closeButton = TRUE)
-    # } else if (is.element("hypoparathyroidism", input$disease_selected) 
-    #            && is.element("vitamin D3 deficiency", input$disease_selected)) {
-    #   showNotification("Cannot select to diseases at the same time!",
-    #                    type = "error", closeButton = TRUE)
-    # }
-  })
   
   # make a vector of disease related parameters, 
   # fixed_parameters and parameters related to events
@@ -256,12 +288,6 @@ shinyServer(function(input, output, session) {
   
   # Render the event table
   output$event_table <- renderTable({event$table})
-  
-  output$test <- renderPlot({
-    input$run
-    x <- 1:10
-    plot(x, log(x), type = 'l')
-  })
   
   #------------------------------------------------------------------------- 
   #  
@@ -276,12 +302,59 @@ shinyServer(function(input, output, session) {
     isolate({
       parameters <- parameters()
       times <- times()
-      as.data.frame(ode(y = states$val[[length(states$val)]], 
-                        times = times, 
-                        func = calcium_phosphate_core, 
-                        parms = parameters))
+      patient_state_0
+      # always solve from the last state
+      as.data.frame(
+        ode(
+          # when opening the application, y will be state_0 since states$val
+          # is an empty list. However, for the next runs, states$val is 
+          # populated with the last simulated final condition. 
+          y = if (is_empty(states$val)) {
+            patient_state_0
+          } else {
+            states$val[[length(states$val)]]
+          }, 
+          times = times, 
+          func = calcium_phosphate_core, 
+          parms = parameters
+        )
+      )
     })
   })
+  
+  
+  # update initial conditions to the last state of the system each time an event
+  # has occured. Do not update if parathyroid surgery is performed twice
+  observe({
+    shinyjs::delay(
+      5000,
+      isolate({
+        req(input$treatment_selected)
+        if (is.na(match("parathyroid surgery", event$table$event))) {
+          out <- out()
+          temp_state <- c(
+            "PTH_g" = out[nrow(out),"PTH_g"], "PTH_p" = out[nrow(out),"PTH_p"],
+            "D3_p" = out[nrow(out),"D3_p"], "FGF_p" = out[nrow(out),"FGF_p"],
+            "Ca_p" = out[nrow(out),"Ca_p"], "Ca_f" = out[nrow(out),"Ca_f"],
+            "Ca_b" = out[nrow(out),"Ca_b"], "PO4_p" = out[nrow(out),"PO4_p"],
+            "PO4_f" = out[nrow(out),"PO4_f"], "PO4_b" = out[nrow(out),"PO4_b"],
+            "PO4_c" = out[nrow(out),"PO4_c"], "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
+            "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], "CPP_p" = out[nrow(out),"CPP_p"],
+            "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
+            "CaProt_p" = out[nrow(out),"CaProt_p"],"NaPO4_p" = out[nrow(out),"NaPO4_p"],
+            "Ca_tot" = out[nrow(out),"Ca_tot"], "PO4_tot" = out[nrow(out),"PO4_tot"],
+            "EGTA_p" = out[nrow(out),"EGTA_p"], "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
+          )
+          states$counter <- states$counter + 1
+          states$val[[states$counter]] <- temp_state
+          states$name <- input$treatment_selected
+        } else {
+          NULL
+        }
+      })
+    )
+  })
+  
   
   #output$table <- renderDataTable( out(), options = list(pageLength = 10) )
   
@@ -560,7 +633,6 @@ shinyServer(function(input, output, session) {
   
   # prevent user from selecting multiple treatments as the same time
   observe({
-    #req(input$treatment_selected)
     if (!is.null(input$treatment_selected)) {
       treatment <- match.arg(input$treatment_selected, treatment_choices)
       idx <- match(input$treatment_selected, treatment_choices)
@@ -572,25 +644,33 @@ shinyServer(function(input, output, session) {
       enable(id = "treatment_selected")
     }
   })
+ 
   
+  # # automatically uncheck the treatment checkboxGroup 
+  # # when add_treatment is activated
+  # observe({
+  #   req(input$add_treatment)
+  #   if (input$add_treatment > 0) {
+  #     shinyjs::delay(
+  #       500,
+  #       updatePrettyCheckboxGroup(
+  #         session,
+  #         inputId = "treatment_selected",
+  #         choices = c("parathyroid surgery",
+  #                     "vitamin D3 iv injection",
+  #                     "Ca supplementation",
+  #                     "Ca iv injection",
+  #                     "PO4 supplementation",
+  #                     "PO4 iv injection",
+  #                     "cinacalcet"),
+  #         selected = NULL,
+  #         prettyOptions = list(thick = TRUE, animation = "pulse", status = "info")
+  #       )
+  #     )
+  #   }
+  # })
   
-  # prevent user from selecting multiple diseases as the same time
-  observe({
-    #req(input$treatment_selected)
-    if (!is.null(input$disease_selected)) {
-      disease <- match.arg(input$disease_selected, disease_choices)
-      idx <- match(input$disease_selected, disease_choices)
-      other_diseases <- disease_choices[-idx]
-      lapply(seq_along(other_diseases), FUN = function(j) {
-        disable(selector = paste0("#disease_selected input[value='", other_diseases[[j]], "']"))
-      })
-    } else {
-      enable(id = "disease_selected")
-    }
-  })
-  
-  
-  
+
   # display or not display the network background
   observe({
     if (!is_empty(input$background_choice)) {
@@ -633,40 +713,14 @@ shinyServer(function(input, output, session) {
     } 
   })
   
-  # change the dashboard skin
-  current_skin <- reactiveValues(color = NULL)
-  previous_skin <- reactiveValues(color = NULL)
-  observeEvent(input$skin,{
-    # the first time, previous_skin$color is set to the first
-    # skin value at opening. Same thing for current value
-    if (is.null(previous_skin$color)) {
-      previous_skin$color <- current_skin$color <- input$skin
-    } else {
-      current_skin$color <- input$skin
-      # if the old skin is the same as the current selected skin
-      # then, do nothing
-      if (previous_skin$color == current_skin$color) {
-        NULL
-      } else {
-        # otherwise, remove the old CSS class and add the new one
-        shinyjs::removeClass(selector = "body", class = paste("skin", previous_skin$color, sep = "-"))
-        shinyjs::addClass(selector = "body", class = paste("skin", current_skin$color, sep = "-"))
-        # the current skin is added to previous_skin to be ready for
-        # the next change
-        previous_skin$color <- c(previous_skin$color, current_skin$color)[-1]
-      }
-    }
-  })
-  
   # Custom footer
-  output$dynamicFooter <- renderFooter({ 
-    generate_dynamicFooter() 
-  })
+  # output$dynamicFooter <- renderFooter({ 
+  #   generate_dynamicFooter() 
+  # })
   
   
   # reset all the values of box inputs as well as graphs
   observeEvent(input$resetAll,{
-    reset("disease_selected")
     reset("treatment_selected")
     reset("tmax")
     reset("t_now")

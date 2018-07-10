@@ -54,24 +54,16 @@ generate_slider_events <- function(input) {
     }, 
     
     # Start, stop and add
-    if (input$treatment_selected == "parathyroid surgery" |
+    if (input$treatment_selected == "PTX" |
         input$treatment_selected == "cinacalcet") {
       NULL
     } else {
-      list(
-      numericInput("t_start",
-                   "Time when begins this event:", 
-                   value = 0, 
-                   min = 0, 
-                   max = NA, 
-                   width = "100%"),
-      
       numericInput("t_stop",
                    "Time when stops this event:", 
                    value = 100, 
                    min = 0, 
                    max = NA, 
-                   width = "100%"))
+                   width = "100%")
     },
     actionBttn(inputId = "add_treatment", 
                label = NULL, 
