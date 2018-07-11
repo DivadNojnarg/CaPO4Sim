@@ -59,7 +59,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
     "/", 
     list.files(patient_images_folder)[[random_image_number]]
   )
-  patient_avatar <- unlist(str_split(string = patient_avatar, pattern = "www"))[2]
+  patient_avatar <- unlist(str_split(string = patient_avatar, pattern = "www/"))[2]
   
   # set up a rendom doctor image
   doctor_images_folder <- paste0(state_folder, "/doctors_img")
@@ -75,7 +75,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
       "/", 
       list.files(doctor_images_folder)[[random_image_number]]
     )
-    doctor_avatar <- unlist(str_split(string = doctor_avatar, pattern = "www"))[2]
+    doctor_avatar <- unlist(str_split(string = doctor_avatar, pattern = "www/"))[2]
   })
   
   

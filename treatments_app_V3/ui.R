@@ -17,11 +17,13 @@
 # Define UI
 #header_box_network,
 dashboardPagePlus(
+  enable_preloader = TRUE,
+  loading_duration = 3,
   collapse_sidebar = TRUE,
   skin = "black",
   title = "CaPO4 Teaching App",
   header = header,
   sidebar = sidebar,
   body = body,
-  rightsidebar = dashboardControlbar,
+  rightsidebar = dashboardControlbar
 )

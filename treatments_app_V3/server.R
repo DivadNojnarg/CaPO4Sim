@@ -123,7 +123,7 @@ shinyServer(function(input, output, session) {
             userPostToolItem(
               dashboardLabel(
                 medical_history$examination_dates[[i]], 
-                status = "danger"
+                status = "warning"
               ), 
               side = "right"
             )
@@ -135,45 +135,134 @@ shinyServer(function(input, output, session) {
   })
   
   
+  # Event to be added in the timeLine
+  output$recent_events <- renderUI({
+    len <- nrow(event$table)
+    name <- event$table$event
+    start_time <- event$table$real_time
+    rate <- event$table$rate
+    
+    print(len)
+    
+    boxPlus(
+      width = 12, 
+      solidHeader = FALSE, 
+      status = "primary",
+      collapsible = TRUE,
+      enable_label = TRUE,
+      label_text = len,
+      label_status = "danger",
+      style = "overflow-y: auto;",
+      title = "Recent Events",
+      
+      if (len > 0) {
+        timelineBlock(
+          style = "height: 600px",
+          timelineStart(color = "danger"),
+          br(),
+          lapply(1:len, FUN = function(i){
+            tagAppendAttributes(
+              timelineItem(
+                title = name[[i]],
+                icon = "medkit",
+                color = "orange",
+                time = dashboardLabel(status = "warning", start_time[[i]]),
+                timelineItemMedia(
+                  src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                     "treatments_img/syringe.svg"
+                    } else if (name[[i]] %in% c("Ca_food", "P_food")) {
+                      "treatments_img/medicine.svg"
+                    } else if (name[[i]] == "PTX") {
+                      "treatments_img/surgery.svg"
+                    } else if (name[[i]] == "cinacalcet") {
+                      "treatments_img/pills.svg"
+                    } else if (name[[i]] == "plasma analysis") {
+                      "treatments_img/test-tube.svg"
+                    },
+                  width = "40", 
+                  height = "40"
+                ),
+                # in case of plasma analysis, display the results next to the logo
+                if (name[[i]] == "plasma analysis") {
+                  withMathJax(
+                    tagList(
+                      br(),
+                      paste0("[Ca^{2+}_p] = ", round(out()[nrow(out()), "Ca_p"]), " mM"),
+                      br(),
+                      paste0("[P_i] = ", round(out()[nrow(out()), "PO4_p"]), " mM"),
+                      br(),
+                      paste0("[PTH_p] = ", round(out()[nrow(out()), "PTH_p"]), " pM"),
+                      br(),
+                      paste0("[D3_p] = ", round(out()[nrow(out()), "D3_p"]), " pM"),
+                      br(),
+                      paste0("[FGF23_p] = ", round(out()[nrow(out()), "FGF_p"]), " pM"),
+                      br()
+                    )
+                  )
+                },
+                footer = if (!is.null(name[[i]])) {
+                  if (name[[i]] != "PTX") 
+                    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
+                      dashboardLabel(status = "danger", rate[[i]])
+                    }
+                  else NULL
+                }
+              ),
+              align = "middle"
+            )
+          }),
+          br(),
+          timelineEnd(color = "gray")
+        )
+      }
+    )
+  })
+  
+  
   #------------------------------------------------------------------------- 
-  #  TO DO
+  #  Javascript alerts
   #  
   #-------------------------------------------------------------------------
-  
-  
-  states <- reactiveValues(
-    val = list(), 
-    counter = 1,
-    name = "start_case")
   
   # counter to trigger sweetAlert R
   counter <- reactiveValues(alert = 0)
   
   # When the counter is equal to 0, each time the session is opened, 
   # show the how to start sweetAlert
+  # I set up a delay of 5 seconds so that the alert is not displayed before
+  # the page is fully loaded (in case we use preloaders in the dashboardPagePlus)
   observe({
     if (counter$alert == 0) {
-      sendSweetAlert(
-        session, 
-        title = "How to start?",
-        text = HTML(
-          paste(
-            "Welcome to the virtual CaPO4 patient simulator.
-             To start a case study in the", icon("map-o"), 
-             "section of the right sidebar."
-          )
-        ),
-        type = "warning",
-        html = TRUE
+      shinyjs::delay(
+        5000,
+        sendSweetAlert(
+          session, 
+          title = "How to start?",
+          text = HTML(
+            paste(
+              "Welcome to the virtual CaPO4 patient simulator.
+              A random patient was selected for you. The goal of 
+              the game is to find the corresponding disease and treat
+              the patient correctly."
+            )
+          ),
+          type = "warning",
+          html = TRUE
+        )
       )
     }
   })
   
   
-  # Event to be added in the timeLine
-  output$current_event <- renderUI({
-    # TO DO
-  })
+  #------------------------------------------------------------------------- 
+  #  TO DO
+  #  
+  #-------------------------------------------------------------------------
+  
+  states <- reactiveValues(
+    val = list(), 
+    counter = 1,
+    name = "start_case")
   
   
   # Set events parameters in reactiveValues so as to modify them later
@@ -194,6 +283,25 @@ shinyServer(function(input, output, session) {
   output$sliderInject <- renderUI({
     req(input$treatment_selected)
     generate_slider_events(input)
+  })
+  
+  # plasma analysis events
+  observeEvent(input$current_node_id, {
+    node_id <- input$current_node_id
+    if (node_id == 2) {
+      temp_event <- data.frame(
+        id = event$counter,
+        real_time = Sys.time(),
+        event = "plasma analysis",
+        rate = "undefined",
+        start_time = "undefined",
+        stop_time = "undefined",
+        status = "active",
+        stringsAsFactors = FALSE
+      )
+      event$table <- rbind(event$table, temp_event)
+      event$counter <- event$counter + 1
+    }
   })
   
   # Add treatments to the event list
@@ -252,8 +360,8 @@ shinyServer(function(input, output, session) {
   
   observe({
     print(event$table)
-    print(input$t_stop)
-    print(patient_datas)
+    #print(input$t_stop)
+    #print(patient_datas)
     #print(patient_state_0)
     #print(input$treatment_selected)
   })
@@ -606,9 +714,11 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   observe({
-    shinyjs::toggleClass(id = "controlbar", 
-                         class = "control-sidebar-open",
-                         condition = input$help)
+    shinyjs::toggleClass(
+      id = "controlbar", 
+      class = "control-sidebar-open",
+      condition = input$help
+    )
   })
   
   # observeEvent(input$help,{

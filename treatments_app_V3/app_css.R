@@ -74,6 +74,9 @@ app_css <- function() {
               display:inline-block; 
               margin-left: 100px; 
             }
+            .box {
+                border-radius: 15px 50px 30px;
+            }
           ")
     )
   )
