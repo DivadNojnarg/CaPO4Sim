@@ -231,224 +231,233 @@ flux_lighting <- function(edges, network = "network_Ca", events, out, t_target){
 title_size <- list(size = 10)
 plot_node <- function(input, node, out, parms) {
   
-  if (sum(node ==  c(1,5:7,9:10,12:16)) != 1) {
-    
-    # set the x/y-axis ranges
-    time <- out[,1]
-    xvar <- list(title = "time (min)", 
-                 range = c(0, max(time)))
-    #yvar <- list(title = "Concentrations (mM)", 
-    #             range = c(min(out[,node])*0.8,
-    #                       max(out[,node])*1.2))
-    
-    # plasma compartment
-    if (node == 2) {
-      p <- plot_ly(out, 
-                   x = time, 
-                   mode = "lines") %>%
-        add_lines(y = round(out[,"Ca_p"], 1),
-                  ymin = 0.5 * min(out[,"Ca_p"]),
-                  ymax = 1.5 * max(out[,"Ca_p"]),
-                  name = "Ca2+p (mM)",
-                  line = list(color = 'rgb(27, 102, 244)', width = 2), 
-                  visible = TRUE) %>%
-        add_lines(y = round(out[,"PO4_p"], 1), 
-                  ymin = 0.5 * min(out[,"PO4_p"]),
-                  ymax = 1.5 * max(out[,"PO4_p"]),
-                  name = "PO4p (mM)",
-                  line = list(color = 'rgb(244, 27, 27)', width = 2), 
-                  visible = FALSE) %>%
-        add_lines(y = round(out[,"PTH_p"]/parms["Vp"], 1),
-                  ymin = 0.5 * min(out[,"PTH_p"]),
-                  ymax = 1.5 * max(out[,"PTH_p"]),
-                  name = "PTHp (pM)",
-                  line = list(color = 'black', width = 2),
-                  visible = FALSE) %>%
-        add_lines(y = round(out[,"D3_p"]),
-                  ymin = 0.5 * min(out[,"D3_p"]),
-                  ymax = 1.5 * max(out[,"D3_p"]),
-                  name = "D3p (pM)",
-                  line = list(color = 'black', width = 2),
-                  visible = FALSE) %>%
-        add_lines(y = round(out[,"FGF_p"], 1),
-                  ymin = 0.5 * min(out[,"FGF_p"]),
-                  ymax = 1.5 * max(out[,"FGF_p"]),
-                  name = "FGFp (pM)",
-                  line = list(color = 'black', width = 2),
-                  visible = FALSE) %>%
-        layout(
-          title = "Plasma compartment concentrations",
-          font = title_size,
-          xaxis = xvar,
-          #yaxis = list(title = "y"),
-          updatemenus = list(
-            list(
-              type = "buttons",
-              direction = "right",
-              xanchor = 'center',
-              yanchor = "bottom",
-              #pad = list('r'= 0, 't'= 10, 'b' = 10),
-              x = 0.5,
-              y = -0.45,
-              buttons = list(
-                list(method = "restyle",
-                     args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE)),
-                     label = "Cap"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(FALSE, TRUE, FALSE, FALSE, FALSE)),
-                     label = "PO4p"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(FALSE, FALSE, TRUE, FALSE, FALSE)),
-                     label = "PTHp"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(FALSE, FALSE, FALSE, TRUE, FALSE)),
-                     label = "D3p"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(FALSE, FALSE, FALSE, FALSE, TRUE)),
-                     label = "FGFp")))
-          )
-        ) %>%
-        config(displayModeBar = FALSE)
+  if (node == "null") {
+    p <- plot_ly() %>%
+      add_annotations(
+        "Please select a node!", 
+        showarrow = FALSE, 
+        font = list(color = "red", size = 10)
+      ) %>%
+      config(displayModeBar = FALSE)
+  } else {
+    if (sum(node ==  c(1,5:7,9:10,12:16)) != 1) {
       
-    } else if (node == 3) {
+      # set the x/y-axis ranges
+      time <- out[,1]
+      xvar <- list(title = "time (min)", 
+                   range = c(0, max(time)))
+      #yvar <- list(title = "Concentrations (mM)", 
+      #             range = c(min(out[,node])*0.8,
+      #                       max(out[,node])*1.2))
       
-      # rapid bone compartment
-      p <- plot_ly(out, 
-                   x = time, 
-                   mode = "lines") %>%
-        add_lines(y = round(out[,"Ca_f"], 3),
-                  ymin = 0.5 * min(out[,"Ca_f"]),
-                  ymax = 1.5 * max(out[,"Ca_f"]),
-                  name = "Caf (mmol)",
-                  line = list(color = 'rgb(27, 102, 244)', width = 2), 
-                  visible = TRUE) %>%
-        add_lines(y = round(out[,"PO4_f"], 3), 
-                  ymin = 0.5 * min(out[,"PO4_f"]),
-                  ymax = 1.5 * max(out[,"PO4_f"]),
-                  name = "PO4f (mmol)",
-                  line = list(color = 'rgb(244, 27, 27)', width = 2), 
-                  visible = TRUE) %>%
-        layout(
-          title = "Rapid bone pool Ca and PO4 content",
-          font = title_size,
-          xaxis = xvar,
-          yaxis = list(title = "Quantities (mmol)"),
-          updatemenus = list(
-            list(
-              type = "buttons",
-              direction = "right",
-              xanchor = 'center',
-              yanchor = "bottom",
-              #pad = list('r'= 0, 't'= 10, 'b' = 10),
-              x = 0.5,
-              y = -0.45,
-              buttons = list(
-                list(method = "restyle",
-                     args = list("visible", list(TRUE, FALSE, FALSE)),
-                     label = "Ca fast bone"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(FALSE, TRUE, FALSE)),
-                     label = "PO4 fast bone"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(TRUE, TRUE, FALSE)),
-                     label = "Both")))
-          )
-        ) %>%
-        config(displayModeBar = FALSE)
-      
-    } else if (node == 4) {
-      
-      # deep bone compartment
-      p <- plot_ly(out, 
-                   x = time, 
-                   mode = "lines") %>%
-        add_lines(y = out[,"Ca_b"],
-                  ymin = 0.5 * min(out[,"Ca_b"]),
-                  ymax = 1.5 * max(out[,"Ca_b"]),
-                  name = "Cab (mmol)",
-                  line = list(color = 'rgb(27, 102, 244)', width = 2), 
-                  visible = TRUE) %>%
-        add_lines(y = out[,"PO4_b"],
-                  ymin = 0.5 * min(out[,"PO4_b"]),
-                  ymax = 1.5 * max(out[,"PO4_b"]),
-                  name = "PO4b (mmol)",
-                  line = list(color = 'rgb(244, 27, 27)', width = 2), 
-                  visible = TRUE) %>%
-        layout(
-          title = "Deep bone pool Ca and PO4 content",
-          font = title_size,
-          xaxis = xvar,
-          yaxis = list(title = "Quantities (mmol"),
-          updatemenus = list(
-            list(
-              type = "buttons",
-              direction = "right",
-              xanchor = 'center',
-              yanchor = "bottom",
-              #pad = list('r'= 0, 't'= 10, 'b' = 10),
-              x = 0.5,
-              y = -0.45,
-              buttons = list(
-                list(method = "restyle",
-                     args = list("visible", list(TRUE, FALSE, FALSE)),
-                     label = "Ca bone"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(FALSE, TRUE, FALSE)),
-                     label = "PO4 bone"),
-                
-                list(method = "restyle",
-                     args = list("visible", list(TRUE, TRUE, FALSE)),
-                     label = "Both")))
-          )
-        ) %>%
-        config(displayModeBar = FALSE)
+      # plasma compartment
+      if (node == 2) {
+        p <- plot_ly(out, 
+                     x = time, 
+                     mode = "lines") %>%
+          add_lines(y = round(out[,"Ca_p"], 1),
+                    ymin = 0.5 * min(out[,"Ca_p"]),
+                    ymax = 1.5 * max(out[,"Ca_p"]),
+                    name = "Ca2+p (mM)",
+                    line = list(color = 'rgb(27, 102, 244)', width = 2), 
+                    visible = TRUE) %>%
+          add_lines(y = round(out[,"PO4_p"], 1), 
+                    ymin = 0.5 * min(out[,"PO4_p"]),
+                    ymax = 1.5 * max(out[,"PO4_p"]),
+                    name = "PO4p (mM)",
+                    line = list(color = 'rgb(244, 27, 27)', width = 2), 
+                    visible = FALSE) %>%
+          add_lines(y = round(out[,"PTH_p"]/parms["Vp"], 1),
+                    ymin = 0.5 * min(out[,"PTH_p"]),
+                    ymax = 1.5 * max(out[,"PTH_p"]),
+                    name = "PTHp (pM)",
+                    line = list(color = 'black', width = 2),
+                    visible = FALSE) %>%
+          add_lines(y = round(out[,"D3_p"]),
+                    ymin = 0.5 * min(out[,"D3_p"]),
+                    ymax = 1.5 * max(out[,"D3_p"]),
+                    name = "D3p (pM)",
+                    line = list(color = 'black', width = 2),
+                    visible = FALSE) %>%
+          add_lines(y = round(out[,"FGF_p"], 1),
+                    ymin = 0.5 * min(out[,"FGF_p"]),
+                    ymax = 1.5 * max(out[,"FGF_p"]),
+                    name = "FGFp (pM)",
+                    line = list(color = 'black', width = 2),
+                    visible = FALSE) %>%
+          layout(
+            title = "Plasma compartment concentrations",
+            font = title_size,
+            xaxis = xvar,
+            #yaxis = list(title = "y"),
+            updatemenus = list(
+              list(
+                type = "buttons",
+                direction = "right",
+                xanchor = 'center',
+                yanchor = "bottom",
+                #pad = list('r'= 0, 't'= 10, 'b' = 10),
+                x = 0.5,
+                y = -0.45,
+                buttons = list(
+                  list(method = "restyle",
+                       args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE)),
+                       label = "Cap"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(FALSE, TRUE, FALSE, FALSE, FALSE)),
+                       label = "PO4p"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(FALSE, FALSE, TRUE, FALSE, FALSE)),
+                       label = "PTHp"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(FALSE, FALSE, FALSE, TRUE, FALSE)),
+                       label = "D3p"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(FALSE, FALSE, FALSE, FALSE, TRUE)),
+                       label = "FGFp")))
+            )
+          ) %>%
+          config(displayModeBar = FALSE)
+        
+      } else if (node == 3) {
+        
+        # rapid bone compartment
+        p <- plot_ly(out, 
+                     x = time, 
+                     mode = "lines") %>%
+          add_lines(y = round(out[,"Ca_f"], 3),
+                    ymin = 0.5 * min(out[,"Ca_f"]),
+                    ymax = 1.5 * max(out[,"Ca_f"]),
+                    name = "Caf (mmol)",
+                    line = list(color = 'rgb(27, 102, 244)', width = 2), 
+                    visible = TRUE) %>%
+          add_lines(y = round(out[,"PO4_f"], 3), 
+                    ymin = 0.5 * min(out[,"PO4_f"]),
+                    ymax = 1.5 * max(out[,"PO4_f"]),
+                    name = "PO4f (mmol)",
+                    line = list(color = 'rgb(244, 27, 27)', width = 2), 
+                    visible = TRUE) %>%
+          layout(
+            title = "Rapid bone pool Ca and PO4 content",
+            font = title_size,
+            xaxis = xvar,
+            yaxis = list(title = "Quantities (mmol)"),
+            updatemenus = list(
+              list(
+                type = "buttons",
+                direction = "right",
+                xanchor = 'center',
+                yanchor = "bottom",
+                #pad = list('r'= 0, 't'= 10, 'b' = 10),
+                x = 0.5,
+                y = -0.45,
+                buttons = list(
+                  list(method = "restyle",
+                       args = list("visible", list(TRUE, FALSE, FALSE)),
+                       label = "Ca fast bone"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(FALSE, TRUE, FALSE)),
+                       label = "PO4 fast bone"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(TRUE, TRUE, FALSE)),
+                       label = "Both")))
+            )
+          ) %>%
+          config(displayModeBar = FALSE)
+        
+      } else if (node == 4) {
+        
+        # deep bone compartment
+        p <- plot_ly(out, 
+                     x = time, 
+                     mode = "lines") %>%
+          add_lines(y = out[,"Ca_b"],
+                    ymin = 0.5 * min(out[,"Ca_b"]),
+                    ymax = 1.5 * max(out[,"Ca_b"]),
+                    name = "Cab (mmol)",
+                    line = list(color = 'rgb(27, 102, 244)', width = 2), 
+                    visible = TRUE) %>%
+          add_lines(y = out[,"PO4_b"],
+                    ymin = 0.5 * min(out[,"PO4_b"]),
+                    ymax = 1.5 * max(out[,"PO4_b"]),
+                    name = "PO4b (mmol)",
+                    line = list(color = 'rgb(244, 27, 27)', width = 2), 
+                    visible = TRUE) %>%
+          layout(
+            title = "Deep bone pool Ca and PO4 content",
+            font = title_size,
+            xaxis = xvar,
+            yaxis = list(title = "Quantities (mmol"),
+            updatemenus = list(
+              list(
+                type = "buttons",
+                direction = "right",
+                xanchor = 'center',
+                yanchor = "bottom",
+                #pad = list('r'= 0, 't'= 10, 'b' = 10),
+                x = 0.5,
+                y = -0.45,
+                buttons = list(
+                  list(method = "restyle",
+                       args = list("visible", list(TRUE, FALSE, FALSE)),
+                       label = "Ca bone"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(FALSE, TRUE, FALSE)),
+                       label = "PO4 bone"),
+                  
+                  list(method = "restyle",
+                       args = list("visible", list(TRUE, TRUE, FALSE)),
+                       label = "Both")))
+            )
+          ) %>%
+          config(displayModeBar = FALSE)
+        
+      } else {
+        
+        # other cases: need to convert graph indexes to the solver indexes
+        # which are totally different (and is a big problem!!!). 
+        # 0 correspond to nodes in previous cases or not interesting
+        node_Ca_list <- data.frame(id = c(rep(0,7),11,rep(0,2),2),
+                                   names = c(rep("",7),"PO4 quantity in cells",
+                                             rep("",2),"PTH quantity in parathyroid glands"),
+                                   units = c(rep("",7),"mmol",
+                                             rep("",2),"pmol"))
+        #names(node_Ca_list) <- c(rep("",8),"PTH quantity in parathyroid glands",
+        #                         rep("",3),"PO4 quantity in cells")
+        
+        yvar <- list(title = paste("Quantity", "(", node_Ca_list$units[node], ")"), 
+                     range = c(min(out[,node_Ca_list$id[node]]*0.8),
+                               max(out[,node_Ca_list$id[node]]*1.2)))
+        
+        p <- plot_ly(out, 
+                     x = time, 
+                     y = out[,node_Ca_list$id[node]],
+                     type = "scatter",
+                     mode = "lines",
+                     line = list(color = 'black', width = 2)) %>%
+          layout(title = paste(node_Ca_list$names[node]),
+                 font = title_size,
+                 xaxis = xvar,
+                 yaxis = yvar) %>%
+          config(displayModeBar = FALSE)
+        
+      }
       
     } else {
-      
-      # other cases: need to convert graph indexes to the solver indexes
-      # which are totally different (and is a big problem!!!). 
-      # 0 correspond to nodes in previous cases or not interesting
-      node_Ca_list <- data.frame(id = c(rep(0,7),11,rep(0,2),2),
-                                 names = c(rep("",7),"PO4 quantity in cells",
-                                           rep("",2),"PTH quantity in parathyroid glands"),
-                                 units = c(rep("",7),"mmol",
-                                           rep("",2),"pmol"))
-      #names(node_Ca_list) <- c(rep("",8),"PTH quantity in parathyroid glands",
-      #                         rep("",3),"PO4 quantity in cells")
-      
-      yvar <- list(title = paste("Quantity", "(", node_Ca_list$units[node], ")"), 
-                   range = c(min(out[,node_Ca_list$id[node]]*0.8),
-                             max(out[,node_Ca_list$id[node]]*1.2)))
-      
-      p <- plot_ly(out, 
-                   x = time, 
-                   y = out[,node_Ca_list$id[node]],
-                   type = "scatter",
-                   mode = "lines",
-                   line = list(color = 'black', width = 2)) %>%
-        layout(title = paste(node_Ca_list$names[node]),
-               font = title_size,
-               xaxis = xvar,
-               yaxis = yvar) %>%
+      # node not allowed to plot
+      p <- plot_ly() %>%
+        add_annotations("Please select another node!", 
+                        showarrow = FALSE, 
+                        font = list(color = "red", size = 10)) %>%
         config(displayModeBar = FALSE)
-      
     }
-    
-  } else {
-    
-    # node not allowed to plot
-    p <- plot_ly() %>%
-      add_annotations("Please select another node!", 
-                      showarrow = FALSE, 
-                      font = list(color = "red", size = 10)) %>%
-      config(displayModeBar = FALSE)
   }
 }
 

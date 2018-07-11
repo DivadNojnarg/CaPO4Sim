@@ -56,7 +56,8 @@ shinyServer(function(input, output, session) {
   
   
   #------------------------------------------------------------------------- 
-  #  Render Patient boxes
+  #  Render Patient boxes: patient_info, 
+  #  medical_history and the timeline events
   #  
   #-------------------------------------------------------------------------
   
@@ -141,6 +142,7 @@ shinyServer(function(input, output, session) {
     name <- event$table$event
     start_time <- event$table$real_time
     rate <- event$table$rate
+    plasma_values <- plasma_analysis$history
     
     print(len)
     
@@ -187,15 +189,15 @@ shinyServer(function(input, output, session) {
                   withMathJax(
                     tagList(
                       br(),
-                      paste0("[Ca^{2+}_p] = ", round(out()[nrow(out()), "Ca_p"]), " mM"),
+                      paste0("[Ca^{2+}_p] = ", round(plasma_values[i, "Ca_p"]), " mM"),
                       br(),
-                      paste0("[P_i] = ", round(out()[nrow(out()), "PO4_p"]), " mM"),
+                      paste0("[P_i] = ", round(plasma_values[i, "PO4_p"]), " mM"),
                       br(),
-                      paste0("[PTH_p] = ", round(out()[nrow(out()), "PTH_p"]), " pM"),
+                      paste0("[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM"),
                       br(),
-                      paste0("[D3_p] = ", round(out()[nrow(out()), "D3_p"]), " pM"),
+                      paste0("[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM"),
                       br(),
-                      paste0("[FGF23_p] = ", round(out()[nrow(out()), "FGF_p"]), " pM"),
+                      paste0("[FGF23_p] = ", round(plasma_values[i, "FGF_p"]), " pM"),
                       br()
                     )
                   )
@@ -220,7 +222,7 @@ shinyServer(function(input, output, session) {
   
   
   #------------------------------------------------------------------------- 
-  #  Javascript alerts
+  #  Javascript alerts: to give instructions to users
   #  
   #-------------------------------------------------------------------------
   
@@ -278,6 +280,18 @@ shinyServer(function(input, output, session) {
     ),
     counter = 1
   )
+  
+  
+  # handle plasma analysis history
+  plasma_analysis <- reactiveValues(history = data.frame(stringsAsFactors = FALSE))
+  
+  observeEvent(input$current_node_id, {
+    node_id <- input$current_node_id
+    if (node_id == 2) {
+      temp_plasma_analysis <- out()[nrow(out()), -1]
+      plasma_analysis$history <- rbind(plasma_analysis$history, temp_plasma_analysis) 
+    }
+  })
   
   # generate the slider corresponding to a given treatment
   output$sliderInject <- renderUI({
@@ -360,6 +374,7 @@ shinyServer(function(input, output, session) {
   
   observe({
     print(event$table)
+    print(plasma_analysis$history)
     #print(input$t_stop)
     #print(patient_datas)
     #print(patient_state_0)
@@ -501,7 +516,7 @@ shinyServer(function(input, output, session) {
                 ;}") %>% 
       # unselect node event
       visEvents(deselectNode = "function(nodes) {
-                Shiny.onInputChange('current_node_bis_id', 'null');
+                Shiny.onInputChange('current_node_id', 'null');
                 ;}") %>%
       # add the doubleclick function to handle zoom views
       visEvents(doubleClick = "function(nodes) {
