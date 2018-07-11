@@ -15,44 +15,42 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # Basic reactive expressions needed by the solver
-  
   times <- reactive({seq(0,input$tmax, by = 1)})
   
-  # Generate special state for php1, hypoD3, hypopara # Only do when the original files are unavailable or corrupted
+ # initial conditions
+  states <- reactiveValues(
+    val = list(), 
+    counter = 1,
+    name = "start_case")
   
-  # observeEvent(input$disease_selected,{
-  # 
-  #   out <- out()
-  # 
-  #   if(input$disease_selected == "primary-hyperparathyroidism"){
-  # 
-  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_php1.csv")
-  # 
-  #   }
-  #   else if (input$disease_selected == "hypoparathyroidism"){
-  # 
-  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_hypopara.csv")
-  # 
-  #   }
-  #   else if (input$disease_selected == "vitamin D3 deficiency"){
-  # 
-  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_hypoD3.csv")
-  # 
-  #   }
-  # 
-  # })
+  # storing parameters event from the data frame to a reactive list
+  parameters_event <- reactive({generate_event_parms(event$table)})
   
-  # observeEvent(input$disease_selected,{
-  # 
-  #   out <- out()
-  # 
-  #   if (input$disease_selected == "vitamin D3 deficiency"){
-  # 
-  #     write.csv(x = c(out[nrow(out),2:23]), file = "init_hypoD3.csv")
-  # 
-  #   }
-  # 
-  # })
+  # Create parameters sets for all diseases and treatments
+  parameters_disease <- reactive({
+    c("k_prod_PTHg" = ifelse(
+      patient_disease == "php1", 300*4.192, 
+      ifelse(patient_disease == "hypopara", 0, 4.192)
+    ), 
+    "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005),
+    # once PTX is done, it is forever!
+    "PTX_coeff" = ifelse(
+      is.element("parathyroid surgery", event$table$event), 0, 
+      ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1)
+    ),
+    "k_inject_Ca" = ifelse(is.element("Ca iv injection", event$table$event), input$Ca_inject, 0), 
+    "Ca_food" = ifelse(is.element("Ca supplementation", event$table$event), input$Ca_food, 2.2e-003),
+    "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", event$table$event), input$D3_inject, 0),
+    "k_inject_P" = ifelse(is.element("PO4 iv injection", event$table$event), input$P_inject, 0),
+    "P_food" = ifelse(is.element("PO4 supplementation", event$table$event), input$P_food, 1.55e-003))
+  })
+  
+  
+  # make a vector of disease related parameters, 
+  # fixed_parameters and parameters related to events
+  parameters <- reactive({
+    c(parameters_disease(), parameters_fixed, parameters_event()) 
+  }) 
   
   
   #------------------------------------------------------------------------- 
@@ -257,15 +255,9 @@ shinyServer(function(input, output, session) {
   
   
   #------------------------------------------------------------------------- 
-  #  TO DO
+  #  This part handle events, plasma analysis, triggered by the user
   #  
   #-------------------------------------------------------------------------
-  
-  states <- reactiveValues(
-    val = list(), 
-    counter = 1,
-    name = "start_case")
-  
   
   # Set events parameters in reactiveValues so as to modify them later
   event <<- reactiveValues(
@@ -381,34 +373,6 @@ shinyServer(function(input, output, session) {
     #print(input$treatment_selected)
   })
   
-  
-  # storing parameters event from the data frame to a reactive list
-  parameters_event <- reactive({generate_event_parms(event$table)})
-  
-  # Create parameters sets for all diseases and treatments
-  parameters_disease <- reactive({
-    c("k_prod_PTHg" = ifelse(
-      patient_disease == "php1", 300*4.192, 
-      ifelse(patient_disease == "hypopara", 0, 4.192)
-      ), 
-      "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005),
-      # once PTX is done, it is forever!
-      "PTX_coeff" = ifelse(is.element("parathyroid surgery", event$table$event), 0, 
-                           ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1)),
-      "k_inject_Ca" = ifelse(is.element("Ca iv injection", event$table$event), input$Ca_inject, 0), 
-      "Ca_food" = ifelse(is.element("Ca supplementation", event$table$event), input$Ca_food, 2.2e-003),
-      "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", event$table$event), input$D3_inject, 0),
-      "k_inject_P" = ifelse(is.element("PO4 iv injection", event$table$event), input$P_inject, 0),
-      "P_food" = ifelse(is.element("PO4 supplementation", event$table$event), input$P_food, 1.55e-003))
-  })
-  
-  
-  # make a vector of disease related parameters, 
-  # fixed_parameters and parameters related to events
-  parameters <- reactive({
-    c(parameters_disease(), parameters_fixed, parameters_event()) 
-  }) 
-  
   # Render the event table
   output$event_table <- renderTable({event$table})
   
@@ -478,19 +442,6 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  
-  #output$table <- renderDataTable( out(), options = list(pageLength = 10) )
-  
-  # observe({
-  #
-  #   out <- out()
-  #
-  #   input$run
-  #
-  #   write.csv(x = out, file = "out.csv")
-  #
-  # })
-  
   #------------------------------------------------------------------------- 
   #  
   #  The network part: make interactive diagramms of Ca and PO4 homeostasis
@@ -538,77 +489,101 @@ shinyServer(function(input, output, session) {
                 this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
   })
   
+  
+  # Events for the CaPO4 Homeostasis diagramm whenever a flux change
+  # Change arrow color relatively to the value of fluxes for Ca injection/PO4 
+  # injection as well as PO4 gavage
+  observe({
+    out <- out()
+    edges_Ca <- edges_Ca()
+    arrow_lighting_live(
+      out, 
+      edges = edges_Ca, 
+      session, 
+      t_target = input$t_now
+    )
+  })
+  
+  
   # handle the size of organ and hormonal nodes
   output$size_nodes_organs <- renderUI({
     tagList(
-      knobInput("size_organs", 
-                "Organs", 
-                min = 50, 
-                max = 100, 
-                value = 70, 
-                step = 5,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = "tron",
-                width = "100px", 
-                height = "100px")
+      knobInput(
+        "size_organs", 
+        "Organs", 
+        min = 50, 
+        max = 100, 
+        value = 70, 
+        step = 5,
+        displayPrevious = TRUE,
+        fgColor = "#A9A9A9", 
+        inputColor = "#A9A9A9",
+        skin = "tron",
+        width = "100px", 
+        height = "100px"
+      )
     )
   })
   
   output$size_nodes_hormones <- renderUI({
     tagList(
-      knobInput("size_hormones", 
-                "Hormones", 
-                min = 20, 
-                max = 60, 
-                value = 40, 
-                step = 5,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = "tron",
-                width = "100px", 
-                height = "100px")
+      knobInput(
+        "size_hormones", 
+        "Hormones", 
+        min = 20, 
+        max = 60, 
+        value = 40, 
+        step = 5,
+        displayPrevious = TRUE,
+        fgColor = "#A9A9A9", 
+        inputColor = "#A9A9A9",
+        skin = "tron",
+        width = "100px", 
+        height = "100px"
+      )
     )
   })
   
   # control width of arrows
   output$width_arrows_organs <- renderUI({
     tagList(
-      knobInput("width_organs", 
-                "Organs",
-                angleOffset = -90,
-                angleArc = 180,
-                min = 4, 
-                max = 14, 
-                value = 8, 
-                step = 1,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = NULL,
-                width = "100px", 
-                height = "100px")
+      knobInput(
+        "width_organs", 
+        "Organs",
+        angleOffset = -90,
+        angleArc = 180,
+        min = 4, 
+        max = 14, 
+        value = 8, 
+        step = 1,
+        displayPrevious = TRUE,
+        fgColor = "#A9A9A9", 
+        inputColor = "#A9A9A9",
+        skin = NULL,
+        width = "100px", 
+        height = "100px"
+      )
     )
   })
   
   output$width_arrows_hormones <- renderUI({
     tagList(
-      knobInput("width_hormones", 
-                "Hormones", 
-                angleOffset = -90,
-                angleArc = 180,
-                min = 1, 
-                max = 8, 
-                value = 4, 
-                step = 1,
-                displayPrevious = TRUE,
-                fgColor = "#A9A9A9", 
-                inputColor = "#A9A9A9",
-                skin = NULL,
-                width = "100px", 
-                height = "100px")
+      knobInput(
+        "width_hormones", 
+        "Hormones", 
+        angleOffset = -90,
+        angleArc = 180,
+        min = 1, 
+        max = 8, 
+        value = 4, 
+        step = 1,
+        displayPrevious = TRUE,
+        fgColor = "#A9A9A9", 
+        inputColor = "#A9A9A9",
+        skin = NULL,
+        width = "100px", 
+        height = "100px"
+      )
     )
   })
   
@@ -633,21 +608,6 @@ shinyServer(function(input, output, session) {
     plot_edge(edge = input$current_edge_id , out)
   })
   
-  
-  #-------------------------------------------------------------------------
-  #
-  #  Events for the CaPO4 Homeostasis diagramm whenever a flux change
-  #
-  #-------------------------------------------------------------------------
-  
-  # Change arrow color relatively to the value of fluxes for Ca injection/PO4 
-  # injection as well as PO4 gavage
-  observe({
-    out <- out()
-    edges_Ca <- edges_Ca()
-    arrow_lighting_live(out, edges = edges_Ca, session, t_target = input$t_now)
-  })
-  
   #-------------------------------------------------------------------------
   #
   #  Handle dangerous parameter values by the user
@@ -666,26 +626,32 @@ shinyServer(function(input, output, session) {
     
     # check if input tmax does not exists or is not numeric
     if (is.na(input$tmax)) {
-      sendSweetAlert(session, 
-                     title = "Ooops ...", 
-                     text = "Invalid value: tmax should be set correctly.", 
-                     type = "error")
+      sendSweetAlert(
+        session, 
+        title = "Ooops ...", 
+        text = "Invalid value: tmax should be set correctly.", 
+        type = "error"
+      )
       reset("tmax") # value is reset
     } else {
       # if yes, check it is negative
       if (input$tmax <= 0) {
-        sendSweetAlert(session, 
-                       title = "Ooops ...", 
-                       text = "Invalid value: tmax must be higher than 0.", 
-                       type = "error")
+        sendSweetAlert(
+          session, 
+          title = "Ooops ...", 
+          text = "Invalid value: tmax must be higher than 0.", 
+          type = "error"
+        )
         reset("tmax") # value is reset
         # check whether it is too high
       } else if (input$tmax > 100000) {
-        sendSweetAlert(session, 
-                       title = "Ooops ...", 
-                       text = "Invalid value: the maximum 
+        sendSweetAlert(
+          session, 
+          title = "Ooops ...", 
+          text = "Invalid value: the maximum 
                        time of simulation is too high!", 
-                       type = "error")
+          type = "error"
+        )
         reset("tmax") # value is reset
       }
     }
@@ -703,17 +669,19 @@ shinyServer(function(input, output, session) {
   # Do not forget to wrap the event content in I('my_function')
   # otherwise it will fail
   observeEvent(input$help,{
-    introjs(session, 
-            options = list("nextLabel" = "Next step!",
-                           "prevLabel" = "Did you forget something?",
-                           "tooltipClass" = "newClass",
-                           "showProgress" = TRUE,
-                           "showBullets" = FALSE),
-            events = list(# reset the session to hide sliders and back/next buttons
-              "oncomplete" = I('history.go(0)')
-              )
-            )
-    
+    introjs(
+      session, 
+      options = list(
+        "nextLabel" = "Next step!",
+        "prevLabel" = "Did you forget something?",
+        "tooltipClass" = "newClass",
+        "showProgress" = TRUE,
+        "showBullets" = FALSE
+      ),
+      events = list(# reset the session to hide sliders and back/next buttons
+        "oncomplete" = I('history.go(0)')
+      )
+    )
     #   "onbeforechange" = I('
     #                                  if (targetElement.getAttribute("data-step")==="2") {
     #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
@@ -833,8 +801,11 @@ shinyServer(function(input, output, session) {
   # the reverse case does not work for unknow reason 
   observeEvent(input$network_hormonal_choice, {
     if (input$network_hormonal_choice == TRUE) {
-      updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", 
-                                selected = c("Ca","PO4", "PTH", "D3", "FGF23"))
+      updatePrettyCheckboxGroup(
+        session, 
+        inputId = "network_Ca_choice", 
+        selected = c("Ca","PO4", "PTH", "D3", "FGF23")
+      )
     } 
   })
   
