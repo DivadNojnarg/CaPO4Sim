@@ -11,49 +11,65 @@
 # selection
 generate_network <- function(nodes, edges, usephysics = FALSE) {
   
-  visNetwork(nodes, 
-             edges, 
-             width = "100%", 
-             height = "100%") %>%
-    visNodes(shapeProperties = list(useBorderWithImage = FALSE,
-                                    interpolation = FALSE)) %>%
+  visNetwork(
+    nodes, 
+    edges, 
+    width = "100%", 
+    height = "100%"
+  ) %>%
+    visNodes(
+      shapeProperties = list(
+        interpolation = TRUE
+      )
+    ) %>%
     # put shadow on false
-    visEdges(shadow = FALSE, 
-             font = list(align = "horizontal")) %>%
+    visEdges(
+      shadow = FALSE, 
+      font = list(align = "horizontal")
+    ) %>%
     # add group selection option
-    visOptions(highlightNearest = FALSE, 
-               clickToUse = FALSE, 
-               manipulation = FALSE, 
-               collapse = FALSE,
-               autoResize = TRUE) %>% 
+    visOptions(
+      highlightNearest = FALSE, 
+      clickToUse = FALSE, 
+      manipulation = FALSE, 
+      collapse = FALSE,
+      autoResize = TRUE
+    ) %>% 
     # prevent edge from being selected when a node is selected
-    visInteraction(hover = TRUE, 
-                   hoverConnectedEdges = FALSE, 
-                   selectConnectedEdges = FALSE, 
-                   multiselect = FALSE, 
-                   dragNodes = FALSE,
-                   dragView = FALSE, 
-                   zoomView = FALSE,
-                   navigationButtons = FALSE,
-                   selectable = TRUE,
-                   tooltipStyle = 'position: fixed;
-                   visibility:hidden;
-                   padding: 5px;
-                   padding-right: 10px;
-                   padding-bottom: 10px;
-                   white-space: nowrap;
-                   font-family: verdana;
-                   font-size:14px;
-                   font-color:#000000;
-                   background-color: #FFFFFF;
-                   -moz-border-radius: 3px;
-                   -webkit-border-radius: 3px;
-                   border-radius: 3px;
-                   border: 1px solid #808074;
-                   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-                   z-index: 100;') %>% 
+    visInteraction(
+      hover = TRUE, 
+      hoverConnectedEdges = FALSE, 
+      selectConnectedEdges = FALSE, 
+      multiselect = FALSE, 
+      dragNodes = FALSE,
+      dragView = FALSE, 
+      zoomView = FALSE,
+      navigationButtons = FALSE,
+      selectable = TRUE,
+      tooltipStyle = 
+        'position: fixed;
+         visibility:hidden;
+         padding: 5px;
+         padding-right: 10px;
+         padding-bottom: 10px;
+         white-space: nowrap;
+         font-family: verdana;
+         font-size:14px;
+         font-color:#000000;
+         background-color: #FFFFFF;
+         -moz-border-radius: 3px;
+         -webkit-border-radius: 3px;
+         border-radius: 3px;
+         border: 1px solid #808074;
+         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+         z-index: 100;
+        ' 
+    ) %>% 
     # stabilization prevents arrows from bouncing
-    visPhysics(stabilization = TRUE, enabled = usephysics)
+    visPhysics(
+      stabilization = TRUE, 
+      enabled = usephysics
+    )
 }
 
 # % % % % #
