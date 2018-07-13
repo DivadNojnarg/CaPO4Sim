@@ -96,7 +96,7 @@ shinyServer(function(input, output, session) {
                 Shiny.onInputChange('current_edge_id', 'null');
                 ;}") %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "on", afterDrawing = "function() {
+      visEvents(type = "on", stabilized = "function() {
                 this.moveTo({ position: {x:0, y:-13.43},
                 offset: {x: 0, y:0} })}") %>% 
       # very important: allow to detect the web browser used by client
@@ -104,7 +104,7 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", beforeDrawing = "function() {
                 Shiny.onInputChange('browser', navigator.sayswho);
                 ;}") %>%
-      visEvents(type = "on", beforeDrawing = "function() {
+      visEvents(type = "on", initRedraw = "function() {
                 this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
   })
   
