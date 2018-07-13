@@ -25,6 +25,7 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
     # put shadow on false
     visEdges(
       shadow = FALSE, 
+      smooth = TRUE,
       font = list(align = "horizontal")
     ) %>%
     # add group selection option
@@ -116,7 +117,6 @@ generate_nodes_Ca <- function(input) {
               }
               ,"PTH.svg", "D3.svg","D3.svg","D3.svg","FGF23.svg"),
     label = c(rep("", 6), rep("",10)),
-    fixed = list("x" = TRUE, "y" = TRUE),
     
     # tooltip to display an image
     title = c(
@@ -170,6 +170,7 @@ generate_nodes_Ca <- function(input) {
       c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481)
     } else if (input$background_choice == "rat") {
       c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481)
+      # for human background
     } else {
       c(13,-80,-185,-322,157,333,7,-175,290,320,9,-466,330,385,-386,481)
     },
@@ -178,6 +179,7 @@ generate_nodes_Ca <- function(input) {
       c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452)
     } else if (input$background_choice == "rat") {
       c(-150,195,472,460,0,230,506,0,-317,-633,-452,240,-452,0,-106,-452)
+      # for human background
     } else {
       c(23,320,524,214,189,439,581,88,-317,-633,-449,400,-452,0,-106,-452)
     },
@@ -292,7 +294,7 @@ generate_edges_Ca <- function(input) {
               rep("",15)),
     smooth = c(rep(TRUE,29)),
     length = c(200,rep(300,2),rep(300,2),200,300,
-               200,rep(300,4),rep(200,8), 1800, rep(200,8)),
+               200,rep(300,4),rep(200,8), 1700, rep(200,8)),
     # to show either Ca or PO4 or CaPO4 network arrows
     hidden = c(
       ## organ arrows ##
