@@ -9,7 +9,7 @@
 # This function is used to generate a network as well
 # as basic options such as physics, manipulations,
 # selection
-generate_network <- function(nodes, edges, usephysics = FALSE) {
+generate_network <- function(input, nodes, edges, usephysics = FALSE) {
   
   visNetwork(
     nodes, 
@@ -34,7 +34,7 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
       clickToUse = FALSE, 
       manipulation = FALSE, 
       collapse = FALSE,
-      autoResize = TRUE
+      autoResize = if (input$isMobile) FALSE else TRUE
     ) %>% 
     # prevent edge from being selected when a node is selected
     visInteraction(

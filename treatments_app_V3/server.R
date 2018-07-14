@@ -141,9 +141,7 @@ shinyServer(function(input, output, session) {
     start_time <- event$table$real_time
     rate <- event$table$rate
     plasma_values <- plasma_analysis$history
-    
-    print(len)
-    
+
     boxPlus(
       width = 12, 
       solidHeader = FALSE, 
@@ -166,7 +164,7 @@ shinyServer(function(input, output, session) {
                 title = name[[i]],
                 icon = "medkit",
                 color = "orange",
-                time = dashboardLabel(status = "warning", start_time[[i]]),
+                time = dashboardLabel(style = "default", status = "warning", start_time[[i]]),
                 timelineItemMedia(
                   src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
                      "treatments_img/syringe.svg"
@@ -227,6 +225,38 @@ shinyServer(function(input, output, session) {
   # counter to trigger sweetAlert R
   counter <- reactiveValues(alert = 0)
   
+  
+  # set up a timer during which user have to finish the game
+  # and generate the related progress bar
+  countdown <- reactive({
+    invalidateLater(1000, session)
+    countdown <- as.numeric(round(end_time - Sys.time()))
+  })
+  
+  percent_countdown <- reactive({
+    countdown() / minutes_time * 100
+  })
+    
+  output$currentTime <- renderUI({
+    countdown <- countdown()
+    percent_countdown <- percent_countdown()
+    statusClass <- if (66 < percent_countdown & percent_countdown <= 100) {
+      "success"
+    } else if (30 < percent_countdown & percent_countdown <= 66) {
+      "warning"
+    } else {
+      "danger"
+    }
+    progressBar(
+      id = "countdown", 
+      value = percent_countdown, 
+      status = statusClass,
+      striped = TRUE,
+      size = "xs",
+      title = paste0("This application will close in ", countdown, " min")
+    )
+  })
+  
   # When the counter is equal to 0, each time the session is opened, 
   # show the how to start sweetAlert
   # I set up a delay of 5 seconds so that the alert is not displayed before
@@ -253,6 +283,49 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # shift stop when countdown is 14
+  observe({
+    if (countdown() == 14) 
+      event$stop <- TRUE
+  })
+  
+  # When the timer is 0 the game is over if the user has no diagnosis
+  # and treatment
+  observe({
+    if (is.null(input$close_app)) {
+      if (event$stop) {
+        confirmSweetAlert(
+          inputId = "close_app",
+          danger_mode = TRUE,
+          session, 
+          title = "This is the end!",
+          text = HTML(
+            paste(
+              "It seems that the game is finished. 
+              You can restart or close the game."
+            )
+          ),
+          btn_labels = c("Restart", "Stop"),
+          type = "error",
+          html = TRUE
+        )
+      }
+    }
+  })
+  
+  # Handle what happens when the user close or restart the app
+  observeEvent(input$close_app, {
+      if (input$close_app) {
+        sendSweetAlert(
+          session, 
+          title = "Stop in 5 seconds...", 
+          type = "error"
+        )
+        shinyjs::delay(5000, stop())
+      } else {
+        #js$reset()
+      }
+  })
   
   #------------------------------------------------------------------------- 
   #  This part handle events, plasma analysis, triggered by the user
@@ -270,7 +343,8 @@ shinyServer(function(input, output, session) {
       status = NULL,
       stringsAsFactors = FALSE
     ),
-    counter = 1
+    counter = 1,
+    stop = FALSE
   )
   
   
@@ -365,8 +439,8 @@ shinyServer(function(input, output, session) {
   })
   
   observe({
-    print(event$table)
-    print(plasma_analysis$history)
+    #print(event$table)
+    #print(plasma_analysis$history)
     #print(input$t_stop)
     #print(patient_datas)
     #print(patient_state_0)
@@ -460,7 +534,7 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
     input$network_hormonal_choice
     
-    generate_network(nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
+    generate_network(input, nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
       # simple click event to allow graph ploting
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);
@@ -482,13 +556,9 @@ shinyServer(function(input, output, session) {
                 offset: {x: 0, y:0} })}") %>%
       # very important: allow to detect the web browser used by client
       # use before drawing the network. Works with find_navigator.js
-      visEvents(type = "on", beforeDrawing = "function() {
-                Shiny.onInputChange('browser', navigator.sayswho);
-                ;}") %>%
       visEvents(type = "on", initRedraw = "function() {
                  this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
   })
-  
   
   # Events for the CaPO4 Homeostasis diagramm whenever a flux change
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4 

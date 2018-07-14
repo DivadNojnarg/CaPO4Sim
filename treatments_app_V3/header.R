@@ -17,6 +17,8 @@ header <- dashboardHeaderPlus(
   ),
   
   titleWidth = 300,
+  
+  left_menu = tagList(uiOutput("currentTime")),
 
   tags$li(
     title = "",

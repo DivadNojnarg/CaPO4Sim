@@ -91,6 +91,12 @@ P_inject <- NULL
 P_food <- NULL
 D3_inject <- NULL
 
+# inititalization of the timer
+minutes_time <- 15 # the application will stop in 15 minutes
+end_time <- Sys.time() + minutes_time * 60
+
+# reset function
+#jsResetCode <- "shinyjs.reset = function() {history.go(0)}"
 
 # compile the C code containing equations
 #system("R CMD SHLIB compiled_core.c")

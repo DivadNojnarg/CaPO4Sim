@@ -14,6 +14,16 @@ body <- dashboardBody(
   # include CSS
   app_css(),
   
+  tags$head(
+    tags$script(
+      "$(document).on('shiny:connected', function(event) {
+          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          Shiny.onInputChange('isMobile', isMobile);
+       });
+      "
+    )
+  ),
+  
   # include the script for Hotjar tracking
   #tags$head(includeScript("www/hotjar.js")),
   # include the script needed to find the web browser
@@ -23,10 +33,12 @@ body <- dashboardBody(
   introjsUI(),
   # JS interactions
   useShinyjs(),
+  #extendShinyjs(text = jsResetCode),
   # print feedback for input
   useShinyFeedback(),
   useSweetAlert(),
   setShadow("box"),
+  setShadow("dropdown-menu"),
   setZoom("box", scale = 1.01),
   setPulse("timeline-item"),
 
@@ -77,55 +89,12 @@ body <- dashboardBody(
                 style = "fill",
                 color = "danger",
                 icon = icon("trash")
-              )
-            ),
-            solidHeader = FALSE, 
-            status = "primary", 
-            width = 12,
-            closable = TRUE,
-            enable_sidebar = TRUE,
-            sidebar_content = tagList(
-              boxPad(
-                color = NULL,
-                prettyCheckboxGroup(
-                  inputId = "background_choice",
-                  label = "Network background",
-                  choices = c("rat", "human"),
-                  thick = TRUE,
-                  animation = "pulse",
-                  selected = "rat",
-                  inline = TRUE
-                ),
-                prettyCheckboxGroup(
-                  inputId = "network_Ca_choice",
-                  label = "Select a network",
-                  choices = c(
-                    "Ca" = "Ca",
-                    "Pi" = "PO4",
-                    "PTH" = "PTH",
-                    "D3" = "D3",
-                    "FGF23" = "FGF23"
-                  ),
-                  thick = TRUE,
-                  animation = "pulse",
-                  selected = "rat",
-                  inline = TRUE
-                ),
-                prettySwitch(
-                  inputId = "network_hormonal_choice",
-                  label = "Display hormones",
-                  value = TRUE,
-                  slim = TRUE,
-                  bigger = TRUE
-                ),
-                prettySwitch(
-                  inputId = "network_organ_choice",
-                  label = "Display organs",
-                  value = TRUE,
-                  slim = TRUE,
-                  bigger = TRUE
-                ),
-                hr(),
+              ),
+              dropdownButton(
+                label = "Treatments",
+                icon = icon("sliders"),
+                status = "primary",
+                circle = FALSE,
                 prettyCheckboxGroup(
                   inputId = "treatment_selected",
                   label = "Select a treatment",
@@ -145,11 +114,20 @@ body <- dashboardBody(
                 uiOutput(outputId = "sliderInject")
               )
             ),
+            solidHeader = FALSE, 
+            status = "primary", 
+            width = 12,
+            closable = TRUE,
+            enable_sidebar = TRUE,
+            sidebar_content = tagList(),
             introBox(
               div(
                 id = "network_cap",
                 withSpinner(
-                  visNetworkOutput("network_Ca", height = "900px"), 
+                  visNetworkOutput(
+                    "network_Ca", 
+                    height = "900px"
+                  ), 
                   size = 2, 
                   type = 8, 
                   color = "#000000"
@@ -167,9 +145,16 @@ body <- dashboardBody(
           style = 'padding:0px;',
           # results box
           boxPlus(
-            width = 12, solidHeader = FALSE, status = "primary", collapsible = TRUE,
+            width = 12, 
+            solidHeader = FALSE, 
+            status = "primary", 
+            collapsible = TRUE,
             withSpinner(
-              plotlyOutput("plot_node", height = "300px", width = "100%"),
+              plotlyOutput(
+                "plot_node", 
+                height = "300px", 
+                width = "100%"
+              ),
               size = 2,
               type = 8,
               color = "#000000"

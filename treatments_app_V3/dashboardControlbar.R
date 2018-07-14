@@ -6,6 +6,45 @@ dashboardControlbar <- rightSidebar(
     id = "options",
     icon = "cogs",
     h4("Network options"),
+    prettyCheckboxGroup(
+      inputId = "background_choice",
+      label = "Network background",
+      choices = c("rat", "human"),
+      thick = TRUE,
+      animation = "pulse",
+      selected = "rat",
+      inline = TRUE
+    ),
+    prettyCheckboxGroup(
+      inputId = "network_Ca_choice",
+      label = "Select a network",
+      choices = c(
+        "Ca" = "Ca",
+        "Pi" = "PO4",
+        "PTH" = "PTH",
+        "D3" = "D3",
+        "FGF23" = "FGF23"
+      ),
+      thick = TRUE,
+      animation = "pulse",
+      selected = "rat",
+      inline = TRUE
+    ),
+    prettySwitch(
+      inputId = "network_hormonal_choice",
+      label = "Display hormones",
+      value = TRUE,
+      slim = TRUE,
+      bigger = TRUE
+    ),
+    prettySwitch(
+      inputId = "network_organ_choice",
+      label = "Display organs",
+      value = TRUE,
+      slim = TRUE,
+      bigger = TRUE
+    ),
+    hr(),
     fluidRow(
       column(
         width = 6,
