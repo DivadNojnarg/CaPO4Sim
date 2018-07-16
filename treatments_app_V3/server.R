@@ -8,6 +8,61 @@
 #-------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
+  
+  #------------------------------------------------------------------------- 
+  #  useful datas: initialization. These datq are not in global.R since
+  #  they are some time reloaded by the program. In global.R they would not
+  #  be reloaded, which would corrupt the new session
+  #  
+  #-------------------------------------------------------------------------
+  
+  # load patient files
+  patient_datas <- patient_selector()
+  
+  # Load state values based on files previously created for each case (php1, hypopara, hypoD3)
+  patient_state_0 <- patient_datas$initial_conditions
+  
+  # patient disease
+  patient_disease <- patient_datas$disease_id
+  
+  # answer
+  if (patient_disease == "php1") answer <- "primary hyperparathyroidism" 
+  
+  # initial conditions
+  state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
+             "D3_p" = 564.2664, "FGF_p" = 16.78112, 
+             "Ca_p" = 1.2061,"Ca_f" = 1.8363, "Ca_b" = 250, 
+             "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, 
+             "PO4_c" = 2.7719,"CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, 
+             "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, 
+             "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
+             "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
+  
+  # below is needed to handle treatments events
+  treatment_choices <- c(
+    "PTX",
+    "D3_inject",
+    "Ca_food",
+    "Ca_inject",
+    "P_food",
+    "P_inject",
+    "cinacalcet"
+  )
+  
+  # initialization of event parameters
+  t_start <- NULL
+  t_stop <- NULL
+  Ca_inject <- NULL
+  Ca_food <- NULL
+  P_inject <- NULL
+  P_food <- NULL
+  D3_inject <- NULL
+  
+  # inititalization of the timer
+  minutes_time <- 15 # the application will stop in 15 minutes
+  start_time <- Sys.time()
+  end_time <- start_time + minutes_time * 60
+  
   #------------------------------------------------------------------------- 
   #  Store times, state and parameters in reactive values that can
   #  react to user inputs
@@ -441,9 +496,12 @@ shinyServer(function(input, output, session) {
           title = "Stop in 5 seconds...", 
           type = "error"
         )
-        shinyjs::delay(5000, stop())
+        shinyjs::delay(5000, {
+          js$closeWindow()
+          stopApp()
+        })
       } else {
-        #js$reset()
+        session$reload()
       }
   })
   
@@ -503,6 +561,75 @@ shinyServer(function(input, output, session) {
       )
     }
   })
+  
+  # save user plasma analysis history whenever export button is pressed
+  observeEvent(input$export,{
+    user_folder <- paste0(
+      getwd(), "/www/users_datas/", 
+      input$user_name, "-", start_time
+    )
+    
+    # save user comments in a separate file
+    if (nrow(plasma_analysis$history) > 0) {
+      saveRDS(
+        object = plasma_analysis$history, 
+        file = paste0(user_folder, "/user_plasma_analysis.rds")
+      )
+      # otherwise explain the user what to do
+    } else {
+      sendSweetAlert(
+        session,
+        title = "You do not have any plasma analysis results!",
+        type = "error"
+      )
+    }
+  })
+  
+  
+  # # give the user the opportunity to load a previous session
+  # observeEvent(input$register_user, {
+  #   user_folder <- paste0(getwd(), "/www/users_datas/")
+  #   file_list <- as.vector(list.files(user_folder))
+  #   
+  #   confirmSweetAlert(
+  #     session,
+  #     danger_mode = TRUE,
+  #     inputId = "load_previous_session",
+  #     title = "Want to load an older session?",
+  #     text = tagList(
+  #       column(
+  #         width = 12,
+  #         align = "center",
+  #         prettyRadioButtons(
+  #           inputId = "old_session",
+  #           label = "Choose a saved session:",
+  #           choices = file_list,
+  #           animation = "pulse", 
+  #           status = "info"
+  #         )
+  #       )
+  #     ),
+  #     btn_labels = c("Cancel", "Load"),
+  #     type = "warning",
+  #     html = TRUE
+  #   )
+  # })
+  # 
+  # # load the previous session
+  # observeEvent(input$load_previous_session, {
+  #   if (input$load_previous_session) {
+  #     user_folder <- paste0(getwd(), "/www/users_datas/")
+  #     temp_folder <- paste0(user_folder, input$old_session)
+  #     file_list <- list.files(temp_folder)
+  #     lapply(1:length(file_list), FUN = function(i) {
+  #       print(paste0(temp_folder, "/", file_list[[i]]))
+  #       readRDS(file = paste0(temp_folder, "/", file_list[[i]]))
+  #     })
+  #     
+  #     # replace start_time by the value of when the folder was first created
+  #     start_time <- unlist(str_split(input$old_session, "-", n = 2))[[2]]
+  #   }
+  # })
   
   
   # handle case when the use press the diagnosis button

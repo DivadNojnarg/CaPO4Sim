@@ -52,56 +52,6 @@ source("generate_slider_events.R")
 source("generate_dynamicFooter.R")
 
 
-# load patient files
-patient_datas <- patient_selector()
-
-# Load state values based on files previously created for each case (php1, hypopara, hypoD3)
-patient_state_0 <- patient_datas$initial_conditions
-
-# patient disease
-patient_disease <- patient_datas$disease_id
-
-# answer
-if (patient_disease == "php1") answer <- "primary hyperparathyroidism" 
-
-# initial conditions
-state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
-           "D3_p" = 564.2664, "FGF_p" = 16.78112, 
-           "Ca_p" = 1.2061,"Ca_f" = 1.8363, "Ca_b" = 250, 
-           "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, 
-           "PO4_c" = 2.7719,"CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, 
-           "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, 
-           "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
-           "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
-
-# below is needed to handle treatments events
-treatment_choices <- c(
-  "PTX",
-  "D3_inject",
-  "Ca_food",
-  "Ca_inject",
-  "P_food",
-  "P_inject",
-  "cinacalcet"
-)
-
-# initialization of event parameters
-t_start <- NULL
-t_stop <- NULL
-Ca_inject <- NULL
-Ca_food <- NULL
-P_inject <- NULL
-P_food <- NULL
-D3_inject <- NULL
-
-# inititalization of the timer
-minutes_time <- 15 # the application will stop in 15 minutes
-start_time <- Sys.time()
-end_time <- start_time + minutes_time * 60
-
-# reset function
-#jsResetCode <- "shinyjs.reset = function() {history.go(0)}"
-
 # compile the C code containing equations
 #system("R CMD SHLIB compiled_core.c")
 #dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))

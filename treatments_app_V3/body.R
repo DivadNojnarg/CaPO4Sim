@@ -33,7 +33,7 @@ body <- dashboardBody(
   introjsUI(),
   # JS interactions
   useShinyjs(),
-  #extendShinyjs(text = jsResetCode),
+  extendShinyjs(script = "www/close.js"),
   # print feedback for input
   useShinyFeedback(),
   useSweetAlert(),
