@@ -7,6 +7,9 @@
 
 sidebar <- dashboardSidebar(
   width = 300,
+  
+  uiOutput("user_panel"),
+  
   introBox(
     sidebarMenu(
       id = "sidebar_main",

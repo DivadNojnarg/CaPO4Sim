@@ -218,7 +218,8 @@ shinyServer(function(input, output, session) {
   
   
   #------------------------------------------------------------------------- 
-  #  Javascript alerts: to give instructions to users
+  #  Javascript alerts: to give instructions to users, handle when the
+  #  game ends
   #  
   #-------------------------------------------------------------------------
   
@@ -237,6 +238,7 @@ shinyServer(function(input, output, session) {
     countdown() / minutes_time * 100
   })
     
+  # render the progress bar for countdown
   output$currentTime <- renderUI({
     countdown <- countdown()
     percent_countdown <- percent_countdown()
@@ -253,27 +255,34 @@ shinyServer(function(input, output, session) {
       status = statusClass,
       striped = TRUE,
       size = "xs",
-      title = paste0("This application will close in ", countdown, " min")
+      title = paste0("This game will end in ", countdown, " min")
     )
   })
   
   # When the counter is equal to 0, each time the session is opened, 
   # show the how to start sweetAlert
   # I set up a delay of 5 seconds so that the alert is not displayed before
-  # the page is fully loaded (in case we use preloaders in the dashboardPagePlus)
+  # the page is fully loaded (in case we use preloaders in the dashboardPagePlus
+  # the preloader lasts around 3s...)
   observe({
     if (counter$alert == 0) {
       shinyjs::delay(
         5000,
-        sendSweetAlert(
+        confirmSweetAlert(
           session, 
+          inputId = "register_user",
           title = "How to start?",
-          text = HTML(
-            paste(
-              "Welcome to the virtual CaPO4 patient simulator.
-              A random patient was selected for you. The goal of 
-              the game is to find the corresponding disease and treat
-              the patient correctly."
+          text = tagList(
+            "Welcome to the virtual CaPO4 patient simulator.
+            A random patient was selected for you. The goal of 
+            the game is to find the corresponding disease and treat
+            the patient correctly. Before starting enter your 
+            name and the date.",
+            hr(),
+            column(
+              align = "center",
+              width = 12,
+              textInput("user_name", "Your name:")
             )
           ),
           type = "warning",
@@ -283,9 +292,9 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  # shift stop when countdown is 14
+  # shift stop when countdown is 0
   observe({
-    if (countdown() == 14) 
+    if (countdown() == 0) 
       event$stop <- TRUE
   })
   
@@ -327,8 +336,69 @@ shinyServer(function(input, output, session) {
       }
   })
   
+  
+  # init the directory where user datas will be saved
+  observeEvent(input$register_user,{
+    if (input$register_user) {
+      
+      user_folder <- paste0(getwd(), "/www/users_datas/")
+      dir_list <- list.dirs(user_folder)
+      # remove all empty folders to clean
+      if (length(dir_list) > 1) {
+        lapply(2:length(dir_list), FUN = function(i) {
+          temp_dir <- dir_list[[i]]
+          temp_file_list <- list.files(temp_dir)
+          if (length(temp_file_list) == 0) unlink(x = temp_dir, recursive = TRUE)
+        })
+      }
+      
+      # create the new folder
+      dir.create(paste0(user_folder, input$user_name, "-", start_time))
+    }
+  })
+  
+  # save user events whenever export button is pressed
+  observeEvent(input$export,{
+    user_folder <- paste0(
+      getwd(), "/www/users_datas/", 
+      input$user_name, "-", start_time
+    )
+    
+    # save only if the event table contains elements
+    if (nrow(event$table) > 0) {
+      saveRDS(
+        object = event$table, 
+        file = paste0(user_folder, "/user_timeline.rds")
+      )
+      # otherwise explain the user what to do
+    } else {
+      sendSweetAlert(
+        session,
+        title = "Your timeline is currently empty, 
+        please trigger events before saving!",
+        type = "error"
+      )
+    }
+    
+  })
+  
+  #------------------------------------------------------------------------- 
+  # sidebar User panel: print name and date
+  #  
+  #-------------------------------------------------------------------------
+  output$user_panel <- renderUI({
+    invalidateLater(1000)
+    sidebarUserPanel(
+      input$user_name, 
+      subtitle = Sys.time(), 
+      image = "https://image.flaticon.com/icons/svg/305/305983.svg"
+    )
+  })
+  
+  
   #------------------------------------------------------------------------- 
   #  This part handle events, plasma analysis, triggered by the user
+  #  as well as the export function to save the timeline Event
   #  
   #-------------------------------------------------------------------------
   

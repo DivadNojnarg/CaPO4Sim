@@ -94,6 +94,7 @@ D3_inject <- NULL
 # inititalization of the timer
 minutes_time <- 15 # the application will stop in 15 minutes
 end_time <- Sys.time() + minutes_time * 60
+start_time <- end_time - minutes_time * 60
 
 # reset function
 #jsResetCode <- "shinyjs.reset = function() {history.go(0)}"

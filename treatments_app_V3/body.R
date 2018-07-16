@@ -90,29 +90,37 @@ body <- dashboardBody(
                 color = "danger",
                 icon = icon("trash")
               ),
-              dropdownButton(
-                label = "Treatments",
-                icon = icon("sliders"),
-                status = "primary",
-                circle = FALSE,
-                prettyCheckboxGroup(
-                  inputId = "treatment_selected",
-                  label = "Select a treatment",
-                  choices = c(
-                    "parathyroid surgery" = "PTX",
-                    "D3 iv injection" = "D3_inject",
-                    "Ca supplementation" = "Ca_food",
-                    "Ca iv injection" = "Ca_inject",
-                    "Pi iv injection" = "P_inject",
-                    "Pi supplementation" = "P_food",
-                    "cinacalcet" = "cinacalcet" 
-                  ),
-                  thick = TRUE,
-                  animation = "pulse",
-                  inline = TRUE
-                ),
-                uiOutput(outputId = "sliderInject")
-              )
+              actionBttn(
+                inputId = "export",
+                size = "lg",
+                label = " Export",
+                style = "fill",
+                color = "success",
+                icon = icon("download")
+              )#,
+              # dropdownButton(
+              #   label = "Treatments",
+              #   icon = icon("sliders"),
+              #   status = "primary",
+              #   circle = FALSE,
+              #   prettyCheckboxGroup(
+              #     inputId = "treatment_selected",
+              #     label = "Select a treatment",
+              #     choices = c(
+              #       "parathyroid surgery" = "PTX",
+              #       "D3 iv injection" = "D3_inject",
+              #       "Ca supplementation" = "Ca_food",
+              #       "Ca iv injection" = "Ca_inject",
+              #       "Pi iv injection" = "P_inject",
+              #       "Pi supplementation" = "P_food",
+              #       "cinacalcet" = "cinacalcet" 
+              #     ),
+              #     thick = TRUE,
+              #     animation = "pulse",
+              #     inline = TRUE
+              #   ),
+              #   uiOutput(outputId = "sliderInject")
+              # )
             ),
             solidHeader = FALSE, 
             status = "primary", 
