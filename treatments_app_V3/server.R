@@ -31,18 +31,34 @@ shinyServer(function(input, output, session) {
     c("k_prod_PTHg" = ifelse(
       patient_disease == "php1", 300*4.192, 
       ifelse(patient_disease == "hypopara", 0, 4.192)
-    ), 
-    "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005),
-    # once PTX is done, it is forever!
-    "PTX_coeff" = ifelse(
-      is.element("parathyroid surgery", event$table$event), 0, 
-      ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1)
-    ),
-    "k_inject_Ca" = ifelse(is.element("Ca iv injection", event$table$event), input$Ca_inject, 0), 
-    "Ca_food" = ifelse(is.element("Ca supplementation", event$table$event), input$Ca_food, 2.2e-003),
-    "k_inject_D3" = ifelse(is.element("vitamin D3 iv injection", event$table$event), input$D3_inject, 0),
-    "k_inject_P" = ifelse(is.element("PO4 iv injection", event$table$event), input$P_inject, 0),
-    "P_food" = ifelse(is.element("PO4 supplementation", event$table$event), input$P_food, 1.55e-003))
+      ), 
+      "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005),
+      # once PTX is done, it is forever!
+      "PTX_coeff" = ifelse(
+        is.element("parathyroid surgery", event$table$event), 0, 
+        ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1)
+      ),
+      "k_inject_Ca" = ifelse(
+        is.element("Ca iv injection", event$table$event), 
+        input$Ca_inject, 0
+      ), 
+      "Ca_food" = ifelse(
+        is.element("Ca supplementation", event$table$event), 
+        input$Ca_food, 2.2e-003
+      ),
+      "k_inject_D3" = ifelse(
+        is.element("vitamin D3 iv injection", event$table$event), 
+        input$D3_inject, 0
+      ),
+      "k_inject_P" = ifelse(
+        is.element("PO4 iv injection", event$table$event), 
+        input$P_inject, 0
+      ),
+      "P_food" = ifelse(
+        is.element("PO4 supplementation", event$table$event), 
+        input$P_food, 1.55e-003
+      )
+    )
   })
   
   
@@ -84,8 +100,67 @@ shinyServer(function(input, output, session) {
             title = "Weight",
             description = patient_datas$weight
           )
+        ),
+        column(
+          width = 12,
+          align = "center",
+          actionBttn(
+            inputId = "diagnosis",
+            size = "lg",
+            label = "Diagnose patient!",
+            style = "fill",
+            color = "primary",
+            icon = icon("search")
+          )
         )
       )
+    )
+  })
+  
+  # the user notebook
+  output$user_notebook <- renderUI({
+    
+    comments <- comments$table
+    len <- nrow(comments)
+  
+    socialBox(
+      width = 12, 
+      style = "overflow-y: auto; max-height: 400px;",
+      title = paste0(input$user_name, "'s notebook"),
+      subtitle = start_time,
+      src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+      textAreaInput(
+        inputId = "user_comment", 
+        label = "My Comment", 
+        value = "I enter here all my observations!"
+      ),
+      column(
+        width = 12,
+        align = "center",
+        actionBttn(
+          inputId = "user_add_comment",
+          size = "xs",
+          icon = icon("plus"),
+          style = "material-circle",
+          color = "success"
+        )
+      ),
+      hr(),
+      comments = if (len > 0) {
+        tagList(
+          lapply(1:len, FUN = function(i) {
+            boxComment(
+              src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+              title = paste0("Comment ", i),
+              date = comments$date[[i]],
+              comments$description[[i]]
+            )
+          })
+        ) 
+      } else {
+        NULL
+      },
+      footer = NULL
     )
   })
   
@@ -150,12 +225,33 @@ shinyServer(function(input, output, session) {
       enable_label = TRUE,
       label_text = len,
       label_status = "danger",
-      style = "overflow-y: auto;",
+      style = "overflow-y: scroll;",
       title = "Recent Events",
+      
+      # treatments input are
+      # in the event box
+      prettyCheckboxGroup(
+        inputId = "treatment_selected",
+        label = "Select a new treatment:",
+        choices = c(
+          "parathyroid surgery" = "PTX",
+          "D3 iv injection" = "D3_inject",
+          "Ca supplementation" = "Ca_food",
+          "Ca iv injection" = "Ca_inject",
+          "Pi iv injection" = "P_inject",
+          "Pi supplementation" = "P_food",
+          "cinacalcet" = "cinacalcet"
+        ),
+        thick = TRUE,
+        inline = TRUE,
+        animation = "pulse"
+      ),
+      uiOutput(outputId = "sliderInject"),
+      hr(),
       
       if (len > 0) {
         timelineBlock(
-          style = "height: 600px",
+          style = "height: 400px;",
           timelineStart(color = "danger"),
           br(),
           lapply(1:len, FUN = function(i){
@@ -164,7 +260,11 @@ shinyServer(function(input, output, session) {
                 title = name[[i]],
                 icon = "medkit",
                 color = "orange",
-                time = dashboardLabel(style = "default", status = "warning", start_time[[i]]),
+                time = dashboardLabel(
+                  style = "default", 
+                  status = "warning", 
+                  start_time[[i]]
+                ),
                 timelineItemMedia(
                   src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
                      "treatments_img/syringe.svg"
@@ -285,9 +385,20 @@ shinyServer(function(input, output, session) {
               textInput("user_name", "Your name:")
             )
           ),
+          btn_labels = c(NULL, "Confirm"),
           type = "warning",
           html = TRUE
         )
+      )
+    }
+  })
+  
+  # disable the confirm button if the user name is missing
+  observe({
+    if (!is.null(input$user_name)) {
+      shinyjs::toggleState(
+        selector = "button.swal-button.swal-button--confirm", 
+        condition = input$user_name != ""
       )
     }
   })
@@ -339,19 +450,8 @@ shinyServer(function(input, output, session) {
   
   # init the directory where user datas will be saved
   observeEvent(input$register_user,{
+    user_folder <- paste0(getwd(), "/www/users_datas/")
     if (input$register_user) {
-      
-      user_folder <- paste0(getwd(), "/www/users_datas/")
-      dir_list <- list.dirs(user_folder)
-      # remove all empty folders to clean
-      if (length(dir_list) > 1) {
-        lapply(2:length(dir_list), FUN = function(i) {
-          temp_dir <- dir_list[[i]]
-          temp_file_list <- list.files(temp_dir)
-          if (length(temp_file_list) == 0) unlink(x = temp_dir, recursive = TRUE)
-        })
-      }
-      
       # create the new folder
       dir.create(paste0(user_folder, input$user_name, "-", start_time))
     }
@@ -379,20 +479,158 @@ shinyServer(function(input, output, session) {
         type = "error"
       )
     }
+  })
+  
+  # save user comments whenever export button is pressed
+  observeEvent(input$export,{
+    user_folder <- paste0(
+      getwd(), "/www/users_datas/", 
+      input$user_name, "-", start_time
+    )
     
+    # save user comments in a separate file
+    if (nrow(comments$table) > 0) {
+      saveRDS(
+        object = comments$table, 
+        file = paste0(user_folder, "/user_comments.rds")
+      )
+      # otherwise explain the user what to do
+    } else {
+      sendSweetAlert(
+        session,
+        title = "You do not have any comments!",
+        type = "error"
+      )
+    }
+  })
+  
+  
+  # handle case when the use press the diagnosis button
+  observeEvent(input$diagnosis, {
+    inputSweetAlert(
+      session,
+      inputId = "diagnosis_answer",
+      title = "What is the disease of this patient?",
+      btn_labels = c("Send"),
+      placeholder = "Be careful about word spelling before submitting!",
+      type = "warning"
+    )
+  })
+  
+  # treat the diagnosis answer
+  observeEvent(input$diagnosis_answer, {
+    user_answer <- input$diagnosis_answer
+    test <- str_detect(answer, regex(user_answer, ignore_case = TRUE))
+    if (test) {
+      event$answered <- TRUE
+      sendSweetAlert(
+        session,
+        title = paste0("Congratulations ", input$user_name, " !"),
+        text = "It seems that you discovered this patient disease. 
+        However, it would be better to treat him now. Remember you have
+        15 minutes to complete this activity.",
+        type = "success"
+      ) 
+    } else {
+      event$answered <- FALSE
+      sendSweetAlert(
+        session,
+        title = "Wasted!",
+        text = paste0(input$user_name, ", it seems that your answer is wrong!"),
+        type = "error"
+      )
+    }
+  })
+  
+  # prevent the user from resubmitting an answer if he correctly guessed
+  # the patient disease
+  observe({
+    if (!is.null(event$answered)) {
+      if (event$answered) {
+        shinyjs::disable("diagnosis") 
+      } 
+    }
+  })
+  
+  # a label to indicate the user whether the diagnosis is ok or not
+  # in the header
+  output$user_game_status <- renderUI({
+   game_status <- if (!is.null(event$answered)) {
+     if (event$answered) "success" else "danger"
+   } else {
+     "warning"
+   }
+   game_text <- if (!is.null(event$answered)) {
+     if (event$answered) 
+       "Successful Diagnosis" 
+     else "Unsuccessful diagnosis"
+   } else {
+     "No diagnosis yet"
+   }
+   div(
+     style = "margin-top: 7.5px; margin-left: 10px;",
+     class = "diagnosis-badge",
+     dashboardLabel(
+       game_text, 
+       status = game_status, 
+       style = "square"
+     )
+   )
+  })
+  
+  
+  # clean users datas from empty folders when the user close the session
+  session$onSessionEnded(function() {
+    user_folder <- paste0(getwd(), "/www/users_datas/")
+    dir_list <- list.dirs(user_folder)
+    if (length(dir_list) > 1) {
+      lapply(2:length(dir_list), FUN = function(i) {
+        temp_dir <- dir_list[[i]]
+        temp_file_list <- list.files(temp_dir)
+        if (length(temp_file_list) == 0) unlink(x = temp_dir, recursive = TRUE)
+      })
+    }
   })
   
   #------------------------------------------------------------------------- 
   # sidebar User panel: print name and date
   #  
   #-------------------------------------------------------------------------
+  
   output$user_panel <- renderUI({
+    # use invalidate later to simulate a clock
     invalidateLater(1000)
     sidebarUserPanel(
       input$user_name, 
       subtitle = Sys.time(), 
       image = "https://image.flaticon.com/icons/svg/305/305983.svg"
     )
+  })
+  
+  #------------------------------------------------------------------------- 
+  # Handle user comments
+  #  
+  #-------------------------------------------------------------------------
+  
+  # create the comment dataframe to store all comments
+  comments <- reactiveValues(
+    table = data.frame(
+      description = NULL,
+      date = NULL,
+      stringsAsFactors = FALSE
+    )
+  )
+  
+  # each time the user add a new comment, add it to the table
+  observeEvent(input$user_add_comment, {
+    if (!is.null(input$user_comment)) {
+      temp_comment <- data.frame(
+        description = input$user_comment,
+        date = Sys.time(),
+        stringsAsFactors = FALSE
+      )
+      comments$table <- rbind(comments$table, temp_comment) 
+    }
   })
   
   
@@ -414,7 +652,8 @@ shinyServer(function(input, output, session) {
       stringsAsFactors = FALSE
     ),
     counter = 1,
-    stop = FALSE
+    stop = FALSE,
+    answered = NULL
   )
   
   

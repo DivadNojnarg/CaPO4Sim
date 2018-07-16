@@ -61,6 +61,9 @@ patient_state_0 <- patient_datas$initial_conditions
 # patient disease
 patient_disease <- patient_datas$disease_id
 
+# answer
+if (patient_disease == "php1") answer <- "primary hyperparathyroidism" 
+
 # initial conditions
 state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
            "D3_p" = 564.2664, "FGF_p" = 16.78112, 
@@ -93,8 +96,8 @@ D3_inject <- NULL
 
 # inititalization of the timer
 minutes_time <- 15 # the application will stop in 15 minutes
-end_time <- Sys.time() + minutes_time * 60
-start_time <- end_time - minutes_time * 60
+start_time <- Sys.time()
+end_time <- start_time + minutes_time * 60
 
 # reset function
 #jsResetCode <- "shinyjs.reset = function() {history.go(0)}"

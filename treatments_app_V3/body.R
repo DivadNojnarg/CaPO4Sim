@@ -41,6 +41,8 @@ body <- dashboardBody(
   setShadow("dropdown-menu"),
   setZoom("box", scale = 1.01),
   setPulse("timeline-item"),
+  setPulse("diagnosis-badge"),
+  setShake("diagnosis-badge"),
 
   tabItems(
     # Network panel
@@ -48,7 +50,6 @@ body <- dashboardBody(
       tabName = "main",
       
       fluidRow(
-        
         # left colum
         column(
           width = 3,
@@ -56,10 +57,11 @@ body <- dashboardBody(
           
           # profile box
           uiOutput("patient_info"),
+          # user notebook
+          uiOutput("user_notebook"),
           # info box (previous diseases, treatments)
           uiOutput("patient_history")
         ),
-        
         
         # patient operation table
         column(
@@ -97,30 +99,7 @@ body <- dashboardBody(
                 style = "fill",
                 color = "success",
                 icon = icon("download")
-              )#,
-              # dropdownButton(
-              #   label = "Treatments",
-              #   icon = icon("sliders"),
-              #   status = "primary",
-              #   circle = FALSE,
-              #   prettyCheckboxGroup(
-              #     inputId = "treatment_selected",
-              #     label = "Select a treatment",
-              #     choices = c(
-              #       "parathyroid surgery" = "PTX",
-              #       "D3 iv injection" = "D3_inject",
-              #       "Ca supplementation" = "Ca_food",
-              #       "Ca iv injection" = "Ca_inject",
-              #       "Pi iv injection" = "P_inject",
-              #       "Pi supplementation" = "P_food",
-              #       "cinacalcet" = "cinacalcet" 
-              #     ),
-              #     thick = TRUE,
-              #     animation = "pulse",
-              #     inline = TRUE
-              #   ),
-              #   uiOutput(outputId = "sliderInject")
-              # )
+              )
             ),
             solidHeader = FALSE, 
             status = "primary", 

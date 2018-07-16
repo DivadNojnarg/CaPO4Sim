@@ -18,7 +18,10 @@ header <- dashboardHeaderPlus(
   
   titleWidth = 300,
   
-  left_menu = tagList(uiOutput("currentTime")),
+  left_menu = tagList(
+    uiOutput("currentTime"),
+    uiOutput("user_game_status")
+  ),
 
   tags$li(
     title = "",
