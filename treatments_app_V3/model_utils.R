@@ -724,62 +724,37 @@ find_parameter_change <- function(parms) {
 # Recover to_start and t_stop time when reading the event_table
 # Takes event table as argument and returns a vector of the 
 # corresponding event parameters (t_start, t_stop and the rate of injection/gavage)
-generate_event_parms <- function(event_table) { 
-  for (i in 1:nrow(event_table)) {
-    if (is.element("Ca_inject", event_table[i,"event"])) {
-      t_start <- event_table[i,"start_time"]
-      t_stop <- event_table[i,"stop_time"]
-      Ca_inject <- event_table[i, "rate"]
-    } else if (is.element("Ca_food", event_table[i,"event"])) {
-      t_start <- event_table[i,"start_time"]
-      t_stop <- event_table[i,"stop_time"]
-      Ca_food <- event_table[i, "rate"]
-    } else if (is.element("D3_inject", event_table[i,"event"])) {
-      t_start <- event_table[i,"start_time"]
-      t_stop <- event_table[i,"stop_time"]
-      D3_inject <- event_table[i, "rate"]
-    } else if (is.element("P_inject", event_table[i,"event"])) {
-      t_start <- event_table[i,"start_time"]
-      t_stop <- event_table[i,"stop_time"]
-      P_inject <- c(P_inject, event_table[i, "rate"])
-    } else if (is.element("P_food", event_table[i,"event"])) {
-      t_start <- event_table[i,"start_time"]
-      t_stop <- event_table[i,"stop_time"]
-      P_food <- event_table[i, "rate"]
-    } else {
-      t_start <- NULL
-      t_stop <- NULL
-      Ca_inject <- NULL
-      Ca_food <- NULL
-      D3_inject <- NULL
-      P_inject <- NULL
-      P_food <- NULL
-    }
+generate_event_parms <- function(event_table) {
+  #take event table row by row
+  if (nrow(event_table) > 0) {
+    name <- event_table[1, "event"]
+    rate <- event_table[1, "rate"]
+    t_start <- event_table[1, "start_time"]
+    t_stop <- event_table[1, "stop_time"]
+    
+    Ca_inject <- if (name == "Ca_inject") rate else NA
+    Ca_food <- if (name == "Ca_food") rate else NA
+    D3_inject <- if (name == "D3_inject") rate else NA
+    P_inject <- if (name == "P_inject") rate else NA
+    P_food <- if (name == "P_food") rate else NA
+    
+    return(
+      c(
+        "t_start" = t_start,
+        "t_stop" = t_stop,
+        "Ca_inject" = Ca_inject,
+        "Ca_food" = Ca_food,
+        "D3_inject" = D3_inject,
+        "P_inject" = P_inject,
+        "P_food" = P_food
+      )
+    )
   }
-  # return t_start, t_stop and the rate of the treatment
-  return(c("t_start" = t_start, "t_stop" = t_stop,
-           "Ca_inject" = Ca_inject, "Ca_food" = Ca_food,
-           "D3_inject" = D3_inject, "P_inject" = P_inject,
-           "P_food" = P_food))
 }
 
 
-
 # Function to handle events
-# Takes input as argument.
 # Set the parameters corresponding to an injection/gavage
-trigger_event <- function(input) {
-  if (!is.null(t_start) && !is.null(t_stop)) {
-    if (!is.null(input$Ca_inject)) {
-      k_inject_Ca <- input$Ca_inject
-    } else if (!is.null(input$Ca_food)) {
-      I_Ca <- input$Ca_food
-    } else if (!is.null(input$D3_inject)) {
-      k_inject_D3 <- input$D3_inject * Vp
-    } else if (!is.null(input$P_inject)) {
-      k_inject_P <- input$P_inject
-    } else if (!is.null(input$P_food)) {
-      I_P <- input$P_food
-    }
-  }
+trigger_event <- function() {
+    
 }

@@ -25,23 +25,14 @@ shinyServer(function(input, output, session) {
   # patient disease
   patient_disease <- patient_datas$disease_id
   
-  # answer
-  if (patient_disease == "php1") answer <- "primary hyperparathyroidism"
-  
-  # initial conditions
-  state <- c(
-    "PTH_g" = 1288.19, "PTH_p" = 0.0687, 
-    "D3_p" = 564.2664, "FGF_p" = 16.78112, 
-    "Ca_p" = 1.2061,"Ca_f" = 1.8363, 
-    "Ca_b" = 250, "PO4_p" = 1.4784, 
-    "PO4_f" = 0.7922, "PO4_b" = 90, 
-    "PO4_c" = 2.7719,"CaHPO4_p" = 0.1059, 
-    "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, 
-    "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, 
-    "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, 
-    "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, 
-    "EGTA_p" = 0, "CaEGTA_p" = 0
-  )
+  # game answers
+  if (patient_disease == "php1") {
+    answer <- "primary hyperparathyroidism"
+  } else if (patient_disease == "hypopara") {
+    answer <- "hypoparathyroidism"
+  } else if (patient_disease == "hypoD3") {
+    answer <- "vitamin D3 deficiency"
+  }
   
   # below is needed to handle treatments events
   treatment_choices <- c(
@@ -57,11 +48,6 @@ shinyServer(function(input, output, session) {
   # initialization of event parameters
   t_start <- NULL
   t_stop <- NULL
-  Ca_inject <- NULL
-  Ca_food <- NULL
-  P_inject <- NULL
-  P_food <- NULL
-  D3_inject <- NULL
   
   # inititalization of the timer
   minutes_time <- 15 # the application will stop in 15 minutes
@@ -81,10 +67,18 @@ shinyServer(function(input, output, session) {
   states <- reactiveValues(
     val = list(), 
     counter = 1,
-    name = "start_case")
+    name = "start_case"
+  )
   
   # storing parameters event from the data frame to a reactive list
-  parameters_event <- reactive({generate_event_parms(event$table)})
+  parameters_event <- reactive({
+    c(
+      # static event parameters
+      "PTX_coeff" = ifelse(isTRUE(events$PTX), 0, 1), 
+      # dynamic event parameters
+      generate_event_parms(events$current)
+    )
+  })
   
   # Create parameters sets for all diseases and treatments
   parameters_disease <- reactive({
@@ -92,32 +86,7 @@ shinyServer(function(input, output, session) {
       patient_disease == "php1", 300*4.192, 
       ifelse(patient_disease == "hypopara", 0, 4.192)
       ), 
-      "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005),
-      # once PTX is done, it is forever!
-      "PTX_coeff" = ifelse(
-        is.element("parathyroid surgery", event$table$event), 0, 
-        ifelse(is.element("parathyroid surgery", input$treatment_selected), 0, 1)
-      ),
-      "k_inject_Ca" = ifelse(
-        is.element("Ca iv injection", event$table$event), 
-        input$Ca_inject, 0
-      ), 
-      "Ca_food" = ifelse(
-        is.element("Ca supplementation", event$table$event), 
-        input$Ca_food, 2.2e-003
-      ),
-      "k_inject_D3" = ifelse(
-        is.element("vitamin D3 iv injection", event$table$event), 
-        input$D3_inject, 0
-      ),
-      "k_inject_P" = ifelse(
-        is.element("PO4 iv injection", event$table$event), 
-        input$P_inject, 0
-      ),
-      "P_food" = ifelse(
-        is.element("PO4 supplementation", event$table$event), 
-        input$P_food, 1.55e-003
-      )
+      "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005)
     )
   })
   
@@ -127,7 +96,6 @@ shinyServer(function(input, output, session) {
   parameters <- reactive({
     c(parameters_disease(), parameters_fixed, parameters_event()) 
   }) 
-  
   
   #------------------------------------------------------------------------- 
   #  Render Patient boxes: patient_info, 
@@ -180,7 +148,7 @@ shinyServer(function(input, output, session) {
   # the user notebook
   output$user_notebook <- renderUI({
     
-    comments <- comments$table
+    comments <- comments$history
     len <- nrow(comments)
   
     socialBox(
@@ -271,10 +239,10 @@ shinyServer(function(input, output, session) {
   
   # Event to be added in the timeLine
   output$recent_events <- renderUI({
-    len <- nrow(event$table)
-    name <- event$table$event
-    start_time <- event$table$real_time
-    rate <- event$table$rate
+    len <- nrow(events$history)
+    name <- events$history$event
+    start_time <- events$history$real_time
+    rate <- events$history$rate
     plasma_values <- plasma_analysis$history
 
     boxPlus(
@@ -415,7 +383,7 @@ shinyServer(function(input, output, session) {
       status = statusClass,
       striped = TRUE,
       size = "xs",
-      title = paste0("This game will end in ", countdown, " min")
+      title = paste0("End in ", countdown, " min")
     )
   })
   
@@ -466,14 +434,14 @@ shinyServer(function(input, output, session) {
   # shift stop when countdown is 0
   observe({
     if (countdown() == 0) 
-      event$stop <- TRUE
+      events$stop <- TRUE
   })
   
   # When the timer is 0 the game is over if the user has no diagnosis
   # and treatment
   observe({
     if (is.null(input$close_app)) {
-      if (event$stop) {
+      if (events$stop) {
         confirmSweetAlert(
           inputId = "close_app",
           danger_mode = TRUE,
@@ -512,7 +480,7 @@ shinyServer(function(input, output, session) {
   
   
   # init the directory where user datas will be saved
-  observeEvent(input$register_user,{
+  observeEvent(input$register_user, {
     user_folder <- paste0(getwd(), "/www/users_datas/")
     if (input$register_user) {
       # create the new folder
@@ -521,16 +489,16 @@ shinyServer(function(input, output, session) {
   })
   
   # save user events whenever export button is pressed
-  observeEvent(input$export,{
+  observeEvent(input$export, {
     user_folder <- paste0(
       getwd(), "/www/users_datas/", 
       input$user_name, "-", start_time
     )
     
     # save only if the event table contains elements
-    if (nrow(event$table) > 0) {
+    if (nrow(events$history) > 0) {
       saveRDS(
-        object = event$table, 
+        object = events$history, 
         file = paste0(user_folder, "/user_timeline.rds")
       )
       # otherwise explain the user what to do
@@ -545,16 +513,16 @@ shinyServer(function(input, output, session) {
   })
   
   # save user comments whenever export button is pressed
-  observeEvent(input$export,{
+  observeEvent(input$export, {
     user_folder <- paste0(
       getwd(), "/www/users_datas/", 
       input$user_name, "-", start_time
     )
     
     # save user comments in a separate file
-    if (nrow(comments$table) > 0) {
+    if (nrow(comments$history) > 0) {
       saveRDS(
-        object = comments$table, 
+        object = comments$history, 
         file = paste0(user_folder, "/user_comments.rds")
       )
       # otherwise explain the user what to do
@@ -568,7 +536,7 @@ shinyServer(function(input, output, session) {
   })
   
   # save user plasma analysis history whenever export button is pressed
-  observeEvent(input$export,{
+  observeEvent(input$export, {
     user_folder <- paste0(
       getwd(), "/www/users_datas/", 
       input$user_name, "-", start_time
@@ -654,7 +622,7 @@ shinyServer(function(input, output, session) {
     user_answer <- input$diagnosis_answer
     test <- str_detect(answer, regex(user_answer, ignore_case = TRUE))
     if (test) {
-      event$answered <- TRUE
+      events$answered <- TRUE
       sendSweetAlert(
         session,
         title = paste0("Congratulations ", input$user_name, " !"),
@@ -664,7 +632,7 @@ shinyServer(function(input, output, session) {
         type = "success"
       ) 
     } else {
-      event$answered <- FALSE
+      events$answered <- FALSE
       sendSweetAlert(
         session,
         title = "Wasted!",
@@ -672,13 +640,23 @@ shinyServer(function(input, output, session) {
         type = "error"
       )
     }
+    
+    # save the answer status
+    user_folder <- paste0(
+      getwd(), "/www/users_datas/", 
+      input$user_name, "-", start_time
+    )
+    saveRDS(
+      object = events$answered, 
+      file = paste0(user_folder, "/user_answer.rds")
+    )
   })
   
   # prevent the user from resubmitting an answer if he correctly guessed
   # the patient disease
   observe({
-    if (!is.null(event$answered)) {
-      if (event$answered) {
+    if (!is.null(events$answered)) {
+      if (events$answered) {
         shinyjs::disable("diagnosis") 
       } 
     }
@@ -687,13 +665,13 @@ shinyServer(function(input, output, session) {
   # a label to indicate the user whether the diagnosis is ok or not
   # in the header
   output$user_game_status <- renderUI({
-   game_status <- if (!is.null(event$answered)) {
-     if (event$answered) "success" else "danger"
+   game_status <- if (!is.null(events$answered)) {
+     if (events$answered) "success" else "danger"
    } else {
      "warning"
    }
-   game_text <- if (!is.null(event$answered)) {
-     if (event$answered) 
+   game_text <- if (!is.null(events$answered)) {
+     if (events$answered) 
        "Successful Diagnosis" 
      else "Unsuccessful diagnosis"
    } else {
@@ -746,7 +724,7 @@ shinyServer(function(input, output, session) {
   
   # create the comment dataframe to store all comments
   comments <- reactiveValues(
-    table = data.frame(
+    history = data.frame(
       description = NULL,
       date = NULL,
       stringsAsFactors = FALSE
@@ -761,7 +739,7 @@ shinyServer(function(input, output, session) {
         date = Sys.time(),
         stringsAsFactors = FALSE
       )
-      comments$table <- rbind(comments$table, temp_comment) 
+      comments$history <- rbind(comments$history, temp_comment) 
     }
   })
   
@@ -773,9 +751,22 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # Set events parameters in reactiveValues so as to modify them later
-  event <<- reactiveValues(
-    table = data.frame(
+  # history stores all events whereas current correspond to the last called
+  # event in the stack
+  events <- reactiveValues(
+    history = data.frame(
       id = NULL,
+      real_time = NULL,
+      event = NULL,
+      rate = NULL,
+      start_time = NULL,
+      stop_time = NULL,
+      status = NULL,
+      stringsAsFactors = FALSE
+    ),
+    current = data.frame(
+      id = NULL,
+      real_time = NULL,
       event = NULL,
       rate = NULL,
       start_time = NULL,
@@ -785,7 +776,8 @@ shinyServer(function(input, output, session) {
     ),
     counter = 1,
     stop = FALSE,
-    answered = NULL
+    answered = NULL,
+    PTX = FALSE
   )
   
   
@@ -811,7 +803,7 @@ shinyServer(function(input, output, session) {
     node_id <- input$current_node_id
     if (node_id == 2) {
       temp_event <- data.frame(
-        id = event$counter,
+        id = events$counter,
         real_time = Sys.time(),
         event = "plasma analysis",
         rate = "undefined",
@@ -820,8 +812,8 @@ shinyServer(function(input, output, session) {
         status = "active",
         stringsAsFactors = FALSE
       )
-      event$table <- rbind(event$table, temp_event)
-      event$counter <- event$counter + 1
+      events$history <- rbind(events$history, temp_event)
+      events$counter <- events$counter + 1
     }
   })
   
@@ -832,9 +824,9 @@ shinyServer(function(input, output, session) {
     # cannot be performed more than once
       if (input$treatment_selected != "PTX" &
           input$treatment_selected != "cinacalcet") {
-        if (nrow(event$table) == 0) {
+        if (nrow(events$history) == 0) {
           temp_event <- data.frame(
-            id = event$counter,
+            id = events$counter,
             real_time = Sys.time(),
             event = input$treatment_selected,
             rate = input[[paste(input$treatment_selected)]],
@@ -844,9 +836,9 @@ shinyServer(function(input, output, session) {
             stringsAsFactors = FALSE
           )
         } else {
-          #old_time <- event$table$real_time[nrow(event$table)]
+          #old_time <- event$history$real_time[nrow(event$history)]
           temp_event <- data.frame(
-            id = event$counter,
+            id = events$counter,
             real_time = Sys.time() + input$t_stop,
             event = input$treatment_selected,
             rate = input[[paste(input$treatment_selected)]],
@@ -856,12 +848,13 @@ shinyServer(function(input, output, session) {
             stringsAsFactors = FALSE
           )
         }
-        event$table <- rbind(event$table, temp_event)
-        event$counter <- event$counter + 1
+        events$history <- rbind(events$history, temp_event)
+        events$counter <- events$counter + 1
+        events$current <- temp_event
       } else {
-        if (is.na(match("PTX", event$table$event))) {
+        if (!isTRUE(events$PTX)) {
           temp_event <- data.frame(
-            id = event$counter,
+            id = events$counter,
             real_time = Sys.time(),
             event = input$treatment_selected,
             rate = "undefined", 
@@ -870,26 +863,27 @@ shinyServer(function(input, output, session) {
             status = "active",
             stringsAsFactors = FALSE
           )
-          event$table <- rbind(event$table, temp_event)
-          event$counter <- event$counter + 1
+          events$history <- rbind(events$history, temp_event)
+          events$counter <- events$counter + 1
+          events$PTX <- TRUE
         } else {
-          showNotification("Cannot perform parathyroidectomy more than once!",
-                           type = "error", closeButton = TRUE)
+          showNotification(
+            "Cannot perform parathyroidectomy more than once!",
+            type = "error", 
+            closeButton = TRUE
+          )
         }
       }
   })
   
   observe({
-    #print(event$table)
+    #print(events$history)
     #print(plasma_analysis$history)
     #print(input$t_stop)
     #print(patient_datas)
     #print(patient_state_0)
     #print(input$treatment_selected)
   })
-  
-  # Render the event table
-  output$event_table <- renderTable({event$table})
   
   #------------------------------------------------------------------------- 
   #  
@@ -932,20 +926,31 @@ shinyServer(function(input, output, session) {
       5000,
       isolate({
         req(input$treatment_selected)
-        if (is.na(match("parathyroid surgery", event$table$event))) {
+        if (is.na(match("parathyroid surgery", events$history$event))) {
           out <- out()
           temp_state <- c(
-            "PTH_g" = out[nrow(out),"PTH_g"], "PTH_p" = out[nrow(out),"PTH_p"],
-            "D3_p" = out[nrow(out),"D3_p"], "FGF_p" = out[nrow(out),"FGF_p"],
-            "Ca_p" = out[nrow(out),"Ca_p"], "Ca_f" = out[nrow(out),"Ca_f"],
-            "Ca_b" = out[nrow(out),"Ca_b"], "PO4_p" = out[nrow(out),"PO4_p"],
-            "PO4_f" = out[nrow(out),"PO4_f"], "PO4_b" = out[nrow(out),"PO4_b"],
-            "PO4_c" = out[nrow(out),"PO4_c"], "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
-            "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], "CPP_p" = out[nrow(out),"CPP_p"],
-            "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
-            "CaProt_p" = out[nrow(out),"CaProt_p"],"NaPO4_p" = out[nrow(out),"NaPO4_p"],
-            "Ca_tot" = out[nrow(out),"Ca_tot"], "PO4_tot" = out[nrow(out),"PO4_tot"],
-            "EGTA_p" = out[nrow(out),"EGTA_p"], "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
+            "PTH_g" = out[nrow(out),"PTH_g"], 
+            "PTH_p" = out[nrow(out),"PTH_p"],
+            "D3_p" = out[nrow(out),"D3_p"], 
+            "FGF_p" = out[nrow(out),"FGF_p"],
+            "Ca_p" = out[nrow(out),"Ca_p"], 
+            "Ca_f" = out[nrow(out),"Ca_f"],
+            "Ca_b" = out[nrow(out),"Ca_b"], 
+            "PO4_p" = out[nrow(out),"PO4_p"],
+            "PO4_f" = out[nrow(out),"PO4_f"], 
+            "PO4_b" = out[nrow(out),"PO4_b"],
+            "PO4_c" = out[nrow(out),"PO4_c"], 
+            "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
+            "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], 
+            "CPP_p" = out[nrow(out),"CPP_p"],
+            "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], 
+            "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
+            "CaProt_p" = out[nrow(out),"CaProt_p"],
+            "NaPO4_p" = out[nrow(out),"NaPO4_p"],
+            "Ca_tot" = out[nrow(out),"Ca_tot"], 
+            "PO4_tot" = out[nrow(out),"PO4_tot"],
+            "EGTA_p" = out[nrow(out),"EGTA_p"], 
+            "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
           )
           states$counter <- states$counter + 1
           states$val[[states$counter]] <- temp_state
@@ -1051,8 +1056,7 @@ shinyServer(function(input, output, session) {
   })
   
   
-  # change the selected node size to
-  # better highlight it
+  # change the selected node size to better highlight it
   last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
   
   observeEvent(input$current_node_id, {
@@ -1299,32 +1303,6 @@ shinyServer(function(input, output, session) {
     }
   })
  
-  
-  # # automatically uncheck the treatment checkboxGroup 
-  # # when add_treatment is activated
-  # observe({
-  #   req(input$add_treatment)
-  #   if (input$add_treatment > 0) {
-  #     shinyjs::delay(
-  #       500,
-  #       updatePrettyCheckboxGroup(
-  #         session,
-  #         inputId = "treatment_selected",
-  #         choices = c("parathyroid surgery",
-  #                     "vitamin D3 iv injection",
-  #                     "Ca supplementation",
-  #                     "Ca iv injection",
-  #                     "PO4 supplementation",
-  #                     "PO4 iv injection",
-  #                     "cinacalcet"),
-  #         selected = NULL,
-  #         prettyOptions = list(thick = TRUE, animation = "pulse", status = "info")
-  #       )
-  #     )
-  #   }
-  # })
-  
-
   # display or not display the network background
   observe({
     if (!is_empty(input$background_choice)) {
@@ -1374,18 +1352,4 @@ shinyServer(function(input, output, session) {
   # output$dynamicFooter <- renderFooter({ 
   #   generate_dynamicFooter() 
   # })
-  
-  
-  # reset all the values of box inputs as well as graphs
-  observeEvent(input$resetAll,{
-    reset("treatment_selected")
-    reset("tmax")
-    reset("t_now")
-    
-    edges_Ca <- edges_Ca()
-    
-    visNetworkProxy("network_Ca") %>%
-      visUpdateEdges(edges = edges_Ca)
-  })
-  
 })

@@ -75,14 +75,6 @@ body <- dashboardBody(
                 icon = icon("play")
               ),
               actionBttn(
-                inputId = "resetAll",
-                size = "lg",
-                label = " Reset",
-                style = "fill",
-                color = "danger",
-                icon = icon("trash")
-              ),
-              actionBttn(
                 inputId = "export",
                 size = "lg",
                 label = " Export",
