@@ -26,8 +26,6 @@ library(shinydashboardPlus)
 # Load the template components of UI
 source("patient_generator.R")
 source("patient_selector.R")
-source("app_css.R")
-source("help.R")
 source("header.R")
 source("sidebar.R")
 source("body.R")
@@ -41,7 +39,6 @@ source("body.R")
 #-------------------------------------------------------------------------
 
 # Load usefull scripts
-source("utils.R")
 source("dashboardControlbar.R")
 source("cap_fixed_parameters.R")
 source("calcium_phosphate_core.R") # core model

@@ -1,7 +1,7 @@
 patient_selector <- function() {
   # read the datas folder and 
   # find the number of patients
-  data_folder <- paste0(getwd(), "/www/datas")
+  data_folder <- paste0(getwd(), "/www/patients_datas")
   file_list <- list.files(data_folder)
   n_patients <- length(file_list)
   

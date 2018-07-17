@@ -91,8 +91,8 @@ calc_change <- function(out, t_target) {
     Res_D3_change = Res_D3_change,
     Reabs_PT_PO4_PTH_change = Reabs_PT_PO4_PTH_change,
     Reabs_PT_PO4_FGF_change = Reabs_PT_PO4_FGF_change, # 28
-    stringsAsFactors = FALSE)
-  
+    stringsAsFactors = FALSE
+    )
 }
 
 # Uncomment if need to set new base case values

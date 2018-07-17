@@ -13,7 +13,7 @@ header <- dashboardHeaderPlus(
   rightSidebarIcon = "gears",
   title = tagList(
     span(class = "logo-lg", "CaPO4 Teaching Tool"), 
-    img(src = "online-learning.svg")
+    img(src = "logos/online-learning.svg")
   ),
   
   titleWidth = 300,
@@ -21,20 +21,5 @@ header <- dashboardHeaderPlus(
   left_menu = tagList(
     uiOutput("currentTime"),
     uiOutput("user_game_status")
-  ),
-
-  tags$li(
-    title = "",
-    class = "dropdown",
-    actionBttn(
-      "help",
-      label = "Help",
-      icon = NULL,
-      style = "fill",
-      color = "danger",
-      size = "lg",
-      block = FALSE,
-      no_outline = TRUE
-    )
   )
 )

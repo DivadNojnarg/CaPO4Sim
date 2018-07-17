@@ -26,17 +26,22 @@ shinyServer(function(input, output, session) {
   patient_disease <- patient_datas$disease_id
   
   # answer
-  if (patient_disease == "php1") answer <- "primary hyperparathyroidism" 
+  if (patient_disease == "php1") answer <- "primary hyperparathyroidism"
   
   # initial conditions
-  state <- c("PTH_g" = 1288.19, "PTH_p" = 0.0687, 
-             "D3_p" = 564.2664, "FGF_p" = 16.78112, 
-             "Ca_p" = 1.2061,"Ca_f" = 1.8363, "Ca_b" = 250, 
-             "PO4_p" = 1.4784, "PO4_f" = 0.7922, "PO4_b" = 90, 
-             "PO4_c" = 2.7719,"CaHPO4_p" = 0.1059, "CaH2PO4_p" = 0.0038, 
-             "CPP_p" = 0.0109, "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, 
-             "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, "Ca_tot" = 2.4914, 
-             "PO4_tot" = 2.8354, "EGTA_p" = 0, "CaEGTA_p" = 0)
+  state <- c(
+    "PTH_g" = 1288.19, "PTH_p" = 0.0687, 
+    "D3_p" = 564.2664, "FGF_p" = 16.78112, 
+    "Ca_p" = 1.2061,"Ca_f" = 1.8363, 
+    "Ca_b" = 250, "PO4_p" = 1.4784, 
+    "PO4_f" = 0.7922, "PO4_b" = 90, 
+    "PO4_c" = 2.7719,"CaHPO4_p" = 0.1059, 
+    "CaH2PO4_p" = 0.0038, "CPP_p" = 0.0109, 
+    "CaHPO4_f" = 0.0864, "CaH2PO4_f" = 0.0031, 
+    "CaProt_p" = 1.4518, "NaPO4_p" = 0.9135, 
+    "Ca_tot" = 2.4914, "PO4_tot" = 2.8354, 
+    "EGTA_p" = 0, "CaEGTA_p" = 0
+  )
   
   # below is needed to handle treatments events
   treatment_choices <- c(
@@ -970,30 +975,65 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
     input$network_hormonal_choice
     
-    generate_network(input, nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
+    generate_network(
+      input, 
+      nodes = nodes_Ca, 
+      edges = edges_Ca, 
+      usephysics = TRUE
+    ) %>%
       # simple click event to allow graph ploting
-      visEvents(selectNode = "function(nodes) {
-                Shiny.onInputChange('current_node_id', nodes.nodes);
-                ;}") %>% 
+      visEvents(
+        selectNode = "
+          function(nodes) {
+            Shiny.onInputChange('current_node_id', nodes.nodes);
+          }"
+      ) %>% 
       # unselect node event
-      visEvents(deselectNode = "function(nodes) {
-                Shiny.onInputChange('current_node_id', 'null');
-                ;}") %>%
+      visEvents(
+        deselectNode = "
+          function(nodes) {
+            Shiny.onInputChange('current_node_id', 'null');
+          }"
+      ) %>%
       # add the doubleclick function to handle zoom views
-      visEvents(doubleClick = "function(nodes) {
-                Shiny.onInputChange('current_node_bis_id', nodes.nodes);
-                }") %>%  
-      visEvents(selectEdge = "function(edges) {
-                Shiny.onInputChange('current_edge_id', edges.edges);
-                ;}") %>%
+      visEvents(
+        doubleClick = "
+          function(nodes) {
+            Shiny.onInputChange('current_node_bis_id', nodes.nodes);
+          }"
+      ) %>%  
+      visEvents(
+        selectEdge = "
+          function(edges) {
+            Shiny.onInputChange('current_edge_id', edges.edges);
+          }"
+      ) %>%
+      visEvents(
+        deselectEdge = "
+          function(edges) {
+            Shiny.onInputChange('current_edge_id', 'null');
+          }"
+      ) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "on", stabilized = "function() {
-                this.moveTo({ position: {x:0, y:-13.43},
-                offset: {x: 0, y:0} })}") %>%
+      visEvents(
+        type = "on", 
+        stabilized = "
+          function() {
+            this.moveTo({ 
+              position: {x:0, y:-13.43},
+              offset: {x: 0, y:0} 
+            });
+          }"
+      ) %>%
       # very important: allow to detect the web browser used by client
       # use before drawing the network. Works with find_navigator.js
-      visEvents(type = "on", initRedraw = "function() {
-                 this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
+      visEvents(
+        type = "on", 
+        initRedraw = "
+          function() {
+            this.moveTo({scale:0.6});
+        }"
+      ) # to set the initial zoom (1 by default)
   })
   
   # Events for the CaPO4 Homeostasis diagramm whenever a flux change
@@ -1008,6 +1048,75 @@ shinyServer(function(input, output, session) {
       session, 
       t_target = input$t_now
     )
+  })
+  
+  
+  # change the selected node size to
+  # better highlight it
+  last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
+  
+  observeEvent(input$current_node_id, {
+    req(input$current_node_id)
+    selected_node <- input$current_node_id
+    nodes_Ca <- nodes_Ca()
+    # javascript return null instead of NULL
+    # cannot use is.null
+    if (!identical(selected_node, "null")) {
+      last$selected_node <- selected_node
+      # organ nodes
+      if (selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[selected_node] <- 100
+        # Kidney zoom node
+      } else if (selected_node == 6) {
+        nodes_Ca$size[selected_node] <- 214
+        # regulation nodes
+      } else {
+        nodes_Ca$size[selected_node] <- 57
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateNodes(nodes = nodes_Ca)
+      # reset the node size when unselected
+    } else {
+      if (last$selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[last$selected_node] <- 70
+      } else if (last$selected_node == 6) {
+        nodes_Ca$size[last$selected_node] <- 150
+      } else {
+        nodes_Ca$size[last$selected_node] <- 40
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateNodes(nodes = nodes_Ca)
+    }
+  })
+  
+  # change the selected edge size to
+  # better highlight it
+  observeEvent(input$current_edge_id,{
+    req(input$current_edge_id)
+    selected_edge <- input$current_edge_id
+    edges_Ca <- edges_Ca()
+    edge_id <- match(selected_edge, edges_Ca$id)
+    if (!identical(selected_edge, "null")) {
+      last$selected_edge <- edge_id
+      # organs edges
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 24
+        # regulations edges
+      } else {
+        edges_Ca$width[edge_id] <- 12
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateEdges(edges = edges_Ca)
+      # reset the edge size when unselected
+    } else {
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 8
+      } else {
+        edges_Ca$width[edge_id] <- 4
+      }
+      visNetworkProxy("network_Ca") %>%
+        visUpdateEdges(edges = edges_Ca)
+    }
   })
   
   
@@ -1163,58 +1272,6 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Notification events to explain the user how to play with the app
-  #
-  #-------------------------------------------------------------------------
-  
-  # help animation with introjs
-  # options are provided to control the size of the help
-  # Do not forget to wrap the event content in I('my_function')
-  # otherwise it will fail
-  observeEvent(input$help,{
-    introjs(
-      session, 
-      options = list(
-        "nextLabel" = "Next step!",
-        "prevLabel" = "Did you forget something?",
-        "tooltipClass" = "newClass",
-        "showProgress" = TRUE,
-        "showBullets" = FALSE
-      ),
-      events = list(# reset the session to hide sliders and back/next buttons
-        "oncomplete" = I('history.go(0)')
-      )
-    )
-    #   "onbeforechange" = I('
-    #                                  if (targetElement.getAttribute("data-step")==="2") {
-    #                        $(".newClass").css("max-width", "800px").css("min-width","800px");  
-    # } else {
-    #                        $(".newClass").css("max-width", "500px").css("min-width","500px");
-    # }'),
-  })
-  
-  #------------------------------------------------------------------------- 
-  #  
-  #  Toggle each sidebar when a user press the help button
-  #
-  #-------------------------------------------------------------------------
-  
-  observe({
-    shinyjs::toggleClass(
-      id = "controlbar", 
-      class = "control-sidebar-open",
-      condition = input$help
-    )
-  })
-  
-  # observeEvent(input$help,{
-  #   shinyjs::removeClass(selector = "body", 
-  #                        class = "sidebar-collapse")
-  # })
-  
   #-------------------------------------------------------------------------
   #
   #  Useful tasks such as save, reset, load ...
@@ -1227,8 +1284,6 @@ shinyServer(function(input, output, session) {
     # call the function to reset the given slider
     sliders_reset(button_states, input)
   })
-  
-  
   
   # prevent user from selecting multiple treatments as the same time
   observe({

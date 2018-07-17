@@ -89,6 +89,5 @@ dashboardControlbar <- rightSidebar(
             size = "xs"
           )
       )
-    
   )
 )

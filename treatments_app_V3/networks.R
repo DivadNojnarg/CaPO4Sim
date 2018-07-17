@@ -80,91 +80,31 @@ generate_network <- function(input, nodes, edges, usephysics = FALSE) {
 # % % % % #
 
 # Generate nodes for the CaPO4 network
-Ca_int_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23937&Menu=1079&backbar=0"
-PO4_int_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0)"
-rapid_bone_web <- "https://academic.oup.com/ndt/article/26/8/2438/1917340/The-exchangeable-calcium-pool-physiology-and"
-bone_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24035&Menu=1079&backbar=0"
-Ca_kidney_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0"
-PO4_kidney_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23410&Menu=1079&backbar=0"
-Ca_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18891&Menu=1079&backbar=0"
-PO4_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=18893&Menu=1079&backbar=0"
-PTH_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23466&Menu=1079&backbar=0"
-D3_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23484&Menu=1079&backbar=0"
-FGF23_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23408&Menu=1079&backbar=0"
-
 generate_nodes_Ca <- function(input) {
   
   data.frame(
     id = 1:16,
-    shape = c("image","image","image","image","image","image", "image","image",
-              ifelse(input$network_hormonal_choice == "TRUE","image","text"),
-              ifelse(input$network_hormonal_choice == "TRUE","image","text"),
-              "image",
-              ifelse(input$network_hormonal_choice == "TRUE","image","text"),
-              ifelse(input$network_hormonal_choice == "TRUE","image","text"),
-              ifelse(input$network_hormonal_choice == "TRUE","image","text"),
-              ifelse(input$network_hormonal_choice == "TRUE","image","text"),
-              ifelse(input$network_hormonal_choice == "TRUE","image","text")), 
-    image = c("intestine.svg","plasma.svg","rapid-bone.svg",
-              "bone.svg","kidney.svg","kidney_zoom1.svg","urine.svg",
-              "cells.svg","Cap.svg","PO4.svg",
-              if (is.null(input$background_choice)) {
-                "parathyroid_gland.svg"
-              } else if (input$background_choice == "rat") {
-                "parathyroid_gland.svg"
-              } else {
-                "parathyroid_gland_human.svg"
-              }
-              ,"PTH.svg", "D3.svg","D3.svg","D3.svg","FGF23.svg"),
-    label = c(rep("", 6), rep("",10)),
-    
-    # tooltip to display an image
-    title = c(
-      paste(a("About intestinal Ca absorption", 
-              href = Ca_int_web,
-              target = "_blank"),br(),
-            a("About intestinal PO4 absorption", 
-              href = PO4_int_web,
-              target = "_blank")),
-      "",
-      paste(a("About rapid bone pool", 
-              href = rapid_bone_web,
-              target = "_blank")),
-      paste(a("About bone", 
-              href = bone_web,
-              target = "_blank")),
-      paste(a("About Ca kidney handling", 
-              href = Ca_kidney_web,
-              target = "_blank"), br(),
-            a("About PO4 kidney handling", 
-              href = PO4_kidney_web,
-              target = "_blank")),
-      rep("",3),
-      paste(a("About Calcium", 
-              href = Ca_web,
-              target = "_blank")),
-      paste(a("About Phosphate", 
-              href = PO4_web,
-              target = "_blank")),
-      paste(a("About PTH", 
-              href = PTH_web, 
-              target = "_blank")),
-      paste(a("About PTH", 
-              href = PTH_web, 
-              target = "_blank")),
-      paste(a("About vitamin D3", 
-              href = D3_web,
-              target = "_blank")),
-      paste(a("About vitamin D3", 
-              href = D3_web,
-              target = "_blank")),
-      paste(a("About vitamin D3", 
-              href = D3_web,
-              target = "_blank")),
-      paste(a("About FGF23", 
-              href = FGF23_web,
-              target = "_blank"))
+    shape = rep("image", 16), 
+    image = c(
+      "CaPO4_network/intestine.svg", "CaPO4_network/plasma.svg",
+      "CaPO4_network/rapid-bone.svg", "CaPO4_network/bone.svg",
+      "CaPO4_network/kidney.svg", "CaPO4_network/kidney_zoom1.svg",
+      "CaPO4_network/urine.svg", "CaPO4_network/cells.svg", 
+      "CaPO4_network/Cap.svg", "CaPO4_network/PO4.svg",
+      if (is.null(input$background_choice)) {
+        "CaPO4_network/parathyroid_gland.svg"
+      } else if (input$background_choice == "rat") {
+        "CaPO4_network/parathyroid_gland.svg"
+      } else {
+        "CaPO4_network/parathyroid_gland_human.svg"
+      }
+      , "CaPO4_network/PTH.svg", "CaPO4_network/D3.svg",
+      "CaPO4_network/D3.svg", "CaPO4_network/D3.svg", 
+      "CaPO4_network/FGF23.svg"
     ),
+    label = c(rep("", 6), rep("",10)),
+    # tooltip to display an image
+    title = rep(NA, 16),
     
     x = if (is.null(input$background_choice)) {
       c(38,-65,-65,-256,180,360,170,-190,290,320,41,-418,330,385,-386,481)
@@ -238,60 +178,60 @@ generate_nodes_Ca <- function(input) {
       # FGF23
       ifelse(input$network_hormonal_choice, 
              ifelse(is.element("FGF23", input$network_Ca_choice), FALSE, TRUE), TRUE)
-    )
+    ),
+    stringsAsFactors = FALSE
   )
 }
 
 # Generate edges for the CaPO4 network
-ac_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=24281&Menu=1079&backbar=0"
-res_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=25370&Menu=1079&backbar=0"
-CaSR_web <- "https://kidneynccr.bio-med.ch/cms/Default.aspx?Page=23415&Menu=1079&backbar=0"
-
 generate_edges_Ca <- function(input) {
   req(input$width_organs, input$width_hormones)
   data.frame(
-    from = c(1,2,3,rep(3,2),4,2,rep(5,2),rep(5,2),8,
-             rep(9,3),rep(10,3),rep(11,2),11,rep(13,2),rep(14,2),rep(15,2),
-             rep(16,2)), 
-    to = c(2,3,2,rep(4,2),2,5,rep(2,2),rep(7,2),2,11,5,
-           13,11,13,16,5,13,4,11,16,14,5,4,1,13,5),
-    
-    arrows = list(to = list(enabled = c(TRUE, rep(FALSE,2), rep(TRUE,8), FALSE, rep(TRUE,17)), 
-                            scaleFactor = 1, 
-                            type = "arrow")),
-    
-    label = c("","Net Ca","Net PO4","Ca","PO4",rep("",2),"Ca","PO4",
-              "Ca","PO4", "Net PO4",rep("-",3),"+","-","+",
-              "","+","+","-","+","-","+","+","+","-","-"),
-    id = c("Abs_int","Net_Ca_pf","Net_PO4_pf","Ac_Ca","Ac_PO4","Res",7,"Reabs_Ca",
-           "Reabs_PO4","U_Ca","U_PO4","Net_PO4_cells",13:29),
+    from = c(
+      1, 2, 3, rep(3, 2), 4, 2, rep(5, 2), rep(5, 2), 8,
+      rep(9, 3), rep(10, 3), rep(11, 2), 11, rep(13, 2), 
+      rep(14, 2), rep(15, 2), rep(16, 2)
+    ), 
+    to = c(
+      2, 3, 2, rep(4, 2), 2, 5, rep(2, 2), rep(7, 2), 
+      2, 11, 5, 13, 11, 13, 16, 5, 13, 4, 11, 16, 
+      14, 5, 4, 1, 13, 5
+    ),
+    arrows = list(
+      to = list(
+        enabled = c(
+          TRUE, 
+          rep(FALSE,2), 
+          rep(TRUE,8), 
+          FALSE, 
+          rep(TRUE,17)
+        ), 
+        scaleFactor = 1, 
+        type = "arrow"
+      )
+    ),
+    label = c(
+      "", "Net Ca", "Net PO4", "Ca", "PO4", rep("", 2), "Ca", "PO4",
+      "Ca", "PO4", "Net PO4", rep("-", 3), "+", "-", "+",
+      "", "+", "+", "-", "+", "-", "+", "+", "+", "-", "-"
+    ),
+    id = c(
+      "Abs_int", "Net_Ca_pf", "Net_PO4_pf",
+      "Ac_Ca", "Ac_PO4", "Res", 7, "Reabs_Ca",
+      "Reabs_PO4", "U_Ca", "U_PO4", "Net_PO4_cells", 
+      13:29
+    ),
     width = c(rep(input$width_organs,12), rep(input$width_hormones,17)),
     font.size = c(rep(25,12),rep(60,17)),
-    font.align = c("","top","bottom","top","bottom",rep("",4),"bottom",
-                   "top","bottom","bottom",rep("top",2),"top","top",
-                   "top","","bottom","top","top","bottom","bottom","top","top",
-                   rep("top",2),"bottom"),
-    color = list(color = c(rep("black", 29)), 
-                 highlight = "yellow"),
+    font.align = c(
+      "","top","bottom","top","bottom",rep("",4),"bottom",
+      "top","bottom","bottom",rep("top",2),"top","top",
+      "top","","bottom","top","top","bottom","bottom","top","top",
+      rep("top",2),"bottom"
+    ),
+    color = list(color = c(rep("black", 29)), highlight = "yellow"),
     dashes = c(rep(FALSE,12), rep(TRUE,17)),
-    title = c(rep("",3),
-              paste(a("About bone formation", 
-                      href = ac_web ,
-                      target = "_blank")),
-              paste(a("About bone formation", 
-                      href = ac_web,
-                      target = "_blank")),
-              paste(a("About bone resorption", 
-                      href = res_web,
-                      target = "_blank")),
-              rep("",6),
-              paste(a("About the Calcium Sensing Receptor", 
-                      href = CaSR_web,
-                      target = "_blank")),
-              paste(a("About the Calcium Sensing Receptor", 
-                      href = CaSR_web,
-                      target = "_blank")),
-              rep("",15)),
+    title = c(rep(NA,3), rep(NA, 9), rep(NA, 2), rep(NA,15)),
     smooth = c(rep(TRUE,29)),
     length = c(200,rep(300,2),rep(300,2),200,300,
                200,rep(300,4),rep(200,8), 1700, rep(200,8)),
@@ -393,5 +333,6 @@ generate_edges_Ca <- function(input) {
              ifelse(input$network_hormonal_choice, 
                     ifelse(is.element("FGF23", input$network_Ca_choice), FALSE, TRUE), TRUE), TRUE)
     ), 
-    stringsAsFactors = FALSE) 
+    stringsAsFactors = FALSE
+  ) 
 }

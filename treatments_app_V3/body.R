@@ -12,28 +12,18 @@
 body <- dashboardBody(
   
   # include CSS
-  app_css(),
-  
-  tags$head(
-    tags$script(
-      "$(document).on('shiny:connected', function(event) {
-          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-          Shiny.onInputChange('isMobile', isMobile);
-       });
-      "
-    )
-  ),
-  
+  includeCSS(path = "www/css/treatments-app.css"),
+
   # include the script for Hotjar tracking
   #tags$head(includeScript("www/hotjar.js")),
   # include the script needed to find the web browser
-  #tags$head(includeScript("www/find_navigator.js")),
   
   # to print help
   introjsUI(),
   # JS interactions
   useShinyjs(),
-  extendShinyjs(script = "www/close.js"),
+  extendShinyjs(script = "www/js/close.js"),
+  includeScript(path = "www/js/find-navigator.js"),
   # print feedback for input
   useShinyFeedback(),
   useSweetAlert(),
@@ -72,7 +62,7 @@ body <- dashboardBody(
             title = tagList(
               img(
                 class = "img-circle img-bordered-sm", 
-                src = "monitor-2.svg", 
+                src = "interface_img/monitor-2.svg", 
                 width = "40px", 
                 height = "40px"
               ),
@@ -107,21 +97,17 @@ body <- dashboardBody(
             closable = TRUE,
             enable_sidebar = TRUE,
             sidebar_content = tagList(),
-            introBox(
-              div(
-                id = "network_cap",
-                withSpinner(
-                  visNetworkOutput(
-                    "network_Ca", 
-                    height = "900px"
-                  ), 
-                  size = 2, 
-                  type = 8, 
-                  color = "#000000"
-                )
-              ),
-              data.step = 2,
-              data.intro = help_text[2]
+            div(
+              id = "network_cap",
+              withSpinner(
+                visNetworkOutput(
+                  "network_Ca", 
+                  height = "900px"
+                ), 
+                size = 2, 
+                type = 8, 
+                color = "#000000"
+              )
             ),
             footer = NULL
           )
@@ -155,10 +141,15 @@ body <- dashboardBody(
     # About section Panel
     tabItem(
       tabName = "about",
-      div(id = "about_us",
-          HTML(paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
-                      border=\"0\" align=\"center\"  src=\"about_us.jpg\"/> "))#,
-          #HTML(paste(tags$img(src = "about_us.jpg")))
+      div(
+        id = "about_us",
+        HTML(
+          paste(
+            "<img style=\"height: 100%; width: 100%; object-fit: contain\" 
+             border=\"0\" align=\"center\"  src=\"logos/about_us.jpg\"/>"
+          )
+        )#,
+        #HTML(paste(tags$img(src = "about_us.jpg")))
       )
     )
   )

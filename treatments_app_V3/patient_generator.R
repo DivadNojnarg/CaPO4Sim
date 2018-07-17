@@ -19,7 +19,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
                               disease_id) {
   
   # check if the provided id is already used
-  data_folder <- paste0(getwd(), "/treatments_app_V3/www/datas")
+  data_folder <- paste0(getwd(), "/treatments_app_V3/www/patients_datas")
   file_list <- list.files(data_folder)
   n_patients <- length(file_list)
   
@@ -31,7 +31,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
   } 
   
   # setup initial conditions depending on the disease_id
-  state_folder <- paste0(getwd(), "/treatments_app_V3/www")
+  state_folder <- paste0(getwd(), "/treatments_app_V3/www/model_engine")
   if (disease_id == "php1") {
     state <- read.csv(paste0(state_folder, "/init_php1.csv"),
                       stringsAsFactors = FALSE)
@@ -98,7 +98,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
     disease_id = disease_id,
     initial_conditions = state
   )
-  saveRDS(object = patient_data, file = paste0(getwd(), "/treatments_app_V3/www/datas/patient_", id, ".rds"))
+  saveRDS(object = patient_data, file = paste0(getwd(), "/treatments_app_V3/www/patients_datas/patient_", id, ".rds"))
 }
 
 # patient_generator(

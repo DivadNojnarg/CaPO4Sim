@@ -8,16 +8,23 @@
 sidebar <- dashboardSidebar(
   width = 300,
   
+  # user panel info
   uiOutput("user_panel"),
   
-  introBox(
-    sidebarMenu(
-      id = "sidebar_main",
-      menuItem("About", tabName = "about", icon = icon("info-circle")), 
-      menuItem("App", tabName = "main", icon = icon("home"), selected = TRUE)
-    ),
-    data.step = 1,
-    data.intro = help_text[1]
+  # sidebar menu with 2 tabs
+  sidebarMenu(
+    id = "sidebar_main",
+    menuItem(
+      "About", 
+      tabName = "about", 
+      icon = icon("info-circle")
+    ), 
+    menuItem(
+      "App", 
+      tabName = "main", 
+      icon = icon("home"), 
+      selected = TRUE
+    )
   )
 )
 
