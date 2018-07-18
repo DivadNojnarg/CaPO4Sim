@@ -244,58 +244,59 @@ shinyServer(function(input, output, session) {
     start_time <- events$history$real_time
     rate <- events$history$rate
     plasma_values <- plasma_analysis$history
-
-    boxPlus(
-      width = 12, 
-      solidHeader = FALSE, 
-      status = "primary",
-      collapsible = TRUE,
-      enable_label = TRUE,
-      label_text = len,
-      label_status = "danger",
-      style = "overflow-y: scroll;",
-      title = "Recent Events",
-      
-      # treatments input are
-      # in the event box
-      prettyCheckboxGroup(
-        inputId = "treatment_selected",
-        label = "Select a new treatment:",
-        choices = c(
-          "parathyroid surgery" = "PTX",
-          "D3 iv injection" = "D3_inject",
-          "Ca supplementation" = "Ca_food",
-          "Ca iv injection" = "Ca_inject",
-          "Pi iv injection" = "P_inject",
-          "Pi supplementation" = "P_food",
-          "cinacalcet" = "cinacalcet"
+    
+    withMathJax(
+      boxPlus(
+        width = 12, 
+        solidHeader = FALSE, 
+        status = "primary",
+        collapsible = TRUE,
+        enable_label = TRUE,
+        label_text = len,
+        label_status = "danger",
+        style = "overflow-y: scroll;",
+        title = "Recent Events",
+        
+        # treatments input are
+        # in the event box
+        prettyCheckboxGroup(
+          inputId = "treatment_selected",
+          label = "Select a new treatment:",
+          choices = c(
+            "parathyroid surgery" = "PTX",
+            "D3 iv injection" = "D3_inject",
+            "Ca supplementation" = "Ca_food",
+            "Ca iv injection" = "Ca_inject",
+            "Pi iv injection" = "P_inject",
+            "Pi supplementation" = "P_food",
+            "cinacalcet" = "cinacalcet"
+          ),
+          thick = TRUE,
+          inline = TRUE,
+          animation = "pulse"
         ),
-        thick = TRUE,
-        inline = TRUE,
-        animation = "pulse"
-      ),
-      uiOutput(outputId = "sliderInject"),
-      hr(),
-      
-      if (len > 0) {
-        timelineBlock(
-          style = "height: 400px;",
-          timelineStart(color = "danger"),
-          br(),
-          lapply(1:len, FUN = function(i){
-            tagAppendAttributes(
-              timelineItem(
-                title = name[[i]],
-                icon = "medkit",
-                color = "orange",
-                time = dashboardLabel(
-                  style = "default", 
-                  status = "warning", 
-                  start_time[[i]]
-                ),
-                timelineItemMedia(
-                  src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
-                     "treatments_img/syringe.svg"
+        uiOutput(outputId = "sliderInject"),
+        hr(),
+        
+        if (len > 0) {
+          timelineBlock(
+            style = "height: 400px;",
+            timelineStart(color = "danger"),
+            br(),
+            lapply(1:len, FUN = function(i){
+              tagAppendAttributes(
+                timelineItem(
+                  title = name[[i]],
+                  icon = "medkit",
+                  color = "orange",
+                  time = dashboardLabel(
+                    style = "default", 
+                    status = "warning", 
+                    start_time[[i]]
+                  ),
+                  timelineItemMedia(
+                    src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                      "treatments_img/syringe.svg"
                     } else if (name[[i]] %in% c("Ca_food", "P_food")) {
                       "treatments_img/medicine.svg"
                     } else if (name[[i]] == "PTX") {
@@ -305,42 +306,35 @@ shinyServer(function(input, output, session) {
                     } else if (name[[i]] == "plasma analysis") {
                       "treatments_img/test-tube.svg"
                     },
-                  width = "40", 
-                  height = "40"
-                ),
-                # in case of plasma analysis, display the results next to the logo
-                if (name[[i]] == "plasma analysis") {
-                  withMathJax(
+                    width = "40", 
+                    height = "40"
+                  ),
+                  # in case of plasma analysis, display the results next to the logo
+                  if (name[[i]] == "plasma analysis") {
                     tagList(
-                      br(),
-                      paste0("[Ca^{2+}_p] = ", round(plasma_values[i, "Ca_p"]), " mM"),
-                      br(),
-                      paste0("[P_i] = ", round(plasma_values[i, "PO4_p"]), " mM"),
-                      br(),
-                      paste0("[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM"),
-                      br(),
-                      paste0("[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM"),
-                      br(),
-                      paste0("[FGF23_p] = ", round(plasma_values[i, "FGF_p"]), " pM"),
-                      br()
+                      paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, "Ca_p"], 2), " mM [1.1-1.3 mM]$$"),
+                      paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
+                      paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
+                      paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
+                      paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
                     )
-                  )
-                },
-                footer = if (!is.null(name[[i]])) {
-                  if (name[[i]] != "PTX") 
-                    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
-                      dashboardLabel(status = "danger", rate[[i]])
-                    }
-                  else NULL
-                }
-              ),
-              align = "middle"
-            )
-          }),
-          br(),
-          timelineEnd(color = "gray")
-        )
-      }
+                  },
+                  footer = if (!is.null(name[[i]])) {
+                    if (name[[i]] != "PTX") 
+                      if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
+                        dashboardLabel(status = "danger", rate[[i]])
+                      }
+                    else NULL
+                  }
+                ),
+                align = "middle"
+              )
+            }),
+            br(),
+            timelineEnd(color = "gray")
+          )
+        }
+      )
     )
   })
   
@@ -792,6 +786,19 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  observeEvent(input$add_treatment, {
+    if (!is.null(input$add_treatment)) {
+      # prevent plasma analysis from being done when PTX was already
+      # performed before
+      if (input$treatment_selected == "PTX" && isTRUE(events$PTX)) {
+        NULL
+      } else {
+        temp_plasma_analysis <- out()[nrow(out()), -1]
+        plasma_analysis$history <- rbind(plasma_analysis$history, temp_plasma_analysis) 
+      }
+    }
+  })
+  
   # generate the slider corresponding to a given treatment
   output$sliderInject <- renderUI({
     req(input$treatment_selected)
@@ -836,10 +843,24 @@ shinyServer(function(input, output, session) {
             stringsAsFactors = FALSE
           )
         } else {
-          #old_time <- event$history$real_time[nrow(event$history)]
           temp_event <- data.frame(
             id = events$counter,
-            real_time = Sys.time() + input$t_stop,
+            # if PTX was performed before, we do not need to wait
+            real_time = if (events$history[nrow(events$history), "event"] == "PTX") {
+              Sys.time()
+              # need to wait before the end of the previous event
+            } else {
+              # calculate the time difference between the previous event
+              # end and when the user press the add event button
+              dt <- difftime(
+                time1 = Sys.time(), 
+                time2 = events$history[nrow(events$history), "real_time"], 
+                units = c("mins"), 
+                tz = Sys.timezone(location = TRUE)
+              )
+              # DOES NOT WORK !!!!
+              events$history[nrow(events$history), "real_time"] + dt + input$t_stop
+            },
             event = input$treatment_selected,
             rate = input[[paste(input$treatment_selected)]],
             start_time = 0,
@@ -876,13 +897,21 @@ shinyServer(function(input, output, session) {
       }
   })
   
-  observe({
-    #print(events$history)
-    #print(plasma_analysis$history)
-    #print(input$t_stop)
-    #print(patient_datas)
-    #print(patient_state_0)
-    #print(input$treatment_selected)
+  # flush the stack of current events 
+  # 5 seconds after the user click on run
+  observeEvent(input$run, {
+    shinyjs::delay(5000, {
+      events$current <- data.frame(
+        id = NULL,
+        real_time = NULL,
+        event = NULL,
+        rate = NULL,
+        start_time = NULL,
+        stop_time = NULL,
+        status = NULL,
+        stringsAsFactors = FALSE
+      )
+    })
   })
   
   #------------------------------------------------------------------------- 
@@ -898,7 +927,6 @@ shinyServer(function(input, output, session) {
     isolate({
       parameters <- parameters()
       times <- times()
-      patient_state_0
       # always solve from the last state
       as.data.frame(
         ode(
@@ -920,47 +948,83 @@ shinyServer(function(input, output, session) {
   
   
   # update initial conditions to the last state of the system each time an event
-  # has occured. Do not update if parathyroid surgery is performed twice
+  # has occured. Need to delayed by the time needed for computation before updating
   observe({
-    shinyjs::delay(
-      5000,
-      isolate({
-        req(input$treatment_selected)
-        if (is.na(match("parathyroid surgery", events$history$event))) {
-          out <- out()
-          temp_state <- c(
-            "PTH_g" = out[nrow(out),"PTH_g"], 
-            "PTH_p" = out[nrow(out),"PTH_p"],
-            "D3_p" = out[nrow(out),"D3_p"], 
-            "FGF_p" = out[nrow(out),"FGF_p"],
-            "Ca_p" = out[nrow(out),"Ca_p"], 
-            "Ca_f" = out[nrow(out),"Ca_f"],
-            "Ca_b" = out[nrow(out),"Ca_b"], 
-            "PO4_p" = out[nrow(out),"PO4_p"],
-            "PO4_f" = out[nrow(out),"PO4_f"], 
-            "PO4_b" = out[nrow(out),"PO4_b"],
-            "PO4_c" = out[nrow(out),"PO4_c"], 
-            "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
-            "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], 
-            "CPP_p" = out[nrow(out),"CPP_p"],
-            "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], 
-            "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
-            "CaProt_p" = out[nrow(out),"CaProt_p"],
-            "NaPO4_p" = out[nrow(out),"NaPO4_p"],
-            "Ca_tot" = out[nrow(out),"Ca_tot"], 
-            "PO4_tot" = out[nrow(out),"PO4_tot"],
-            "EGTA_p" = out[nrow(out),"EGTA_p"], 
-            "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
-          )
-          states$counter <- states$counter + 1
-          states$val[[states$counter]] <- temp_state
-          states$name <- input$treatment_selected
-        } else {
-          NULL
-        }
+    input$run
+    shinyjs::delay(5000, {
+        out <- out()
+        temp_state <- c(
+          "PTH_g" = out[nrow(out),"PTH_g"], 
+          "PTH_p" = out[nrow(out),"PTH_p"],
+          "D3_p" = out[nrow(out),"D3_p"], 
+          "FGF_p" = out[nrow(out),"FGF_p"],
+          "Ca_p" = out[nrow(out),"Ca_p"], 
+          "Ca_f" = out[nrow(out),"Ca_f"],
+          "Ca_b" = out[nrow(out),"Ca_b"], 
+          "PO4_p" = out[nrow(out),"PO4_p"],
+          "PO4_f" = out[nrow(out),"PO4_f"], 
+          "PO4_b" = out[nrow(out),"PO4_b"],
+          "PO4_c" = out[nrow(out),"PO4_c"], 
+          "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
+          "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], 
+          "CPP_p" = out[nrow(out),"CPP_p"],
+          "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], 
+          "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
+          "CaProt_p" = out[nrow(out),"CaProt_p"],
+          "NaPO4_p" = out[nrow(out),"NaPO4_p"],
+          "Ca_tot" = out[nrow(out),"Ca_tot"], 
+          "PO4_tot" = out[nrow(out),"PO4_tot"],
+          "EGTA_p" = out[nrow(out),"EGTA_p"], 
+          "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
+        )
+        states$counter <- states$counter + 1
+        states$val[[states$counter]] <- temp_state
+        states$name <- input$treatment_selected
       })
-    )
   })
+  
+  
+  # when the user clicks on summary rerun the simulation with all events
+  observeEvent(input$summary, {
+    
+    if (nrow(events$history) >= 2) {
+      times <- as.list(events$history[, "real_time"])
+      len <- length(times)
+      delta_t <- lapply(2:len, FUN = function(i) {
+        times[[i]] - times[[i - 1]]
+      })
+      
+        showModal(
+          modalDialog(
+            title = tagList(
+              "Overview of your patient",
+              tags$button(
+                type = "button",
+                class = "btn btn-default pull-right",
+                `data-dismiss` = "modal",
+                icon("close"),
+                "Dismiss"
+              )
+            ),
+            fluidRow(
+              column(
+                width = 12, 
+                align = "center",
+                tabsetPanel(
+                  type = "tabs",
+                  tabPanel("Plot", print(delta_t)),
+                  tabPanel("Summary", "summary"),
+                  tabPanel("Table", "table")
+                )
+              )
+            ),
+            size = "m",
+            footer = NULL
+          ) 
+        )
+    }
+  })
+
   
   #------------------------------------------------------------------------- 
   #  

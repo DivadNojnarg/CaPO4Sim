@@ -24,6 +24,10 @@ calcium_phosphate_core <- function(t, state, parameters) {
     #   Simulations  #
     ##################
     
+    k_inject_P <- 0
+    k_inject_Ca <- 0
+    k_inject_D3 <- 0
+    
     if (exists("t_start") && exists("t_stop")) {
       if (!is.na(Ca_inject)) {
         if (t > t_start && t < t_stop) {

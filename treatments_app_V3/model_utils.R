@@ -244,24 +244,22 @@ plot_node <- function(input, node, out, parms) {
       
       # set the x/y-axis ranges
       time <- out[,1]
-      xvar <- list(title = "time (min)", 
-                   range = c(0, max(time)))
-      #yvar <- list(title = "Concentrations (mM)", 
-      #             range = c(min(out[,node])*0.8,
-      #                       max(out[,node])*1.2))
+      xvar <- list(
+        title = "time (min)", 
+        range = c(0, max(time))
+      )
       
       # plasma compartment
       if (node == 2) {
         p <- plot_ly(out, 
-                     x = time, 
-                     mode = "lines") %>%
-          add_lines(y = round(out[,"Ca_p"], 1),
+                     x = time) %>%
+          add_lines(y = round(out[,"Ca_p"], 3),
                     ymin = 0.5 * min(out[,"Ca_p"]),
                     ymax = 1.5 * max(out[,"Ca_p"]),
                     name = "Ca2+p (mM)",
                     line = list(color = 'rgb(27, 102, 244)', width = 2), 
                     visible = TRUE) %>%
-          add_lines(y = round(out[,"PO4_p"], 1), 
+          add_lines(y = round(out[,"PO4_p"], 3), 
                     ymin = 0.5 * min(out[,"PO4_p"]),
                     ymax = 1.5 * max(out[,"PO4_p"]),
                     name = "PO4p (mM)",
@@ -273,7 +271,7 @@ plot_node <- function(input, node, out, parms) {
                     name = "PTHp (pM)",
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
-          add_lines(y = round(out[,"D3_p"]),
+          add_lines(y = out[,"D3_p"],
                     ymin = 0.5 * min(out[,"D3_p"]),
                     ymax = 1.5 * max(out[,"D3_p"]),
                     name = "D3p (pM)",
@@ -289,15 +287,13 @@ plot_node <- function(input, node, out, parms) {
             title = "Plasma compartment concentrations",
             font = title_size,
             xaxis = xvar,
-            #yaxis = list(title = "y"),
             updatemenus = list(
               list(
-                type = "buttons",
+                #type = "buttons",
                 direction = "right",
-                xanchor = 'center',
+                #xanchor = 'left',
                 yanchor = "bottom",
-                #pad = list('r'= 0, 't'= 10, 'b' = 10),
-                x = 0.5,
+                x = 0,
                 y = -0.45,
                 buttons = list(
                   list(method = "restyle",
@@ -318,7 +314,9 @@ plot_node <- function(input, node, out, parms) {
                   
                   list(method = "restyle",
                        args = list("visible", list(FALSE, FALSE, FALSE, FALSE, TRUE)),
-                       label = "FGFp")))
+                       label = "FGFp")
+                )
+              )
             )
           ) %>%
           config(displayModeBar = FALSE)
@@ -329,13 +327,13 @@ plot_node <- function(input, node, out, parms) {
         p <- plot_ly(out, 
                      x = time, 
                      mode = "lines") %>%
-          add_lines(y = round(out[,"Ca_f"], 3),
+          add_lines(y = out[,"Ca_f"],
                     ymin = 0.5 * min(out[,"Ca_f"]),
                     ymax = 1.5 * max(out[,"Ca_f"]),
                     name = "Caf (mmol)",
                     line = list(color = 'rgb(27, 102, 244)', width = 2), 
                     visible = TRUE) %>%
-          add_lines(y = round(out[,"PO4_f"], 3), 
+          add_lines(y = out[,"PO4_f"], 
                     ymin = 0.5 * min(out[,"PO4_f"]),
                     ymax = 1.5 * max(out[,"PO4_f"]),
                     name = "PO4f (mmol)",

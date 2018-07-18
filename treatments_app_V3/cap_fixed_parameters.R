@@ -163,11 +163,11 @@ parameters_fixed <- c(
   Ca_EGTA_norm = 1e000,
   
   # simulation
-  k_inject_P = 0,
-  k_inject_Ca = 0,
+  #k_inject_P = 0,
+  #k_inject_Ca = 0,
   k_inject_FGF = 0,
   k_inject_PTH = 0,
-  k_inject_D3 = 0,
+  #k_inject_D3 = 0,
   
   k_on_egta = 0,
   k_off_egta = 0,

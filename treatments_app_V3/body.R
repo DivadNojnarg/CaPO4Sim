@@ -33,6 +33,9 @@ body <- dashboardBody(
   setPulse("timeline-item"),
   setPulse("diagnosis-badge"),
   setShake("diagnosis-badge"),
+  setShadow("modal-content"),
+  setZoom("modal-content"),
+  setPulse("progress-bar"),
 
   tabItems(
     # Network panel
@@ -81,6 +84,14 @@ body <- dashboardBody(
                 style = "fill",
                 color = "success",
                 icon = icon("download")
+              ),
+              actionBttn(
+                inputId = "summary",
+                size = "lg",
+                label = "Summary",
+                style = "fill",
+                color = "royal",
+                icon = icon("tv")
               )
             ),
             solidHeader = FALSE, 
