@@ -27,11 +27,11 @@ shinyServer(function(input, output, session) {
   
   # game answers
   if (patient_disease == "php1") {
-    answer <- "primary hyperparathyroidism"
+    answer <- c("primary hyperparathyroidism")
   } else if (patient_disease == "hypopara") {
-    answer <- "hypoparathyroidism"
+    answer <- c("hypoparathyroidism")
   } else if (patient_disease == "hypoD3") {
-    answer <- "vitamin D3 deficiency"
+    answer <- c("vitamin D3 deficiency")
   }
   
   # below is needed to handle treatments events
@@ -614,36 +614,45 @@ shinyServer(function(input, output, session) {
   # treat the diagnosis answer
   observeEvent(input$diagnosis_answer, {
     user_answer <- input$diagnosis_answer
-    test <- str_detect(answer, regex(user_answer, ignore_case = TRUE))
-    if (test) {
-      events$answered <- TRUE
-      sendSweetAlert(
-        session,
-        title = paste0("Congratulations ", input$user_name, " !"),
-        text = "It seems that you discovered this patient disease. 
-        However, it would be better to treat him now. Remember you have
-        15 minutes to complete this activity.",
-        type = "success"
-      ) 
+    if (user_answer != "") {
+      test <- str_detect(answer, regex(paste0("\\b", user_answer, "\\b"), ignore_case = TRUE))
+      if (test) {
+        events$answered <- TRUE
+        sendSweetAlert(
+          session,
+          title = paste0("Congratulations ", input$user_name, " !"),
+          text = "It seems that you discovered this patient disease. 
+          However, it would be better to treat him now. Remember you have
+          15 minutes to complete this activity.",
+          type = "success"
+        ) 
+      } else {
+        events$answered <- FALSE
+        sendSweetAlert(
+          session,
+          title = "Wasted!",
+          text = paste0(input$user_name, ", it seems that your answer is wrong!"),
+          type = "error"
+        )
+      }
+      
+      # save the answer status
+      user_folder <- paste0(
+        getwd(), "/www/users_datas/", 
+        input$user_name, "-", start_time
+      )
+      saveRDS(
+        object = events$answered, 
+        file = paste0(user_folder, "/user_answer.rds")
+      )
     } else {
-      events$answered <- FALSE
       sendSweetAlert(
         session,
-        title = "Wasted!",
-        text = paste0(input$user_name, ", it seems that your answer is wrong!"),
+        title = "Missing diagnosis!",
+        text = paste0(input$user_name, ", it seems that your answer is empty!"),
         type = "error"
       )
     }
-    
-    # save the answer status
-    user_folder <- paste0(
-      getwd(), "/www/users_datas/", 
-      input$user_name, "-", start_time
-    )
-    saveRDS(
-      object = events$answered, 
-      file = paste0(user_folder, "/user_answer.rds")
-    )
   })
   
   # prevent the user from resubmitting an answer if he correctly guessed
@@ -809,23 +818,60 @@ shinyServer(function(input, output, session) {
   observeEvent(input$current_node_id, {
     node_id <- input$current_node_id
     if (node_id == 2) {
-      temp_event <- data.frame(
-        id = events$counter,
-        real_time = Sys.time(),
-        event = "plasma analysis",
-        rate = "undefined",
-        start_time = "undefined",
-        stop_time = "undefined",
-        status = "active",
-        stringsAsFactors = FALSE
-      )
+      if (nrow(events$history) == 0) {
+        temp_event <- data.frame(
+          id = events$counter,
+          real_time = Sys.time(),
+          event = "plasma analysis",
+          rate = "undefined",
+          start_time = "undefined",
+          stop_time = "undefined",
+          status = "active",
+          stringsAsFactors = FALSE
+        )
+      } else {
+        temp_event <- data.frame(
+          id = events$counter,
+          real_time = if (events$history[nrow(events$history), "event"] == "PTX" ||
+                          events$history[nrow(events$history), "event"] == "plasma analysis") {
+            events$history[nrow(events$history), "real_time"]
+            # need to wait before the end of the previous event
+          } else {
+            # calculate the time difference between the previous event
+            # end and when the user press the add event button
+            dt <- difftime(
+              time1 = Sys.time(), 
+              time2 = events$history[nrow(events$history), "real_time"] + 
+                as.numeric(events$history[nrow(events$history), "stop_time"]), 
+              units = c("mins"), 
+              tz = Sys.timezone(location = TRUE)
+            )
+            # if the user press before the previous event is finished
+            # we consider that the next event happens just after 
+            if (dt <= 0) {
+              events$history[nrow(events$history), "real_time"] + 
+                as.numeric(events$history[nrow(events$history), "stop_time"])
+              # otherwise, we consider the elapsed time plus the time
+              # that takes the event (t_stop)
+            } else {
+              Sys.time()
+            }
+          },
+          event = "plasma analysis",
+          rate = "undefined",
+          start_time = "undefined",
+          stop_time = "undefined",
+          status = "active",
+          stringsAsFactors = FALSE
+        )
+      }
       events$history <- rbind(events$history, temp_event)
       events$counter <- events$counter + 1
     }
   })
   
   # Add treatments to the event list
-  observeEvent(input$add_treatment,{
+  observeEvent(input$add_treatment, {
     # the same treatment can be added
     # multiple times. However, parathyroidectomy
     # cannot be performed more than once
@@ -846,20 +892,31 @@ shinyServer(function(input, output, session) {
           temp_event <- data.frame(
             id = events$counter,
             # if PTX was performed before, we do not need to wait
-            real_time = if (events$history[nrow(events$history), "event"] == "PTX") {
-              Sys.time()
+            real_time = if (events$history[nrow(events$history), "event"] == "PTX" ||
+                            events$history[nrow(events$history), "event"] == "plasma analysis") {
+              events$history[nrow(events$history), "real_time"]
               # need to wait before the end of the previous event
             } else {
               # calculate the time difference between the previous event
               # end and when the user press the add event button
               dt <- difftime(
                 time1 = Sys.time(), 
-                time2 = events$history[nrow(events$history), "real_time"], 
+                time2 = events$history[nrow(events$history), "real_time"] + 
+                        as.numeric(events$history[nrow(events$history), "stop_time"]), 
                 units = c("mins"), 
                 tz = Sys.timezone(location = TRUE)
               )
-              # DOES NOT WORK !!!!
-              events$history[nrow(events$history), "real_time"] + dt + input$t_stop
+              # if the user press before the previous event is finished
+              # we consider that the next event happens just after 
+              if (dt <= 0) {
+                events$history[nrow(events$history), "real_time"] + 
+                as.numeric(events$history[nrow(events$history), "stop_time"]) +
+                input$t_stop
+                # otherwise, we consider the elapsed time plus the time
+                # that takes the event (t_stop)
+              } else {
+                Sys.time() + input$t_stop
+              }
             },
             event = input$treatment_selected,
             rate = input[[paste(input$treatment_selected)]],
@@ -874,16 +931,53 @@ shinyServer(function(input, output, session) {
         events$current <- temp_event
       } else {
         if (!isTRUE(events$PTX)) {
-          temp_event <- data.frame(
-            id = events$counter,
-            real_time = Sys.time(),
-            event = input$treatment_selected,
-            rate = "undefined", 
-            start_time = "undefined",
-            stop_time = "undefined",
-            status = "active",
-            stringsAsFactors = FALSE
-          )
+          if (nrow(events$history) == 0) {
+            temp_event <- data.frame(
+              id = events$counter,
+              real_time = Sys.time(),
+              event = input$treatment_selected,
+              rate = "undefined", 
+              start_time = "undefined",
+              stop_time = "undefined",
+              status = "active",
+              stringsAsFactors = FALSE
+            )
+          } else {
+            temp_event <- data.frame(
+              id = events$counter,
+              # if PTX was performed before, we do not need to wait
+              real_time = if (events$history[nrow(events$history), "event"] == "plasma analysis") {
+                events$history[nrow(events$history), "real_time"]
+                # need to wait before the end of the previous event
+              } else {
+                # calculate the time difference between the previous event
+                # end and when the user press the add event button
+                dt <- difftime(
+                  time1 = Sys.time(), 
+                  time2 = events$history[nrow(events$history), "real_time"] + 
+                    as.numeric(events$history[nrow(events$history), "stop_time"]), 
+                  units = c("mins"), 
+                  tz = Sys.timezone(location = TRUE)
+                )
+                # if the user press before the previous event is finished
+                # we consider that the next event happens just after 
+                if (dt < 0) {
+                  events$history[nrow(events$history), "real_time"] + 
+                  as.numeric(events$history[nrow(events$history), "stop_time"])
+                  # otherwise, we consider the elapsed time plus the time
+                  # that takes the event (t_stop)
+                } else {
+                  Sys.time()
+                }
+              },
+              event = input$treatment_selected,
+              rate = "undefined", 
+              start_time = "undefined",
+              stop_time = "undefined",
+              status = "active",
+              stringsAsFactors = FALSE
+            )
+          }
           events$history <- rbind(events$history, temp_event)
           events$counter <- events$counter + 1
           events$PTX <- TRUE
@@ -986,43 +1080,66 @@ shinyServer(function(input, output, session) {
   
   # when the user clicks on summary rerun the simulation with all events
   observeEvent(input$summary, {
-    
+    showModal(
+      modalDialog(
+        title = tagList(
+          "Overview of your patient",
+          tags$button(
+            type = "button",
+            class = "btn btn-default pull-right",
+            `data-dismiss` = "modal",
+            icon("close"),
+            "Dismiss"
+          )
+        ),
+        fluidRow(
+          column(
+            width = 12, 
+            align = "center",
+            tabsetPanel(
+              type = "tabs",
+              tabPanel("Plot", "plot"),
+              tabPanel("Summary", "summary"),
+              tabPanel("Table", "table")
+            )
+          )
+        ),
+        size = "m",
+        footer = NULL
+      ) 
+    )
+  })
+  
+  out_summary <- eventReactive(input$summary, {
     if (nrow(events$history) >= 2) {
       times <- as.list(events$history[, "real_time"])
       len <- length(times)
       delta_t <- lapply(2:len, FUN = function(i) {
-        times[[i]] - times[[i - 1]]
+        difftime(
+          time1 = times[[i]], 
+          time2 = times[[i - 1]], 
+          units = c("secs"), 
+          tz = Sys.timezone(location = TRUE)
+        )
       })
       
-        showModal(
-          modalDialog(
-            title = tagList(
-              "Overview of your patient",
-              tags$button(
-                type = "button",
-                class = "btn btn-default pull-right",
-                `data-dismiss` = "modal",
-                icon("close"),
-                "Dismiss"
-              )
-            ),
-            fluidRow(
-              column(
-                width = 12, 
-                align = "center",
-                tabsetPanel(
-                  type = "tabs",
-                  tabPanel("Plot", print(delta_t)),
-                  tabPanel("Summary", "summary"),
-                  tabPanel("Table", "table")
-                )
-              )
-            ),
-            size = "m",
-            footer = NULL
-          ) 
+      
+      parameters <- parameters()
+      times <- times()
+      as.data.frame(
+        ode(
+          y = patient_state_0, 
+          times = times, 
+          func = calcium_phosphate_core, 
+          parms = parameters
         )
+      )
+      
     }
+  })
+  
+  observe({
+    print(out_summary())
   })
 
   

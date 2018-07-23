@@ -28,7 +28,7 @@ generate_slider_events <- function(input) {
     } else if (input$treatment_selected == "Ca_inject") {
       sliderInput(
         "Ca_inject", 
-        "$$ k_{inject}^{Ca} $$", 
+        "Ca injection", 
         min = 0, 
         max = 0.002, 
         value = 0.001, 

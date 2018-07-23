@@ -9,11 +9,13 @@ arrow_lighting <- function(events, edges, network) {
     param_event <- list(
       values = events,
       # do not use rep(6,2) to have 6,6//12,12 because of a bug
-      edges_id = list(4,2,3,2,3,6,6,7,12,12,
-                      c(19,20,21),
-                      c(22,23,24,25,26,27),
-                      c(22,23,24,25,26,27), 
-                      c(28,29))
+      edges_id = list(
+        4,2,3,2,3,6,6,7,12,12,
+        c(19,20,21),
+        c(22,23,24,25,26,27),
+        c(22,23,24,25,26,27), 
+        c(28,29)
+      )
     )
   } else if (network == "network_PTH") {
     param_event <- list(
@@ -284,7 +286,7 @@ plot_node <- function(input, node, out, parms) {
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
           layout(
-            title = "Plasma compartment concentrations",
+            title = "Plasma concentrations",
             font = title_size,
             xaxis = xvar,
             updatemenus = list(
