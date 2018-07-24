@@ -345,10 +345,6 @@ shinyServer(function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
-  # counter to trigger sweetAlert R
-  counter <- reactiveValues(alert = 0)
-  
-  
   # set up a timer during which user have to finish the game
   # and generate the related progress bar
   countdown <- reactive({
@@ -387,7 +383,7 @@ shinyServer(function(input, output, session) {
   # the page is fully loaded (in case we use preloaders in the dashboardPagePlus
   # the preloader lasts around 3s...)
   observe({
-    if (counter$alert == 0) {
+    if (!events$logged) {
       shinyjs::delay(
         5000,
         confirmSweetAlert(
@@ -399,7 +395,7 @@ shinyServer(function(input, output, session) {
             A random patient was selected for you. The goal of 
             the game is to find the corresponding disease and treat
             the patient correctly. Before starting enter your 
-            name and the date.",
+            name.",
             hr(),
             column(
               align = "center",
@@ -422,6 +418,13 @@ shinyServer(function(input, output, session) {
         selector = "button.swal-button.swal-button--confirm", 
         condition = input$user_name != ""
       )
+    }
+  })
+  
+  # when the user is registered, set logged to TRUE
+  observeEvent(input$register_user,{
+    if (input$user_name != "") {
+      events$logged <- TRUE  
     }
   })
   
@@ -692,6 +695,33 @@ shinyServer(function(input, output, session) {
   })
   
   
+  # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
+  observe({
+    out <- out()
+    if (events$logged) {
+      if (out[, "Ca_p"] < 1.1 || out[, "Ca_p"] > 1.3) {
+        if (out[, "Ca_p"] < 1.1) {
+          sendSweetAlert(
+            session,
+            title = paste0("Oups ", input$user_name, " !"),
+            text = "It seems that your patient has hypocalcemia. 
+            You should do something!",
+            type = "warning"
+          ) 
+        } else if (out[, "Ca_p"] > 1.3) {
+          sendSweetAlert(
+            session,
+            title = paste0("Oups ", input$user_name, " !"),
+            text = "It seems that your patient has hypercalcemia.
+            You should do something!",
+            type = "warning"
+          ) 
+        }
+      } 
+    }
+  })
+  
+  
   # clean users datas from empty folders when the user close the session
   session$onSessionEnded(function() {
     user_folder <- paste0(getwd(), "/www/users_datas/")
@@ -780,7 +810,8 @@ shinyServer(function(input, output, session) {
     counter = 1,
     stop = FALSE,
     answered = NULL,
-    PTX = FALSE
+    PTX = FALSE,
+    logged = FALSE
   )
   
   
@@ -1124,22 +1155,23 @@ shinyServer(function(input, output, session) {
       })
       
       
-      parameters <- parameters()
-      times <- times()
-      as.data.frame(
-        ode(
-          y = patient_state_0, 
-          times = times, 
-          func = calcium_phosphate_core, 
-          parms = parameters
-        )
-      )
+      # parameters <- parameters()
+      # times <- times()
+      # as.data.frame(
+      #   ode(
+      #     y = patient_state_0, 
+      #     times = times, 
+      #     func = calcium_phosphate_core, 
+      #     parms = parameters
+      #   )
+      # )
       
     }
   })
   
   observe({
-    print(out_summary())
+    #print(out_summary())
+    #print(parameters())
   })
 
   
