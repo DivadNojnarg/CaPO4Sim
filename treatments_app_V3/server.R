@@ -49,6 +49,9 @@ shinyServer(function(input, output, session) {
   t_start <- NULL
   t_stop <- NULL
   
+  # initialization of the patient feedback observer
+  patient_feedback <- NULL
+  
   # inititalization of the timer
   minutes_time <- 15 # the application will stop in 15 minutes
   start_time <- Sys.time()
@@ -312,7 +315,7 @@ shinyServer(function(input, output, session) {
                   # in case of plasma analysis, display the results next to the logo
                   if (name[[i]] == "plasma analysis") {
                     tagList(
-                      paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, "Ca_p"], 2), " mM [1.1-1.3 mM]$$"),
+                      paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
                       paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
                       paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
                       paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
@@ -694,34 +697,6 @@ shinyServer(function(input, output, session) {
    )
   })
   
-  
-  # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
-  observe({
-    out <- out()
-    if (events$logged) {
-      if (out[, "Ca_p"] < 1.1 || out[, "Ca_p"] > 1.3) {
-        if (out[, "Ca_p"] < 1.1) {
-          sendSweetAlert(
-            session,
-            title = paste0("Oups ", input$user_name, " !"),
-            text = "It seems that your patient has hypocalcemia. 
-            You should do something!",
-            type = "warning"
-          ) 
-        } else if (out[, "Ca_p"] > 1.3) {
-          sendSweetAlert(
-            session,
-            title = paste0("Oups ", input$user_name, " !"),
-            text = "It seems that your patient has hypercalcemia.
-            You should do something!",
-            type = "warning"
-          ) 
-        }
-      } 
-    }
-  })
-  
-  
   # clean users datas from empty folders when the user close the session
   session$onSessionEnded(function() {
     user_folder <- paste0(getwd(), "/www/users_datas/")
@@ -734,6 +709,82 @@ shinyServer(function(input, output, session) {
       })
     }
   })
+  
+  
+  #------------------------------------------------------------------------- 
+  # Calcium/PTH/D3/FGF3 feedback: give the user some feedback 
+  # regarding the current state of the app
+  #  
+  #-------------------------------------------------------------------------
+  
+  
+  # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
+  observe({
+    out <- out()
+    # event only triggered if the user is logged in
+    if (events$logged) {
+      
+      # Calcium conditions
+      Cap_range <- (out[, "Ca_p"] > 1.1 && out[, "Ca_p"] < 1.3)
+      # Pi conditions
+      PO4p_range <- (out[, "PO4_p"] > 0.8 && out[, "PO4_p"] < 1.5)
+      # PTH conditions
+      PTHp_range <- (out[, "PTH_p"] > 8 && out[, "PTH_p"] < 51)
+      # D3 conditions
+      D3p_range <- (out[, "D3_p"] > 80 && out[, "D3_p"] < 700)
+      # FGF23 conditions
+      FGFp_range <- (out[, "FGF_p"] > 12 && out[, "FGF_p"] < 21)
+      
+      if (!Cap_range) {
+        patient_feedback <- paste0(
+          patient_feedback, p(" [Ca2+]p is out of bounds", class = "text-danger")
+        )
+      }
+      if (!PO4p_range) {
+        patient_feedback <- paste0(
+          patient_feedback, p(" [Pi]p is out of bounds", class = "text-danger")
+        )
+      }
+      if (!PTHp_range) {
+        patient_feedback <- paste0(
+          patient_feedback, p(" [PTH]p is out of bounds", class = "text-danger")
+        )
+      }
+      if (!D3p_range) {
+        patient_feedback <- paste0(
+          patient_feedback, p(" [D3]p is out of bounds", class = "text-danger")
+        )
+      }
+      if (!FGFp_range) {
+        patient_feedback <- paste0(
+          patient_feedback, p(" [FGF23]p is out of bounds", class = "text-danger")
+        )
+      }
+      
+      # send the alert message with all feedbacks
+      sendSweetAlert(
+        session,
+        title = paste0("Oups ", input$user_name, " !"),
+        text = HTML(paste0(
+          "It seems that: ", patient_feedback,
+          "You should do something!")
+        ),
+        type = "warning",
+        html = TRUE
+      ) 
+    }
+  })
+  
+  # output$current_calcium <- renderUI({
+  #   Ca_p <- round(out()[, "Ca_p"], 2)
+  #   if (Ca_p > 1.1 && Ca_p < 1.3) {
+  #     p(Ca_p)
+  #   } else if (Ca_p < 1.1) {
+  #     p(class = "text-danger", paste0("$$[Ca]$$"))
+  #   } else {
+  #     p(class = "text-success", Ca_p)
+  #   }
+  # })
   
   #------------------------------------------------------------------------- 
   # sidebar User panel: print name and date
@@ -1047,6 +1098,9 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
   
+  # will be used the save all out elements
+  out_history <- reactiveValues(item = list(), counter = 0)
+  
   out <- reactive({
     input$run
     isolate({
@@ -1169,7 +1223,23 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  # each time the user click on run, the history is saved
+  observeEvent(input$run, {
+    out <- out()
+    len <- length(out_history$item)
+    if (len >= 1) {
+      # translate all time by the number of time points
+      # in the previous run + 1
+      out_history$counter <- out_history$counter + 501
+      out[, "time"] <- out[, "time"] + out_history$counter
+    }
+    out_history$item[[len + 1]] <- out 
+  })
+  
   observe({
+    print(out_history$item)
+    #if (length(out_history$item) > 1)
+    #  print(out_history$item[[2]])
     #print(out_summary())
     #print(parameters())
   })

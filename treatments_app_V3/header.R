@@ -20,6 +20,7 @@ header <- dashboardHeaderPlus(
   
   left_menu = tagList(
     uiOutput("currentTime"),
-    uiOutput("user_game_status")
+    uiOutput("user_game_status")#,
+    #uiOutput("current_calcium")
   )
 )
