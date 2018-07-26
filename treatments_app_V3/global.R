@@ -22,6 +22,7 @@ library(shinyFeedback)
 library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
+library(dplyr)
 
 # Load the template components of UI
 source("patient_generator.R")

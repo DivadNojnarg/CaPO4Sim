@@ -45,6 +45,15 @@ shinyServer(function(input, output, session) {
     "cinacalcet"
   )
   
+  # plot summary list
+  summary_plot_names <- c(
+    "Ca_p",
+    "PO4_p",
+    "PTH_p",
+    "D3_p",
+    "FGF_p"
+  )
+  
   # initialization of event parameters
   t_start <- NULL
   t_stop <- NULL
@@ -102,243 +111,334 @@ shinyServer(function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  Render Patient boxes: patient_info, 
-  #  medical_history and the timeline events
+  #  medical_history, timeline events as well 
+  #  as the graph and CaPO4 network box
   #  
   #-------------------------------------------------------------------------
   
   # patient info box
   output$patient_info <- renderUI({
-    boxPlus(
-      width = 12, 
-      solidHeader = FALSE, 
-      status = "primary", 
-      collapsible = TRUE,
-      boxProfile(
-        src = patient_datas$picture,
-        title = patient_datas$name,
-        subtitle = NULL,
-        boxProfileItemList(
-          bordered = FALSE,
-          boxProfileItem(
-            title = "Age",
-            description = patient_datas$age
+    if (events$logged) {
+      boxPlus(
+        width = 12, 
+        solidHeader = FALSE, 
+        status = "primary", 
+        collapsible = TRUE,
+        boxProfile(
+          src = patient_datas$picture,
+          title = patient_datas$name,
+          subtitle = NULL,
+          boxProfileItemList(
+            bordered = FALSE,
+            boxProfileItem(
+              title = "Age",
+              description = patient_datas$age
+            ),
+            boxProfileItem(
+              title = "Height",
+              description = patient_datas$height
+            ),
+            boxProfileItem(
+              title = "Weight",
+              description = patient_datas$weight
+            )
           ),
-          boxProfileItem(
-            title = "Height",
-            description = patient_datas$height
-          ),
-          boxProfileItem(
-            title = "Weight",
-            description = patient_datas$weight
+          column(
+            width = 12,
+            align = "center",
+            actionBttn(
+              inputId = "diagnosis",
+              size = "lg",
+              label = "Diagnose patient!",
+              style = "fill",
+              color = "primary",
+              icon = icon("search")
+            )
           )
+        )
+      ) 
+    }
+  })
+  
+  # the user notebook
+  output$user_notebook <- renderUI({
+    if (events$logged) {
+      comments <- comments$history
+      len <- nrow(comments)
+      
+      socialBox(
+        width = 12, 
+        style = "overflow-y: auto; max-height: 400px;",
+        title = paste0(input$user_name, "'s notebook"),
+        subtitle = start_time,
+        src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+        textAreaInput(
+          inputId = "user_comment", 
+          label = "My Comment", 
+          value = "I enter here all my observations!"
         ),
         column(
           width = 12,
           align = "center",
           actionBttn(
-            inputId = "diagnosis",
-            size = "lg",
-            label = "Diagnose patient!",
-            style = "fill",
-            color = "primary",
-            icon = icon("search")
+            inputId = "user_add_comment",
+            size = "xs",
+            icon = icon("plus"),
+            style = "material-circle",
+            color = "success"
           )
-        )
-      )
-    )
-  })
-  
-  # the user notebook
-  output$user_notebook <- renderUI({
-    
-    comments <- comments$history
-    len <- nrow(comments)
-  
-    socialBox(
-      width = 12, 
-      style = "overflow-y: auto; max-height: 400px;",
-      title = paste0(input$user_name, "'s notebook"),
-      subtitle = start_time,
-      src = "https://image.flaticon.com/icons/svg/305/305983.svg",
-      textAreaInput(
-        inputId = "user_comment", 
-        label = "My Comment", 
-        value = "I enter here all my observations!"
-      ),
-      column(
-        width = 12,
-        align = "center",
-        actionBttn(
-          inputId = "user_add_comment",
-          size = "xs",
-          icon = icon("plus"),
-          style = "material-circle",
-          color = "success"
-        )
-      ),
-      hr(),
-      comments = if (len > 0) {
-        tagList(
-          lapply(1:len, FUN = function(i) {
-            boxComment(
-              src = "https://image.flaticon.com/icons/svg/305/305983.svg",
-              title = paste0("Comment ", i),
-              date = comments$date[[i]],
-              comments$description[[i]]
-            )
-          })
-        ) 
-      } else {
-        NULL
-      },
-      footer = NULL
-    )
+        ),
+        hr(),
+        comments = if (len > 0) {
+          tagList(
+            lapply(1:len, FUN = function(i) {
+              boxComment(
+                src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+                title = paste0("Comment ", i),
+                date = comments$date[[i]],
+                comments$description[[i]]
+              )
+            })
+          ) 
+        } else {
+          NULL
+        },
+        footer = NULL
+      ) 
+    }
   })
   
   # patient medical history
   output$patient_history <- renderUI({
-    medical_history <- patient_datas$medical_history
-    len <- length(medical_history$pathologies)
-    
-    boxPlus(
-      width = 12, 
-      solidHeader = FALSE, 
-      status = "primary",
-      title = "Medical History", 
-      collapsible = TRUE,
-      enable_label = TRUE,
-      label_text = len,
-      label_status = "danger",
+    if (events$logged) {
+      medical_history <- patient_datas$medical_history
+      len <- length(medical_history$pathologies)
       
-      lapply(1:len, FUN = function(i){
-        userPost(
-          id = i,
-          src = medical_history$doctors_avatars[[i]],
-          author = medical_history$doctors[[i]],
-          description = strong(medical_history$pathologies[[i]]),
-          paste(medical_history$disease_description[[i]]),
-          if (!is.null(medical_history$disease_image[[i]])) {
-            userPostMedia(
-              src = medical_history$disease_image[[i]],
-              width = "300", 
-              height = "300"
-            )
-          },
-          userPostToolItemList(
-            userPostToolItem(
-              dashboardLabel(
-                medical_history$examination_dates[[i]], 
-                status = "warning"
-              ), 
-              side = "right"
-            )
-          ),
-          br()
-        )
-      })
-    )
+      boxPlus(
+        width = 12, 
+        solidHeader = FALSE, 
+        status = "primary",
+        title = "Medical History", 
+        collapsible = TRUE,
+        enable_label = TRUE,
+        label_text = len,
+        label_status = "danger",
+        
+        lapply(1:len, FUN = function(i){
+          userPost(
+            id = i,
+            src = medical_history$doctors_avatars[[i]],
+            author = medical_history$doctors[[i]],
+            description = strong(medical_history$pathologies[[i]]),
+            paste(medical_history$disease_description[[i]]),
+            if (!is.null(medical_history$disease_image[[i]])) {
+              userPostMedia(
+                src = medical_history$disease_image[[i]],
+                width = "300", 
+                height = "300"
+              )
+            },
+            userPostToolItemList(
+              userPostToolItem(
+                dashboardLabel(
+                  medical_history$examination_dates[[i]], 
+                  status = "warning"
+                ), 
+                side = "right"
+              )
+            ),
+            br()
+          )
+        })
+      )
+    }
   })
   
   
   # Event to be added in the timeLine
   output$recent_events <- renderUI({
-    len <- nrow(events$history)
-    name <- events$history$event
-    start_time <- events$history$real_time
-    rate <- events$history$rate
-    plasma_values <- plasma_analysis$history
-    
-    withMathJax(
+    if (events$logged) {
+      len <- nrow(events$history)
+      name <- events$history$event
+      start_time <- events$history$real_time
+      rate <- events$history$rate
+      plasma_values <- plasma_analysis$history
+      
+      withMathJax(
+        boxPlus(
+          width = 12, 
+          solidHeader = FALSE, 
+          status = "primary",
+          collapsible = TRUE,
+          enable_label = TRUE,
+          label_text = len,
+          label_status = "danger",
+          style = "overflow-y: scroll;",
+          title = "Recent Events",
+          
+          # treatments input are
+          # in the event box
+          prettyCheckboxGroup(
+            inputId = "treatment_selected",
+            label = "Select a new treatment:",
+            choices = c(
+              "parathyroid surgery" = "PTX",
+              "D3 iv injection" = "D3_inject",
+              "Ca supplementation" = "Ca_food",
+              "Ca iv injection" = "Ca_inject",
+              "Pi iv injection" = "P_inject",
+              "Pi supplementation" = "P_food",
+              "cinacalcet" = "cinacalcet"
+            ),
+            thick = TRUE,
+            inline = TRUE,
+            animation = "pulse"
+          ),
+          uiOutput(outputId = "sliderInject"),
+          hr(),
+          
+          if (len > 0) {
+            timelineBlock(
+              style = "height: 400px;",
+              timelineStart(color = "danger"),
+              br(),
+              lapply(1:len, FUN = function(i){
+                tagAppendAttributes(
+                  timelineItem(
+                    title = name[[i]],
+                    icon = "medkit",
+                    color = "orange",
+                    time = dashboardLabel(
+                      style = "default", 
+                      status = "warning", 
+                      start_time[[i]]
+                    ),
+                    timelineItemMedia(
+                      src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                        "treatments_img/syringe.svg"
+                      } else if (name[[i]] %in% c("Ca_food", "P_food")) {
+                        "treatments_img/medicine.svg"
+                      } else if (name[[i]] == "PTX") {
+                        "treatments_img/surgery.svg"
+                      } else if (name[[i]] == "cinacalcet") {
+                        "treatments_img/pills.svg"
+                      } else if (name[[i]] == "plasma analysis") {
+                        "treatments_img/test-tube.svg"
+                      },
+                      width = "40", 
+                      height = "40"
+                    ),
+                    # in case of plasma analysis, display the results next to the logo
+                    if (name[[i]] == "plasma analysis") {
+                      tagList(
+                        paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
+                        paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
+                        paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
+                        paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
+                        paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
+                      )
+                    },
+                    footer = if (!is.null(name[[i]])) {
+                      if (name[[i]] != "PTX") 
+                        if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
+                          dashboardLabel(status = "danger", rate[[i]])
+                        }
+                      else NULL
+                    }
+                  ),
+                  align = "middle"
+                )
+              }),
+              br(),
+              timelineEnd(color = "gray")
+            )
+          }
+        )
+      )
+    }
+  })
+  
+  
+  # graph box
+  output$graphs_box <- renderUI({
+    if (events$logged) {
       boxPlus(
         width = 12, 
         solidHeader = FALSE, 
-        status = "primary",
+        status = "primary", 
         collapsible = TRUE,
-        enable_label = TRUE,
-        label_text = len,
-        label_status = "danger",
-        style = "overflow-y: scroll;",
-        title = "Recent Events",
-        
-        # treatments input are
-        # in the event box
-        prettyCheckboxGroup(
-          inputId = "treatment_selected",
-          label = "Select a new treatment:",
-          choices = c(
-            "parathyroid surgery" = "PTX",
-            "D3 iv injection" = "D3_inject",
-            "Ca supplementation" = "Ca_food",
-            "Ca iv injection" = "Ca_inject",
-            "Pi iv injection" = "P_inject",
-            "Pi supplementation" = "P_food",
-            "cinacalcet" = "cinacalcet"
+        withSpinner(
+          plotlyOutput(
+            "plot_node", 
+            height = "300px", 
+            width = "100%"
           ),
-          thick = TRUE,
-          inline = TRUE,
-          animation = "pulse"
-        ),
-        uiOutput(outputId = "sliderInject"),
-        hr(),
-        
-        if (len > 0) {
-          timelineBlock(
-            style = "height: 400px;",
-            timelineStart(color = "danger"),
-            br(),
-            lapply(1:len, FUN = function(i){
-              tagAppendAttributes(
-                timelineItem(
-                  title = name[[i]],
-                  icon = "medkit",
-                  color = "orange",
-                  time = dashboardLabel(
-                    style = "default", 
-                    status = "warning", 
-                    start_time[[i]]
-                  ),
-                  timelineItemMedia(
-                    src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
-                      "treatments_img/syringe.svg"
-                    } else if (name[[i]] %in% c("Ca_food", "P_food")) {
-                      "treatments_img/medicine.svg"
-                    } else if (name[[i]] == "PTX") {
-                      "treatments_img/surgery.svg"
-                    } else if (name[[i]] == "cinacalcet") {
-                      "treatments_img/pills.svg"
-                    } else if (name[[i]] == "plasma analysis") {
-                      "treatments_img/test-tube.svg"
-                    },
-                    width = "40", 
-                    height = "40"
-                  ),
-                  # in case of plasma analysis, display the results next to the logo
-                  if (name[[i]] == "plasma analysis") {
-                    tagList(
-                      paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
-                      paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
-                      paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
-                      paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
-                      paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
-                    )
-                  },
-                  footer = if (!is.null(name[[i]])) {
-                    if (name[[i]] != "PTX") 
-                      if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
-                        dashboardLabel(status = "danger", rate[[i]])
-                      }
-                    else NULL
-                  }
-                ),
-                align = "middle"
-              )
-            }),
-            br(),
-            timelineEnd(color = "gray")
-          )
-        }
+          size = 2,
+          type = 8,
+          color = "#000000"
+        )
       )
-    )
+    }
+  })
+
+  
+  # network box
+  output$network_box <- renderUI({
+    if (events$logged) {
+      boxPlus(
+        title = tagList(
+          img(
+            class = "img-circle img-bordered-sm", 
+            src = "interface_img/monitor-2.svg", 
+            width = "40px", 
+            height = "40px"
+          ),
+          actionBttn(
+            inputId = "run",
+            size = "lg",
+            label = "Run",
+            style = "fill",
+            color = "primary",
+            icon = icon("play")
+          ),
+          actionBttn(
+            inputId = "export",
+            size = "lg",
+            label = " Export",
+            style = "fill",
+            color = "success",
+            icon = icon("download")
+          ),
+          actionBttn(
+            inputId = "summary",
+            size = "lg",
+            label = "Summary",
+            style = "fill",
+            color = "royal",
+            icon = icon("tv")
+          )
+        ),
+        solidHeader = FALSE, 
+        status = "primary", 
+        width = 12,
+        closable = TRUE,
+        enable_sidebar = TRUE,
+        sidebar_content = tagList(),
+        div(
+          id = "network_cap",
+          withSpinner(
+            visNetworkOutput(
+              "network_Ca", 
+              height = "900px"
+            ), 
+            size = 2, 
+            type = 8, 
+            color = "#000000"
+          )
+        ),
+        footer = NULL
+      )
+    }
   })
   
   
@@ -1099,7 +1199,11 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # will be used the save all out elements
-  out_history <- reactiveValues(item = list(), counter = 0)
+  out_history <- reactiveValues(
+    item = list(), 
+    counter = 0, 
+    summary = data.frame()
+  )
   
   out <- reactive({
     input$run
@@ -1111,7 +1215,8 @@ shinyServer(function(input, output, session) {
         ode(
           # when opening the application, y will be state_0 since states$val
           # is an empty list. However, for the next runs, states$val is 
-          # populated with the last simulated final condition. 
+          # populated with the last simulated final state and so on
+          # each time the user press run
           y = if (is_empty(states$val)) {
             patient_state_0
           } else {
@@ -1128,9 +1233,10 @@ shinyServer(function(input, output, session) {
   
   # update initial conditions to the last state of the system each time an event
   # has occured. Need to delayed by the time needed for computation before updating
+  # which is not really obvious since we don't know exactly what time it will take.
   observe({
     input$run
-    shinyjs::delay(5000, {
+    shinyjs::delay(3000, {
         out <- out()
         temp_state <- c(
           "PTH_g" = out[nrow(out),"PTH_g"], 
@@ -1181,11 +1287,22 @@ shinyServer(function(input, output, session) {
           column(
             width = 12, 
             align = "center",
-            tabsetPanel(
-              type = "tabs",
-              tabPanel("Plot", "plot"),
-              tabPanel("Summary", "summary"),
-              tabPanel("Table", "table")
+            do.call(
+              tabsetPanel, 
+              c(type = "tabs", # generate the 5 plots
+                lapply(1:length(summary_plot_names), FUN = function(i) {
+                  name <- summary_plot_names[[i]]
+                  tabPanel(
+                    name,
+                    withSpinner(
+                      plotlyOutput(paste0("plot_summary_", name)),
+                      size = 2,
+                      type = 8,
+                      color = "#000000"
+                    )
+                  )
+                })
+              )
             )
           )
         ),
@@ -1195,32 +1312,147 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  out_summary <- eventReactive(input$summary, {
-    if (nrow(events$history) >= 2) {
-      times <- as.list(events$history[, "real_time"])
-      len <- length(times)
-      delta_t <- lapply(2:len, FUN = function(i) {
-        difftime(
-          time1 = times[[i]], 
-          time2 = times[[i - 1]], 
-          units = c("secs"), 
-          tz = Sys.timezone(location = TRUE)
-        )
-      })
-      
-      
-      # parameters <- parameters()
-      # times <- times()
-      # as.data.frame(
-      #   ode(
-      #     y = patient_state_0, 
-      #     times = times, 
-      #     func = calcium_phosphate_core, 
-      #     parms = parameters
-      #   )
-      # )
-      
-    }
+  # out_summary <- eventReactive(input$summary, {
+  #   if (nrow(events$history) >= 2) {
+  #     times <- as.list(events$history[, "real_time"])
+  #     len <- length(times)
+  #     delta_t <- lapply(2:len, FUN = function(i) {
+  #       difftime(
+  #         time1 = times[[i]],
+  #         time2 = times[[i - 1]],
+  #         units = c("secs"),
+  #         tz = Sys.timezone(location = TRUE)
+  #       )
+  #     })
+  # 
+  #     
+  # 
+  #   }
+  #   
+  # })
+  
+  
+  # cumulative datas
+  datas_summary <- reactive({
+    datas <- out_history$summary %>%
+      filter(time %% 50 == 0) %>%
+      accumulate_by(~time)
+    
+    # add bounds for each variable
+    low_norm_Ca_p <- data.frame(low_norm_Ca_p = rep(1.1, length(datas[, "time"])))
+    high_norm_Ca_p <- data.frame(high_norm_Ca_p = rep(1.3, length(datas[, "time"])))
+    low_norm_PO4_p <- data.frame(low_norm_PO4_p = rep(0.8, length(datas[, "time"])))
+    high_norm_PO4_p <- data.frame(high_norm_PO4_p = rep(1.5, length(datas[, "time"])))
+    low_norm_PTH_p <- data.frame(low_norm_PTH_p = rep(8, length(datas[, "time"])))
+    high_norm_PTH_p <- data.frame(high_norm_PTH_p = rep(51, length(datas[, "time"])))
+    low_norm_D3_p <- data.frame(low_norm_D3_p = rep(80, length(datas[, "time"])))
+    high_norm_D3_p <- data.frame(high_norm_D3_p = rep(700, length(datas[, "time"])))
+    low_norm_FGF_p <- data.frame(low_norm_FGF_p = rep(12, length(datas[, "time"])))
+    high_norm_FGF_p <- data.frame(high_norm_FGF_p = rep(21, length(datas[, "time"])))
+    
+    # bind all values
+    datas <- cbind(
+      datas, 
+      low_norm_Ca_p, 
+      high_norm_Ca_p,
+      low_norm_PO4_p,
+      high_norm_PO4_p,
+      low_norm_PTH_p,
+      high_norm_PTH_p,
+      low_norm_D3_p,
+      high_norm_D3_p,
+      low_norm_FGF_p,
+      high_norm_FGF_p
+    )
+  })
+  
+  
+  # cumulative plot (5 plots)
+  lapply(1:length(summary_plot_names), FUN = function(i) {
+    name <- summary_plot_names[[i]]
+    output[[paste0("plot_summary_", name)]] <- renderPlotly({
+      if (nrow(out_history$summary) >= 1) {
+        plot_ly(
+          datas_summary(),
+          x = datas_summary()[, "time"], 
+          y = if (name == "PTH_p") {
+            datas_summary()[, name] * 100
+          } else {
+            datas_summary()[, name]
+          },
+          name = if (name %in% c("Ca_p", "PO4_p")) {
+            paste0(name, " (mM)")
+          } else {
+            paste0(name, " (pM)")
+          },
+          frame = ~frame,
+          type = 'scatter',
+          mode = 'lines', 
+          
+          line = list(
+            simplyfy = FALSE,
+            color = if (name == "Ca_p") {
+              'rgb(27, 102, 244)'
+            } else if (name == "PO4_p") {
+              'rgb(244, 27, 27)'
+            } else {
+              'black'
+            }
+          )
+        ) %>% 
+          add_lines(
+            y = datas_summary()[, paste0("low_norm_", name)],
+            frame = ~frame,
+            name = if (name %in% c("Ca_p", "PO4_p")) {
+              paste0("Low ", name, " bound (mM)")
+            } else {
+              paste0("Low ", name, " bound (pM)")
+            },
+            line = list(
+              color = 'rgb(169,169,169)', 
+              width = 4, 
+              dash = 'dash'
+            )
+          ) %>%
+          add_lines(
+            y = datas_summary()[, paste0("high_norm_", name)],
+            frame = ~frame,
+            name = if (name %in% c("Ca_p", "PO4_p")) {
+              paste0("High ", name, " bound (mM)")
+            } else {
+              paste0("High ", name, " bound (pM)")
+            },
+            line = list(
+              color = 'rgb(169,169,169)', 
+              width = 4, 
+              dash = 'dot'
+            )
+          ) %>%
+          layout(
+            xaxis = list(
+              title = "time",
+              zeroline = FALSE
+            ),
+            yaxis = list(
+              title = if (name %in% c("Ca_p", "PO4_p")) {
+                paste0(name, " (mM)")
+              } else {
+                paste0(name, " (pM)")
+              },
+              zeroline = FALSE
+            )
+          ) %>% 
+          animation_opts(
+            # animation speed (the lower, the faster)
+            frame = 5, 
+            transition = 0, 
+            redraw = FALSE
+          ) %>%
+          animation_slider(
+            hide = FALSE
+          ) 
+      }
+    })
   })
   
   # each time the user click on run, the history is saved
@@ -1234,16 +1466,9 @@ shinyServer(function(input, output, session) {
       out[, "time"] <- out[, "time"] + out_history$counter
     }
     out_history$item[[len + 1]] <- out 
+    # merge all dataframe into a big one
+    out_history$summary <- bind_rows(out_history$item)
   })
-  
-  observe({
-    print(out_history$item)
-    #if (length(out_history$item) > 1)
-    #  print(out_history$item[[2]])
-    #print(out_summary())
-    #print(parameters())
-  })
-
   
   #------------------------------------------------------------------------- 
   #  
@@ -1572,6 +1797,13 @@ shinyServer(function(input, output, session) {
     sliders_reset(button_states, input)
   })
   
+  # disable the summary button as long as input$run is lower than 1
+  observe({
+    if (!is.null(input$run)) {
+      toggleState(id = "summary", condition = input$run >= 1)
+    }
+  })
+  
   # prevent user from selecting multiple treatments as the same time
   observe({
     if (!is.null(input$treatment_selected)) {
@@ -1588,19 +1820,22 @@ shinyServer(function(input, output, session) {
  
   # display or not display the network background
   observe({
-    if (!is_empty(input$background_choice)) {
-      if (input$background_choice == "rat") {
-        addClass(id = "network_cap", class = "network_caprat")
-        removeClass(id = "network_cap", class = "network_caphuman")
+    # add invalidate later so that the background class is
+    # applied after the application startup
+    invalidateLater(1000, session)
+      if (!is_empty(input$background_choice)) {
+        if (input$background_choice == "rat") {
+          addClass(id = "network_cap", class = "network_caprat")
+          removeClass(id = "network_cap", class = "network_caphuman")
+        } else {
+          removeClass(id = "network_cap", class = "network_caprat")
+          addClass(id = "network_cap", class = "network_caphuman")
+        }
       } else {
+        addClass(id = "network_cap", class = "network_capnone")
+        removeClass(id = "network_cap", class = "network_caphuman")
         removeClass(id = "network_cap", class = "network_caprat")
-        addClass(id = "network_cap", class = "network_caphuman")
-      }
-    } else {
-      addClass(id = "network_cap", class = "network_capnone")
-      removeClass(id = "network_cap", class = "network_caphuman")
-      removeClass(id = "network_cap", class = "network_caprat")
-    }
+      } 
   })
   
   # prevent user from selecting multiple background

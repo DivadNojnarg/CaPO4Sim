@@ -59,82 +59,14 @@ body <- dashboardBody(
         column(
           width = 6,
           style = 'padding:0px;',
-          
-          boxPlus(
-            title = tagList(
-              img(
-                class = "img-circle img-bordered-sm", 
-                src = "interface_img/monitor-2.svg", 
-                width = "40px", 
-                height = "40px"
-              ),
-              actionBttn(
-                inputId = "run",
-                size = "lg",
-                label = "Run",
-                style = "fill",
-                color = "primary",
-                icon = icon("play")
-              ),
-              actionBttn(
-                inputId = "export",
-                size = "lg",
-                label = " Export",
-                style = "fill",
-                color = "success",
-                icon = icon("download")
-              ),
-              actionBttn(
-                inputId = "summary",
-                size = "lg",
-                label = "Summary",
-                style = "fill",
-                color = "royal",
-                icon = icon("tv")
-              )
-            ),
-            solidHeader = FALSE, 
-            status = "primary", 
-            width = 12,
-            closable = TRUE,
-            enable_sidebar = TRUE,
-            sidebar_content = tagList(),
-            div(
-              id = "network_cap",
-              withSpinner(
-                visNetworkOutput(
-                  "network_Ca", 
-                  height = "900px"
-                ), 
-                size = 2, 
-                type = 8, 
-                color = "#000000"
-              )
-            ),
-            footer = NULL
-          )
+          uiOutput("network_box")
         ),
         # event/results column
         column(
           width = 3,
           style = 'padding:0px;',
           # results box
-          boxPlus(
-            width = 12, 
-            solidHeader = FALSE, 
-            status = "primary", 
-            collapsible = TRUE,
-            withSpinner(
-              plotlyOutput(
-                "plot_node", 
-                height = "300px", 
-                width = "100%"
-              ),
-              size = 2,
-              type = 8,
-              color = "#000000"
-            )
-          ),
+          uiOutput("graphs_box"),
           # timeline event box
           uiOutput("recent_events")
         )

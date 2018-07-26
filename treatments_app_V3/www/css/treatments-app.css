@@ -54,3 +54,20 @@ mark {
 .MathJax_Display { 
     text-align: center !important;
 }
+
+.modal-body {
+  max-height: 500px;
+ overflow-y: auto;
+}
+
+.bttn-fill {
+  border-radius: 5px;
+}
+
+.btn-box-tool {
+  border-radius: 5px;
+}
+
+#user_comment {
+  border-radius: 5px;
+} 
