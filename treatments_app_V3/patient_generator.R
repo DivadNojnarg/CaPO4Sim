@@ -50,7 +50,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
   }
   
   # set up random patient image
-  patient_images_folder <- paste0(raw_folder, "/patients_img")
+  patient_images_folder <- paste0(raw_folder, "patients_img")
   if (gender == "male") {
     patient_images_folder <- paste0(patient_images_folder, "/male")
   } else {
@@ -65,7 +65,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
   patient_avatar <- unlist(str_split(string = patient_avatar, pattern = "www/"))[2]
   
   # set up a rendom doctor image
-  doctor_images_folder <- paste0(raw_folder, "/doctors_img")
+  doctor_images_folder <- paste0(raw_folder, "doctors_img")
   doctors_avatars <- lapply(1:length(doctors), FUN = function(i){
     if (doctors_gender[[i]] == "male") {
       doctor_images_folder <- paste0(doctor_images_folder, "/male")

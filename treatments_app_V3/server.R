@@ -273,7 +273,7 @@ shinyServer(function(input, output, session) {
           enable_label = TRUE,
           label_text = len,
           label_status = "danger",
-          style = "overflow-y: scroll;",
+          style = "overflow-y: auto;",
           title = "Recent Events",
           
           # treatments input are
@@ -497,7 +497,7 @@ shinyServer(function(input, output, session) {
             "Welcome to the virtual CaPO4 patient simulator.
             A random patient was selected for you. The goal of 
             the game is to find the corresponding disease and treat
-            the patient correctly. Before starting enter your 
+            the patient correctly, in exactly 15 minutes. Before starting enter your 
             name.",
             hr(),
             column(
@@ -1274,7 +1274,7 @@ shinyServer(function(input, output, session) {
     showModal(
       modalDialog(
         title = tagList(
-          "Overview of your patient",
+          p(style = "text-align: center;", "Overview of your patient"),
           tags$button(
             type = "button",
             class = "btn btn-default pull-right",
