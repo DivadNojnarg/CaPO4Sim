@@ -71,3 +71,67 @@ mark {
 #user_comment {
   border-radius: 5px;
 } 
+
+
+@-webkit-keyframes glowing_blue {
+  0% { background-color: #3d89f7; -webkit-box-shadow: 0 0 3px #3d89f7; }
+  50% { background-color: #44c5f4; -webkit-box-shadow: 0 0 10px #44c5f4; }
+  100% { background-color: #3d89f7; -webkit-box-shadow: 0 0 3px #3d89f7; }
+}
+
+@-moz-keyframes glowing_blue {
+  0% { background-color: #3d89f7; -moz-box-shadow: 0 0 3px #3d89f7; }
+  50% { background-color: #44c5f4; -moz-box-shadow: 0 0 10px #44c5f4; }
+  100% { background-color: #3d89f7; -moz-box-shadow: 0 0 3px #3d89f7; }
+}
+
+@-o-keyframes glowing_blue {
+  0% { background-color: #3d89f7; box-shadow: 0 0 3px #3d89f7; }
+  50% { background-color: #44c5f4; box-shadow: 0 0 10px #44c5f4; }
+  100% { background-color: #3d89f7; box-shadow: 0 0 3px #3d89f7; }
+}
+
+@keyframes glowing_blue {
+  0% { background-color: #3d89f7; box-shadow: 0 0 3px #3d89f7; }
+  50% { background-color: #44c5f4; box-shadow: 0 0 10px #44c5f4; }
+  100% { background-color: #3d89f7; box-shadow: 0 0 3px #3d89f7; }
+}
+
+
+@-webkit-keyframes glowing_purple {
+  0% { background-color: #ad42ed; -webkit-box-shadow: 0 0 3px #ad42ed; }
+  50% { background-color: #ee44f4; -webkit-box-shadow: 0 0 10px #ee44f4; }
+  100% { background-color: #ad42ed; -webkit-box-shadow: 0 0 3px #ad42ed; }
+}
+
+@-moz-keyframes glowing_purple {
+  0% { background-color: #ad42ed; -moz-box-shadow: 0 0 3px #ad42ed; }
+  50% { background-color: #ee44f4; -moz-box-shadow: 0 0 10px #ee44f4; }
+  100% { background-color: #ad42ed; -moz-box-shadow: 0 0 3px #ad42ed; }
+}
+
+@-o-keyframes glowing_purple {
+  0% { background-color: #ad42ed; box-shadow: 0 0 3px #ad42ed; }
+  50% { background-color: #ee44f4; box-shadow: 0 0 10px #ee44f4; }
+  100% { background-color: #ad42ed; box-shadow: 0 0 3px #ad42ed; }
+}
+
+@keyframes glowing_purple {
+  0% { background-color: #ad42ed; box-shadow: 0 0 3px #ad42ed; }
+  50% { background-color: #ee44f4; box-shadow: 0 0 10px #ee44f4; }
+  100% { background-color: #ad42ed; box-shadow: 0 0 3px #ad42ed; }
+}
+
+.run_glowing_blue {
+  -webkit-animation: glowing_blue 1000ms infinite;
+  -moz-animation: glowing_blue 1000ms infinite;
+  -o-animation: glowing_blue 1000ms infinite;
+  animation: glowing_blue 1000ms infinite;
+}
+
+.run_glowing_purple {
+  -webkit-animation: glowing_purple 1000ms infinite;
+  -moz-animation: glowing_purple 1000ms infinite;
+  -o-animation: glowing_purple 1000ms infinite;
+  animation: glowing_purple 1000ms infinite;
+}

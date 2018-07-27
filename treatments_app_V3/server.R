@@ -124,6 +124,7 @@ shinyServer(function(input, output, session) {
         solidHeader = FALSE, 
         status = "primary", 
         collapsible = TRUE,
+        closable = FALSE,
         boxProfile(
           src = patient_datas$picture,
           title = patient_datas$name,
@@ -167,6 +168,7 @@ shinyServer(function(input, output, session) {
       len <- nrow(comments)
       
       socialBox(
+        closable = FALSE,
         width = 12, 
         style = "overflow-y: auto; max-height: 400px;",
         title = paste0(input$user_name, "'s notebook"),
@@ -220,6 +222,7 @@ shinyServer(function(input, output, session) {
         status = "primary",
         title = "Medical History", 
         collapsible = TRUE,
+        closable = FALSE,
         enable_label = TRUE,
         label_text = len,
         label_status = "danger",
@@ -270,6 +273,7 @@ shinyServer(function(input, output, session) {
           solidHeader = FALSE, 
           status = "primary",
           collapsible = TRUE,
+          closable = FALSE, 
           enable_label = TRUE,
           label_text = len,
           label_status = "danger",
@@ -367,6 +371,7 @@ shinyServer(function(input, output, session) {
         solidHeader = FALSE, 
         status = "primary", 
         collapsible = TRUE,
+        closable = FALSE, 
         withSpinner(
           plotlyOutput(
             "plot_node", 
@@ -419,17 +424,23 @@ shinyServer(function(input, output, session) {
           )
         ),
         solidHeader = FALSE, 
+        collapsible = TRUE, 
         status = "primary", 
         width = 12,
-        closable = TRUE,
+        closable = FALSE,
         enable_sidebar = TRUE,
-        sidebar_content = tagList(),
+        sidebar_width = 50,
+        sidebar_background = "#888888",
+        sidebar_start_open = TRUE,
+        sidebar_content = tagList(
+          getting_started()
+        ),
         div(
           id = "network_cap",
           withSpinner(
             visNetworkOutput(
               "network_Ca", 
-              height = "900px"
+              height = if (input$isMobile) "450px" else "900px"
             ), 
             size = 2, 
             type = 8, 
@@ -1440,7 +1451,8 @@ shinyServer(function(input, output, session) {
                 paste0(name, " (pM)")
               },
               zeroline = FALSE
-            )
+            ),
+            showlegend = if (input$isMobile) FALSE else TRUE
           ) %>% 
           animation_opts(
             # animation speed (the lower, the faster)
@@ -1450,7 +1462,8 @@ shinyServer(function(input, output, session) {
           ) %>%
           animation_slider(
             hide = FALSE
-          ) 
+          ) %>% 
+          config(displayModeBar = FALSE)
       }
     })
   })
@@ -1542,10 +1555,10 @@ shinyServer(function(input, output, session) {
       # use before drawing the network. Works with find_navigator.js
       visEvents(
         type = "on", 
-        initRedraw = "
+        initRedraw = paste0("
           function() {
-            this.moveTo({scale:0.6});
-        }"
+            this.moveTo({scale:", if (input$isMobile) 0.3 else 0.6, "});
+        }")
       ) # to set the initial zoom (1 by default)
   })
   
@@ -1630,49 +1643,52 @@ shinyServer(function(input, output, session) {
         visUpdateEdges(edges = edges_Ca)
     }
   })
-  
+
   
   # handle the size of organ and hormonal nodes
   output$size_nodes_organs <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "size_organs", 
         "Organs", 
         min = 50, 
         max = 100, 
-        value = 70, 
+        value = if (input$isMobile) 85 else 70, 
         step = 5,
         displayPrevious = TRUE,
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = "tron",
-        width = "100px", 
-        height = "100px"
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
       )
     )
   })
   
   output$size_nodes_hormones <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "size_hormones", 
         "Hormones", 
         min = 20, 
         max = 60, 
-        value = 40, 
+        value = if (input$isMobile) 60 else 40, 
         step = 5,
         displayPrevious = TRUE,
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = "tron",
-        width = "100px", 
-        height = "100px"
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
       )
     )
   })
   
   # control width of arrows
   output$width_arrows_organs <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "width_organs", 
@@ -1687,13 +1703,14 @@ shinyServer(function(input, output, session) {
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = NULL,
-        width = "100px", 
-        height = "100px"
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
       )
     )
   })
   
   output$width_arrows_hormones <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "width_hormones", 
@@ -1708,8 +1725,8 @@ shinyServer(function(input, output, session) {
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = NULL,
-        width = "100px", 
-        height = "100px"
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
       )
     )
   })
@@ -1801,6 +1818,38 @@ shinyServer(function(input, output, session) {
   observe({
     if (!is.null(input$run)) {
       toggleState(id = "summary", condition = input$run >= 1)
+    }
+  })
+  
+  # make the run button blinking when a new event is added 
+  # but remove it when run is pressed
+  observeEvent(input$add_treatment, {
+    addClass(id = "run", class = "run_glowing_blue")
+  })
+  observeEvent(input$run, {
+    removeClass(id = "run", class = "run_glowing_blue")
+  })
+  
+  # make the Summary button blinking when run was pressed at least once
+  observeEvent(input$run, {
+    addClass(id = "summary", class = "run_glowing_purple")
+  })
+  observeEvent(input$summary, {
+    removeClass(id = "summary", class = "run_glowing_purple")
+  })
+  
+  # make diagnosis blinking when there remains 5 min
+  # before the app close
+  observe({
+    if (countdown() <= 5) {
+      if (input$diagnosis == 0) {
+        addClass(id = "diagnosis", class = "run_glowing_blue") 
+      }
+    }
+  })
+  observeEvent(input$diagnosis, {
+    if (input$diagnosis > 0) {
+      removeClass(id = "diagnosis", class = "run_glowing_blue") 
     }
   })
   

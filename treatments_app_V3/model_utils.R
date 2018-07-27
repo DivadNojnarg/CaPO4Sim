@@ -752,14 +752,6 @@ generate_event_parms <- function(event_table) {
   }
 }
 
-
-# Function to handle events
-# Set the parameters corresponding to an injection/gavage
-trigger_event <- function() {
-    
-}
-
-
 # Function needed to produce cumulative plots
 accumulate_by <- function(dat, var) {
   var <- lazyeval::f_eval(var, dat)
