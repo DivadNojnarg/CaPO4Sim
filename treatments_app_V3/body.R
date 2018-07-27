@@ -18,15 +18,12 @@ body <- dashboardBody(
   #tags$head(includeScript("www/hotjar.js")),
   # include the script needed to find the web browser
   
-  # to print help
-  introjsUI(),
   # JS interactions
   useShinyjs(),
   extendShinyjs(script = "www/js/close.js"),
   includeScript(path = "www/js/find-navigator.js"),
   # print feedback for input
   useShinyFeedback(),
-  useSweetAlert(),
   setShadow("box"),
   setShadow("dropdown-menu"),
   setZoom("box", scale = 1.01),
