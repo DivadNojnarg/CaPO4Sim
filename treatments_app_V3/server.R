@@ -54,10 +54,6 @@ shinyServer(function(input, output, session) {
     "FGF_p"
   )
   
-  # initialization of event parameters
-  t_start <- NULL
-  t_stop <- NULL
-  
   # initialization of the patient feedback observer
   patient_feedback <- NULL
   
@@ -505,11 +501,11 @@ shinyServer(function(input, output, session) {
           inputId = "register_user",
           title = "How to start?",
           text = tagList(
-            "Welcome to the virtual CaPO4 patient simulator.
+            HTML("Welcome to the virtual CaPO4 patient simulator.
             A random patient was selected for you. The goal of 
-            the game is to find the corresponding disease and treat
-            the patient correctly, in exactly 15 minutes. Before starting enter your 
-            name.",
+            the game is to <b>find</b> the corresponding disease and <b>treat</b>
+            the patient correctly, in exactly <b>15 minutes</b>. 
+            Before starting enter your name."),
             hr(),
             column(
               align = "center",
@@ -1205,7 +1201,8 @@ shinyServer(function(input, output, session) {
   #  
   #  Integrate equations using deSolve package to generate table
   #  out is a reactive intermediate component that is called by
-  #  to make plots or other stuffs
+  #  to make plots or other stuffs. We used the compiled version of
+  #  the code, to make computations faster
   #
   #-------------------------------------------------------------------------
   
@@ -1233,14 +1230,30 @@ shinyServer(function(input, output, session) {
           } else {
             states$val[[length(states$val)]]
           }, 
-          times = times, 
-          func = calcium_phosphate_core, 
-          parms = parameters
+          times = times,
+          func = "derivs",
+          parms = parameters,
+          dllname = "compiled_core",
+          initfunc = "initmod",
+          nout = 33,
+          outnames = c(
+            "U_Ca", "U_PO4", "Abs_int_Ca", 
+            "Abs_int_PO4", "Res_Ca", "Res_PO4", 
+            "Ac_Ca", "Ac_PO4", "Reabs_Ca", "Reabs_PO4", 
+            "Ca_pf", "Ca_fp", "PO4_pf", "PO4_fp",
+            "PO4_pc", "PO4_cp", "PTHg_synth", 
+            "PTHg_synth_D3", "PTHg_synth_PO4",
+            "PTHg_exo_CaSR", "PTHg_deg", "PTHg_exo", 
+            "PTHp_deg", "Reabs_PT_PTH",
+            "Reabs_TAL_CaSR", "Reabs_TAL_PTH", 
+            "Reabs_DCT_PTH", "Reabs_DCT_D3",
+            "Abs_int_D3", "Res_PTH", "Res_D3", 
+            "Reabs_PT_PO4_PTH", "Reabs_PT_PO4_FGF"
+          )
         )
       )
     })
   })
-  
   
   # update initial conditions to the last state of the system each time an event
   # has occured. Need to delayed by the time needed for computation before updating

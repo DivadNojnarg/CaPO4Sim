@@ -51,8 +51,8 @@ source("generate_dynamicFooter.R")
 Sys.setenv(TZ = "Europe/Zurich")
 
 # compile the C code containing equations
-#system("R CMD SHLIB compiled_core.c")
-#dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))
+system("R CMD SHLIB compiled_core.c")
+dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))
 
 #------------------------------------------------------------------------- 
 #  

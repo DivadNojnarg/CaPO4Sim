@@ -732,11 +732,11 @@ generate_event_parms <- function(event_table) {
     t_start <- event_table[1, "start_time"]
     t_stop <- event_table[1, "stop_time"]
     
-    Ca_inject <- if (name == "Ca_inject") rate else NA
-    Ca_food <- if (name == "Ca_food") rate else NA
-    D3_inject <- if (name == "D3_inject") rate else NA
-    P_inject <- if (name == "P_inject") rate else NA
-    P_food <- if (name == "P_food") rate else NA
+    Ca_inject <- if (name == "Ca_inject") rate else 0
+    Ca_food <- if (name == "Ca_food") rate else 0
+    D3_inject <- if (name == "D3_inject") rate else 0
+    P_inject <- if (name == "P_inject") rate else 0
+    P_food <- if (name == "P_food") rate else 0
     
     return(
       c(
@@ -747,6 +747,18 @@ generate_event_parms <- function(event_table) {
         "D3_inject" = D3_inject,
         "P_inject" = P_inject,
         "P_food" = P_food
+      )
+    )
+  } else {
+    return(
+      c(
+        "t_start" = 0,
+        "t_stop" = 0,
+        "Ca_inject" = 0,
+        "Ca_food" = 0,
+        "D3_inject" = 0,
+        "P_inject" = 0,
+        "P_food" = 0
       )
     )
   }

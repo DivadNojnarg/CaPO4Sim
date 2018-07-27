@@ -159,14 +159,10 @@ parameters_fixed <- c(
   CaHPO4_norm = 1e000,
   CaH2PO4_norm = 1e000,
   CPP_norm = 1e000,
-  EGTA_norm = 1e000,
-  Ca_EGTA_norm = 1e000,
-  
-  # simulation
-  k_inject_FGF = 0,
-  k_inject_PTH = 0,
   
   # EGTA constants if any
+  EGTA_norm = 1e000,
+  Ca_EGTA_norm = 1e000,
   k_on_egta = 0,
   k_off_egta = 0,
   k_inject_egta = 0,

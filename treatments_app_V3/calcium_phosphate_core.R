@@ -27,18 +27,20 @@ calcium_phosphate_core <- function(t, state, parameters) {
     k_inject_P <- 0
     k_inject_Ca <- 0
     k_inject_D3 <- 0
+    k_inject_FGF <- 0
+    k_inject_PTH <- 0
     
-    if (exists("t_start") && exists("t_stop")) {
+    if (t_stop != 0) {
       if (t > t_start && t < t_stop) {
-        if (!is.na(Ca_inject)) {
+        if (Ca_inject != 0) {
           k_inject_Ca <- Ca_inject
-        } else if (!is.na(Ca_food)) {
+        } else if (Ca_food != 0) {
           I_Ca <- Ca_food
-        } else if (!is.na(D3_inject)) {
+        } else if (D3_inject != 0) {
           k_inject_D3 <- D3_inject * Vp
-        } else if (!is.na(P_inject)) {
+        } else if (P_inject != 0) {
           k_inject_P <- P_inject
-        } else if (!is.na(P_food)) {
+        } else if (P_food != 0) {
           I_P <- P_food
         }
       }
