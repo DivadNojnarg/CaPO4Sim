@@ -1183,7 +1183,7 @@ shinyServer(function(input, output, session) {
   # flush the stack of current events 
   # 5 seconds after the user click on run
   observeEvent(input$run, {
-    shinyjs::delay(5000, {
+    shinyjs::delay(1000, {
       events$current <- data.frame(
         id = NULL,
         real_time = NULL,
@@ -1260,7 +1260,7 @@ shinyServer(function(input, output, session) {
   # which is not really obvious since we don't know exactly what time it will take.
   observe({
     input$run
-    shinyjs::delay(3000, {
+    shinyjs::delay(1000, {
         out <- out()
         temp_state <- c(
           "PTH_g" = out[nrow(out),"PTH_g"], 
