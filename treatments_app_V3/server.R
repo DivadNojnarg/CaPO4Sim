@@ -501,6 +501,8 @@ shinyServer(function(input, output, session) {
           inputId = "register_user",
           title = "How to start?",
           text = tagList(
+            img(src = "interface_img/start.svg", width = "100px", height = "100px"),
+            br(),
             HTML("Welcome to the virtual CaPO4 patient simulator.
             A random patient was selected for you. The goal of 
             the game is to <b>find</b> the corresponding disease and <b>treat</b>
@@ -554,11 +556,15 @@ shinyServer(function(input, output, session) {
           danger_mode = TRUE,
           session, 
           title = "This is the end!",
-          text = HTML(
-            paste(
-              "It seems that the game is finished. 
-              You can restart or close the game."
-            )
+          text = tagList(
+            img(src = "interface_img/finish.svg", width = "100px", height = "100px"),
+            br(),
+            HTML(
+              paste(
+                "It seems that the game is finished. 
+                You can restart or close the game."
+              )
+              )
           ),
           btn_labels = c("Restart", "Stop"),
           type = "error",
@@ -734,10 +740,11 @@ shinyServer(function(input, output, session) {
         sendSweetAlert(
           session,
           title = paste0("Congratulations ", input$user_name, " !"),
-          text = "It seems that you discovered this patient disease. 
-          However, it would be better to treat him now. Remember you have
-          15 minutes to complete this activity.",
-          type = "success"
+          text = HTML(paste0("This patient has,", answer, 
+          "It would be better to treat him now. Remember you have
+          <b>15 minutes</b> to complete this activity.")),
+          type = "success",
+          html = TRUE
         ) 
       } else {
         events$answered <- FALSE
@@ -788,7 +795,7 @@ shinyServer(function(input, output, session) {
    }
    game_text <- if (!is.null(events$answered)) {
      if (events$answered) 
-       "Successful Diagnosis" 
+       "Successful diagnosis" 
      else "Unsuccessful diagnosis"
    } else {
      "No diagnosis yet"
@@ -1454,7 +1461,7 @@ shinyServer(function(input, output, session) {
           ) %>%
           layout(
             xaxis = list(
-              title = "time",
+              title = "time (min)",
               zeroline = FALSE
             ),
             yaxis = list(
