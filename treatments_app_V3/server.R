@@ -388,12 +388,6 @@ shinyServer(function(input, output, session) {
     if (events$logged) {
       boxPlus(
         title = tagList(
-          img(
-            class = "img-circle img-bordered-sm", 
-            src = "interface_img/monitor-2.svg", 
-            width = "40px", 
-            height = "40px"
-          ),
           actionBttn(
             inputId = "run",
             size = "lg",
@@ -401,14 +395,6 @@ shinyServer(function(input, output, session) {
             style = "fill",
             color = "primary",
             icon = icon("play")
-          ),
-          actionBttn(
-            inputId = "export",
-            size = "lg",
-            label = " Export",
-            style = "fill",
-            color = "success",
-            icon = icon("download")
           ),
           actionBttn(
             inputId = "summary",
@@ -601,76 +587,6 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  # save user events whenever export button is pressed
-  observeEvent(input$export, {
-    user_folder <- paste0(
-      getwd(), "/www/users_datas/", 
-      input$user_name, "-", start_time
-    )
-    
-    # save only if the event table contains elements
-    if (nrow(events$history) > 0) {
-      saveRDS(
-        object = events$history, 
-        file = paste0(user_folder, "/user_timeline.rds")
-      )
-      # otherwise explain the user what to do
-    } else {
-      sendSweetAlert(
-        session,
-        title = "Your timeline is currently empty, 
-        please trigger events before saving!",
-        type = "error"
-      )
-    }
-  })
-  
-  # save user comments whenever export button is pressed
-  observeEvent(input$export, {
-    user_folder <- paste0(
-      getwd(), "/www/users_datas/", 
-      input$user_name, "-", start_time
-    )
-    
-    # save user comments in a separate file
-    if (nrow(comments$history) > 0) {
-      saveRDS(
-        object = comments$history, 
-        file = paste0(user_folder, "/user_comments.rds")
-      )
-      # otherwise explain the user what to do
-    } else {
-      sendSweetAlert(
-        session,
-        title = "You do not have any comments!",
-        type = "error"
-      )
-    }
-  })
-  
-  # save user plasma analysis history whenever export button is pressed
-  observeEvent(input$export, {
-    user_folder <- paste0(
-      getwd(), "/www/users_datas/", 
-      input$user_name, "-", start_time
-    )
-    
-    # save user comments in a separate file
-    if (nrow(plasma_analysis$history) > 0) {
-      saveRDS(
-        object = plasma_analysis$history, 
-        file = paste0(user_folder, "/user_plasma_analysis.rds")
-      )
-      # otherwise explain the user what to do
-    } else {
-      sendSweetAlert(
-        session,
-        title = "You do not have any plasma analysis results!",
-        type = "error"
-      )
-    }
-  })
-  
   
   # # give the user the opportunity to load a previous session
   # observeEvent(input$register_user, {
@@ -813,8 +729,44 @@ shinyServer(function(input, output, session) {
   
   # clean users datas from empty folders when the user close the session
   session$onSessionEnded(function() {
-    user_folder <- paste0(getwd(), "/www/users_datas/")
-    dir_list <- list.dirs(user_folder)
+    
+    # wrap in observe to provide a reactive context
+    # save all user datas yhen the session is closed
+    observe({
+      user_folder <- paste0(
+        getwd(), "/www/users_datas/", 
+        input$user_name, "-", start_time
+      )
+      
+      # save user events
+      if (nrow(events$history) > 0) {
+        saveRDS(
+          object = events$history, 
+          file = paste0(user_folder, "/user_timeline.rds")
+        )
+      } 
+      
+      # save user comments
+      if (nrow(comments$history) > 0) {
+        saveRDS(
+          object = comments$history, 
+          file = paste0(user_folder, "/user_comments.rds")
+        )
+      }
+      
+      # save user plasma analysis history
+      else if (nrow(plasma_analysis$history) > 0) {
+        saveRDS(
+          object = plasma_analysis$history, 
+          file = paste0(user_folder, "/user_plasma_analysis.rds")
+        )
+      }
+    })
+    
+    
+    # clean all the empty folders
+    users_folder <- paste0(getwd(), "/www/users_datas/")
+    dir_list <- list.dirs(users_folder)
     if (length(dir_list) > 1) {
       lapply(2:length(dir_list), FUN = function(i) {
         temp_dir <- dir_list[[i]]
