@@ -65,6 +65,26 @@ shinyServer(function(input, output, session) {
   start_time <- Sys.time()
   end_time <- start_time + minutes_time * 60
   
+  # store the app url
+  app_url <- reactive({
+    paste0(
+      session$clientData$url_protocol, "//",
+      session$clientData$url_hostname, ":",
+      session$clientData$url_port
+    )
+  })
+  
+  # store the current user folder
+  user_folder <- reactive({
+    paste0(
+      getwd(), "/www/users_datas/", 
+      input$user_name, "-", start_time
+    )
+  })
+  
+  # all users folders (use for cleaning up empty files)
+  users_folder <- paste0(getwd(), "/www/users_datas/")
+  
   #------------------------------------------------------------------------- 
   #  Store times, state and parameters in reactive values that can
   #  react to user inputs
@@ -589,10 +609,9 @@ shinyServer(function(input, output, session) {
   
   # init the directory where user datas will be saved
   observeEvent(input$register_user, {
-    user_folder <- paste0(getwd(), "/www/users_datas/")
     if (input$register_user) {
       # create the new folder
-      dir.create(paste0(user_folder, input$user_name, "-", start_time))
+      dir.create(user_folder())
     }
   })
   
@@ -682,13 +701,9 @@ shinyServer(function(input, output, session) {
       }
       
       # save the answer status
-      user_folder <- paste0(
-        getwd(), "/www/users_datas/", 
-        input$user_name, "-", start_time
-      )
       saveRDS(
         object = events$answered, 
-        file = paste0(user_folder, "/user_answer.rds")
+        file = paste0(user_folder(), "/user_answer.rds")
       )
     } else {
       sendSweetAlert(
@@ -736,22 +751,18 @@ shinyServer(function(input, output, session) {
    )
   })
   
-  # clean users datas from empty folders when the user close the session
+  # save all datas when the session is closed
+  # avoid to lose data in case of issue
   session$onSessionEnded(function() {
     
     # wrap in observe to provide a reactive context
     # save all user datas yhen the session is closed
     observe({
-      user_folder <- paste0(
-        getwd(), "/www/users_datas/", 
-        input$user_name, "-", start_time
-      )
-      
       # save user events
       if (nrow(events$history) > 0) {
         saveRDS(
           object = events$history, 
-          file = paste0(user_folder, "/user_timeline.rds")
+          file = paste0(user_folder(), "/user_timeline.rds")
         )
       } 
       
@@ -759,22 +770,22 @@ shinyServer(function(input, output, session) {
       if (nrow(comments$history) > 0) {
         saveRDS(
           object = comments$history, 
-          file = paste0(user_folder, "/user_comments.rds")
+          file = paste0(user_folder(), "/user_comments.rds")
         )
       }
       
       # save user plasma analysis history
-      else if (nrow(plasma_analysis$history) > 0) {
+      if (nrow(plasma_analysis$history) > 0) {
         saveRDS(
           object = plasma_analysis$history, 
-          file = paste0(user_folder, "/user_plasma_analysis.rds")
+          file = paste0(user_folder(), "/user_plasma_analysis.rds")
         )
       }
     })
-    
-    
-    # clean all the empty folders
-    users_folder <- paste0(getwd(), "/www/users_datas/")
+  })
+  
+  # clean all the empty folders at the application startup
+  observe({
     dir_list <- list.dirs(users_folder)
     if (length(dir_list) > 1) {
       lapply(2:length(dir_list), FUN = function(i) {
@@ -784,7 +795,6 @@ shinyServer(function(input, output, session) {
       })
     }
   })
-  
   
   #------------------------------------------------------------------------- 
   # Calcium/PTH/D3/FGF3 feedback: give the user some feedback 
@@ -1453,7 +1463,6 @@ shinyServer(function(input, output, session) {
     out <- out()
     len <- length(out_history$item)
     if (len >= 1) {
-      print(nrow(out_history$item[[len]]))
       # translate all time by the number of time points
       # in the previous run + 1
       out_history$counter <- out_history$counter + nrow(out_history$item[[len]])
