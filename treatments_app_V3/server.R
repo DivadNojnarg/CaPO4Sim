@@ -7,7 +7,7 @@
 #  June 12th, 2017
 #-------------------------------------------------------------------------
 
-shinyServer(function(input, output, session) {
+server <- function(input, output, session) {
   
   #------------------------------------------------------------------------- 
   #  useful datas: initialization. These datq are not in global.R since
@@ -84,7 +84,7 @@ shinyServer(function(input, output, session) {
   
   # all users folders (use for cleaning up empty files)
   users_folder <- paste0(getwd(), "/www/users_datas/")
-  
+
   #------------------------------------------------------------------------- 
   #  Store times, state and parameters in reactive values that can
   #  react to user inputs
@@ -1909,4 +1909,4 @@ shinyServer(function(input, output, session) {
   # output$dynamicFooter <- renderFooter({ 
   #   generate_dynamicFooter() 
   # })
-})
+}

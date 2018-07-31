@@ -16,7 +16,7 @@
 
 # Define UI
 #header_box_network,
-dashboardPagePlus(
+ui <- dashboardPagePlus(
   enable_preloader = TRUE,
   loading_duration = 3,
   collapse_sidebar = TRUE,
