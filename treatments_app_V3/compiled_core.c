@@ -12,7 +12,7 @@
 
 
 /* define parameters */
-static double parameters[129];
+static double parameters[130];
 
 #define k_prod_PTHg parameters[0]      
 #define D3_inact parameters[1]         
@@ -147,11 +147,12 @@ static double parameters[129];
 #define D3_inject parameters[126]
 #define P_inject parameters[127]
 #define P_food parameters[128]
+#define D3_intake_reduction parameters[129]
 
 /* initializer  */
 void initmod(void (* odeparms)(int *, double *))
 {
-  int N=129;
+  int N = 130;
   odeparms(&N, parameters);
 }
 /* Derivatives and 1 output variable */
@@ -229,7 +230,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   PTHp_degradation_norm = k_deg_PTHp * y[1] / Vp;
   
   /* D3p */
-  D3_basal_synthesis_norm = k_conv_min * D3_inact / D3_norm;
+  D3_basal_synthesis_norm = 1/D3_intake_reduction * k_conv_min * D3_inact / D3_norm;
   D3_conv_PTH_norm = (delta_conv_max * (D3_inact / D3_norm) * pow(y[1] / Vp, n_conv)) /
                      (pow(y[1] / Vp, n_conv) + pow(K_conv / PTH_p_norm, n_conv));
   D3_conv_Ca_norm = 1 / (1 + gamma_ca_conv * Ca_p_norm * y[4]);

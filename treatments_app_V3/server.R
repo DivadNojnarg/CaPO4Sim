@@ -32,6 +32,8 @@ shinyServer(function(input, output, session) {
     answer <- c("hypoparathyroidism")
   } else if (patient_disease == "hypoD3") {
     answer <- c("vitamin D3 deficiency")
+  } else if (patient_disease == "hyperD3") {
+    answer <- c("vitamin D3 intoxication")
   }
   
   # below is needed to handle treatments events
@@ -42,7 +44,8 @@ shinyServer(function(input, output, session) {
     "Ca_inject",
     "P_food",
     "P_inject",
-    "cinacalcet"
+    "cinacalcet",
+    "D3_intake_reduction"
   )
   
   # plot summary list
@@ -94,7 +97,10 @@ shinyServer(function(input, output, session) {
       patient_disease == "php1", 300*4.192, 
       ifelse(patient_disease == "hypopara", 0, 4.192)
       ), 
-      "D3_inact" = ifelse(patient_disease == "hypoD3", 0, 2.5e-005)
+      "D3_inact" = ifelse(
+        patient_disease == "hypoD3", 0, 
+        ifelse(patient_disease == "hyperD3", 2.5e-003, 2.5e-005)
+      )
     )
   })
   
@@ -146,7 +152,7 @@ shinyServer(function(input, output, session) {
             actionBttn(
               inputId = "diagnosis",
               size = "lg",
-              label = "Diagnose patient!",
+              label = "Diagnosis",
               style = "fill",
               color = "primary",
               icon = icon("search")
@@ -288,7 +294,8 @@ shinyServer(function(input, output, session) {
               "Ca iv injection" = "Ca_inject",
               "Pi iv injection" = "P_inject",
               "Pi supplementation" = "P_food",
-              "cinacalcet" = "cinacalcet"
+              "cinacalcet" = "cinacalcet",
+              "D3 intake reduction" = "D3_intake_reduction"
             ),
             thick = TRUE,
             inline = TRUE,

@@ -737,6 +737,7 @@ generate_event_parms <- function(event_table) {
     D3_inject <- if (name == "D3_inject") rate else 0
     P_inject <- if (name == "P_inject") rate else 0
     P_food <- if (name == "P_food") rate else 0
+    D3_intake_reduction <- if (name == "D3_intake_reduction") rate else 1
     
     return(
       c(
@@ -746,7 +747,8 @@ generate_event_parms <- function(event_table) {
         "Ca_food" = Ca_food,
         "D3_inject" = D3_inject,
         "P_inject" = P_inject,
-        "P_food" = P_food
+        "P_food" = P_food,
+        "D3_intake_reduction" = D3_intake_reduction
       )
     )
   } else {
@@ -758,7 +760,8 @@ generate_event_parms <- function(event_table) {
         "Ca_food" = 0,
         "D3_inject" = 0,
         "P_inject" = 0,
-        "P_food" = 0
+        "P_food" = 0,
+        "D3_intake_reduction" = 1
       )
     )
   }

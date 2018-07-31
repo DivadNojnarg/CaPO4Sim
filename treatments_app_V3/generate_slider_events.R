@@ -61,6 +61,18 @@ generate_slider_events <- function(input) {
         shinyInput_label_embed(
           icon("info") %>%
             bs_embed_tooltip(title = "PO4 injection (μmol/min)"))
+    } else if (input$treatment_selected == "D3_intake_reduction") {
+      sliderInput(
+        "D3_intake_reduction", 
+        "D3 intake reduction", 
+        value = 1, 
+        min = 1, 
+        max = 100, 
+        step = 1
+      ) %>%
+        shinyInput_label_embed(
+          icon("info") %>%
+            bs_embed_tooltip(title = "D3 intake reduction fold"))
     }, 
     
     # Start, stop and add

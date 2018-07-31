@@ -36,16 +36,16 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
   # setup initial conditions depending on the disease_id
   state_folder <- paste0(getwd(), "/treatments_app_V3/www/model_engine")
   if (disease_id == "php1") {
-    state <- read.csv(paste0(state_folder, "/init_php1.csv"),
-                      stringsAsFactors = FALSE)
+    state <- read.csv(paste0(state_folder, "/init_php1.csv"), stringsAsFactors = FALSE)
     state <- unlist(state[,-1])
   } else if (disease_id == "hypopara") {
-    state <- read.csv(paste0(state_folder, "/init_hypopara.csv"),
-                      stringsAsFactors = FALSE)
+    state <- read.csv(paste0(state_folder, "/init_hypopara.csv"), stringsAsFactors = FALSE)
     state <- unlist(state[,-1])
   } else if (disease_id == "hypoD3") {
-    state <- read.csv(paste0(state_folder, "/init_hypoD3.csv"),
-                      stringsAsFactors = FALSE)
+    state <- read.csv(paste0(state_folder, "/init_hypoD3.csv"), stringsAsFactors = FALSE)
+    state <- unlist(state[,-1])
+  } else if (disease_id == "hyperD3") {
+    state <- read.csv(paste0(state_folder, "/init_hyperD3.csv"), stringsAsFactors = FALSE)
     state <- unlist(state[,-1])
   }
   
