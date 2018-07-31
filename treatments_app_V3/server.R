@@ -72,7 +72,9 @@ shinyServer(function(input, output, session) {
   #-------------------------------------------------------------------------
   
   # Basic reactive expressions needed by the solver
-  times <- reactive({seq(0,input$tmax, by = 1)})
+  times <- reactive({ 
+    seq(0, ifelse(parameters()[["t_stop"]] != 0, parameters()[["t_stop"]], input$tmax), by = 1)
+  })
   
  # initial conditions
   states <- reactiveValues(
@@ -1356,7 +1358,6 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  
   # cumulative plot (5 plots)
   lapply(1:length(summary_plot_names), FUN = function(i) {
     name <- summary_plot_names[[i]]
@@ -1452,9 +1453,10 @@ shinyServer(function(input, output, session) {
     out <- out()
     len <- length(out_history$item)
     if (len >= 1) {
+      print(nrow(out_history$item[[len]]))
       # translate all time by the number of time points
       # in the previous run + 1
-      out_history$counter <- out_history$counter + 501
+      out_history$counter <- out_history$counter + nrow(out_history$item[[len]])
       out[, "time"] <- out[, "time"] + out_history$counter
     }
     out_history$item[[len + 1]] <- out 
