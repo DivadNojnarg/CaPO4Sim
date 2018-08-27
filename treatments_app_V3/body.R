@@ -47,9 +47,7 @@ body <- dashboardBody(
           # profile box
           uiOutput("patient_info"),
           # user notebook
-          uiOutput("user_notebook"),
-          # info box (previous diseases, treatments)
-          uiOutput("patient_history")
+          uiOutput("user_notebook")
         ),
         
         # patient operation table

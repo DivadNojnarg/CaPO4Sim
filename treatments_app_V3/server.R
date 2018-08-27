@@ -84,7 +84,7 @@ server <- function(input, output, session) {
   
   # all users folders (use for cleaning up empty files)
   users_folder <- paste0(getwd(), "/www/users_datas/")
-
+  
   #------------------------------------------------------------------------- 
   #  Store times, state and parameters in reactive values that can
   #  react to user inputs
@@ -96,7 +96,7 @@ server <- function(input, output, session) {
     seq(0, ifelse(parameters()[["t_stop"]] != 0, parameters()[["t_stop"]], input$tmax), by = 1)
   })
   
- # initial conditions
+  # initial conditions
   states <- reactiveValues(
     val = list(), 
     counter = 1,
@@ -118,11 +118,11 @@ server <- function(input, output, session) {
     c("k_prod_PTHg" = ifelse(
       patient_disease == "php1", 300*4.192, 
       ifelse(patient_disease == "hypopara", 0, 4.192)
-      ), 
-      "D3_inact" = ifelse(
-        patient_disease == "hypoD3", 0, 
-        ifelse(patient_disease == "hyperD3", 2.5e-003, 2.5e-005)
-      )
+    ), 
+    "D3_inact" = ifelse(
+      patient_disease == "hypoD3", 0, 
+      ifelse(patient_disease == "hyperD3", 2.5e-003, 2.5e-005)
+    )
     )
   })
   
@@ -143,12 +143,20 @@ server <- function(input, output, session) {
   # patient info box
   output$patient_info <- renderUI({
     if (events$logged) {
+      
+      medical_history <- patient_datas$medical_history
+      len <- length(medical_history$pathologies)
+      
       boxPlus(
         width = 12, 
         solidHeader = FALSE, 
         status = "primary", 
         collapsible = TRUE,
         closable = FALSE,
+        title = "Medical History", 
+        enable_label = TRUE,
+        label_text = len,
+        label_status = "danger",
         boxProfile(
           src = patient_datas$picture,
           title = patient_datas$name,
@@ -167,20 +175,38 @@ server <- function(input, output, session) {
               title = "Weight",
               description = patient_datas$weight
             )
-          ),
-          column(
-            width = 12,
-            align = "center",
-            actionBttn(
-              inputId = "diagnosis",
-              size = "lg",
-              label = "Diagnosis",
-              style = "fill",
-              color = "primary",
-              icon = icon("search")
-            )
           )
-        )
+        ),
+        br(),
+        hr(),
+        br(),
+        lapply(1:len, FUN = function(i){
+          userPost(
+            id = i,
+            collapsed = FALSE,
+            src = medical_history$doctors_avatars[[i]],
+            author = medical_history$doctors[[i]],
+            description = strong(medical_history$pathologies[[i]]),
+            paste(medical_history$disease_description[[i]]),
+            if (!is.null(medical_history$disease_image[[i]])) {
+              userPostMedia(
+                src = medical_history$disease_image[[i]],
+                width = "300", 
+                height = "300"
+              )
+            },
+            userPostToolItemList(
+              userPostToolItem(
+                dashboardLabel(
+                  medical_history$examination_dates[[i]], 
+                  status = "warning"
+                ), 
+                side = "right"
+              )
+            ),
+            br()
+          )
+        })
       ) 
     }
   })
@@ -198,6 +224,19 @@ server <- function(input, output, session) {
         title = paste0(input$user_name, "'s notebook"),
         subtitle = start_time,
         src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+        column(
+          width = 12,
+          align = "center",
+          actionBttn(
+            inputId = "diagnosis",
+            size = "lg",
+            label = "Diagnosis",
+            style = "fill",
+            color = "primary",
+            icon = icon("search")
+          )
+        ), 
+        hr(),
         textAreaInput(
           inputId = "user_comment", 
           label = "My Comment", 
@@ -234,156 +273,110 @@ server <- function(input, output, session) {
     }
   })
   
-  # patient medical history
-  output$patient_history <- renderUI({
-    if (events$logged) {
-      medical_history <- patient_datas$medical_history
-      len <- length(medical_history$pathologies)
-      
-      boxPlus(
-        width = 12, 
-        solidHeader = FALSE, 
-        status = "primary",
-        title = "Medical History", 
-        collapsible = TRUE,
-        closable = FALSE,
-        enable_label = TRUE,
-        label_text = len,
-        label_status = "danger",
-        
-        lapply(1:len, FUN = function(i){
-          userPost(
-            id = i,
-            src = medical_history$doctors_avatars[[i]],
-            author = medical_history$doctors[[i]],
-            description = strong(medical_history$pathologies[[i]]),
-            paste(medical_history$disease_description[[i]]),
-            if (!is.null(medical_history$disease_image[[i]])) {
-              userPostMedia(
-                src = medical_history$disease_image[[i]],
-                width = "300", 
-                height = "300"
-              )
-            },
-            userPostToolItemList(
-              userPostToolItem(
-                dashboardLabel(
-                  medical_history$examination_dates[[i]], 
-                  status = "warning"
-                ), 
-                side = "right"
-              )
-            ),
-            br()
-          )
-        })
-      )
-    }
-  })
-  
-  
   # Event to be added in the timeLine
   output$recent_events <- renderUI({
     if (events$logged) {
-      len <- nrow(events$history)
-      name <- events$history$event
-      start_time <- events$history$real_time
-      rate <- events$history$rate
-      plasma_values <- plasma_analysis$history
-      
-      withMathJax(
-        boxPlus(
-          width = 12, 
-          solidHeader = FALSE, 
-          status = "primary",
-          collapsible = TRUE,
-          closable = FALSE, 
-          enable_label = TRUE,
-          label_text = len,
-          label_status = "danger",
-          style = "overflow-y: auto;",
-          title = "Recent Events",
-          
-          # treatments input are
-          # in the event box
-          prettyCheckboxGroup(
-            inputId = "treatment_selected",
-            label = "Select a new treatment:",
-            choices = c(
-              "parathyroid surgery" = "PTX",
-              "D3 iv injection" = "D3_inject",
-              "Ca supplementation" = "Ca_food",
-              "Ca iv injection" = "Ca_inject",
-              "Pi iv injection" = "P_inject",
-              "Pi supplementation" = "P_food",
-              "cinacalcet" = "cinacalcet",
-              "D3 intake reduction" = "D3_intake_reduction"
+      if (!is.null(events$answered)) {
+        len <- nrow(events$history)
+        name <- events$history$event
+        start_time <- events$history$real_time
+        rate <- events$history$rate
+        plasma_values <- plasma_analysis$history
+        
+        withMathJax(
+          boxPlus(
+            width = 12, 
+            solidHeader = FALSE, 
+            status = "primary",
+            collapsible = TRUE,
+            closable = FALSE, 
+            enable_label = TRUE,
+            label_text = len,
+            label_status = "danger",
+            style = "overflow-y: auto;",
+            title = "Recent Events",
+            
+            # treatments input are
+            # in the event box
+            prettyCheckboxGroup(
+              inputId = "treatment_selected",
+              label = "Select a new treatment:",
+              choices = c(
+                "parathyroid surgery" = "PTX",
+                "D3 iv injection" = "D3_inject",
+                "Ca supplementation" = "Ca_food",
+                "Ca iv injection" = "Ca_inject",
+                "Pi iv injection" = "P_inject",
+                "Pi supplementation" = "P_food",
+                "cinacalcet" = "cinacalcet",
+                "D3 intake reduction" = "D3_intake_reduction"
+              ),
+              thick = TRUE,
+              inline = TRUE,
+              animation = "pulse"
             ),
-            thick = TRUE,
-            inline = TRUE,
-            animation = "pulse"
-          ),
-          uiOutput(outputId = "sliderInject"),
-          hr(),
-          
-          if (len > 0) {
-            timelineBlock(
-              style = "height: 400px;",
-              timelineStart(color = "danger"),
-              br(),
-              lapply(1:len, FUN = function(i){
-                tagAppendAttributes(
-                  timelineItem(
-                    title = name[[i]],
-                    icon = "medkit",
-                    color = "orange",
-                    time = dashboardLabel(
-                      style = "default", 
-                      status = "warning", 
-                      start_time[[i]]
-                    ),
-                    timelineItemMedia(
-                      src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
-                        "treatments_img/syringe.svg"
-                      } else if (name[[i]] %in% c("Ca_food", "P_food")) {
-                        "treatments_img/medicine.svg"
-                      } else if (name[[i]] == "PTX") {
-                        "treatments_img/surgery.svg"
-                      } else if (name[[i]] == "cinacalcet") {
-                        "treatments_img/pills.svg"
-                      } else if (name[[i]] == "plasma analysis") {
-                        "treatments_img/test-tube.svg"
+            uiOutput(outputId = "sliderInject"),
+            hr(),
+            
+            if (len > 0) {
+              timelineBlock(
+                style = "height: 400px;",
+                timelineStart(color = "danger"),
+                br(),
+                lapply(1:len, FUN = function(i){
+                  tagAppendAttributes(
+                    timelineItem(
+                      title = name[[i]],
+                      icon = "medkit",
+                      color = "orange",
+                      time = dashboardLabel(
+                        style = "default", 
+                        status = "warning", 
+                        start_time[[i]]
+                      ),
+                      timelineItemMedia(
+                        src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                          "treatments_img/syringe.svg"
+                        } else if (name[[i]] %in% c("Ca_food", "P_food")) {
+                          "treatments_img/medicine.svg"
+                        } else if (name[[i]] == "PTX") {
+                          "treatments_img/surgery.svg"
+                        } else if (name[[i]] == "cinacalcet") {
+                          "treatments_img/pills.svg"
+                        } else if (name[[i]] == "plasma analysis") {
+                          "treatments_img/test-tube.svg"
+                        },
+                        width = "40", 
+                        height = "40"
+                      ),
+                      # in case of plasma analysis, display the results next to the logo
+                      if (name[[i]] == "plasma analysis") {
+                        tagList(
+                          paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
+                          paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
+                          paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
+                          paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
+                          paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
+                        )
                       },
-                      width = "40", 
-                      height = "40"
+                      footer = if (!is.null(name[[i]])) {
+                        if (name[[i]] != "PTX") 
+                          if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
+                            dashboardLabel(status = "danger", rate[[i]])
+                          }
+                        else NULL
+                      }
                     ),
-                    # in case of plasma analysis, display the results next to the logo
-                    if (name[[i]] == "plasma analysis") {
-                      tagList(
-                        paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
-                        paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
-                        paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
-                        paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
-                        paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
-                      )
-                    },
-                    footer = if (!is.null(name[[i]])) {
-                      if (name[[i]] != "PTX") 
-                        if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
-                          dashboardLabel(status = "danger", rate[[i]])
-                        }
-                      else NULL
-                    }
-                  ),
-                  align = "middle"
-                )
-              }),
-              br(),
-              timelineEnd(color = "gray")
-            )
-          }
-        )
-      )
+                    align = "middle"
+                  )
+                }),
+                br(),
+                timelineEnd(color = "gray")
+              )
+            }
+          )
+        )   
+      }
     }
   })
   
@@ -410,7 +403,7 @@ server <- function(input, output, session) {
       )
     }
   })
-
+  
   
   # network box
   output$network_box <- renderUI({
@@ -480,7 +473,7 @@ server <- function(input, output, session) {
   percent_countdown <- reactive({
     countdown() / minutes_time * 100
   })
-    
+  
   # render the progress bar for countdown
   output$currentTime <- renderUI({
     countdown <- countdown()
@@ -579,7 +572,7 @@ server <- function(input, output, session) {
                 "It seems that the game is finished. 
                 You can restart or close the game."
               )
-              )
+            )
           ),
           btn_labels = c("Restart", "Stop"),
           type = "error",
@@ -591,19 +584,19 @@ server <- function(input, output, session) {
   
   # Handle what happens when the user close or restart the app
   observeEvent(input$close_app, {
-      if (input$close_app) {
-        sendSweetAlert(
-          session, 
-          title = "Stop in 5 seconds...", 
-          type = "error"
-        )
-        shinyjs::delay(5000, {
-          js$closeWindow()
-          stopApp()
-        })
-      } else {
-        session$reload()
-      }
+    if (input$close_app) {
+      sendSweetAlert(
+        session, 
+        title = "Stop in 5 seconds...", 
+        type = "error"
+      )
+      shinyjs::delay(5000, {
+        js$closeWindow()
+        stopApp()
+      })
+    } else {
+      session$reload()
+    }
   })
   
   
@@ -685,7 +678,7 @@ server <- function(input, output, session) {
           session,
           title = paste0("Congratulations ", input$user_name, " !"),
           text = HTML(paste0("This patient has,", answer, 
-          "It would be better to treat him now. Remember you have
+                             "It would be better to treat him now. Remember you have
           <b>15 minutes</b> to complete this activity.")),
           type = "success",
           html = TRUE
@@ -728,27 +721,27 @@ server <- function(input, output, session) {
   # a label to indicate the user whether the diagnosis is ok or not
   # in the header
   output$user_game_status <- renderUI({
-   game_status <- if (!is.null(events$answered)) {
-     if (events$answered) "success" else "danger"
-   } else {
-     "warning"
-   }
-   game_text <- if (!is.null(events$answered)) {
-     if (events$answered) 
-       "Successful diagnosis" 
-     else "Unsuccessful diagnosis"
-   } else {
-     "No diagnosis yet"
-   }
-   div(
-     style = "margin-top: 7.5px; margin-left: 10px;",
-     class = "diagnosis-badge",
-     dashboardLabel(
-       game_text, 
-       status = game_status, 
-       style = "square"
-     )
-   )
+    game_status <- if (!is.null(events$answered)) {
+      if (events$answered) "success" else "danger"
+    } else {
+      "warning"
+    }
+    game_text <- if (!is.null(events$answered)) {
+      if (events$answered) 
+        "Successful diagnosis" 
+      else "Unsuccessful diagnosis"
+    } else {
+      "No diagnosis yet"
+    }
+    div(
+      style = "margin-top: 7.5px; margin-left: 10px;",
+      class = "diagnosis-badge",
+      dashboardLabel(
+        game_text, 
+        status = game_status, 
+        style = "square"
+      )
+    )
   })
   
   # save all datas when the session is closed
@@ -803,62 +796,62 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
   
   
-  # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
-  observe({
-    out <- out()
-    # event only triggered if the user is logged in
-    if (events$logged) {
-      
-      # Calcium conditions
-      Cap_range <- (out[, "Ca_p"] > 1.1 && out[, "Ca_p"] < 1.3)
-      # Pi conditions
-      PO4p_range <- (out[, "PO4_p"] > 0.8 && out[, "PO4_p"] < 1.5)
-      # PTH conditions
-      PTHp_range <- (out[, "PTH_p"] > 8 && out[, "PTH_p"] < 51)
-      # D3 conditions
-      D3p_range <- (out[, "D3_p"] > 80 && out[, "D3_p"] < 700)
-      # FGF23 conditions
-      FGFp_range <- (out[, "FGF_p"] > 12 && out[, "FGF_p"] < 21)
-      
-      if (!Cap_range) {
-        patient_feedback <- paste0(
-          patient_feedback, p(" [Ca2+]p is out of bounds", class = "text-danger")
-        )
-      }
-      if (!PO4p_range) {
-        patient_feedback <- paste0(
-          patient_feedback, p(" [Pi]p is out of bounds", class = "text-danger")
-        )
-      }
-      if (!PTHp_range) {
-        patient_feedback <- paste0(
-          patient_feedback, p(" [PTH]p is out of bounds", class = "text-danger")
-        )
-      }
-      if (!D3p_range) {
-        patient_feedback <- paste0(
-          patient_feedback, p(" [D3]p is out of bounds", class = "text-danger")
-        )
-      }
-      if (!FGFp_range) {
-        patient_feedback <- paste0(
-          patient_feedback, p(" [FGF23]p is out of bounds", class = "text-danger")
-        )
-      }
-      
-      # send the alert message with all feedbacks
-      sendSweetAlert(
-        session,
-        title = paste0("Oups ", input$user_name, " !"),
-        text = HTML(paste0(
-          "It seems that: ", patient_feedback,
-          "You should do something!")
-        ),
-        type = "warning",
-        html = TRUE
-      ) 
-    }
-  })
+  # # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
+  # observe({
+  #   out <- out()
+  #   # event only triggered if the user is logged in
+  #   if (events$logged) {
+  #     
+  #     # Calcium conditions
+  #     Cap_range <- (out[, "Ca_p"] > 1.1 && out[, "Ca_p"] < 1.3)
+  #     # Pi conditions
+  #     PO4p_range <- (out[, "PO4_p"] > 0.8 && out[, "PO4_p"] < 1.5)
+  #     # PTH conditions
+  #     PTHp_range <- (out[, "PTH_p"] > 8 && out[, "PTH_p"] < 51)
+  #     # D3 conditions
+  #     D3p_range <- (out[, "D3_p"] > 80 && out[, "D3_p"] < 700)
+  #     # FGF23 conditions
+  #     FGFp_range <- (out[, "FGF_p"] > 12 && out[, "FGF_p"] < 21)
+  #     
+  #     if (!Cap_range) {
+  #       patient_feedback <- paste0(
+  #         patient_feedback, p(" [Ca2+]p is out of bounds", class = "text-danger")
+  #       )
+  #     }
+  #     if (!PO4p_range) {
+  #       patient_feedback <- paste0(
+  #         patient_feedback, p(" [Pi]p is out of bounds", class = "text-danger")
+  #       )
+  #     }
+  #     if (!PTHp_range) {
+  #       patient_feedback <- paste0(
+  #         patient_feedback, p(" [PTH]p is out of bounds", class = "text-danger")
+  #       )
+  #     }
+  #     if (!D3p_range) {
+  #       patient_feedback <- paste0(
+  #         patient_feedback, p(" [D3]p is out of bounds", class = "text-danger")
+  #       )
+  #     }
+  #     if (!FGFp_range) {
+  #       patient_feedback <- paste0(
+  #         patient_feedback, p(" [FGF23]p is out of bounds", class = "text-danger")
+  #       )
+  #     }
+  #     
+  #     # send the alert message with all feedbacks
+  #     sendSweetAlert(
+  #       session,
+  #       title = paste0("Oups ", input$user_name, " !"),
+  #       text = HTML(paste0(
+  #         "It seems that: ", patient_feedback,
+  #         "You should do something!")
+  #       ),
+  #       type = "warning",
+  #       html = TRUE
+  #     ) 
+  #   }
+  # })
   
   # output$current_calcium <- renderUI({
   #   Ca_p <- round(out()[, "Ca_p"], 2)
@@ -1042,16 +1035,70 @@ server <- function(input, output, session) {
     # the same treatment can be added
     # multiple times. However, parathyroidectomy
     # cannot be performed more than once
-      if (input$treatment_selected != "PTX" &
-          input$treatment_selected != "cinacalcet") {
+    if (input$treatment_selected != "PTX" &
+        input$treatment_selected != "cinacalcet") {
+      if (nrow(events$history) == 0) {
+        temp_event <- data.frame(
+          id = events$counter,
+          real_time = Sys.time(),
+          event = input$treatment_selected,
+          rate = input[[paste(input$treatment_selected)]],
+          start_time = 0,
+          stop_time = input$t_stop,
+          status = "active",
+          stringsAsFactors = FALSE
+        )
+      } else {
+        temp_event <- data.frame(
+          id = events$counter,
+          # if PTX was performed before, we do not need to wait
+          real_time = if (events$history[nrow(events$history), "event"] == "PTX" ||
+                          events$history[nrow(events$history), "event"] == "plasma analysis") {
+            events$history[nrow(events$history), "real_time"]
+            # need to wait before the end of the previous event
+          } else {
+            # calculate the time difference between the previous event
+            # end and when the user press the add event button
+            dt <- difftime(
+              time1 = Sys.time(), 
+              time2 = events$history[nrow(events$history), "real_time"] + 
+                as.numeric(events$history[nrow(events$history), "stop_time"]), 
+              units = c("mins"), 
+              tz = Sys.timezone(location = TRUE)
+            )
+            # if the user press before the previous event is finished
+            # we consider that the next event happens just after 
+            if (dt <= 0) {
+              events$history[nrow(events$history), "real_time"] + 
+                as.numeric(events$history[nrow(events$history), "stop_time"]) +
+                input$t_stop
+              # otherwise, we consider the elapsed time plus the time
+              # that takes the event (t_stop)
+            } else {
+              Sys.time() + input$t_stop
+            }
+          },
+          event = input$treatment_selected,
+          rate = input[[paste(input$treatment_selected)]],
+          start_time = 0,
+          stop_time = input$t_stop,
+          status = "active",
+          stringsAsFactors = FALSE
+        )
+      }
+      events$history <- rbind(events$history, temp_event)
+      events$counter <- events$counter + 1
+      events$current <- temp_event
+    } else {
+      if (!isTRUE(events$PTX)) {
         if (nrow(events$history) == 0) {
           temp_event <- data.frame(
             id = events$counter,
             real_time = Sys.time(),
             event = input$treatment_selected,
-            rate = input[[paste(input$treatment_selected)]],
-            start_time = 0,
-            stop_time = input$t_stop,
+            rate = "undefined", 
+            start_time = "undefined",
+            stop_time = "undefined",
             status = "active",
             stringsAsFactors = FALSE
           )
@@ -1059,8 +1106,7 @@ server <- function(input, output, session) {
           temp_event <- data.frame(
             id = events$counter,
             # if PTX was performed before, we do not need to wait
-            real_time = if (events$history[nrow(events$history), "event"] == "PTX" ||
-                            events$history[nrow(events$history), "event"] == "plasma analysis") {
+            real_time = if (events$history[nrow(events$history), "event"] == "plasma analysis") {
               events$history[nrow(events$history), "real_time"]
               # need to wait before the end of the previous event
             } else {
@@ -1069,93 +1115,40 @@ server <- function(input, output, session) {
               dt <- difftime(
                 time1 = Sys.time(), 
                 time2 = events$history[nrow(events$history), "real_time"] + 
-                        as.numeric(events$history[nrow(events$history), "stop_time"]), 
+                  as.numeric(events$history[nrow(events$history), "stop_time"]), 
                 units = c("mins"), 
                 tz = Sys.timezone(location = TRUE)
               )
               # if the user press before the previous event is finished
               # we consider that the next event happens just after 
-              if (dt <= 0) {
+              if (dt < 0) {
                 events$history[nrow(events$history), "real_time"] + 
-                as.numeric(events$history[nrow(events$history), "stop_time"]) +
-                input$t_stop
+                  as.numeric(events$history[nrow(events$history), "stop_time"])
                 # otherwise, we consider the elapsed time plus the time
                 # that takes the event (t_stop)
               } else {
-                Sys.time() + input$t_stop
+                Sys.time()
               }
             },
             event = input$treatment_selected,
-            rate = input[[paste(input$treatment_selected)]],
-            start_time = 0,
-            stop_time = input$t_stop,
+            rate = "undefined", 
+            start_time = "undefined",
+            stop_time = "undefined",
             status = "active",
             stringsAsFactors = FALSE
           )
         }
         events$history <- rbind(events$history, temp_event)
         events$counter <- events$counter + 1
-        events$current <- temp_event
+        events$PTX <- TRUE
       } else {
-        if (!isTRUE(events$PTX)) {
-          if (nrow(events$history) == 0) {
-            temp_event <- data.frame(
-              id = events$counter,
-              real_time = Sys.time(),
-              event = input$treatment_selected,
-              rate = "undefined", 
-              start_time = "undefined",
-              stop_time = "undefined",
-              status = "active",
-              stringsAsFactors = FALSE
-            )
-          } else {
-            temp_event <- data.frame(
-              id = events$counter,
-              # if PTX was performed before, we do not need to wait
-              real_time = if (events$history[nrow(events$history), "event"] == "plasma analysis") {
-                events$history[nrow(events$history), "real_time"]
-                # need to wait before the end of the previous event
-              } else {
-                # calculate the time difference between the previous event
-                # end and when the user press the add event button
-                dt <- difftime(
-                  time1 = Sys.time(), 
-                  time2 = events$history[nrow(events$history), "real_time"] + 
-                    as.numeric(events$history[nrow(events$history), "stop_time"]), 
-                  units = c("mins"), 
-                  tz = Sys.timezone(location = TRUE)
-                )
-                # if the user press before the previous event is finished
-                # we consider that the next event happens just after 
-                if (dt < 0) {
-                  events$history[nrow(events$history), "real_time"] + 
-                  as.numeric(events$history[nrow(events$history), "stop_time"])
-                  # otherwise, we consider the elapsed time plus the time
-                  # that takes the event (t_stop)
-                } else {
-                  Sys.time()
-                }
-              },
-              event = input$treatment_selected,
-              rate = "undefined", 
-              start_time = "undefined",
-              stop_time = "undefined",
-              status = "active",
-              stringsAsFactors = FALSE
-            )
-          }
-          events$history <- rbind(events$history, temp_event)
-          events$counter <- events$counter + 1
-          events$PTX <- TRUE
-        } else {
-          showNotification(
-            "Cannot perform parathyroidectomy more than once!",
-            type = "error", 
-            closeButton = TRUE
-          )
-        }
+        showNotification(
+          "Cannot perform parathyroidectomy more than once!",
+          type = "error", 
+          closeButton = TRUE
+        )
       }
+    }
   })
   
   # flush the stack of current events 
@@ -1239,35 +1232,35 @@ server <- function(input, output, session) {
   observe({
     input$run
     shinyjs::delay(1000, {
-        out <- out()
-        temp_state <- c(
-          "PTH_g" = out[nrow(out),"PTH_g"], 
-          "PTH_p" = out[nrow(out),"PTH_p"],
-          "D3_p" = out[nrow(out),"D3_p"], 
-          "FGF_p" = out[nrow(out),"FGF_p"],
-          "Ca_p" = out[nrow(out),"Ca_p"], 
-          "Ca_f" = out[nrow(out),"Ca_f"],
-          "Ca_b" = out[nrow(out),"Ca_b"], 
-          "PO4_p" = out[nrow(out),"PO4_p"],
-          "PO4_f" = out[nrow(out),"PO4_f"], 
-          "PO4_b" = out[nrow(out),"PO4_b"],
-          "PO4_c" = out[nrow(out),"PO4_c"], 
-          "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
-          "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], 
-          "CPP_p" = out[nrow(out),"CPP_p"],
-          "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], 
-          "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
-          "CaProt_p" = out[nrow(out),"CaProt_p"],
-          "NaPO4_p" = out[nrow(out),"NaPO4_p"],
-          "Ca_tot" = out[nrow(out),"Ca_tot"], 
-          "PO4_tot" = out[nrow(out),"PO4_tot"],
-          "EGTA_p" = out[nrow(out),"EGTA_p"], 
-          "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
-        )
-        states$counter <- states$counter + 1
-        states$val[[states$counter]] <- temp_state
-        states$name <- input$treatment_selected
-      })
+      out <- out()
+      temp_state <- c(
+        "PTH_g" = out[nrow(out),"PTH_g"], 
+        "PTH_p" = out[nrow(out),"PTH_p"],
+        "D3_p" = out[nrow(out),"D3_p"], 
+        "FGF_p" = out[nrow(out),"FGF_p"],
+        "Ca_p" = out[nrow(out),"Ca_p"], 
+        "Ca_f" = out[nrow(out),"Ca_f"],
+        "Ca_b" = out[nrow(out),"Ca_b"], 
+        "PO4_p" = out[nrow(out),"PO4_p"],
+        "PO4_f" = out[nrow(out),"PO4_f"], 
+        "PO4_b" = out[nrow(out),"PO4_b"],
+        "PO4_c" = out[nrow(out),"PO4_c"], 
+        "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
+        "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"], 
+        "CPP_p" = out[nrow(out),"CPP_p"],
+        "CaHPO4_f" = out[nrow(out),"CaHPO4_f"], 
+        "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
+        "CaProt_p" = out[nrow(out),"CaProt_p"],
+        "NaPO4_p" = out[nrow(out),"NaPO4_p"],
+        "Ca_tot" = out[nrow(out),"Ca_tot"], 
+        "PO4_tot" = out[nrow(out),"PO4_tot"],
+        "EGTA_p" = out[nrow(out),"EGTA_p"], 
+        "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
+      )
+      states$counter <- states$counter + 1
+      states$val[[states$counter]] <- temp_state
+      states$name <- input$treatment_selected
+    })
   })
   
   
@@ -1633,7 +1626,7 @@ server <- function(input, output, session) {
         visUpdateEdges(edges = edges_Ca)
     }
   })
-
+  
   
   # handle the size of organ and hormonal nodes
   output$size_nodes_organs <- renderUI({
@@ -1856,25 +1849,25 @@ server <- function(input, output, session) {
       enable(id = "treatment_selected")
     }
   })
- 
+  
   # display or not display the network background
   observe({
     # add invalidate later so that the background class is
     # applied after the application startup
     invalidateLater(1000, session)
-      if (!is_empty(input$background_choice)) {
-        if (input$background_choice == "rat") {
-          addClass(id = "network_cap", class = "network_caprat")
-          removeClass(id = "network_cap", class = "network_caphuman")
-        } else {
-          removeClass(id = "network_cap", class = "network_caprat")
-          addClass(id = "network_cap", class = "network_caphuman")
-        }
-      } else {
-        addClass(id = "network_cap", class = "network_capnone")
+    if (!is_empty(input$background_choice)) {
+      if (input$background_choice == "rat") {
+        addClass(id = "network_cap", class = "network_caprat")
         removeClass(id = "network_cap", class = "network_caphuman")
+      } else {
         removeClass(id = "network_cap", class = "network_caprat")
-      } 
+        addClass(id = "network_cap", class = "network_caphuman")
+      }
+    } else {
+      addClass(id = "network_cap", class = "network_capnone")
+      removeClass(id = "network_cap", class = "network_caphuman")
+      removeClass(id = "network_cap", class = "network_caprat")
+    } 
   })
   
   # prevent user from selecting multiple background

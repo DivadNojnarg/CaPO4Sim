@@ -133,7 +133,9 @@ generate_nodes_Ca <- function(input) {
     hidden = c(
       ## organs ##
       if (input$network_organ_choice == TRUE) {
-        c(rep(FALSE, 7),
+        c(rep(FALSE, 5),
+          TRUE,
+          FALSE,
           # PO4 Cells
           ifelse(is.element("PO4", input$network_Ca_choice), 
                  ifelse(is.element("Ca", input$network_Ca_choice),FALSE,FALSE),TRUE))

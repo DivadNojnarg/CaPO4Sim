@@ -82,7 +82,7 @@ generate_slider_events <- function(input) {
     } else {
       numericInput(
         "t_stop",
-        "Time when stops this event:", 
+        "Duration (in minutes):", 
         value = 100, 
         min = 0, 
         max = NA, 
