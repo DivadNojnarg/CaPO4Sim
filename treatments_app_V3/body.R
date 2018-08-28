@@ -32,6 +32,7 @@ body <- dashboardBody(
   setShake("diagnosis-badge"),
   setShadow("modal-content"),
   setZoom("modal-content"),
+  #setShake("post"),
 
   tabItems(
     # Network panel

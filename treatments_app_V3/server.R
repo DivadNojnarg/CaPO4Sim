@@ -44,7 +44,6 @@ server <- function(input, output, session) {
     "Ca_inject",
     "P_food",
     "P_inject",
-    "cinacalcet",
     "D3_intake_reduction"
   )
   
@@ -121,7 +120,7 @@ server <- function(input, output, session) {
     ), 
     "D3_inact" = ifelse(
       patient_disease == "hypoD3", 0, 
-      ifelse(patient_disease == "hyperD3", 2.5e-003, 2.5e-005)
+      ifelse(patient_disease == "hyperD3", 5e-004, 2.5e-005)
     )
     )
   })
@@ -142,73 +141,68 @@ server <- function(input, output, session) {
   
   # patient info box
   output$patient_info <- renderUI({
-    if (events$logged) {
-      
-      medical_history <- patient_datas$medical_history
-      len <- length(medical_history$pathologies)
-      
-      boxPlus(
-        width = 12, 
-        solidHeader = FALSE, 
-        status = "primary", 
-        collapsible = TRUE,
-        closable = FALSE,
-        title = "Medical History", 
-        enable_label = TRUE,
-        label_text = len,
-        label_status = "danger",
-        boxProfile(
-          src = patient_datas$picture,
-          title = patient_datas$name,
-          subtitle = NULL,
-          boxProfileItemList(
-            bordered = FALSE,
-            boxProfileItem(
-              title = "Age",
-              description = patient_datas$age
-            ),
-            boxProfileItem(
-              title = "Height",
-              description = patient_datas$height
-            ),
-            boxProfileItem(
-              title = "Weight",
-              description = patient_datas$weight
+    medical_history <- patient_datas$medical_history
+    len <- length(medical_history$pathologies)
+    
+    boxPlus(
+      width = 12, 
+      solidHeader = FALSE, 
+      status = "primary", 
+      collapsible = TRUE,
+      closable = FALSE,
+      title = "Medical History", 
+      enable_label = TRUE,
+      label_text = len,
+      label_status = "danger",
+      boxProfile(
+        src = patient_datas$picture,
+        title = patient_datas$name,
+        subtitle = NULL,
+        boxProfileItemList(
+          bordered = FALSE,
+          boxProfileItem(
+            title = "Age",
+            description = patient_datas$age
+          ),
+          boxProfileItem(
+            title = "Height",
+            description = patient_datas$height
+          ),
+          boxProfileItem(
+            title = "Weight",
+            description = patient_datas$weight
+          )
+        )
+      ),
+      br(),
+      lapply(1:len, FUN = function(i){
+        userPost(
+          id = i,
+          collapsed = FALSE,
+          src = medical_history$doctors_avatars[[i]],
+          author = medical_history$doctors[[i]],
+          description = strong(medical_history$pathologies[[i]]),
+          paste(medical_history$disease_description[[i]]),
+          if (!is.null(medical_history$disease_image[[i]])) {
+            userPostMedia(
+              src = medical_history$disease_image[[i]],
+              width = "300", 
+              height = "300"
             )
-          )
-        ),
-        br(),
-        hr(),
-        br(),
-        lapply(1:len, FUN = function(i){
-          userPost(
-            id = i,
-            collapsed = FALSE,
-            src = medical_history$doctors_avatars[[i]],
-            author = medical_history$doctors[[i]],
-            description = strong(medical_history$pathologies[[i]]),
-            paste(medical_history$disease_description[[i]]),
-            if (!is.null(medical_history$disease_image[[i]])) {
-              userPostMedia(
-                src = medical_history$disease_image[[i]],
-                width = "300", 
-                height = "300"
-              )
-            },
-            userPostToolItemList(
-              userPostToolItem(
-                dashboardLabel(
-                  medical_history$examination_dates[[i]], 
-                  status = "warning"
-                ), 
-                side = "right"
-              )
-            ),
-            br()
-          )
-        })
-      ) 
-    }
+          },
+          userPostToolItemList(
+            userPostToolItem(
+              dashboardLabel(
+                medical_history$examination_dates[[i]], 
+                status = "warning"
+              ), 
+              side = "right"
+            )
+          ),
+          br()
+        )
+      })
+    ) 
   })
   
   # the user notebook
@@ -236,10 +230,11 @@ server <- function(input, output, session) {
             icon = icon("search")
           )
         ), 
-        hr(),
+        br(),
+        br(),
         textAreaInput(
           inputId = "user_comment", 
-          label = "My Comment", 
+          label = NULL, 
           value = "I enter here all my observations!"
         ),
         column(
@@ -308,7 +303,6 @@ server <- function(input, output, session) {
                 "Ca iv injection" = "Ca_inject",
                 "Pi iv injection" = "P_inject",
                 "Pi supplementation" = "P_food",
-                "cinacalcet" = "cinacalcet",
                 "D3 intake reduction" = "D3_intake_reduction"
               ),
               thick = TRUE,
@@ -386,6 +380,7 @@ server <- function(input, output, session) {
     if (events$logged) {
       boxPlus(
         width = 12, 
+        #title = "Click on the plasma node to display concentrations",
         solidHeader = FALSE, 
         status = "primary", 
         collapsible = TRUE,
@@ -795,6 +790,55 @@ server <- function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
+  # how to use the notebook
+  observe({
+    if (!is_empty(input$register_user)) {
+      shinyjs::delay(
+        2000,
+        confirmSweetAlert(
+          session, 
+          inputId = "notebook_intro",
+          title = "How to use the notebook?",
+          text = tagList(
+            img(src = "interface_img/notebook.svg", width = "100px", height = "100px"),
+            br(),
+            HTML("In the following, some questions will help you in the diagnostic process. 
+                 You will have to write your answers in the comment box (below the diagnosis button)
+                 and press + to save it.")
+          ),
+          btn_labels = c(NULL, "Confirm"),
+          type = "warning",
+          html = TRUE
+        )
+      )
+    }
+  })
+  
+  # how to use the network
+  observe({
+    if (!is_empty(input$notebook_intro)) {
+      shinyjs::delay(
+        2000,
+        confirmSweetAlert(
+          session, 
+          inputId = "network_intro",
+          title = "How to use the human network?",
+          text = tagList(
+            img(src = "interface_img/human-body.svg", width = "100px", height = "100px"),
+            br(),
+            HTML("To answer the following questions, you will have to access plasma concentrations.
+                 You have to click on the network plasma node (center panel). 
+                 A graph will be displayed on the top right panel, where you can
+                 select the concentration to display.")
+            ),
+          btn_labels = c(NULL, "Confirm"),
+          type = "warning",
+          html = TRUE
+            )
+        )
+    }
+  })
+  
   
   # # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
   # observe({
@@ -1035,8 +1079,7 @@ server <- function(input, output, session) {
     # the same treatment can be added
     # multiple times. However, parathyroidectomy
     # cannot be performed more than once
-    if (input$treatment_selected != "PTX" &
-        input$treatment_selected != "cinacalcet") {
+    if (input$treatment_selected != "PTX") {
       if (nrow(events$history) == 0) {
         temp_event <- data.frame(
           id = events$counter,

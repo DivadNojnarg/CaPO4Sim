@@ -9,10 +9,10 @@ dashboardControlbar <- rightSidebar(
     prettyCheckboxGroup(
       inputId = "background_choice",
       label = "Network background",
-      choices = c("rat", "human"),
+      choices = c("human"),
       thick = TRUE,
       animation = "pulse",
-      selected = "rat",
+      selected = "human",
       inline = TRUE
     ),
     prettyCheckboxGroup(

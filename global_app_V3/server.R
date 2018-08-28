@@ -111,11 +111,11 @@ shinyServer(function(input, output, session) {
     out()[nrow(out()), 55:56]
   })
   
-  # # generate virtual patient initial conditions
-  # observe({
-  #   out <- out()
-  #   write.csv(x = c(out[nrow(out),2:23]), file = "init_hyperD3.csv")
-  # })
+  # generate virtual patient initial conditions
+  observe({
+    out <- out()
+    write.csv(x = c(out[nrow(out),2:23]), file = "init_hyperD3.csv")
+  })
   
   #------------------------------------------------------------------------- 
   #  
