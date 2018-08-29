@@ -882,8 +882,9 @@ server <- function(input, output, session) {
           btn_labels = c(NULL, "Ok"),
           type = "warning",
           html = TRUE
-            )
-          )
+        )
+      )
+      events$animation <- events$animation + 1
     }
   })
   
