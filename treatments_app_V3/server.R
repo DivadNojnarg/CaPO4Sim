@@ -60,7 +60,7 @@ server <- function(input, output, session) {
   patient_feedback <- NULL
   
   # inititalization of the timer
-  minutes_time <- 2 # the application will stop in 15 minutes
+  minutes_time <- 15 # the application will stop in 15 minutes
   start_time <- Sys.time()
   end_time <- start_time + minutes_time * 60
   
