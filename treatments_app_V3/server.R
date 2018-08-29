@@ -60,7 +60,7 @@ server <- function(input, output, session) {
   patient_feedback <- NULL
   
   # inititalization of the timer
-  minutes_time <- 15 # the application will stop in 15 minutes
+  minutes_time <- 2 # the application will stop in 15 minutes
   start_time <- Sys.time()
   end_time <- start_time + minutes_time * 60
   
@@ -481,36 +481,57 @@ server <- function(input, output, session) {
   #  
   #-------------------------------------------------------------------------
   
+  time <- reactiveValues(switcher = FALSE)
+  
   # set up a timer during which user have to finish the game
   # and generate the related progress bar
   countdown <- reactive({
     invalidateLater(1000, session)
-    countdown <- as.numeric(round(end_time - Sys.time()))
+    countdown <- end_time - Sys.time()
   })
   
+  # switch between minutes and seconds when coutdown < 1 minute
+  observe({
+    if (countdown()<= 1.02) {
+      time$switcher <- TRUE
+    }
+  })
+  
+  # convert in percentage for the progress bar
   percent_countdown <- reactive({
-    countdown() / minutes_time * 100
+    countdown <- countdown()
+    if (!time$switcher) {
+      countdown / minutes_time * 100
+    } else {
+      countdown / 60 * 100
+    }
   })
   
   # render the progress bar for countdown
   output$currentTime <- renderUI({
-    countdown <- countdown()
-    percent_countdown <- percent_countdown()
-    statusClass <- if (66 < percent_countdown & percent_countdown <= 100) {
-      "success"
-    } else if (30 < percent_countdown & percent_countdown <= 66) {
-      "warning"
-    } else {
-      "danger"
+    if (!events$stop) {
+      countdown <- countdown()
+      percent_countdown <- percent_countdown()
+      statusClass <- if (!time$switcher) {
+        if (66 < percent_countdown & percent_countdown <= 100) {
+          "success"
+        } else if (30 < percent_countdown & percent_countdown <= 66) {
+          "warning"
+        } else {
+          "danger"
+        }
+      } else {
+        "danger"
+      }
+      progressBar(
+        id = "countdown", 
+        value = percent_countdown, 
+        status = statusClass,
+        striped = TRUE,
+        size = "xs",
+        title = paste0("End in ", round(countdown), if (!time$switcher) " min" else " sec")
+      ) 
     }
-    progressBar(
-      id = "countdown", 
-      value = percent_countdown, 
-      status = statusClass,
-      striped = TRUE,
-      size = "xs",
-      title = paste0("End in ", countdown, " min")
-    )
   })
   
   # When the counter is equal to 0, each time the session is opened, 
@@ -575,7 +596,7 @@ server <- function(input, output, session) {
   
   # shift stop when countdown is 0
   observe({
-    if (countdown() == 0) 
+    if (countdown() <= 0) 
       events$stop <- TRUE
   })
   
@@ -1449,8 +1470,8 @@ server <- function(input, output, session) {
     high_norm_Ca_p <- data.frame(high_norm_Ca_p = rep(1.3, length(datas[, "time"])))
     low_norm_PO4_p <- data.frame(low_norm_PO4_p = rep(0.8, length(datas[, "time"])))
     high_norm_PO4_p <- data.frame(high_norm_PO4_p = rep(1.5, length(datas[, "time"])))
-    low_norm_PTH_p <- data.frame(low_norm_PTH_p = rep(8, length(datas[, "time"])))
-    high_norm_PTH_p <- data.frame(high_norm_PTH_p = rep(51, length(datas[, "time"])))
+    low_norm_PTH_p <- data.frame(low_norm_PTH_p = rep(1.5, length(datas[, "time"])))
+    high_norm_PTH_p <- data.frame(high_norm_PTH_p = rep(7, length(datas[, "time"])))
     low_norm_D3_p <- data.frame(low_norm_D3_p = rep(80, length(datas[, "time"])))
     high_norm_D3_p <- data.frame(high_norm_D3_p = rep(700, length(datas[, "time"])))
     low_norm_FGF_p <- data.frame(low_norm_FGF_p = rep(12, length(datas[, "time"])))
@@ -1933,17 +1954,22 @@ server <- function(input, output, session) {
   })
   
   # make diagnosis blinking when there remains 5 min
-  # before the app close
+  # before the app close, only if it exists (if the user
+  # never clicked on next, diagmosis does not exist!!!)
   observe({
     if (countdown() <= 5) {
-      if (input$diagnosis == 0) {
-        addClass(id = "diagnosis", class = "run_glowing_blue") 
+      if (!is_empty(input$diagnosis)) {
+        if (input$diagnosis == 0) {
+          addClass(id = "diagnosis", class = "run_glowing_blue") 
+        } 
       }
     }
   })
-  observeEvent(input$diagnosis, {
-    if (input$diagnosis > 0) {
-      removeClass(id = "diagnosis", class = "run_glowing_blue") 
+  observe({
+    if (!is_empty(input$diagnosis)) {
+      if (input$diagnosis > 0) {
+        removeClass(id = "diagnosis", class = "run_glowing_blue")  
+      }
     }
   })
   
