@@ -201,7 +201,24 @@ server <- function(input, output, session) {
           ),
           br()
         )
-      })
+      }),
+      br(),
+      # print additional info when the animation goes further
+      if (events$animation == 1) {
+        userPost(
+          id = 2,
+          src = "interface_img/research.svg",
+          collapsed = FALSE,
+          author = "Additional laboratory findings",
+          description = "A renal sonogram further revealed a mildly 
+            enlarged prostate and mild left hydronephrosis.",
+          userPostMedia(
+            src = "case_studies_img/patient1-2.svg",
+            width = "300", 
+            height = "300"
+          )
+        )
+      }
     ) 
   })
   
@@ -218,37 +235,43 @@ server <- function(input, output, session) {
         title = paste0(input$user_name, "'s notebook"),
         subtitle = start_time,
         src = "https://image.flaticon.com/icons/svg/305/305983.svg",
-        column(
-          width = 12,
-          align = "center",
-          actionBttn(
-            inputId = "diagnosis",
-            size = "lg",
-            label = "Diagnosis",
-            style = "fill",
-            color = "primary",
-            icon = icon("search")
+        if (events$animation >= 2) {
+          tagList(
+            column(
+              width = 12,
+              align = "center",
+              actionBttn(
+                inputId = "diagnosis",
+                size = "lg",
+                label = "Diagnosis",
+                style = "fill",
+                color = "primary",
+                icon = icon("search")
+              )
+            ),
+            br()
           )
-        ), 
-        br(),
-        br(),
-        textAreaInput(
-          inputId = "user_comment", 
-          label = NULL, 
-          value = "I enter here all my observations!"
-        ),
-        column(
-          width = 12,
-          align = "center",
-          actionBttn(
-            inputId = "user_add_comment",
-            size = "xs",
-            icon = icon("plus"),
-            style = "material-circle",
-            color = "success"
+        }, 
+        if (events$animation < 2) {
+          tagList(
+            textAreaInput(
+              inputId = "user_comment", 
+              label = "What are the significant findings of the blood analysis?", 
+              value = "I enter here all my observations!"
+            ),
+            column(
+              width = 12,
+              align = "center",
+              actionBttn(
+                inputId = "user_add_comment",
+                size = "xs",
+                icon = "Next",
+                style = "material-flat",
+                color = "success"
+              )
+            ) 
           )
-        ),
-        hr(),
+        },
         comments = if (len > 0) {
           tagList(
             lapply(1:len, FUN = function(i) {
@@ -506,11 +529,18 @@ server <- function(input, output, session) {
           text = tagList(
             img(src = "interface_img/start.svg", width = "100px", height = "100px"),
             br(),
-            HTML("Welcome to the virtual CaPO4 patient simulator.
-            A random patient was selected for you. The goal of 
-            the game is to <b>find</b> the corresponding disease and <b>treat</b>
-            the patient correctly, in exactly <b>15 minutes</b>. 
-            Before starting enter your name."),
+            HTML(
+              "You will be presented with a patient case-study related 
+               to CaPO4 homeostasis. The goal of this activity is to 
+               <b>establish</b> a diagnosis and <b>treat</b>
+               the patient correctly, in exactly <b>15 minutes</b>:
+               <ol> 
+               <li> To establish your diagnostic, you can click on any compartment e.g. 
+                click on plasma to conduct blood plasma analyses. </li>
+               <li> After having established an initial diagnostic you will be 
+               offered multiple treatment options. </li>
+              </ol>"
+            ),
             hr(),
             column(
               align = "center",
@@ -797,16 +827,18 @@ server <- function(input, output, session) {
         2000,
         confirmSweetAlert(
           session, 
-          inputId = "notebook_intro",
+          inputId = "diagnosis_intro",
           title = "How to use the notebook?",
           text = tagList(
             img(src = "interface_img/notebook.svg", width = "100px", height = "100px"),
             br(),
-            HTML("In the following, some questions will help you in the diagnostic process. 
-                 You will have to write your answers in the comment box (below the diagnosis button)
-                 and press + to save it.")
+            HTML("A serie of questions will help you during 
+                 the diagnostic process. Click on <img src='interface_img/next.svg' height='50' width='50'>
+                 to go through the questions. Once you completed all questions,
+                 submit your diagnosis by clicking on 
+                 <img src='interface_img/diagnosis.svg' height='70' width='70'>.")
           ),
-          btn_labels = c(NULL, "Confirm"),
+          btn_labels = c(NULL, "Ok"),
           type = "warning",
           html = TRUE
         )
@@ -814,28 +846,62 @@ server <- function(input, output, session) {
     }
   })
   
-  # how to use the network
-  observe({
-    if (!is_empty(input$notebook_intro)) {
+  # Introduction to treatments
+  observeEvent(input$diagnosis_answer, {
+    if (events$animation == 2) {
       shinyjs::delay(
         2000,
         confirmSweetAlert(
           session, 
-          inputId = "network_intro",
-          title = "How to use the human network?",
+          inputId = "treatments_intro",
+          title = "How to deal with treatments?",
           text = tagList(
-            img(src = "interface_img/human-body.svg", width = "100px", height = "100px"),
+            img(src = "treatments_img/pills.svg", width = "100px", height = "100px"),
             br(),
-            HTML("To answer the following questions, you will have to access plasma concentrations.
-                 You have to click on the network plasma node (center panel). 
-                 A graph will be displayed on the top right panel, where you can
-                 select the concentration to display.")
-            ),
-          btn_labels = c(NULL, "Confirm"),
+            column(
+              width = 12,
+              align = "center",
+              HTML(
+                "Now that you have posed your initial diagnostic, you may explore different treatment options.
+                For each:
+                <ol>
+                <li> Select the treatment in the timeline </li>
+                <li> Specify dosage and duration (if relevant) </li>
+                <li> Click on <img src='interface_img/run.svg' height='50' width='50'></li>
+                <li> You may visualize changes due to your last intervention in the top right panel </li>
+                <li> To visualize the entire simulation history, click on 
+                <img src='interface_img/summary.svg' height='70' width='70'></li>
+                </ol>
+                You can perform several treatments. Note that interventions cannot 
+                be erased from the timeline (i.e. you cannot go back in time). 
+                But you can always start over and explore a different approach.
+                "
+              )
+            )
+          ),
+          btn_labels = c(NULL, "Ok"),
           type = "warning",
           html = TRUE
             )
-        )
+          )
+    }
+  })
+  
+  # increase the animation counter by 1 each time a new comment 
+  # is added by the user
+  observeEvent(input$user_add_comment, {
+    events$animation <- events$animation + 1
+  })
+  
+  # 
+  observe({
+    if (events$animation == 1) {
+      updateTextAreaInput(
+        session, 
+        inputId = "user_comment", 
+        label = "What is your differential diagnostic?", 
+        value = "I enter here all my observations!"
+      )
     }
   })
   
@@ -984,7 +1050,8 @@ server <- function(input, output, session) {
     stop = FALSE,
     answered = NULL,
     PTX = FALSE,
-    logged = FALSE
+    logged = FALSE,
+    animation = 0
   )
   
   
