@@ -273,16 +273,18 @@ plot_node <- function(input, node, out, parms) {
                     name = "PTHp (pM)",
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
-          add_lines(y = out[,"D3_p"]/4,
-                    ymin = 0.5 * min(out[,"D3_p"]/4),
-                    ymax = 1.5 * max(out[,"D3_p"]/4),
-                    name = "D3p (pM)",
+          # rescale D3
+          add_lines(y = out[,"D3_p"] / 4,
+                    ymin = 0.5 * min(out[,"D3_p"] / 4),
+                    ymax = 1.5 * max(out[,"D3_p"] / 4),
+                    name = "1,25D3p (pM)",
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
-          add_lines(y = round(out[,"FGF_p"], 1),
-                    ymin = 0.5 * min(out[,"FGF_p"]),
-                    ymax = 1.5 * max(out[,"FGF_p"]),
-                    name = "FGFp (pM)",
+          # rescale FGF23
+          add_lines(y = round(out[,"FGF_p"] / 16.8 * 32, 1),
+                    ymin = 0.5 * min(out[,"FGF_p"] / 16.8 * 32),
+                    ymax = 1.5 * max(out[,"FGF_p"] / 16.8 * 32),
+                    name = "FGF23p (pg/mL)",
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
           layout(

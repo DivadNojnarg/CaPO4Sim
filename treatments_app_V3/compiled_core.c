@@ -238,7 +238,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   PTHp_degradation_norm = k_deg_PTHp * y[1] / Vp;
   
   /* D3p */
-  D3_basal_synthesis_norm = 1 / D3_intake_reduction * k_conv_min * D3_inact / D3_norm;
+  D3_basal_synthesis_norm = (1 - D3_intake_reduction / 100) * k_conv_min * D3_inact / D3_norm;
   D3_conv_PTH_norm = (delta_conv_max * (D3_inact / D3_norm) * pow(y[1] / Vp, n_conv)) /
                      (pow(y[1] / Vp, n_conv) + pow(K_conv / PTH_p_norm, n_conv));
   D3_conv_Ca_norm = 1 / (1 + gamma_ca_conv * Ca_p_norm * y[4]);

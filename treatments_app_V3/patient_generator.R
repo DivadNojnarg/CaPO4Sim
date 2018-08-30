@@ -107,13 +107,13 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
 patient_generator(
   id = 1,
   name = "Patient: Pablo Vilalobos",
-  age = 50,
+  age = "50 yrs",
   height = 183,
   weight = 72,
   gender = "male",
   disease_id = "hyperD3",
   pathologies = list(
-    "Obduntation, muscle aches, appetite loss, constipation, irritability",
+    "Hyporeactivity, muscle aches, appetite loss, constipation, irritability",
     "Preliminary blood and urine analyses",
     "Mild left hydronephrosis"
   ),

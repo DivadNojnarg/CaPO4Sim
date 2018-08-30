@@ -381,9 +381,11 @@ server <- function(input, output, session) {
                         tagList(
                           paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
                           paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
-                          paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
-                          paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"])/4, " pM [50-180 pM]$$"), # scale D3
-                          paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
+                          paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [1.6-7 pM]$$"),
+                          # scale D3
+                          paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [50-180 pM]$$"),
+                          # scale FGF23
+                          paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 16.8 * 32, 2), " pM [8-50 pg/ml]$$")
                         )
                       },
                       footer = NULL
@@ -1552,8 +1554,8 @@ server <- function(input, output, session) {
     high_norm_PTH_p <- data.frame(high_norm_PTH_p = rep(7, length(datas[, "time"])))
     low_norm_D3_p <- data.frame(low_norm_D3_p = rep(50, length(datas[, "time"])))
     high_norm_D3_p <- data.frame(high_norm_D3_p = rep(180, length(datas[, "time"])))
-    low_norm_FGF_p <- data.frame(low_norm_FGF_p = rep(12, length(datas[, "time"])))
-    high_norm_FGF_p <- data.frame(high_norm_FGF_p = rep(21, length(datas[, "time"])))
+    low_norm_FGF_p <- data.frame(low_norm_FGF_p = rep(8, length(datas[, "time"])))
+    high_norm_FGF_p <- data.frame(high_norm_FGF_p = rep(51, length(datas[, "time"])))
     
     # bind all values
     datas <- cbind(
@@ -1582,12 +1584,16 @@ server <- function(input, output, session) {
           y = if (name == "PTH_p") {
             datas_summary()[, name] * 100
           } else if (name == "D3_p") {
-            datas_summary()[, name] / 4
+            datas_summary()[, name] / 4 
+          } else if (name == "FGF_p") {
+            datas_summary()[, name] / 16.8 * 32
           } else {
             datas_summary()[, name]
           },
           name = if (name %in% c("Ca_p", "PO4_p")) {
             paste0(name, " (mM)")
+          } else if (name == "FGF_p") {
+            paste0(name, " (pg/mL)")
           } else {
             paste0(name, " (pM)")
           },
