@@ -167,10 +167,6 @@ server <- function(input, output, session) {
     c(parameters_disease(), parameters_fixed, parameters_event()) 
   }) 
   
-  observe({
-    print(parameters())
-  })
-  
   #------------------------------------------------------------------------- 
   #  Render Patient boxes: patient_info, 
   #  medical_history, timeline events as well 
@@ -765,9 +761,13 @@ server <- function(input, output, session) {
         sendSweetAlert(
           session,
           title = paste0("Congratulations ", input$user_name, " !"),
-          text = HTML(paste0("This patient has,", answer, 
-                             "It would be better to treat him now. Remember you have
-          <b>15 minutes</b> to complete this activity.")),
+          text = HTML(
+            paste0(
+              "This patient has,", answer, 
+              "It would be better to treat him now. Remember you have
+              <b>15 minutes</b> to complete this activity."
+            )
+          ),
           type = "success",
           html = TRUE
         ) 
@@ -911,7 +911,7 @@ server <- function(input, output, session) {
   
   # Introduction to plasma analysis
   observeEvent(input$user_add_comment, {
-    if (events$animation == 0) {
+    if (events$animation == 3) {
       shinyjs::delay(
         1000,
         confirmSweetAlert(
