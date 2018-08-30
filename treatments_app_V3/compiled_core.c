@@ -223,6 +223,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   n_Ca_norm = n1_exo / (1 + exp(-rho_exo * Ca_p_norm * (R / Ca_p_norm - y[4]))) + n2_exo;
   F_Ca_norm = beta_exo_PTHg - gamma_exo_PTHg * pow(y[4], n_Ca_norm) /
               (pow(y[4], n_Ca_norm) + pow(K_Ca / Ca_p_norm, n_Ca_norm));
+  // F_Ca_norm = (beta_exo_PTHg - gamma_exo_PTHg) * 0.035; // First action of cinacalcet
   PTHg_exocytosis_norm = F_Ca_norm * y[0];
   
   /* PTHp */
@@ -280,10 +281,10 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   Resorption_D3_norm = (delta_res_max * 0.8 * pow(y[2], n_res)) /
                         (pow(y[2], n_res) + pow(K_res_D3 / D3_norm, n_res));
     
-  Resorption_norm = Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm;
+  Resorption_norm = Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm; // bisphosphonate effect
     
   /* P Slow Bone */
-  Resorption_P_norm = 0.3 * Resorption_norm;
+  Resorption_P_norm = 0.3 * Resorption_norm; // bisphosphonate effect
   
   /* Ca Kidney */
   Reabs_PT_basal = lambda_reabs_PT_0;
@@ -292,6 +293,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
     
   Reabs_TAL_basal = lambda_TAL_0;
   Reabs_TAL_CaSR_norm = delta_CaSR_max / (1 + pow(y[4] * Ca_p_norm / Ca_ref, n_TAL));
+  // Reabs_TAL_CaSR_norm = delta_CaSR_max; // Second action of cinacalcet
   Reabs_TAL_PTH_norm = delta_PTH_max * y[1] / Vp / (y[1] / Vp + K_TAL_PTH / PTH_p_norm);
     
   Reabs_DCT_basal = lambda_DCT_0;

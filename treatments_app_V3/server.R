@@ -322,13 +322,16 @@ server <- function(input, output, session) {
                   inputId = "treatment_selected",
                   label = "Select a new treatment:",
                   choices = c(
-                    "parathyroid surgery" = "PTX",
-                    "D3 iv injection" = "D3_inject",
-                    "Ca supplementation" = "Ca_food",
-                    "Ca iv injection" = "Ca_inject",
-                    "Pi iv injection" = "P_inject",
-                    "Pi supplementation" = "P_food",
-                    "D3 intake reduction" = "D3_intake_reduction"
+                    #"parathyroid surgery" = "PTX",
+                    #"D3 iv injection" = "D3_inject",
+                    #"Ca supplementation" = "Ca_food",
+                    #"Ca iv injection" = "Ca_inject",
+                    #"Pi iv injection" = "P_inject",
+                    #"Pi supplementation" = "P_food",
+                    "D3 intake reduction" = "D3_intake_reduction",
+                    "Cinacalcet" = "cinacalcet",
+                    "Bisphosphonate" = "bisphosphonate",
+                    "Furosemide" = "furosemide"
                   ),
                   thick = TRUE,
                   inline = TRUE,
@@ -898,6 +901,34 @@ server <- function(input, output, session) {
     }
   })
   
+  # Introduction to plasma analysis
+  observeEvent(input$user_add_comment, {
+    if (events$animation == 0) {
+      shinyjs::delay(
+        1000,
+        confirmSweetAlert(
+          session, 
+          inputId = "plasma_analysis_intro",
+          title = "How to deal with plasma analysis?",
+          text = tagList(
+            img(src = "CaPO4_network/plasma.svg", width = "100px", height = "100px"),
+            br(),
+            "You can access any plasma concentration by clicking on the",
+            img(src = "CaPO4_network/plasma.svg", width = "50px", height = "50px"),
+            " node. Besides, other compartments are available such as", 
+            img(src = "CaPO4_network/parathyroid_gland_human.svg", width = "50px", height = "50px"),
+            img(src = "CaPO4_network/cells.svg", width = "50px", height = "50px"),
+            img(src = "CaPO4_network/bone.svg", width = "50px", height = "50px"),
+            "and", img(src = "CaPO4_network/rapid-bone.svg", width = "50px", height = "50px")
+          ),
+          btn_labels = c(NULL, "Ok"),
+          type = "warning",
+          html = TRUE
+        )
+      )
+    }
+  })
+  
   # Introduction to treatments
   observeEvent(input$diagnosis_answer, {
     if (events$animation == 8) {
@@ -936,6 +967,9 @@ server <- function(input, output, session) {
           html = TRUE
         )
       )
+      # increament by 1 to prevent this alert
+      # from being displayed each time since
+      # the button is hidden when equal to 8
       events$animation <- events$animation + 1
     }
   })
