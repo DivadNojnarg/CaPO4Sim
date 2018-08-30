@@ -70,13 +70,16 @@ server <- function(input, output, session) {
   
   # below is needed to handle treatments events
   treatment_choices <- c(
-    "PTX",
-    "D3_inject",
-    "Ca_food",
-    "Ca_inject",
-    "P_food",
-    "P_inject",
-    "D3_intake_reduction"
+    #"PTX",
+    #"D3_inject",
+    #"Ca_food",
+    #"Ca_inject",
+    #"P_food",
+    #"P_inject",
+    "D3_intake_reduction",
+    "cinacalcet",
+    "bisphosphonate",
+    "furosemide"
   )
   
   # plot summary list
@@ -163,6 +166,10 @@ server <- function(input, output, session) {
   parameters <- reactive({
     c(parameters_disease(), parameters_fixed, parameters_event()) 
   }) 
+  
+  observe({
+    print(parameters())
+  })
   
   #------------------------------------------------------------------------- 
   #  Render Patient boxes: patient_info, 
@@ -1234,7 +1241,11 @@ server <- function(input, output, session) {
           id = events$counter,
           real_time = Sys.time(),
           event = input$treatment_selected,
-          rate = input[[paste(input$treatment_selected)]],
+          rate = if (!(input$treatment_selected %in% c("bisphosphonate", "furosemide"))) {
+            input[[paste(input$treatment_selected)]]
+          } else {
+            "undefined"
+          },
           start_time = 0,
           stop_time = input$t_stop,
           status = "active",
@@ -1271,7 +1282,11 @@ server <- function(input, output, session) {
             }
           },
           event = input$treatment_selected,
-          rate = input[[paste(input$treatment_selected)]],
+          rate = if (!(input$treatment_selected %in% c("bisphosphonate", "furosemide"))) {
+            input[[paste(input$treatment_selected)]]
+          } else {
+            "undefined"
+          },
           start_time = 0,
           stop_time = input$t_stop,
           status = "active",

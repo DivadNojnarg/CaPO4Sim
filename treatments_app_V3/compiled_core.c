@@ -12,7 +12,7 @@
 
 
 /* define parameters */
-static double parameters[130];
+static double parameters[132];
 
 #define k_prod_PTHg parameters[0]      
 #define D3_inact parameters[1]         
@@ -148,11 +148,13 @@ static double parameters[130];
 #define P_inject parameters[127]
 #define P_food parameters[128]
 #define D3_intake_reduction parameters[129]
+#define Bispho parameters[130]
+#define Furo parameters[131]
 
 /* initializer  */
 void initmod(void (* odeparms)(int *, double *))
 {
-  int N = 130;
+  int N = 132;
   odeparms(&N, parameters);
 }
 /* Derivatives and 1 output variable */
@@ -190,7 +192,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   
   /* define parameters for simulations*/
   double k_inject_P = 0, k_inject_Ca = 0, k_inject_FGF = 0, 
-         k_inject_PTH = 0, k_inject_D3 = 0; 
+         k_inject_PTH = 0, k_inject_D3 = 0;
   
   /* simulation engine */
   if (t_stop != 0) {
@@ -205,7 +207,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
         k_inject_P = P_inject;
       } else if (P_food != 0) {
         I_P = P_food;
-      }
+      } 
     }
   }
    
@@ -231,13 +233,13 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   PTHp_degradation_norm = k_deg_PTHp * y[1] / Vp;
   
   /* D3p */
-  D3_basal_synthesis_norm = 1/D3_intake_reduction * k_conv_min * D3_inact / D3_norm;
+  D3_basal_synthesis_norm = 1 / D3_intake_reduction * k_conv_min * D3_inact / D3_norm;
   D3_conv_PTH_norm = (delta_conv_max * (D3_inact / D3_norm) * pow(y[1] / Vp, n_conv)) /
                      (pow(y[1] / Vp, n_conv) + pow(K_conv / PTH_p_norm, n_conv));
   D3_conv_Ca_norm = 1 / (1 + gamma_ca_conv * Ca_p_norm * y[4]);
   D3_conv_D3_norm = 1 / (1 + gamma_D3_conv * D3_norm * y[2]);
   D3_conv_P_norm = 1 / (1 + gamma_P_conv * Pho_p_norm * y[7]);
-  D3_conv_FGF_norm = 1/(1 + gamma_FGF_conv * FGF_p_norm * y[3]);
+  D3_conv_FGF_norm = 1 / (1 + gamma_FGF_conv * FGF_p_norm * y[3]);
   D3_synthesis_norm = D3_basal_synthesis_norm + D3_conv_PTH_norm * D3_conv_Ca_norm *
                       D3_conv_D3_norm*D3_conv_P_norm*D3_conv_FGF_norm;
     
@@ -281,7 +283,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   Resorption_D3_norm = (delta_res_max * 0.8 * pow(y[2], n_res)) /
                         (pow(y[2], n_res) + pow(K_res_D3 / D3_norm, n_res));
     
-  Resorption_norm = Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm; // bisphosphonate effect
+  Resorption_norm = Bispho * (Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm); // bisphosphonate effect
     
   /* P Slow Bone */
   Resorption_P_norm = 0.3 * Resorption_norm; // bisphosphonate effect
@@ -302,7 +304,7 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   Reabs_DCT_D3_norm = (delta_DCT_max * 0.2 * y[2]) / 
                       (y[2] + K_DCT_D3 / D3_norm);
     
-  Excretion_norm = (1 - (Reabs_PT + Reabs_TAL_basal + Reabs_TAL_CaSR_norm + 
+  Excretion_norm = Furo * (1 - (Reabs_PT + Reabs_TAL_basal + Reabs_TAL_CaSR_norm + 
                    Reabs_TAL_PTH_norm + Reabs_DCT_basal + 
                    Reabs_DCT_PTH_norm + Reabs_DCT_D3_norm)) *
                    GFR*(y[4] + y[11] + y[12]);

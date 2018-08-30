@@ -738,6 +738,8 @@ generate_event_parms <- function(event_table) {
     P_inject <- if (name == "P_inject") rate else 0
     P_food <- if (name == "P_food") rate else 0
     D3_intake_reduction <- if (name == "D3_intake_reduction") rate else 1
+    Bispho <- if (name == "bisphosphonate") 0.3 else 1
+    Furo <- if (name == "furosemide") 6 else 1
     
     return(
       c(
@@ -748,7 +750,9 @@ generate_event_parms <- function(event_table) {
         "D3_inject" = D3_inject,
         "P_inject" = P_inject,
         "P_food" = P_food,
-        "D3_intake_reduction" = D3_intake_reduction
+        "D3_intake_reduction" = D3_intake_reduction,
+        "Bispho" = Bispho,
+        "Furo" = Furo
       )
     )
   } else {
@@ -761,7 +765,9 @@ generate_event_parms <- function(event_table) {
         "D3_inject" = 0,
         "P_inject" = 0,
         "P_food" = 0,
-        "D3_intake_reduction" = 1
+        "D3_intake_reduction" = 1,
+        "Bispho" = 1,
+        "Furo" = 1
       )
     )
   }
