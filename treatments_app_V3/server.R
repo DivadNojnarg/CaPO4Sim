@@ -368,11 +368,11 @@ server <- function(input, output, session) {
                       timelineItemMedia(
                         src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
                           "treatments_img/syringe.svg"
-                        } else if (name[[i]] %in% c("Ca_food", "P_food")) {
+                        } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
                           "treatments_img/medicine.svg"
                         } else if (name[[i]] == "PTX") {
                           "treatments_img/surgery.svg"
-                        } else if (name[[i]] == "cinacalcet") {
+                        } else if (name[[i]] %in% c("cinacalcet", "furosemide", "bisphosphonate")) {
                           "treatments_img/pills.svg"
                         } else if (name[[i]] == "plasma analysis") {
                           "treatments_img/test-tube.svg"
@@ -390,13 +390,14 @@ server <- function(input, output, session) {
                           paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
                         )
                       },
-                      footer = if (!is.null(name[[i]])) {
-                        if (name[[i]] != "PTX") 
-                          if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
-                            dashboardLabel(status = "danger", rate[[i]])
-                          }
-                        else NULL
-                      }
+                      footer = NULL
+                      #if (!is.null(name[[i]])) {
+                      #  if (name[[i]] != "PTX") 
+                      #    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
+                      #      dashboardLabel(status = "danger", rate[[i]])
+                      #    }
+                      #  else NULL
+                      #}
                     ),
                     align = "middle"
                   )
@@ -1241,7 +1242,8 @@ server <- function(input, output, session) {
           id = events$counter,
           real_time = Sys.time(),
           event = input$treatment_selected,
-          rate = if (!(input$treatment_selected %in% c("bisphosphonate", "furosemide"))) {
+          rate = if (!(input$treatment_selected %in% 
+                       c("bisphosphonate", "furosemide", "cinacalcet"))) {
             input[[paste(input$treatment_selected)]]
           } else {
             "undefined"
@@ -1282,7 +1284,8 @@ server <- function(input, output, session) {
             }
           },
           event = input$treatment_selected,
-          rate = if (!(input$treatment_selected %in% c("bisphosphonate", "furosemide"))) {
+          rate = if (!(input$treatment_selected %in% 
+                       c("bisphosphonate", "furosemide", "cinacalcet"))) {
             input[[paste(input$treatment_selected)]]
           } else {
             "undefined"

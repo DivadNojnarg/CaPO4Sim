@@ -64,25 +64,24 @@ generate_slider_events <- function(input) {
     } else if (input$treatment_selected == "D3_intake_reduction") {
       sliderInput(
         "D3_intake_reduction", 
-        "D3 intake reduction", 
-        value = 1, 
+        "D3 intake reduction fold", 
+        value = 10, 
         min = 1, 
-        max = 100, 
+        max = 20, 
         step = 1
       ) %>%
         shinyInput_label_embed(
           icon("info") %>%
-            bs_embed_tooltip(title = "D3 intake reduction fold"))
+            bs_embed_tooltip(title = "Amount by which D3 intake is divided"))
     }, 
     
     # Start, stop and add
-    if (input$treatment_selected == "PTX" |
-        input$treatment_selected == "cinacalcet") {
+    if (input$treatment_selected == "PTX") {
       NULL
     } else {
       numericInput(
         "t_stop",
-        "Duration (in minutes):", 
+        "Duration (in minutes, 1440 min = 1 day):", 
         value = 100, 
         min = 0, 
         max = NA, 

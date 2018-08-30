@@ -10,9 +10,8 @@
 /* includes */
 #include <R.h>
 
-
 /* define parameters */
-static double parameters[132];
+static double parameters[133];
 
 #define k_prod_PTHg parameters[0]      
 #define D3_inact parameters[1]         
@@ -150,11 +149,12 @@ static double parameters[132];
 #define D3_intake_reduction parameters[129]
 #define Bispho parameters[130]
 #define Furo parameters[131]
+#define Cinacal parameters[132]
 
 /* initializer  */
 void initmod(void (* odeparms)(int *, double *))
 {
-  int N = 132;
+  int N = 133;
   odeparms(&N, parameters);
 }
 /* Derivatives and 1 output variable */
@@ -223,9 +223,14 @@ void derivs (int *neq, double *t, double *y, double *ydot,
     
   PTHg_degradation_norm = k_deg_PTHg * y[0];
   n_Ca_norm = n1_exo / (1 + exp(-rho_exo * Ca_p_norm * (R / Ca_p_norm - y[4]))) + n2_exo;
-  F_Ca_norm = beta_exo_PTHg - gamma_exo_PTHg * pow(y[4], n_Ca_norm) /
-              (pow(y[4], n_Ca_norm) + pow(K_Ca / Ca_p_norm, n_Ca_norm));
-  // F_Ca_norm = (beta_exo_PTHg - gamma_exo_PTHg) * 0.035; // First action of cinacalcet
+  // First action of cinacalcet
+  if (Cinacal == 0) {
+    F_Ca_norm = beta_exo_PTHg - gamma_exo_PTHg * pow(y[4], n_Ca_norm) /
+      (pow(y[4], n_Ca_norm) + pow(K_Ca / Ca_p_norm, n_Ca_norm));;
+  } else {
+    F_Ca_norm = beta_exo_PTHg - gamma_exo_PTHg;
+  }
+  // F_Ca_norm = (beta_exo_PTHg - gamma_exo_PTHg) * 0.035;
   PTHg_exocytosis_norm = F_Ca_norm * y[0];
   
   /* PTHp */
@@ -283,10 +288,10 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   Resorption_D3_norm = (delta_res_max * 0.8 * pow(y[2], n_res)) /
                         (pow(y[2], n_res) + pow(K_res_D3 / D3_norm, n_res));
     
-  Resorption_norm = Bispho * (Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm); // bisphosphonate effect
+  Resorption_norm = Bispho * (Resorption_basal + Resorption_PTH_norm + Resorption_D3_norm);
     
   /* P Slow Bone */
-  Resorption_P_norm = 0.3 * Resorption_norm; // bisphosphonate effect
+  Resorption_P_norm = 0.3 * Resorption_norm;
   
   /* Ca Kidney */
   Reabs_PT_basal = lambda_reabs_PT_0;
@@ -294,8 +299,13 @@ void derivs (int *neq, double *t, double *y, double *ydot,
   Reabs_PT = Reabs_PT_basal + Reabs_PT_PTH_norm;
     
   Reabs_TAL_basal = lambda_TAL_0;
-  Reabs_TAL_CaSR_norm = delta_CaSR_max / (1 + pow(y[4] * Ca_p_norm / Ca_ref, n_TAL));
-  // Reabs_TAL_CaSR_norm = delta_CaSR_max; // Second action of cinacalcet
+  // Second action of cinacalcet if any
+  if (Cinacal == 0) {
+    Reabs_TAL_CaSR_norm = delta_CaSR_max / (1 + pow(y[4] * Ca_p_norm / Ca_ref, n_TAL));
+  } else {
+    Reabs_TAL_CaSR_norm = delta_CaSR_max;
+  }
+  
   Reabs_TAL_PTH_norm = delta_PTH_max * y[1] / Vp / (y[1] / Vp + K_TAL_PTH / PTH_p_norm);
     
   Reabs_DCT_basal = lambda_DCT_0;
