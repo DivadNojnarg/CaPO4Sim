@@ -379,7 +379,7 @@ server <- function(input, output, session) {
                           paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
                           paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
                           paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [8-51 pM]$$"),
-                          paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"]), " pM [80-700 pM]$$"),
+                          paste0("$$[D3_p] = ", round(plasma_values[i, "D3_p"])/4, " pM [50-180 pM]$$"), # scale D3
                           paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"], 2), " pM [12-21 pM]$$")
                         )
                       },
@@ -1532,8 +1532,8 @@ server <- function(input, output, session) {
     high_norm_PO4_p <- data.frame(high_norm_PO4_p = rep(1.5, length(datas[, "time"])))
     low_norm_PTH_p <- data.frame(low_norm_PTH_p = rep(1.5, length(datas[, "time"])))
     high_norm_PTH_p <- data.frame(high_norm_PTH_p = rep(7, length(datas[, "time"])))
-    low_norm_D3_p <- data.frame(low_norm_D3_p = rep(80, length(datas[, "time"])))
-    high_norm_D3_p <- data.frame(high_norm_D3_p = rep(700, length(datas[, "time"])))
+    low_norm_D3_p <- data.frame(low_norm_D3_p = rep(50, length(datas[, "time"])))
+    high_norm_D3_p <- data.frame(high_norm_D3_p = rep(180, length(datas[, "time"])))
     low_norm_FGF_p <- data.frame(low_norm_FGF_p = rep(12, length(datas[, "time"])))
     high_norm_FGF_p <- data.frame(high_norm_FGF_p = rep(21, length(datas[, "time"])))
     
@@ -1563,6 +1563,8 @@ server <- function(input, output, session) {
           x = datas_summary()[, "time"], 
           y = if (name == "PTH_p") {
             datas_summary()[, name] * 100
+          } else if (name == "D3_p") {
+            datas_summary()[, name] / 4
           } else {
             datas_summary()[, name]
           },
@@ -2013,10 +2015,12 @@ server <- function(input, output, session) {
     removeClass(id = "summary", class = "run_glowing_purple")
   })
   
-  observeEvent(input$register_user, {
-    #if (events$animation > 0) {
+  # make the run button glowing when not clicked
+  observeEvent(input$diagnosis_intro, {
       addClass(id = "user_add_comment", class = "run_glowing_green") 
-    #}
+  })
+  observeEvent(input$add_user_comment, {
+    removeClass(id = "user_add_comment", class = "run_glowing_green") 
   })
   
   # make diagnosis blinking when there remains 5 min

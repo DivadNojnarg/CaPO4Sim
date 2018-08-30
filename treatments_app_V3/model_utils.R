@@ -273,9 +273,9 @@ plot_node <- function(input, node, out, parms) {
                     name = "PTHp (pM)",
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
-          add_lines(y = out[,"D3_p"],
-                    ymin = 0.5 * min(out[,"D3_p"]),
-                    ymax = 1.5 * max(out[,"D3_p"]),
+          add_lines(y = out[,"D3_p"]/4,
+                    ymin = 0.5 * min(out[,"D3_p"]/4),
+                    ymax = 1.5 * max(out[,"D3_p"]/4),
                     name = "D3p (pM)",
                     line = list(color = 'black', width = 2),
                     visible = FALSE) %>%
