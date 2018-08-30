@@ -19,7 +19,7 @@ header <- dashboardHeaderPlus(
   titleWidth = 300,
   
   left_menu = tagList(
-    uiOutput("currentTime"),
+    #uiOutput("currentTime"),
     uiOutput("user_game_status")#,
     #uiOutput("current_calcium")
   )

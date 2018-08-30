@@ -22,9 +22,9 @@ library(shinydashboardPlus)
 library(dplyr)
 
 # Load the template components of UI
-source("patient_generator.R")
 source("patient_selector.R")
 source("getting_started.R")
+source("generate_questions.R")
 source("header.R")
 source("sidebar.R")
 source("body.R")

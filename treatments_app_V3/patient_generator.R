@@ -19,10 +19,10 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
                               disease_id) {
   
   # raw folder
-  raw_folder <- paste0(getwd(), "/treatments_app_V3/www/")
+  raw_folder <- paste0(getwd(), "/www/")
   
   # check if the provided id is already used
-  data_folder <- paste0(getwd(), "/treatments_app_V3/www/patients_datas")
+  data_folder <- paste0(raw_folder, "patients_datas")
   file_list <- list.files(data_folder)
   n_patients <- length(file_list)
   
@@ -34,7 +34,7 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
   } 
   
   # setup initial conditions depending on the disease_id
-  state_folder <- paste0(getwd(), "/treatments_app_V3/www/model_engine")
+  state_folder <- paste0(raw_folder, "model_engine")
   if (disease_id == "php1") {
     state <- read.csv(paste0(state_folder, "/init_php1.csv"), stringsAsFactors = FALSE)
     state <- unlist(state[,-1])
@@ -101,37 +101,45 @@ patient_generator <- function(id, name, picture = NULL, age, height, weight, gen
     disease_id = disease_id,
     initial_conditions = state
   )
-  saveRDS(object = patient_data, file = paste0(getwd(), "/treatments_app_V3/www/patients_datas/patient_", id, ".rds"))
+  saveRDS(object = patient_data, file = paste0(raw_folder, "patients_datas/patient_", id, ".rds"))
 }
 
-# patient_generator(
-#   id = 1,
-#   name = "Jean Jacques",
-#   age = 37,
-#   height = 184,
-#   weight = 90,
-#   gender = "male",
-#   disease_id = "php1",
-#   pathologies = list("calcium stones", "nausea", "hypertension") ,
-#   examination_dates = list("17-02-16", "24-08-17", "26-04-18"),
-#   doctors = list("Prof. Adam Jones", "Dr.med. Ulla Turman", "Dr. John Smith"),
-#   doctors_gender = list("male", "female", "male"),
-#   disease_description = list(
-#     "Calcium oxalate stones are the most common type of kidney stone.
-#     Kidney stones are solid masses that form in the kidney when
-#     there are high levels of calcium, oxalate, cystine, or phosphate
-#     and too little liquid. There are different types of kidney stones.
-#     Your healthcare provider can test your stones to find what type you have.
-#     Calcium oxalate stones are caused by too much oxalate in the urine",
-#     "Nausea is pronounced stomach discomfort and the sensation of wanting to vomit.
-#     Nausea can be a precursor to vomiting the contents of the stomach.
-#     The condition has many causes and can often be prevented",
-#     "Traditionnellement, l'hypertension est définie comme une tension artérielle
-#     supérieure à 140/90, et est considérée comme grave si elle est supérieure à 180/120"
-#     ),
-#   disease_image = list(
-#     "https://steemitimages.com/0x0/https://img.esteem.ws/4dssd1ydr0.jpg",
-#     NULL,
-#     "https://image.shutterstock.com/image-photo/blood-pressure-gauge-show-hypertension-260nw-611687891.jpg"
-#   )
-# )
+patient_generator(
+  id = 1,
+  name = "Patient: Pablo Vilalobos",
+  age = 50,
+  height = 183,
+  weight = 72,
+  gender = "male",
+  disease_id = "hyperD3",
+  pathologies = list(
+    "Obduntation, muscle aches, appetite loss, constipation, irritability",
+    "Preliminary blood and urine analyses",
+    "Mild left hydronephrosis"
+  ),
+  examination_dates = list(rep("", 3)),
+  doctors = list(
+    "Initial consultation",
+    "Laboratory Findings",
+    "Renal sonography"
+  ),
+  doctors_gender = list("male", "female", "male"),
+  disease_description = list(
+    "Mr. Vilalobos presented with tiredness and hyporeactivity. 
+    Over the past few weeks, he had experienced fatigue, excessive thirst, 
+    muscle aches, loss of appetite, constipation and irritability. <br>
+    Mr. Vilalobos did not have any relevant past clinical history and was 
+    not taking any medication apart from over the counter supplements. 
+    Basic physical parameters were normal: BMI (21.5 kg/m2), blood 
+    pressure (120/70 mmHg) and heart rate (70 bpm). 
+    ",
+    NULL,
+    "Renal sonography revealed normal sized kidneys (right 10.cm, left 11cm),
+    no nephrocalcinosis, but a mild left hydronephrosis."
+    ),
+  disease_image = list(
+    NULL,
+    "case_studies_img/patient1-1.svg",
+    NULL
+  )
+)

@@ -10,11 +10,28 @@
 server <- function(input, output, session) {
   
   #------------------------------------------------------------------------- 
-  #  useful datas: initialization. These datq are not in global.R since
+  #  useful datas: initialization. These data are not in global.R since
   #  they are some time reloaded by the program. In global.R they would not
   #  be reloaded, which would corrupt the new session
   #  
   #-------------------------------------------------------------------------
+  
+  # all students names for the session
+  students_names <- c(
+    "Berquez Marine",
+    "Bileck Andrea",
+    "Burgaski Milica",
+    "Chen Zhiyong",
+    "Dalh Sophie",
+    "Ghazi Susan",
+    "Gunter Julia",
+    "Lambert Delphine",
+    "Schnoz Christina",
+    "Stuecheli Simon"
+  )
+  
+  # load all questions
+  questions <- generate_questions()
   
   # load patient files
   patient_datas <- patient_selector()
@@ -35,6 +52,21 @@ server <- function(input, output, session) {
   } else if (patient_disease == "hyperD3") {
     answer <- c("vitamin D3 intoxication")
   }
+  
+  # disease answer list for students
+  diseases_list <- c(
+    "nephrolithiasis",
+    "primary hyperparathroidism",
+    "vitamin D3 intoxication",
+    "hypoparathyroidism",
+    "ricket",
+    "oncogenic osteomalacia",
+    "FGF23 deficiency",
+    "vitamin D3 deficiency",
+    "nephrocalcinosis",
+    "depression",
+    "nonalcoholic fatty liver disease"
+  )
   
   # below is needed to handle treatments events
   treatment_choices <- c(
@@ -59,10 +91,10 @@ server <- function(input, output, session) {
   # initialization of the patient feedback observer
   patient_feedback <- NULL
   
-  # inititalization of the timer
-  minutes_time <- 15 # the application will stop in 15 minutes
+  # # inititalization of the timer
+  # minutes_time <- 60 # the application will stop in 60 minutes
   start_time <- Sys.time()
-  end_time <- start_time + minutes_time * 60
+  # end_time <- start_time + minutes_time * 60
   
   # store the app url
   app_url <- reactive({
@@ -150,7 +182,7 @@ server <- function(input, output, session) {
       status = "primary", 
       collapsible = TRUE,
       closable = FALSE,
-      title = "Medical History", 
+      title = "Past Medical History", 
       enable_label = TRUE,
       label_text = len,
       label_status = "danger",
@@ -182,43 +214,12 @@ server <- function(input, output, session) {
           src = medical_history$doctors_avatars[[i]],
           author = medical_history$doctors[[i]],
           description = strong(medical_history$pathologies[[i]]),
-          paste(medical_history$disease_description[[i]]),
+          HTML(paste(medical_history$disease_description[[i]])),
           if (!is.null(medical_history$disease_image[[i]])) {
-            userPostMedia(
-              src = medical_history$disease_image[[i]],
-              width = "300", 
-              height = "300"
-            )
-          },
-          userPostToolItemList(
-            userPostToolItem(
-              dashboardLabel(
-                medical_history$examination_dates[[i]], 
-                status = "warning"
-              ), 
-              side = "right"
-            )
-          ),
-          br()
+            userPostMedia(src = medical_history$disease_image[[i]])
+          }
         )
-      }),
-      br(),
-      # print additional info when the animation goes further
-      if (events$animation == 1) {
-        userPost(
-          id = 2,
-          src = "interface_img/research.svg",
-          collapsed = FALSE,
-          author = "Additional laboratory findings",
-          description = "A renal sonogram further revealed a mildly 
-            enlarged prostate and mild left hydronephrosis.",
-          userPostMedia(
-            src = "case_studies_img/patient1-2.svg",
-            width = "300", 
-            height = "300"
-          )
-        )
-      }
+      })
     ) 
   })
   
@@ -231,11 +232,10 @@ server <- function(input, output, session) {
       socialBox(
         closable = FALSE,
         width = 12, 
-        style = "overflow-y: auto; max-height: 400px;",
         title = paste0(input$user_name, "'s notebook"),
         subtitle = start_time,
         src = "https://image.flaticon.com/icons/svg/305/305983.svg",
-        if (events$animation >= 2) {
+        if (events$animation >= 8) {
           tagList(
             column(
               width = 12,
@@ -252,11 +252,11 @@ server <- function(input, output, session) {
             br()
           )
         }, 
-        if (events$animation < 2) {
+        if (events$animation < 8) {
           tagList(
             textAreaInput(
               inputId = "user_comment", 
-              label = "What are the significant findings of the blood analysis?", 
+              label = questions[[events$animation + 1]], 
               value = "I enter here all my observations!"
             ),
             column(
@@ -264,9 +264,9 @@ server <- function(input, output, session) {
               align = "center",
               actionBttn(
                 inputId = "user_add_comment",
-                size = "xs",
+                size = "sm",
                 icon = "Next",
-                style = "material-flat",
+                style = "fill",
                 color = "success"
               )
             ) 
@@ -277,7 +277,7 @@ server <- function(input, output, session) {
             lapply(1:len, FUN = function(i) {
               boxComment(
                 src = "https://image.flaticon.com/icons/svg/305/305983.svg",
-                title = paste0("Comment ", i),
+                title = questions[[i]],
                 date = comments$date[[i]],
                 comments$description[[i]]
               )
@@ -294,7 +294,7 @@ server <- function(input, output, session) {
   # Event to be added in the timeLine
   output$recent_events <- renderUI({
     if (events$logged) {
-      if (!is.null(events$answered)) {
+      if (events$animation_started) {
         len <- nrow(events$history)
         name <- events$history$event
         start_time <- events$history$real_time
@@ -316,24 +316,28 @@ server <- function(input, output, session) {
             
             # treatments input are
             # in the event box
-            prettyCheckboxGroup(
-              inputId = "treatment_selected",
-              label = "Select a new treatment:",
-              choices = c(
-                "parathyroid surgery" = "PTX",
-                "D3 iv injection" = "D3_inject",
-                "Ca supplementation" = "Ca_food",
-                "Ca iv injection" = "Ca_inject",
-                "Pi iv injection" = "P_inject",
-                "Pi supplementation" = "P_food",
-                "D3 intake reduction" = "D3_intake_reduction"
-              ),
-              thick = TRUE,
-              inline = TRUE,
-              animation = "pulse"
-            ),
-            uiOutput(outputId = "sliderInject"),
-            hr(),
+            if (!is.null(events$answered)) {
+              tagList(
+                prettyCheckboxGroup(
+                  inputId = "treatment_selected",
+                  label = "Select a new treatment:",
+                  choices = c(
+                    "parathyroid surgery" = "PTX",
+                    "D3 iv injection" = "D3_inject",
+                    "Ca supplementation" = "Ca_food",
+                    "Ca iv injection" = "Ca_inject",
+                    "Pi iv injection" = "P_inject",
+                    "Pi supplementation" = "P_food",
+                    "D3 intake reduction" = "D3_intake_reduction"
+                  ),
+                  thick = TRUE,
+                  inline = TRUE,
+                  animation = "pulse"
+                ),
+                uiOutput(outputId = "sliderInject"),
+                hr()
+              )
+            },
             
             if (len > 0) {
               timelineBlock(
@@ -392,85 +396,87 @@ server <- function(input, output, session) {
               )
             }
           )
-        )   
+        )
       }
     }
   })
   
-  
   # graph box
   output$graphs_box <- renderUI({
     if (events$logged) {
-      boxPlus(
-        width = 12, 
-        #title = "Click on the plasma node to display concentrations",
-        solidHeader = FALSE, 
-        status = "primary", 
-        collapsible = TRUE,
-        closable = FALSE, 
-        withSpinner(
-          plotlyOutput(
-            "plot_node", 
-            height = "300px", 
-            width = "100%"
-          ),
-          size = 2,
-          type = 8,
-          color = "#000000"
+      if (events$animation_started) {
+        boxPlus(
+          width = 12, 
+          #title = "Click on the plasma node to display concentrations",
+          solidHeader = FALSE, 
+          status = "primary", 
+          collapsible = TRUE,
+          closable = FALSE, 
+          withSpinner(
+            plotlyOutput(
+              "plot_node", 
+              height = "300px", 
+              width = "100%"
+            ),
+            size = 2,
+            type = 8,
+            color = "#000000"
+          )
         )
-      )
+      }
     }
   })
-  
   
   # network box
   output$network_box <- renderUI({
     if (events$logged) {
-      boxPlus(
-        title = tagList(
-          actionBttn(
-            inputId = "run",
-            size = "lg",
-            label = "Run",
-            style = "fill",
-            color = "primary",
-            icon = icon("play")
+      if (events$animation_started) {
+        boxPlus(
+          title = tagList(
+            actionBttn(
+              inputId = "run",
+              size = "lg",
+              label = "Run",
+              style = "fill",
+              color = "primary",
+              icon = icon("play")
+            ),
+            actionBttn(
+              inputId = "summary",
+              size = "lg",
+              label = "Summary",
+              style = "fill",
+              color = "royal",
+              icon = icon("tv")
+            )
           ),
-          actionBttn(
-            inputId = "summary",
-            size = "lg",
-            label = "Summary",
-            style = "fill",
-            color = "royal",
-            icon = icon("tv")
-          )
-        ),
-        solidHeader = FALSE, 
-        collapsible = TRUE, 
-        status = "primary", 
-        width = 12,
-        closable = FALSE,
-        enable_sidebar = TRUE,
-        sidebar_width = 50,
-        sidebar_background = "#888888",
-        sidebar_start_open = TRUE,
-        sidebar_content = tagList(
-          getting_started()
-        ),
-        div(
-          id = "network_cap",
-          withSpinner(
-            visNetworkOutput(
-              "network_Ca", 
-              height = if (input$isMobile) "450px" else "900px"
-            ), 
-            size = 2, 
-            type = 8, 
-            color = "#000000"
-          )
-        ),
-        footer = NULL
-      )
+          solidHeader = FALSE, 
+          collapsible = TRUE, 
+          status = "primary", 
+          width = 12,
+          closable = FALSE,
+          enable_sidebar = TRUE,
+          sidebar_width = 50,
+          sidebar_background = "#888888",
+          sidebar_start_open = FALSE,
+          sidebar_content = tagList(
+            getting_started()
+          ),
+          div(
+            id = "network_cap",
+            withSpinner(
+              visNetworkOutput(
+                "network_Ca", 
+                height = if (input$isMobile) "450px" else "900px"
+              ), 
+              size = 2, 
+              type = 8, 
+              color = "#000000"
+            )
+          ),
+          footer = NULL
+        )
+      }
     }
   })
   
@@ -480,59 +486,59 @@ server <- function(input, output, session) {
   #  game ends
   #  
   #-------------------------------------------------------------------------
-  
-  time <- reactiveValues(switcher = FALSE)
-  
-  # set up a timer during which user have to finish the game
-  # and generate the related progress bar
-  countdown <- reactive({
-    invalidateLater(1000, session)
-    countdown <- end_time - Sys.time()
-  })
-  
-  # switch between minutes and seconds when coutdown < 1 minute
-  observe({
-    if (countdown()<= 1.02) {
-      time$switcher <- TRUE
-    }
-  })
-  
-  # convert in percentage for the progress bar
-  percent_countdown <- reactive({
-    countdown <- countdown()
-    if (!time$switcher) {
-      countdown / minutes_time * 100
-    } else {
-      countdown / 60 * 100
-    }
-  })
-  
-  # render the progress bar for countdown
-  output$currentTime <- renderUI({
-    if (!events$stop) {
-      countdown <- countdown()
-      percent_countdown <- percent_countdown()
-      statusClass <- if (!time$switcher) {
-        if (66 < percent_countdown & percent_countdown <= 100) {
-          "success"
-        } else if (30 < percent_countdown & percent_countdown <= 66) {
-          "warning"
-        } else {
-          "danger"
-        }
-      } else {
-        "danger"
-      }
-      progressBar(
-        id = "countdown", 
-        value = percent_countdown, 
-        status = statusClass,
-        striped = TRUE,
-        size = "xs",
-        title = paste0("End in ", round(countdown), if (!time$switcher) " min" else " sec")
-      ) 
-    }
-  })
+
+  # time <- reactiveValues(switcher = FALSE)
+  # 
+  # # set up a timer during which user have to finish the game
+  # # and generate the related progress bar
+  # countdown <- reactive({
+  #   invalidateLater(1000, session)
+  #   countdown <- end_time - Sys.time()
+  # })
+  # 
+  # # switch between minutes and seconds when coutdown < 1 minute
+  # observe({
+  #   if (countdown()<= 1.02) {
+  #     time$switcher <- TRUE
+  #   }
+  # })
+  # 
+  # # convert in percentage for the progress bar
+  # percent_countdown <- reactive({
+  #   countdown <- countdown()
+  #   if (!time$switcher) {
+  #     countdown / minutes_time * 100
+  #   } else {
+  #     countdown / 60 * 100
+  #   }
+  # })
+  # 
+  # # render the progress bar for countdown
+  # output$currentTime <- renderUI({
+  #   if (!events$stop) {
+  #     countdown <- countdown()
+  #     percent_countdown <- percent_countdown()
+  #     statusClass <- if (!time$switcher) {
+  #       if (66 < percent_countdown & percent_countdown <= 100) {
+  #         "success"
+  #       } else if (30 < percent_countdown & percent_countdown <= 66) {
+  #         "warning"
+  #       } else {
+  #         "danger"
+  #       }
+  #     } else {
+  #       "danger"
+  #     }
+  #     progressBar(
+  #       id = "countdown", 
+  #       value = percent_countdown, 
+  #       status = statusClass,
+  #       striped = TRUE,
+  #       size = "xs",
+  #       title = paste0("End in ", round(countdown), if (!time$switcher) " min" else " sec")
+  #     ) 
+  #   }
+  # })
   
   # When the counter is equal to 0, each time the session is opened, 
   # show the how to start sweetAlert
@@ -554,7 +560,7 @@ server <- function(input, output, session) {
               "You will be presented with a patient case-study related 
                to CaPO4 homeostasis. The goal of this activity is to 
                <b>establish</b> a diagnosis and <b>treat</b>
-               the patient correctly, in exactly <b>15 minutes</b>:
+               the patient correctly, in exactly <b>60 minutes</b>:
                <ol> 
                <li> To establish your diagnostic, you can click on any compartment e.g. 
                 click on plasma to conduct blood plasma analyses. </li>
@@ -566,7 +572,16 @@ server <- function(input, output, session) {
             column(
               align = "center",
               width = 12,
-              textInput("user_name", "Your name:")
+              selectInput(
+                inputId = "user_name", 
+                label = "Your name:", 
+                choices = students_names, 
+                selected = NULL, 
+                multiple = FALSE,
+                selectize = TRUE, 
+                width = NULL, 
+                size = NULL
+              )
             )
           ),
           btn_labels = c(NULL, "Confirm"),
@@ -594,56 +609,56 @@ server <- function(input, output, session) {
     }
   })
   
-  # shift stop when countdown is 0
-  observe({
-    if (countdown() <= 0) 
-      events$stop <- TRUE
-  })
-  
-  # When the timer is 0 the game is over if the user has no diagnosis
-  # and treatment
-  observe({
-    if (is.null(input$close_app)) {
-      if (events$stop) {
-        confirmSweetAlert(
-          inputId = "close_app",
-          danger_mode = TRUE,
-          session, 
-          title = "This is the end!",
-          text = tagList(
-            img(src = "interface_img/finish.svg", width = "100px", height = "100px"),
-            br(),
-            HTML(
-              paste(
-                "It seems that the game is finished. 
-                You can restart or close the game."
-              )
-            )
-          ),
-          btn_labels = c("Restart", "Stop"),
-          type = "error",
-          html = TRUE
-        )
-      }
-    }
-  })
-  
-  # Handle what happens when the user close or restart the app
-  observeEvent(input$close_app, {
-    if (input$close_app) {
-      sendSweetAlert(
-        session, 
-        title = "Stop in 5 seconds...", 
-        type = "error"
-      )
-      shinyjs::delay(5000, {
-        js$closeWindow()
-        stopApp()
-      })
-    } else {
-      session$reload()
-    }
-  })
+  # # shift stop when countdown is 0
+  # observe({
+  #   if (countdown() <= 0) 
+  #     events$stop <- TRUE
+  # })
+  # 
+  # # When the timer is 0 the game is over if the user has no diagnosis
+  # # and treatment
+  # observe({
+  #   if (is.null(input$close_app)) {
+  #     if (events$stop) {
+  #       confirmSweetAlert(
+  #         inputId = "close_app",
+  #         danger_mode = TRUE,
+  #         session, 
+  #         title = "This is the end!",
+  #         text = tagList(
+  #           img(src = "interface_img/finish.svg", width = "100px", height = "100px"),
+  #           br(),
+  #           HTML(
+  #             paste(
+  #               "It seems that the game is finished. 
+  #               You can restart or close the game."
+  #             )
+  #           )
+  #         ),
+  #         btn_labels = c("Restart", "Stop"),
+  #         type = "error",
+  #         html = TRUE
+  #       )
+  #     }
+  #   }
+  # })
+  # 
+  # # Handle what happens when the user close or restart the app
+  # observeEvent(input$close_app, {
+  #   if (input$close_app) {
+  #     sendSweetAlert(
+  #       session, 
+  #       title = "Stop in 5 seconds...", 
+  #       type = "error"
+  #     )
+  #     shinyjs::delay(5000, {
+  #       js$closeWindow()
+  #       stopApp()
+  #     })
+  #   } else {
+  #     session$reload()
+  #   }
+  # })
   
   
   # init the directory where user datas will be saved
@@ -703,19 +718,35 @@ server <- function(input, output, session) {
   
   # handle case when the use press the diagnosis button
   observeEvent(input$diagnosis, {
-    inputSweetAlert(
+    confirmSweetAlert(
       session,
       inputId = "diagnosis_answer",
       title = "What is the disease of this patient?",
       btn_labels = c("Send"),
-      placeholder = "Be careful about word spelling before submitting!",
-      type = "warning"
+      type = "warning",
+      text = tagList(
+        column(
+          align = "center",
+          width = 12,
+          selectInput(
+            inputId = "disease_name", 
+            label = "",
+            choices = diseases_list, 
+            selected = NULL, 
+            multiple = FALSE,
+            selectize = TRUE, 
+            width = NULL, 
+            size = NULL
+          )
+        )
+      ),
+      html = TRUE
     )
   })
   
   # treat the diagnosis answer
   observeEvent(input$diagnosis_answer, {
-    user_answer <- input$diagnosis_answer
+    user_answer <- input$disease_name
     if (user_answer != "") {
       test <- str_detect(answer, regex(paste0("\\b", user_answer, "\\b"), ignore_case = TRUE))
       if (test) {
@@ -774,8 +805,8 @@ server <- function(input, output, session) {
     }
     game_text <- if (!is.null(events$answered)) {
       if (events$answered) 
-        "Successful diagnosis" 
-      else "Unsuccessful diagnosis"
+        paste0(input$disease_name, ": successful diagnosis")
+      else paste0(input$disease_name, ": unsuccessful diagnosis")
     } else {
       "No diagnosis yet"
     }
@@ -845,7 +876,7 @@ server <- function(input, output, session) {
   observe({
     if (!is_empty(input$register_user)) {
       shinyjs::delay(
-        2000,
+        1000,
         confirmSweetAlert(
           session, 
           inputId = "diagnosis_intro",
@@ -869,9 +900,9 @@ server <- function(input, output, session) {
   
   # Introduction to treatments
   observeEvent(input$diagnosis_answer, {
-    if (events$animation == 2) {
+    if (events$animation == 8) {
       shinyjs::delay(
-        2000,
+        1000,
         confirmSweetAlert(
           session, 
           inputId = "treatments_intro",
@@ -915,18 +946,12 @@ server <- function(input, output, session) {
     events$animation <- events$animation + 1
   })
   
-  # 
-  observe({
+  # say that the animation is started when the user has clicked on next
+  observeEvent(events$animation , {
     if (events$animation == 1) {
-      updateTextAreaInput(
-        session, 
-        inputId = "user_comment", 
-        label = "What is your differential diagnostic?", 
-        value = "I enter here all my observations!"
-      )
+      events$animation_started <- TRUE 
     }
   })
-  
   
   # # warn the user when Calcium, PTH, vitamin D3 are above their physiological ranges
   # observe({
@@ -1073,7 +1098,8 @@ server <- function(input, output, session) {
     answered = NULL,
     PTX = FALSE,
     logged = FALSE,
-    animation = 0
+    animation = 0,
+    animation_started = FALSE
   )
   
   
@@ -1953,18 +1979,24 @@ server <- function(input, output, session) {
     removeClass(id = "summary", class = "run_glowing_purple")
   })
   
+  observeEvent(input$register_user, {
+    #if (events$animation > 0) {
+      addClass(id = "user_add_comment", class = "run_glowing_green") 
+    #}
+  })
+  
   # make diagnosis blinking when there remains 5 min
   # before the app close, only if it exists (if the user
   # never clicked on next, diagmosis does not exist!!!)
-  observe({
-    if (countdown() <= 5) {
-      if (!is_empty(input$diagnosis)) {
-        if (input$diagnosis == 0) {
-          addClass(id = "diagnosis", class = "run_glowing_blue") 
-        } 
-      }
-    }
-  })
+  # observe({
+  #   if (countdown() <= 5) {
+  #     if (!is_empty(input$diagnosis)) {
+  #       if (input$diagnosis == 0) {
+  #         addClass(id = "diagnosis", class = "run_glowing_blue") 
+  #       } 
+  #     }
+  #   }
+  # })
   observe({
     if (!is_empty(input$diagnosis)) {
       if (input$diagnosis > 0) {
