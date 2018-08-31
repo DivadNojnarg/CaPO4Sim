@@ -569,7 +569,7 @@ server <- function(input, output, session) {
               "You will be presented with a patient case-study related 
                to CaPO4 homeostasis. The goal of this activity is to 
                <b>establish</b> a diagnosis and <b>treat</b>
-               the patient correctly, in exactly <b>60 minutes</b>:
+               the patient correctly:
                <ol> 
                <li> To establish your diagnostic, you can click on any compartment e.g. 
                 click on plasma to conduct blood plasma analyses. </li>
@@ -785,7 +785,7 @@ server <- function(input, output, session) {
       
       # save the answer status
       saveRDS(
-        object = events$answered, 
+        object = c(events$answered, user_answer), 
         file = paste0(user_folder(), "/user_answer.rds")
       )
     } else {
@@ -914,27 +914,24 @@ server <- function(input, output, session) {
   # Introduction to plasma analysis
   observeEvent(input$user_add_comment, {
     if (events$animation == 3) {
-      shinyjs::delay(
-        1000,
-        confirmSweetAlert(
-          session, 
-          inputId = "plasma_analysis_intro",
-          title = "How to deal with plasma analysis?",
-          text = tagList(
-            img(src = "CaPO4_network/plasma.svg", width = "100px", height = "100px"),
-            br(),
-            "You can access any plasma concentration by clicking on the",
-            img(src = "CaPO4_network/plasma.svg", width = "50px", height = "50px"),
-            " node. Besides, other compartments are available such as", 
-            img(src = "CaPO4_network/parathyroid_gland_human.svg", width = "50px", height = "50px"),
-            img(src = "CaPO4_network/cells.svg", width = "50px", height = "50px"),
-            img(src = "CaPO4_network/bone.svg", width = "50px", height = "50px"),
-            "and", img(src = "CaPO4_network/rapid-bone.svg", width = "50px", height = "50px")
-          ),
-          btn_labels = c(NULL, "Ok"),
-          type = "warning",
-          html = TRUE
-        )
+      confirmSweetAlert(
+        session, 
+        inputId = "plasma_analysis_intro",
+        title = "How to deal with plasma analysis?",
+        text = tagList(
+          img(src = "CaPO4_network/plasma.svg", width = "100px", height = "100px"),
+          br(),
+          "You can access any plasma concentration by clicking on the",
+          img(src = "CaPO4_network/plasma.svg", width = "50px", height = "50px"),
+          " node. Besides, other compartments are available such as", 
+          img(src = "CaPO4_network/parathyroid_gland_human.svg", width = "50px", height = "50px"),
+          img(src = "CaPO4_network/cells.svg", width = "50px", height = "50px"),
+          img(src = "CaPO4_network/bone.svg", width = "50px", height = "50px"),
+          "and", img(src = "CaPO4_network/rapid-bone.svg", width = "50px", height = "50px")
+        ),
+        btn_labels = c(NULL, "Ok"),
+        type = "warning",
+        html = TRUE
       )
     }
   })
@@ -960,6 +957,8 @@ server <- function(input, output, session) {
                 <ol>
                 <li> Select the treatment in the timeline </li>
                 <li> Specify dosage and duration (if relevant) </li>
+                <li> Click on <img src='interface_img/add_treatment.svg' height='50' width='50'>
+                to add the treatment</li>
                 <li> Click on <img src='interface_img/run.svg' height='50' width='50'></li>
                 <li> You may visualize changes due to your last intervention in the top right panel </li>
                 <li> To visualize the entire simulation history, click on 
