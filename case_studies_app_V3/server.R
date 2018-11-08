@@ -99,13 +99,13 @@ shinyServer(function(input, output, session) {
       visEvents(type = "on", stabilized = "function() {
                 this.moveTo({ position: {x:0, y:-13.43},
                 offset: {x: 0, y:0} })}") %>% 
-      # very important: allow to detect the web browser used by client
-      # use before drawing the network. Works with find_navigator.js
-      visEvents(type = "on", beforeDrawing = "function() {
-                Shiny.onInputChange('browser', navigator.sayswho);
-                ;}") %>%
-      visEvents(type = "on", initRedraw = "function() {
-                this.moveTo({scale:0.6})}") # to set the initial zoom (1 by default)
+      visEvents(
+        type = "on", 
+        initRedraw = paste0("
+          function() {
+            this.moveTo({scale:", if (input$isMobile) 0.3 else 0.6, "});
+        }")
+      )
   })
   
   # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #
@@ -287,8 +287,7 @@ shinyServer(function(input, output, session) {
     
     edges_Ca <- edges_Ca()
     current_sim <- extract_running_sim(input)[[1]]
-    dynamic_sim <- !(input$run_Ca_inject | input$run_PO4_inject |
-                       input$run_PO4_gav)
+    dynamic_sim <- !(input$run_Ca_inject | input$run_PO4_inject | input$run_PO4_gav)
     # only if a simulation is selected 
     # dynamics simulations are excluded since calculations
     # are performed live contrary to steady-state simulations
@@ -331,11 +330,13 @@ shinyServer(function(input, output, session) {
         
         # make arrow yellow and blink
         # (see model_utils.R)
-        arrow_lighting(edges = edges_Ca,
-                       simulation = current_sim,
-                       counter = counter_nav$diagram,
-                       input,
-                       session)
+        arrow_lighting(
+          edges = edges_Ca,
+          simulation = current_sim,
+          counter = counter_nav$diagram,
+          input,
+          session
+        )
       } 
     }
   })
@@ -436,19 +437,31 @@ shinyServer(function(input, output, session) {
       description <- generate_userFields(input)$description
       if (description == "dead") {
         tagList(
-          actionBttn(inputId = "cure", label = "Change Rat", 
-                     style = "fill", color = "success")
+          actionBttn(
+            inputId = "cure", 
+            label = "Change Rat", 
+            style = "fill", 
+            color = "success"
+          )
         )
       } else {
         tagList(
-          actionBttn(inputId = "cure", label = "Cure Rat", 
-                     style = "fill", color = "success")
+          actionBttn(
+            inputId = "cure", 
+            label = "Cure Rat", 
+            style = "fill", 
+            color = "success"
+          )
         )
       }
     } else {
       tagList(
-        actionBttn(inputId = "cure", label = "Cure Rat", 
-                   style = "fill", color = "success")
+        actionBttn(
+          inputId = "cure", 
+          label = "Cure Rat", 
+          style = "fill", 
+          color = "success"
+        )
       )
     }
   })
@@ -617,9 +630,11 @@ shinyServer(function(input, output, session) {
   
   #  Toggle the sidebar when a user press the help button
   observe({
-    shinyjs::toggleClass(id = "controlbar", 
-                         class = "control-sidebar-open",
-                         condition = input$help)
+    shinyjs::toggleClass(
+      id = "controlbar", 
+      class = "control-sidebar-open",
+      condition = input$help
+    )
   })
   
   # Need to find a way to integrate the userMenu card to the help section
@@ -694,8 +709,11 @@ shinyServer(function(input, output, session) {
   # the reverse case does not work for unknow reason 
   observeEvent(input$network_hormonal_choice, {
     if (input$network_hormonal_choice == TRUE) {
-      updatePrettyCheckboxGroup(session, inputId = "network_Ca_choice", 
-                                selected = c("Ca","PO4", "PTH", "D3", "FGF23"))
+      updatePrettyCheckboxGroup(
+        session, 
+        inputId = "network_Ca_choice", 
+        selected = c("Ca","PO4", "PTH", "D3", "FGF23")
+      )
     } 
   })
   
@@ -763,8 +781,8 @@ shinyServer(function(input, output, session) {
   })
   
   # Custom footer
-  output$dynamicFooter <- renderFooter({ 
-    generate_dynamicFooter()
-  })
+  #output$dynamicFooter <- renderFooter({ 
+  #  generate_dynamicFooter()
+  #})
   
 })

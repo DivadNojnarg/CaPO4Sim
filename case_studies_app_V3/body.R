@@ -37,17 +37,15 @@ body <- dashboardBody(
   withMathJax(),
   use_bs_popover(),
   use_bs_tooltip(),
-  
   # print feedback for input
   useShinyFeedback(),
   useSweetAlert(),
   
   # include the script for Hotjar tracking
-  #tags$head(includeScript("www/hotjar.js")),
-  tags$head(includeScript(paste0(getwd(), "/www/rintrojs_count.js"))),
-  
+  tags$head(includeScript(paste0(getwd(), "/www/js/rintrojs_count.js"))),
+  includeScript(path = "www/js/find-navigator.js"),
   # include hotjar tracking
-  tags$head(includeScript(paste0(getwd(), "/www/hotjar.js"))),
+  tags$head(includeScript(paste0(getwd(), "/www/js/hotjar.js"))),
   
   # Main application Panel
   tabItems(
@@ -64,33 +62,44 @@ body <- dashboardBody(
     # Video panels
     tabItem(
       tabName = "video",
-      
       fluidRow(
         # Ca movie
-        box(id = "ca_movie", solidHeader = TRUE,
-            column(12, align = "center", 
-                   HTML('<iframe width="560" height="315"
-                        src="https://youtube.com/embed/9x2QFK6_IkQ" 
-                        frameborder="0" allowfullscreen></iframe>')
-            )
+        box(
+          id = "ca_movie", 
+          solidHeader = TRUE,
+          column(
+            width = 12, 
+            align = "center", 
+            HTML('<iframe width="560" height="315"
+                   src="https://youtube.com/embed/9x2QFK6_IkQ" 
+                   frameborder="0" allowfullscreen></iframe>')
+          )
         ),
         # PO4 movie
-        box(id = "PO4_movie", solidHeader = TRUE,
-            column(12, align = "center",
-                   HTML('<iframe width="560" height="315"
-                        src="https://youtube.com/embed/1eh5VF6poWo"
-                        frameborder="0" allowfullscreen></iframe>')
-            )
+        box(
+          id = "PO4_movie", 
+          solidHeader = TRUE,
+          column(
+            width = 12, 
+            align = "center",
+            HTML('<iframe width="560" height="315"
+                   src="https://youtube.com/embed/1eh5VF6poWo"
+                   frameborder="0" allowfullscreen></iframe>')
+          )
         )
       ),
       fluidRow(
         # PTH movie
-        box(id = "PTH_movie", solidHeader = TRUE,
-            column(12, align = "center",
-                   HTML('<iframe width="560" height="315"
-                        src="https://youtube.com/embed/5OEenuXMjyg"
-                        frameborder="0" allowfullscreen></iframe>')
-            )
+        box(
+          id = "PTH_movie", 
+          solidHeader = TRUE,
+          column(
+            width = 12, 
+            align = "center",
+            HTML('<iframe width="560" height="315"
+                   src="https://youtube.com/embed/5OEenuXMjyg"
+                   frameborder="0" allowfullscreen></iframe>')
+          )
         )
       )
     ),
@@ -98,20 +107,26 @@ body <- dashboardBody(
     # About section Panel
     tabItem(
       tabName = "about",
-      div(id = "about_us",
-          HTML(
-            paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
-                      border=\"0\" align=\"center\"  src=\"logos/about_us.jpg\"/> ")
-          )
+      div(
+        id = "about_us",
+        HTML(
+          paste("<img style=\"height: 100%; width: 100%; object-fit: contain\" 
+                border=\"0\" align=\"center\"  src=\"logos/about_us.jpg\"/> ")
+        )
       )
     ),
     # Glossary Panel
     tabItem(
       tabName = "glossary",
-      div(id = "glossary",
-          box(id = "boxglossary", solidHeader = TRUE, width = 12, height = "50%",
-              dataTableOutput("glossary")
-          )
+      div(
+        id = "glossary",
+        box(
+          id = "boxglossary", 
+          solidHeader = TRUE, 
+          width = 12, 
+          height = "50%",
+          dataTableOutput("glossary")
+        )
       )
     )
   )

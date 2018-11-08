@@ -3,23 +3,16 @@
 #' @param name userName.
 #' @param image user profile picture.
 #'
-#' @seealso \code{\link{userOutput}} and \code{\link{renderUser}} for dynamically-generating \code{\link{dashboardUser}}.
+#' @seealso \code{\link{userOutput}} and \code{\link{renderUser}} for 
+#' dynamically-generating \code{\link{dashboardUser}}.
 #' @export
-dashboardUser <- function(name = "Guang Yang",
-                          image = paste0("ygdashboard", "-", as.character(utils::packageVersion("ygdashboard")), "/img/yg.jpg"),
-                          description = "Alchemist",
-                          sub_description = "Member since Aug. 2015",
-                          stat1 = "100 Posts",
-                          stat2 = "2048 Followers",
-                          stat3 = "1024 Following",
-                          stat4 = "Blabla",
-                          btn1 = "Profile",
-                          btn2 = "Sign Out") {
+dashboardUser <- function(name = NULL, image = NULL, description = NULL,
+                          sub_description = NULL, stat1 = NULL,
+                          stat2 = NULL, stat3 = NULL, stat4 = NULL,
+                          btn1 = NULL, btn2 = NULL) {
   
   # create user account menu
-  tags$li(
-    class = "dropdown user user-menu",
-    style = "padding-right: 200px;",
+  tagList(
     # menu toggle button
     tags$a(
       href = "#", class = "dropdown-toggle", `data-toggle` = "dropdown",
@@ -64,16 +57,18 @@ dashboardUser <- function(name = "Guang Yang",
         )
       ),
       # menu footer. Do not show if the patient is healthy
-      if (description %in% c("sick", "dead")) {
-        tags$li(
-          class = "user-footer",
-          tags$div(
-            #class = "pull-left",
-            column(12, align = "center",
-                   uiOutput("userbttn1")
+      if(!is.null(description)) {
+        if (description %in% c("sick", "dead")) {
+          tags$li(
+            class = "user-footer",
+            tags$div(
+              #class = "pull-left",
+              column(12, align = "center",
+                     uiOutput("userbttn1")
+              )
             )
           )
-        )
+        }
       }
     )
   )
@@ -83,15 +78,15 @@ dashboardUser <- function(name = "Guang Yang",
 #'
 #' This can be used as a placeholder for dynamically-generated \code{\link{dashboardUser}}.
 #'
-#' @param outputId Output variable name.
+#' @param id Output variable name.
 #' @param tag A tag function, like \code{tags$li} or \code{tags$ul}.
 #'
 #' @seealso \code{\link{renderUser}} for the corresponding server side function
 #'   and examples.
 #' @family user outputs
 #' @export
-userOutput <- function(outputId) {
-  moduleOutput(outputId, tag = tags$li)
+userOutput <- function(id, tag = tags$li) {
+  uiOutput(outputId = id, container = tag, class = "dropdown user user-menu")
 }
 
 #' Create dynamic user output (server side)

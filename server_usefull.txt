@@ -111,6 +111,9 @@ sudo /opt/shiny-server/bin/sspasswd /etc/shiny-server/passwd admin
 user -> nccr
 passwd -> Beautiful_Nephrons
 
-RStudio Server Interface
-user -> David
+RStudio Server Interface (130.60.24.79:8787)
+user -> david, diane, christelle
 passwd -> admin
+
+to give read/write rights to a server user
+sudo chown diane:diane /srv/shiny-server/folder (folder can be anything)

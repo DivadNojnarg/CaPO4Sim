@@ -119,7 +119,8 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 # Add a new user to the htpasswd file (as much as you want)
 # replace user and password by what you want
 sudo htpasswd -bc /etc/apache2/htpasswd.users user password
-
+# to add a new user without having to remove all existing ones
+sudo htpasswd -b /etc/apache2/htpasswd.users user password
     
     
     

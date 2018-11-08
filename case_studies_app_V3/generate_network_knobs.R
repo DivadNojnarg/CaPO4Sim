@@ -14,43 +14,48 @@
 generate_network_knobs <- function(input, output, session) {
   # handle the size of organ and hormonal nodes
   output$size_nodes_organs <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "size_organs", 
         "Organs", 
         min = 50, 
         max = 100, 
-        value = 70, 
+        value = if (input$isMobile) 85 else 70, 
         step = 5,
         displayPrevious = TRUE,
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = "tron",
-        width = "100px", 
-        height = "100px")
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
+      )
     )
   })
   
   output$size_nodes_hormones <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "size_hormones", 
         "Hormones", 
         min = 20, 
         max = 60, 
-        value = 40, 
+        value = if (input$isMobile) 60 else 40, 
         step = 5,
         displayPrevious = TRUE,
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = "tron",
-        width = "100px", 
-        height = "100px")
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
+      )
     )
   })
   
   # control width of arrows
   output$width_arrows_organs <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "width_organs", 
@@ -65,12 +70,14 @@ generate_network_knobs <- function(input, output, session) {
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = NULL,
-        width = "100px", 
-        height = "100px")
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
+      )
     )
   })
   
   output$width_arrows_hormones <- renderUI({
+    req(!is.null(input$isMobile))
     tagList(
       knobInput(
         "width_hormones", 
@@ -85,8 +92,9 @@ generate_network_knobs <- function(input, output, session) {
         fgColor = "#A9A9A9", 
         inputColor = "#A9A9A9",
         skin = NULL,
-        width = "100px", 
-        height = "100px")
+        width = if (input$isMobile) "75px" else "100px", 
+        height = if (input$isMobile) "75px" else "100px"
+      )
     )
   })
 }

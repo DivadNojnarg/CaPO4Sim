@@ -12,13 +12,13 @@
 # *------------------------------------------------------------------
 
 # Define UI
-dashboardPage(
+dashboardPagePlus(
   skin = "black",
   title = "CaPO4 Teaching App",
   collapse_sidebar = TRUE,
+  enable_preloader = TRUE,
   header,
   sidebar,
   body,
-  footerOutput(outputId = "dynamicFooter"),
-  div(id = "controlbar", dashboardControlbar())
+  rightsidebar
 )

@@ -12,16 +12,24 @@
 # |
 # *------------------------------------------------------------------
 
-header <- dashboardHeader(
+header <- dashboardHeaderPlus(
   title = HTML(paste0(
     '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
     '<img src= "logos/online-learning.svg">'
   )),
   
   titleWidth = 300,
+  enable_rightsidebar = TRUE,
+  rightSidebarIcon = "gears",
+  fixed = FALSE,
   
   # user box (see generate_userInfo.R and model_utils.R)
-  user = userOutput("user"),
+  left_menu = tagList(
+    tagAppendAttributes(
+      userOutput("user"),
+      style = "margin-left: 100px; border:none;"
+    )
+  ),
   
   # help button
   tags$li(
