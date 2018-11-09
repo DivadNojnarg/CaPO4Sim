@@ -27,25 +27,22 @@
 body <- dashboardBody(
   
   # load the css
-  app_css(),
-  # perform some javascript events such as show/hide ...
+  includeCSS(path = "www/css/case_studies_app.css"),
+  
+  # include scripts
+  tags$head(includeScript(paste0(getwd(), "/www/js/rintrojs_count.js"))),
+  includeScript(path = "www/js/find-navigator.js"),
+  tags$head(includeScript(paste0(getwd(), "/www/js/hotjar.js"))),
+  
+  # Load other JS facilities
   useShinyjs(), 
-  # load the help animation library
   introjsUI(),
-  # make beautiful notifications, replace showNotifications by shiny
   useToastr(),
   withMathJax(),
   use_bs_popover(),
   use_bs_tooltip(),
-  # print feedback for input
   useShinyFeedback(),
   useSweetAlert(),
-  
-  # include the script for Hotjar tracking
-  tags$head(includeScript(paste0(getwd(), "/www/js/rintrojs_count.js"))),
-  includeScript(path = "www/js/find-navigator.js"),
-  # include hotjar tracking
-  tags$head(includeScript(paste0(getwd(), "/www/js/hotjar.js"))),
   
   # Main application Panel
   tabItems(

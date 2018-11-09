@@ -44,7 +44,6 @@ library(DT)
 
 # 2) Load the template components
 source("help.R")
-source("app_css.R")
 source("utils.R")
 source("dashboardUser.R")
 source("header.R")

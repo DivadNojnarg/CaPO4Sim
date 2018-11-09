@@ -74,7 +74,7 @@ shinyServer(function(input, output, session) {
     edges_Ca <- edges_Ca()
     input$network_hormonal_choice
     
-    generate_network(nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
+    generate_network(input, nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
       # simple click event to select a node
       visEvents(selectNode = "function(nodes) {
                 Shiny.onInputChange('current_node_id', nodes.nodes);

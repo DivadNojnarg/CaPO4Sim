@@ -26,7 +26,7 @@
 # This function is used to generate a network as well
 # as basic options such as physics, manipulations,
 # selection
-generate_network <- function(nodes, edges, usephysics = FALSE) {
+generate_network <- function(input, nodes, edges, usephysics = FALSE) {
   
   visNetwork(
     nodes, 
@@ -43,14 +43,16 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
     # put shadow on false
     visEdges(
       shadow = FALSE, 
-      font = list(align = "horizontal")) %>%
+      font = list(align = "horizontal")
+    ) %>%
     # add group selection option
     visOptions(
       highlightNearest = FALSE, 
       clickToUse = FALSE, 
       manipulation = FALSE, 
       collapse = FALSE,
-      autoResize = TRUE) %>% 
+      autoResize = if (input$isMobile) FALSE else TRUE
+    ) %>% 
     # prevent edge from being selected when a node is selected
     visInteraction(
       hover = TRUE, 
@@ -78,7 +80,8 @@ generate_network <- function(nodes, edges, usephysics = FALSE) {
         border-radius: 3px;
         border: 1px solid #808074;
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-        z-index: 100;') %>% 
+        z-index: 100;'
+    ) %>% 
     # stabilization prevents arrows from bouncing
     visPhysics(stabilization = TRUE, enabled = usephysics)
 }

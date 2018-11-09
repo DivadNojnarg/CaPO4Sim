@@ -79,6 +79,7 @@ library(DT)
   - remove human background from options
   - rename « demo » to «  video »
 + CaPO4 Network
+  - add a mobile and tablet support (graph dynamically resize for small screens)
   - when a node is selected, its size is increased (and restored when deselected) 
   - same thing for edges
   - add a way to make edges blinking when a case study is selected
