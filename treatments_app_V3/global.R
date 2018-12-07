@@ -20,6 +20,7 @@ library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(dplyr)
+library(shinyEffects)
 
 # Load the template components of UI
 source("patient_selector.R")
