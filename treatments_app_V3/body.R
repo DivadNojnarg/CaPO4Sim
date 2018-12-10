@@ -24,14 +24,14 @@ body <- dashboardBody(
   includeScript(path = "www/js/find-navigator.js"),
   # print feedback for input
   useShinyFeedback(),
-  setShadow("box"),
-  setShadow("dropdown-menu"),
-  setZoom("box", scale = 1.01),
-  setPulse("timeline-item"),
-  setPulse("diagnosis-badge"),
-  setShake("diagnosis-badge"),
-  setShadow("modal-content"),
-  setZoom("modal-content"),
+  setShadow(class = "box"),
+  setShadow(class = "dropdown-menu"),
+  setZoom(class = "box", scale = 1.01),
+  setPulse(class = "timeline-item"),
+  setPulse(class = "diagnosis-badge"),
+  setShake(class = "diagnosis-badge"),
+  setShadow(class = "modal-content"),
+  setZoom(class = "modal-content"),
   #setShake("post"),
 
   tabItems(
