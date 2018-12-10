@@ -44,6 +44,13 @@ body <- dashboardBody(
   useShinyFeedback(),
   useSweetAlert(),
   
+  # shinyEffects
+  setShadow(class = "box"),
+  setShadow(class = "dropdown-menu"),
+  setZoom(class = "box", scale = 1.01),
+  setShadow(class = "modal-content"),
+  setZoom(class = "modal-content"),
+  
   # Main application Panel
   tabItems(
     tabItem(

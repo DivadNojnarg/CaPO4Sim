@@ -22,6 +22,7 @@
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
+library(shinyEffects)
 library(visNetwork)
 library(shinyBS)
 library(dplyr)
