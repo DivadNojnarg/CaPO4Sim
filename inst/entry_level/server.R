@@ -25,6 +25,7 @@
 shinyServer(function(input, output, session) {
 
   callModule(module = skinSelect, id = "skin")
+  callModule(module = glossaryCaPO4, id = "glossary")
 
   nodes_Ca <- reactive({generate_nodes_Ca(input)})
   edges_Ca <- reactive({generate_edges_Ca(input)})
@@ -381,17 +382,8 @@ shinyServer(function(input, output, session) {
   #
   #-------------------------------------------------------------------------
 
-  # glossary
-  output$glossary <- renderDataTable({
-    generate_glossary()
-  })
-
-
-
   # generate a patient profile
-  userInfo <- reactive({
-    generate_userInfo(input)
-  })
+  userInfo <- reactive({ generate_userInfo(input) })
   output$user <- renderUser({userInfo() %$% head_user})
 
   output$userbttn1 <- renderUI({
@@ -593,7 +585,7 @@ shinyServer(function(input, output, session) {
   #  Toggle the sidebar when a user press the help button
   observe({
     shinyjs::toggleClass(
-      id = "controlbar",
+      id = "right_sidebar",
       class = "control-sidebar-open",
       condition = input$help
     )
@@ -609,7 +601,7 @@ shinyServer(function(input, output, session) {
 
   # reset all parameters
   observeEvent(input$cure,{
-    shinyjs::reset("sidebar_bis")
+    shinyjs::reset("right_sidebar")
   })
 
   # display or not display the network background
@@ -640,26 +632,26 @@ shinyServer(function(input, output, session) {
   })
 
   # prevent user from selecting multiple background
-  # observe({
-  #   if (is.element("rat", input$background_choice) &&
-  #       !is.element("human", input$background_choice)) {
-  #     disable(selector = "#background_choice input[value='human']")
-  #   } else {
-  #     enable(selector = "#background_choice input[value='human']")
-  #   }
-  #   if (is.element("human", input$background_choice) &&
-  #       !is.element("rat", input$background_choice)) {
-  #     disable(selector = "#background_choice input[value='rat']")
-  #   } else {
-  #     enable(selector = "#background_choice input[value='rat']")
-  #   }
-  # })
+  observe({
+    if (is.element("rat", input$background_choice) &&
+        !is.element("human", input$background_choice)) {
+      disable(selector = "#background_choice input[value='human']")
+    } else {
+      enable(selector = "#background_choice input[value='human']")
+    }
+    if (is.element("human", input$background_choice) &&
+        !is.element("rat", input$background_choice)) {
+      disable(selector = "#background_choice input[value='rat']")
+    } else {
+      enable(selector = "#background_choice input[value='rat']")
+    }
+  })
 
 
   # disable the human background
-  observe({
-    shinyjs::disable(selector = "#background_choice input[value='human']")
-  })
+  #observe({
+  #  shinyjs::disable(selector = "#background_choice input[value='human']")
+  #})
 
   # when enable regulation is selected, activates all the checkboxes
   # the reverse case does not work for unknow reason
@@ -673,38 +665,10 @@ shinyServer(function(input, output, session) {
     }
   })
 
-  # Disable the private section
+  # Disable the private section: workaround
   observe({
     shinyjs::hide("prettystuff")
   })
-
-  # prevent user from unselecting all graph components
-  # observeEvent(input$network_Ca_choice, {
-  #
-  #   if (is.element("PO4", input$network_Ca_choice) &&
-  #       !is.element("Ca", input$network_Ca_choice)) {
-  #     disable(selector = "#network_Ca_choice input[value='PO4']")
-  #   } else {
-  #     enable(selector = "#network_Ca_choice input[value='PO4']")
-  #   }
-  #   if (is.element("Ca", input$network_Ca_choice) &&
-  #       !is.element("PO4", input$network_Ca_choice)) {
-  #     disable(selector = "#network_Ca_choice input[value='Ca']")
-  #   } else {
-  #     enable(selector = "#network_Ca_choice input[value='Ca']")
-  #   }
-  # })
-
-  # reset parameters individually
-  button_states <- reactiveValues(values = list())
-
-  observeEvent(c(input$reset_tmaxCainj,
-                 input$reset_tmaxPO4inj,
-                 input$reset_tmaxPO4gav),{
-
-                   # call the function to reset the given slider
-                   sliders_reset(button_states, input)
-                 })
 
   # Custom footer
   #output$dynamicFooter <- renderFooter({

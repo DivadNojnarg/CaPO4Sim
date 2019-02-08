@@ -120,16 +120,7 @@ body <- dashboardBody(
     # Glossary Panel
     tabItem(
       tabName = "glossary",
-      div(
-        id = "glossary",
-        box(
-          id = "boxglossary",
-          solidHeader = TRUE,
-          width = 12,
-          height = "50%",
-          dataTableOutput("glossary")
-        )
-      )
+      glossaryCaPO4Ui(id = "glossary")
     )
   )
 )

@@ -24,7 +24,7 @@ rightsidebar <- rightSidebar(
       prettyCheckboxGroup(
         inputId = "background_choice",
         label = "Background",
-        choices = "rat", #c("rat", "human")
+        choices = c("rat", "human"),
         animation = "pulse",
         thick = TRUE,
         status = "primary",
