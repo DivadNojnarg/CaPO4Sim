@@ -19,6 +19,7 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
 
   pkgs <- c(
     "shiny",
+    "shinyjqui",
     "shinydashboard",
     "shinydashboardPlus",
     "visNetwork",
