@@ -1,5 +1,5 @@
 # CaPO4Sim, the virtual physiology simulator
-[![Travis build status](https://travis-ci.org/DivadNojnarg/CaPO4Sim.svg?branch=master)](https://travis-ci.org/DivadNojnarg/CaPO4Sim)
+[![Travis build status](https://travis-ci.com/DivadNojnarg/CaPO4Sim.svg?token=wk4LByQczpy1WzofyA7q&branch=master)](https://travis-ci.com/DivadNojnarg/CaPO4Sim)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
 
@@ -22,7 +22,7 @@
 
 ### **Aknowledgments** ###
 
-![Figure 1-1](inst/images/about_us.jpg)
+![Figure 1-1](man/figures/about_us.jpg)
 
 
 I am also very grateful to the [Shiny](http://shiny.rstudio.com) developers 

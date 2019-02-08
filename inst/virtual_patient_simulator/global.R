@@ -1,6 +1,6 @@
-#------------------------------------------------------------------------- 
+#-------------------------------------------------------------------------
 #  This codes loads all packages needed by the application.
-#  Moreover, it contains all mandatory UI and server elements. 
+#  Moreover, it contains all mandatory UI and server elements.
 #
 #-------------------------------------------------------------------------
 
@@ -19,7 +19,6 @@ library(shinyFeedback)
 library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
-library(dplyr)
 library(shinyEffects)
 
 # Load the template components of UI
@@ -30,11 +29,11 @@ source("header.R")
 source("sidebar.R")
 source("body.R")
 
-#------------------------------------------------------------------------- 
-#  
-#  
+#-------------------------------------------------------------------------
+#
+#
 #  Load server elements and useful functions
-#  
+#
 #
 #-------------------------------------------------------------------------
 
@@ -55,11 +54,11 @@ Sys.setenv(TZ = "Europe/Zurich")
 system("R CMD SHLIB compiled_core.c")
 dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))
 
-#------------------------------------------------------------------------- 
-#  
-#  
+#-------------------------------------------------------------------------
+#
+#
 #  Other elements: bookmarking, config,...
-#  
+#
 #
 #-------------------------------------------------------------------------
 
