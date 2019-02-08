@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="-11.444 0 113.742 100.771" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>.cls-1{fill:#faf1ce;}.cls-2{fill:#f3e0d8;}.cls-2,.cls-3,.cls-4{stroke:#ae5536;stroke-linejoin:round;}.cls-2,.cls-4{stroke-width:2px;}.cls-3{fill:none;stroke-linecap:round;}.cls-4{fill:#f8ecbc;}.cls-5{font-size:14px;font-family:Arial-BoldMT, Arial;font-weight:700;}</style>
+    <symbol id="PTH" data-name="PTH" viewBox="0 0 90 96.87">
+      <circle class="cls-1" cx="45" cy="51.87" r="45"/>
+      <path class="cls-2" d="M45,36.49s3.37-.15,4.75,2.49C51,41.25,51.68,47.85,54,49.24c.86.52,2,.25,2.79.43,0,0-1.84-15.52.59-25.63S65.3.09,71,1C76.56,2,74.37,10.91,77.7,19c2,4.93,10.94,18,8.87,30.89s-13.93,24-21.4,23.94c-7.72,0-8.62-8.14-11.72-12.61C51,57.72,45,57.82,45,57.82"/>
+      <path class="cls-3" d="M64.42,39.86a2.46,2.46,0,0,0,0-4.92"/>
+      <path class="cls-3" d="M69.39,49.67a2.46,2.46,0,0,0,0-4.92"/>
+      <path class="cls-3" d="M66.93,63.37a2.46,2.46,0,1,0,0-4.92"/>
+      <path class="cls-3" d="M62,54.59a2.46,2.46,0,1,0,0-4.92"/>
+      <path class="cls-3" d="M63.8,28.23a2.46,2.46,0,1,0,0-4.92"/>
+      <path class="cls-3" d="M70.19,21.29a2.46,2.46,0,0,0,0-4.92"/>
+      <path class="cls-3" d="M76.89,56.47a2.46,2.46,0,1,0,0-4.92"/>
+      <path class="cls-3" d="M73.66,34a2.46,2.46,0,0,0,0-4.92"/>
+      <path class="cls-3" d="M79.35,43.81a2.46,2.46,0,0,0,0-4.92"/>
+      <ellipse class="cls-4" cx="64.99" cy="25.07" rx="2.94" ry="5.53"/>
+      <path class="cls-2" d="M44.93,36.49s-3.37-.15-4.75,2.49C39,41.25,38.28,47.85,36,49.24c-.86.52-2,.25-2.79.43,0,0,1.84-15.52-.59-25.63S24.65.09,18.91,1C13.4,2,15.58,10.91,12.25,19c-2,4.93-10.94,18-8.87,30.89s13.93,24,21.4,23.94c7.72,0,8.62-8.14,11.72-12.61,2.41-3.48,8.43-3.38,8.43-3.38"/>
+      <path class="cls-3" d="M25.54,39.86a2.46,2.46,0,1,1,0-4.92"/>
+      <path class="cls-3" d="M20.57,49.67a2.46,2.46,0,1,1,0-4.92"/>
+      <path class="cls-3" d="M23,63.37a2.46,2.46,0,0,1,0-4.92"/>
+      <path class="cls-3" d="M28,54.59a2.46,2.46,0,0,1,0-4.92"/>
+      <path class="cls-3" d="M26.15,28.23a2.46,2.46,0,0,1,0-4.92"/>
+      <path class="cls-3" d="M19.77,21.29a2.46,2.46,0,0,1,0-4.92"/>
+      <path class="cls-3" d="M13.06,56.47a2.46,2.46,0,1,1,0-4.92"/>
+      <path class="cls-3" d="M16.3,34a2.46,2.46,0,0,1,0-4.92"/>
+      <path class="cls-3" d="M10.6,43.81a2.46,2.46,0,0,1,0-4.92"/>
+      <ellipse class="cls-4" cx="24.97" cy="25.07" rx="2.94" ry="5.53"/>
+      <text class="cls-5" style="white-space: pre; font-size: 14px;" x="30.07" y="82.649">PTHg</text>
+      <text x="114.112" y="72.653" style="white-space: pre; fill: rgb(51, 51, 51); font-family: sans-serif; font-size: 24px;"> </text>
+    </symbol>
+    <symbol id="CaSR-" data-name="CaSR-" viewBox="0 0 55 77.35">
+      <g id="Neues_Symbol_4" data-name="Neues Symbol 4">
+        <circle class="cls-1" cx="27.5" cy="27.5" r="27.5" style="fill: rgb(229, 235, 184);"/>
+      </g>
+      <text class="cls-2" transform="translate(1.83 33.55)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: bold; line-height: 22.4px; width: 51.3125px; perspective-origin: 25.6562px 0px; fill: rgb(133, 146, 53);">CaSR(-)</text>
+      <g id="Neues_Symbol_3" data-name="Neues Symbol 3">
+        <polyline class="cls-3" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(133, 146, 53); stroke-linecap: round; stroke-linejoin: round; stroke-width: 5px;"/>
+        <polyline class="cls-4" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(210, 221, 131); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      </g>
+    </symbol>
+    <symbol id="symbol-1" data-name="CaSR-" viewBox="0 0 55 77.35">
+      <g id="g-2" data-name="Neues Symbol 4">
+        <circle class="cls-1" cx="27.5" cy="27.5" r="27.5" style="fill: rgb(229, 235, 184);"/>
+      </g>
+      <g id="g-3" data-name="Neues Symbol 3">
+        <polyline class="cls-3" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(133, 146, 53); stroke-linecap: round; stroke-linejoin: round; stroke-width: 5px;"/>
+        <polyline class="cls-4" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(210, 221, 131); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      </g>
+    </symbol>
+    <symbol id="symbol-2" data-name="CaSR-" viewBox="0 0 55 77.35">
+      <g id="g-1" data-name="Neues Symbol 4">
+        <circle class="cls-1" cx="27.5" cy="27.5" r="27.5" style="fill: rgb(229, 235, 184);"/>
+      </g>
+      <text class="cls-2" transform="translate(1.83 33.55)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: bold; line-height: 22.4px; width: 51.3125px; perspective-origin: 25.6562px 0px; fill: rgb(133, 146, 53);">CaSR(-)</text>
+      <g id="g-5" data-name="Neues Symbol 3">
+        <polyline class="cls-3" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(133, 146, 53); stroke-linecap: round; stroke-linejoin: round; stroke-width: 5px;"/>
+        <polyline class="cls-4" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(210, 221, 131); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      </g>
+    </symbol>
+    <symbol id="symbol-3" data-name="CaSR-" viewBox="0 0 55 77.35">
+      <g id="g-6" data-name="Neues Symbol 4">
+        <circle class="cls-1" cx="27.5" cy="27.5" r="27.5" style="fill: rgb(229, 235, 184); stroke-width: 0; stroke: rgb(174, 85, 54); stroke-linecap: round; stroke-linejoin: round;"/>
+      </g>
+      <g id="g-7" data-name="Neues Symbol 3">
+        <polyline class="cls-3" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(133, 146, 53); stroke-linecap: round; stroke-linejoin: round; stroke-width: 5px;"/>
+        <polyline class="cls-4" points="36.89 46.41 19.89 46.41 19.89 68.09 28.39 68.09 28.39 52.94 36.89 52.94 36.89 74.85 19.89 74.85" style="fill: none; stroke: rgb(210, 221, 131); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      </g>
+      <text class="cls-2" x="1.55" y="31.736" style="fill: rgb(133, 146, 53); font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: bold; stroke: none; white-space: pre;">CaSR(-)</text>
+    </symbol>
+    <symbol id="Neues_Symbol_1" data-name="Neues Symbol 1" viewBox="0 0 55 55">
+      <circle class="cls-4" cx="27.5" cy="27.5" r="27.5" style="fill: rgb(229, 243, 234); stroke: rgb(229, 243, 234);"/>
+    </symbol>
+  </defs>
+  <title>NaPo4_170904_PTH Icon</title>
+  <g id="Bild">
+    <g id="Ebene_8" data-name="Ebene 8">
+      <use id="PTH-3" data-name="PTH" width="90" height="96.87" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#PTH"/>
+    </g>
+  </g>
+  <g id="g-4" transform="matrix(0.468905, 0, 0, 0.467831, 29.598352, 15.12596)">
+    <use width="55" height="77.3499984741211" transform="matrix(0.9026902914047241, 0, 0, 0.9183127880096436, 7.6599836349487305, -26.939800262451172)" xlink:href="#symbol-3"/>
+  </g>
+  <use id="Neues_Symbol_1-15" data-name="Neues Symbol 1" width="55" height="55" transform="matrix(0.306172, 0, 0, 0.301193, 43.166267, 83.899834)" style="fill: rgb(151, 106, 106);" xlink:href="#Neues_Symbol_1"/>
+  <circle class="cls-33" cx="116.577" cy="23.877" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(0.306172, 0, 0, 0.301193, 11.098929, 80.74086)"/>
+  <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(0.306172, 0, 0, 0.301194, -105.98539, 78.896713)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(0.306172, 0, 0, 0.301192, -106.291565, 79.197952)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <text class="cls-35" style="white-space: pre; font-size: 14px; font-family: Arial-BoldMT, Arial; font-weight: bold; width: 202.969px; perspective-origin: 101.484px 0px; fill: rgb(94, 118, 88);" x="110.276" y="43.691" transform="matrix(0.306172, 0, 0, 0.301193, 11.098929, 80.74086)">[PTH]p</text>
+  <use id="use-1" data-name="Neues Symbol 1" width="55" height="55" transform="matrix(0.306172, 0, 0, 0.301193, 84.55407, 54.549942)" style="fill: rgb(151, 106, 106);" xlink:href="#Neues_Symbol_1"/>
+  <circle class="cls-33" cx="116.577" cy="23.877" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(0.306172, 0, 0, 0.301193, 52.486729, 51.390968)"/>
+  <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(0.306172, 0, 0, 0.301194, -64.597595, 49.546822)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(0.306172, 0, 0, 0.301192, -64.90377, 49.848061)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <text class="cls-35" style="white-space: pre; font-size: 14px; font-family: Arial-BoldMT, Arial; font-weight: bold; width: 202.969px; perspective-origin: 101.484px 0px; fill: rgb(94, 118, 88);" x="110.276" y="43.691" transform="matrix(0.306172, 0, 0, 0.301193, 52.486729, 51.390968)">[PTH]p</text>
+  <use id="use-2" data-name="Neues Symbol 1" width="55" height="55" transform="matrix(0.306172, 0, 0, 0.301193, -9.217182, 58.820038)" style="fill: rgb(151, 106, 106);" xlink:href="#Neues_Symbol_1"/>
+  <circle class="cls-33" cx="116.577" cy="23.877" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;" transform="matrix(0.306172, 0, 0, 0.301193, -41.284523, 55.661064)"/>
+  <circle class="cls-33" cx="485.42" cy="27.92" r="3.99" transform="matrix(0.306172, 0, 0, 0.301194, -158.368835, 53.816917)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <circle class="cls-33" cx="493.6" cy="18.78" r="3.99" transform="matrix(0.306172, 0, 0, 0.301192, -158.675018, 54.118156)" style="fill: rgb(182, 211, 145); stroke: rgb(94, 118, 88); stroke-linecap: round; stroke-linejoin: round;"/>
+  <text class="cls-35" style="white-space: pre; font-size: 14px; font-family: Arial-BoldMT, Arial; font-weight: bold; width: 202.969px; perspective-origin: 101.484px 0px; fill: rgb(94, 118, 88);" x="110.276" y="43.691" transform="matrix(0.306172, 0, 0, 0.301193, -41.284523, 55.661064)">[PTH]p</text>
+</svg>

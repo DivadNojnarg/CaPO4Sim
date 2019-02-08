@@ -1,0 +1,2 @@
+sidebar <- dashboardSidebar(disable = TRUE)
+
