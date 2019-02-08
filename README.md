@@ -1,5 +1,5 @@
-# WebApp_CaP_homeostasis
-[![Travis build status](https://travis-ci.org/DivadNojnarg/WebApp_CaP_homeostasis.svg?branch=master)](https://travis-ci.org/DivadNojnarg/WebApp_CaP_homeostasis)
+# CaPO4Sim, the virtual physiology simulator
+[![Travis build status](https://travis-ci.org/DivadNojnarg/CaPO4Sim.svg?branch=master)](https://travis-ci.org/DivadNojnarg/CaPO4Sim)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
 
