@@ -5,7 +5,45 @@
 #' @param id module id.
 #'
 #' @export
-networkCaPO4Ui <- function(id) {}
+networkCaPO4Ui <- function(id) {
+
+  ns <- NS(id)
+
+  column(
+    width = 6,
+    offset = 0,
+    style = 'padding:0px;',
+    box(
+      id = "boxinfo",
+      width = 12,
+      solidHeader = TRUE,
+      # back button for case studies
+      uiOutput(ns("back_button")),
+      # slider input for dynamic case studies
+      uiOutput(ns("progress")),
+      # next button for case studies
+      uiOutput(ns("next_button")),
+      br(),
+      # Main network
+      introBox(
+        div(
+          id = "network_cap", # to insert a background image if needed
+          withSpinner(
+            visNetworkOutput(
+              outputId = ns("network_CaPo4"),
+              height = "900px"),
+            size = 2,
+            type = 8,
+            color = "#000000"
+          )
+        ),
+        data.step = 2,
+        data.intro = help_text[2],
+        data.position = "right"
+      )
+    )
+  )
+}
 
 
 
@@ -19,4 +57,348 @@ networkCaPO4Ui <- function(id) {}
 #' @param session Session object.
 #'
 #' @export
-networkCaPO4 <- function(input, output, session) {}
+networkCaPO4 <- function(input, output, session) {
+
+  ns <- session$ns
+
+  #-------------------------------------------------------------------------
+  #  Generate the patient overview network
+  #-------------------------------------------------------------------------
+
+  nodes_Ca <- reactive({generate_nodes_Ca(input)})
+  edges_Ca <- reactive({generate_edges_Ca(input)})
+
+  # Generate the output of the Ca graph to be used in body
+  output$network_CaPO4 <- renderVisNetwork({
+
+    nodes_Ca <- nodes_Ca()
+    edges_Ca <- edges_Ca()
+    input$network_hormonal_choice
+
+    generate_network(input, nodes = nodes_Ca, edges = edges_Ca, usephysics = TRUE) %>%
+      # simple click event to select a node
+      visEvents(selectNode = "function(nodes) { Shiny.onInputChange('current_node_id', nodes.nodes); }") %>%
+      # unselect node event
+      visEvents(deselectNode = "function(nodes) { Shiny.onInputChange('current_node_id', 'null'); }") %>%
+      # add the doubleclick for nodes
+      visEvents(doubleClick = "function(nodes) { Shiny.onInputChange('current_node_bis_id', nodes.nodes); }") %>%
+      # simple click event for selecting edges
+      visEvents(selectEdge = "function(edges) { Shiny.onInputChange('current_edge_id', edges.edges); }") %>%
+      # unselect edge event
+      visEvents(deselectEdge = "function(edges) { Shiny.onInputChange('current_edge_id', 'null'); }") %>%
+      # very important: change the whole graph position after drawing
+      visEvents(type = "on", stabilized = "function() { this.moveTo({ position: {x:0, y:-13.43}, offset: {x: 0, y:0} }); }") %>%
+      visEvents(type = "on", initRedraw = paste0("function() { this.moveTo({scale:", if (input$isMobile) 0.3 else 0.6, "}); }"))
+  })
+
+
+  #-------------------------------------------------------------------------
+  # Network UI: next and back button, progress bar, ...
+  #-------------------------------------------------------------------------
+
+  # back button
+  output$back_button <- renderUI({
+
+    if (input.run_php1 | input.run_hypopara |
+        input.run_hypoD3 | input.help) {
+      column(
+        width = 4,
+        align = "left",
+        introBox(
+          actionBttn(
+            inputId = ns("back"),
+            label = "Back",
+            style = "stretch",
+            color = "danger",
+            size = "md",
+            icon = icon("step-backward")
+          ),
+          data.step = 3,
+          data.intro = help_text[3]
+        )
+      )
+    }
+  })
+
+  # next button
+  output$next_button <- renderUI({
+
+    if (input.run_php1 | input.run_hypopara |
+        input.run_hypoD3 | input.help) {
+      column(
+        width = 4,
+        align = "right",
+        actionBttn(
+          inputId = ns("next"),
+          label = "Next",
+          style = "stretch",
+          color = "danger",
+          size = "md",
+          icon = icon("step-forward")
+        )
+      )
+    }
+  })
+
+  # create a navigation counter to trigger sequential graph animation
+  counter_nav <- reactiveValues(diagram = 0)
+
+  # progress
+  output$counter_progress <- renderUI({
+    if (input$run_php1 == "TRUE" | input$run_hypopara == "TRUE" |
+        input$run_hypoD3 == "TRUE" | input$help) {
+
+      column(
+        width = 4,
+        align = "center",
+        introBox(
+          progressBar(
+            id = ns("counter_progress"),
+            value = counter_nav$diagram,
+            total = 6,
+            title = "Progress",
+            size = "s",
+            striped = TRUE,
+            status = if (counter_nav$diagram <= 1) {
+              "danger"
+            } else if (counter_nav$diagram >= 2 & counter_nav$diagram <= 5) {
+              "warning"
+            } else {
+              "success"
+            },
+            display_pct = FALSE
+          ),
+          data.step = 4,
+          data.intro = help_text[4]
+        )
+      )
+    }
+  })
+
+
+  # counter decrease
+  observeEvent(input$back1,{
+    if (counter_nav$diagram == 0) {
+      NULL
+    } else {
+      counter_nav$diagram <- counter_nav$diagram - 1
+    }
+  })
+
+  # counter incrementation
+  observeEvent(input$next1,{
+    counter_nav$diagram <- counter_nav$diagram + 1
+  })
+
+  # reset the counter if higher than 5
+  observeEvent(input$next1,{
+    if (counter_nav$diagram > 6) {
+      counter_nav$diagram <- 0
+    }
+  })
+
+
+  # add the blinking button class to the next button in animations
+  observe({
+    if (input$next1 == 0) {
+      addClass(id = "next1", class = "blinking-button")
+    } else {
+      removeClass(id = "next1", class = "blinking-button")
+    }
+  })
+
+
+  #-------------------------------------------------------------------------
+  # Network animations
+  #-------------------------------------------------------------------------
+
+  # change the selected node size to
+  # better highlight it
+  last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
+
+  observeEvent(input$current_node_id, {
+    req(input$current_node_id)
+    selected_node <- input$current_node_id
+    nodes_Ca <- nodes_Ca()
+    # javascript return null instead of NULL
+    # cannot use is.null
+    if (!identical(selected_node, "null")) {
+      last$selected_node <- selected_node
+      # organ nodes
+      if (selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[selected_node] <- 100
+        # Kidney zoom node
+      } else if (selected_node == 6) {
+        nodes_Ca$size[selected_node] <- 214
+        # regulation nodes
+      } else {
+        nodes_Ca$size[selected_node] <- 57
+      }
+      visNetworkProxy(ns("network_CaPo4")) %>%
+        visUpdateNodes(nodes = nodes_Ca)
+      # reset the node size when unselected
+    } else {
+      if (last$selected_node %in% c(1:5, 7:8, 11)) {
+        nodes_Ca$size[last$selected_node] <- 70
+      } else if (last$selected_node == 6) {
+        nodes_Ca$size[last$selected_node] <- 150
+      } else {
+        nodes_Ca$size[last$selected_node] <- 40
+      }
+      visNetworkProxy(ns("network_CaPo4")) %>%
+        visUpdateNodes(nodes = nodes_Ca)
+    }
+  })
+
+  # change the selected edge size to
+  # better highlight it
+  observeEvent(input$current_edge_id,{
+    req(input$current_edge_id)
+    selected_edge <- input$current_edge_id
+    edges_Ca <- edges_Ca()
+    edge_id <- match(selected_edge, edges_Ca$id)
+    if (!identical(selected_edge, "null")) {
+      last$selected_edge <- edge_id
+      # organs edges
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 24
+        # regulations edges
+      } else {
+        edges_Ca$width[edge_id] <- 12
+      }
+      visNetworkProxy(ns("network_CaPo4")) %>%
+        visUpdateEdges(edges = edges_Ca)
+      # reset the edge size when unselected
+    } else {
+      if (edge_id %in% c(1:12)) {
+        edges_Ca$width[edge_id] <- 8
+      } else {
+        edges_Ca$width[edge_id] <- 4
+      }
+      visNetworkProxy(ns("network_CaPo4")) %>%
+        visUpdateEdges(edges = edges_Ca)
+    }
+  })
+
+
+  # reset also if another simulation is choosen
+  observeEvent(eval(parse(text = paste0("input$", extract_running_sim(input)[[2]]))),{
+    counter_nav$diagram <- 0
+    edges_Ca <- edges_Ca()
+    edges_Ca$color <- "black"
+    edges_Ca$witdh <- 4
+    visNetworkProxy(ns("network_CaPo4"), session) %>%  # then reset the graph
+      visUpdateEdges(edges = edges_Ca)
+  })
+
+
+  # Animations of arrows when event occurs (php1, hypopara, hypoD3)
+  observeEvent(input$next1 | input$back1 , {
+
+    edges_Ca <- edges_Ca()
+    current_sim <- extract_running_sim(input)[[1]]
+    dynamic_sim <- !(input$run_Ca_inject | input$run_PO4_inject | input$run_PO4_gav)
+    # only if a simulation is selected
+    # dynamics simulations are excluded since calculations
+    # are performed live contrary to steady-state simulations
+    if (!is_empty(current_sim) &&  dynamic_sim) {
+      if (eval(parse(text = paste0("input$", current_sim)))) {
+
+        # the code below ensures that nodes related to
+        # perturbations, ie PTHg for php1 and hypopara
+        # D3 nodes for hypoD3, blink when the counter equals 1
+        if (counter_nav$diagram == 1) {
+          nodes_Ca <- nodes_Ca()
+          if (input$run_php1 == TRUE | input$run_hypopara == TRUE) {
+            lapply(1:2, FUN = function(i){
+              if ((i %% 2) != 0) {
+                nodes_Ca$hidden[11] <- TRUE
+                visNetworkProxy(ns("network_CaPo4")) %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              } else {
+                nodes_Ca$hidden[11] <- FALSE
+                visNetworkProxy(ns("network_CaPo4")) %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              }
+              Sys.sleep(0.5)
+            })
+          } else if (input$run_hypoD3 == TRUE) {
+            lapply(1:2, FUN = function(i){
+              if ((i %% 2) != 0) {
+                nodes_Ca$hidden[c(13:15)] <- TRUE
+                visNetworkProxy(ns("network_CaPo4")) %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              } else {
+                nodes_Ca$hidden[c(13:15)] <- FALSE
+                visNetworkProxy(ns("network_CaPo4")) %>%
+                  visUpdateNodes(nodes = nodes_Ca)
+              }
+              Sys.sleep(0.5)
+            })
+          }
+        }
+
+        # make arrow yellow and blink
+        # (see model_utils.R)
+        arrow_lighting(
+          edges = edges_Ca,
+          simulation = current_sim,
+          counter = counter_nav$diagram,
+          input,
+          session
+        )
+      }
+    }
+  })
+
+
+  #-------------------------------------------------------------------------
+  # Get node position, for debug only
+  #-------------------------------------------------------------------------
+
+  vals <- reactiveValues(coords = NULL, viewposition = NULL, scale = NULL)
+
+  # Node position
+  # useful to set a proper layout
+  observe({
+    invalidateLater(1000)
+    visNetworkProxy(ns("network_CaPO4")) %>% visGetPositions()
+    vals$coords <- if (!is.null(input$network_CaPO4_positions))
+      do.call(rbind, input$network_CaPO4_positions)
+  })
+
+  # view position (of the camera)
+  # useful to set a proper view
+  output$viewposition <- renderPrint(vals$viewposition)
+  observe({
+    invalidateLater(1000)
+    visNetworkProxy(ns("network_CaPO4")) %>% visGetViewPosition()
+    vals$viewposition <- if (!is.null(input$network_CaPO4_viewPosition))
+      do.call(rbind, input$network_CaPO4_viewPosition)
+  })
+
+  # scale (get the zoomView...)
+  output$scale <- renderPrint({vals$scale})
+  observe({
+    invalidateLater(1000)
+    visNetworkProxy(ns("network_CaPO4")) %>% visGetScale()
+    vals$scale <- if (!is.null(input$network_CaPO4_scale))
+      do.call(rbind, list(input$network_CaPO4_scale))
+  })
+
+  network_debug <- reactive({
+    list(
+      position = vals$coords,
+      view = vals$viewposition,
+      scale = vals$scale
+    )
+  })
+
+  return(
+    list(
+      debug = network_debug,
+      counter = reactive(counter_nav$diagram)
+    )
+  )
+
+}

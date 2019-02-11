@@ -43,32 +43,6 @@ Kent Russell ([sweetalertR](http://timelyportfolio.github.io/buildingwidgets/wee
 Carl Ganz and Afshin Mehrabani ([rintrojs](https://carlganz.github.io/rintrojs/)),
 Andy Merlino ([shinyFeedback](https://cran.r-project.org/web/packages/shinyFeedback/vignettes/shinyFeedback-intro.html))
 
-
-```R
-library(shiny)
-library(ygdashboard)
-require(visNetwork)
-library(shinyBS)
-library(dplyr)
-library(plotly)
-library(deSolve)
-library(shinythemes)
-library(shinyjs)
-library(shinycssloaders)
-library(shinyWidgets)
-library(shinyjqui)
-library(bsplus)
-library(sweetalertR)
-library(shinytoastr)
-library(shinyMenus)
-library(stringr)
-library(purrr)
-library(rintrojs)
-library(shinyFeedback)
-library(magrittr)
-library(DT)
-```
-
 ### **Contacts** ###
 
 *david.granjon_at_uzh.ch*

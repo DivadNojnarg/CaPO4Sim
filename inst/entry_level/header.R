@@ -1,13 +1,13 @@
 # *------------------------------------------------------------------
 # | PROGRAM NAME: header.R
-# | DATE: 29/03/2018 
+# | DATE: 29/03/2018
 # | CREATED BY:  David Granjon
 # *----------------------------------------------------------------
 # | PURPOSE:  This code contains the header of shinydashboard.
 # |           It is modified compared to classic header: help button,
 # |           userInfo card.
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/03/2018 (last update)
 # |
 # |
 # *------------------------------------------------------------------
@@ -17,33 +17,28 @@ header <- dashboardHeaderPlus(
     '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
     '<img src= "logos/online-learning.svg">'
   )),
-  
+
   titleWidth = 300,
   enable_rightsidebar = TRUE,
   rightSidebarIcon = "gears",
   fixed = FALSE,
-  
+
   # user box (see generate_userInfo.R and model_utils.R)
-  left_menu = tagList(
-    tagAppendAttributes(
-      userOutput("user"),
-      style = "margin-left: 100px; border:none;"
-    )
-  ),
-  
+  left_menu = tagList(userInfoUi(id = "rat")),
+
   # help button
   tags$li(
     title = "",
     class = "dropdown",
     introBox(
       actionBttn(
-        inputId = "help", 
-        label = "Help", 
-        icon = NULL, 
+        inputId = "help",
+        label = "Help",
+        icon = NULL,
         style = "fill",
-        color = "danger", 
+        color = "danger",
         size = "lg",
-        block = FALSE, 
+        block = FALSE,
         no_outline = TRUE
       ),
       data.step = 7,

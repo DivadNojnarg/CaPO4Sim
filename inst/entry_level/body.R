@@ -24,6 +24,16 @@
 # |
 # *------------------------------------------------------------------
 
+# useful datas for videos
+video_data <- data.frame(
+  caption = c("Calcium", "Phosphate", "Parathyroid hormone"),
+  src = c(
+    "https://youtube.com/embed/9x2QFK6_IkQ",
+    "https://youtube.com/embed/1eh5VF6poWo",
+    "https://youtube.com/embed/5OEenuXMjyg"
+  )
+)
+
 body <- dashboardBody(
 
   # load the css
@@ -56,54 +66,18 @@ body <- dashboardBody(
     tabItem(
       tabName = "main",
       fluidRow(
-        # load the CaPO4 network box
-        network_box(),
-        # load the graph box
-        graph_box()
+        # load the CaPO4 network box module
+        networkCaPO4Ui(id = "network_CaPO4"),
+        # load the graph box module
+        plotBoxUi(id = "graphs_CaPO4")
       )
     ),
 
     # Video panels
     tabItem(
       tabName = "video",
-      fluidRow(
-        #tagAppendAttributes(
-          carousel(
-            id = "videoCarousel",
-            carouselItem(
-              caption = "Calcium",
-              tags$iframe(
-                width = "100%",
-                height = "450",
-                src = "https://youtube.com/embed/9x2QFK6_IkQ",
-                frameborder = "0",
-                `allowfullscreen` <- NA
-              )
-            ),
-            carouselItem(
-              caption = "Phosphate",
-              tags$iframe(
-                width = "100%",
-                height = "450",
-                src = "https://youtube.com/embed/1eh5VF6poWo",
-                frameborder = "0",
-                `allowfullscreen` <- NA
-              )
-            ),
-            carouselItem(
-              caption = "PTH",
-              tags$iframe(
-                width = "100%",
-                height = "450",
-                src = "https://youtube.com/embed/5OEenuXMjyg",
-                frameborder = "0",
-                `allowfullscreen` <- NA
-              )
-            )
-          ),
-          align = "center"
-        #)
-      )
+      # load video module
+      videoUi(id = "CaPO4_movies", data = video_data)
     ),
 
     # About section Panel
