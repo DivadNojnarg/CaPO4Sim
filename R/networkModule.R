@@ -195,18 +195,12 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         introBox(
           progressBar(
             id = ns("progress"),
-            value = counter_nav$diagram,
+            value = 0,
             total = 6,
             title = "Progress",
             size = "s",
             striped = TRUE,
-            status = if (counter_nav$diagram <= 1) {
-              "danger"
-            } else if (counter_nav$diagram >= 2 & counter_nav$diagram <= 5) {
-              "warning"
-            } else {
-              "success"
-            },
+            status = NULL,
             display_pct = FALSE
           ),
           data.step = 4,
@@ -214,6 +208,23 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         )
       )
     }
+  })
+
+
+  observeEvent(c(input$previousStep, input$nextStep), {
+    updateProgressBar(
+      session,
+      id = ns("progress"),
+      value = counter_nav$diagram,
+      total = 6,
+      status = if (counter_nav$diagram <= 1) {
+        "danger"
+      } else if (counter_nav$diagram >= 2 & counter_nav$diagram <= 5) {
+        "warning"
+      } else {
+        "success"
+      }
+    )
   })
 
 
@@ -241,15 +252,11 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
   # add the blinking button class to the next button in animations
   observe({
-
     req(input$nextStep)
-
     if (input$nextStep == 0) {
-      addClass(id = "nextStep", class = "blinking-button")
-      #runjs(code = '$("nextStep").addClass("blinking-button")')
+      runjs("$('#network-nextStep').addClass('blinking-button')")
     } else {
-      removeClass(id = "nextStep", class = "blinking-button")
-      #runjs(code = '$("nextStep").removeClass("blinking-button")')
+      runjs("$('#network-nextStep').removeClass('blinking-button')")
     }
   })
 

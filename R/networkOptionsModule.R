@@ -121,93 +121,58 @@ networkOptions <- function(input, output, session, mobile) {
 
   ns <- session$ns
 
-  # generate the knob to control node and edges properties
-  # handle the size of organ and hormonal nodes
-  output$size_nodes_organs <- renderUI({
+  outputIds <- c(
+    "size_nodes_organs",
+    "size_nodes_hormones",
+    "width_edges_organs",
+    "width_edges_hormones"
+  )
+
+  knobsProps <- reactive({
     req(!is.null(mobile()))
-    tagList(
-      knobInput(
-        inputId = ns("size_nodes_organs"),
-        label = "Organs",
-        min = 50,
-        max = 100,
-        value = if (mobile()) 85 else 70,
-        step = 5,
-        displayPrevious = TRUE,
-        fgColor = "#A9A9A9",
-        inputColor = "#A9A9A9",
-        skin = "tron",
-        width = if (mobile()) "75px" else "100px",
-        height = if (mobile()) "75px" else "100px"
-      )
+    list(
+      inputIds = outputIds,
+      labels = c("Organs", "Hormones", "Organs", "Hormones"),
+      mins = c(50, 20, 4, 1),
+      maxs = c(100, 60, 14, 4),
+      values = c(
+        if (mobile()) 85 else 70,
+        if (mobile()) 60 else 40,
+        8,
+        4
+      ),
+      steps = c(rep(5, 2), rep(1, 2)),
+      displayPrevious = rep(TRUE, 4),
+      fgColors = rep("#A9A9A9", 4),
+      inputColors = rep("#A9A9A9", 4),
+      skins = rep("tron", 4),
+      width = rep(if (mobile()) "75px" else "100px", 4),
+      height = rep(if (mobile()) "75px" else "100px", 4)
     )
   })
 
-  output$size_nodes_hormones <- renderUI({
-    req(!is.null(mobile()))
-    tagList(
-      knobInput(
-        inputId = ns("size_nodes_hormones"),
-        label = "Hormones",
-        min = 20,
-        max = 60,
-        value = if (mobile()) 60 else 40,
-        step = 5,
-        displayPrevious = TRUE,
-        fgColor = "#A9A9A9",
-        inputColor = "#A9A9A9",
-        skin = "tron",
-        width = if (mobile()) "75px" else "100px",
-        height = if (mobile()) "75px" else "100px"
+  # generate the 4 knobInputs
+  lapply(1:4, FUN = function(i) {
+    output[[outputIds[[i]]]] <- renderUI({
+      with(
+        knobsProps(),
+        knobInput(
+          inputId = ns(inputIds[[i]]),
+          label = labels[[i]],
+          min = mins[[i]],
+          max = maxs[[i]],
+          value = values[[i]],
+          step = steps[[i]],
+          displayPrevious = displayPrevious[[i]],
+          fgColor = fgColors[[i]],
+          inputColor = inputColors[[i]],
+          skin = skins[[i]],
+          width = width[[i]],
+          height = height[[i]]
+        )
       )
-    )
+    })
   })
-
-  # control width of arrows
-  output$width_edges_organs <- renderUI({
-    req(!is.null(mobile()))
-    tagList(
-      knobInput(
-        inputId = ns("width_edges_organs"),
-        label = "Organs",
-        angleOffset = -90,
-        angleArc = 180,
-        min = 4,
-        max = 14,
-        value = 8,
-        step = 1,
-        displayPrevious = TRUE,
-        fgColor = "#A9A9A9",
-        inputColor = "#A9A9A9",
-        skin = NULL,
-        width = if (mobile()) "75px" else "100px",
-        height = if (mobile()) "75px" else "100px"
-      )
-    )
-  })
-
-  output$width_edges_hormones <- renderUI({
-    req(!is.null(mobile()))
-    tagList(
-      knobInput(
-        inputId = ns("width_edges_hormones"),
-        label = "Hormones",
-        angleOffset = -90,
-        angleArc = 180,
-        min = 1,
-        max = 8,
-        value = 4,
-        step = 1,
-        displayPrevious = TRUE,
-        fgColor = "#A9A9A9",
-        inputColor = "#A9A9A9",
-        skin = NULL,
-        width = if (mobile()) "75px" else "100px",
-        height = if (mobile()) "75px" else "100px"
-      )
-    )
-  })
-
 
   #-------------------------------------------------------------------------
   #  Events
@@ -233,24 +198,24 @@ networkOptions <- function(input, output, session, mobile) {
 
 
   # prevent user from selecting multiple background
-  observe({
-    if (is.element("rat", input$background_choice) &&
-        !is.element("human", input$background_choice)) {
-      runjs("$('#network_options-background_choice input[value='human']').prop('disabled', true)")
-      #disable(selector = "#background_choice input[value='human']")
-    } else {
-      runjs("$('#network_options-background_choice input[value='human']').prop('disabled', false)")
-      #enable(selector = "#background_choice input[value='human']")
-    }
-    if (is.element("human", input$background_choice) &&
-        !is.element("rat", input$background_choice)) {
-      runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', true)")
-      #disable(selector = "#background_choice input[value='rat']")
-    } else {
-      runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', false)")
-      #enable(selector = "#background_choice input[value='rat']")
-    }
-  })
+  #observe({
+  #  if (is.element("rat", input$background_choice) &&
+  #      !is.element("human", input$background_choice)) {
+  #    runjs("$('#network_options-background_choice input[value='human']').prop('disabled', true)")
+  #    #disable(selector = "#background_choice input[value='human']")
+  #  } else {
+  #    runjs("$('#network_options-background_choice input[value='human']').prop('disabled', false)")
+  #    #enable(selector = "#background_choice input[value='human']")
+  #  }
+  #  if (is.element("human", input$background_choice) &&
+  #      !is.element("rat", input$background_choice)) {
+  #    runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', true)")
+  #    #disable(selector = "#background_choice input[value='rat']")
+  #  } else {
+  #    runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', false)")
+  #    #enable(selector = "#background_choice input[value='rat']")
+  #  }
+  #})
 
 
   # when enable regulation is selected, activates all the checkboxes
