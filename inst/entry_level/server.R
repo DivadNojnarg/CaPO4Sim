@@ -32,7 +32,13 @@ shinyServer(function(input, output, session) {
     hormones_edges_size = networkOptions$hormones_edges_size,
     help = help
   )
-  #callModule(module = info, id = "infos")
+  callModule(
+    module = infos,
+    id = "infos",
+    diseases = diseases,
+    animation_counter = network_utils$counter,
+    regulations = networkOptions$regulations
+  )
   #callModule(module = plotBox, id = "graphs")
 
   ## test disease inputs

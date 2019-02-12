@@ -5,7 +5,7 @@
 \title{CaPO4 Edges Generator}
 \usage{
 generate_edges(components, organs, regulations, diseases,
-  organs_nodes_size, hormones_nodes_size)
+  organs_edges_size, hormones_edges_size)
 }
 \arguments{
 \item{components}{Shiny input CaPO4 component selector. See \link{networkOptions}.}
@@ -15,12 +15,6 @@ generate_edges(components, organs, regulations, diseases,
 \item{regulations}{Shiny input to toggle hormone display. See \link{networkOptions}.}
 
 \item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
-
-\item{organs_nodes_size}{Shiny input for organs node size. See \link{networkOptions}.}
-
-\item{hormones_nodes_size}{Shiny input for hormones node size. See \link{networkOptions}.}
-
-\item{background}{Shiny input background selector. See \link{networkOptions}.}
 
 \item{organs_edges_size}{Shiny input for organs edges size. See \link{networkOptions}.}
 

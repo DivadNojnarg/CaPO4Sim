@@ -5,8 +5,7 @@
 \title{CaPO4 Nodes Generator}
 \usage{
 generate_nodes(components, organs, regulations, background, diseases,
-  organs_nodes_size, hormones_nodes_size, organs_edges_size,
-  hormones_edges_size)
+  organs_nodes_size, hormones_nodes_size)
 }
 \arguments{
 \item{components}{Shiny input CaPO4 component selector. See \link{networkOptions}.}
@@ -21,11 +20,7 @@ generate_nodes(components, organs, regulations, background, diseases,
 
 \item{organs_nodes_size}{Shiny input for organs node size. See \link{networkOptions}.}
 
-\item{hormones_nodes_size}{Shiny input for hormones node size. See \link{networkOptions}.}
-
-\item{organs_edges_size}{Shiny input for organs edges size. See \link{networkOptions}.}
-
-\item{hormones_edges_size}{Shiny input for hormones edges size. See \link{networkOptions}.}
+\item{hormones_nodes_size}{Shiny input for hormones node size. See \link{networkOptions}..}
 }
 \description{
 Generate nodes for the CaPO4 network

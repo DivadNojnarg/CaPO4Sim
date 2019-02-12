@@ -126,17 +126,18 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
     generate_network(nodes, edges, usephysics = TRUE, isMobile) %>%
       # simple click event to select a node
-      visEvents(selectNode = "function(nodes) { Shiny.onInputChange('current_node_id', nodes.nodes); }") %>%
+      visEvents(selectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', nodes.nodes); }")) %>%
       # unselect node event
-      visEvents(deselectNode = "function(nodes) { Shiny.onInputChange('current_node_id', 'null'); }") %>%
+      visEvents(deselectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', 'null'); }")) %>%
       # add the doubleclick for nodes
-      visEvents(doubleClick = "function(nodes) { Shiny.onInputChange('current_node_bis_id', nodes.nodes); }") %>%
+      visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_bis"), "', nodes.nodes); }")) %>%
       # simple click event for selecting edges
-      visEvents(selectEdge = "function(edges) { Shiny.onInputChange('current_edge_id', edges.edges); }") %>%
+      visEvents(selectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', edges.edges); }")) %>%
       # unselect edge event
-      visEvents(deselectEdge = "function(edges) { Shiny.onInputChange('current_edge_id', 'null'); }") %>%
+      visEvents(deselectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', 'null'); }")) %>%
       # very important: change the whole graph position after drawing
       visEvents(type = "on", stabilized = "function() { this.moveTo({ position: {x:0, y:-13.43}, offset: {x: 0, y:0} }); }") %>%
+      # scale for cellphones and tablets
       visEvents(type = "on", initRedraw = paste0("function() { this.moveTo({scale:", if (isMobile()) 0.3 else 0.6, "}); }"))
   })
 
@@ -267,74 +268,73 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
   # change the selected node size to
   # better highlight it
-  #last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
-  #
-  #observeEvent(input$current_node_id, {
-  #  req(input$current_node_id)
-  #  selected_node <- input$current_node_id
-  #  nodes <- nodes()
-  #  # javascript return null instead of NULL
-  #  # cannot use is.null
-  #  if (!identical(selected_node, "null")) {
-  #    last$selected_node <- selected_node
-  #    # organ nodes
-  #    if (selected_node %in% c(1:5, 7:8, 11)) {
-  #      nodes$size[selected_node] <- 100
-  #      # Kidney zoom node
-  #    } else if (selected_node == 6) {
-  #      nodes$size[selected_node] <- 214
-  #      # regulation nodes
-  #    } else {
-  #      nodes$size[selected_node] <- 57
-  #    }
-  #    visNetworkProxy(ns("network_CaPO4")) %>%
-  #      visUpdateNodes(nodes = nodes)
-  #    # reset the node size when unselected
-  #  } else {
-  #    if (last$selected_node %in% c(1:5, 7:8, 11)) {
-  #      nodes$size[last$selected_node] <- 70
-  #    } else if (last$selected_node == 6) {
-  #      nodes$size[last$selected_node] <- 150
-  #    } else {
-  #      nodes$size[last$selected_node] <- 40
-  #    }
-  #    visNetworkProxy(ns("network_CaPO4")) %>%
-  #      visUpdateNodes(nodes = nodes)
-  #  }
-  #})
-  #
-  ## change the selected edge size to
-  ## better highlight it
-  #observeEvent(input$current_edge_id,{
-  #  req(input$current_edge_id)
-  #  selected_edge <- input$current_edge_id
-  #  edges <- edges()
-  #  edge_id <- match(selected_edge, edges_Ca$id)
-  #  if (!identical(selected_edge, "null")) {
-  #    last$selected_edge <- edge_id
-  #    # organs edges
-  #    if (edge_id %in% c(1:12)) {
-  #      edges$width[edge_id] <- 24
-  #      # regulations edges
-  #    } else {
-  #      edges$width[edge_id] <- 12
-  #    }
-  #    visNetworkProxy(ns("network_CaPO4")) %>%
-  #      visUpdateEdges(edges = edges)
-  #    # reset the edge size when unselected
-  #  } else {
-  #    if (edge_id %in% c(1:12)) {
-  #      edges$width[edge_id] <- 8
-  #    } else {
-  #      edges$width[edge_id] <- 4
-  #    }
-  #    visNetworkProxy(ns("network_CaPO4")) %>%
-  #      visUpdateEdges(edges = edges)
-  #  }
-  #})
-  #
-  #
-  ## reset also if another simulation is choosen
+  last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
+
+  observeEvent(input$current_node_id, {
+    req(input$current_node_id)
+    selected_node <- input$current_node_id
+    nodes <- nodes()
+    # javascript return null instead of NULL
+    # cannot use is.null
+    if (!identical(selected_node, "null")) {
+      last$selected_node <- selected_node
+      # organ nodes
+      if (selected_node %in% c(1:5, 7:8, 11)) {
+        nodes$size[selected_node] <- 100
+        # Kidney zoom node
+      } else if (selected_node == 6) {
+        nodes$size[selected_node] <- 214
+        # regulation nodes
+      } else {
+        nodes$size[selected_node] <- 57
+      }
+      visNetworkProxy(ns("network_CaPO4")) %>%
+        visUpdateNodes(nodes = nodes)
+      # reset the node size when unselected
+    } else {
+      if (last$selected_node %in% c(1:5, 7:8, 11)) {
+        nodes$size[last$selected_node] <- 70
+      } else if (last$selected_node == 6) {
+        nodes$size[last$selected_node] <- 150
+      } else {
+        nodes$size[last$selected_node] <- 40
+      }
+      visNetworkProxy(ns("network_CaPO4")) %>%
+        visUpdateNodes(nodes = nodes)
+    }
+  })
+
+  # change the selected edge size to
+  # better highlight it
+  observeEvent(input$current_edge_id,{
+    req(input$current_edge_id)
+    selected_edge <- input$current_edge_id
+    edges <- edges()
+    edge_id <- match(selected_edge, edges$id)
+    if (!identical(selected_edge, "null")) {
+      last$selected_edge <- edge_id
+      # organs edges
+      if (edge_id %in% c(1:12)) {
+        edges$width[edge_id] <- 24
+        # regulations edges
+      } else {
+        edges$width[edge_id] <- 12
+      }
+      visNetworkProxy(ns("network_CaPO4")) %>%
+        visUpdateEdges(edges = edges)
+      # reset the edge size when unselected
+    } else {
+      if (edge_id %in% c(1:12)) {
+        edges$width[edge_id] <- 8
+      } else {
+        edges$width[edge_id] <- 4
+      }
+      visNetworkProxy(ns("network_CaPO4")) %>%
+        visUpdateEdges(edges = edges)
+    }
+  })
+
+  # reset also if another simulation is choosen
   #observeEvent(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3()), {
   #  counter_nav$diagram <- 0
   #  edges<- edges()
@@ -343,9 +343,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   #  visNetworkProxy(ns("network_CaPO4"), session) %>%  # then reset the graph
   #    visUpdateEdges(edges = edges)
   #})
-  #
-  #
-  ## Animations of arrows when event occurs (php1, hypopara, hypoD3)
+
+  # Animations of arrows when event occurs (php1, hypopara, hypoD3)
   #observeEvent(input$nextStep | input$previousStep , {
   #
   #  edges <- edges()
