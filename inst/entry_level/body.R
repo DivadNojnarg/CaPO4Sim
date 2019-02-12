@@ -1,29 +1,3 @@
-# *------------------------------------------------------------------
-# | PROGRAM NAME: body.R
-# | DATE: 29/03/2018
-# | CREATED BY:  David Granjon
-# *----------------------------------------------------------------
-# | PURPOSE:  Contains the dashboard body
-# |*------------------------------------------------------------------
-# | DATA USED:  /www/rintrojs_count.js
-# |             /www/hotjar.js
-# |             3 youtube links for movies
-# |             /logos/about_us.jpg
-# |
-# |*------------------------------------------------------------------
-# | CONTENTS:
-# |
-# |  PART 1:  load CSS, shinyjs, introjs, MathJax, bs_popovers, bs_tooltips
-# |           shinyFeedback, sweetalerts
-# |  PART 2:  load js scripts (hotjar tracking, ...)
-# |  PART 3:  main network_box, graph_box, load other tabPanels
-# |           like movies, glossary, about_section
-# *-----------------------------------------------------------------
-# | UPDATES: 29/05/2018 (last update)
-# |
-# |
-# *------------------------------------------------------------------
-
 # useful datas for videos
 video_data <- data.frame(
   caption = c("Calcium", "Phosphate", "Parathyroid hormone"),
@@ -67,9 +41,9 @@ body <- dashboardBody(
       tabName = "main",
       fluidRow(
         # load the CaPO4 network box module
-        networkCaPO4Ui(id = "network_CaPO4"),
+        networkCaPO4Ui(id = "network"),
         # load the graph box module
-        plotBoxUi(id = "graphs_CaPO4")
+        plotBoxUi(id = "graphs")
       )
     ),
 

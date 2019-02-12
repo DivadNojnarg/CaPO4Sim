@@ -27,22 +27,5 @@ header <- dashboardHeaderPlus(
   left_menu = tagList(userInfoUi(id = "rat")),
 
   # help button
-  tags$li(
-    title = "",
-    class = "dropdown",
-    introBox(
-      actionBttn(
-        inputId = "help",
-        label = "Help",
-        icon = NULL,
-        style = "fill",
-        color = "danger",
-        size = "lg",
-        block = FALSE,
-        no_outline = TRUE
-      ),
-      data.step = 7,
-      data.intro = help_text[7]
-    )
-  )
+  helpCaPO4Ui(id = "help_section")
 )

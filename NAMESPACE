@@ -2,8 +2,13 @@
 
 export(diseaseSelect)
 export(diseaseSelectUi)
+export(generate_edges)
+export(generate_network)
+export(generate_nodes)
 export(glossaryCaPO4)
 export(glossaryCaPO4Ui)
+export(helpCaPO4)
+export(helpCaPO4Ui)
 export(info)
 export(infoUi)
 export(networkCaPO4)

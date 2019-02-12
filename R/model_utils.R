@@ -1,33 +1,3 @@
-# *------------------------------------------------------------------
-# | PROGRAM NAME: model_utils.R
-# | DATE: 29/03/2018
-# | CREATED BY:  David Granjon
-# *----------------------------------------------------------------
-# | PURPOSE:  This UI code contains a list of very useful functions
-# |           I use all over this app.
-# *-----------------------------------------------------------------
-# | DATA USED:  notifications.R, graph_notifications.R
-# |
-# |
-# |*------------------------------------------------------------------
-# | CONTENTS:
-# |
-# |  PART 1: generate_notifications(simulation, counter, allowed)
-# |  PART 2: extract_running_sim(input)
-# |  PART 3: extract_animation(input)
-# |  PART 4: arrow_lighting(edges, simulation, counter, input, session)
-# |  PART 5: arrow_lighting_live(out, edges, session)
-# |  PART 6: generate_slidersteady(input)
-# |  PART 7: sliders_reset(button_states, input)
-# |  PART 8: generate_userFields(input)
-# *-----------------------------------------------------------------
-# | UPDATES: 29/05/2018 (last update)
-# |
-# |
-# *------------------------------------------------------------------
-
-
-
 # Notification function. Takes counter_nav diagram as well
 # as the simulation event as arguments and also the switch
 # to allow notifications or not.
@@ -236,7 +206,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
   }
 
   # update the network
-  visNetworkProxy("network_Ca", session) %>%
+  visNetworkProxy("network_CaPO4", session) %>%
     visUpdateEdges(edges = edges)
 }
 

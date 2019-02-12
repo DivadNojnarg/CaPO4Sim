@@ -95,11 +95,11 @@ networkOptionsUi <- function(id) {
       fluidRow(
         column(
           width = 6,
-          uiOutput(outputId = ns("width_arrows_organs"))
+          uiOutput(outputId = ns("width_edges_organs"))
         ),
         column(
           width = 6,
-          uiOutput(outputId = ns("width_arrows_hormones"))
+          uiOutput(outputId = ns("width_edges_hormones"))
         )
       )
     )
@@ -121,15 +121,13 @@ networkOptions <- function(input, output, session, mobile) {
 
   ns <- session$ns
 
-  observe(print(mobile()))
-
   # generate the knob to control node and edges properties
   # handle the size of organ and hormonal nodes
   output$size_nodes_organs <- renderUI({
     req(!is.null(mobile()))
     tagList(
       knobInput(
-        inputId = ns("size_organs"),
+        inputId = ns("size_nodes_organs"),
         label = "Organs",
         min = 50,
         max = 100,
@@ -149,7 +147,7 @@ networkOptions <- function(input, output, session, mobile) {
     req(!is.null(mobile()))
     tagList(
       knobInput(
-        inputId = ns("size_hormones"),
+        inputId = ns("size_nodes_hormones"),
         label = "Hormones",
         min = 20,
         max = 60,
@@ -166,11 +164,11 @@ networkOptions <- function(input, output, session, mobile) {
   })
 
   # control width of arrows
-  output$width_arrows_organs <- renderUI({
+  output$width_edges_organs <- renderUI({
     req(!is.null(mobile()))
     tagList(
       knobInput(
-        inputId = ns("width_organs"),
+        inputId = ns("width_edges_organs"),
         label = "Organs",
         angleOffset = -90,
         angleArc = 180,
@@ -188,11 +186,11 @@ networkOptions <- function(input, output, session, mobile) {
     )
   })
 
-  output$width_arrows_hormones <- renderUI({
+  output$width_edges_hormones <- renderUI({
     req(!is.null(mobile()))
     tagList(
       knobInput(
-        inputId = ns("width_hormones"),
+        inputId = ns("width_edges_hormones"),
         label = "Hormones",
         angleOffset = -90,
         angleArc = 180,
@@ -216,19 +214,20 @@ networkOptions <- function(input, output, session, mobile) {
   #-------------------------------------------------------------------------
 
   # display or not display the network background
+  # classic addClass and removeClass do not work
   observe({
     if (!is_empty(input$background_choice)) {
       if (input$background_choice == "rat") {
-        addClass(id = "network_cap", class = "network_caprat")
-        removeClass(id = "network_cap", class = "network_caphuman")
+        runjs("$('#network_cap').addClass('network_caprat')")
+        runjs("$('#network_cap').removeClass('network_caphuman')")
       } else {
-        removeClass(id = "network_cap", class = "network_caprat")
-        addClass(id = "network_cap", class = "network_caphuman")
+        runjs("$('#network_cap').removeClass('network_caprat')")
+        runjs("$('#network_cap').addClass('network_caphuman')")
       }
     } else {
-      addClass(id = "network_cap", class = "network_capnone")
-      removeClass(id = "network_cap", class = "network_caphuman")
-      removeClass(id = "network_cap", class = "network_caprat")
+      runjs("$('#network_cap').addClass('network_capnone')")
+      runjs("$('#network_cap').removeClass('network_caphuman')")
+      runjs("$('#network_cap').removeClass('network_caprat')")
     }
   })
 
@@ -237,26 +236,30 @@ networkOptions <- function(input, output, session, mobile) {
   observe({
     if (is.element("rat", input$background_choice) &&
         !is.element("human", input$background_choice)) {
-      disable(selector = "#background_choice input[value='human']")
+      runjs("$('#network_options-background_choice input[value='human']').prop('disabled', true)")
+      #disable(selector = "#background_choice input[value='human']")
     } else {
-      enable(selector = "#background_choice input[value='human']")
+      runjs("$('#network_options-background_choice input[value='human']').prop('disabled', false)")
+      #enable(selector = "#background_choice input[value='human']")
     }
     if (is.element("human", input$background_choice) &&
         !is.element("rat", input$background_choice)) {
-      disable(selector = "#background_choice input[value='rat']")
+      runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', true)")
+      #disable(selector = "#background_choice input[value='rat']")
     } else {
-      enable(selector = "#background_choice input[value='rat']")
+      runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', false)")
+      #enable(selector = "#background_choice input[value='rat']")
     }
   })
 
 
   # when enable regulation is selected, activates all the checkboxes
   # the reverse case does not work for unknow reason
-  observeEvent(input$network_hormonal_choice, {
-    if (input$network_hormonal_choice == TRUE) {
+  observeEvent(input$hormonal_choice, {
+    if (input$hormonal_choice) {
       updatePrettyCheckboxGroup(
         session,
-        inputId = ns("network_Ca_choice"),
+        inputId = "components_choice",
         selected = c("Ca","PO4", "PTH", "D3", "FGF23")
       )
     }
@@ -275,10 +278,10 @@ networkOptions <- function(input, output, session, mobile) {
       regulations = reactive(input$hormonal_choice),
       organs = reactive(input$organ_choice),
       components = reactive(input$components_choice),
-      organs_node_size = reactive(input$size_nodes_organs),
-      hormones_node_size = reactive(input$size_nodes_hormones),
-      organs_edges_size = reactive(input$width_arrows_organs),
-      hormones_edges_size = reactive(input$width_arrows_hormones)
+      organs_nodes_size = reactive(input$size_nodes_organs),
+      hormones_nodes_size = reactive(input$size_nodes_hormones),
+      organs_edges_size = reactive(input$width_edges_organs),
+      hormones_edges_size = reactive(input$width_edges_hormones)
     )
   )
 }

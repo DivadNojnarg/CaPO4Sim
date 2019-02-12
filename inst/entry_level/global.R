@@ -42,13 +42,12 @@ library(DT)
 
 # 2) Load the template components
 source("help.R")
-source("utils.R")
+#source("utils.R")
 source("header.R")
 source("sidebar.R")
 source("body.R")
 
 # 3) Load server components and functions
-source("model_utils.R")
 source("dashboardControlbar.R")
 source("notifications.R")
 source("graph_notifications.R")
