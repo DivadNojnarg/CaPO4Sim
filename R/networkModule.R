@@ -17,9 +17,17 @@ networkCaPO4Ui <- function(id) {
       width = 12,
       solidHeader = TRUE,
       # back button for case studies
-      uiOutput(ns("back_button")),
+      introBox(
+        uiOutput(ns("back_button")),
+        data.step = 3,
+        data.intro = help_text[3]
+      ),
       # slider input for dynamic case studies
-      uiOutput(ns("counter_progress")),
+      introBox(
+        uiOutput(ns("counter_progress")),
+        data.step = 4,
+        data.intro = help_text[4]
+      ),
       # next button for case studies
       uiOutput(ns("next_button")),
       br(),
@@ -145,17 +153,13 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       column(
         width = 4,
         align = "left",
-        introBox(
-          actionBttn(
-            inputId = ns("previousStep"),
-            label = "Back",
-            style = "stretch",
-            color = "danger",
-            size = "md",
-            icon = icon("step-backward")
-          ),
-          data.step = 3,
-          data.intro = help_text[3]
+        actionBttn(
+          inputId = ns("previousStep"),
+          label = "Back",
+          style = "simple",
+          color = "danger",
+          size = "md",
+          icon = icon("step-backward")
         )
       )
     }
@@ -172,7 +176,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         actionBttn(
           inputId = ns("nextStep"),
           label = "Next",
-          style = "stretch",
+          style = "simple",
           color = "danger",
           size = "md",
           icon = icon("step-forward")
@@ -192,26 +196,22 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       column(
         width = 4,
         align = "center",
-        introBox(
-          progressBar(
-            id = ns("progress"),
-            value = 0,
-            total = 6,
-            title = "Progress",
-            size = "s",
-            striped = TRUE,
-            status = NULL,
-            display_pct = FALSE
-          ),
-          data.step = 4,
-          data.intro = help_text[4]
+        progressBar(
+          id = ns("progress"),
+          value = 0,
+          total = 6,
+          title = "Progress",
+          size = "s",
+          striped = TRUE,
+          status = NULL,
+          display_pct = FALSE
         )
       )
     }
   })
 
-
-  observeEvent(c(input$previousStep, input$nextStep), {
+  # update the progress bar
+  observeEvent(counter_nav$diagram, {
     updateProgressBar(
       session,
       id = ns("progress"),
