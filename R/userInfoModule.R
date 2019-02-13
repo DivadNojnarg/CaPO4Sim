@@ -11,8 +11,7 @@ userInfoUi <- function(id) {
 
   tagAppendAttributes(
     userOutput(ns("user")),
-    style = "margin-left: 100px; border:none;"#,
-    #uiOutput(ns("cureUser"))
+    style = "margin-left: 100px; border:none;"
   )
 }
 
@@ -27,9 +26,10 @@ userInfoUi <- function(id) {
 #' @param output Shiny Outputs
 #' @param session Session object.
 #' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param sliderDisease Shiny input disease severity selector. See \link{plotBox}.
 #'
 #' @export
-userInfo <- function(input, output, session, diseases) {
+userInfo <- function(input, output, session, diseases, sliderDisease) {
 
   # generate a patient profile
   output$user <- renderUser({
@@ -41,12 +41,12 @@ userInfo <- function(input, output, session, diseases) {
     dashboardUser(
       name = "Rat State",
       src = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        generate_userFields(input)$image
+        generate_userFields(diseases, sliderDisease)$image
       } else {
         "images_patient_info/happy.png"
       },
       title = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        generate_userFields(input)$description
+        generate_userFields(diseases, sliderDisease)$description
       } else {
         "healthy"
       },
@@ -60,7 +60,7 @@ userInfo <- function(input, output, session, diseases) {
         "nothing to declare!"
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        dashboardUserItem(width = 6, generate_userFields(disease)$stat1)
+        dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat1)
       } else {
         dashboardUserItem(
           width = 6,
@@ -68,7 +68,7 @@ userInfo <- function(input, output, session, diseases) {
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        dashboardUserItem(width = 6, generate_userFields(disease)$stat2)
+        dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat2)
       } else {
         dashboardUserItem(
           width = 6,
@@ -76,7 +76,7 @@ userInfo <- function(input, output, session, diseases) {
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        dashboardUserItem(width = 12, generate_userFields(disease)$stat3)
+        dashboardUserItem(width = 12, generate_userFields(diseases, sliderDisease)$stat3)
       } else {
         dashboardUserItem(
           width = 12,
@@ -95,8 +95,9 @@ userInfo <- function(input, output, session, diseases) {
     )
   })
 
-  # reset all parameters
-  observeEvent(input$cure,{
+  # reset all parameters (DOES NOTE WORK)
+  observeEvent(input$cure, {
+    #runjs("$('#diseases-run_php1').trigger('reset');")
     reset("right_sidebar")
   })
 

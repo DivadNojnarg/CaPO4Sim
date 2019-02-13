@@ -14,7 +14,6 @@ shinyServer(function(input, output, session) {
   callModule(module = video, id = "CaPO4_movies")
   callModule(module = skinSelect, id = "skin")
   callModule(module = glossaryCaPO4, id = "glossary")
-  #callModule(module = userInfo, id = "rat", diseases = diseases)
   diseases <- callModule(module = diseaseSelect, id = "diseases")
   networkOptions <- callModule(module = networkOptions, id = "network_options", mobile = isMobile)
 
@@ -45,7 +44,8 @@ shinyServer(function(input, output, session) {
   )
 
   # plot module
-  callModule(module = plotBox, id = "graphs", diseases = diseases, help = help)
+  slider_disease <- callModule(module = plotBox, id = "graphs", diseases = diseases, help = help)
+  callModule(module = userInfo, id = "rat", diseases = diseases, sliderDisease = slider_disease)
 
   ## test disease inputs
   #observe(print(diseases$php1()))

@@ -203,11 +203,11 @@ arrow_lighting <- function(edges, simulation, counter, session) {
 # image, stat1, stat2 and stat3, so as to reinject
 # them in the header userMenu. Takes input as arguments.
 # Returns a list.
-generate_userFields <- function(diseases) {
+generate_userFields <- function(diseases, sliderDisease) {
   if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
     if (diseases$php1()) {
-      req(input$slider_php1)
-      if (input$slider_php1 == 20) {
+      req(sliderDisease())
+      if (sliderDisease() == 20) {
         stat1 <- HTML(
           paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>",
                 "1.5 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
@@ -219,7 +219,7 @@ generate_userFields <- function(diseases) {
                 "107 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
-      } else if (input$slider_php1 == 100) {
+      } else if (sliderDisease() == 100) {
         stat1 <- HTML(
           paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>",
                 "2 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
@@ -245,14 +245,14 @@ generate_userFields <- function(diseases) {
         state <- "dead"
       }
     } else if (diseases$hypopara()) {
-      req(input$slider_hypopara)
-      if (input$slider_hypopara == 0.5) {
+      req(sliderDisease())
+      if (sliderDisease() == 0.5) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 63 ng/l")), "<br/>", "(20-70 ng/l)"))
         image <- "images_patient_info/happy.png"
         state <- "sick"
-      } else if (input$slider_hypopara == 0.1) {
+      } else if (sliderDisease() == 0.1) {
         stat1 <- HTML(
           paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>",
                 "1 mM", "</b></font>", "<br/>", "(1.1-1.3 mM)"))
@@ -277,7 +277,7 @@ generate_userFields <- function(diseases) {
       }
     } else {
       req(diseases$hypoD3())
-      if (input$slider_hypoD3 == 0.5) {
+      if (sliderDisease() == 0.5) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(
@@ -285,7 +285,7 @@ generate_userFields <- function(diseases) {
                 "106 ng/l", "</b></font>", "<br/>", "(20-70 ng/l)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
-      } else if (input$slider_hypoD3 == 0.1) {
+      } else if (sliderDisease() == 0.1) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         stat3 <- HTML(

@@ -270,4 +270,7 @@ plotBox <- function(input, output, session, diseases, help) {
       )
     }
   })
+
+  # return slider disease
+  return(reactive(input[[slider()[[2]]]]))
 }
