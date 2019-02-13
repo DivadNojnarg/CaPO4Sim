@@ -162,12 +162,6 @@ plotBox <- function(input, output, session, diseases, help) {
   # Create plots
   #-------------------------------------------------------------------------
 
-  observe({
-    #current_sim <- extract_running_sim(diseases)
-    #req(current_sim)
-    #print(input[[slider()[[3]]]])
-  })
-
   # draw each of the 6 plots as a function of the selected simulation
   output$plot <- renderPlotly({
 

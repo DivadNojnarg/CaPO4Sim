@@ -255,9 +255,9 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   observe({
     req(input$nextStep)
     if (input$nextStep == 0) {
-      runjs("$('#network-nextStep').addClass('blinking-button')")
+      shinyjs::runjs("$('#network-nextStep').addClass('blinking-button')")
     } else {
-      runjs("$('#network-nextStep').removeClass('blinking-button')")
+      shinyjs::runjs("$('#network-nextStep').removeClass('blinking-button')")
     }
   })
 

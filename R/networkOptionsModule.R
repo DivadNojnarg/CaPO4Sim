@@ -181,16 +181,16 @@ networkOptions <- function(input, output, session, mobile) {
   observe({
     if (!is_empty(input$background_choice)) {
       if (input$background_choice == "rat") {
-        runjs("$('#network_cap').addClass('network_caprat')")
-        runjs("$('#network_cap').removeClass('network_caphuman')")
+        shinyjs::runjs("$('#network_cap').addClass('network_caprat')")
+        shinyjs::runjs("$('#network_cap').removeClass('network_caphuman')")
       } else {
-        runjs("$('#network_cap').removeClass('network_caprat')")
-        runjs("$('#network_cap').addClass('network_caphuman')")
+        shinyjs::runjs("$('#network_cap').removeClass('network_caprat')")
+        shinyjs::runjs("$('#network_cap').addClass('network_caphuman')")
       }
     } else {
-      runjs("$('#network_cap').addClass('network_capnone')")
-      runjs("$('#network_cap').removeClass('network_caphuman')")
-      runjs("$('#network_cap').removeClass('network_caprat')")
+      shinyjs::runjs("$('#network_cap').addClass('network_capnone')")
+      shinyjs::runjs("$('#network_cap').removeClass('network_caphuman')")
+      shinyjs::runjs("$('#network_cap').removeClass('network_caprat')")
     }
   })
 

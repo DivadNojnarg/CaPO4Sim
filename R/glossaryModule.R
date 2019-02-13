@@ -46,12 +46,12 @@ glossaryCaPO4 <- function(input, output, session) {
       "Primary hyperparathyroidism"),
     "units" = c("mM (mmol/l)", "mM", "ng/l", rep("", 6))
   )
-  glossary <- datatable(
+  glossary <- DT::datatable(
     glossary,
     escape = c(rep(FALSE, 3), TRUE),
     options = list(dom = 't')
     ) %>%
-    formatStyle(
+    DT::formatStyle(
       'full.name',
       color = 'black',
       backgroundColor = 'orange',

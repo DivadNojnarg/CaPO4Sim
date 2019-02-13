@@ -1,32 +1,3 @@
-# *------------------------------------------------------------------
-# | PROGRAM NAME: all_plots.R
-# | DATE: 29/03/2018
-# | CREATED BY:  David Granjon
-# *----------------------------------------------------------------
-# | PURPOSE:  This UI code contains all plots of php1, hypopara and
-# |           hypoD3. Calls generate_slidersteady(input) to generate
-# |           the slider corresponding to the running simulation
-# |*------------------------------------------------------------------
-# | DATA USED:  php1.csv, hypopara.csv, hypoD3.csv, iv_Ca.csv,
-# |             iv_PO4.csv, gav_PO4.csv
-# |
-# |
-# |*------------------------------------------------------------------
-# | CONTENTS:
-# |
-# |  PART 1:  PHP1
-# |  PART 2:  HYPOPARA
-# |  PART 3:  HYPOD3
-# |  PART 4: Ca inject
-# |  PART 5: PO4 inject
-# |  PART 6: PO4 gavage
-# *-----------------------------------------------------------------
-# | UPDATES: 29/05/2018 (last update)
-# |
-# |
-# *------------------------------------------------------------------
-
-
 # define color palettes
 colfuncCa <- colorRampPalette(c("darkblue", "lightblue", "green"))(20)
 colfuncPO4 <- colorRampPalette(c("darkred", "pink", "yellow"))(20)
@@ -43,6 +14,15 @@ php1_table <- read.csv(path_to_php1)
 php1_vec <- 4.192 * seq(1, 300,by = 10)
 names(php1_vec) <- paste("k_prod_PTHg =", php1_vec)
 
+
+#' @title Produce plots related to primary hyperparathyroidism (php1)
+#'
+#' @description Use inside the \link{plotBox} module.
+#'
+#' @param sliderVal Shiny slider input related to the current disease severity.
+#' See \link{plotBox}.
+#'
+#' @export
 make_plot_php1 <- function(sliderVal) {
 
   # define x and y ranges
@@ -209,6 +189,15 @@ hypoD3_table <- read.csv(path_to_hypoD3)
 hypoD3_vec <- rev(2.5e-005 * seq(0, 1, by = 0.01))
 names(hypoD3_vec) <- paste("D3_inact =", hypoD3_vec)
 
+
+#' @title Produce plots related to vitamin D3 deficiency (hypoD3)
+#'
+#' @description Use inside the \link{plotBox} module.
+#'
+#' @param sliderVal Shiny slider input related to the current disease severity.
+#' See \link{plotBox}.
+#'
+#' @export
 make_plot_hypoD3 <- function(sliderVal) {
 
   # define x and y ranges
@@ -389,6 +378,15 @@ hypopara_table <- read.csv(path_to_hypopara)
 hypopara_vec <- rev(4.192 * seq(0, 1, by = 0.01)) # create the sequence of PTH production rate
 names(hypopara_vec) <- paste("k_prod_PTHg =",  hypopara_vec)
 
+
+#' @title Produce plots related to hypoparathyroidism (hypopara)
+#'
+#' @description Use inside the \link{plotBox} module.
+#'
+#' @param sliderVal Shiny slider input related to the current disease severity.
+#' See \link{plotBox}.
+#'
+#' @export
 make_plot_hypopara <- function(sliderVal) {
 
   # define x and y ranges

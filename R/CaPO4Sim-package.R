@@ -2,6 +2,6 @@
 #'
 #' @name CaPO4Sim
 #' @import shiny shinydashboard visNetwork plotly shinyWidgets
-#' @import shinydashboardPlus shinyjs shinyjqui purrr rintrojs shinycssloaders stringr
+#' @import shinydashboardPlus shinyjqui purrr rintrojs shinycssloaders stringr
 #' @docType package
 NULL

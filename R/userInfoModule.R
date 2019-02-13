@@ -98,7 +98,7 @@ userInfo <- function(input, output, session, diseases, sliderDisease) {
   # reset all parameters (DOES NOTE WORK)
   observeEvent(input$cure, {
     #runjs("$('#diseases-run_php1').trigger('reset');")
-    reset("right_sidebar")
+    shinyjs::reset("right_sidebar")
   })
 
 }

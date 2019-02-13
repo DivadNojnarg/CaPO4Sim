@@ -1,6 +1,15 @@
-# Notification function. Takes counter_nav diagram as well
-# as the simulation event as arguments and also the switch
-# to allow notifications or not.
+#' @title Notifications Generator for CaPO4 animations
+#'
+#' @description Generate sequential notification as a function of the
+#' selected diseases. All notifications are in the notifications.R file in the
+#' inst/entry_level app folder. Used in the \link{infos} module.
+#'
+#' @param simulation Which disease is currently selected. See \link{extract_running_sim}.
+#' @param counter To determine which notification to display. We expect a counter
+#' returned by the \link{networkCaPO4} module.
+#' @param allowed Whether to allow simulations. Expect logical value. See \link{infos} module.
+#'
+#' @export
 generate_notification <- function(simulation, counter, allowed) {
   idx <- counter
   # print only if notifications are allowed
@@ -45,8 +54,15 @@ generate_notification <- function(simulation, counter, allowed) {
 # dropNulls
 dropNulls <- function (x) x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 
-# Extract the current runing simulation among php1, hypoD3, hypopara. Takes
-# diseases as input
+
+#' @title Extract the current running simulation
+#'
+#' @description Simulations are currently php1, hypoD3 and hypopara. Takes
+#' diseases as input given by the \link{diseaseSelect} module.
+#'
+#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#'
+#' @export
 extract_running_sim <- function(diseases) {
   sim <- unlist(
     lapply(seq_along(diseases), FUN = function(i) {
@@ -59,12 +75,19 @@ extract_running_sim <- function(diseases) {
 
 
 
-# highlight arrows for steady state events.
-# Takes edges id, current simulation, the counter value
-# (which represents the current step f-of the animation),
-# some input values as well as session. Nothing is returned
-# except that the network is updated. This function calls
-# extract_animation() to get the current animation
+
+#' @title Highlight arrows for steady state events
+#'
+#' @description Use inside in the \link{networkCaPO4}. Nothing is returned
+#' except that the network is updated via \link[visNetwork]{visNetworkProxy}.
+#'
+#' @param edges A dataframe of edges provided by \link{generate_edges}.
+#' @param simulation Which disease is currently selected. See \link{extract_running_sim}.
+#' @param counter To determine which notification to display. We expect a counter
+#' returned by the \link{networkCaPO4} module.
+#' @param session Session object.
+#'
+#' @export
 arrow_lighting <- function(edges, simulation, counter, session) {
 
   ns <- session$ns
@@ -198,11 +221,16 @@ arrow_lighting <- function(edges, simulation, counter, session) {
 
 
 
-
-# Function that helps in generating 4 users fields,
-# image, stat1, stat2 and stat3, so as to reinject
-# them in the header userMenu. Takes input as arguments.
-# Returns a list.
+#' @title Generate user fields
+#'
+#' @description Use inside in the \link{userInfo}. Function that helps in generating 4 users fields,
+#' image, stat1, stat2 and stat3, so as to reinject them in the header userMenu
+#'
+#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param sliderDisease Shiny slider input related to the current disease severity.
+#' See \link{plotBox}.
+#'
+#' @export
 generate_userFields <- function(diseases, sliderDisease) {
   if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
     if (diseases$php1()) {
