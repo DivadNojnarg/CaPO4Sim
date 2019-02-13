@@ -59,23 +59,18 @@ extract_running_sim <- function(diseases) {
 
 
 
-# extract the proper table of animations
-extract_animation <- function(diseases) {
-  # returns php1, hypopara, hypoD3
-  current_sim <- extract_running_sim(diseases)
-  current_animation <- paste0("animation_", current_sim)
-  return(current_animation)
-}
-
 # highlight arrows for steady state events.
 # Takes edges id, current simulation, the counter value
 # (which represents the current step f-of the animation),
 # some input values as well as session. Nothing is returned
 # except that the network is updated. This function calls
 # extract_animation() to get the current animation
-arrow_lighting <- function(edges, simulation, counter, input, session) {
+arrow_lighting <- function(edges, simulation, counter, session) {
+
+  ns <- session$ns
+
   # store the current animation
-  current_anim <- eval(parse(text = extract_animation(input)))
+  current_anim <- eval(parse(text = paste0("animation_", simulation)))
 
   # if the counter is 1 or higher
   if (counter > 0) {
@@ -85,18 +80,18 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
     if (counter != 6) edges$color.color[sel] <- "yellow" # perturbation
 
     # edge size might depend on the event
-    if (simulation == "run_php1") {
+    if (simulation == "php1") {
       if (sum(is.element(c(1:4, 6), counter)) == 1) {
         edges$width[sel] <- 8
         # make these edges blink
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
@@ -107,11 +102,11 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
@@ -120,18 +115,18 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
       if (counter == 6) {
         edges$color.color[sel] <- c(rep("red", 4), rep("green", 7))
       }
-    } else if (simulation == "run_hypopara") {
+    } else if (simulation == "hypopara") {
       if (sum(is.element(c(1:4, 6), counter)) == 1) {
         edges$width[sel] <- 3
         # make these edges blink
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
@@ -142,11 +137,11 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
@@ -155,18 +150,18 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
       if (counter == 6) {
         edges$color.color[sel] <- c(rep("green", 4), rep("red", 7))
       }
-    } else if (simulation == "run_hypoD3") {
+    } else if (simulation == "hypoD3") {
       if (sum(is.element(c(1, 3, 4, 5), counter)) == 1) {
         edges$width[sel] <- 3
         # make these edges blink
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
@@ -177,11 +172,11 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy("network_Ca") %>%
+            visNetworkProxy(ns("network_CaPO4")) %>%
               visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
@@ -197,7 +192,7 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
   }
 
   # update the network
-  visNetworkProxy("network_CaPO4", session) %>%
+  visNetworkProxy(ns("network_CaPO4"), session) %>%
     visUpdateEdges(edges = edges)
 }
 

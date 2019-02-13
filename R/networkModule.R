@@ -335,72 +335,71 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   })
 
   # reset also if another simulation is choosen
-  #observeEvent(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3()), {
-  #  counter_nav$diagram <- 0
-  #  edges<- edges()
-  #  edges$color <- "black"
-  #  edges$witdh <- 4
-  #  visNetworkProxy(ns("network_CaPO4"), session) %>%  # then reset the graph
-  #    visUpdateEdges(edges = edges)
-  #})
+  observeEvent(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3()), {
+    counter_nav$diagram <- 0
+    edges<- edges()
+    edges$color <- "black"
+    edges$witdh <- 4
+    visNetworkProxy(ns("network_CaPO4"), session) %>%  # then reset the graph
+      visUpdateEdges(edges = edges)
+  })
 
   # Animations of arrows when event occurs (php1, hypopara, hypoD3)
-  #observeEvent(input$nextStep | input$previousStep , {
-  #
-  #  edges <- edges()
-  #  current_sim <- names(which(diseases == TRUE))
-  #  # only if a simulation is selected
-  #  # dynamics simulations are excluded since calculations
-  #  # are performed live contrary to steady-state simulations
-  #  if (!is_empty(current_sim)) {
-  #    if (eval(parse(text = paste0("diseases$", current_sim, "()")))) {
-  #
-  #      # the code below ensures that nodes related to
-  #      # perturbations, ie PTHg for php1 and hypopara
-  #      # D3 nodes for hypoD3, blink when the counter equals 1
-  #      if (counter_nav$diagram == 1) {
-  #        nodes <- nodes()
-  #        if (diseases$php1() | diseases$hypopara()) {
-  #          lapply(1:2, FUN = function(i){
-  #            if ((i %% 2) != 0) {
-  #              nodes$hidden[11] <- TRUE
-  #              visNetworkProxy(ns("network_CaPO4")) %>%
-  #                visUpdateNodes(nodes = nodes)
-  #            } else {
-  #              nodes$hidden[11] <- FALSE
-  #              visNetworkProxy(ns("network_CaPO4")) %>%
-  #                visUpdateNodes(nodes = nodes)
-  #            }
-  #            Sys.sleep(0.5)
-  #          })
-  #        } else if (diseases$hypoD3()) {
-  #          lapply(1:2, FUN = function(i){
-  #            if ((i %% 2) != 0) {
-  #              nodes$hidden[c(13:15)] <- TRUE
-  #              visNetworkProxy(ns("network_CaPO4")) %>%
-  #                visUpdateNodes(nodes = nodes)
-  #            } else {
-  #              nodes$hidden[c(13:15)] <- FALSE
-  #              visNetworkProxy(ns("network_CaPO4")) %>%
-  #                visUpdateNodes(nodes = nodes)
-  #            }
-  #            Sys.sleep(0.5)
-  #          })
-  #        }
-  #      }
-  #
-  #      # make arrow yellow and blink
-  #      # (see model_utils.R)
-  #      arrow_lighting(
-  #        edges = edges,
-  #        simulation = current_sim,
-  #        counter = counter_nav$diagram,
-  #        input,
-  #        session
-  #      )
-  #    }
-  #  }
-  #})
+  observeEvent(input$nextStep | input$previousStep , {
+
+    edges <- edges()
+    current_sim <- extract_running_sim(diseases)
+    # only if a simulation is selected
+    # dynamics simulations are excluded since calculations
+    # are performed live contrary to steady-state simulations
+    if (!is_empty(current_sim)) {
+      if (eval(parse(text = paste0("diseases$", current_sim, "()")))) {
+
+        # the code below ensures that nodes related to
+        # perturbations, ie PTHg for php1 and hypopara
+        # D3 nodes for hypoD3, blink when the counter equals 1
+        if (counter_nav$diagram == 1) {
+          nodes <- nodes()
+          if (diseases$php1() | diseases$hypopara()) {
+            lapply(1:2, FUN = function(i){
+              if ((i %% 2) != 0) {
+                nodes$hidden[11] <- TRUE
+                visNetworkProxy(ns("network_CaPO4")) %>%
+                  visUpdateNodes(nodes = nodes)
+              } else {
+                nodes$hidden[11] <- FALSE
+                visNetworkProxy(ns("network_CaPO4")) %>%
+                  visUpdateNodes(nodes = nodes)
+              }
+              Sys.sleep(0.5)
+            })
+          } else if (diseases$hypoD3()) {
+            lapply(1:2, FUN = function(i){
+              if ((i %% 2) != 0) {
+                nodes$hidden[c(13:15)] <- TRUE
+                visNetworkProxy(ns("network_CaPO4")) %>%
+                  visUpdateNodes(nodes = nodes)
+              } else {
+                nodes$hidden[c(13:15)] <- FALSE
+                visNetworkProxy(ns("network_CaPO4")) %>%
+                  visUpdateNodes(nodes = nodes)
+              }
+              Sys.sleep(0.5)
+            })
+          }
+        }
+
+        # make arrow yellow and blink
+        # (see model_utils.R)
+        arrow_lighting(
+          edges = edges,
+          simulation = current_sim,
+          counter = counter_nav$diagram,
+          session
+        )
+      }
+    }
+  })
 
 
   #-------------------------------------------------------------------------

@@ -85,6 +85,8 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
 generate_nodes <- function(components, organs, regulations, background, diseases,
                            organs_nodes_size, hormones_nodes_size) {
 
+  req(organs_nodes_size(), hormones_nodes_size())
+
   data.frame(
     id = 1:16,
     shape = c(
@@ -517,7 +519,7 @@ generate_nodes <- function(components, organs, regulations, background, diseases
 generate_edges <- function(components, organs, regulations, diseases,
                            organs_edges_size, hormones_edges_size) {
 
-  #req(organs_nodes_size(), hormones_nodes_size())
+  req(organs_edges_size(), hormones_edges_size())
   data.frame(
     from = c(
       1,
@@ -550,8 +552,7 @@ generate_edges <- function(components, organs, regulations, diseases,
       } else {
         2
       },
-      rep(9, 3), rep(10, 3), rep(11, 2), 11, rep(13, 2), rep(14, 2), rep(15, 2),
-      rep(16, 2)
+      rep(9, 3), rep(10, 3), rep(11, 2), 11, rep(13, 2), rep(14, 2), rep(15, 2), rep(16, 2)
     ),
 
     to = c(
@@ -698,7 +699,7 @@ generate_edges <- function(components, organs, regulations, diseases,
     # to show either Ca or PO4 or CaPO4 network arrows
     hidden = c(
       ## organ arrows ##
-      if (organs() == TRUE) {
+      if (organs()) {
         c(
           ifelse(is.element("Ca", components()) | is.element("PO4", components()), FALSE, TRUE),
           ifelse(is.element("Ca", components()), ifelse(is.element("PO4", components()), FALSE, FALSE), TRUE),
