@@ -5,7 +5,6 @@
 #' @param id module id.
 #'
 #' @export
-#' @importFrom shiny selectInput NS
 skinSelectUi <- function(id) {
 
   ns <- NS(id)
@@ -33,8 +32,6 @@ skinSelectUi <- function(id) {
 #' @param session Session object.
 #'
 #' @export
-#' @importFrom shiny observeEvent reactiveValues
-#' @importFrom shinyjs removeClass addClass
 skinSelect <- function(input, output, session) {
 
   # change the dashboard skin

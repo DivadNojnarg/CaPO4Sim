@@ -4,9 +4,6 @@
 #'
 #' @param id module id.
 #'
-#' @importFrom shiny NS div
-#' @importFrom shinydashboard box
-#'
 #' @export
 glossaryCaPO4Ui <- function(id) {
 

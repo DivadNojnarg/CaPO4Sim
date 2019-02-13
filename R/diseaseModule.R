@@ -4,9 +4,6 @@
 #'
 #' @param id module id.
 #'
-#' @importFrom shiny NS tagList h6
-#' @importFrom shinyWidgets prettyCheckbox
-#'
 #' @export
 diseaseSelectUi <- function(id) {
 
@@ -57,29 +54,27 @@ diseaseSelectUi <- function(id) {
 #' @param output Shiny Outputs
 #' @param session Session object.
 #'
-#' @importFrom shiny reactive observeEvent
-#' @importFrom purrr map
-#'
 #' @export
 diseaseSelect <- function(input, output, session) {
 
   #  Prevent user from selecting multiple boxes using shinyjs functions
-  observeEvent(eval(parse(text = paste0("input$", extract_running_sim(input)[[2]]))), {
+  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
 
+    diseases <- list(php1 = input$run_php1, hypopara = input$run_hypopara, hypoD3 = input$run_hypoD3)
     # extract the list of simulations and the current one as well as its index
     # to properly select boxes to enable/disable
-    sim_list <- extract_running_sim(input)[[2]]
-    current_simulation <- extract_running_sim(input)[[1]]
-    index <- which(sim_list == current_simulation)
+    current_simulation <- unlist(
+      lapply(seq_along(diseases), FUN = function(i) {
+        if (diseases[[i]]) names(diseases)[[i]]
+      })
+    )
+    index <- which(names(diseases) == current_simulation)
 
     # if one simulation run, disable all boxes that are not related to that one
-    if (!is_empty(current_simulation)) {
-      temp <- eval(parse(text = paste0("input$", current_simulation)))
-      if (temp == "TRUE") {
-        map(sim_list[-index], disable)
-      }
+    if (!is.null(current_simulation)) {
+      map(diseases[-index], disable)
     } else {# if no simulation runs, all boxes are available
-      map(sim_list, enable)
+      map(diseases, enable)
     }
   })
 

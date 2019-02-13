@@ -4,8 +4,6 @@
 #'
 #' @param id module id
 #'
-#' @importFrom shiny tagList
-#'
 #' @export
 networkOptionsUi <- function(id) {
 

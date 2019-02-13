@@ -5,7 +5,6 @@
 #' @param context Choose between \code{c("introduction", "virtual-patient")}.
 #'
 #' @export
-#' @importFrom shiny runApp
 #'
 #' @examples
 #'

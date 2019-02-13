@@ -4,9 +4,6 @@
 #'
 #' @param id module id.
 #'
-#' @importFrom shiny tagList NS column uiOutput HTML conditionalPanel tags
-#' @importFrom shinydashboard box
-#'
 #' @export
 plotBoxUi <- function(id) {
 
@@ -95,9 +92,6 @@ plotBoxUi <- function(id) {
 #' @param input Shiny inputs
 #' @param output Shiny Outputs
 #' @param session Session object.
-#'
-#' @importFrom shiny renderUI withMathJax HTML tags
-#' @importFrom plotly renderPlotly
 #'
 #' @export
 plotBox <- function(input, output, session) {

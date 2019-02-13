@@ -9,7 +9,7 @@ shinyServer(function(input, output, session) {
   # in the right sidebar
   observe(shinyjs::hide("prettystuff"))
 
-  # call all modules
+  # some useful modules
   help <- callModule(module = helpCaPO4, id = "help_section")
   callModule(module = video, id = "CaPO4_movies")
   callModule(module = skinSelect, id = "skin")
@@ -17,6 +17,8 @@ shinyServer(function(input, output, session) {
   callModule(module = userInfo, id = "rat")
   diseases <- callModule(module = diseaseSelect, id = "diseases")
   networkOptions <- callModule(module = networkOptions, id = "network_options", mobile = isMobile)
+
+  # network module
   network_utils <- callModule(
     module = networkCaPO4,
     id = "network",
@@ -32,6 +34,8 @@ shinyServer(function(input, output, session) {
     hormones_edges_size = networkOptions$hormones_edges_size,
     help = help
   )
+
+  # modals module
   callModule(
     module = infos,
     id = "infos",

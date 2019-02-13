@@ -5,10 +5,6 @@
 #' @param id module id.
 #' @param data Video data.
 #'
-#' @importFrom shiny NS tagList h6 fluidRow tags
-#' @importFrom shinyWidgets prettyCheckbox
-#' @importFrom shinydashboardPlus carousel carouselItem
-#'
 #' @export
 videoUi <- function(id, data) {
 

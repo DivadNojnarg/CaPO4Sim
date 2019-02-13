@@ -3,8 +3,6 @@
 # to allow notifications or not.
 generate_notification <- function(simulation, counter, allowed) {
   idx <- counter
-  # only take the part after the "_"
-  sim <- str_split(simulation, pattern = "_")[[1]][2]
   # print only if notifications are allowed
   if (allowed == TRUE) {
     if (counter > 0) {
@@ -13,7 +11,7 @@ generate_notification <- function(simulation, counter, allowed) {
         # need to eval and deparse so as to paste message
         # need also to use HTML to handle html tags in the text
         # such as <b> >/b>, ...
-        HTML(eval(parse(text = paste0("notification_list$", sim, "[idx+1]")))),
+        HTML(eval(parse(text = paste0("notification_list$", simulation, "[idx+1]")))),
         type = "message",
         duration = 9999
       )
@@ -23,7 +21,7 @@ generate_notification <- function(simulation, counter, allowed) {
 
     # toastr is interesting but need to be improved!
     # toastr_info(
-    #   message = eval(parse(text = paste("notification_list$", sim, "[idx+1]", sep = ""))),
+    #   message = eval(parse(text = paste("notification_list$", simulation, "[idx+1]", sep = ""))),
     #   title = "",
     #   closeButton = TRUE,
     #   preventDuplicates = TRUE,
@@ -44,35 +42,28 @@ generate_notification <- function(simulation, counter, allowed) {
 
 
 
-# Extract the current runing simulation among php1, hypoD3, hypopara
-# Ca_inject, PO4_inject and PO4 gavage. Takes input as argument
-# returns the names of the current simulation (string).
-extract_running_sim <- function(input) {
-  # extract all simulations
-  sim <- str_extract(names(input), pattern = "^run_\\w+")
-  # remove NAs
-  sim <- sim[!is.na(sim)]
-  # converting each string to the corresponding object
-  sim_obj <- lapply(sim, function(x) {eval(parse(text = paste("input$", x)))})
-  # which simulation is set to true? (php1, hypopara, ...)
-  sim_idx <- which(sim_obj == TRUE)
-  current_simulation <- sim[sim_idx]
-  return(list(current_simulation, sim))
+# dropNulls
+dropNulls <- function (x) x[!vapply(x, is.null, FUN.VALUE = logical(1))]
+
+# Extract the current runing simulation among php1, hypoD3, hypopara. Takes
+# diseases as input
+extract_running_sim <- function(diseases) {
+  sim <- unlist(
+    lapply(seq_along(diseases), FUN = function(i) {
+      if (diseases[[i]]()) names(diseases)[[i]]
+    })
+  )
+  sim <- dropNulls(sim)
+  return(sim)
 }
 
 
 
-# Lighting events for php1, hypopara and hypoD3
-# As fluxes are not calculated by the model
-# we have to make something different of what
-# was done in the global app.
-
-
 # extract the proper table of animations
-extract_animation <- function(input) {
+extract_animation <- function(diseases) {
   # returns php1, hypopara, hypoD3
-  current_sim <- extract_running_sim(input)[[1]]
-  current_animation <- paste0("animation", str_extract(current_sim, "_\\w+"))
+  current_sim <- extract_running_sim(diseases)
+  current_animation <- paste0("animation_", current_sim)
   return(current_animation)
 }
 
@@ -211,73 +202,6 @@ arrow_lighting <- function(edges, simulation, counter, input, session) {
 }
 
 
-
-# highlitght arrows for dynamic events
-# take out (result of integration by ode solver),
-# edges and session as arguments. Nothing special
-# is returned, except that the network is updated
-arrow_lighting_live <- function(out, edges, session) {
-  calc_change_t <- calc_change(out)
-  calc_change_t$X <- NULL # remove column X
-
-  # calculate the difference between live fluxes and base-case values
-  # index of arrows in the graph (which are fluxes and not regulations)
-  index <- c(1,10,11,6,4,5,8,9,2,3,12)
-  calc_change_t <- rbind(calc_change_t, index)
-
-  # calculate which element in the sum table is different of 0 and store the index
-  flux_changed_index <- which(calc_change_t[1,] != 0)
-  # convert to arrow index in the interactive diagramm
-  arrow_index <- as.numeric(t(calc_change_t[2,flux_changed_index]))
-
-  if (!is.null(flux_changed_index)) {
-    for (i in (1:ncol(calc_change_t))) {
-      # change edge color according to an increase or decrease of the flux
-      arrow_index_i <- arrow_index[i]
-      ifelse(calc_change_t[[i]][1] > 0,
-             edges$color.color[arrow_index_i] <- "green",
-             edges$color.color[arrow_index_i] <- "red")
-    }
-
-  }
-
-  # need to add elements related to PO4 and Ca events
-  # if (input$run_PO4_gav) { # PO4 gavage
-  #
-  #   edges_Ca$color.color[1] <- "yellow" # perturbation
-  #   edges_Ca$width[1] <- 8
-  #
-  # }
-  # if (input$run_Ca_inject) {
-  #   if (input$tmax < 60) { # Ca infusion
-  #
-  #     edges_Ca$color.color[c(20,24,25,33)] <- "yellow" # perturbation
-  #     edges_Ca$width[c(20,24,25,33)] <- 8
-  #
-  #   } else {# EGTA infusion
-  #
-  #     edges_Ca$color.color[c(20,24,25,35)] <- "yellow" # perturbation
-  #     edges_Ca$width[c(20,24,25)] <- 2
-  #     edges_Ca$width[35] <- 8
-  #
-  #   }
-  # }
-  # if (input$run_PO4_inject) { # PO4 injection
-  #   edges_Ca$color.color[c(26,27,28)] <- "yellow" # perturbation
-  #   edges_Ca$width[c(26,27,28)] <- 8
-  #
-  #   if (input$tmaxbis <= 3) {
-  #
-  #     edges_Ca$color.color[34] <- "yellow" # perturbation
-  #     edges_Ca$width[34] <- 8
-  #
-  #   }
-  #
-  # }
-
-  visNetworkProxy("network_Ca") %>%
-    visUpdateEdges(edges = edges)
-}
 
 
 

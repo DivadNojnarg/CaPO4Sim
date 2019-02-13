@@ -4,8 +4,6 @@
 #'
 #' @param id module id.
 #'
-#' @importFrom shiny NS tagAppendAttributes
-#'
 #' @export
 userInfoUi <- function(id) {
 
@@ -28,9 +26,6 @@ userInfoUi <- function(id) {
 #' @param input Shiny inputs
 #' @param output Shiny Outputs
 #' @param session Session object.
-#'
-#' @importFrom shiny reactive renderUI tagList
-#' @importFrom shinyWidgets actionBttn
 #'
 #' @export
 userInfo <- function(input, output, session) {
@@ -101,7 +96,7 @@ userInfo <- function(input, output, session) {
 
   # reset all parameters
   observeEvent(input$cure,{
-    shinyjs::reset("right_sidebar")
+    reset("right_sidebar")
   })
 
 }
