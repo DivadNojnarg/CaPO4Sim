@@ -33,6 +33,3 @@ source("graph_notifications.R")
 source("animations.R")
 source("modals.R")
 source("generate_dynamicFooter.R")
-# all plot requires generate_slidersteady and extract_running_sim
-# to run properly. Therefore, it is loaded in the end
-source("all_plots.R")

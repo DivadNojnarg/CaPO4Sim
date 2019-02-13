@@ -199,35 +199,13 @@ arrow_lighting <- function(edges, simulation, counter, session) {
 
 
 
-
-# function needed to generate the slider for php1,
-# hypopara and hypoD3. Takes input as argument and
-# returns the slider_value as output. It is used by
-# all_plots.R script to draw the vertical orange line
-# during php1, hypopara and hypoD3
-generate_slidersteady <- function(input){
-  current_sim <- extract_running_sim(input)[[1]] %>%
-    str_extract("_\\w+") %>%
-    str_replace("_", "")
-
-  if (is_empty(current_sim)) {
-    slider_value <- eval(parse(text = "input$slider_help"))
-  } else {
-    slider_name <- paste("slider_", current_sim, sep = "")
-    slider_value <- eval(parse(text = paste0("input$", slider_name)))
-  }
-  return(slider_value)
-}
-
-
-
 # Function that helps in generating 4 users fields,
 # image, stat1, stat2 and stat3, so as to reinject
 # them in the header userMenu. Takes input as arguments.
 # Returns a list.
-generate_userFields <- function() {
-  if (input$run_php1 | input$run_hypopara | input$run_hypoD3) {
-    if (input$run_php1) {
+generate_userFields <- function(diseases) {
+  if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
+    if (diseases$php1()) {
       req(input$slider_php1)
       if (input$slider_php1 == 20) {
         stat1 <- HTML(
@@ -266,7 +244,7 @@ generate_userFields <- function() {
         image <- "images_patient_info/dead.png"
         state <- "dead"
       }
-    } else if (input$run_hypopara) {
+    } else if (diseases$hypopara()) {
       req(input$slider_hypopara)
       if (input$slider_hypopara == 0.5) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
@@ -298,7 +276,7 @@ generate_userFields <- function() {
         state <- "sick"
       }
     } else {
-      req(input$slider_hypoD3)
+      req(diseases$hypoD3())
       if (input$slider_hypoD3 == 0.5) {
         stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
         stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))

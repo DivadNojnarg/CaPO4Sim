@@ -23,9 +23,14 @@ plotBoxUi <- function(id) {
       uiOutput(ns("info")),
 
       conditionalPanel(
-        condition = "input.run_php1 | input.run_hypopara |
-                     input.run_hypoD3 | input.help",
-
+        # be careful about the namespace
+        # (need to update manually if the father module id is updated)
+        condition = "
+          input['diseases-run_php1'] |
+          input['diseases-run_hypopara'] |
+          input['diseases-run_hypoD3'] |
+          input['help_section-help']
+        ",
         # main graph
         column(
           width = 12,
@@ -40,9 +45,9 @@ plotBoxUi <- function(id) {
             )
           ),
           hr(),
-          rintrojs::introBox(
-            shinycssloaders::withSpinner(
-              plotly::plotlyOutput(
+          introBox(
+            withSpinner(
+              plotlyOutput(
                 outputId = ns("plot"),
                 height = "600px"
               ),
@@ -65,9 +70,9 @@ plotBoxUi <- function(id) {
         column(
           width = 4, align = "center",
           br(),
-          rintrojs::introBox(
+          introBox(
             uiOutput(
-              outputId = ns("slider"),
+              outputId = ns("slider_disease"),
               class = "theme-orange"
             ),
             data.step = 6,
@@ -92,74 +97,102 @@ plotBoxUi <- function(id) {
 #' @param input Shiny inputs
 #' @param output Shiny Outputs
 #' @param session Session object.
+#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param help Help input.
 #'
 #' @export
-plotBox <- function(input, output, session) {
+plotBox <- function(input, output, session, diseases, help) {
 
   ns <- session$ns
+
+  #-------------------------------------------------------------------------
+  # Create slider for diseases (needed by plots)
+  #-------------------------------------------------------------------------
+
+  # Generate sliders for php1, hypopara and hypoD3 and even help
+  slider <- reactive({
+
+    req(!is.null(diseases))
+
+    current_sim <- extract_running_sim(diseases)
+
+    if (diseases$php1() | diseases$hypopara() | diseases$hypoD3() | help()) {
+
+
+      sliderChoices <- if (diseases$php1() | help()) c(20, 100, 200) else c(0.5, 0.1, 0)
+      sliderValue <- if (help()) {
+        100
+      } else {
+        if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
+          if (diseases$php1()) {
+            100
+          } else {
+            0
+          }
+        } else {
+          1
+        }
+      }
+
+      sliderId <- ifelse(help(), "slider_help", paste0("slider_", current_sim))
+
+      sliderTag <- sliderTextInput(
+        inputId = ns(sliderId),
+        label = if (diseases$php1() | help()) {
+          "PTH mRNA synthesis fold increase"
+        } else if (diseases$hypopara()) {
+          "PTH mRNA synthesis fold decrease"
+        } else if (diseases$hypoD3()) {
+          "25(OH)D stock"
+        },
+        choices = sliderChoices,
+        selected = sliderValue,
+        grid = TRUE
+      )
+
+      return(list(sliderTag, sliderId))
+
+    }
+  })
+
+
+  output$slider_disease <- renderUI(slider()[[1]])
 
   #-------------------------------------------------------------------------
   # Create plots
   #-------------------------------------------------------------------------
 
+  observe({
+    #current_sim <- extract_running_sim(diseases)
+    #req(current_sim)
+    #print(input[[slider()[[3]]]])
+  })
+
   # draw each of the 6 plots as a function of the selected simulation
   output$plot <- renderPlotly({
 
-    # extract only the name of the simulation
-    # and not "run_simulation", as given by extract_running_sim()
-    current_sim <- extract_running_sim(input)[[1]] %>%
-      str_extract("_\\w+") %>%
-      str_replace("_", "")
+    # extract the current simulation
+    current_sim <- extract_running_sim(diseases)
+    req(current_sim)
+    # take dependency on the related slider and store its value
+    sliderValue <- input[[slider()[[2]]]]
+    req(sliderValue)
 
     # avoid that plotly returns an error when current_sim is empty
-    #print(str_detect(names(unlist(reactiveValuesToList(input))), "slider_help"))
-
     if (!is_empty(current_sim)) {
-      eval(parse(text = paste0("make_plot_", current_sim, "(input)")))
+      eval(parse(text = paste0("make_plot_", current_sim, "(sliderVal = ", sliderValue, ")")))
     } else {
-      if (input$help) {
-        make_plot_php1(input)
+      if (help()) {
+        make_plot_php1(sliderVal = sliderValue)
       }
     }
   })
 
 
-  # Generate sliders for php1, hypopara and hypoD3 and even help
-  output$slider <- renderUI({
-    current_sim <- extract_running_sim(input)[[1]] %>%
-      str_extract("_\\w+") %>%
-      str_replace("_", "")
-
-    if (input$run_php1 | input$run_hypopara | input$run_hypoD3 | input$help) {
-
-      sliderTextInput(
-        inputId = ifelse(input$help, "slider_help", paste0("slider_", current_sim)),
-        label = if (input$run_php1 | input$help) {
-          "PTH mRNA synthesis fold increase"
-        } else if (input$run_hypopara) {
-          "PTH mRNA synthesis fold decrease"
-        } else if (input$run_hypoD3) {
-          "25(OH)D stock"
-        },
-        choices = if (input$run_php1 | input$help) {
-          c(20, 100, 200)
-        } else {
-          c(0.5, 0.1, 0)
-        },
-        selected = if (input$help) {
-          100
-        } else {
-          ifelse(input$run_php1 | input$run_hypopara | input$run_hypoD3,
-                 ifelse(input$run_php1, 100, 0), 1)
-        },
-        grid = TRUE)
-    }
-  })
 
   # Print a short help text in the graph part
   output$info <- renderUI({
-    if (sum(c(input$run_php1, input$run_hypopara, input$run_hypoD3)) == 0 &&
-        input$help == 0) {
+    if (sum(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3())) == 0 && help() == 0) {
       withMathJax(
         HTML(
           paste(

@@ -4,7 +4,7 @@
 \alias{plotBox}
 \title{plot box server module}
 \usage{
-plotBox(input, output, session)
+plotBox(input, output, session, diseases, help)
 }
 \arguments{
 \item{input}{Shiny inputs}
@@ -12,6 +12,10 @@ plotBox(input, output, session)
 \item{output}{Shiny Outputs}
 
 \item{session}{Session object.}
+
+\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+
+\item{help}{Help input.}
 }
 \description{
 Create modals, alerts, ...
