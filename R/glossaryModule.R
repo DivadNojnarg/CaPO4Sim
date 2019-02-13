@@ -7,18 +7,15 @@
 #' @export
 glossaryCaPO4Ui <- function(id) {
 
- ns <- NS(id)
+  ns <- NS(id)
 
- div(
-   id = "glossary",
-   box(
-     id = "boxglossary",
-     solidHeader = TRUE,
-     width = 12,
-     height = "50%",
-     dataTableOutput(ns("glossary"))
-   )
- )
+  box(
+    id = "boxGlossary",
+    solidHeader = TRUE,
+    width = 12,
+    height = "50%",
+    DT::dataTableOutput(ns("glossary"))
+  )
 }
 
 
@@ -61,5 +58,5 @@ glossaryCaPO4 <- function(input, output, session) {
       fontWeight = 'bold'
     )
 
-  output$glossary <- renderDataTable(glossary)
+  output$glossary <- DT::renderDataTable(glossary)
 }

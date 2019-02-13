@@ -78,7 +78,7 @@ body <- dashboardBody(
     # Glossary Panel
     tabItem(
       tabName = "glossary",
-      glossaryCaPO4Ui(id = "glossary")
+      glossaryCaPO4Ui(id = "lexicus")
     )
   )
 )
