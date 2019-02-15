@@ -9,80 +9,84 @@ plotBoxUi <- function(id) {
 
   ns <- NS(id)
 
-  column(
-    width = 6,
-    offset = 0,
-    style = 'padding:0px;',
-    box(
-      id = "tabset1",
-      width = 12,
-      solidHeader = TRUE,
-      height = "950px",
+  boxTag <- box(
+    width = 12,
+    solidHeader = TRUE,
+    height = "950px",
 
-      # show some text to tell the user how to print the graphs
-      uiOutput(ns("info")),
+    # show some text to tell the user how to print the graphs
+    uiOutput(ns("info")),
 
-      conditionalPanel(
-        # be careful about the namespace
-        # (need to update manually if the father module id is updated)
-        condition = "
+    conditionalPanel(
+      # be careful about the namespace
+      # (need to update manually if the father module id is updated)
+      condition = "
           input['diseases-run_php1'] |
           input['diseases-run_hypopara'] |
           input['diseases-run_hypoD3'] |
           input['help_section-help']
         ",
-        # main graph
-        column(
-          width = 12,
-          HTML(
-            paste(
-              "<b><mark><font color=\"#FF0000\">Steady-state</font></mark> concentrations and fluxes
+      # main graph
+      column(
+        width = 12,
+        HTML(
+          paste(
+            "<b><mark><font color=\"#FF0000\">Steady-state</font></mark> concentrations and fluxes
               normalized by the baseline normal values:</b>", br(),
-              tags$ul(
-                tags$li("Values > 1 : higher than normal"),
-                tags$li("Values < 1 : lower than normal")
-              )
+            tags$ul(
+              tags$li("Values > 1 : higher than normal"),
+              tags$li("Values < 1 : lower than normal")
             )
-          ),
-          hr(),
-          introBox(
-            withSpinner(
-              plotlyOutput(
-                outputId = ns("plot"),
-                height = "600px"
-              ),
-              size = 2,
-              type = 8,
-              color = "#000000"),
-            data.step = 5,
-            data.intro = help_text[5],
-            data.position = "left"
-          ),
-          hr(),
-          HTML("<u><b>Mouse over the curves</b></u> or <u><b>move the slider</b></u> below
+          )
+        ),
+        hr(),
+        introBox(
+          withSpinner(
+            plotlyOutput(
+              outputId = ns("plot"),
+              height = "600px"
+            ),
+            size = 2,
+            type = 8,
+            color = "#000000"),
+          data.step = 5,
+          data.intro = help_text[5],
+          data.position = "left"
+        ),
+        hr(),
+        HTML("<u><b>Mouse over the curves</b></u> or <u><b>move the slider</b></u> below
           to read normalized plasma concentrations and fluxes
           corresponding to different severities of the disease:"
-          )
-        ),
-        column(width = 4, align = "left"),
+        )
+      ),
+      column(width = 4, align = "left"),
 
-        # slider to control the disease intensity
-        column(
-          width = 4, align = "center",
-          br(),
-          introBox(
-            uiOutput(
-              outputId = ns("slider_disease"),
-              class = "theme-orange"
-            ),
-            data.step = 6,
-            data.intro = help_text[6],
-            data.position = "left"
-          )
-        ),
-        column(width = 4, align = "right")
-      )
+      # slider to control the disease intensity
+      column(
+        width = 4, align = "center",
+        br(),
+        introBox(
+          uiOutput(
+            outputId = ns("slider_disease"),
+            class = "theme-orange"
+          ),
+          data.step = 6,
+          data.intro = help_text[6],
+          data.position = "left"
+        )
+      ),
+      column(width = 4, align = "right")
     )
+  )
+
+  # the box is actually wrapped in a column tag. Need to take the first child
+  boxTag$children[[1]] <- tagAppendAttributes(boxTag$children[[1]], id = "boxPlot")
+
+  column(
+    width = 6,
+    offset = 0,
+    style = 'padding:0px;',
+    boxTag
   )
 }
 

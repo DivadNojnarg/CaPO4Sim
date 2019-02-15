@@ -9,46 +9,51 @@ networkCaPO4Ui <- function(id) {
 
   ns <- NS(id)
 
+
+  boxTag <- box(
+    width = 12,
+    solidHeader = TRUE,
+    # back button for case studies
+    introBox(
+      uiOutput(ns("back_button")),
+      data.step = 3,
+      data.intro = help_text[3]
+    ),
+    # slider input for dynamic case studies
+    introBox(
+      uiOutput(ns("counter_progress")),
+      data.step = 4,
+      data.intro = help_text[4]
+    ),
+    # next button for case studies
+    uiOutput(ns("next_button")),
+    br(),
+    # Main network
+    introBox(
+      div(
+        id = "network_cap", # to insert a background image if needed
+        withSpinner(
+          visNetworkOutput(
+            outputId = ns("network_CaPO4"),
+            height = "900px"),
+          size = 2,
+          type = 8,
+          color = "#000000"
+        )
+      ),
+      data.step = 2,
+      data.intro = help_text[2],
+      data.position = "right"
+    )
+  )
+
+  boxTag$children[[1]] <- tagAppendAttributes(boxTag$children[[1]], id = "boxNetwork")
+
   column(
     width = 6,
     offset = 0,
     style = 'padding:0px;',
-    box(
-      width = 12,
-      solidHeader = TRUE,
-      # back button for case studies
-      introBox(
-        uiOutput(ns("back_button")),
-        data.step = 3,
-        data.intro = help_text[3]
-      ),
-      # slider input for dynamic case studies
-      introBox(
-        uiOutput(ns("counter_progress")),
-        data.step = 4,
-        data.intro = help_text[4]
-      ),
-      # next button for case studies
-      uiOutput(ns("next_button")),
-      br(),
-      # Main network
-      introBox(
-        div(
-          id = "network_cap", # to insert a background image if needed
-          withSpinner(
-            visNetworkOutput(
-              outputId = ns("network_CaPO4"),
-              height = "900px"),
-            size = 2,
-            type = 8,
-            color = "#000000"
-          )
-        ),
-        data.step = 2,
-        data.intro = help_text[2],
-        data.position = "right"
-      )
-    )
+    boxTag
   )
 }
 
@@ -129,8 +134,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       visEvents(selectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', nodes.nodes); }")) %>%
       # unselect node event
       visEvents(deselectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', 'null'); }")) %>%
-      # add the doubleclick for nodes
-      visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_bis"), "', nodes.nodes); }")) %>%
+      # add the doubleclick for nodes (zoom view)
+      visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', nodes.nodes); }")) %>%
       # simple click event for selecting edges
       visEvents(selectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', edges.edges); }")) %>%
       # unselect edge event
@@ -401,6 +406,28 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
     }
   })
 
+
+  #-------------------------------------------------------------------------
+  # Zoom events
+  #-------------------------------------------------------------------------
+
+  observeEvent(input$current_node_id_zoom, {
+
+    node_id_zoom <- switch (as.character(input$current_node_id_zoom),
+      "1" = "intestine",
+      "4" = "bones",
+      "6" = "kidneys",
+      "11" = "PTHg"
+    )
+
+    ## show the modal related to the current running simulation
+    current_sim <- extract_running_sim(diseases)
+    if (is.null(current_sim)) {
+      showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, sep = "_"))))
+    } else {
+      NULL
+    }
+  })
 
   #-------------------------------------------------------------------------
   # Get node position, for debug only

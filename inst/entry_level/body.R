@@ -39,9 +39,14 @@ body <- dashboardBody(
   useSweetAlert(),
 
   # shinyEffects
-  setShadow(class = "box"),
+  setShadow(id = "boxPlot"),
+  setShadow(id = "boxNetwork"),
   setShadow(class = "dropdown-menu"),
-  setZoom(class = "box", scale = 1.01),
+  setShadow(id = "boxNetwork"),
+  setShadow(id = "boxGlossary"),
+  #setZoom(id = "boxPlot", scale = 1.01),
+  #setZoom(id = "boxNetwork", scale = 1.01),
+  setZoom(id = "boxGlossary", scale = 1.01),
   setShadow(class = "modal-content"),
   setZoom(class = "modal-content"),
 

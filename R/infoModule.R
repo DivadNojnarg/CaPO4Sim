@@ -50,11 +50,10 @@ infosUi <- function(id) {
 #'
 #' @export
 infos <- function(input, output, session, diseases, animation_counter, regulations) {
+
   #-------------------------------------------------------------------------
-  #
-  #  4) Educational content: modals, network and graph notifications,
+  #  Educational content: modals, network and graph notifications,
   #     glossary
-  #
   #-------------------------------------------------------------------------
 
   # Modal for primary hyperparathyroidism, hypopara, ...

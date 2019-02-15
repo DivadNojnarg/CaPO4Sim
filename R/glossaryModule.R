@@ -9,13 +9,14 @@ glossaryCaPO4Ui <- function(id) {
 
   ns <- NS(id)
 
-  box(
-    id = "boxGlossary",
+  boxTag <- box(
     solidHeader = TRUE,
     width = 12,
     height = "50%",
     DT::dataTableOutput(ns("glossary"))
   )
+  boxTag$children[[1]] <- tagAppendAttributes(boxTag$children[[1]], id = "boxGlossary")
+  boxTag
 }
 
 
