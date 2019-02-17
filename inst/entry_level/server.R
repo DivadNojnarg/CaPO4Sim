@@ -73,10 +73,4 @@ shinyServer(function(input, output, session) {
   #observe({
   #  shinyjs::disable(selector = "#background_choice input[value='human']")
   #})
-
-  # Custom footer
-  #output$dynamicFooter <- renderFooter({
-  #  generate_dynamicFooter()
-  #})
-
 })

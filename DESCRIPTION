@@ -11,6 +11,7 @@ Description: Access 3 shiny apps to better understand Ca and PO4 homeostasis.
     These app are powered by RinteRface <https://rinterface.com>.
 Imports: 
     shiny, 
+    htmltools,
     shinyjs, 
     shinyWidgets, 
     shinydashboard, 

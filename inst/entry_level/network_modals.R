@@ -515,37 +515,11 @@ generate_modal(
   disease = "hypoD3",
   fluidRow(
     column(
-      width = 6,
+      width = 12,
       align = "center",
       "Detailed PTH mechanisms",
       br(),
       modal_img(src = "hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg", size = "260px")
-    ),
-    br(),
-    column(
-      width = 6,
-      align = "center",
-      "Effect of D3 on PTH synthesis",
-      br(),
-      modal_img(src = "hypoD3_zoom/PTHg/hypoD3_notif_PTHg2.svg", size = "260px")
-    )
-  ),
-  hr(),
-  fluidRow(
-    column(
-      width = 6,
-      align = "center",
-      "Effect of Pi on PTH synthesis",
-      br(),
-      modal_img(src = "hypoD3_zoom/PTHg/hypoD3_notif_PTHg3.svg", size = "260px")
-    ),
-    br(),
-    column(
-      width = 6,
-      align = "center",
-      "Effect of Ca on PTH secretion",
-      br(),
-      modal_img(src = "hypoD3_zoom/PTHg/hypoD3_notif_PTHg4.svg", size = "260px")
     )
   )
 )

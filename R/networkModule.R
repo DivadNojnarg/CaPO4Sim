@@ -133,11 +133,16 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       # simple click event to select a node
       visEvents(selectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', nodes.nodes); }")) %>%
       # unselect node event
-      visEvents(deselectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', 'null'); }")) %>%
+      visEvents(deselectNode = paste0(
+        "function(nodes) {
+          Shiny.setInputValue('", ns("current_node_id"), "', 'null');
+          Shiny.setInputValue('", ns("current_node_id_zoom"), "', 'null');
+         }
+        "
+        )
+      ) %>%
       # add the doubleclick for nodes (zoom view)
       visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', nodes.nodes); }")) %>%
-      # reset double click
-      visEvents(deselectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', 'null'); }")) %>%
       # simple click event for selecting edges
       visEvents(selectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', edges.edges); }")) %>%
       # unselect edge event
@@ -278,7 +283,6 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
 
   observeEvent(input$current_node_id, {
-    req(input$current_node_id)
     selected_node <- input$current_node_id
     nodes <- nodes()
     # javascript return null instead of NULL
@@ -430,7 +434,9 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, sep = "_"))))
       }
     } else {
-      showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, current_sim, sep = "_"))))
+      if (!is.null(node_id_zoom)) {
+        showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, current_sim, sep = "_"))))
+      }
     }
   })
 

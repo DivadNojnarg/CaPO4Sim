@@ -1,12 +1,12 @@
 # *------------------------------------------------------------------
 # | PROGRAM NAME: ui.R
-# | DATE: 29/03/2018 
+# | DATE: 29/03/2018
 # | CREATED BY:  David Granjon
 # *----------------------------------------------------------------
-# | PURPOSE:  This UI code contains the global UI of the application. 
-# |           It calls header, body, both sidebars and the footer 
+# | PURPOSE:  This UI code contains the global UI of the application.
+# |           It calls header, body, both sidebars and the footer
 # *-----------------------------------------------------------------
-# | UPDATES: 29/03/2018 (last update)          
+# | UPDATES: 29/03/2018 (last update)
 # |
 # |
 # *------------------------------------------------------------------
@@ -20,5 +20,6 @@ dashboardPagePlus(
   header,
   sidebar,
   body,
+  footer,
   rightsidebar
 )

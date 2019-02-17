@@ -26,6 +26,7 @@ source("header.R")
 source("sidebar.R")
 source("body.R")
 source("dashboardControlbar.R")
+source("footer.R")
 
 # 3) Load server components and functions
 source("notifications.R")
@@ -33,4 +34,3 @@ source("graph_notifications.R")
 source("animations.R")
 source("modals.R")
 source("network_modals.R")
-source("generate_dynamicFooter.R")

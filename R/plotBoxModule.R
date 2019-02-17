@@ -80,7 +80,11 @@ plotBoxUi <- function(id) {
   )
 
   # the box is actually wrapped in a column tag. Need to take the first child
-  boxTag$children[[1]] <- tagAppendAttributes(boxTag$children[[1]], id = "boxPlot")
+  boxTag$children[[1]] <- tagAppendAttributes(
+    boxTag$children[[1]],
+    id = "boxPlot",
+    style = "overflow-y: auto;"
+  )
 
   column(
     width = 6,
@@ -191,6 +195,7 @@ plotBox <- function(input, output, session, diseases, help) {
   # Print a short help text in the graph part
   output$info <- renderUI({
     if (sum(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3())) == 0 && help() == 0) {
+
       withMathJax(
         HTML(
           paste(
@@ -211,7 +216,7 @@ plotBox <- function(input, output, session, diseases, help) {
             img(src = "rintrojs_help/dashed_arrow_help.svg",
                 height = "70px", width = "70px"),
             "Mixed effect or opposite effects on \\([Ca]_p\\) and \\([P_i]_p\\).
-        Click on the detailed cellular view to see individual actions", br(), br(),
+            Click on the detailed cellular view to see individual actions", br(), br(),
             "<b>2) FLuxes and concentrations:</b>", br(),
             "\\([...]_p\\)", "Plasma concentrations", br(),
             img(src = "rintrojs_help/arrow_help.svg",
@@ -223,20 +228,20 @@ plotBox <- function(input, output, session, diseases, help) {
                 HTML(
                   paste(
                     "<b><mark><font color=\"#FF0000\">Mouse
-                over</font></mark></b> the organs to visualize detailed
-                intra-cellular regulatory pathways</b>"
+                    over</font></mark></b> the organs to visualize detailed
+                    intra-cellular regulatory pathways</b>"
                   )
                 )
               ),
               tags$li(HTML(paste("Open the right sidebar by clicking on", icon("gears")))),
               tags$li(HTML(paste("Select the first tab", icon("sliders")))),
               tags$li(paste("Play with the different options (enable/disable regulations,
-        display/hide organs)"))
+              display/hide organs)"))
             ),
             br(), br(),
             "<b>4) Visualize the consequences of selected
-        <mark><font color=\"#FF0000\">pathological
-        disorders</font></mark>:</b>", br(),
+             <mark><font color=\"#FF0000\">pathological
+             disorders</font></mark>:</b>", br(),
             tags$ul(
               tags$li(
                 HTML(
