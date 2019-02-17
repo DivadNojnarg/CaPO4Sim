@@ -136,6 +136,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       visEvents(deselectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', 'null'); }")) %>%
       # add the doubleclick for nodes (zoom view)
       visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', nodes.nodes); }")) %>%
+      # reset double click
+      visEvents(deselectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', 'null'); }")) %>%
       # simple click event for selecting edges
       visEvents(selectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', edges.edges); }")) %>%
       # unselect edge event
@@ -414,6 +416,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   observeEvent(input$current_node_id_zoom, {
 
     node_id_zoom <- switch (as.character(input$current_node_id_zoom),
+      NULL = NULL,
       "1" = "intestine",
       "4" = "bones",
       "6" = "kidneys",
@@ -423,9 +426,11 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
     ## show the modal related to the current running simulation
     current_sim <- extract_running_sim(diseases)
     if (is.null(current_sim)) {
-      showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, sep = "_"))))
+      if (!is.null(node_id_zoom)) {
+        showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, sep = "_"))))
+      }
     } else {
-      NULL
+      showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, current_sim, sep = "_"))))
     }
   })
 

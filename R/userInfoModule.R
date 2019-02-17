@@ -83,6 +83,7 @@ userInfo <- function(input, output, session, diseases, sliderDisease) {
           HTML(paste(withMathJax(p("$$[PTH]_p$$ 66 ng/l")), "<br/>", "(20-70 ng/l)"))
         )
       },
+      br(),
       dashboardUserItem(
         width = 12,
         actionBttn(
