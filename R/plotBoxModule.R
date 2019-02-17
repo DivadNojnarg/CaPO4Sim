@@ -120,46 +120,45 @@ plotBox <- function(input, output, session, diseases, help) {
   # Generate sliders for php1, hypopara and hypoD3 and even help
   slider <- reactive({
 
-    req(!is.null(diseases))
+    if (!is.null(diseases) | help()) {
+      if (diseases$php1() | diseases$hypopara() | diseases$hypoD3() | help()) {
 
-    current_sim <- extract_running_sim(diseases)
+        current_sim <- extract_running_sim(diseases)
 
-    if (diseases$php1() | diseases$hypopara() | diseases$hypoD3() | help()) {
-
-
-      sliderChoices <- if (diseases$php1() | help()) c(20, 100, 200) else c(0.5, 0.1, 0)
-      sliderValue <- if (help()) {
-        100
-      } else {
-        if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-          if (diseases$php1()) {
-            100
-          } else {
-            0
-          }
+        sliderChoices <- if (diseases$php1() | help()) c(20, 100, 200) else c(0.5, 0.1, 0)
+        sliderValue <- if (help()) {
+          100
         } else {
-          1
+          if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
+            if (diseases$php1()) {
+              100
+            } else {
+              0
+            }
+          } else {
+            1
+          }
         }
+
+        sliderId <- ifelse(help(), "slider_help", paste0("slider_", current_sim))
+
+        sliderTag <- sliderTextInput(
+          inputId = ns(sliderId),
+          label = if (diseases$php1() | help()) {
+            "PTH mRNA synthesis fold increase"
+          } else if (diseases$hypopara()) {
+            "PTH mRNA synthesis fold decrease"
+          } else if (diseases$hypoD3()) {
+            "25(OH)D stock"
+          },
+          choices = sliderChoices,
+          selected = sliderValue,
+          grid = TRUE
+        )
+
+        return(list(sliderTag, sliderId))
+
       }
-
-      sliderId <- ifelse(help(), "slider_help", paste0("slider_", current_sim))
-
-      sliderTag <- sliderTextInput(
-        inputId = ns(sliderId),
-        label = if (diseases$php1() | help()) {
-          "PTH mRNA synthesis fold increase"
-        } else if (diseases$hypopara()) {
-          "PTH mRNA synthesis fold decrease"
-        } else if (diseases$hypoD3()) {
-          "25(OH)D stock"
-        },
-        choices = sliderChoices,
-        selected = sliderValue,
-        grid = TRUE
-      )
-
-      return(list(sliderTag, sliderId))
-
     }
   })
 
@@ -173,20 +172,20 @@ plotBox <- function(input, output, session, diseases, help) {
   # draw each of the 6 plots as a function of the selected simulation
   output$plot <- renderPlotly({
 
-    # extract the current simulation
-    current_sim <- extract_running_sim(diseases)
-    req(current_sim)
+    req(slider())
     # take dependency on the related slider and store its value
     sliderValue <- input[[slider()[[2]]]]
     req(sliderValue)
 
-    # avoid that plotly returns an error when current_sim is empty
-    if (!is_empty(current_sim)) {
-      eval(parse(text = paste0("make_plot_", current_sim, "(sliderVal = ", sliderValue, ")")))
+    if(help()) {
+      make_plot_php1(sliderVal = sliderValue)
     } else {
-      if (help()) {
-        make_plot_php1(sliderVal = sliderValue)
-      }
+      # extract the current simulation
+      current_sim <- extract_running_sim(diseases)
+      req(current_sim)
+
+      # avoid that plotly returns an error when current_sim is empty
+      eval(parse(text = paste0("make_plot_", current_sim, "(sliderVal = ", sliderValue, ")")))
     }
   })
 

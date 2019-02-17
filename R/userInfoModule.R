@@ -27,9 +27,10 @@ userInfoUi <- function(id) {
 #' @param session Session object.
 #' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
 #' @param sliderDisease Shiny input disease severity selector. See \link{plotBox}.
+#' @param help Help input.
 #'
 #' @export
-userInfo <- function(input, output, session, diseases, sliderDisease) {
+userInfo <- function(input, output, session, diseases, sliderDisease, help) {
 
   # generate a patient profile
   output$user <- renderUser({
@@ -96,10 +97,19 @@ userInfo <- function(input, output, session, diseases, sliderDisease) {
     )
   })
 
-  # reset all parameters (DOES NOTE WORK)
+  # reset all parameters (DOES NOT WORK)
   observeEvent(input$cure, {
-    #runjs("$('#diseases-run_php1').trigger('reset');")
-    shinyjs::reset("right_sidebar")
+    runjs("$('#disease-run_php1 input[type=checkbox]').prop('checked', false);")
+  })
+
+
+  # Need to find a way to integrate the userMenu card to the help section
+  observeEvent(help(), {
+    shinyjs::toggleClass(
+      id = "user",
+      class = "user-menu open",
+      condition = help()
+    )
   })
 
 }

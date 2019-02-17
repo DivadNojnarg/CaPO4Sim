@@ -196,24 +196,23 @@ networkOptions <- function(input, output, session, mobile) {
 
 
   # prevent user from selecting multiple background
-  #observe({
-  #  if (is.element("rat", input$background_choice) &&
-  #      !is.element("human", input$background_choice)) {
-  #    runjs("$('#network_options-background_choice input[value='human']').prop('disabled', true)")
-  #    #disable(selector = "#background_choice input[value='human']")
-  #  } else {
-  #    runjs("$('#network_options-background_choice input[value='human']').prop('disabled', false)")
-  #    #enable(selector = "#background_choice input[value='human']")
-  #  }
-  #  if (is.element("human", input$background_choice) &&
-  #      !is.element("rat", input$background_choice)) {
-  #    runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', true)")
-  #    #disable(selector = "#background_choice input[value='rat']")
-  #  } else {
-  #    runjs("$('#network_options-background_choice input[value='rat']').prop('disabled', false)")
-  #    #enable(selector = "#background_choice input[value='rat']")
-  #  }
-  #})
+  # in a module when using selector arg, need to prefix the
+  # element id by its namespace. This is a bit dirty but totally expected...
+  # When using only id, the namespace is not needed (in the same module)
+  observe({
+    if (is.element("rat", input$background_choice) &&
+        !is.element("human", input$background_choice)) {
+      disable(selector = "#network_options-background_choice input[value='human']")
+    } else {
+      enable(selector = "#network_options-background_choice input[value='human']")
+    }
+    if (is.element("human", input$background_choice) &&
+        !is.element("rat", input$background_choice)) {
+      disable(selector = "#network_options-background_choice input[value='rat']")
+    } else {
+      enable(selector = "#network_options-background_choice input[value='rat']")
+    }
+  })
 
 
   # when enable regulation is selected, activates all the checkboxes

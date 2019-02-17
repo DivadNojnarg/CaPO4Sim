@@ -58,25 +58,33 @@ diseaseSelectUi <- function(id) {
 diseaseSelect <- function(input, output, session) {
 
   #  Prevent user from selecting multiple boxes using shinyjs functions
-  # observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
-  #
-  #   diseases <- list(php1 = input$run_php1, hypopara = input$run_hypopara, hypoD3 = input$run_hypoD3)
-  #   # extract the list of simulations and the current one as well as its index
-  #   # to properly select boxes to enable/disable
-  #   current_simulation <- unlist(
-  #     lapply(seq_along(diseases), FUN = function(i) {
-  #       if (diseases[[i]]) names(diseases)[[i]]
-  #     })
-  #   )
-  #   index <- which(names(diseases) == current_simulation)
-  #
-  #   # if one simulation run, disable all boxes that are not related to that one
-  #   if (!is.null(current_simulation)) {
-  #     map(diseases[-index], disable)
-  #   } else {# if no simulation runs, all boxes are available
-  #     map(diseases, enable)
-  #   }
-  # })
+  observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
+
+    diseases <- list(
+      run_php1 = input$run_php1,
+      run_hypopara = input$run_hypopara,
+      run_hypoD3 = input$run_hypoD3
+    )
+    # extract the list of simulations and the current one as well as its index
+    # to properly select boxes to enable/disable
+    current_simulation <- unlist(
+      lapply(seq_along(diseases), FUN = function(i) {
+        if (diseases[[i]]) names(diseases)[[i]]
+      })
+    )
+    index <- which(names(diseases) == current_simulation)
+
+    # if one simulation run, disable all boxes that are not related to that one
+    if (!is.null(current_simulation)) {
+      lapply(seq_along(diseases[-index]), FUN = function(i) {
+        shinyjs::disable(id = names(diseases[-index])[[i]])
+      })
+    } else {# if no simulation runs, all boxes are available
+      lapply(seq_along(diseases), FUN = function(i) {
+        shinyjs::enable(id = names(diseases)[[i]])
+      })
+    }
+  })
 
 
   return(

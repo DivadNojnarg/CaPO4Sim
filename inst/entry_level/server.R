@@ -1,4 +1,4 @@
-shinyServer(function(input, output, session) {
+server <- function(input, output, session) {
 
   # determine whether we are on mobile or not
   # relies on the find-navigator.js file in www/js
@@ -45,32 +45,10 @@ shinyServer(function(input, output, session) {
 
   # plot module
   slider_disease <- callModule(module = plotBox, id = "graphs", diseases = diseases, help = help)
-  callModule(module = userInfo, id = "rat", diseases = diseases, sliderDisease = slider_disease)
+  callModule(module = userInfo, id = "rat", diseases = diseases, sliderDisease = slider_disease, help = help)
 
   ## test disease inputs
   #observe(print(diseases$php1()))
   #observe(print(which(lapply(seq_along(diseases), isTRUE) == TRUE)))
   #observe(print(networkOptions$regulations()))
-
-  #-------------------------------------------------------------------------
-  #
-  #  5) Useful functions: show/hide/reset/...
-  #
-  #-------------------------------------------------------------------------
-
-
-  # Need to find a way to integrate the userMenu card to the help section
-  #observe({
-  #  shinyjs::toggleClass(
-  #    id = "user",
-  #    class = "user-menu open",
-  #    condition = input$help
-  #  )
-  #})
-
-
-  # disable the human background
-  #observe({
-  #  shinyjs::disable(selector = "#background_choice input[value='human']")
-  #})
-})
+}

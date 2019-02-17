@@ -60,13 +60,13 @@ helpCaPO4 <- function(input, output, session) {
       events = list(
         # reset the session to hide sliders and back/next buttons
         "oncomplete" = I('history.go(0)'),
-        "onbeforchange" = I("function(steps) { Shiny.onInputChange('current_step', data-stepnumber); }")
-        # "onbeforechange" = I('
-        #     if (targetElement.getAttribute("data-step")==="2") {
-        #         $(".newClass").css("max-width", "800px").css("min-width","800px");
-        #     } else {
-        #         $(".newClass").css("max-width", "500px").css("min-width","500px");
-        #     }')
+        "onbeforchange" = I("function(steps) { Shiny.onInputChange('current_step', data-stepnumber); }"),
+        "onbeforechange" = I('
+            if (targetElement.getAttribute("data-step") === "2") {
+                $(".newClass").css("max-width", "800px").css("min-width","800px");
+            } else {
+                $(".newClass").css("max-width", "500px").css("min-width","500px");
+        }')
       )
     )
   })
@@ -74,11 +74,12 @@ helpCaPO4 <- function(input, output, session) {
 
   #  Toggle the sidebar when a user press the help button
   observe({
-    shinyjs::toggleClass(
-      id = "right_sidebar",
-      class = "control-sidebar-open",
-      condition = input$help
-    )
+    shinyjs::toggleClass(selector = "body", class = "control-sidebar-open", condition = input$help)
+    shinyjs::runjs("$('.control-sidebar-tabs li:eq(0)').addClass('active')")
+    shinyjs::runjs("$('.control-sidebar-tabs li:not(:eq(0))').removeClass('active')")
+    #shinyjs::runjs("$('.control-sidebar-tabs li:eq(0) a').tab('show')")
+    shinyjs::runjs("$('.controlbar.tab-content div:eq(0)').addClass('active')")
+    shinyjs::runjs("$('.controlbar.tab-content div:not(:eq(0))').removeClass('active')")
   })
 
   return(reactive(input$help))
