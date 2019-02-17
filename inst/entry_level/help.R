@@ -59,21 +59,6 @@ help_text <- c(
     ),
 
   paste(
-    "By clicking on next or back buttons, you can see animations
-    corresponding to the case studies available in the",
-    icon("map-o fa-2x"), "section of the",
-    "<mark><font color=\"#FF0000\"><b>", "right sidebar.",
-    "</b></font></mark>", "Be careful, clicking on Next/Back
-    without having selected a case study will not trigger anything.",
-    sep = " "
-    ),
-
-  paste(
-    "This is the progress bar showing your current position in the
-    selected case study.", sep = " "
-    ),
-
-  paste(
     "In this panel are displayed the graphs of each simulation.
     To see results, start by clicking on a case study in the",
     icon("map-o fa-2x"), "section of the",
@@ -103,30 +88,6 @@ help_text <- c(
     "help", "</b></font>", "text as well as a review of all
     features of this application you can trigger by pressing the
     help button."),
-
-  paste(
-    icon("heartbeat fa-2x"), "allow you to have a feedback
-    on the patient state. Whenever you trigger a disease in the",
-    icon("map-o fa-2x"), "section of the",
-    "<mark><font color=\"#FF0000\"><b>", "right sidebar.",
-    "</b></font></mark>", "you can check calcium, phosphate,
-    PTH and vitamin D3 concentration. (red: lower than base-case;
-    green: higher than expected. If the disease is lethal, you
-    are notified."),
-
-  paste(
-    "<ul>
-    <li> <i class=\"fa fa-sliders fa-2x\"></i>  is where you handle the
-    <font color=\"#FF0000\"><b>parameters</b></font>
-    of this application such as changing the background,
-    display regulation mechanisms or not...</li>
-    <li> <i class=\"fa fa-map fa-2x\"></i> is dedicated to the
-    <font color=\"#FF0000\"><b>educational content</b></font> of the app.
-    Go here if you want to select some case studies</li>
-    <li> <i class=\"fa fa-paint-brush fa-2x\"></i>
-    Here you can change the global
-    <font color=\"#FF0000\"><b>theme</b></font> of the dashboard</li>
-    </ul>"),
 
   paste("Choose your <font color=\"#FF0000\"><b> background </b></font> (Rat by default)."),
   paste("<font color=\"#FF0000\"><b>Enable/disable</b></font> organs and/or

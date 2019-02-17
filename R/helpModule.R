@@ -23,8 +23,8 @@ helpCaPO4Ui <- function(id) {
         block = FALSE,
         no_outline = TRUE
       ),
-      data.step = 7,
-      data.intro = help_text[7]
+      data.step = 5,
+      data.intro = help_text[5]
     )
   )
 }
@@ -77,7 +77,6 @@ helpCaPO4 <- function(input, output, session) {
     shinyjs::toggleClass(selector = "body", class = "control-sidebar-open", condition = input$help)
     shinyjs::runjs("$('.control-sidebar-tabs li:eq(0)').addClass('active')")
     shinyjs::runjs("$('.control-sidebar-tabs li:not(:eq(0))').removeClass('active')")
-    #shinyjs::runjs("$('.control-sidebar-tabs li:eq(0) a').tab('show')")
     shinyjs::runjs("$('.controlbar.tab-content div:eq(0)').addClass('active')")
     shinyjs::runjs("$('.controlbar.tab-content div:not(:eq(0))').removeClass('active')")
   })

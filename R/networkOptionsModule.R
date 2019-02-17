@@ -12,8 +12,8 @@ networkOptionsUi <- function(id) {
   tagList(
     # background choice
     introBox(
-      data.step = 10,
-      data.intro = help_text[10],
+      data.step = 6,
+      data.intro = help_text[6],
       prettyCheckboxGroup(
         inputId = ns("background_choice"),
         label = "Background",
@@ -29,8 +29,8 @@ networkOptionsUi <- function(id) {
 
     # enable hormones?
     introBox(
-      data.step = 11,
-      data.intro = help_text[11],
+      data.step = 7,
+      data.intro = help_text[7],
       prettySwitch(
         inputId = ns("hormonal_choice"),
         label = "Regulations?",
@@ -53,8 +53,8 @@ networkOptionsUi <- function(id) {
 
     # filter elements to display
     introBox(
-      data.step = 12,
-      data.intro = help_text[12],
+      data.step = 8,
+      data.intro = help_text[8],
       prettyCheckboxGroup(
         inputId = ns("components_choice"),
         label = "Choose your Network",
@@ -71,8 +71,8 @@ networkOptionsUi <- function(id) {
     # Control Nodes size
     h4("Nodes size"),
     introBox(
-      data.step = 13,
-      data.intro = help_text[13],
+      data.step = 9,
+      data.intro = help_text[9],
       fluidRow(
         column(
           width = 6,
@@ -88,8 +88,8 @@ networkOptionsUi <- function(id) {
     # Control arrow properties
     h4("Arrow width"),
     introBox(
-      data.step = 14,
-      data.intro = help_text[14],
+      data.step = 10,
+      data.intro = help_text[10],
       fluidRow(
         column(
           width = 6,

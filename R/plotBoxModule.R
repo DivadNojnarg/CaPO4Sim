@@ -49,8 +49,8 @@ plotBoxUi <- function(id) {
             size = 2,
             type = 8,
             color = "#000000"),
-          data.step = 5,
-          data.intro = help_text[5],
+          data.step = 3,
+          data.intro = help_text[3],
           data.position = "left"
         ),
         hr(),
@@ -70,8 +70,8 @@ plotBoxUi <- function(id) {
             outputId = ns("slider_disease"),
             class = "theme-orange"
           ),
-          data.step = 6,
-          data.intro = help_text[6],
+          data.step = 4,
+          data.intro = help_text[4],
           data.position = "left"
         )
       ),

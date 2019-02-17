@@ -103,13 +103,13 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
   })
 
 
-  # Need to find a way to integrate the userMenu card to the help section
-  observeEvent(help(), {
-    shinyjs::toggleClass(
-      id = "user",
-      class = "user-menu open",
-      condition = help()
-    )
-  })
+  # Open the userInfo menu. Useless since rintrojs does not work with modules
+  #observeEvent(help(), {
+  #  shinyjs::toggleClass(
+  #    id = "user",
+  #    class = "user-menu open",
+  #    condition = help()
+  #  )
+  #})
 
 }

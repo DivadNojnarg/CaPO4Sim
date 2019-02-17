@@ -14,17 +14,9 @@ networkCaPO4Ui <- function(id) {
     width = 12,
     solidHeader = TRUE,
     # back button for case studies
-    introBox(
-      uiOutput(ns("back_button")),
-      data.step = 3,
-      data.intro = help_text[3]
-    ),
+    uiOutput(ns("back_button")),
     # slider input for dynamic case studies
-    introBox(
-      uiOutput(ns("counter_progress")),
-      data.step = 4,
-      data.intro = help_text[4]
-    ),
+    uiOutput(ns("counter_progress")),
     # next button for case studies
     uiOutput(ns("next_button")),
     br(),
