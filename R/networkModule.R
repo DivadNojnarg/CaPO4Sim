@@ -178,13 +178,17 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       column(
         width = 4,
         align = "right",
-        actionBttn(
-          inputId = ns("nextStep"),
-          label = "Next",
-          style = "simple",
-          color = "danger",
-          size = "md",
-          icon = icon("step-forward")
+        # manually add an extra class for shinyjs
+        tagAppendAttributes(
+          actionBttn(
+            inputId = ns("nextStep"),
+            label = "Next",
+            style = "simple",
+            color = "danger",
+            size = "md",
+            icon = icon("step-forward")
+          ),
+          class = "nextStep"
         )
       )
     }
@@ -248,7 +252,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   })
 
   # reset the counter if higher than 5
-  observeEvent(input$nextStep,{
+  observeEvent(input$nextStep, {
     if (counter_nav$diagram > 6) {
       counter_nav$diagram <- 0
     }
@@ -257,11 +261,11 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
   # add the blinking button class to the next button in animations
   observe({
-    req(input$nextStep)
+    req(!is.null(input$nextStep))
     if (input$nextStep == 0) {
-      shinyjs::runjs("$('#network-nextStep').addClass('blinking-button')")
+      shinyjs::runjs("$('.nextStep').addClass('blinking-button')")
     } else {
-      shinyjs::runjs("$('#network-nextStep').removeClass('blinking-button')")
+      shinyjs::runjs("$('.nextStep').removeClass('blinking-button')")
     }
   })
 

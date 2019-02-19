@@ -18,16 +18,6 @@ body <- dashboardBody(
   includeScript(path = "www/js/find-navigator.js"),
   tags$head(includeScript(paste0(getwd(), "/www/js/hotjar.js"))),
 
-  # hide the dashboard title on small screen devices (bad display in the controlbar)
-  #tags$head(
-  #  tags$script(
-  #    "$(document).ready(function() {
-  #      $('.logo').addClass('hidden-xs')
-  #     });
-  #    "
-  #  )
-  #),
-
   # Load other JS facilities
   useShinyjs(),
   introjsUI(),
