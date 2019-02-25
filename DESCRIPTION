@@ -8,7 +8,7 @@ Authors@R: c(
     )
 Maintainer: David Granjon <dgranjon@ymail.com>
 Description: Access 3 shiny apps to better understand Ca and PO4 homeostasis.
-    These app are powered by RinteRface <https://rinterface.com>.
+    These apps are powered by RinteRface <https://rinterface.com>.
 Imports: 
     shiny, 
     htmltools,

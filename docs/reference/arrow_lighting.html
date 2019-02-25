@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • CaPO4Sim</title>
+<title>Highlight arrows for steady state events — arrow_lighting • CaPO4Sim</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -25,12 +25,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Authors" />
+<meta property="og:title" content="Highlight arrows for steady state events — arrow_lighting" />
+
+<meta property="og:description" content="Use inside in the networkCaPO4. Nothing is returned
+except that the network is updated via visNetworkProxy." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +51,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -59,7 +63,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">CaPO4Sim</a>
+        <a class="navbar-link" href="../index.html">CaPO4Sim</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -67,16 +71,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -92,26 +96,54 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>Highlight arrows for steady state events</h1>
+    
+    <div class="hidden name"><code>arrow_lighting.Rd</code></div>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>David Granjon</strong>. Author, maintainer. 
-        </p>
-      </li>
-      <li>
-        <p><strong> RinteRface</strong>. Copyright holder. 
-        </p>
-      </li>
-    </ul>
+    <div class="ref-description">
+    
+    <p>Use inside in the <a href='networkCaPO4.html'>networkCaPO4</a>. Nothing is returned
+except that the network is updated via <a href='https://www.rdocumentation.org/packages/visNetwork/topics/visNetwork-shiny'>visNetworkProxy</a>.</p>
+    
+    </div>
+
+    <pre class="usage"><span class='fu'>arrow_lighting</span>(<span class='no'>edges</span>, <span class='no'>simulation</span>, <span class='no'>counter</span>, <span class='no'>session</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>edges</th>
+      <td><p>A dataframe of edges provided by <a href='generate_edges.html'>generate_edges</a>.</p></td>
+    </tr>
+    <tr>
+      <th>simulation</th>
+      <td><p>Which disease is currently selected. See <a href='extract_running_sim.html'>extract_running_sim</a>.</p></td>
+    </tr>
+    <tr>
+      <th>counter</th>
+      <td><p>To determine which notification to display. We expect a counter
+returned by the <a href='networkCaPO4.html'>networkCaPO4</a> module.</p></td>
+    </tr>
+    <tr>
+      <th>session</th>
+      <td><p>Session object.</p></td>
+    </tr>
+    </table>
+    
 
   </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
+  </div>
 </div>
-
 
       <footer>
       <div class="copyright">
