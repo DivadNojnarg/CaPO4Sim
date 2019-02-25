@@ -9,41 +9,38 @@ diseaseSelectUi <- function(id) {
 
   ns <- NS(id)
 
+  diseases <- list(
+    labels = c("Primary hyperparathyroidism", "Hypoparathyroidism", "25(OH)D deficiency"),
+    ids = c("run_php1", "run_hypopara", "run_hypoD3")
+  )
+
   tagList(
     h6("Steady-state simulations"),
     # primary hyperparathyroidism
-    prettyCheckbox(
-      inputId = ns("run_php1"),
-      label = "Primary hyperparathyroidism",
-      value = FALSE,
-      animation = "pulse",
-      thick = TRUE,
-      status = "primary"
-    ),
-
-    # hypoparathyroidism
-    prettyCheckbox(
-      inputId = ns("run_hypopara"),
-      label = "hypoparathyroidism",
-      value = FALSE,
-      animation = "pulse",
-      thick = TRUE,
-      status = "primary"
-    ),
-
-    # vitamin D3 deficiency
-    prettyCheckbox(
-      inputId = ns("run_hypoD3"),
-      label = "25(OH)D deficiency",
-      value = FALSE,
-      animation = "pulse",
-      thick = TRUE,
-      status = "primary"
-    )
+    lapply(seq_along(diseases$ids), function(i) {
+      diseaseCheckBox(inputId = ns(diseases$ids[[i]]), label = diseases$labels[[i]])
+    })
   )
 }
 
 
+#' @title Create a checkbox for \link{diseaseSelectUi}
+#'
+#' @description Create a \link[shinyWidgets]{prettyCheckbox}.
+#'
+#' @param inputId Checkbox Input id.
+#' @param label Checkbox label.
+#'
+diseaseCheckBox <- function(inputId, label) {
+  shinyWidgets::prettyCheckbox(
+    inputId = inputId,
+    label = label,
+    value = FALSE,
+    animation = "pulse",
+    thick = TRUE,
+    status = "primary"
+  )
+}
 
 
 #' @title Create a disease selector server logic

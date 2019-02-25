@@ -110,12 +110,12 @@ arrow_lighting <- function(edges, simulation, counter, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
         })
@@ -125,12 +125,12 @@ arrow_lighting <- function(edges, simulation, counter, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
         })
@@ -145,12 +145,12 @@ arrow_lighting <- function(edges, simulation, counter, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
         })
@@ -160,12 +160,12 @@ arrow_lighting <- function(edges, simulation, counter, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
         })
@@ -180,12 +180,12 @@ arrow_lighting <- function(edges, simulation, counter, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
         })
@@ -195,12 +195,12 @@ arrow_lighting <- function(edges, simulation, counter, session) {
         lapply(1:2, FUN = function(i){
           if ((i %% 2) != 0) {
             edges$hidden[sel] <- TRUE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           } else {
             edges$hidden[sel] <- FALSE
-            visNetworkProxy(ns("network_CaPO4")) %>%
-              visUpdateEdges(edges = edges)
+            visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+              visNetwork::visUpdateEdges(edges = edges)
           }
           Sys.sleep(0.5)
         })
@@ -215,8 +215,8 @@ arrow_lighting <- function(edges, simulation, counter, session) {
   }
 
   # update the network
-  visNetworkProxy(ns("network_CaPO4"), session) %>%
-    visUpdateEdges(edges = edges)
+  visNetwork::visNetworkProxy(ns("network_CaPO4"), session) %>%
+    visNetwork::visUpdateEdges(edges = edges)
 }
 
 

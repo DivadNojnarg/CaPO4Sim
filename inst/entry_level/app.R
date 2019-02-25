@@ -1,4 +1,5 @@
 # 1) load all packages
+library(CaPO4Sim)
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
@@ -13,7 +14,6 @@ library(shinyEffects)
 library(bsplus)
 library(sweetalertR)
 library(shinytoastr)
-library(stringr)
 library(purrr)
 library(rintrojs)
 library(shinyFeedback)

@@ -10,12 +10,12 @@
 #' @export
 generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
 
-  visNetwork(
+  visNetwork::visNetwork(
     nodes,
     edges,
     width = "100%",
     height = "100%") %>%
-    visNodes(
+    visNetwork::visNodes(
       shapeProperties =
         list(
           useBorderWithImage = FALSE,
@@ -23,12 +23,12 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
         )
     ) %>%
     # put shadow on false
-    visEdges(
+    visNetwork::visEdges(
       shadow = FALSE,
       font = list(align = "horizontal")
     ) %>%
     # add group selection option
-    visOptions(
+    visNetwork::visOptions(
       highlightNearest = FALSE,
       clickToUse = FALSE,
       manipulation = FALSE,
@@ -36,7 +36,7 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
       autoResize = if (isMobile()) FALSE else TRUE
     ) %>%
     # prevent edge from being selected when a node is selected
-    visInteraction(
+    visNetwork::visInteraction(
       hover = TRUE,
       hoverConnectedEdges = FALSE,
       selectConnectedEdges = FALSE,
@@ -69,7 +69,7 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
         z-index: 100;'
     ) %>%
     # stabilization prevents arrows from bouncing
-    visPhysics(stabilization = TRUE, enabled = usephysics)
+    visNetwork::visPhysics(stabilization = TRUE, enabled = usephysics)
 }
 
 

@@ -9,7 +9,7 @@ glossaryCaPO4Ui <- function(id) {
 
   ns <- NS(id)
 
-  boxTag <- box(
+  boxTag <- shinydashboard::box(
     solidHeader = TRUE,
     width = 12,
     height = "50%",

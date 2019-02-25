@@ -51,12 +51,8 @@ skinSelect <- function(input, output, session) {
         NULL
       } else {
         # otherwise, remove the old CSS class and add the new one
-        shinyjs::removeClass(
-          selector = "body",
-          class = paste("skin", previous_skin$color, sep = "-"))
-        shinyjs::addClass(
-          selector = "body",
-          class = paste("skin", current_skin$color, sep = "-"))
+        shinyjs::removeClass(selector = "body", class = paste("skin", previous_skin$color, sep = "-"))
+        shinyjs::addClass(selector = "body", class = paste("skin", current_skin$color, sep = "-"))
         # the current skin is added to previous_skin to be ready for
         # the next change
         previous_skin$color <- c(previous_skin$color, current_skin$color)[-1]

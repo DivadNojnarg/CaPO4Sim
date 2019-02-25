@@ -12,10 +12,10 @@ videoUi <- function(id, data) {
   ns <- NS(id)
 
   fluidRow(
-    carousel(
+    shinydashboardPlus::carousel(
       id = ns("carousel"),
       .list = lapply(seq_along(video_data$caption), FUN = function(i) {
-        carouselItem(
+        shinydashboardPlus::carouselItem(
           caption = video_data$caption[[i]],
           tags$iframe(
             width = "100%",

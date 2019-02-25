@@ -1,0 +1,12 @@
+name: entry_level
+title: entry_level
+username: dgranj
+account: dgranj
+server: physiol-seafile.uzh.ch
+hostUrl: http://physiol-seafile.uzh.ch:3939/__api__
+appId: 4
+bundleId: 7
+url: http://physiol-seafile.uzh.ch:3939/content/4/
+when: 1550586458.35407
+asMultiple: FALSE
+asStatic: FALSE

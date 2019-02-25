@@ -12,27 +12,38 @@ infosUi <- function(id) {
 
   ns <- NS(id)
 
+  infos <- list(
+    ids = c("notif2_switch", "modal_switch"),
+    labels = c("Notifications?", "Descriptions?")
+  )
+
   tagList(
     # Enable/Disable informations
-    prettySwitch(
-      inputId = ns("notif2_switch"),
-      label = "Notifications?",
-      value = TRUE,
-      status = "success",
-      slim = TRUE,
-      bigger = TRUE
-    ),
-    prettySwitch(
-      inputId = ns("modal_switch"),
-      label = "Descriptions?",
-      value = TRUE,
-      status = "success",
-      slim = TRUE,
-      bigger = TRUE
-    )
+    lapply(seq_along(infos$ids), function(i) {
+      infoSwitch(inputId = ns(infos$ids[[i]]), label = infos$labels[[i]])
+    })
   )
 }
 
+
+
+#' @title Create a switch input for \link{infosUi}
+#'
+#' @description Create a \link[shinyWidgets]{prettySwitch}.
+#'
+#' @param inputId Checkbox Input id.
+#' @param label Checkbox label.
+#'
+infoSwitch <- function(inputId, label) {
+  shinyWidgets::prettySwitch(
+    inputId = inputId,
+    label = label,
+    value = TRUE,
+    status = "success",
+    slim = TRUE,
+    bigger = TRUE
+  )
+}
 
 
 #' @title Info server module
@@ -86,7 +97,7 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
             allowed = input$notif2_switch
           )
           # make it draggable
-          jqui_draggable(selector = "#shiny-notification-notifid")
+          shinyjqui::jqui_draggable(selector = "#shiny-notification-notifid")
         }
       }, priority = 10)
 
@@ -99,7 +110,7 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
       input_current_simulation <- paste0("diseases$", current_simulation, "()")
       if (!is_empty(current_simulation)) {
         if (eval(parse(text = input_current_simulation)) & !regulations()) {
-          sendSweetAlert(
+          shinyWidgets::sendSweetAlert(
             session = session,
             type = "error",
             title = NULL,
@@ -121,7 +132,7 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
   observe({
     if (animation_counter() == 6) {
       current_simulation <- extract_running_sim(diseases)
-      sendSweetAlert(
+      shinyWidgets::sendSweetAlert(
         session = session,
         type = "success",
         title = NULL,

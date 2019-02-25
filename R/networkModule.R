@@ -10,7 +10,7 @@ networkCaPO4Ui <- function(id) {
   ns <- NS(id)
 
 
-  boxTag <- box(
+  boxTag <- shinydashboard::box(
     width = 12,
     solidHeader = TRUE,
     # back button for case studies
@@ -21,11 +21,11 @@ networkCaPO4Ui <- function(id) {
     uiOutput(ns("next_button")),
     br(),
     # Main network
-    introBox(
+    rintrojs::introBox(
       div(
         id = "network_cap", # to insert a background image if needed
-        withSpinner(
-          visNetworkOutput(
+        shinycssloaders::withSpinner(
+          visNetwork::visNetworkOutput(
             outputId = ns("network_CaPO4"),
             height = "900px"),
           size = 2,
@@ -115,7 +115,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   })
 
   # Generate the output of the Ca graph to be used in body
-  output$network_CaPO4 <- renderVisNetwork({
+  output$network_CaPO4 <- visNetwork::renderVisNetwork({
 
     nodes<- nodes()
     edges <- edges()
@@ -123,9 +123,9 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
     generate_network(nodes, edges, usephysics = TRUE, isMobile) %>%
       # simple click event to select a node
-      visEvents(selectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', nodes.nodes); }")) %>%
+      visNetwork::visEvents(selectNode = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id"), "', nodes.nodes); }")) %>%
       # unselect node event
-      visEvents(deselectNode = paste0(
+      visNetwork::visEvents(deselectNode = paste0(
         "function(nodes) {
           Shiny.setInputValue('", ns("current_node_id"), "', 'null');
           Shiny.setInputValue('", ns("current_node_id_zoom"), "', 'null');
@@ -134,15 +134,15 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         )
       ) %>%
       # add the doubleclick for nodes (zoom view)
-      visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', nodes.nodes); }")) %>%
+      visNetwork::visEvents(doubleClick = paste0("function(nodes) { Shiny.setInputValue('", ns("current_node_id_zoom"), "', nodes.nodes); }")) %>%
       # simple click event for selecting edges
-      visEvents(selectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', edges.edges); }")) %>%
+      visNetwork::visEvents(selectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', edges.edges); }")) %>%
       # unselect edge event
-      visEvents(deselectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', 'null'); }")) %>%
+      visNetwork::visEvents(deselectEdge = paste0("function(edges) { Shiny.setInputValue('", ns("current_edge_id"), "', 'null'); }")) %>%
       # very important: change the whole graph position after drawing
-      visEvents(type = "on", stabilized = "function() { this.moveTo({ position: {x:0, y:-13.43}, offset: {x: 0, y:0} }); }") %>%
+      visNetwork::visEvents(type = "on", stabilized = "function() { this.moveTo({ position: {x:0, y:-13.43}, offset: {x: 0, y:0} }); }") %>%
       # scale for cellphones and tablets
-      visEvents(type = "on", initRedraw = paste0("function() { this.moveTo({scale:", if (isMobile()) 0.3 else 0.6, "}); }"))
+      visNetwork::visEvents(type = "on", initRedraw = paste0("function() { this.moveTo({scale:", if (isMobile()) 0.3 else 0.6, "}); }"))
   })
 
 
@@ -158,7 +158,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       column(
         width = 4,
         align = "left",
-        actionBttn(
+        shinyWidgets::actionBttn(
           inputId = ns("previousStep"),
           label = "Back",
           style = "simple",
@@ -180,7 +180,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         align = "right",
         # manually add an extra class for shinyjs
         tagAppendAttributes(
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = ns("nextStep"),
             label = "Next",
             style = "simple",
@@ -205,7 +205,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       column(
         width = 4,
         align = "center",
-        progressBar(
+        shinyWidgets::progressBar(
           id = ns("progress"),
           value = 0,
           total = 6,
@@ -221,7 +221,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
   # update the progress bar
   observeEvent(counter_nav$diagram, {
-    updateProgressBar(
+    shinyWidgets::updateProgressBar(
       session,
       id = ns("progress"),
       value = counter_nav$diagram,
@@ -295,8 +295,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       } else {
         nodes$size[selected_node] <- 57
       }
-      visNetworkProxy(ns("network_CaPO4")) %>%
-        visUpdateNodes(nodes = nodes)
+      visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+        visNetwork::visUpdateNodes(nodes = nodes)
       # reset the node size when unselected
     } else {
       if (last$selected_node %in% c(1:5, 7:8, 11)) {
@@ -306,8 +306,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       } else {
         nodes$size[last$selected_node] <- 40
       }
-      visNetworkProxy(ns("network_CaPO4")) %>%
-        visUpdateNodes(nodes = nodes)
+      visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+        visNetwork::visUpdateNodes(nodes = nodes)
     }
   })
 
@@ -327,8 +327,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       } else {
         edges$width[edge_id] <- 12
       }
-      visNetworkProxy(ns("network_CaPO4")) %>%
-        visUpdateEdges(edges = edges)
+      visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+        visNetwork::visUpdateEdges(edges = edges)
       # reset the edge size when unselected
     } else {
       if (edge_id %in% c(1:12)) {
@@ -336,8 +336,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       } else {
         edges$width[edge_id] <- 4
       }
-      visNetworkProxy(ns("network_CaPO4")) %>%
-        visUpdateEdges(edges = edges)
+      visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+        visNetwork::visUpdateEdges(edges = edges)
     }
   })
 
@@ -347,8 +347,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
     edges<- edges()
     edges$color <- "black"
     edges$witdh <- 4
-    visNetworkProxy(ns("network_CaPO4"), session) %>%  # then reset the graph
-      visUpdateEdges(edges = edges)
+    visNetwork::visNetworkProxy(ns("network_CaPO4"), session) %>%  # then reset the graph
+      visNetwork::visUpdateEdges(edges = edges)
   })
 
   # Animations of arrows when event occurs (php1, hypopara, hypoD3)
@@ -371,12 +371,12 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
             lapply(1:2, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes$hidden[11] <- TRUE
-                visNetworkProxy(ns("network_CaPO4")) %>%
-                  visUpdateNodes(nodes = nodes)
+                visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+                  visNetwork::visUpdateNodes(nodes = nodes)
               } else {
                 nodes$hidden[11] <- FALSE
-                visNetworkProxy(ns("network_CaPO4")) %>%
-                  visUpdateNodes(nodes = nodes)
+                visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+                  visNetwork::visUpdateNodes(nodes = nodes)
               }
               Sys.sleep(0.5)
             })
@@ -384,12 +384,12 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
             lapply(1:2, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes$hidden[c(13:15)] <- TRUE
-                visNetworkProxy(ns("network_CaPO4")) %>%
-                  visUpdateNodes(nodes = nodes)
+                visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+                  visNetwork::visUpdateNodes(nodes = nodes)
               } else {
                 nodes$hidden[c(13:15)] <- FALSE
-                visNetworkProxy(ns("network_CaPO4")) %>%
-                  visUpdateNodes(nodes = nodes)
+                visNetwork::visNetworkProxy(ns("network_CaPO4")) %>%
+                  visNetwork::visUpdateNodes(nodes = nodes)
               }
               Sys.sleep(0.5)
             })
@@ -447,7 +447,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   output$position <- renderPrint(vals$position)
   observe({
     invalidateLater(1000)
-    visNetworkProxy(ns("network_CaPO4")) %>% visGetPositions()
+    visNetwork::visNetworkProxy(ns("network_CaPO4")) %>% visNetwork::visGetPositions()
     vals$coords <- if (!is.null(input$network_CaPO4_positions))
       do.call(rbind, input$network_CaPO4_positions)
   })
@@ -457,7 +457,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   output$viewposition <- renderPrint(vals$viewposition)
   observe({
     invalidateLater(1000)
-    visNetworkProxy(ns("network_CaPO4")) %>% visGetViewPosition()
+    visNetwork::visNetworkProxy(ns("network_CaPO4")) %>% visNetwork::visGetViewPosition()
     vals$viewposition <- if (!is.null(input$network_CaPO4_viewPosition))
       do.call(rbind, input$network_CaPO4_viewPosition)
   })
@@ -466,7 +466,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   output$scale <- renderPrint(vals$scale)
   observe({
     invalidateLater(1000)
-    visNetworkProxy(ns("network_CaPO4")) %>% visGetScale()
+    visNetwork::visNetworkProxy(ns("network_CaPO4")) %>% visNetwork::visGetScale()
     vals$scale <- if (!is.null(input$network_CaPO4_scale))
       do.call(rbind, list(input$network_CaPO4_scale))
   })

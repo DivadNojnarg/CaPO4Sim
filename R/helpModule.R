@@ -12,8 +12,8 @@ helpCaPO4Ui <- function(id) {
   tags$li(
     title = "",
     class = "dropdown",
-    introBox(
-      actionBttn(
+    rintrojs::introBox(
+      shinyWidgets::actionBttn(
         inputId = ns("help"),
         label = "Help",
         icon = NULL,
@@ -47,7 +47,7 @@ helpCaPO4 <- function(input, output, session) {
   # Do not forget to wrap the event content in I('my_function')
   # otherwise it will fail
   observeEvent(input$help,{
-    introjs(
+    rintrojs::introjs(
       session,
       options = list(
         "nextLabel" = "Next step!",

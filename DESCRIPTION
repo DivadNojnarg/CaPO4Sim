@@ -15,15 +15,15 @@ Imports:
     shinyjs, 
     shinyWidgets, 
     shinydashboard, 
-    purrr, 
     shinydashboardPlus, 
     shinyjqui, 
     plotly, 
     rintrojs, 
     shinycssloaders,
     visNetwork,
-    stringr,
-    DT
+    purrr,
+    DT,
+    magrittr
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

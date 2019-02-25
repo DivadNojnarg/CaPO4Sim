@@ -31,7 +31,6 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
     "bsplus",
     "sweetalertR",
     "shinytoastr",
-    "stringr",
     "purrr",
     "rintrojs",
     "shinyFeedback"

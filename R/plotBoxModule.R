@@ -9,7 +9,7 @@ plotBoxUi <- function(id) {
 
   ns <- NS(id)
 
-  boxTag <- box(
+  boxTag <- shinydashboard::box(
     width = 12,
     solidHeader = TRUE,
     height = "950px",
@@ -40,9 +40,9 @@ plotBoxUi <- function(id) {
           )
         ),
         hr(),
-        introBox(
-          withSpinner(
-            plotlyOutput(
+        rintrojs::introBox(
+          shinycssloaders::withSpinner(
+            plotly::plotlyOutput(
               outputId = ns("plot"),
               height = "600px"
             ),
@@ -65,7 +65,7 @@ plotBoxUi <- function(id) {
       column(
         width = 4, align = "center",
         br(),
-        introBox(
+        rintrojs::introBox(
           uiOutput(
             outputId = ns("slider_disease"),
             class = "theme-orange"
@@ -142,7 +142,7 @@ plotBox <- function(input, output, session, diseases, help) {
 
         sliderId <- ifelse(help(), "slider_help", paste0("slider_", current_sim))
 
-        sliderTag <- sliderTextInput(
+        sliderTag <- shinyWidgets::sliderTextInput(
           inputId = ns(sliderId),
           label = if (diseases$php1() | help()) {
             "PTH mRNA synthesis fold increase"
@@ -170,7 +170,7 @@ plotBox <- function(input, output, session, diseases, help) {
   #-------------------------------------------------------------------------
 
   # draw each of the 6 plots as a function of the selected simulation
-  output$plot <- renderPlotly({
+  output$plot <- plotly::renderPlotly({
 
     req(slider())
     # take dependency on the related slider and store its value

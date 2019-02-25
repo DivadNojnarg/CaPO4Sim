@@ -10,7 +10,7 @@ userInfoUi <- function(id) {
   ns <- NS(id)
 
   tagAppendAttributes(
-    userOutput(ns("user")),
+    shinydashboardPlus::userOutput(ns("user")),
     style = "margin-left: 100px; border:none;"
   )
 }
@@ -33,13 +33,13 @@ userInfoUi <- function(id) {
 userInfo <- function(input, output, session, diseases, sliderDisease, help) {
 
   # generate a patient profile
-  output$user <- renderUser({
+  output$user <- shinydashboardPlus::renderUser({
 
     ns <- session$ns
 
     req(!is.null(diseases$php1()) | !is.null(diseases$hypopara()) | !is.null(diseases$hypoD3()))
 
-    dashboardUser(
+    shinydashboardPlus::dashboardUser(
       name = "Rat State",
       src = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
         generate_userFields(diseases, sliderDisease)$image
@@ -61,33 +61,33 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
         "nothing to declare!"
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat1)
+        shinydashboardPlus::dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat1)
       } else {
-        dashboardUserItem(
+        shinydashboardPlus::dashboardUserItem(
           width = 6,
           HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat2)
+        shinydashboardPlus::dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat2)
       } else {
-        dashboardUserItem(
+        shinydashboardPlus::dashboardUserItem(
           width = 6,
           HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        dashboardUserItem(width = 12, generate_userFields(diseases, sliderDisease)$stat3)
+        shinydashboardPlus::dashboardUserItem(width = 12, generate_userFields(diseases, sliderDisease)$stat3)
       } else {
-        dashboardUserItem(
+        shinydashboardPlus::dashboardUserItem(
           width = 12,
           HTML(paste(withMathJax(p("$$[PTH]_p$$ 66 ng/l")), "<br/>", "(20-70 ng/l)"))
         )
       },
       br(),
-      dashboardUserItem(
+      shinydashboardPlus::dashboardUserItem(
         width = 12,
-        actionBttn(
+        shinyWidgets::actionBttn(
           inputId = ns("cure"),
           label = "Cure Rat",
           style = "fill",
@@ -99,7 +99,7 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
 
   # reset all parameters (DOES NOT WORK)
   observeEvent(input$cure, {
-    runjs("$('#disease-run_php1 input[type=checkbox]').prop('checked', false);")
+    shinyjs::runjs("$('#disease-run_php1 input[type=checkbox]').prop('checked', false);")
   })
 
 

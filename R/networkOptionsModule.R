@@ -11,10 +11,10 @@ networkOptionsUi <- function(id) {
 
   tagList(
     # background choice
-    introBox(
+    rintrojs::introBox(
       data.step = 6,
       data.intro = help_text[6],
-      prettyCheckboxGroup(
+      shinyWidgets::prettyCheckboxGroup(
         inputId = ns("background_choice"),
         label = "Background",
         choices = c("rat", "human"),
@@ -28,10 +28,10 @@ networkOptionsUi <- function(id) {
     hr(),
 
     # enable hormones?
-    introBox(
+    rintrojs::introBox(
       data.step = 7,
       data.intro = help_text[7],
-      prettySwitch(
+      shinyWidgets::prettySwitch(
         inputId = ns("hormonal_choice"),
         label = "Regulations?",
         value = TRUE,
@@ -41,7 +41,7 @@ networkOptionsUi <- function(id) {
       ),
 
       # enable organs
-      prettySwitch(
+      shinyWidgets::prettySwitch(
         inputId = ns("organ_choice"),
         label = "Organs?",
         value = TRUE,
@@ -52,10 +52,10 @@ networkOptionsUi <- function(id) {
     ),
 
     # filter elements to display
-    introBox(
+    rintrojs::introBox(
       data.step = 8,
       data.intro = help_text[8],
-      prettyCheckboxGroup(
+      shinyWidgets::prettyCheckboxGroup(
         inputId = ns("components_choice"),
         label = "Choose your Network",
         choices = c("Ca", "PO4", "PTH", "D3", "FGF23"),
@@ -70,7 +70,7 @@ networkOptionsUi <- function(id) {
 
     # Control Nodes size
     h4("Nodes size"),
-    introBox(
+    rintrojs::introBox(
       data.step = 9,
       data.intro = help_text[9],
       fluidRow(
@@ -87,7 +87,7 @@ networkOptionsUi <- function(id) {
 
     # Control arrow properties
     h4("Arrow width"),
-    introBox(
+    rintrojs::introBox(
       data.step = 10,
       data.intro = help_text[10],
       fluidRow(
@@ -154,7 +154,7 @@ networkOptions <- function(input, output, session, mobile) {
     output[[outputIds[[i]]]] <- renderUI({
       with(
         knobsProps(),
-        knobInput(
+        shinyWidgets::knobInput(
           inputId = ns(inputIds[[i]]),
           label = labels[[i]],
           min = mins[[i]],
@@ -202,15 +202,15 @@ networkOptions <- function(input, output, session, mobile) {
   observe({
     if (is.element("rat", input$background_choice) &&
         !is.element("human", input$background_choice)) {
-      disable(selector = "#network_options-background_choice input[value='human']")
+      shinyjs::disable(selector = "#network_options-background_choice input[value='human']")
     } else {
-      enable(selector = "#network_options-background_choice input[value='human']")
+      shinyjs::enable(selector = "#network_options-background_choice input[value='human']")
     }
     if (is.element("human", input$background_choice) &&
         !is.element("rat", input$background_choice)) {
-      disable(selector = "#network_options-background_choice input[value='rat']")
+      shinyjs::disable(selector = "#network_options-background_choice input[value='rat']")
     } else {
-      enable(selector = "#network_options-background_choice input[value='rat']")
+      shinyjs::enable(selector = "#network_options-background_choice input[value='rat']")
     }
   })
 
@@ -219,7 +219,7 @@ networkOptions <- function(input, output, session, mobile) {
   # the reverse case does not work for unknow reason
   observeEvent(input$hormonal_choice, {
     if (input$hormonal_choice) {
-      updatePrettyCheckboxGroup(
+      shinyWidgets::updatePrettyCheckboxGroup(
         session,
         inputId = "components_choice",
         selected = c("Ca","PO4", "PTH", "D3", "FGF23")
