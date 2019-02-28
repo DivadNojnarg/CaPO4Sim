@@ -4,11 +4,13 @@
 \alias{make_plot_hypopara}
 \title{Produce plots related to hypoparathyroidism (hypopara)}
 \usage{
-make_plot_hypopara(sliderVal)
+make_plot_hypopara(sliderVal, isMobile)
 }
 \arguments{
 \item{sliderVal}{Shiny slider input related to the current disease severity.
 See \link{plotBox}.}
+
+\item{isMobile}{Shiny input useful to scale elements based on the device screen size.}
 }
 \description{
 Use inside the \link{plotBox} module.
