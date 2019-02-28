@@ -76,10 +76,12 @@ networkOptionsUi <- function(id) {
       fluidRow(
         column(
           width = 6,
+          class = "col-xs-6",
           uiOutput(outputId = ns("size_nodes_organs"))
         ),
         column(
           width = 6,
+          class = "col-xs-6",
           uiOutput(outputId = ns("size_nodes_hormones"))
         )
       )
@@ -93,10 +95,12 @@ networkOptionsUi <- function(id) {
       fluidRow(
         column(
           width = 6,
+          class = "col-xs-6",
           uiOutput(outputId = ns("width_edges_organs"))
         ),
         column(
           width = 6,
+          class = "col-xs-6",
           uiOutput(outputId = ns("width_edges_hormones"))
         )
       )

@@ -1,0 +1,12 @@
+name: virtual_patient
+title: virtual_patient
+username: dgranj
+account: dgranj
+server: physiol-seafile.uzh.ch
+hostUrl: http://physiol-seafile.uzh.ch:3939/__api__
+appId: 6
+bundleId: 9
+url: http://physiol-seafile.uzh.ch:3939/content/6/
+when: 1551108750.39932
+asMultiple: FALSE
+asStatic: FALSE

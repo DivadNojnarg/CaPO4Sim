@@ -21,7 +21,7 @@ ui <- dashboardPagePlus(
   loading_duration = 3,
   collapse_sidebar = TRUE,
   skin = "black",
-  title = "CaPO4 Teaching App",
+  title = "Virtual CaPO4 Patient",
   header = header,
   sidebar = sidebar,
   body = body,

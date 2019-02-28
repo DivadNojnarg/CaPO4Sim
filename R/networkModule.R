@@ -10,9 +10,12 @@ networkCaPO4Ui <- function(id) {
   ns <- NS(id)
 
 
-  boxTag <- shinydashboard::box(
+  boxTag <- shinydashboardPlus::boxPlus(
     width = 12,
-    solidHeader = TRUE,
+    solidHeader = FALSE,
+    status = NULL,
+    collapsible = TRUE,
+    closable = FALSE,
     # back button for case studies
     uiOutput(ns("back_button")),
     # slider input for dynamic case studies
@@ -24,14 +27,7 @@ networkCaPO4Ui <- function(id) {
     rintrojs::introBox(
       div(
         id = "network_cap", # to insert a background image if needed
-        shinycssloaders::withSpinner(
-          visNetwork::visNetworkOutput(
-            outputId = ns("network_CaPO4"),
-            height = "900px"),
-          size = 2,
-          type = 8,
-          color = "#000000"
-        )
+        uiOutput(ns("networkOutput"))
       ),
       data.step = 2,
       data.intro = help_text[2],
@@ -39,12 +35,17 @@ networkCaPO4Ui <- function(id) {
     )
   )
 
-  boxTag$children[[1]] <- tagAppendAttributes(boxTag$children[[1]], id = "boxNetwork")
+  boxTag[[2]]$children[[1]] <- tagAppendAttributes(boxTag[[2]]$children[[1]], id = "boxNetwork")
+  # remove all spaces so that the network fits the whole body
+  boxTag[[2]]$children[[1]]$children[[2]] <- tagAppendAttributes(
+    boxTag[[2]]$children[[1]]$children[[2]],
+    style = "padding:0px;"
+  )
 
   column(
     width = 6,
     offset = 0,
-    style = 'padding:0px;',
+    style = "padding:0px;",
     boxTag
   )
 }
@@ -145,6 +146,19 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       visNetwork::visEvents(type = "on", initRedraw = paste0("function() { this.moveTo({scale:", if (isMobile()) 0.3 else 0.6, "}); }"))
   })
 
+  output$networkOutput <- renderUI({
+
+    req(!is.null(isMobile()))
+
+    shinycssloaders::withSpinner(
+      visNetwork::visNetworkOutput(
+        outputId = ns("network_CaPO4"),
+        height = if (isMobile()) "450px" else "900px"),
+      size = 2,
+      type = 8,
+      color = "#000000"
+    )
+  })
 
   #-------------------------------------------------------------------------
   # Network UI: next and back button, progress bar, ...
@@ -157,13 +171,15 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         diseases$hypoD3() | help()) {
       column(
         width = 4,
+        # handle small screens
+        class = "col-xs-3",
         align = "left",
         shinyWidgets::actionBttn(
           inputId = ns("previousStep"),
           label = "Back",
           style = "simple",
           color = "danger",
-          size = "md",
+          size = if(isMobile()) "xs" else "md",
           icon = icon("step-backward")
         )
       )
@@ -177,7 +193,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
         diseases$hypoD3() | help()) {
       column(
         width = 4,
-        align = "right",
+        align = "left",
+        class = "col-xs-3",
         # manually add an extra class for shinyjs
         tagAppendAttributes(
           shinyWidgets::actionBttn(
@@ -185,7 +202,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
             label = "Next",
             style = "simple",
             color = "danger",
-            size = "md",
+            size = if(isMobile()) "xs" else "md",
             icon = icon("step-forward")
           ),
           class = "nextStep"
@@ -204,7 +221,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
       column(
         width = 4,
-        align = "center",
+        align = "left",
+        class = "col-xs-6",
         shinyWidgets::progressBar(
           id = ns("progress"),
           value = 0,
@@ -225,7 +243,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       session,
       id = ns("progress"),
       value = counter_nav$diagram,
-      total = 6,
+      total = 2,
       status = if (counter_nav$diagram <= 1) {
         "danger"
       } else if (counter_nav$diagram >= 2 & counter_nav$diagram <= 5) {

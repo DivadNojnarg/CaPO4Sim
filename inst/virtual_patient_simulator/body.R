@@ -1,8 +1,8 @@
 #-------------------------------------------------------------------------
 #  This code contains the body of shinydashboard. It is an advanced dashboard
 #  using several advanced javascript properties such as MathJax display,
-#  organize each Boxes relatively to each others via jqui commands (shinyjqui), 
-#  trigger some help modals when required. 
+#  organize each Boxes relatively to each others via jqui commands (shinyjqui),
+#  trigger some help modals when required.
 #
 #
 #  David Granjon, the Interface Group, Zurich
@@ -10,14 +10,14 @@
 #-------------------------------------------------------------------------
 
 body <- dashboardBody(
-  
+
   # include CSS
   includeCSS(path = "www/css/treatments-app.css"),
 
   # include the script for Hotjar tracking
   #tags$head(includeScript("www/hotjar.js")),
   # include the script needed to find the web browser
-  
+
   # JS interactions
   useShinyjs(),
   extendShinyjs(script = "www/js/close.js"),
@@ -38,19 +38,19 @@ body <- dashboardBody(
     # Network panel
     tabItem(
       tabName = "main",
-      
+
       fluidRow(
         # left colum
         column(
           width = 3,
           style = 'padding:0px;',
-          
+
           # profile box
           uiOutput("patient_info"),
           # user notebook
           uiOutput("user_notebook")
         ),
-        
+
         # patient operation table
         column(
           width = 6,
@@ -75,7 +75,7 @@ body <- dashboardBody(
         id = "about_us",
         HTML(
           paste(
-            "<img style=\"height: 100%; width: 100%; object-fit: contain\" 
+            "<img style=\"height: 100%; width: 100%; object-fit: contain\"
              border=\"0\" align=\"center\"  src=\"logos/about_us.jpg\"/>"
           )
         )#,

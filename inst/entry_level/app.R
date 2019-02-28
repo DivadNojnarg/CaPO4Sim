@@ -95,7 +95,7 @@ shinyApp(
     )
 
     # plot module
-    slider_disease <- callModule(module = plotBox, id = "graphs", diseases = diseases, help = help)
+    slider_disease <- callModule(module = plotBox, id = "graphs", diseases = diseases, help = help, isMobile = isMobile)
 
     # userInfo module
     callModule(module = userInfo, id = "rat", diseases = diseases, sliderDisease = slider_disease, help = help)

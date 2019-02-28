@@ -21,9 +21,10 @@ names(php1_vec) <- paste("k_prod_PTHg =", php1_vec)
 #'
 #' @param sliderVal Shiny slider input related to the current disease severity.
 #' See \link{plotBox}.
+#' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
 #' @export
-make_plot_php1 <- function(sliderVal) {
+make_plot_php1 <- function(sliderVal, isMobile) {
 
   # define x and y ranges
   xvar <- list(
@@ -167,9 +168,11 @@ make_plot_php1 <- function(sliderVal) {
   plot_php1 <- plotly::subplot(
     plot_CaP_php1, plot_hormones_php1, plot_Ca_fluxes_php1,
     plot_PO4_fluxes_php1,
-    titleX = TRUE, titleY = TRUE, nrows = 2,
-    margin = c(0.07, 0.07, 0.07, 0.07),
-    heights = c(0.5, 0.5)
+    titleX = TRUE,
+    titleY = TRUE,
+    nrows = if (isMobile) 4 else 2,
+    margin = if (isMobile) rep(1, 4) else rep(0.07, 4),
+    heights = if (isMobile) rep(0.25, 4) else rep(0.5, 2)
   ) %>%
     plotly::config(displayModeBar = FALSE)
 
@@ -196,9 +199,10 @@ names(hypoD3_vec) <- paste("D3_inact =", hypoD3_vec)
 #'
 #' @param sliderVal Shiny slider input related to the current disease severity.
 #' See \link{plotBox}.
+#' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
 #' @export
-make_plot_hypoD3 <- function(sliderVal) {
+make_plot_hypoD3 <- function(sliderVal, isMobile) {
 
   # define x and y ranges
   xvar <- list(
@@ -357,9 +361,15 @@ make_plot_hypoD3 <- function(sliderVal) {
 
   # gather all subplots
   plot_hypoD3 <- plotly::subplot(
-    plot_CaP_hypoD3, plot_hormones_hypoD3, plot_Ca_fluxes_hypoD3,
-    plot_PO4_fluxes_hypoD3, titleX = TRUE, titleY = TRUE,
-    nrows = 2, margin = 0.07, heights = c(0.5, 0.5)
+    plot_CaP_hypoD3,
+    plot_hormones_hypoD3,
+    plot_Ca_fluxes_hypoD3,
+    plot_PO4_fluxes_hypoD3,
+    titleX = TRUE,
+    titleY = TRUE,
+    nrows = if (isMobile) 4 else 2,
+    margin = if (isMobile) rep(1, 4) else rep(0.07, 4),
+    heights = if (isMobile) rep(0.25, 4) else rep(0.5, 2)
   ) %>%
     plotly::config(displayModeBar = FALSE)
 
@@ -385,9 +395,10 @@ names(hypopara_vec) <- paste("k_prod_PTHg =",  hypopara_vec)
 #'
 #' @param sliderVal Shiny slider input related to the current disease severity.
 #' See \link{plotBox}.
+#' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
 #' @export
-make_plot_hypopara <- function(sliderVal) {
+make_plot_hypopara <- function(sliderVal, isMobile) {
 
   # define x and y ranges
   xvar <- list(
@@ -546,10 +557,15 @@ make_plot_hypopara <- function(sliderVal) {
 
   # gather all subplots
   plot_hypopara <- plotly::subplot(
-    plot_CaP_hypopara, plot_hormones_hypopara,
-    plot_Ca_fluxes_hypopara, plot_PO4_fluxes_hypopara,
-    titleX = TRUE, titleY = TRUE,
-    nrows = 2, margin = 0.07, heights = c(0.5, 0.5)
+    plot_CaP_hypopara,
+    plot_hormones_hypopara,
+    plot_Ca_fluxes_hypopara,
+    plot_PO4_fluxes_hypopara,
+    titleX = TRUE,
+    titleY = TRUE,
+    nrows = if (isMobile) 4 else 2,
+    margin = if (isMobile) rep(1, 4) else rep(0.07, 4),
+    heights = if (isMobile) rep(0.25, 4) else rep(0.5, 2)
   ) %>%
     plotly::config(displayModeBar = FALSE)
 

@@ -9,10 +9,13 @@ plotBoxUi <- function(id) {
 
   ns <- NS(id)
 
-  boxTag <- shinydashboard::box(
+  boxTag <- shinydashboardPlus::boxPlus(
     width = 12,
-    solidHeader = TRUE,
-    height = "950px",
+    solidHeader = FALSE,
+    status = NULL,
+    collapsible = TRUE,
+    closable = FALSE,
+    #height = "950px",
 
     # show some text to tell the user how to print the graphs
     uiOutput(ns("info")),
@@ -80,8 +83,8 @@ plotBoxUi <- function(id) {
   )
 
   # the box is actually wrapped in a column tag. Need to take the first child
-  boxTag$children[[1]] <- tagAppendAttributes(
-    boxTag$children[[1]],
+  boxTag[[2]]$children[[1]] <- tagAppendAttributes(
+    boxTag[[2]]$children[[1]],
     id = "boxPlot",
     style = "overflow-y: auto;"
   )
@@ -107,9 +110,10 @@ plotBoxUi <- function(id) {
 #' @param session Session object.
 #' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
 #' @param help Help input.
+#' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
 #' @export
-plotBox <- function(input, output, session, diseases, help) {
+plotBox <- function(input, output, session, diseases, help, isMobile) {
 
   ns <- session$ns
 
@@ -178,14 +182,19 @@ plotBox <- function(input, output, session, diseases, help) {
     req(sliderValue)
 
     if(help()) {
-      make_plot_php1(sliderVal = sliderValue)
+      make_plot_php1(sliderVal = sliderValue, isMobile = isMobile())
     } else {
       # extract the current simulation
       current_sim <- extract_running_sim(diseases)
       req(current_sim)
 
       # avoid that plotly returns an error when current_sim is empty
-      eval(parse(text = paste0("make_plot_", current_sim, "(sliderVal = ", sliderValue, ")")))
+      eval(parse(text = paste0(
+        "make_plot_",
+        current_sim,
+        "(sliderVal = ", sliderValue,
+        ", isMobile = ", isMobile(), ")"
+      )))
     }
   })
 
