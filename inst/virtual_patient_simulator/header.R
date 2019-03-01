@@ -12,12 +12,21 @@ header <- dashboardHeaderPlus(
   enable_rightsidebar = TRUE,
   rightSidebarIcon = "gears",
   title = tagList(
-    span(class = "logo-lg", "CaPO4 Teaching Tool"), 
+    span(class = "logo-lg", "CaPO4 Teaching Tool"),
     img(src = "logos/online-learning.svg")
   ),
-  
+
   titleWidth = 300,
-  
+
+  # button to download logs
+  tags$li(
+    class = "dropdown",
+    downloadButton(
+      label = "logs",
+      outputId = "download_logs"
+    )
+  ),
+
   left_menu = tagList(
     #uiOutput("currentTime"),
     uiOutput("user_game_status")#,

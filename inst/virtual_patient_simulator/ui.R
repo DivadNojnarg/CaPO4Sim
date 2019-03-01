@@ -25,5 +25,6 @@ ui <- dashboardPagePlus(
   header = header,
   sidebar = sidebar,
   body = body,
-  rightsidebar = dashboardControlbar
+  rightsidebar = dashboardControlbar,
+  footer = footer
 )

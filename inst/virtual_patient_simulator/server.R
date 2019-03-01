@@ -111,13 +111,10 @@ server <- function(input, output, session) {
   # store the current user folder
   user_folder <- reactive({
     paste0(
-      getwd(), "/www/users_datas/",
-      input$user_name, "-", start_time
-    )
+      users_logs, "/",
+      input$user_name, "-", start_time,
+    "/")
   })
-
-  # all users folders (use for cleaning up empty files)
-  users_folder <- paste0(getwd(), "/www/users_datas/")
 
   #-------------------------------------------------------------------------
   #  Store times, state and parameters in reactive values that can
@@ -713,7 +710,7 @@ server <- function(input, output, session) {
 
   # # give the user the opportunity to load a previous session
   # observeEvent(input$register_user, {
-  #   user_folder <- paste0(getwd(), "/www/users_datas/")
+  #   user_folder <- paste0(getwd(), "/users_datas/")
   #   file_list <- as.vector(list.files(user_folder))
   #
   #   confirmSweetAlert(
@@ -743,7 +740,7 @@ server <- function(input, output, session) {
   # # load the previous session
   # observeEvent(input$load_previous_session, {
   #   if (input$load_previous_session) {
-  #     user_folder <- paste0(getwd(), "/www/users_datas/")
+  #     user_folder <- paste0(getwd(), "/users_datas/")
   #     temp_folder <- paste0(user_folder, input$old_session)
   #     file_list <- list.files(temp_folder)
   #     lapply(1:length(file_list), FUN = function(i) {
@@ -866,42 +863,24 @@ server <- function(input, output, session) {
     )
   })
 
-  # save all datas when the session is closed
-  # avoid to lose data in case of issue
-  session$onSessionEnded(function() {
+  # Give users the opportunity to save data
+  output$download_logs <- downloadHandler(
+    filename = function() paste0(input$user_name, "_logs.rds"),
+    content = function(file) {
+      saveRDS(
+        list(
+          my_events = events$history,
+          my_comments = comments$history,
+          my_answer = c(events$answered, input$disease_name)
+        ),
+        file
+      )
+    }
+  )
 
-    # wrap in observe to provide a reactive context
-    # save all user datas yhen the session is closed
-    observe({
-      # save user events
-      if (nrow(events$history) > 0) {
-        saveRDS(
-          object = events$history,
-          file = paste0(user_folder(), "/user_timeline.rds")
-        )
-      }
-
-      # save user comments
-      if (nrow(comments$history) > 0) {
-        saveRDS(
-          object = comments$history,
-          file = paste0(user_folder(), "/user_comments.rds")
-        )
-      }
-
-      # save user plasma analysis history
-      if (nrow(plasma_analysis$history) > 0) {
-        saveRDS(
-          object = plasma_analysis$history,
-          file = paste0(user_folder(), "/user_plasma_analysis.rds")
-        )
-      }
-    })
-  })
-
-  # clean all the empty folders at the application startup
+  # clean all empty folders when the application starts
   observe({
-    dir_list <- list.dirs(users_folder)
+    dir_list <- list.dirs(users_logs)
     if (length(dir_list) > 1) {
       lapply(2:length(dir_list), FUN = function(i) {
         temp_dir <- dir_list[[i]]
@@ -2170,9 +2149,4 @@ server <- function(input, output, session) {
       file.remove("compiled_core.dll")
     }
   })
-
-  # Custom footer
-  # output$dynamicFooter <- renderFooter({
-  #   generate_dynamicFooter()
-  # })
 }

@@ -46,7 +46,7 @@ source("calc_change.R")
 source("networks.R")
 source("model_utils.R")
 source("generate_slider_events.R")
-source("generate_dynamicFooter.R")
+source("footer.R")
 
 # set the current time zone to Zurich (for shiny server)
 Sys.setenv(TZ = "Europe/Zurich")
@@ -62,6 +62,9 @@ dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))
 #
 #
 #-------------------------------------------------------------------------
-
+users_logs <- "www/users_data"
+if (!dir.exists(users_logs)) {
+  dir.create(users_logs)
+}
 # Bookmarking
 #enableBookmarking(store = "server") # save to the disk
