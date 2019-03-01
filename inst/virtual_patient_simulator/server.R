@@ -489,6 +489,38 @@ server <- function(input, output, session) {
     }
   })
 
+  # wrap the whole UI
+  output$patient_ui <- renderUI({
+    fluidRow(
+      # left colum
+      column(
+        width = if (events$animation_started) 3 else 6,
+        style = 'padding:0px;',
+
+        # profile box
+        uiOutput("patient_info"),
+        # user notebook
+        uiOutput("user_notebook")
+      ),
+
+      # patient operation table
+      column(
+        width = 6,
+        style = 'padding:0px;',
+        uiOutput("network_box")
+      ),
+      # event/results column
+      column(
+        width = 3,
+        style = 'padding:0px;',
+        # results box
+        uiOutput("graphs_box"),
+        # timeline event box
+        uiOutput("recent_events")
+      )
+    )
+  })
+
 
   #-------------------------------------------------------------------------
   #  Javascript alerts: to give instructions to users, handle when the

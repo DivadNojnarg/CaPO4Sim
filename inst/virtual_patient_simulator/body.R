@@ -38,35 +38,7 @@ body <- dashboardBody(
     # Network panel
     tabItem(
       tabName = "main",
-
-      fluidRow(
-        # left colum
-        column(
-          width = 3,
-          style = 'padding:0px;',
-
-          # profile box
-          uiOutput("patient_info"),
-          # user notebook
-          uiOutput("user_notebook")
-        ),
-
-        # patient operation table
-        column(
-          width = 6,
-          style = 'padding:0px;',
-          uiOutput("network_box")
-        ),
-        # event/results column
-        column(
-          width = 3,
-          style = 'padding:0px;',
-          # results box
-          uiOutput("graphs_box"),
-          # timeline event box
-          uiOutput("recent_events")
-        )
-      )
+      uiOutput("patient_ui")
     ),
     # About section Panel
     tabItem(
