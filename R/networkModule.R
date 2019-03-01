@@ -243,7 +243,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       session,
       id = ns("progress"),
       value = counter_nav$diagram,
-      total = 2,
+      total = 6,
       status = if (counter_nav$diagram <= 1) {
         "danger"
       } else if (counter_nav$diagram >= 2 & counter_nav$diagram <= 5) {

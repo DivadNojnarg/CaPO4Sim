@@ -14,7 +14,7 @@ top_dismiss_btn <- tags$button(
 #'
 #' @param src Image path or url.
 #' @param size Image size. 440px by default.
-modal_img <- function(src, size = "440px") {
+modal_img <- function(src, size = "100%") {
   a(
     href = src,
     target = "_blank",
@@ -125,14 +125,14 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Detailed Ca PT reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney1.svg"), size = "260px")
+                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney1.svg"))
               ),
               column(
                 width = 6,
                 align = "center",
                 "Detailed Pi PT reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney2.svg"), size = "260px")
+                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney2.svg"))
               )
             ),
             hr(),
@@ -142,14 +142,14 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Detailed Ca TAL reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney3.svg"), size = "260px")
+                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney3.svg"))
               ),
               column(
                 width = 6,
                 align = "center",
                 "Detailed Ca DCT reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney4.svg"), size = "260px")
+                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney4.svg"))
               )
             )
           )
@@ -169,7 +169,7 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Detailed PTH mechanisms",
                 br(),
-                modal_img(src = "hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg", size = "260px")
+                modal_img(src = "hypoD3_zoom/PTHg/hypoD3_notif_PTHg1.svg")
               )
             )
           } else {
@@ -181,9 +181,9 @@ create_all_modals <- function(diseases, locations) {
                   "Detailed PTH mechanisms",
                   br(),
                   if (j == 2) {
-                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg1.svg", size = "260px")
+                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg1.svg")
                   } else {
-                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg1.svg", size = "260px")
+                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg1.svg")
                   }
                 ),
                 column(
@@ -192,9 +192,9 @@ create_all_modals <- function(diseases, locations) {
                   "Effect of D3 on PTH synthesis",
                   br(),
                   if (j == 2) {
-                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg2.svg", size = "260px")
+                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg2.svg")
                   } else {
-                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg2.svg", size = "260px")
+                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg2.svg")
                   }
                 )
               ),
@@ -206,9 +206,9 @@ create_all_modals <- function(diseases, locations) {
                   "Effect of Pi on PTH synthesis",
                   br(),
                   if (j == 2) {
-                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg3.svg", size = "260px")
+                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg3.svg")
                   } else {
-                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg3.svg", size = "260px")
+                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg3.svg")
                   }
                 ),
                 column(
@@ -217,9 +217,9 @@ create_all_modals <- function(diseases, locations) {
                   "Effect of Ca on PTH secretion",
                   br(),
                   if (j == 2) {
-                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg4.svg", size = "260px")
+                    modal_img(src = "php1_zoom/PTHg/php1_notif_PTHg4.svg")
                   } else {
-                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg4.svg", size = "260px")
+                    modal_img(src = "hypopara_zoom/PTHg/hypopara_notif_PTHg4.svg")
                   }
                 )
               )
