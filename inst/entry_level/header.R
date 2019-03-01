@@ -24,8 +24,7 @@ header <- dashboardHeaderPlus(
   fixed = FALSE,
 
   # user box (see generate_userInfo.R and model_utils.R)
-  left_menu = tagList(userInfoUi(id = "rat")),
-
+  userInfoUi(id = "rat"),
   # help button
   helpCaPO4Ui(id = "help_section")
 )
