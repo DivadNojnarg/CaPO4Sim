@@ -1,9 +1,9 @@
 dashboardControlbar <- bs4DashControlbar(
-  
-  skin = "light", 
-  title = NULL, 
+
+  skin = "light",
+  title = NULL,
   width = 250,
-  
+
   h4("Network options", align = "center"), br(),
   prettyCheckboxGroup(
     inputId = "background_choice",
@@ -83,8 +83,8 @@ dashboardControlbar <- bs4DashControlbar(
       icon("undo") %>%
         actionBttn(
           inputId = "reset_t_now",
-          label = "", 
-          color = "danger", 
+          label = "",
+          color = "danger",
           size = "xs"
         )
     )
