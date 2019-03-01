@@ -5,8 +5,8 @@ account: dgranj
 server: physiol-seafile.uzh.ch
 hostUrl: http://physiol-seafile.uzh.ch:3939/__api__
 appId: 4
-bundleId: 12
+bundleId: 27
 url: http://physiol-seafile.uzh.ch:3939/entry_level/
-when: 1551391629.55234
+when: 1551449291.58704
 asMultiple: FALSE
 asStatic: FALSE
