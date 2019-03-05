@@ -22,6 +22,8 @@ body <- bs4DashBody(
   setZoom(class = "modal-content"),
   #setShake("post"),
 
+  chooseSliderSkin(skin = "Flat", color = "#007cfe"),
+
   bs4TabItems(
     # Network panel
     bs4TabItem(
