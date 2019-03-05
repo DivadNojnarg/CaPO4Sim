@@ -17,18 +17,7 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
 
   # all students names for the session
-  students_names <- c(
-    "Berquez Marine",
-    "Bileck Andrea",
-    "Burgaski Milica",
-    "Chen Zhiyong",
-    "Dalh Sophie",
-    "Ghazi Susan",
-    "Gunter Julia",
-    "Lambert Delphine",
-    "Schnoz Christina",
-    "Stuecheli Simon"
-  )
+  students_names <- paste(rep("Jane Doe", 5), c(1:5))
 
   # load all questions
   questions <- generate_questions()
@@ -1115,7 +1104,7 @@ server <- function(input, output, session) {
     # use invalidate later to simulate a clock
     invalidateLater(1000)
     bs4SidebarUserPanel(
-      text = paste(input$user_name, Sys.time()),
+      text = tags$small(paste(input$user_name, Sys.time())),
       img = "https://image.flaticon.com/icons/svg/305/305983.svg"
     )
   })

@@ -11,24 +11,13 @@ server <- function(input, output, session) {
 
   #-------------------------------------------------------------------------
   #  useful datas: initialization. These data are not in global.R since
-  #  they are some time reloaded by the program. In global.R they would not
-  #  be reloaded, which would corrupt the new session
+  #  they are some time updated by the program for each student. In global.R they would not
+  #  be update, which would corrupt the students sessions
   #
   #-------------------------------------------------------------------------
 
   # all students names for the session
-  students_names <- c(
-    "Berquez Marine",
-    "Bileck Andrea",
-    "Burgaski Milica",
-    "Chen Zhiyong",
-    "Dalh Sophie",
-    "Ghazi Susan",
-    "Gunter Julia",
-    "Lambert Delphine",
-    "Schnoz Christina",
-    "Stuecheli Simon"
-  )
+  students_names <- paste(rep("Jane Doe", 5), c(1:5))
 
   # load all questions
   questions <- generate_questions()
