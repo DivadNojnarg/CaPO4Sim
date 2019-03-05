@@ -5,8 +5,8 @@ account: dgranj
 server: physiol-seafile.uzh.ch
 hostUrl: http://physiol-seafile.uzh.ch:3939/__api__
 appId: 10
-bundleId: 34
+bundleId: 38
 url: http://physiol-seafile.uzh.ch:3939/virtual_patient_v2/
-when: 1551477356.72941
+when: 1551747542.96437
 asMultiple: FALSE
 asStatic: FALSE

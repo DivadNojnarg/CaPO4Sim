@@ -1520,14 +1520,22 @@ server <- function(input, output, session) {
   observeEvent(input$summary, {
     showModal(
       modalDialog(
-        title = tagList(
-          p(style = "text-align: center;", "Overview of your patient"),
-          tags$button(
-            type = "button",
-            class = "btn btn-default pull-right",
-            `data-dismiss` = "modal",
-            icon("close"),
-            "Dismiss"
+        title = fluidRow(
+          column(
+            width = 9,
+            align = "left",
+            p(style = "text-align: center;", "Overview of your patient")
+          ),
+          column(
+            width = 3,
+            align = "right",
+            tags$button(
+              type = "button",
+              class = "btn btn-default float-right",
+              `data-dismiss` = "modal",
+              icon("close"),
+              "Dismiss"
+            )
           )
         ),
         fluidRow(
