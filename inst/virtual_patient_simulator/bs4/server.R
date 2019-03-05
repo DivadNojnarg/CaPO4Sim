@@ -1534,22 +1534,22 @@ server <- function(input, output, session) {
           column(
             width = 12,
             align = "center",
-            do.call(
-              tabsetPanel,
-              c(type = "tabs", # generate the 5 plots
-                lapply(1:length(summary_plot_names), FUN = function(i) {
-                  name <- summary_plot_names[[i]]
-                  tabPanel(
-                    name,
-                    withSpinner(
-                      plotlyOutput(paste0("plot_summary_", name)),
-                      size = 2,
-                      type = 8,
-                      color = "#000000"
-                    )
+            bs4TabSetPanel(
+              id = "tabset1",
+              side = "left", # generate the 5 plots
+              .list = lapply(1:length(summary_plot_names), FUN = function(i) {
+                name <- summary_plot_names[[i]]
+                bs4TabPanel(
+                  tabName = name,
+                  active = if (i == 1) TRUE else FALSE,
+                  withSpinner(
+                    plotlyOutput(paste0("plot_summary_", name)),
+                    size = 2,
+                    type = 8,
+                    color = "#000000"
                   )
-                })
-              )
+                )
+              })
             )
           )
         ),
