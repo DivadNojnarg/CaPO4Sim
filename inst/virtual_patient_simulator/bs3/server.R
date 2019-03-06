@@ -332,60 +332,71 @@ server <- function(input, output, session) {
             },
 
             if (len > 0) {
+
+              items <- lapply(1:len, FUN = function(i){
+                item <- tagAppendAttributes(
+                  timelineItem(
+                    title = name[[i]],
+                    icon = "medkit",
+                    color = "orange",
+                    time = dashboardLabel(
+                      style = "default",
+                      status = "warning",
+                      start_time[[i]]
+                    ),
+                    timelineItemMedia(
+                      src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                        "treatments_img/syringe.svg"
+                      } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
+                        "treatments_img/medicine.svg"
+                      } else if (name[[i]] == "PTX") {
+                        "treatments_img/surgery.svg"
+                      } else if (name[[i]] %in% c("cinacalcet", "furosemide", "bisphosphonate")) {
+                        "treatments_img/pills.svg"
+                      } else if (name[[i]] == "plasma analysis") {
+                        "treatments_img/test-tube.svg"
+                      },
+                      width = "40",
+                      height = "40"
+                    ),
+                    # in case of plasma analysis, display the results next to the logo
+                    if (name[[i]] == "plasma analysis") {
+                      tagList(
+                        paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.4 mM]$$"),
+                        paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.6 mM]$$"),
+                        paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"] * 100) * 1.33, " pM [3-16 pM]$$"),
+                        # scale D3
+                        paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [36-150 pM]$$"),
+                        # scale FGF23
+                        paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
+                      )
+                    },
+                    footer = NULL
+                    #if (!is.null(name[[i]])) {
+                    #  if (name[[i]] != "PTX")
+                    #    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
+                    #      dashboardLabel(status = "danger", rate[[i]])
+                    #    }
+                    #  else NULL
+                    #}
+                  ),
+                  align = "middle"
+                )
+
+                item$children[[2]]$children[[3]] <- tagAppendAttributes(
+                  item$children[[2]]$children[[3]],
+                  style = "overflow-x: auto;"
+                )
+
+                item
+
+              })
+
               timelineBlock(
                 style = "height: 400px;",
                 timelineStart(color = "danger"),
                 br(),
-                lapply(1:len, FUN = function(i){
-                  tagAppendAttributes(
-                    timelineItem(
-                      title = name[[i]],
-                      icon = "medkit",
-                      color = "orange",
-                      time = dashboardLabel(
-                        style = "default",
-                        status = "warning",
-                        start_time[[i]]
-                      ),
-                      timelineItemMedia(
-                        src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
-                          "treatments_img/syringe.svg"
-                        } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
-                          "treatments_img/medicine.svg"
-                        } else if (name[[i]] == "PTX") {
-                          "treatments_img/surgery.svg"
-                        } else if (name[[i]] %in% c("cinacalcet", "furosemide", "bisphosphonate")) {
-                          "treatments_img/pills.svg"
-                        } else if (name[[i]] == "plasma analysis") {
-                          "treatments_img/test-tube.svg"
-                        },
-                        width = "40",
-                        height = "40"
-                      ),
-                      # in case of plasma analysis, display the results next to the logo
-                      if (name[[i]] == "plasma analysis") {
-                        tagList(
-                          paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.4 mM]$$"),
-                          paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.6 mM]$$"),
-                          paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"] * 100) * 1.33, " pM [3-16 pM]$$"),
-                          # scale D3
-                          paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [36-150 pM]$$"),
-                          # scale FGF23
-                          paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
-                        )
-                      },
-                      footer = NULL
-                      #if (!is.null(name[[i]])) {
-                      #  if (name[[i]] != "PTX")
-                      #    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
-                      #      dashboardLabel(status = "danger", rate[[i]])
-                      #    }
-                      #  else NULL
-                      #}
-                    ),
-                    align = "middle"
-                  )
-                }),
+                items,
                 br(),
                 timelineEnd(color = "gray")
               )
