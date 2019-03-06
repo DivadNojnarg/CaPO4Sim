@@ -365,13 +365,13 @@ server <- function(input, output, session) {
                       # in case of plasma analysis, display the results next to the logo
                       if (name[[i]] == "plasma analysis") {
                         tagList(
-                          paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.3 mM]$$"),
-                          paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.5 mM]$$"),
-                          paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"]*100), " pM [1.6-7 pM]$$"),
+                          paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.4 mM]$$"),
+                          paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.6 mM]$$"),
+                          paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"] * 100) * 1.33, " pM [3-16 pM]$$"),
                           # scale D3
-                          paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [50-180 pM]$$"),
+                          paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [36-150 pM]$$"),
                           # scale FGF23
-                          paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 16.8 * 32, 2), " pM [8-50 pg/ml]$$")
+                          paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
                         )
                       },
                       footer = NULL

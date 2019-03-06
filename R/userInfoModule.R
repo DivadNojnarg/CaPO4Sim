@@ -65,7 +65,7 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 6,
-          HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.3 mM)"))
+          HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.21 mM")), "<br/>", "(1.1-1.4 mM)"))
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
@@ -73,7 +73,7 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 6,
-          HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.2-3.5 mM)"))
+          HTML(paste(withMathJax(p("$$[P_i]_p$$ 2.96 mM")), "<br/>", "(2.1-3.4 mM)"))
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
@@ -81,25 +81,11 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 12,
-          HTML(paste(withMathJax(p("$$[PTH]_p$$ 66 ng/l")), "<br/>", "(20-70 ng/l)"))
+          HTML(paste(withMathJax(p("$$[PTH]_p$$ 6.87 pM")), "<br/>", "(3-16 pM)"))
         )
       },
-      br(),
-      shinydashboardPlus::dashboardUserItem(
-        width = 12,
-        shinyWidgets::actionBttn(
-          inputId = ns("cure"),
-          label = "Cure Rat",
-          style = "fill",
-          color = "success"
-        )
-      )
+      br()
     )
-  })
-
-  # reset all parameters (DOES NOT WORK)
-  observeEvent(input$cure, {
-    shinyjs::runjs("$('#disease-run_php1 input[type=checkbox]').prop('checked', false);")
   })
 
 

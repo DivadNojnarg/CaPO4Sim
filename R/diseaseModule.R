@@ -19,7 +19,16 @@ diseaseSelectUi <- function(id) {
     # primary hyperparathyroidism
     lapply(seq_along(diseases$ids), function(i) {
       diseaseCheckBox(inputId = ns(diseases$ids[[i]]), label = diseases$labels[[i]])
-    })
+    }),
+    # reset button
+    shinyWidgets::actionBttn(
+      inputId = ns("cure"),
+      label = "Cure Rat",
+      style = "fill",
+      icon = icon("medkit"),
+      color = "success",
+      block = TRUE,
+    )
   )
 }
 
@@ -81,6 +90,13 @@ diseaseSelect <- function(input, output, session) {
         shinyjs::enable(id = names(diseases)[[i]])
       })
     }
+  })
+
+
+  # reset rat state
+  observeEvent(input$cure, {
+    ids <- c("run_php1", "run_hypopara", "run_hypoD3")
+    map(ids, shinyjs::reset)
   })
 
 

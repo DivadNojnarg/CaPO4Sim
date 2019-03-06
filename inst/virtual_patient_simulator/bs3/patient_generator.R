@@ -125,10 +125,10 @@ patient_generator(
   ),
   doctors_gender = list("male", "female", "male"),
   disease_description = list(
-    "Mr. Vilalobos presented with tiredness and hyporeactivity.
+    "Mr. Doe presented with tiredness and hyporeactivity.
     Over the past few weeks, he had experienced fatigue, excessive thirst,
     muscle aches, loss of appetite, constipation and irritability. <br>
-    Mr. Vilalobos did not have any relevant past clinical history and was
+    Mr. Doe did not have any relevant past clinical history and was
     not taking any medication apart from over the counter supplements.
     Basic physical parameters were normal: BMI (21.5 kg/m2), blood
     pressure (120/70 mmHg) and heart rate (70 bpm).
