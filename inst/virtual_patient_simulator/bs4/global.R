@@ -8,7 +8,7 @@
 library(shiny)
 library(plotly)
 library(deSolve)
-require(visNetwork)
+library(visNetwork)
 library(shinyjs)
 library(shinycssloaders)
 library(shinyjqui)

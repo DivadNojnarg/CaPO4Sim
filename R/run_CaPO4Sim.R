@@ -3,6 +3,7 @@
 #' @description Unleash the virtual patient simulator
 #'
 #' @param context Choose between \code{c("introduction", "virtual-patient")}.
+#' @param lib Which Bootstrap version to use. Either "bs3", default or "bs4"
 #'
 #' @export
 #'
@@ -10,9 +11,9 @@
 #'
 #' if (interactive()) {
 #'  run_CaPO4Sim(context = "introduction")
-#'  run_CaPO4Sim(context = "virtual-patient")
+#'  run_CaPO4Sim(context = "virtual-patient", lib = "bs4")
 #' }
-run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
+run_CaPO4Sim <- function(context = c("introduction", "virtual-patient"), lib = "bs3") {
 
   context <- match.arg(context)
 
@@ -52,6 +53,10 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
   if (context == "introduction") {
     runApp(appDir = system.file("entry_level", package = 'CaPO4Sim', mustWork = TRUE))
   } else {
-    runApp(appDir = system.file("virtual_patient_simulator", package = 'CaPO4Sim', mustWork = TRUE))
+    if (lib == "bs3") {
+      runApp(appDir = system.file("virtual_patient_simulator/bs3", package = 'CaPO4Sim', mustWork = TRUE))
+    } else {
+      runApp(appDir = system.file("virtual_patient_simulator/bs4", package = 'CaPO4Sim', mustWork = TRUE))
+    }
   }
 }

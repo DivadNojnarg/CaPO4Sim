@@ -3,88 +3,68 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
 
->Repository of NCCR project containing shiny apps of Calcium Phosphate homeostasis
+> Repository of NCCR project containing shiny apps of Calcium Phosphate homeostasis
 
-### **Staff** ###
-+ *Project manager*: [Dr. Diane de Zélicourt and Prof. Vartan Kurtcuoglu](http://interfacegroup.ch/people/)
+## Installation
+
+As this package is not currently on CRAN, install it via devtools:
+
+```r
+devtools::install_github("DivadNojnarg/CaPO4Sim")
+```
+
+## Access Apps
+
+There are two ways to run these apps:
+
+- access the [Apps.Physiol](http://physiol-seafile.uzh.ch) RStudio Connect server and selected the relevant app
+- from the package (see below)
+
+```r
+library(CaPO4Sim)
+# entry level app
+run_CaPO4Sim(context = "introduction")
+# virtual patient Bootstrap 3
+run_CaPO4Sim(context = "virtual-patient")
+# virtual patient Bootstrap 4
+run_CaPO4Sim(context = "virtual-patient", lib = "bs4")
+```
+
+Note that for the patient simulator, you need to install a compiler: either [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for windows or clang for [Mac/Linux](https://cran.r-project.org/bin/macosx/tools/). If you don't want,
+you can still access these apps online.
+
+The Bootstrap 4 version is not officialy release but can be accessed [here](http://physiol-seafile.uzh.ch:3939/virtual_patient_v2/).
+
+## Demonstration
+
+### Entry Level Application
+
+![](https://community.rstudio.com/uploads/default/original/2X/b/bd5306bab9eb7561da943c59d2693639dc719168.gif)
+
+### Virtual Patient Simulator
+
+![](https://community.rstudio.com/uploads/default/original/2X/e/eb1013fd09ccf10cbe13da3f0168eebfcb0eba75.gif)
+
+## **Contacts** 
+
+*david.granjon_at_uzh.ch*
+
+## **Staff** 
++ *Project manager*: [Dr. Diane de Zélicourt, Prof. Vartan Kurtcuoglu and Dr. David Granjon](http://interfacegroup.ch/people/)
 + *Experts in Physiology*: 
   - [Prof. François Verrey](https://www.physiol.uzh.ch/en/research/institutegroups/EpithelialTransports/TeamMembers/FVerrey.html),
   - [Prof. Olivier Bonny](https://www.unil.ch/dpt/fr/home/menuinst/recherche/groupe-bonny.html),
   - [Prof. Bernard Rossier](https://hset.org/organization/team/),
   - [Prof. Carsten Wagner](https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html)
-+ *Graphic designer*: [Tara von Grebel](https://www.uzh.ch/id/cl/iframe/org/index.php?id=tg)
++ *Graphic designer*: [Tara von Grebel and Dr. David Granjon](https://www.uzh.ch/id/cl/iframe/org/index.php?id=tg)
 + *Animation*: [Janine Meyer](https://www.uzh.ch/id/cl/iframe/org/index.php?id=jnm)
 + *Model developer*: [Dr. David Granjon](https://divadnojnarg.github.io)
 + *Web/R developer*: Dr. David Granjon
 + *Server management*: Dr. David Granjon
-+ *Server expert*: [Dr. Sergio Maffioletti](https://www.id.uzh.ch/en/scienceit/about/team.html)
-+ *Consultants*: [Dr. Nathalie Debard](https://hset.org/organization/team/)
 
-### **Aknowledgments** ###
+## Acknowledgments
+I thank RStudio for providing us with RStudio Connect licences. All illustration backgrounds were designed by Tara Von Grebel and animations were produced by Janine Meyer, both of the Multimedia and eLearning-Services, University of Zurich.
 
-![Figure 1-1](man/figures/about_us.jpg)
-
-
-I am also very grateful to the [Shiny](http://shiny.rstudio.com) developers 
-and [RStudio](https://www.rstudio.com) team, who provide a lot of useful softwares
-and packages. 
-
-I finally thanks: Dean Attali ([shinyjs](https://deanattali.com/shinyjs/)), 
-Karline Soetaert and Thomas Petzoldt ([deSolve](http://desolve.r-forge.r-project.org)),
-Carson Sievert ([plotly](https://plot.ly/r/)), 
-the datastorm team ([visNetwork](http://datastorm-open.github.io/visNetwork/)),
-the dream R team, especially Victor Perrier ([shinyWidgets](https://dreamrs.github.io/shinyWidgets/index.html)),
-Hadley Wickham and the Tidyverse team ([purrr and stringr](https://www.tidyverse.org/packages/)),
-Eric Bailey ([shinyMenus and shinyBS](https://github.com/ebailey78)),
-Andrew Sali ([shinycssloaders](https://github.com/andrewsali/shinycssloaders)),
-Yang Tang ([shinyjqui](https://cran.r-project.org/web/packages/shinyjqui/vignettes/introduction.html)),
-Ian Lyttle ([bsplus](http://ijlyttle.github.io/bsplus/)),
-Kent Russell ([sweetalertR](http://timelyportfolio.github.io/buildingwidgets/week25/sweetalert_examples.html)),
-Carl Ganz and Afshin Mehrabani ([rintrojs](https://carlganz.github.io/rintrojs/)),
-Andy Merlino ([shinyFeedback](https://cran.r-project.org/web/packages/shinyFeedback/vignettes/shinyFeedback-intro.html))
-
-### **Contacts** ###
-
-*david.granjon_at_uzh.ch*
-
-# **To do** list
-
-## General
-
-- set a load balancer (Ready to be done).
-- <del>set authentication</del> (DONE).
-- <del>use a compiled model instead of only deSolve core<del> (DONE).
-- <del>write "about" section for the staff</del> (DONE).
-- <del>update the main website</del> (DONE).
-- <del>refine video tutorials</del> (DONE).
-- <del>make animations on visnetwork (blinking,...)</del> (DONE).
-
-
-## Global App
-
-- improve the navigation between detailed zoom in the main app
-- <del>find another place to put the active slider(s), maybe in the navbar
-so that they are always visible</del> (DONE)
-- <del>table of modified parameters to remind the user what is changed or not.</del> (DONE)
-- the size of the box should scale each screen (and file the whole half page, 
-which is not the case now)
-- <del>decrease navbar height</del> (DONE)
-- <del>improve help navigation</del> (DONE)
-- <del>adjust the human background</del> (DONE)
-
-## Case studies App
-
-- check plot scaling when screen size is reduced
-- the size of the box should scale each screen (and file the whole half page, 
-which is not the case now)
-- <del>adjust the human background</del> (DONE)
-- <del>slider cursor on 1 by default for each simulation (need to set a reset)</del> (DONE)
-- <del>find a way to better user graphs</del> (DONE)
-- <del>include detailed zoom?</del> (DONE)
-- <del>improve help navigation</del> (DONE)
-- change title "steady-state" and "dynamics" simulations (too computational)
-- use "explanations"" instead of "notifications"
-
-## Treatments studies App
-- <del>update the core to compiled code</del>
-- allow simultaneous treatments
+![](https://community.rstudio.com/uploads/default/original/2X/1/16568320e6b8079b21eae4fc61d26b7f03dcd56e.png) 
+![](https://community.rstudio.com/uploads/default/original/2X/b/b663036fed740eb1543e1d04c7bcc74b0da821eb.png) 
+![](https://community.rstudio.com/uploads/default/original/2X/3/3ad594aa86a0e5a1b5ef038b453eb8fdee4b48f2.png) 

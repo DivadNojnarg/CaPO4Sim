@@ -4,10 +4,13 @@
 \alias{run_CaPO4Sim}
 \title{Launch the virtual patient simulator}
 \usage{
-run_CaPO4Sim(context = c("introduction", "virtual-patient"))
+run_CaPO4Sim(context = c("introduction", "virtual-patient"),
+  lib = "bs3")
 }
 \arguments{
 \item{context}{Choose between \code{c("introduction", "virtual-patient")}.}
+
+\item{lib}{Which Bootstrap version to use. Either "bs3", default or "bs4"}
 }
 \description{
 Unleash the virtual patient simulator
@@ -16,6 +19,6 @@ Unleash the virtual patient simulator
 
 if (interactive()) {
  run_CaPO4Sim(context = "introduction")
- run_CaPO4Sim(context = "virtual-patient")
+ run_CaPO4Sim(context = "virtual-patient", lib = "bs4")
 }
 }

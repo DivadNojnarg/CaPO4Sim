@@ -96,7 +96,7 @@ diseaseSelect <- function(input, output, session) {
   # reset rat state
   observeEvent(input$cure, {
     ids <- c("run_php1", "run_hypopara", "run_hypoD3")
-    map(ids, shinyjs::reset)
+    purrr::map(ids, shinyjs::reset)
   })
 
 
