@@ -12,7 +12,12 @@
 # |
 # *------------------------------------------------------------------
 
-left_footer = fluidRow(
+interface_logo <- "logos/interface.jpeg"
+uzh_logo <- "logos/uzh.svg"
+unil_logo <- "logos/unil.svg"
+nccr_logo <- "logos/nccr.svg"
+
+left_footer <- fluidRow(
   column(
     width = 3,
     align = "center",
@@ -20,7 +25,7 @@ left_footer = fluidRow(
     a(
       href = "http://interfacegroup.ch/people/",
       target = "_blank",
-      img(src = "logos/interface_logo.jpeg", height = "30px")
+      img(src = interface_logo, height = "30px")
     )
   ),
   column(
@@ -45,18 +50,18 @@ left_footer = fluidRow(
     a(
       href = "http://www.nccr-kidney.ch",
       target = "_blank",
-      img(src = "logos/nccr_logo.png", height = "50px")
+      img(src = nccr_logo, height = "50px")
     ),
     a(
       href = "http://www.uzh.ch/de.html",
       target = "_blank",
-      img(src = "logos/uzh_logo.png", height = "30px")
+      img(src = uzh_logo, height = "30px")
     ),
     "and",
     a(
       href = "https://www.unil.ch/fbm/fr/home.html",
       target = "_blank",
-      img(src = "logos/unil_logo.png", height = "55px")
+      img(src = unil_logo, height = "55px")
     )
   )
 )

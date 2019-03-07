@@ -8,7 +8,7 @@ colfuncPO4 <- colorRampPalette(c("darkred", "pink", "yellow"))(20)
 # .... #
 
 # load path to data
-path_to_php1 <- system.file("extdata", "php1.csv", package = "CaPO4Sim")
+path_to_php1 <- system.file("data", "php1.csv", package = "CaPO4Sim")
 php1_table <- read.csv(path_to_php1)
 # create the sequence of PTH production rate
 php1_vec <- 4.192 * seq(1, 300,by = 10)
@@ -186,7 +186,7 @@ make_plot_php1 <- function(sliderVal, isMobile) {
 # .......#
 
 # load path to data
-path_to_hypoD3 <- system.file("extdata", "hypoD3.csv", package = "CaPO4Sim")
+path_to_hypoD3 <- system.file("data", "hypoD3.csv", package = "CaPO4Sim")
 hypoD3_table <- read.csv(path_to_hypoD3)
 # create the sequence of D3 inact and reverse the vector
 hypoD3_vec <- rev(2.5e-005 * seq(0, 1, by = 0.01))
@@ -383,7 +383,7 @@ make_plot_hypoD3 <- function(sliderVal, isMobile) {
 # ........ #
 
 # path to data
-path_to_hypopara <- system.file("extdata", "hypopara.csv", package = "CaPO4Sim")
+path_to_hypopara <- system.file("data", "hypopara.csv", package = "CaPO4Sim")
 hypopara_table <- read.csv(path_to_hypopara)
 hypopara_vec <- rev(4.192 * seq(0, 1, by = 0.01)) # create the sequence of PTH production rate
 names(hypopara_vec) <- paste("k_prod_PTHg =",  hypopara_vec)
