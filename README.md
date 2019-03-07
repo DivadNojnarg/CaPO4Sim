@@ -24,16 +24,14 @@ There are two ways to run these apps:
 library(CaPO4Sim)
 # entry level app
 run_CaPO4Sim(context = "introduction")
-# virtual patient Bootstrap 3
-run_CaPO4Sim(context = "virtual-patient")
 # virtual patient Bootstrap 4
-run_CaPO4Sim(context = "virtual-patient", lib = "bs4")
+run_CaPO4Sim(context = "virtual-patient")
 ```
 
 Note that for the patient simulator, you need to install a compiler: either [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for windows or clang for [Mac/Linux](https://cran.r-project.org/bin/macosx/tools/). If you don't want,
 you can still access these apps online.
 
-The Bootstrap 4 version is not officialy release but can be accessed [here](http://physiol-seafile.uzh.ch:3939/virtual_patient_v2/).
+The Bootstrap 3 version will not be updated anymore but can be accessed [here](http://physiol-seafile.uzh.ch:3939/virtual_patient/).
 
 ## Demonstration
 

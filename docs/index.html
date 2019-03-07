@@ -61,7 +61,6 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-
 <div id="capo4sim-the-virtual-physiology-simulator" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#capo4sim-the-virtual-physiology-simulator" class="anchor"></a>CaPO4Sim, the virtual physiology simulator</h1></div>
@@ -69,13 +68,55 @@
 <blockquote>
 <p>Repository of NCCR project containing shiny apps of Calcium Phosphate homeostasis</p>
 </blockquote>
-<div id="staff" class="section level3">
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>As this package is not currently on CRAN, install it via devtools:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"DivadNojnarg/CaPO4Sim"</span>)</a></code></pre></div>
+</div>
+<div id="access-apps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#access-apps" class="anchor"></a>Access Apps</h2>
+<p>There are two ways to run these apps:</p>
+<ul>
+<li>access the <a href="http://physiol-seafile.uzh.ch">Apps.Physiol</a> RStudio Connect server and selected the relevant app</li>
+<li>from the package (see below)</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(CaPO4Sim)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># entry level app</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span>(<span class="dt">context =</span> <span class="st">"introduction"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># virtual patient Bootstrap 4</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span>(<span class="dt">context =</span> <span class="st">"virtual-patient"</span>)</a></code></pre></div>
+<p>Note that for the patient simulator, you need to install a compiler: either <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> for windows or clang for <a href="https://cran.r-project.org/bin/macosx/tools/">Mac/Linux</a>. If you don’t want, you can still access these apps online.</p>
+<p>The Bootstrap 3 version will not be updated anymore but can be accessed <a href="http://physiol-seafile.uzh.ch:3939/virtual_patient/">here</a>.</p>
+</div>
+<div id="demonstration" class="section level2">
+<h2 class="hasAnchor">
+<a href="#demonstration" class="anchor"></a>Demonstration</h2>
+<div id="entry-level-application" class="section level3">
 <h3 class="hasAnchor">
+<a href="#entry-level-application" class="anchor"></a>Entry Level Application</h3>
+<p><img src="https://community.rstudio.com/uploads/default/original/2X/b/bd5306bab9eb7561da943c59d2693639dc719168.gif"></p>
+</div>
+<div id="virtual-patient-simulator" class="section level3">
+<h3 class="hasAnchor">
+<a href="#virtual-patient-simulator" class="anchor"></a>Virtual Patient Simulator</h3>
+<p><img src="https://community.rstudio.com/uploads/default/original/2X/e/eb1013fd09ccf10cbe13da3f0168eebfcb0eba75.gif"></p>
+</div>
+</div>
+<div id="contacts" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contacts" class="anchor"></a><strong>Contacts</strong>
+</h2>
+<p><em>david.granjon_at_uzh.ch</em></p>
+</div>
+<div id="staff" class="section level2">
+<h2 class="hasAnchor">
 <a href="#staff" class="anchor"></a><strong>Staff</strong>
-</h3>
+</h2>
 <ul>
 <li>
-<em>Project manager</em>: <a href="http://interfacegroup.ch/people/">Dr. Diane de Zélicourt and Prof. Vartan Kurtcuoglu</a>
+<em>Project manager</em>: <a href="http://interfacegroup.ch/people/">Dr. Diane de Zélicourt, Prof. Vartan Kurtcuoglu and Dr. David Granjon</a>
 </li>
 <li>
 <em>Experts in Physiology</em>:
@@ -90,7 +131,7 @@
 </ul>
 </li>
 <li>
-<em>Graphic designer</em>: <a href="https://www.uzh.ch/id/cl/iframe/org/index.php?id=tg">Tara von Grebel</a>
+<em>Graphic designer</em>: <a href="https://www.uzh.ch/id/cl/iframe/org/index.php?id=tg">Tara von Grebel and Dr. David Granjon</a>
 </li>
 <li>
 <em>Animation</em>: <a href="https://www.uzh.ch/id/cl/iframe/org/index.php?id=jnm">Janine Meyer</a>
@@ -102,115 +143,15 @@
 <em>Web/R developer</em>: Dr. David Granjon</li>
 <li>
 <em>Server management</em>: Dr. David Granjon</li>
-<li>
-<em>Server expert</em>: <a href="https://www.id.uzh.ch/en/scienceit/about/team.html">Dr. Sergio Maffioletti</a>
-</li>
-<li>
-<em>Consultants</em>: <a href="https://hset.org/organization/team/">Dr. Nathalie Debard</a>
-</li>
 </ul>
 </div>
-<div id="aknowledgments" class="section level3">
-<h3 class="hasAnchor">
-<a href="#aknowledgments" class="anchor"></a><strong>Aknowledgments</strong>
-</h3>
-<p><img src="reference/figures/about_us.jpg" alt="Figure 1-1"></p>
-<p>I am also very grateful to the <a href="http://shiny.rstudio.com">Shiny</a> developers and <a href="https://www.rstudio.com">RStudio</a> team, who provide a lot of useful softwares and packages.</p>
-<p>I finally thanks: Dean Attali (<a href="https://deanattali.com/shinyjs/">shinyjs</a>), Karline Soetaert and Thomas Petzoldt (<a href="http://desolve.r-forge.r-project.org">deSolve</a>), Carson Sievert (<a href="https://plot.ly/r/">plotly</a>), the datastorm team (<a href="http://datastorm-open.github.io/visNetwork/">visNetwork</a>), the dream R team, especially Victor Perrier (<a href="https://dreamrs.github.io/shinyWidgets/index.html">shinyWidgets</a>), Hadley Wickham and the Tidyverse team (<a href="https://www.tidyverse.org/packages/">purrr and stringr</a>), Eric Bailey (<a href="https://github.com/ebailey78">shinyMenus and shinyBS</a>), Andrew Sali (<a href="https://github.com/andrewsali/shinycssloaders">shinycssloaders</a>), Yang Tang (<a href="https://cran.r-project.org/web/packages/shinyjqui/vignettes/introduction.html">shinyjqui</a>), Ian Lyttle (<a href="http://ijlyttle.github.io/bsplus/">bsplus</a>), Kent Russell (<a href="http://timelyportfolio.github.io/buildingwidgets/week25/sweetalert_examples.html">sweetalertR</a>), Carl Ganz and Afshin Mehrabani (<a href="https://carlganz.github.io/rintrojs/">rintrojs</a>), Andy Merlino (<a href="https://cran.r-project.org/web/packages/shinyFeedback/vignettes/shinyFeedback-intro.html">shinyFeedback</a>)</p>
-</div>
-<div id="contacts" class="section level3">
-<h3 class="hasAnchor">
-<a href="#contacts" class="anchor"></a><strong>Contacts</strong>
-</h3>
-<p><em>david.granjon_at_uzh.ch</em></p>
-</div>
-</div>
-<div id="to-do-list" class="section level1">
-<h1 class="hasAnchor">
-<a href="#to-do-list" class="anchor"></a><strong>To do</strong> list</h1>
-<div id="general" class="section level2">
+<div id="acknowledgments" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
-<ul>
-<li>set a load balancer (Ready to be done).</li>
-<li>
-<del>
-set authentication</del> (DONE).</li>
-<li><del>
-use a compiled model instead of only deSolve core<del> (DONE).</del></del></li>
-<li>
-<del>
-write “about” section for the staff</del> (DONE).</li>
-<li>
-<del>
-update the main website</del> (DONE).</li>
-<li>
-<del>
-refine video tutorials</del> (DONE).</li>
-<li>
-<del>
-make animations on visnetwork (blinking,…)</del> (DONE).</li>
-</ul>
-</div>
-<div id="global-app" class="section level2">
-<h2 class="hasAnchor">
-<a href="#global-app" class="anchor"></a>Global App</h2>
-<ul>
-<li>improve the navigation between detailed zoom in the main app</li>
-<li>
-<del>
-find another place to put the active slider(s), maybe in the navbar so that they are always visible</del> (DONE)</li>
-<li>
-<del>
-table of modified parameters to remind the user what is changed or not.</del> (DONE)</li>
-<li>the size of the box should scale each screen (and file the whole half page, which is not the case now)</li>
-<li>
-<del>
-decrease navbar height</del> (DONE)</li>
-<li>
-<del>
-improve help navigation</del> (DONE)</li>
-<li>
-<del>
-adjust the human background</del> (DONE)</li>
-</ul>
-</div>
-<div id="case-studies-app" class="section level2">
-<h2 class="hasAnchor">
-<a href="#case-studies-app" class="anchor"></a>Case studies App</h2>
-<ul>
-<li>check plot scaling when screen size is reduced</li>
-<li>the size of the box should scale each screen (and file the whole half page, which is not the case now)</li>
-<li>
-<del>
-adjust the human background</del> (DONE)</li>
-<li>
-<del>
-slider cursor on 1 by default for each simulation (need to set a reset)</del> (DONE)</li>
-<li>
-<del>
-find a way to better user graphs</del> (DONE)</li>
-<li>
-<del>
-include detailed zoom?</del> (DONE)</li>
-<li>
-<del>
-improve help navigation</del> (DONE)</li>
-<li>change title “steady-state” and “dynamics” simulations (too computational)</li>
-<li>use “explanations”" instead of “notifications”</li>
-</ul>
-</div>
-<div id="treatments-studies-app" class="section level2">
-<h2 class="hasAnchor">
-<a href="#treatments-studies-app" class="anchor"></a>Treatments studies App</h2>
-<ul>
-<li><del>
-update the core to compiled code</del></li>
-<li>allow simultaneous treatments</li>
-</ul>
+<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+<p>I thank RStudio for providing us with RStudio Connect licences. All illustration backgrounds were designed by Tara Von Grebel and animations were produced by Janine Meyer, both of the Multimedia and eLearning-Services, University of Zurich.</p>
+<p><img src="https://community.rstudio.com/uploads/default/original/2X/1/16568320e6b8079b21eae4fc61d26b7f03dcd56e.png"><img src="https://community.rstudio.com/uploads/default/original/2X/b/b663036fed740eb1543e1d04c7bcc74b0da821eb.png"><img src="https://community.rstudio.com/uploads/default/original/2X/3/3ad594aa86a0e5a1b5ef038b453eb8fdee4b48f2.png"></p>
 </div>
 </div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
