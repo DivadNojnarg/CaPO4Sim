@@ -1,14 +1,29 @@
 Package: CaPO4Sim
 Type: Package
-Title: Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis
+Title: A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis
 Version: 0.1.0
 Authors@R: c(
-    person("David", "Granjon", role = c("aut", "cre"), email = "dgranjon@ymail.com"),
-    person(family = "RinteRface", role = "cph")
+    person("David", "Granjon", role = c("aut", "cre", "cph"), email = "dgranjon@ymail.com"),
+    person("Diane", "de Zélicourt", role = "cph"),
+    person("Vartan", "Kurtcuoglu", role = "cph"),
+    person("Olivier", "Bonny", role = "cph"),
+    person("François", "Verrey", role = "cph"),
+    person(family = "University of Lausanne", role = "fnd"),
+    person(family = "University of Zurich", role = "fnd"),
+    person(family = "Kidney NCCR.CH", role = "fnd"),
+    person(family = "The Interface Group", role = "cph", comment = "Hosting Group"),
+    person(family = "RinteRface", role = "cph", comment = "R/HTML Templates")
     )
 Maintainer: David Granjon <dgranjon@ymail.com>
-Description: Access 3 shiny apps to better understand Ca and PO4 homeostasis.
-    These apps are powered by RinteRface <https://rinterface.com>.
+Description: We present two 'Shiny' apps for the teaching and 
+    exploration of Calcium (Ca) and Phosphate (Pi) homeostasis, building upon on a previously published 
+    mathematical model written in C, to ensure efficient computations. The underlying model is accessible
+    here <https://www.ncbi.nlm.nih.gov/pubmed/28747359>.
+    The first application explores the fundamentals of Ca-Pi homeostasis, 
+    while the second provides interactive case studies for in-depth exploration of the topic, 
+    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. 
+    These applications are hosted on RStudio Connect at <http://physiol-seafile.uzh.ch> and 
+    the design is powered by RinteRface <https://rinterface.com>.
 Imports: 
     shiny, 
     htmltools,

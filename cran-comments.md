@@ -1,6 +1,7 @@
 ## Test environments
 * local OS X install, R 3.4.4
 * ubuntu 14.04 (on travis-ci), R 3.4.4
+* RHub check: Windows server, Ubuntu 16.04 and Fedora 
 * win-builder (devel and release)
 
 ## R CMD check results

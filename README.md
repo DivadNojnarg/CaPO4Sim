@@ -1,9 +1,9 @@
-# CaPO4Sim, the virtual physiology simulator
+# CaPO4Sim, the Virtual Physiology Simulator
 [![Travis build status](https://travis-ci.com/DivadNojnarg/CaPO4Sim.svg?token=wk4LByQczpy1WzofyA7q&branch=master)](https://travis-ci.com/DivadNojnarg/CaPO4Sim)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
-
-> Repository of NCCR project containing shiny apps of Calcium Phosphate homeostasis
+This apps were developed in the [Interface Group](https://interfacegroup.ch).
+![](https://lh5.googleusercontent.com/p/AF1QipMbcic6JUV3C8MuraR0BWq7hV-T-I4Y7QuAliz_=w160-h160-k-no)
 
 ## Installation
 
@@ -63,6 +63,15 @@ The Bootstrap 3 version will not be updated anymore but can be accessed [here](h
 ## Acknowledgments
 I thank RStudio for providing us with RStudio Connect licences. All illustration backgrounds were designed by Tara Von Grebel and animations were produced by Janine Meyer, both of the Multimedia and eLearning-Services, University of Zurich.
 
-![](https://community.rstudio.com/uploads/default/original/2X/1/16568320e6b8079b21eae4fc61d26b7f03dcd56e.png) 
-![](https://community.rstudio.com/uploads/default/original/2X/b/b663036fed740eb1543e1d04c7bcc74b0da821eb.png) 
-![](https://community.rstudio.com/uploads/default/original/2X/3/3ad594aa86a0e5a1b5ef038b453eb8fdee4b48f2.png) 
+<div class="row">
+<div class="col-sm-4">
+<img src="man/figures/nccr.svg" height="200px" width="200px"/>
+</div>
+<div class="col-sm-4">
+<img src="man/figures/unil.svg" height="200px" width="200px"/>
+</div>
+<div class="col-sm-4">
+<img src="man/figures/uzh.svg" height="200px" width="200px"/>
+</div>
+</div>
+
