@@ -22,8 +22,7 @@ Description: We present two 'Shiny' apps for the teaching and
     The first application explores the fundamentals of Ca-Pi homeostasis, 
     while the second provides interactive case studies for in-depth exploration of the topic, 
     thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. 
-    These applications are hosted on RStudio Connect at <http://physiol-seafile.uzh.ch> and 
-    the design is powered by RinteRface <https://rinterface.com>.
+    These applications are hosted on 'RStudio Connect' at <http://physiol-seafile.uzh.ch>.
 Imports: 
     shiny, 
     htmltools,
@@ -39,7 +38,7 @@ Imports:
     purrr,
     DT,
     magrittr
-License: GPL-2
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
