@@ -37,7 +37,8 @@ Imports:
     visNetwork,
     purrr,
     DT,
-    magrittr
+    magrittr,
+    utils
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
