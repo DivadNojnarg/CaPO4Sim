@@ -16,7 +16,7 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
 
   context <- match.arg(context)
 
-  common_pkgs <- c(
+  pkgs <- c(
     "shiny",
     "shinyjqui",
     "visNetwork",
