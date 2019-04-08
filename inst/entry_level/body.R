@@ -21,12 +21,9 @@ body <- dashboardBody(
   # Load other JS facilities
   useShinyjs(),
   introjsUI(),
-  useToastr(),
   withMathJax(),
   use_bs_popover(),
   use_bs_tooltip(),
-  useShinyFeedback(),
-  useSweetAlert(),
 
   # shinyEffects
   setShadow(id = "boxPlot"),

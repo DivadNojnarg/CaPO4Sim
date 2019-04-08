@@ -16,11 +16,9 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
 
   context <- match.arg(context)
 
-  pkgs <- c(
+  common_pkgs <- c(
     "shiny",
     "shinyjqui",
-    "shinydashboard",
-    "shinydashboardPlus",
     "visNetwork",
     "plotly",
     "deSolve",
@@ -29,18 +27,14 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
     "shinyWidgets",
     "shinyEffects",
     "bsplus",
-    "sweetalertR",
-    "shinytoastr",
-    "purrr",
-    "rintrojs",
-    "shinyFeedback"
+    "purrr"
   )
 
   # set packages
   pkgs <- switch (
     context,
-    "introduction" = pkgs <- c(pkgs, "magrittr", "DT"),
-    "virtual-patient" = pkgs
+    "introduction" = pkgs <- c(pkgs, "shinydashboard", "shinydashboardPlus", "rintrojs", "magrittr", "DT"),
+    "virtual-patient" = pkgs <- c(pkgs, "stringr", "shinyFeeback", "bs4Dash", "dplyr", "V8")
   )
 
   # handle missing packages

@@ -14,12 +14,14 @@ library(shinycssloaders)
 library(shinyjqui)
 library(bsplus)
 library(purrr)
+library(shinyWidgets)
+library(shinyEffects)
+
 library(stringr)
 library(shinyFeedback)
-library(shinyWidgets)
 library(bs4Dash)
-library(shinyEffects)
 library(dplyr)
+library(V8)
 
 # Load the template components of UI
 source("patient_selector.R")
