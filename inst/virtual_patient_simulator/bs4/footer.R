@@ -47,7 +47,7 @@ left_footer <- fluidRow(
     a(
       href = "https://www.unil.ch/fbm/fr/home.html",
       target = "_blank",
-      img(src = unil_logo, height = "55px")
+      img(src = unil_logo, height = "30px")
     )
   )
 )
