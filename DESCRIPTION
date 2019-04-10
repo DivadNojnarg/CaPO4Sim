@@ -15,8 +15,8 @@ Authors@R: c(
     person(family = "RinteRface", role = "cph", comment = "R/HTML Templates")
     )
 Maintainer: David Granjon <dgranjon@ymail.com>
-Description: We present two 'Shiny' apps for the teaching and 
-    exploration of Calcium (Ca) and Phosphate (Pi) homeostasis, building upon on a previously published 
+Description: This package provides two 'Shiny' apps for the teaching and 
+    exploration of calcium (Ca) and phosphate (Pi) homeostasis, building upon on a previously published 
     mathematical model written in C, to ensure efficient computations. The underlying model is accessible
     here <https://www.ncbi.nlm.nih.gov/pubmed/28747359>.
     The first application explores the fundamentals of Ca-Pi homeostasis, 
