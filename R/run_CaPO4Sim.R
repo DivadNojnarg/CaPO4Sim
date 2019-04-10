@@ -7,7 +7,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' if (interactive()) {
 #'  run_CaPO4Sim(context = "introduction")
 #'  run_CaPO4Sim(context = "virtual-patient")

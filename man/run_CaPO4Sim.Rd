@@ -13,7 +13,6 @@ run_CaPO4Sim(context = c("introduction", "virtual-patient"))
 Unleash the virtual patient simulator
 }
 \examples{
-
 if (interactive()) {
  run_CaPO4Sim(context = "introduction")
  run_CaPO4Sim(context = "virtual-patient")
