@@ -17,6 +17,8 @@ library(rintrojs)
 library(magrittr)
 library(DT)
 
+library(CaPO4Sim)
+
 # 2) Load the template components
 source("help.R")
 source("header.R")
