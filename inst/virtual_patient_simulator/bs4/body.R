@@ -9,6 +9,7 @@ body <- bs4DashBody(
 
   # JS interactions
   useShinyjs(),
+  extendShinyjs(script = "www/js/fullscreen.js"),
   extendShinyjs(script = "www/js/close.js"),
   includeScript(path = "www/js/find-navigator.js"),
   # print feedback for input

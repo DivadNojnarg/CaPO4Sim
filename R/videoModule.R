@@ -41,7 +41,5 @@ videoUi <- function(id, data) {
 #' @param output Shiny Outputs
 #' @param session Session object.
 #'
-#' @importFrom shiny reactive
-#'
 #' @export
 video <- function(input, output, session) {}

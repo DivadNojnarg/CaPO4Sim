@@ -26,5 +26,7 @@ header <- dashboardHeaderPlus(
   # user box (see generate_userInfo.R and model_utils.R)
   userInfoUi(id = "rat"),
   # help button
-  helpCaPO4Ui(id = "help_section")
+  helpCaPO4Ui(id = "help_section"),
+  # full screen option
+  left_menu = tagList(fullScreenUI(id = "fullScreenTrigger"))
 )

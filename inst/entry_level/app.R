@@ -62,6 +62,7 @@ shinyApp(
     # some useful modules
     help <- callModule(module = helpCaPO4, id = "help_section")
     callModule(module = video, id = "CaPO4_movies")
+    callModule(module = fullScreen, id = "fullScreenTrigger")
     callModule(module = skinSelect, id = "skin")
     callModule(module = glossaryCaPO4, id = "lexicus")
     diseases <- callModule(module = diseaseSelect, id = "diseases")

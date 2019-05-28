@@ -16,7 +16,8 @@ navbar <- bs4DashNavbar(
   controlbarIcon = "th",
   leftUi = tagList(
     #uiOutput("currentTime"),
-    uiOutput("user_game_status")#,
+    fullScreenUI(id = "fullScreenTrigger"),
+    uiOutput("user_game_status")
     #uiOutput("current_calcium")
   ),
   rightUi = tagList(

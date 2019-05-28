@@ -9,6 +9,9 @@
 
 server <- function(input, output, session) {
 
+  # enable fullscreen
+  callModule(module = fullScreen, id = "fullScreenTrigger")
+
   #-------------------------------------------------------------------------
   #  useful datas: initialization. These data are not in global.R since
   #  they are some time reloaded by the program. In global.R they would not

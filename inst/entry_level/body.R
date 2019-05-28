@@ -25,6 +25,8 @@ body <- dashboardBody(
   use_bs_popover(),
   use_bs_tooltip(),
 
+  extendShinyjs(script = "www/js/fullscreen.js"),
+
   # shinyEffects
   setShadow(id = "boxPlot"),
   setShadow(id = "boxNetwork"),
