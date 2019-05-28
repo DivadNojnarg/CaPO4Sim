@@ -1,7 +1,7 @@
 Package: CaPO4Sim
 Type: Package
 Title: A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis
-Version: 0.1.0
+Version: 0.2.0.9000
 Authors@R: c(
     person("David", "Granjon", role = c("aut", "cre", "cph"), email = "dgranjon@ymail.com"),
     person("Diane", "de Zélicourt", role = "cph"),

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CaPO4 Nodes Generator — generate_nodes • CaPO4Sim</title>
+<title>Create a fullScreen UI module — fullScreenUI • CaPO4Sim</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="CaPO4 Nodes Generator — generate_nodes" />
+<meta property="og:title" content="Create a fullScreen UI module — fullScreenUI" />
 
-<meta property="og:description" content="Generate nodes for the CaPO4 network" />
+<meta property="og:description" content="Trigger a fullScreen mode. Based on
+https://stackoverflow.com/questions/42371164/how-to-run-r-shiny-app-in-full-sized-window" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,50 +98,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>CaPO4 Nodes Generator</h1>
+    <h1>Create a fullScreen UI module</h1>
     
-    <div class="hidden name"><code>generate_nodes.Rd</code></div>
+    <div class="hidden name"><code>fullScreenUI.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Generate nodes for the CaPO4 network</p>
+    <p>Trigger a fullScreen mode. Based on
+https://stackoverflow.com/questions/42371164/how-to-run-r-shiny-app-in-full-sized-window</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>generate_nodes</span>(<span class='no'>components</span>, <span class='no'>organs</span>, <span class='no'>regulations</span>, <span class='no'>background</span>, <span class='no'>diseases</span>,
-  <span class='no'>organs_nodes_size</span>, <span class='no'>hormones_nodes_size</span>)</pre>
+    <pre class="usage"><span class='fu'>fullScreenUI</span>(<span class='no'>id</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>components</th>
-      <td><p>Shiny input CaPO4 component selector. See <a href='networkOptions.html'>networkOptions</a>.</p></td>
-    </tr>
-    <tr>
-      <th>organs</th>
-      <td><p>Shiny input to toggle organs display. See <a href='networkOptions.html'>networkOptions</a>.</p></td>
-    </tr>
-    <tr>
-      <th>regulations</th>
-      <td><p>Shiny input to toggle hormone display. See <a href='networkOptions.html'>networkOptions</a>.</p></td>
-    </tr>
-    <tr>
-      <th>background</th>
-      <td><p>Shiny input background selector. See <a href='networkOptions.html'>networkOptions</a>.</p></td>
-    </tr>
-    <tr>
-      <th>diseases</th>
-      <td><p>Shiny input disease selector. See <a href='diseaseSelect.html'>diseaseSelect</a>.</p></td>
-    </tr>
-    <tr>
-      <th>organs_nodes_size</th>
-      <td><p>Shiny input for organs node size. See <a href='networkOptions.html'>networkOptions</a>.</p></td>
-    </tr>
-    <tr>
-      <th>hormones_nodes_size</th>
-      <td><p>Shiny input for hormones node size. See <a href='networkOptions.html'>networkOptions</a>..</p></td>
+      <th>id</th>
+      <td><p>module id.</p></td>
     </tr>
     </table>
     
