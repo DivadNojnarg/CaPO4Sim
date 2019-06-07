@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="-170.609 -209.032 736.277 846.073" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <symbol id="PTH" data-name="PTH" viewBox="0 0 90 96.87">
+      <circle class="cls-1" cx="45" cy="51.87" r="45" style="fill: rgb(253, 234, 191);"/>
+      <path class="cls-2" d="M45,36.49s3.37-.15,4.75,2.49C51,41.25,51.68,47.85,54,49.24c.86.51,2,.24,2.79.43,0,0-1.84-15.52.59-25.63S65.3.09,71.05,1.05C76.56,2,74.37,10.91,77.7,19c2,4.93,10.94,18,8.88,30.89s-13.93,24-21.4,23.94c-7.72,0-8.63-8.14-11.73-12.62C51,57.72,45,57.82,45,57.82" style="fill: rgb(251, 220, 212); stroke: rgb(195, 74, 41); stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-3" d="M64.42,39.86a2.46,2.46,0,0,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M69.39,49.67a2.46,2.46,0,0,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M66.93,63.37a2.46,2.46,0,0,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M62,54.59a2.46,2.46,0,0,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M63.8,28.23a2.46,2.46,0,1,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M70.19,21.29a2.46,2.46,0,1,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M76.89,56.47a2.46,2.46,0,0,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M73.66,34a2.46,2.46,0,1,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M79.35,43.81a2.46,2.46,0,1,0,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <ellipse class="cls-4" cx="64.99" cy="25.07" rx="2.94" ry="5.53" style="fill: rgb(253, 226, 168); stroke: rgb(195, 74, 41); stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-2" d="M44.93,36.49s-3.37-.15-4.75,2.49C39,41.25,38.28,47.85,36,49.24c-.86.51-2,.24-2.79.43,0,0,1.84-15.52-.59-25.63S24.65.09,18.91,1.05C13.4,2,15.58,10.91,12.25,19c-2,4.93-10.94,18-8.87,30.89s13.93,24,21.4,23.94c7.71,0,8.62-8.14,11.72-12.62,2.42-3.47,8.43-3.37,8.43-3.37" style="fill: rgb(251, 220, 212); stroke: rgb(195, 74, 41); stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-3" d="M25.54,39.86a2.46,2.46,0,0,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M20.57,49.67a2.46,2.46,0,0,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M23,63.37a2.46,2.46,0,0,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M28,54.59a2.46,2.46,0,1,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M26.15,28.23a2.46,2.46,0,1,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M19.77,21.29a2.46,2.46,0,1,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M13.06,56.47a2.46,2.46,0,1,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M16.3,34a2.46,2.46,0,0,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M10.6,43.81a2.46,2.46,0,1,1,0-4.92" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <ellipse class="cls-4" cx="24.97" cy="25.07" rx="2.94" ry="5.53" style="fill: rgb(253, 226, 168); stroke: rgb(195, 74, 41); stroke-linejoin: round; stroke-width: 2px;"/>
+      <text class="cls-5" transform="translate(27.62 87.2)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 17.8438px 0px;">PTHg</text>
+    </symbol>
+    <symbol id="Intestine" data-name="Intestine" viewBox="0 0 90.56 155.43">
+      <circle class="cls-1" cx="45.56" cy="110.43" r="45" style="fill: rgb(253, 234, 191);"/>
+      <text class="cls-2" transform="translate(3.56 149.23)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 28.1562px 0px;">Intestine</text>
+      <path class="cls-3" d="M21.93,117.61a2.13,2.13,0,0,0,.6,1.7c3,3,13.88,2.76,21.1,2.62a74.6,74.6,0,0,1,11.32.28c13.08,2,16,12,16.1,12.46a4.5,4.5,0,0,1-8.68,2.38c-.14-.43-1.76-4.9-8.75-5.94a71.68,71.68,0,0,0-9.82-.18c-10.29.2-21.95.43-27.64-5.27A11,11,0,0,1,13,117.43a9,9,0,0,1,2.81-6.38c5.14-4.91,16.17-4.64,28.94-4.33,8.65.21,21.73.53,24.55-2.35a.89.89,0,0,0,.28-.77c-2.43-2.1-16-1.26-23.31-.81-14.1.87-26.28,1.63-32.08-3.58A9.43,9.43,0,0,1,11,92.5a8.88,8.88,0,0,1,2.61-6.83c5.46-5.52,18.55-5.08,32.41-4.6,8,.27,17.84.61,20.59-.9,2-1.11,2.64-2.74,2.43-3.49s-2.09-1.63-5.17-1.48l-18.94.85v.06s-12.33.56-22.1-1.59C-1.33,69.22,1.07,51,1.07,51A26.31,26.31,0,0,1,18.46,27.73c8.31-3,11.24-3.05,12.42-6.43S26.3,8.49,26.3,8.49,24.07,4.35,30,1.86c5.65-2.37,7.79.89,7.79.89l5,10a23.76,23.76,0,0,1,14-4.6c10.94,0,18.16,10.52,17.06,25.58-1.15,15.84-14,25.24-32.68,25.08A48.61,48.61,0,0,1,14.63,50.3s-4.48,8.13,7,12.84a59.33,59.33,0,0,0,21.45,4h0l.22,0,20.07-.9c11-.48,13.67,6,14.23,8,1.45,5.15-1.33,10.83-6.76,13.81-4.91,2.7-14.33,2.38-25.23,2a171.2,171.2,0,0,0-17.84,0c-6.31.51-7.7,1.77-7.89,2,0,0,0,0,0,.08a.43.43,0,0,0,.19.41c3,2.69,16.54,1.85,25.5,1.3,13.27-.83,24.72-1.53,30,3.19a8.53,8.53,0,0,1,2.88,6.07,10,10,0,0,1-2.84,7.6c-5.56,5.67-18,5.37-31.2,5C37.72,115.55,23.65,115.21,21.93,117.61Z" style="fill: rgb(227, 236, 193); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-4" d="M21.55,69s1.62-1.27,1.35-5.38" style="fill: none;"/>
+      <path class="cls-4" d="M32.34,71.66S34,70.4,33.69,66.28" style="fill: none;"/>
+      <path class="cls-4" d="M27.51,68.72s.2,4.81-2.15,6.42" style="fill: none;"/>
+      <path class="cls-4" d="M38.21,70.23s.37,4.31-2,5.92" style="fill: none;"/>
+      <ellipse class="cls-5" cx="32.46" cy="5.98" rx="3.15" ry="1.37" transform="translate(-0.27 10.21) rotate(-17.8)" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+    </symbol>
+    <symbol id="Kidney-2" data-name="Kidney" viewBox="0 0 90 112.16">
+      <circle class="cls-1" cx="45" cy="67.15" r="45" style="fill: rgb(253, 234, 191);"/>
+      <path class="cls-2" d="M67.18,43.06c0,29.47-21.82,45.64-38.48,33.38C14.53,66,27.21,52.11,27.21,52.11a15.56,15.56,0,0,1-2.79-5.29,12.87,12.87,0,0,1-.52-2.53c0-.29,0-.6-.06-.92s0-.72,0-1.07a9.59,9.59,0,0,1,.54-2.54,10.44,10.44,0,0,1,3-4.36s-9.28-.25-12.83-10.63C11.56,16.07,16.35.05,35.8,1,56.74,2.11,67.18,28.52,67.18,43.06Z" style="fill: rgb(240, 210, 202); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-3" d="M23.84,43.37c0,.32,0,.63.06.92h-.14A16.11,16.11,0,0,1,18,43.08a14.9,14.9,0,0,1-8.63-9.93,2.3,2.3,0,0,1,4.49-1,10.36,10.36,0,0,0,10.1,7.58,2.63,2.63,0,0,1,.49.07,9.59,9.59,0,0,0-.54,2.54C23.84,42.65,23.83,43,23.84,43.37Z" style="fill: rgb(143, 213, 222); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-4" d="M24.42,46.82l-.27.06-5.56.76a5.5,5.5,0,0,0-4.73,5.42V87.3a2.3,2.3,0,0,1-4.6,0V53.06a10.13,10.13,0,0,1,8.69-10h0l5.55-.77h.34c0,.35,0,.71,0,1.07s0,.63.06.92A12.87,12.87,0,0,0,24.42,46.82Z" style="fill: rgb(245, 171, 150); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <text class="cls-5" transform="translate(22.05 99.77)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 22.7031px 0px;">Kidney</text>
+    </symbol>
+    <symbol id="Urine_2" data-name="Urine 2" viewBox="0 0 90 111.92">
+      <circle class="cls-1" cx="45" cy="66.92" r="45" style="fill: rgb(253, 234, 191);"/>
+      <text class="cls-2" transform="translate(31.79 101.39)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 17.375px 0px;">Urine</text>
+      <path class="cls-3" d="M35,36A16.56,16.56,0,0,1,1.84,36C1.84,22.37,18.4,1,18.4,1S35,22.37,35,36Z" style="fill: rgb(252, 217, 140); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <circle class="cls-4" cx="23.62" cy="39.02" r="4.46" style="fill: rgb(255, 255, 255);"/>
+      <path class="cls-3" d="M59.36,31a7.24,7.24,0,1,1-14.47,0c0-6,7.23-15.31,7.23-15.31S59.36,25.06,59.36,31Z" style="fill: rgb(252, 217, 140); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <circle class="cls-4" cx="54.4" cy="32.33" r="1.95" style="fill: rgb(255, 255, 255);"/>
+      <path class="cls-3" d="M54.09,69a11.15,11.15,0,0,1-22.3,0c0-9.2,11.15-23.59,11.15-23.59S54.09,59.79,54.09,69Z" style="fill: rgb(252, 217, 140); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <circle class="cls-4" cx="46.45" cy="71" r="3.01" style="fill: rgb(255, 255, 255);"/>
+    </symbol>
+    <symbol id="Plasma_2" data-name="Plasma 2" viewBox="0 0 111.73 107.05">
+      <circle class="cls-1" cx="61.66" cy="62.05" r="45" style="fill: rgb(253, 234, 191);"/>
+      <text class="cls-2" transform="translate(36.26 91.29)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 23.5938px 0px;">Plasma</text>
+      <path class="cls-3" d="M42.06,69s24.59-3,43.78-18.67c19.94-16.31,24.89-36,24.89-36S109.81,7.7,101,3.4c-10.12-5-16.48-.67-16.48-.67s-6.44,16-16,23.86c-13.55,11.16-33,12.24-33,12.24Z" style="fill: rgb(244, 170, 149); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <ellipse class="cls-4" cx="38.78" cy="53.86" rx="8.39" ry="15.52" transform="translate(-9.99 8.85) rotate(-11.54)" style="fill: rgb(245, 171, 150); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-5" d="M41.6,65.24a1.14,1.14,0,0,1-.45.21c-.62.13-1.84-.44-3.16-2a20.15,20.15,0,0,1-3.81-8.63A20.57,20.57,0,0,1,34,46.42c.26-1.19.88-3.84,2.37-4.14.63-.13,1.84.44,3.16,2a20.16,20.16,0,0,1,3.81,8.62C44.72,59.46,43.11,64.13,41.6,65.24Z" style="fill: rgb(223, 132, 124); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-6" d="M47,52.19c-1.72-8.4-6.78-14.45-11.32-13.53s-6.83,8.48-5.12,16.88S37.34,70,41.88,69.06,48.71,60.59,47,52.19Zm-5.4,13a1.34,1.34,0,0,1-.45.22c-.62.12-1.84-.45-3.16-2a20.13,20.13,0,0,1-3.81-8.64A20.35,20.35,0,0,1,34,46.43c.25-1.2.88-3.85,2.37-4.16.62-.12,1.84.45,3.16,2a20.14,20.14,0,0,1,3.81,8.63C44.72,59.46,43.11,64.14,41.6,65.24Z" style="fill: rgb(249, 206, 194); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <ellipse class="cls-7" cx="14.9" cy="47.65" rx="4.04" ry="8.24" transform="translate(-33.82 36.73) rotate(-60)" style="fill: rgb(246, 178, 159); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <ellipse class="cls-7" cx="7.53" cy="69.88" rx="8.24" ry="4.04" transform="translate(-40.43 18.5) rotate(-36.87)" style="fill: rgb(246, 178, 159); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <ellipse class="cls-7" cx="32.5" cy="60.97" rx="8.24" ry="4.04" transform="translate(-23.72 20.81) rotate(-26.4)" style="fill: rgb(246, 178, 159); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+    </symbol>
+    <symbol id="Rapid_Bone" data-name="Rapid Bone" viewBox="0 0 93.45 95">
+      <circle class="cls-1" cx="45.01" cy="49.99" r="45" style="fill: rgb(253, 234, 191);"/>
+      <path class="cls-2" d="M92.4,27.13c-1.72,20.5-25.31,8.08-25.31,8.08s-.58-.59-3.45.45L1,58.28Q.89,57.7.77,57.11a39.1,39.1,0,0,1,1.38-20.3l7.94-2.88L46.51,20.71l5.5-2a4.92,4.92,0,0,0,2.36-2.65S55,0,67.92,1.05C79.45,2,78.21,15,78.21,15S93.41,15,92.4,27.13Z" style="fill: rgb(233, 247, 249);"/>
+      <path class="cls-3" d="M81.44,24.85s-5-1.42-3.23-9.85" style="fill: none;"/>
+      <path class="cls-4" d="M47.72,20.36,52,18.72a4.92,4.92,0,0,0,2.36-2.65S55,0,67.92,1.05C79.45,2,78.21,15,78.21,15s15.2,0,14.19,12.13c-1.72,20.5-25.31,8.08-25.31,8.08s-.58-.59-3.45.45L2.37,57.8" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <line class="cls-4" x1="3.26" y1="36.41" x2="8.09" y2="34.65" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-5" d="M81.44,24.85s-5.36-1.78-3.61-10.21" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-miterlimit: 10;"/>
+      <path class="cls-6" d="M43.4,23.22v.14a15.81,15.81,0,0,1-.09,1.69,16.84,16.84,0,0,1-15.25,15.1c-.5.05-1,.07-1.52.07A16.9,16.9,0,0,1,9.89,26a17.77,17.77,0,0,1-.2-2.65v-.14a16.86,16.86,0,1,1,33.71,0Z" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-7" d="M43.4,23.22v.14a15.81,15.81,0,0,1-.09,1.69,16.84,16.84,0,0,1-15.25,15.1l-3.41,0A16.9,16.9,0,0,1,9.89,26L41.05,14.64a16.74,16.74,0,0,1,2.35,8.58Z" style="fill: rgb(221, 242, 245); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-8" d="M43.4,23.22v.14a15.81,15.81,0,0,1-.09,1.69,16.84,16.84,0,0,1-15.25,15.1c-.5.05-1,.07-1.52.07A16.87,16.87,0,0,1,11.06,30L42.72,18.47A16.94,16.94,0,0,1,43.4,23.22Z" style="fill: rgb(153, 217, 225); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-9" d="M43.31,25.05a16.84,16.84,0,0,1-15.25,15.1c-.5.05-1,.07-1.52.07A16.92,16.92,0,0,1,14.8,35.45Z" style="fill: rgb(204, 236, 240); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-10" d="M43.4,23.22v.14a15.81,15.81,0,0,1-.09,1.69,16.84,16.84,0,0,1-15.25,15.1c-.5.05-1,.07-1.52.07A16.9,16.9,0,0,1,9.89,26a17.77,17.77,0,0,1-.2-2.65v-.14a16.86,16.86,0,1,1,33.71,0Z" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+      <text class="cls-11" transform="translate(23.7 65.81)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 21.0781px 0px;">Rapid-<tspan x="4.28" y="15">Bone</tspan></text>
+    </symbol>
+    <symbol id="Feces" data-name="Feces" viewBox="0 0 92.6 101.64">
+      <circle class="cls-1" cx="47.6" cy="56.64" r="45" style="fill: rgb(253, 234, 191);"/>
+      <path class="cls-2" d="M46.17,20.84s1.74-5.95-.5-11.16S37.36,1,37.36,1s1.37,5.21-2.57,8.36C30,13.23,20.25,16.5,16,22.65A16.68,16.68,0,0,0,12.93,33S3.71,34.36,1.58,41.45c-2.29,7.62.95,23,33.21,23.92,30.45.89,37.29-9.51,37.29-17.57,0-11.66-12.64-14.18-12.64-14.18s1.24-5.21-3.72-9.92C51.87,20,46.17,20.84,46.17,20.84Z" style="fill: rgb(224, 161, 144); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-3" d="M59.44,33.62S54,42.3,35.68,42.3C18.82,42.3,12.93,33,12.93,33" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-3" d="M33.77,28.16s9.92-.74,12.4-7.32" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <text class="cls-4" transform="translate(28.52 86.88)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 19.75px 0px;">Feces</text>
+    </symbol>
+    <symbol id="Cells" data-name="Cells" viewBox="0 0 95.55 101.64">
+      <circle class="cls-1" cx="45" cy="56.64" r="45" style="fill: rgb(253, 234, 191);"/>
+      <circle class="cls-2" cx="57.86" cy="37.69" r="36.69" style="fill: rgb(207, 237, 241); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <circle class="cls-3" cx="57.86" cy="37.69" r="31.43" style="fill: rgb(190, 231, 236); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-4" cx="57.86" cy="37.69" r="11.03" style="fill: rgb(249, 207, 195); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M48.25,26.66a14.58,14.58,0,0,0-5,11c0,.41,0,.81.05,1.22" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M60.37,52.1a14.58,14.58,0,0,0,9.39-5.9" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M49.65,20.35a19.18,19.18,0,0,0-11,17.34c0,.21,0,.42,0,.62" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M56.58,56.82c.42,0,.85,0,1.28,0A19.07,19.07,0,0,0,68,54" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M41.75,19.85A24,24,0,0,0,34.51,32" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <polyline class="cls-5" points="44.38 32 47.71 33.4 47.71 33.41" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <line class="cls-5" x1="65.59" y1="50.41" x2="63.59" y2="47.1" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-6" cx="57.86" cy="16.92" r="3.43" style="fill: rgb(224, 234, 187); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-6" cx="49.65" cy="13.5" r="1.42" style="fill: rgb(224, 234, 187); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-5" cx="52.49" cy="61.87" r="1.42" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-7" d="M76.36,49.69h0a4,4,0,0,1-3-4.68l1.26-5.92a3.94,3.94,0,0,1,4.67-3h0a4,4,0,0,1,3,4.68L81,46.65A4,4,0,0,1,76.36,49.69Z" style="fill: rgb(252, 225, 166); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M77.35,40.57s-2.67-.31-3.49,1.91" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M78.2,45.3s2.65.41,3.56-1.78" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-7" d="M37.75,47.57h0a3.94,3.94,0,0,1,5.53-.67l4.77,3.73a4,4,0,0,1,.67,5.54h0a4,4,0,0,1-5.54.67l-4.76-3.73A3.94,3.94,0,0,1,37.75,47.57Z" style="fill: rgb(252, 225, 166); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M45.5,52.47s1.45-2.26-.18-4" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M40.88,51.15s-1.54,2.21,0,4" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-7" d="M77.24,28.56h0a3.94,3.94,0,0,1-5.57-.2l-4.12-4.43a3.94,3.94,0,0,1,.19-5.57h0a4,4,0,0,1,5.58.2L77.44,23A3.94,3.94,0,0,1,77.24,28.56Z" style="fill: rgb(252, 225, 166); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M70.35,22.51s-1.79,2-.44,4" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M74.71,24.54s1.86-1.94.59-3.94" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <text class="cls-8" transform="translate(27.9 92.52)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 16.5625px 0px;">Cells</text>
+    </symbol>
+    <symbol id="Bone" data-name="Bone" viewBox="0 0 111.88 98.68">
+      <circle class="cls-1" cx="62.84" cy="53.68" r="45" style="fill: rgb(253, 234, 191);"/>
+      <path class="cls-2" d="M37.11,58.41a3.2,3.2,0,0,0-.85.78,3.94,3.94,0,0,0-.8,2.63c.12,3-.19,13.31-9.9,13.93-6.56.41-9.11-4.26-10.09-7.59a4.25,4.25,0,0,0-3.83-3.09C7.7,64.89,1.49,63.46,1,56.26-.08,38.28,21.94,46,21.94,46s.58.44,2.94-.83L74.77,18.36a4.28,4.28,0,0,0,1.71-2.6S74.94,1.75,86.32,1C96.43.38,97,11.81,97,11.81s13.18-1.91,13.84,8.71c1.12,18-20.9,10.21-20.9,10.21s-.58-.43-2.94.84Z" style="fill: rgb(233, 247, 249); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-3" d="M101.05,19.93s-4.5-.59-4-8.12" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-miterlimit: 10;"/>
+      <path class="cls-3" d="M10.83,56.84s4.5.59,4.05,8.12" style="fill: none; stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-miterlimit: 10;"/>
+      <text class="cls-4" transform="translate(55.53 70.75)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 16.9062px 0px;">Bone</text>
+    </symbol>
+    <symbol id="Food" data-name="Food" viewBox="0 0 90.92 100.41">
+      <circle class="cls-1" cx="45.92" cy="55.41" r="45" style="fill: rgb(253, 234, 191);"/>
+      <path class="cls-2" d="M76.58,18.75c-3,8.8-6.8,10-9,11.47L1,62.9,22.37,12.37S21.08,7.63,24.2,4.13c5-5.66,15.73-2.8,30.21,2C68.54,10.77,76.58,18.75,76.58,18.75Z" style="fill: rgb(251, 210, 120); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-3" d="M67.53,30.21c-2.25-2.86-.12-13.07,9-11.47A7.67,7.67,0,0,1,81,27.55c-.52,3-1.7,5.49-8.38,9.53L1,73.09V62.9L67.53,30.21" style="fill: rgb(253, 229, 176); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-4" d="M67.54,30.22,54,37,48,40,30.76,48.54s-2.9,0-1.54,8.28c.42,2.58,2.09,11.18-1.91,11.09C24.08,67.84,26.24,54.55,24,54s-3.66,1.94-3.51,6.37,2.84,18.47-2.74,18c-6-.5,1-21-3.45-21C12.24,57.32,1,62.9,1,62.9L17.85,23l4.52-10.68s4-1.56,11.58-.61A54.83,54.83,0,0,1,47.7,15.47C63.79,21.94,67.54,30.22,67.54,30.22Z" style="fill: rgb(248, 196, 182); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <path class="cls-5" d="M54,37,48,40c-9.66,1.65-12.55-8.29-8.86-12.48,4.58-5.19,12.3-3.55,14.5.31A9.37,9.37,0,0,1,54,37Z" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M29.22,22.59C24.92,25.54,20,24,17.85,23l4.52-10.68s4-1.56,11.58-.61C34.58,13.31,35.77,18.07,29.22,22.59Z" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <path class="cls-5" d="M15.36,38a7.05,7.05,0,0,1,9.81-4c6.73,3.17,2,14.81-5.65,12.19C15.94,45,14,41.53,15.36,38Z" style="fill: rgb(255, 255, 255); stroke: rgb(195, 74, 41); stroke-linecap: round; stroke-linejoin: round;"/>
+      <text class="cls-6" transform="translate(31.55 85.66)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 16.8125px 0px;">Food</text>
+    </symbol>
+    <symbol id="Cap" data-name="Cap" viewBox="0 0 45 50.16">
+      <g id="Deleted_Symbol" data-name="Deleted Symbol">
+        <circle class="cls-1" cx="22.5" cy="22.5" r="22.5" style="fill: rgb(250, 218, 209);"/>
+      </g>
+      <circle class="cls-2" cx="19.84" cy="45.67" r="3.99" style="fill: rgb(242, 152, 127); stroke: rgb(213, 90, 81); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-2" cx="5.27" cy="43.59" r="3.99" style="fill: rgb(242, 152, 127); stroke: rgb(213, 90, 81); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-2" cx="13.45" cy="34.45" r="3.99" style="fill: rgb(242, 152, 127); stroke: rgb(213, 90, 81); stroke-linecap: round; stroke-linejoin: round;"/>
+      <text class="cls-3" transform="translate(9.28 25.87)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 13.0156px 0px; fill: rgb(213, 90, 81);">Cap</text>
+    </symbol>
+    <symbol id="FGF23" data-name="FGF23" viewBox="0 0 50 56.27">
+      <g id="g-18" data-name="Deleted Symbol">
+        <circle class="cls-1" cx="25" cy="25" r="25" style="fill: rgb(225, 247, 238);"/>
+      </g>
+      <circle class="cls-2" cx="30.83" cy="51.77" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(74, 109, 80); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-2" cx="16.26" cy="49.7" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(74, 109, 80); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-2" cx="24.44" cy="40.56" r="3.99" style="fill: rgb(182, 211, 145); stroke: rgb(74, 109, 80); stroke-linecap: round; stroke-linejoin: round;"/>
+      <text class="cls-3" transform="translate(3.22 30.7)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 21.3906px 0px; fill: rgb(74, 109, 80);">FGF23</text>
+    </symbol>
+    <symbol id="PO4p" data-name="PO4p" viewBox="-4.568 13.103 49.568 52.54">
+      <g id="g-21" data-name="Deleted Symbol">
+        <circle class="cls-1" cx="22.5" cy="35.85" r="22.5" style="fill: rgb(239, 215, 237);"/>
+      </g>
+      <circle class="cls-2" cx="14.334" cy="60.966" r="3.99" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-2" cx="-0.246" cy="58.896" r="3.99" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round;"/>
+      <circle class="cls-2" cx="7.934" cy="49.746" r="3.99" style="fill: rgb(211, 147, 205); stroke: rgb(169, 97, 147); stroke-linecap: round; stroke-linejoin: round;"/>
+      <text class="cls-3" transform="translate(4.22 41.55)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 18.125px 0px; fill: rgb(169, 97, 147);">PO4p</text>
+    </symbol>
+  </defs>
+  <polygon class="st0" points="369.5,7.4 2.7,214.5 2.7,636.6 369.5,845 728.2,636.6 728.2,214.5 " transform="matrix(1, 0, 0, 1, -170.339701, -213.6062)" style="fill: rgb(242, 242, 242);"/>
+  <path class="st80" d="M705.6,196.2L427.8,35.8L367.5,1l-60.3,34.8L29.4,196.2L0.1,213.1v424.3l29.3,16.9l281.3,162.4l56.9,32.8 l56.9-32.8l281.3-162.4l29.3-16.9V213.1L705.6,196.2z M682.2,635l-3.5,2l-64.4,37.2l-6.1,3.5l-81.6,47.1l-3.5,2l-154,88.9l-1.7,1 l-1.8-1.1l-154.4-89.1l-3.5-2l-81.1-46.8l-6.1-3.5l-65.9-38.1l-3.5-2l-21.8-12.6V519.8v-3.5v-42.8V399v-36.7v-3.5V231l21.8-12.6 l3.5-2l16.7-9.6l6-3.5L207.8,128l3.5-2l154.4-89.1l1.8-1.1h0l1.7,1l154,88.9l3.5,2l107.4,62l66.6,38.4l5,2.9v127.7v3.5v154v3.5 v101.7L682.2,635z" transform="matrix(1, 0, 0, 1, -170.339701, -213.6062)" style="fill: rgb(66, 66, 66);"/>
+  <g id="Layer_2" transform="matrix(1, 0, 0, 1, -170.339701, -213.6062)"/>
+  <text x="291.836" y="475.335" style="white-space: pre; fill: rgb(51, 51, 51); font-size: 24px;" transform="matrix(0.873082, -0.487574, 0.487574, 0.873082, -230.442383, 284.48349)">https://rinterface.com</text>
+  <title>Napo_Icons_170427Background human</title>
+  <title>Napo_Icons_170427Background human</title>
+  <g id="Ebene_13" data-name="Ebene 13" transform="matrix(1, 0, 0, 1, -307.319244, -406.944641)">
+    <path class="cls-2" d="M 640.346 725.209 C 637.863 732.594 638.409 747.338 635.865 750.392 C 633.321 753.446 623.547 766.28 620.605 765.907 C 616.621 765.398 619.526 764.952 618.315 764.629 C 618.315 764.629 615.038 766.41 613.971 766.157 C 610.917 765.398 612.842 763.674 611.682 762.091 C 611.682 762.091 608.628 761.582 608.628 758.516 C 608.628 756.288 611.936 753.439 611.936 753.439 C 611.936 753.439 611.154 751.517 616.008 748.103 C 617.787 746.862 621.356 741.17 621.356 741.17 L 621.597 729.019 L 617.726 720.642 L 608.418 716.825 C 608.418 716.825 605.047 729.391 602.415 734.711 C 600.175 739.235 595.508 739.452 595.005 734.357 C 594.504 729.26 596.469 723.806 597.228 718.11 C 598.47 708.8 598.238 706.652 601.801 697.009 C 605.364 687.365 607.387 683.784 607.387 683.784 C 607.387 683.784 596.707 652.753 591.618 633.421 C 586.527 614.09 582.93 603.421 582.93 585.108 C 582.93 566.795 579.397 529.663 579.397 529.663 C 577.107 549.758 567.948 566.378 566.426 574.968 C 564.813 584.034 569.22 593.79 569.22 606.5 C 569.22 619.211 573.29 625.831 575.835 636.002 C 578.379 646.176 593.125 695.507 590.078 747.893 C 587.384 794.071 578.373 828.781 574.184 845.425 L 511.182 845.425 C 510.859 827.869 510.709 810.566 510.237 801.554 C 509.22 782.231 504.651 745.862 504.651 745.862 L 501.606 723.992 L 496.728 723.992 L 493.68 745.862 C 493.68 745.862 489.099 782.231 488.095 801.554 C 487.622 810.566 487.473 827.869 487.152 845.425 L 424.111 845.425 C 419.922 828.781 410.911 794.071 408.223 747.893 C 405.164 695.507 419.922 646.169 422.46 636.002 C 424.999 625.838 429.075 619.211 429.075 606.5 C 429.075 593.79 433.482 584.034 431.875 574.968 C 430.347 566.408 421.188 549.791 418.898 529.663 C 418.898 529.663 415.335 566.801 415.371 585.108 C 415.41 603.415 411.78 614.102 406.683 633.421 C 401.588 652.741 390.914 683.784 390.914 683.784 C 390.914 683.784 392.943 687.341 396.5 697.009 C 400.057 706.679 399.846 708.8 401.079 718.11 C 401.82 723.793 403.803 729.281 403.296 734.357 C 402.787 739.433 398.12 739.235 395.886 734.711 C 393.254 729.391 389.883 716.825 389.883 716.825 L 380.618 720.642 L 376.716 729.031 L 376.957 741.182 C 376.957 741.182 380.526 746.85 382.314 748.116 C 387.159 751.529 386.378 753.452 386.378 753.452 C 386.378 753.452 389.685 756.301 389.685 758.528 C 389.685 761.594 386.64 762.103 386.64 762.103 C 385.472 763.668 387.396 765.41 384.349 766.169 C 383.3 766.423 380.005 764.641 380.005 764.641 C 378.794 764.964 381.698 765.41 377.714 765.92 C 374.773 766.286 365.005 753.452 362.461 750.404 C 359.916 747.359 360.423 732.606 357.973 725.221 C 356.924 722.063 361.182 699.293 365.768 686.06 C 369.416 675.511 366.524 663.937 365.514 644.617 C 364.502 625.298 366.524 596.304 369.578 586.628 C 372.632 576.954 378.229 562.226 378.229 562.226 C 378.229 558.839 378.019 548.318 377.205 532.729 C 376.393 517.14 381.618 500.514 382.293 497.125 C 382.97 493.736 379.34 448.098 385.304 428.598 C 389.331 415.417 399.547 409.535 409.569 406.655 C 419.724 402.714 429.709 400.889 436.976 397.433 C 446.408 392.933 449.574 390.066 457.213 385.118 C 464.853 380.173 471.948 377.375 471.948 372.888 C 471.985 371.147 472.125 369.409 472.369 367.686 C 472.07 363.653 471.624 359.843 471.356 357.757 C 469.569 353.617 467.229 349.181 465.728 344.285 C 463.928 338.449 464.529 336.799 460.938 336.799 C 457.344 336.799 458.095 327.702 454.645 323.922 C 449.73 318.529 449.468 315.45 450.969 311.857 C 452.528 308.132 456.289 310.734 456.289 310.734 L 454.047 294.597 C 453.763 286.22 456.637 271.946 467.814 258.913 C 483.986 240.033 515.73 241.848 530.493 258.913 C 541.728 271.89 544.544 286.22 544.278 294.548 L 542.024 310.683 C 542.024 310.683 545.792 308.053 547.356 311.808 C 548.858 315.399 548.598 318.477 543.675 323.871 C 540.225 327.65 540.981 336.75 537.39 336.75 C 533.796 336.75 534.398 338.4 532.598 344.233 C 531.09 349.124 528.757 353.543 526.969 357.708 C 526.701 359.798 526.255 363.602 525.957 367.637 C 526.202 369.366 526.345 371.108 526.386 372.857 C 526.386 377.342 533.473 380.148 541.112 385.088 C 548.751 390.029 551.917 392.9 561.344 397.4 C 568.617 400.859 578.604 402.683 588.763 406.622 C 598.778 409.508 609.001 415.392 613.022 428.568 C 618.979 448.073 615.349 493.693 616.032 497.094 C 616.713 500.496 621.927 517.091 621.115 532.698 C 620.301 548.306 620.096 558.806 620.096 562.195 C 620.096 562.195 625.682 576.941 628.748 586.597 C 631.813 596.255 633.83 625.255 632.814 644.586 C 631.795 663.918 628.909 675.486 632.564 686.03 C 637.131 699.281 641.402 722.051 640.346 725.209 Z" style="fill: rgb(255, 255, 255);"/>
+    <title>Napo_Icons_170427PTH Icon</title>
+    <g id="Bild" transform="matrix(0.521554, 0, 0, 0.521554, 475.945221, 372.593048)">
+      <g id="Ebene_8" data-name="Ebene 8">
+        <use id="PTH-3" data-name="PTH" width="90" height="96.87" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#PTH"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Intestine Icon</title>
+    <g id="g-1" transform="matrix(0.45327, 0, 0, 0.45327, 486.113708, 482.573273)">
+      <g id="g-2" data-name="Ebene 8">
+        <use id="Intestine-3" data-name="Intestine" width="90.56" height="155.43" transform="matrix(1, 0, 0, 1, 0.5299999713897705, 10.09000015258789)" xlink:href="#Intestine"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Kideny Icon</title>
+    <g id="g-3" transform="matrix(0.449719, 0, 0, 0.449719, 527.113708, 593.792236)">
+      <g id="g-4" data-name="Ebene 8">
+        <use width="90" height="112.15" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Kidney-2"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Urine Icon</title>
+    <g id="g-5" transform="matrix(0.450775, 0, 0, 0.450775, 478.640198, 699.039246)">
+      <g id="g-6" data-name="Ebene 8">
+        <use id="Urine_2-3" data-name="Urine 2" width="90" height="111.92" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Urine_2"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Plasma Icon </title>
+    <g id="g-7" transform="matrix(0.47143, 0, 0, 0.47143, 458.169067, 565.944214)">
+      <g id="g-8" data-name="Ebene 8">
+        <use id="Plasma_2-3" data-name="Plasma 2" width="111.73" height="107.05" transform="matrix(1, 0, 0, 1, 0.5, 0)" xlink:href="#Plasma_2"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Rapid Bone Icon</title>
+    <g id="g-9" transform="matrix(0.532031, 0, 0, 0.532031, 377.423431, 565.11731)">
+      <g id="Ebene_6" data-name="Ebene 6">
+        <use id="Rapid_Bone-3" data-name="Rapid Bone" width="93.45" height="94.99" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Rapid_Bone"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Feces Icon</title>
+    <title>Napo_Icons_170427Cells Icon </title>
+    <g id="g-10" transform="matrix(0.49682, 0, 0, 0.49682, 429.170624, 630.792358)">
+      <g id="g-11" data-name="Ebene 8">
+        <use id="Cells-3" data-name="Cells" width="95.55" height="101.64" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Cells"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Bone Icon </title>
+    <g id="g-12" transform="matrix(0.511748, 0, 0, 0.511748, 363.320465, 502.661499)">
+      <g id="g-13" data-name="Ebene 8">
+        <use id="Bone-3" data-name="Bone" width="111.88" height="98.68" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Bone"/>
+      </g>
+    </g>
+    <title>Napo_Icons_170427Food Icon</title>
+    <g id="g-14" transform="matrix(0.502993, 0, 0, 0.502993, 477.17569, 300.363342)">
+      <g id="g-15" data-name="Ebene 8">
+        <use id="Food-3" data-name="Food" width="90.92" height="100.41" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Food"/>
+      </g>
+    </g>
+  </g>
+  <title>Napo_Icons_170427Cap Icon </title>
+  <g id="g-16" transform="matrix(1, 0, 0, 1, -63.318871, 154.614258)">
+    <g id="g-17" data-name="Ebene 8">
+      <use id="Cap-3" data-name="Cap" width="45" height="50.16" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#Cap"/>
+    </g>
+  </g>
+  <title>Napo_Icons_170427FGF23 Icon </title>
+  <g id="g-19" transform="matrix(1, 0, 0, 1, 383.379303, 153.085403)">
+    <g id="g-20" data-name="Ebene 8">
+      <use id="FGF23-3" data-name="FGF23" width="50" height="56.27" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#FGF23"/>
+    </g>
+  </g>
+  <title>Napo_Icons_170427D3 Icon </title>
+  <g id="Text_und_Pfeile" data-name="Text und Pfeile" transform="matrix(1, 0, 0, 1, -69.70858, 78.151436)">
+    <circle class="cls-1" cx="29.96" cy="22.5" r="22.5" style="fill: rgb(240, 219, 190);"/>
+    <circle class="cls-2" cx="19.07" cy="38.84" r="3.99" style="fill: rgb(225, 181, 121); stroke: rgb(212, 111, 51); stroke-linecap: round; stroke-linejoin: round;"/>
+    <circle class="cls-2" cx="4.49" cy="36.77" r="3.99" style="fill: rgb(225, 181, 121); stroke: rgb(212, 111, 51); stroke-linecap: round; stroke-linejoin: round;"/>
+    <circle class="cls-2" cx="12.68" cy="27.62" r="3.99" style="fill: rgb(225, 181, 121); stroke: rgb(212, 111, 51); stroke-linecap: round; stroke-linejoin: round;"/>
+    <text class="cls-3" transform="translate(21.02 25.87)" style="white-space: pre; font-family: Arial-BoldMT, Arial; font-size: 14px; font-weight: 700; line-height: 22.4px; perspective-origin: 8.85938px 0px; fill: rgb(212, 111, 51);">D3</text>
+  </g>
+  <title>Napo_Icons_170427PO4p Icon </title>
+  <g id="g-22" transform="matrix(1, 0, 0, 1, 387.067078, 69.485931)">
+    <g id="g-23" data-name="Ebene 8">
+      <use id="PO4p-3" data-name="PO4p" width="45" height="58.35" transform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#PO4p"/>
+    </g>
+  </g>
+  <rect x="64.495" y="365.667" width="244.352" height="95.624" style="fill: rgb(242, 242, 242);"/>
+  <text style="fill: rgb(51, 51, 51); font-size: 73px; white-space: pre;" x="24.566" y="424.8">CaPO4sim</text>
+</svg>

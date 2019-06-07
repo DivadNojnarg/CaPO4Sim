@@ -1,4 +1,4 @@
-# CaPO4Sim, the Virtual Physiology Simulator
+# CaPO4Sim, the Virtual Physiology Simulator <img src="man/figures/CaPO4sim_hex.svg" width=200 align="right" />
 [![Travis build status](https://travis-ci.com/DivadNojnarg/CaPO4Sim.svg?token=wk4LByQczpy1WzofyA7q&branch=master)](https://travis-ci.com/DivadNojnarg/CaPO4Sim)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
