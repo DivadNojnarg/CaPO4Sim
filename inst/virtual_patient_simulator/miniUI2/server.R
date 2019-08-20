@@ -188,8 +188,8 @@ server <- function(input, output, session) {
         lapply(1:len, FUN = function(i){
           f7AccordionItem(
             title = medical_history$doctors[[i]],
-            medical_history$doctors_avatars[[i]],
-            strong(medical_history$pathologies[[i]]),
+            #tag$img(src = medical_history$doctors_avatars[[i]], height = "20px", width = "20px"),
+            strong(medical_history$pathologies[[i]]), br(),
             HTML(paste(medical_history$disease_description[[i]])),
             if (!is.null(medical_history$disease_image[[i]])) {
               tags$img(src = medical_history$disease_image[[i]])
@@ -231,7 +231,7 @@ server <- function(input, output, session) {
           )
         },
         footer = NULL
-          )
+      )
     }
   })
 
@@ -351,7 +351,7 @@ server <- function(input, output, session) {
   # network box
   output$network_box <- renderUI({
     validate(need(
-      expr = input$user_add_comment,
+      expr = isTRUE(events$animation_started),
       message = "Please click on the next button in the first tab"))
 
     if (events$logged) {
