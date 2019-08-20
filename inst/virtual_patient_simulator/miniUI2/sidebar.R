@@ -17,7 +17,6 @@ sidebar <- bs4DashSidebar(
   opacity = 0.8,
 
   # user panel info
-  uiOutput("user_panel"),
 
   # sidebar menu with 2 tabs
   bs4SidebarMenu(

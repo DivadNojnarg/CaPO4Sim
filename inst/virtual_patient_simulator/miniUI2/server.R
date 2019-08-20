@@ -168,60 +168,35 @@ server <- function(input, output, session) {
     medical_history <- patient_datas$medical_history
     len <- length(medical_history$pathologies)
 
-    bs4Card(
-      title = "Past Medical History",
-      footer = NULL,
-      status = "primary",
-      elevation = 4,
-      solidHeader = TRUE,
-      headerBorder = TRUE,
-      gradientColor = NULL,
-      width = 12,
-      height = NULL,
-      collapsible = TRUE,
-      collapsed = FALSE,
-      closable = FALSE,
-      labelStatus = "danger",
-      labelText = len,
-      labelTooltip = NULL,
-      dropdownMenu = NULL,
-      dropdownIcon = "wrench",
-      overflow = FALSE,
+    f7SocialCard(
+      author = patient_datas$name,
+      author_img = patient_datas$picture,
 
-      cardProfile(
-        src = patient_datas$picture,
-        title = patient_datas$name,
-        subtitle = NULL,
-        cardProfileItemList(
-          bordered = FALSE,
-          cardProfileItem(
-            title = "Age",
-            description = patient_datas$age
-          ),
-          cardProfileItem(
-            title = "Height",
-            description = patient_datas$height
-          ),
-          cardProfileItem(
-            title = "Weight",
-            description = patient_datas$weight
-          )
+      f7ListCard(
+        f7ListCardItem(
+          title = HTML(paste("Age:", f7Badge(patient_datas$age, color = "lightblue")))
+        ),
+        f7ListCardItem(
+          title = HTML(paste("Height:", f7Badge(patient_datas$height, label = "pink")))
+        ),
+        f7ListCardItem(
+          title = HTML(paste("Weight:", f7Badge(patient_datas$weight, color = "orange")))
         )
       ),
       br(),
-      lapply(1:len, FUN = function(i){
-        userPost(
-          id = i,
-          collapsed = FALSE,
-          src = medical_history$doctors_avatars[[i]],
-          author = medical_history$doctors[[i]],
-          description = strong(medical_history$pathologies[[i]]),
-          HTML(paste(medical_history$disease_description[[i]])),
-          if (!is.null(medical_history$disease_image[[i]])) {
-            userPostMedia(src = medical_history$disease_image[[i]])
-          }
-        )
-      })
+      f7Accordion(
+        lapply(1:len, FUN = function(i){
+          f7AccordionItem(
+            title = medical_history$doctors[[i]],
+            medical_history$doctors_avatars[[i]],
+            strong(medical_history$pathologies[[i]]),
+            HTML(paste(medical_history$disease_description[[i]])),
+            if (!is.null(medical_history$disease_image[[i]])) {
+              tags$img(src = medical_history$disease_image[[i]])
+            }
+          )
+        })
+      )
     )
   })
 
@@ -231,70 +206,40 @@ server <- function(input, output, session) {
       comments <- comments$history
       len <- nrow(comments)
 
-      bs4SocialCard(
-        closable = FALSE,
-        width = 12,
-        title = paste0(input$user_name, "'s notebook"),
-        subtitle = start_time,
-        src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+      f7SocialCard(
+        author_img = "https://image.flaticon.com/icons/svg/305/305983.svg",
+        author = paste0(input$user_name, "'s notebook."),
+        date = start_time,
         if (events$animation >= 8) {
           tagList(
-            column(
-              width = 12,
-              align = "center",
-              actionBttn(
-                inputId = "diagnosis",
-                size = "lg",
-                label = "Diagnosis",
-                style = "fill",
-                color = "primary",
-                icon = icon("search")
-              )
+            f7Button(
+              inputId = "diagnosis",
+              label = "Diagnosis",
+              color = "blue"
             ),
             br()
           )
         },
         if (events$animation < 8) {
           tagList(
-            textAreaInput(
-              inputId = "user_comment",
-              label = questions[[events$animation + 1]],
-              value = "I enter here all my observations!"
-            ),
-            column(
-              width = 12,
-              align = "center",
-              actionBttn(
-                inputId = "user_add_comment",
-                size = "sm",
-                icon = "Next",
-                style = "fill",
-                color = "success"
-              )
+            questions[[events$animation + 1]],
+            f7Button(
+              inputId = "user_add_comment",
+              label = "Next",
+              color = "green"
             )
           )
         },
-        comments = if (len > 0) {
-          tagList(
-            lapply(1:len, FUN = function(i) {
-              cardComment(
-                src = "https://image.flaticon.com/icons/svg/305/305983.svg",
-                title = questions[[i]],
-                date = comments$date[[i]],
-                comments$description[[i]]
-              )
-            })
-          )
-        } else {
-          NULL
-        },
         footer = NULL
-      )
+          )
     }
   })
 
   # Event to be added in the timeLine
   output$recent_events <- renderUI({
+
+    validate(need(input$current_node_id, "Select one node on the graph!"))
+
     if (events$logged) {
       if (events$animation_started) {
         len <- nrow(events$history)
@@ -304,31 +249,14 @@ server <- function(input, output, session) {
         plasma_values <- plasma_analysis$history
 
         withMathJax(
-          bs4Card(
-            title = "Recent Events",
-            footer = NULL,
-            status = "primary",
-            elevation = 4,
-            solidHeader = TRUE,
-            headerBorder = TRUE,
-            gradientColor = NULL,
-            width = 12,
-            height = NULL,
-            collapsible = TRUE,
-            collapsed = FALSE,
-            closable = FALSE,
-            labelStatus = "danger",
-            labelText = len,
-            labelTooltip = NULL,
-            dropdownMenu = NULL,
-            dropdownIcon = "wrench",
-            overflow = TRUE,
+          f7Card(
+            title = tagList("Recent Events", f7Badge(len, color = "red")),
 
             # treatments input are
             # in the event box
             if (!is.null(events$answered)) {
               tagList(
-                prettyCheckboxGroup(
+                f7checkBoxGroup(
                   inputId = "treatment_selected",
                   label = "Select a new treatment:",
                   choices = c(
@@ -342,10 +270,7 @@ server <- function(input, output, session) {
                     "Cinacalcet" = "cinacalcet",
                     "Bisphosphonate" = "bisphosphonate",
                     "Furosemide" = "furosemide"
-                  ),
-                  thick = TRUE,
-                  inline = TRUE,
-                  animation = "pulse"
+                  )
                 ),
                 uiOutput(outputId = "sliderInject"),
                 hr()
@@ -355,73 +280,43 @@ server <- function(input, output, session) {
             if (len > 0) {
 
               items <- lapply(1:len, FUN = function(i){
-                item <- tagAppendAttributes(
-                  bs4TimelineItem(
-                    title = name[[i]],
-                    icon = "medkit",
-                    status = "orange",
-                    time = bs4Badge(
-                      position = "left",
-                      rounded = FALSE,
-                      status = "warning",
-                      start_time[[i]]
-                    ),
-                    bs4TimelineItemMedia(
-                      src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
-                        "treatments_img/syringe.svg"
-                      } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
-                        "treatments_img/medicine.svg"
-                      } else if (name[[i]] == "PTX") {
-                        "treatments_img/surgery.svg"
-                      } else if (name[[i]] %in% c("cinacalcet", "furosemide", "bisphosphonate")) {
-                        "treatments_img/pills.svg"
-                      } else if (name[[i]] == "plasma analysis") {
-                        "treatments_img/test-tube.svg"
-                      },
-                      width = "40",
-                      height = "40"
-                    ),
-                    # in case of plasma analysis, display the results next to the logo
-                    if (name[[i]] == "plasma analysis") {
-                      tagList(
-                        paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.4 mM]$$"),
-                        paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.6 mM]$$"),
-                        paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"] * 100) * 1.33, " pM [3-16 pM]$$"),
-                        # scale D3
-                        paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [36-150 pM]$$"),
-                        # scale FGF23
-                        paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
-                      )
-                    },
-                    footer = NULL
-                    #if (!is.null(name[[i]])) {
-                    #  if (name[[i]] != "PTX")
-                    #    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
-                    #      dashboardLabel(status = "danger", rate[[i]])
-                    #    }
-                    #  else NULL
-                    #}
+                item_side <- if (i %% 2 == 0) "left" else "right"
+                items <- f7TimelineItem(
+                  title = name[[i]],
+                  card = TRUE,
+                  date = f7Badge(
+                    color = "yellow",
+                    start_time[[i]]
                   ),
-                  align = "middle"
+                  subtitle =  if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                    img(src = "treatments_img/syringe.svg", height = "20px", width = "20px")
+                  } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
+                    img(src = "treatments_img/medicine.svg", height = "20px", width = "20px")
+                  } else if (name[[i]] == "PTX") {
+                    img(src = "treatments_img/surgery.svg", height = "20px", width = "20px")
+                  } else if (name[[i]] %in% c("cinacalcet", "furosemide", "bisphosphonate")) {
+                    img(src = "treatments_img/pills.svg", height = "20px", width = "20px")
+                  } else if (name[[i]] == "plasma analysis") {
+                    img(src = "treatments_img/test-tube.svg", height = "20px", width = "20px")
+                  },
+                  # in case of plasma analysis, display the results next to the logo
+                  if (name[[i]] == "plasma analysis") {
+                    tagList(
+                      paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.4 mM]$$"),
+                      paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.6 mM]$$"),
+                      paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"] * 100) * 1.33, " pM [3-16 pM]$$"),
+                      # scale D3
+                      paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [36-150 pM]$$"),
+                      # scale FGF23
+                      paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
+                    )
+                  },
+                  side = item_side
                 )
-
-                item$children[[2]]$children[[3]] <- tagAppendAttributes(
-                  item$children[[2]]$children[[3]],
-                  style = "overflow-x: auto;"
-                )
-
-                item
-
               })
-
-              bs4Timeline(
-                width = 12,
-                style = "height: 400px;",
-                bs4TimelineStart(status = "danger"),
-                br(),
-                items,
-                br(),
-                bs4TimelineEnd(status = "gray")
+              f7Timeline(
+                sides = TRUE,
+                items
               )
             }
           )
@@ -432,16 +327,12 @@ server <- function(input, output, session) {
 
   # graph box
   output$graphs_box <- renderUI({
+
+    validate(need(input$current_node_id, "Select one node on the graph!"))
+
     if (events$logged) {
       if (events$animation_started) {
-        bs4Card(
-          width = 12,
-          elevation = 4,
-          #title = "Click on the plasma node to display concentrations",
-          solidHeader = TRUE,
-          status = "primary",
-          collapsible = TRUE,
-          closable = FALSE,
+        f7Card(
           withSpinner(
             plotlyOutput(
               "plot_node",
@@ -459,45 +350,33 @@ server <- function(input, output, session) {
 
   # network box
   output$network_box <- renderUI({
+    validate(need(
+      expr = input$user_add_comment,
+      message = "Please click on the next button in the first tab"))
+
     if (events$logged) {
       if (events$animation_started) {
-        cardTag <- bs4Card(
+        f7Card(
           title = tagList(
-            actionBttn(
+            f7Button(
               inputId = "run",
-              size = "lg",
+              size = "large",
               label = "Run",
-              style = "fill",
-              color = "primary",
-              icon = icon("play")
+              color = "blue"
             ),
-            actionBttn(
+            f7Button(
               inputId = "summary",
-              size = "lg",
+              size = "large",
               label = "Summary",
-              style = "fill",
-              color = "royal",
-              icon = icon("tv")
+              color = "purple"
             )
           ),
-          solidHeader = TRUE,
-          collapsible = TRUE,
-          status = "primary",
-          width = 12,
-          closable = FALSE,
-          #enable_sidebar = TRUE,
-          #sidebar_width = 50,
-          #sidebar_background = "#888888",
-          #sidebar_start_open = FALSE,
-          #sidebar_content = tagList(
-          #  getting_started()
-          #),
           div(
             id = "network_cap",
             withSpinner(
               visNetworkOutput(
                 "network_Ca",
-                height = if (input$isMobile) "450px" else "900px"
+                height = "900px"
               ),
               size = 2,
               type = 8,
@@ -506,49 +385,8 @@ server <- function(input, output, session) {
           ),
           footer = NULL
         )
-
-        cardTag$children[[1]]$children[[2]] <- tagAppendAttributes(
-          cardTag$children[[1]]$children[[2]],
-          class = "p-0"
-        )
-
-        cardTag
-
       }
     }
-  })
-
-
-  # wrap the whole UI
-  output$patient_ui <- renderUI({
-    fluidRow(
-      # left colum
-      column(
-        width = if (events$animation_started) 3 else 6,
-        style = 'padding:0px;',
-
-        # profile box
-        uiOutput("patient_info"),
-        # user notebook
-        uiOutput("user_notebook")
-      ),
-
-      # patient operation table
-      column(
-        width = 6,
-        style = 'padding:0px;',
-        uiOutput("network_box")
-      ),
-      # event/results column
-      column(
-        width = 3,
-        style = 'padding:0px;',
-        # results box
-        uiOutput("graphs_box"),
-        # timeline event box
-        uiOutput("recent_events")
-      )
-    )
   })
 
 
@@ -643,15 +481,10 @@ server <- function(input, output, session) {
             column(
               align = "center",
               width = 12,
-              selectInput(
+              f7Select(
                 inputId = "user_name",
                 label = "Your name:",
-                choices = students_names,
-                selected = NULL,
-                multiple = FALSE,
-                selectize = TRUE,
-                width = NULL,
-                size = NULL
+                choices = students_names
               )
             )
           ),
@@ -799,15 +632,10 @@ server <- function(input, output, session) {
         column(
           align = "center",
           width = 12,
-          selectInput(
+          f7Select(
             inputId = "disease_name",
             label = "",
-            choices = diseases_list,
-            selected = NULL,
-            multiple = FALSE,
-            selectize = TRUE,
-            width = NULL,
-            size = NULL
+            choices = diseases_list
           )
         )
       ),
@@ -888,11 +716,9 @@ server <- function(input, output, session) {
     div(
       style = "margin-top: 7.5px; margin-left: 10px;",
       class = "diagnosis-badge",
-      bs4Badge(
+      f7Badge(
         game_text,
-        status = game_status,
-        rounded = TRUE,
-        position = "left"
+        color = game_status
       )
     )
   })
@@ -1117,10 +943,7 @@ server <- function(input, output, session) {
   output$user_panel <- renderUI({
     # use invalidate later to simulate a clock
     invalidateLater(1000)
-    bs4SidebarUserPanel(
-      text = tags$small(paste(input$user_name, Sys.time())),
-      img = "https://image.flaticon.com/icons/svg/305/305983.svg"
-    )
+    f7Icon("person_round_fill", tags$small(paste(input$user_name, Sys.time())))
   })
 
   #-------------------------------------------------------------------------
@@ -1541,28 +1364,19 @@ server <- function(input, output, session) {
             )
           )
         ),
-        fluidRow(
-          column(
-            width = 12,
-            align = "center",
-            bs4TabSetPanel(
-              id = "tabset1",
-              side = "left", # generate the 5 plots
-              .list = lapply(1:length(summary_plot_names), FUN = function(i) {
-                name <- summary_plot_names[[i]]
-                bs4TabPanel(
-                  tabName = name,
-                  active = if (i == 1) TRUE else FALSE,
-                  withSpinner(
-                    plotlyOutput(paste0("plot_summary_", name)),
-                    size = 2,
-                    type = 8,
-                    color = "#000000"
-                  )
-                )
-              })
+        f7Swiper(
+          id = "tabset1",
+          lapply(1:length(summary_plot_names), FUN = function(i) {
+            name <- summary_plot_names[[i]]
+            f7Slide(
+              withSpinner(
+                plotlyOutput(paste0("plot_summary_", name)),
+                size = 2,
+                type = 8,
+                color = "#000000"
+              )
             )
-          )
+          })
         ),
         size = "m",
         footer = NULL
@@ -1894,85 +1708,6 @@ server <- function(input, output, session) {
       visNetworkProxy("network_Ca") %>%
         visUpdateEdges(edges = edges_Ca)
     }
-  })
-
-
-  # handle the size of organ and hormonal nodes
-  output$size_nodes_organs <- renderUI({
-    req(!is.null(input$isMobile))
-    knobInput(
-      "size_organs",
-      "Organs",
-      min = 50,
-      max = 100,
-      value = if (input$isMobile) 85 else 70,
-      step = 5,
-      displayPrevious = TRUE,
-      fgColor = "#A9A9A9",
-      inputColor = "#A9A9A9",
-      skin = "tron",
-      width = if (input$isMobile) "75px" else "100px",
-      height = if (input$isMobile) "75px" else "100px"
-    )
-  })
-
-  output$size_nodes_hormones <- renderUI({
-    req(!is.null(input$isMobile))
-    knobInput(
-      "size_hormones",
-      "Hormones",
-      min = 20,
-      max = 60,
-      value = if (input$isMobile) 60 else 40,
-      step = 5,
-      displayPrevious = TRUE,
-      fgColor = "#A9A9A9",
-      inputColor = "#A9A9A9",
-      skin = "tron",
-      width = if (input$isMobile) "75px" else "100px",
-      height = if (input$isMobile) "75px" else "100px"
-    )
-  })
-
-  # control width of arrows
-  output$width_arrows_organs <- renderUI({
-    req(!is.null(input$isMobile))
-    knobInput(
-      "width_organs",
-      "Organs",
-      angleOffset = -90,
-      angleArc = 180,
-      min = 4,
-      max = 14,
-      value = 8,
-      step = 1,
-      displayPrevious = TRUE,
-      fgColor = "#A9A9A9",
-      inputColor = "#A9A9A9",
-      skin = NULL,
-      width = if (input$isMobile) "75px" else "100px",
-      height = if (input$isMobile) "75px" else "100px"
-    )
-  })
-
-  output$width_arrows_hormones <- renderUI({
-    req(!is.null(input$isMobile))
-    knobInput(
-      "width_hormones",
-      "Hormones",
-      angleOffset = -90,
-      angleArc = 180,
-      min = 1,
-      max = 8,
-      value = 4,
-      step = 1,
-      displayPrevious = TRUE,
-      fgColor = "#A9A9A9",
-      inputColor = "#A9A9A9",
-      skin = NULL,
-      width = if (input$isMobile) "75px" else "100px",
-      height = if (input$isMobile) "75px" else "100px"
-    )
   })
 
   #-------------------------------------------------------------------------

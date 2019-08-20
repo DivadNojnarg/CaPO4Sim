@@ -19,7 +19,7 @@ library(shinyEffects)
 
 library(stringr)
 library(shinyFeedback)
-library(bs4Dash)
+library(shinyF7)
 library(dplyr)
 library(V8)
 
@@ -29,9 +29,6 @@ library(CaPO4Sim)
 source("patient_selector.R")
 source("getting_started.R")
 source("generate_questions.R")
-source("navbar.R")
-source("sidebar.R")
-source("body.R")
 source("footer.R")
 
 #-------------------------------------------------------------------------

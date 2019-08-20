@@ -3,7 +3,7 @@ uzh_logo <- "logos/uzh.svg"
 unil_logo <- "logos/unil.svg"
 nccr_logo <- "logos/nccr.svg"
 
-left_footer <- fluidRow(
+footer <- fluidRow(
   column(
     width = 3,
     align = "center",
@@ -50,9 +50,4 @@ left_footer <- fluidRow(
       img(src = unil_logo, height = "30px")
     )
   )
-)
-
-footer <- bs4DashFooter(
-  left_footer,
-  right_text = NULL
 )

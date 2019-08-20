@@ -1,91 +1,86 @@
-dashboardControlbar <- bs4DashControlbar(
-
-  skin = "light",
-  title = NULL,
-  width = 250,
+rightPanel <- f7Panel(
+  title = "Inputs",
+  side = "right",
+  theme = "dark",
+  style = "cover",
 
   h4("Network options", align = "center"), br(),
-  prettyCheckboxGroup(
+  f7checkBoxGroup(
     inputId = "background_choice",
     label = "Network background",
     choices = c("human"),
-    thick = TRUE,
-    animation = "pulse",
-    selected = "human",
-    inline = TRUE
+    selected = "human"
   ),
-  prettyCheckboxGroup(
+  f7checkBoxGroup(
     inputId = "network_Ca_choice",
     label = "Select a network",
-    choices = c(
-      "Ca" = "Ca",
-      "Pi" = "PO4",
-      "PTH" = "PTH",
-      "D3" = "D3",
-      "FGF23" = "FGF23"
-    ),
-    thick = TRUE,
-    animation = "pulse",
-    selected = "rat",
-    inline = TRUE
+    choices = c("Ca", "PO4", "PTH", "D3", "FGF23"),
+    selected = NULL
   ),
-  prettySwitch(
+  f7Toggle(
     inputId = "network_hormonal_choice",
     label = "Display hormones",
-    value = TRUE,
-    slim = TRUE,
-    bigger = TRUE
+    checked = TRUE,
+    color = "purple"
   ),
-  prettySwitch(
+  f7Toggle(
     inputId = "network_organ_choice",
     label = "Display organs",
-    value = TRUE,
-    slim = TRUE,
-    bigger = TRUE
+    checked = TRUE,
+    color = "purple"
   ),
   hr(),
-  fluidRow(
-    column(
-      width = 6,
-      uiOutput(outputId = "size_nodes_organs")
-    ),
-    column(
-      width = 6,
-      uiOutput(outputId = "size_nodes_hormones")
-    )
+  f7Stepper(
+    inputId = "size_organs",
+    label = "Organs",
+    min = 50,
+    max = 100,
+    value = 70,
+    step = 5,
+    color = "red"
   ),
-  fluidRow(
-    column(
-      width = 6,
-      uiOutput(outputId = "width_arrows_organs")
-    ),
-    column(
-      width = 6,
-      uiOutput(outputId = "width_arrows_hormones")
-    )
+  f7Stepper(
+    inputId = "size_hormones",
+    label = "Hormones",
+    min = 20,
+    max = 60,
+    value = 40,
+    step = 5,
+    color = "red"
   ),
+  f7Stepper(
+    inputId = "width_organs",
+    label = "Organs",
+    min = 4,
+    max = 14,
+    value = 8,
+    step = 1,
+    color = "red"
+  ),
+  f7Stepper(
+    inputId = "width_hormones",
+    label = "Hormones",
+    min = 1,
+    max = 8,
+    value = 4,
+    step = 1,
+    color = "red"
+  ),
+
   hr(),
   h4("Solver options", align = "center"), br(),
-  numericInput(
+  f7Stepper(
     inputId = "tmax",
     label = "Maximum simulated time",
     value = 500,
-    min = 0
+    min = 0,
+    max = NA
   ),
-  sliderInput(
+  f7Stepper(
     inputId = "t_now",
     label = "Time after simulation",
     min = 1,
     max = 500,
     value = 500
-  ) %>%
-    shinyInput_label_embed(
-      icon("undo") %>%
-        actionBttn(
-          inputId = "reset_t_now",
-          label = "",
-          color = "danger",
-          size = "xs"
-        )
-    )
+  )
 )
