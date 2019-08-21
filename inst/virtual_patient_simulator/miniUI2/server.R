@@ -9,9 +9,6 @@
 
 server <- function(input, output, session) {
 
-  # enable fullscreen
-  callModule(module = fullScreen, id = "fullScreenTrigger")
-
   #-------------------------------------------------------------------------
   #  useful datas: initialization. These data are not in global.R since
   #  they are some time reloaded by the program. In global.R they would not
@@ -169,8 +166,15 @@ server <- function(input, output, session) {
     len <- length(medical_history$pathologies)
 
     f7SocialCard(
-      author = patient_datas$name,
+      author = f7Flex(
+        patient_datas$name,
+        uiOutput("user_game_status"),
+        f7Badge(len, color = "red"),
+        fullScreenUI()
+      ),
       author_img = patient_datas$picture,
+
+      f7Align(side = "center", h4("Patient Infos")),
 
       f7ListCard(
         f7ListCardItem(
@@ -183,17 +187,32 @@ server <- function(input, output, session) {
           title = HTML(paste("Weight:", f7Badge(patient_datas$weight, color = "orange")))
         )
       ),
+
       br(),
+
+      f7Align(side = "center", h4("Patient Medical History")),
+
       f7Accordion(
         lapply(1:len, FUN = function(i){
           f7AccordionItem(
             title = medical_history$doctors[[i]],
-            #tag$img(src = medical_history$doctors_avatars[[i]], height = "20px", width = "20px"),
-            strong(medical_history$pathologies[[i]]), br(),
-            HTML(paste(medical_history$disease_description[[i]])),
-            if (!is.null(medical_history$disease_image[[i]])) {
-              tags$img(src = medical_history$disease_image[[i]])
-            }
+            f7Block(
+              f7Flex(
+                tags$img(src = medical_history$doctors_avatars[[i]], height = "20px", width = "20px"),
+                medical_history$doctors[[i]]
+              ),
+              strong(medical_history$pathologies[[i]]), br(),
+              HTML(paste(medical_history$disease_description[[i]])),
+              if (!is.null(medical_history$disease_image[[i]])) {
+                tagAppendAttributes(
+                  img(src = medical_history$disease_image[[i]]),
+                  style = "display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 50%;"
+                )
+              }
+            )
           )
         })
       )
@@ -249,9 +268,9 @@ server <- function(input, output, session) {
         plasma_values <- plasma_analysis$history
 
         withMathJax(
-          f7Card(
-            title = tagList("Recent Events", f7Badge(len, color = "red")),
 
+          f7Card(
+            title = tagList("Events History", f7Badge(len, color = "red")),
             # treatments input are
             # in the event box
             if (!is.null(events$answered)) {
@@ -283,7 +302,7 @@ server <- function(input, output, session) {
                 item_side <- if (i %% 2 == 0) "left" else "right"
                 items <- f7TimelineItem(
                   title = name[[i]],
-                  card = TRUE,
+                  card = FALSE,
                   date = f7Badge(
                     color = "yellow",
                     start_time[[i]]
@@ -336,7 +355,7 @@ server <- function(input, output, session) {
           withSpinner(
             plotlyOutput(
               "plot_node",
-              height = "300px",
+              #height = "300px",
               width = "100%"
             ),
             size = 2,
@@ -376,7 +395,7 @@ server <- function(input, output, session) {
             withSpinner(
               visNetworkOutput(
                 "network_Ca",
-                height = "900px"
+                height = input$height
               ),
               size = 2,
               type = 8,
@@ -1518,7 +1537,7 @@ server <- function(input, output, session) {
               },
               zeroline = FALSE
             ),
-            showlegend = if (input$isMobile) FALSE else TRUE
+            showlegend = TRUE
           ) %>%
           animation_opts(
             # animation speed (the lower, the faster)
@@ -1623,7 +1642,7 @@ server <- function(input, output, session) {
         type = "on",
         initRedraw = paste0("
           function() {
-            this.moveTo({scale:", if (input$isMobile) 0.3 else 0.6, "});
+            this.moveTo({scale:", 0.5 * input$width / 1000, "});
         }")
       ) # to set the initial zoom (1 by default)
   })

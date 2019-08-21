@@ -1,4 +1,6 @@
 $(document).on('shiny:connected', function(event) {
-  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  Shiny.onInputChange('isMobile', isMobile);
+  var windowHeight = $( window ).height();
+  var windowWidth = $( window ).width();
+  Shiny.onInputChange('height', windowHeight);
+  Shiny.onInputChange('width', windowWidth);
 });

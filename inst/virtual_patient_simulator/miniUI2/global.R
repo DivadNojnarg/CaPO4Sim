@@ -30,6 +30,9 @@ source("patient_selector.R")
 source("getting_started.R")
 source("generate_questions.R")
 source("footer.R")
+source("body.R")
+source("rightPanel.R")
+source("navbar.R")
 
 #-------------------------------------------------------------------------
 #
@@ -40,7 +43,6 @@ source("footer.R")
 #-------------------------------------------------------------------------
 
 # Load usefull scripts
-source("dashboardControlbar.R")
 source("cap_fixed_parameters.R")
 source("calcium_phosphate_core.R") # core model
 source("calc_change.R")
