@@ -169,8 +169,8 @@ server <- function(input, output, session) {
       author = f7Flex(
         patient_datas$name,
         uiOutput("user_game_status"),
-        f7Badge(len, color = "red"),
-        fullScreenUI()
+        f7Badge(len, color = "red")#,
+        #fullScreenUI()
       ),
       author_img = patient_datas$picture,
 
@@ -523,10 +523,6 @@ server <- function(input, output, session) {
     }
   })
 
-  observe({
-    print(input$register_user)
-  })
-
   # when the user is registered, set logged to TRUE
   observeEvent(input$register_user,{
     if (input$register_user != "") {
@@ -647,26 +643,14 @@ server <- function(input, output, session) {
       session,
       inputId = "diagnosis_answer",
       type = "prompt",
-      title = "What is the disease of this patient?",
-      text = tagList(
-        column(
-          align = "center",
-          width = 12,
-          f7Select(
-            inputId = "disease_name",
-            label = "",
-            choices = diseases_list
-          )
-        )
-      )
+      title = "Diagnosis",
+      text = "What is the disease of this patient?"
     )
   })
 
-  observe(print(input$disease_name))
-
   # treat the diagnosis answer
   observeEvent(input$diagnosis_answer, {
-    user_answer <- input$disease_name
+    user_answer <- input$diagnosis_answer
     if (user_answer != "") {
       test <- str_detect(answer, regex(paste0("\\b", user_answer, "\\b"), ignore_case = TRUE))
       if (test) {
@@ -686,11 +670,10 @@ server <- function(input, output, session) {
       } else {
         events$answered <- FALSE
         f7Dialog(
-          session,
+          session = session,
           type = "alert",
           title = "Wasted!",
-          text = paste0(input$register_user, ", it seems that your answer is wrong!"),
-          type = "error"
+          text = paste0(input$register_user, ", it seems that your answer is wrong!")
         )
       }
 
@@ -704,8 +687,7 @@ server <- function(input, output, session) {
         session,
         type = "alert",
         title = "Missing diagnosis!",
-        text = paste0(input$register_user, ", it seems that your answer is empty!"),
-        type = "error"
+        text = paste0(input$register_user, ", it seems that your answer is empty!")
       )
     }
   })
@@ -724,14 +706,14 @@ server <- function(input, output, session) {
   # in the header
   output$user_game_status <- renderUI({
     game_status <- if (!is.null(events$answered)) {
-      if (events$answered) "success" else "danger"
+      if (events$answered) "green" else "red"
     } else {
-      "warning"
+      "orange"
     }
     game_text <- if (!is.null(events$answered)) {
       if (events$answered)
-        paste0(input$disease_name, ": successful diagnosis")
-      else paste0(input$disease_name, ": unsuccessful diagnosis")
+        paste0(input$diagnosis_answer, ": successful diagnosis")
+      else paste0(input$diagnosis_answer, ": unsuccessful diagnosis")
     } else {
       "No diagnosis yet"
     }
@@ -753,7 +735,7 @@ server <- function(input, output, session) {
         list(
           my_events = events$history,
           my_comments = comments$history,
-          my_answer = c(events$answered, input$disease_name)
+          my_answer = c(events$answered, input$diagnosis_answer)
         ),
         file
       )
@@ -1483,7 +1465,7 @@ server <- function(input, output, session) {
           mode = 'lines',
 
           line = list(
-            simplyfy = FALSE,
+            simplify = FALSE,
             color = if (name == "Ca_p") {
               'rgb(27, 102, 244)'
             } else if (name == "PO4_p") {

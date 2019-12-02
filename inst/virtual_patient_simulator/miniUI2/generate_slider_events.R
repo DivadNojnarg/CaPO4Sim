@@ -8,7 +8,8 @@ generate_slider_events <- function(input) {
         value = 0.001,
         min = 0,
         max = 0.1,
-        step = 0.001
+        step = 0.001,
+        scale = TRUE
       ) %>%
         shinyInput_label_embed(
           icon("info") %>%
@@ -20,7 +21,8 @@ generate_slider_events <- function(input) {
         value = 0.0022,
         min = 0,
         max = 0.008,
-        step = 0.0001
+        step = 0.0001,
+        scale = TRUE
       ) %>%
         shinyInput_label_embed(
           icon("info") %>%
@@ -32,7 +34,8 @@ generate_slider_events <- function(input) {
         min = 0,
         max = 0.002,
         value = 0.001,
-        step = 0.0001
+        step = 0.0001,
+        scale = TRUE
       ) %>%
         shinyInput_label_embed(
           icon("info") %>%
@@ -44,7 +47,8 @@ generate_slider_events <- function(input) {
         value = 1.55e-003,
         min = 0,
         max = 0.01,
-        step = 0.0001
+        step = 0.0001,
+        scale = TRUE
       ) %>%
         shinyInput_label_embed(
           icon("info") %>%
@@ -56,7 +60,8 @@ generate_slider_events <- function(input) {
         value = 0.001,
         min = 0,
         max = 0.01,
-        step = 0.0001
+        step = 0.0001,
+        scale = TRUE
       ) %>%
         shinyInput_label_embed(
           icon("info") %>%
@@ -68,7 +73,7 @@ generate_slider_events <- function(input) {
         value = 50,
         min = 0,
         max = 100,
-        step = 1
+        scale = TRUE
       )
     },
 
@@ -79,7 +84,7 @@ generate_slider_events <- function(input) {
       f7Stepper(
         inputId = "t_stop",
         label = "Duration (in minutes, 1440 min = 1 day):",
-        value = 100,
+        value = 100000,
         min = 0,
         max = NA
       )
