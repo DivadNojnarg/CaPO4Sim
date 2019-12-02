@@ -23,7 +23,6 @@ rightPanel <- f7Panel(
     checked = TRUE,
     color = "purple"
   ),
-  br(),
   f7Toggle(
     inputId = "network_organ_choice",
     label = "Display organs",
@@ -69,7 +68,7 @@ rightPanel <- f7Panel(
   ),
 
   hr(),
-  h4("Solver options", align = "center"), br(),
+  h4("Solver options", align = "center"),
   f7Slider(
     inputId = "tmax",
     label = "Maximum simulated time",

@@ -101,7 +101,7 @@ server <- function(input, output, session) {
   user_folder <- reactive({
     paste0(
       users_logs, "/",
-      input$user_name, "-", start_time,
+      input$register_user, "-", start_time,
       "/")
   })
 
@@ -176,14 +176,15 @@ server <- function(input, output, session) {
 
       f7Align(side = "center", h4("Patient Infos")),
 
-      f7ListCard(
-        f7ListCardItem(
+      # patient details
+      f7List(
+        f7ListItem(
           title = HTML(paste("Age:", f7Badge(patient_datas$age, color = "lightblue")))
         ),
-        f7ListCardItem(
+        f7ListItem(
           title = HTML(paste("Height:", f7Badge(patient_datas$height, label = "pink")))
         ),
-        f7ListCardItem(
+        f7ListItem(
           title = HTML(paste("Weight:", f7Badge(patient_datas$weight, color = "orange")))
         )
       ),
@@ -227,7 +228,7 @@ server <- function(input, output, session) {
 
       f7SocialCard(
         author_img = "https://image.flaticon.com/icons/svg/305/305983.svg",
-        author = paste0(input$user_name, "'s notebook."),
+        author = paste0(input$register_user, "'s notebook."),
         date = start_time,
         if (events$animation >= 8) {
           tagList(
@@ -302,7 +303,7 @@ server <- function(input, output, session) {
                 item_side <- if (i %% 2 == 0) "left" else "right"
                 items <- f7TimelineItem(
                   title = name[[i]],
-                  card = FALSE,
+                  card = TRUE,
                   date = f7Badge(
                     color = "yellow",
                     start_time[[i]]
@@ -395,7 +396,7 @@ server <- function(input, output, session) {
             withSpinner(
               visNetworkOutput(
                 "network_Ca",
-                height = input$height
+                height = input$screenSize$height
               ),
               size = 2,
               type = 8,
@@ -476,11 +477,12 @@ server <- function(input, output, session) {
   observe({
     if (!events$logged) {
       shinyjs::delay(
-        5000,
-        confirmSweetAlert(
+        1000,
+        f7Dialog(
           session,
           inputId = "register_user",
           title = "How to start?",
+          type = "prompt",
           text = tagList(
             img(src = "interface_img/start.svg", width = "100px", height = "100px"),
             br(),
@@ -500,16 +502,12 @@ server <- function(input, output, session) {
             column(
               align = "center",
               width = 12,
-              f7Select(
-                inputId = "user_name",
-                label = "Your name:",
-                choices = students_names
-              )
+              h4("Enter your name below")
             )
-          ),
-          btn_labels = c(NULL, "Confirm"),
-          type = "warning",
-          html = TRUE
+          )#,
+          #btn_labels = c(NULL, "Confirm"),
+          #type = "warning",
+          #html = TRUE
         )
       )
     }
@@ -517,17 +515,21 @@ server <- function(input, output, session) {
 
   # disable the confirm button if the user name is missing
   observe({
-    if (!is.null(input$user_name)) {
+    if (!is.null(input$register_user)) {
       shinyjs::toggleState(
         selector = "button.swal-button.swal-button--confirm",
-        condition = input$user_name != ""
+        condition = input$register_user != ""
       )
     }
   })
 
+  observe({
+    print(input$register_user)
+  })
+
   # when the user is registered, set logged to TRUE
   observeEvent(input$register_user,{
-    if (input$user_name != "") {
+    if (input$register_user != "") {
       events$logged <- TRUE
     }
   })
@@ -586,7 +588,7 @@ server <- function(input, output, session) {
 
   # init the directory where user datas will be saved
   observeEvent(input$register_user, {
-    if (input$register_user) {
+    if (input$register_user != "") {
       # create the new folder
       dir.create(user_folder())
     }
@@ -641,12 +643,11 @@ server <- function(input, output, session) {
 
   # handle case when the use press the diagnosis button
   observeEvent(input$diagnosis, {
-    confirmSweetAlert(
+    f7Dialog(
       session,
       inputId = "diagnosis_answer",
+      type = "prompt",
       title = "What is the disease of this patient?",
-      btn_labels = c("Send"),
-      type = "warning",
       text = tagList(
         column(
           align = "center",
@@ -657,10 +658,11 @@ server <- function(input, output, session) {
             choices = diseases_list
           )
         )
-      ),
-      html = TRUE
+      )
     )
   })
+
+  observe(print(input$disease_name))
 
   # treat the diagnosis answer
   observeEvent(input$diagnosis_answer, {
@@ -669,25 +671,25 @@ server <- function(input, output, session) {
       test <- str_detect(answer, regex(paste0("\\b", user_answer, "\\b"), ignore_case = TRUE))
       if (test) {
         events$answered <- TRUE
-        sendSweetAlert(
+        f7Dialog(
           session,
-          title = paste0("Congratulations ", input$user_name, " !"),
+          type = "alert",
+          title = paste0("Congratulations ", input$register_user, " !"),
           text = HTML(
             paste0(
               "This patient has,", answer,
               "It would be better to treat him now. Remember you have
               <b>15 minutes</b> to complete this activity."
             )
-          ),
-          type = "success",
-          html = TRUE
+          )
         )
       } else {
         events$answered <- FALSE
-        sendSweetAlert(
+        f7Dialog(
           session,
+          type = "alert",
           title = "Wasted!",
-          text = paste0(input$user_name, ", it seems that your answer is wrong!"),
+          text = paste0(input$register_user, ", it seems that your answer is wrong!"),
           type = "error"
         )
       }
@@ -698,10 +700,11 @@ server <- function(input, output, session) {
         file = paste0(user_folder(), "/user_answer.rds")
       )
     } else {
-      sendSweetAlert(
+      f7Dialog(
         session,
+        type = "alert",
         title = "Missing diagnosis!",
-        text = paste0(input$user_name, ", it seems that your answer is empty!"),
+        text = paste0(input$register_user, ", it seems that your answer is empty!"),
         type = "error"
       )
     }
@@ -744,7 +747,7 @@ server <- function(input, output, session) {
 
   # Give users the opportunity to save data
   output$download_logs <- downloadHandler(
-    filename = function() paste0(input$user_name, "_logs.rds"),
+    filename = function() paste0(input$register_user, "_logs.rds"),
     content = function(file) {
       saveRDS(
         list(
@@ -780,10 +783,11 @@ server <- function(input, output, session) {
     if (!is_empty(input$register_user)) {
       shinyjs::delay(
         1000,
-        confirmSweetAlert(
+        f7Dialog(
           session,
           inputId = "diagnosis_intro",
           title = "How to use the notebook?",
+          type = "confirm",
           text = tagList(
             img(src = "interface_img/notebook.svg", width = "100px", height = "100px"),
             br(),
@@ -792,10 +796,7 @@ server <- function(input, output, session) {
                  to go through the questions. Once you completed all questions,
                  submit your diagnosis by clicking on
                  <img src='interface_img/diagnosis.svg' height='70' width='70'>.")
-          ),
-          btn_labels = c(NULL, "Ok"),
-          type = "warning",
-          html = TRUE
+          )
         )
       )
     }
@@ -804,10 +805,11 @@ server <- function(input, output, session) {
   # Introduction to plasma analysis
   observeEvent(input$user_add_comment, {
     if (events$animation == 3) {
-      confirmSweetAlert(
+      f7Dialog(
         session,
         inputId = "plasma_analysis_intro",
         title = "How to deal with plasma analysis?",
+        type = "confirm",
         text = tagList(
           img(src = "CaPO4_network/plasma.svg", width = "100px", height = "100px"),
           br(),
@@ -818,10 +820,7 @@ server <- function(input, output, session) {
           img(src = "CaPO4_network/cells.svg", width = "50px", height = "50px"),
           img(src = "CaPO4_network/bone.svg", width = "50px", height = "50px"),
           "and", img(src = "CaPO4_network/rapid-bone.svg", width = "50px", height = "50px")
-        ),
-        btn_labels = c(NULL, "Ok"),
-        type = "warning",
-        html = TRUE
+        )
       )
     }
   })
@@ -831,8 +830,9 @@ server <- function(input, output, session) {
     if (events$animation == 8) {
       shinyjs::delay(
         1000,
-        confirmSweetAlert(
+        f7Dialog(
           session,
+          type = "confirm",
           inputId = "treatments_intro",
           title = "How to deal with treatments?",
           text = tagList(
@@ -860,10 +860,7 @@ server <- function(input, output, session) {
                 "
               )
             )
-          ),
-          btn_labels = c(NULL, "Ok"),
-          type = "warning",
-          html = TRUE
+          )
         )
       )
       # increament by 1 to prevent this alert
@@ -932,7 +929,7 @@ server <- function(input, output, session) {
   #     # send the alert message with all feedbacks
   #     sendSweetAlert(
   #       session,
-  #       title = paste0("Oups ", input$user_name, " !"),
+  #       title = paste0("Oups ", input$register_user, " !"),
   #       text = HTML(paste0(
   #         "It seems that: ", patient_feedback,
   #         "You should do something!")
@@ -962,7 +959,7 @@ server <- function(input, output, session) {
   output$user_panel <- renderUI({
     # use invalidate later to simulate a clock
     invalidateLater(1000)
-    f7Icon("person_round_fill", tags$small(paste(input$user_name, Sys.time())))
+    f7Icon("person_round_fill", tags$small(paste(input$register_user, Sys.time())))
   })
 
   #-------------------------------------------------------------------------
@@ -1642,10 +1639,12 @@ server <- function(input, output, session) {
         type = "on",
         initRedraw = paste0("
           function() {
-            this.moveTo({scale:", 0.5 * input$width / 1000, "});
+            this.moveTo({scale:", 0.8 * input$screenSize$width / 1000, "});
         }")
       ) # to set the initial zoom (1 by default)
   })
+
+  observeEvent(input$screenSize$height, {print( 0.8 * input$screenSize$width / 1000)})
 
   # Events for the CaPO4 Homeostasis diagramm whenever a flux change
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4
@@ -1768,31 +1767,28 @@ server <- function(input, output, session) {
 
     # check if input tmax does not exists or is not numeric
     if (is.na(input$tmax)) {
-      sendSweetAlert(
+      f7Toast(
         session,
-        title = "Ooops ...",
-        text = "Invalid value: tmax should be set correctly.",
-        type = "error"
+        position = "bottom",
+        text = "Invalid value: tmax should be set correctly."
       )
       reset("tmax") # value is reset
     } else {
       # if yes, check it is negative
       if (input$tmax <= 0) {
-        sendSweetAlert(
+        f7Toast(
           session,
-          title = "Ooops ...",
           text = "Invalid value: tmax must be higher than 0.",
-          type = "error"
+          position = "bottom"
         )
         reset("tmax") # value is reset
         # check whether it is too high
       } else if (input$tmax > 100000) {
-        sendSweetAlert(
+        f7Toast(
           session,
-          title = "Ooops ...",
           text = "Invalid value: the maximum
                        time of simulation is too high!",
-          type = "error"
+          position = "bottom"
         )
         reset("tmax") # value is reset
       }

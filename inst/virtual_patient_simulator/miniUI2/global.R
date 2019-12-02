@@ -19,7 +19,7 @@ library(shinyEffects)
 
 library(stringr)
 library(shinyFeedback)
-library(shinyF7)
+library(shinyMobile)
 library(dplyr)
 library(V8)
 

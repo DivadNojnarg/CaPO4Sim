@@ -18,7 +18,7 @@
 #header_box_network,
 ui <- f7Page(
   title = "Virtual Patient Simulator",
-  init = f7Init(theme = "ios"),
+  init = f7Init(skin = "ios", theme = "light"),
   f7TabLayout(
 
     # include CSS

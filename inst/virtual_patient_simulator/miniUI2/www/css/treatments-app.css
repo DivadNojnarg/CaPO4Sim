@@ -1,5 +1,5 @@
 .network_cap{
-  padding-left: 0; 
+  padding-left: 0;
   padding-right: 0;
   background-image:url('CaPO4_network/rat_wholebody.svg');
   background-size: cover;
@@ -9,13 +9,13 @@
 }
 
 .network_capnone{
-  padding-left: 0; 
+  padding-left: 0;
   padding-right: 0;
   height:100%;
 }
 
 .network_caprat{
-  padding-left: 0; 
+  padding-left: 0;
   padding-right: 0;
   background-image:url('CaPO4_network/rat_wholebody.svg');
   background-size: cover;
@@ -25,7 +25,7 @@
 }
 
 .network_caphuman{
-  padding-left: 0; 
+  padding-left: 0;
   padding-right: 0;
   background-image:url('CaPO4_network/human_wholebody.svg');
   background-size: cover;
@@ -51,7 +51,7 @@ mark {
   box-shadow: 6px 6px 0 black;
 }
 
-.MathJax_Display { 
+.MathJax_Display {
     text-align: center !important;
 }
 
@@ -70,7 +70,7 @@ mark {
 
 #user_comment {
   border-radius: 5px;
-} 
+}
 
 
 @-webkit-keyframes glowing_blue {
@@ -170,4 +170,9 @@ mark {
   -moz-animation: glowing_green 1000ms infinite;
   -o-animation: glowing_green 1000ms infinite;
   animation: glowing_green 1000ms infinite;
+}
+
+
+.timeline-item-inner {
+  background-color: gainsboro;
 }

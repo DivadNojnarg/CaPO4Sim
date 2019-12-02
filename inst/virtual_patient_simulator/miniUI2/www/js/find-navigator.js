@@ -1,6 +1,6 @@
-$(document).on('shiny:connected', function(event) {
-  var windowHeight = $( window ).height();
-  var windowWidth = $( window ).width();
-  Shiny.onInputChange('height', windowHeight);
-  Shiny.onInputChange('width', windowWidth);
+$(document).ready(function() {
+  window.onresize = function() {
+    var screenInfo = {width: $(window).width(), height: $(window).height()};
+    Shiny.onInputChange("screenSize", screenInfo);
+  };
 });
