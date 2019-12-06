@@ -507,8 +507,8 @@ server <- function(input, output, session) {
           footer = NULL
         )
 
-        cardTag$children[[1]]$children[[2]] <- tagAppendAttributes(
-          cardTag$children[[1]]$children[[2]],
+        cardTag[[2]]$children[[1]]$children[[2]] <- tagAppendAttributes(
+          cardTag[[2]]$children[[1]]$children[[2]],
           class = "p-0"
         )
 
