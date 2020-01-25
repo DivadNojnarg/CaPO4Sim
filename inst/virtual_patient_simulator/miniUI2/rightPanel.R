@@ -2,9 +2,9 @@ rightPanel <- f7Panel(
   title = "Inputs",
   side = "right",
   theme = "light",
-  style = "cover",
+  effect = "cover",
 
-  h4("Network options", align = "center"), br(),
+  h4("Network options", align = "center"),
   f7checkBoxGroup(
     inputId = "background_choice",
     label = "Network background",
@@ -75,7 +75,10 @@ rightPanel <- f7Panel(
     value = 500,
     min = 0,
     max = 1000
-  ),
+  ) %>%
+    f7Tooltip(
+      "tmax should exist and set between 1 and 100000."
+    ),
   f7Slider(
     inputId = "t_now",
     label = "Time after simulation",

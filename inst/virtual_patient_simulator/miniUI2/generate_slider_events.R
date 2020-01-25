@@ -10,10 +10,9 @@ generate_slider_events <- function(input) {
         max = 0.1,
         step = 0.001,
         scale = TRUE
-      ) %>%
-        shinyInput_label_embed(
-          icon("info") %>%
-            bs_embed_tooltip(title = "D3 injection (pmol/min)"))
+      ) %>% f7Tooltip(
+        "D3 injection (pmol/min)"
+      )
     }  else if (input$treatment_selected == "Ca_food") {
       f7Slider(
         inputId = "Ca_food",
@@ -24,9 +23,9 @@ generate_slider_events <- function(input) {
         step = 0.0001,
         scale = TRUE
       ) %>%
-        shinyInput_label_embed(
-          icon("info") %>%
-            bs_embed_tooltip(title = "Calcium intake (μmol/min)"))
+        f7Tooltip(
+          "Calcium intake (μmol/min)"
+        )
     } else if (input$treatment_selected == "Ca_inject") {
       f7Slider(
         inputId = "Ca_inject",
@@ -37,9 +36,9 @@ generate_slider_events <- function(input) {
         step = 0.0001,
         scale = TRUE
       ) %>%
-        shinyInput_label_embed(
-          icon("info") %>%
-            bs_embed_tooltip(title = "Rate of injection of calcium in plasma (μmol/min)"))
+        f7Tooltip(
+          "Rate of injection of calcium in plasma (μmol/min)"
+        )
     } else if (input$treatment_selected == "P_food") {
       f7Slider(
         inputId = "P_food",
@@ -50,9 +49,7 @@ generate_slider_events <- function(input) {
         step = 0.0001,
         scale = TRUE
       ) %>%
-        shinyInput_label_embed(
-          icon("info") %>%
-            bs_embed_tooltip(title = "Phosphate intake (μmol/min)"))
+        f7Tooltip("Phosphate intake (μmol/min)")
     } else if (input$treatment_selected == "P_inject") {
       f7Slider(
         inputId = "P_inject",
@@ -63,9 +60,9 @@ generate_slider_events <- function(input) {
         step = 0.0001,
         scale = TRUE
       ) %>%
-        shinyInput_label_embed(
-          icon("info") %>%
-            bs_embed_tooltip(title = "PO4 injection (μmol/min)"))
+        f7Tooltip(
+          "PO4 injection (μmol/min)"
+        )
     } else if (input$treatment_selected == "D3_intake_reduction") {
       f7Slider(
         inputId = "D3_intake_reduction",
@@ -84,9 +81,9 @@ generate_slider_events <- function(input) {
       f7Stepper(
         inputId = "t_stop",
         label = "Duration (in minutes, 1440 min = 1 day):",
-        value = 100000,
+        value = 1440,
         min = 0,
-        max = NA
+        max = 2000
       )
     },
     column(

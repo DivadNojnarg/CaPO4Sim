@@ -395,8 +395,8 @@ server <- function(input, output, session) {
             id = "network_cap",
             withSpinner(
               visNetworkOutput(
-                "network_Ca",
-                height = input$screenSize$height
+                "network_Ca"#,
+                #height = input$screenSize$height
               ),
               size = 2,
               type = 8,
@@ -1626,6 +1626,7 @@ server <- function(input, output, session) {
       ) # to set the initial zoom (1 by default)
   })
 
+  observe(print(input$screenSize))
   observeEvent(input$screenSize$height, {print( 0.8 * input$screenSize$width / 1000)})
 
   # Events for the CaPO4 Homeostasis diagramm whenever a flux change
@@ -1740,12 +1741,6 @@ server <- function(input, output, session) {
   # prevent the user to put infinite value in the max time of integration
   # With compiled code, tmax = 100000 min is a correct value
   observeEvent(input$tmax,{
-    # critical value for tmax
-    feedbackWarning(
-      inputId = "tmax",
-      condition = !is.na(input$tmax),
-      text = "tmax should exist and set between 1 and 100000."
-    )
 
     # check if input tmax does not exists or is not numeric
     if (is.na(input$tmax)) {

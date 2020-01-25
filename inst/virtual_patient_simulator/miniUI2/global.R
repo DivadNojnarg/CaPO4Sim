@@ -18,7 +18,6 @@ library(shinyWidgets)
 library(shinyEffects)
 
 library(stringr)
-library(shinyFeedback)
 library(shinyMobile)
 library(dplyr)
 library(V8)
