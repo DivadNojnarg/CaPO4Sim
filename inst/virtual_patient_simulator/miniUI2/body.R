@@ -3,27 +3,27 @@ content <- f7Tabs(
   #swipeable = TRUE,
   f7Tab(
     tabName = "Patient Profile",
-    icon = f7Icon("home_fill"),
+    icon = f7Icon("archivebox"),
     active = TRUE,
     uiOutput("patient_info"),
     uiOutput("user_notebook")
   ),
   f7Tab(
     tabName = "Examination",
-    icon = f7Icon("heart_fill"),
+    icon = f7Icon("heart"),
     active = FALSE,
     uiOutput("network_box"),
     uiOutput("graphs_box")
   ),
   f7Tab(
     tabName = "Events",
-    icon = f7Icon("time_fill"),
+    icon = f7Icon("timer"),
     active = FALSE,
     uiOutput("recent_events")
   ),
   f7Tab(
     tabName = "About",
-    icon = f7Icon("info_round_fill"),
+    icon = f7Icon("info_circle"),
     active = FALSE,
     div(
       id = "about_us",
