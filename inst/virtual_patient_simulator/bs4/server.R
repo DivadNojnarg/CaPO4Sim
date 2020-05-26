@@ -104,8 +104,7 @@ server <- function(input, output, session) {
   user_folder <- reactive({
     paste0(
       users_logs, "/",
-      input$user_name, "-", start_time,
-      "/")
+      input$user_name, "_", format(Sys.time(), "%Y-%m-%d_%H%M%S"))
   })
 
   #-------------------------------------------------------------------------
@@ -655,7 +654,7 @@ server <- function(input, output, session) {
               )
             )
           ),
-          btn_labels = c(NULL, "Confirm"),
+          btn_labels = c(NA, "Confirm"),
           type = "warning",
           html = TRUE
         )
@@ -734,10 +733,9 @@ server <- function(input, output, session) {
 
   # init the directory where user datas will be saved
   observeEvent(input$register_user, {
-    if (input$register_user) {
+    req(input$register_user)
       # create the new folder
       dir.create(user_folder())
-    }
   })
 
 
@@ -2008,7 +2006,7 @@ server <- function(input, output, session) {
     # critical value for tmax
     feedbackWarning(
       inputId = "tmax",
-      condition = !is.na(input$tmax),
+      show = !is.na(input$tmax),
       text = "tmax should exist and set between 1 and 100000."
     )
 
@@ -2169,17 +2167,6 @@ server <- function(input, output, session) {
         inputId = "network_Ca_choice",
         selected = c("Ca","PO4", "PTH", "D3", "FGF23")
       )
-    }
-  })
-
-
-  # delete compiled files right after session is closed...
-  session$onSessionEnded(function() {
-    if (.Platform$OS.type == "unix") {
-      file.remove("compiled_core.o")
-      file.remove("compiled_core.so")
-    } else if (.Platform$OS.type == "windows") {
-      file.remove("compiled_core.dll")
     }
   })
 }
