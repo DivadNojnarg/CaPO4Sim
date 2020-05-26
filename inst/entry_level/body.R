@@ -2,9 +2,9 @@
 video_data <- data.frame(
   caption = c("Calcium", "Phosphate", "Parathyroid hormone"),
   src = c(
-    "https://youtube.com/embed/9x2QFK6_IkQ",
-    "https://youtube.com/embed/1eh5VF6poWo",
-    "https://youtube.com/embed/5OEenuXMjyg"
+    "https://www.youtube.com/embed/O5QVhiUNwUk",
+    "https://www.youtube.com/embed/i1ZhOAKAWHg",
+    "https://www.youtube.com/embed/_Ol9-odgSxM"
   )
 )
 

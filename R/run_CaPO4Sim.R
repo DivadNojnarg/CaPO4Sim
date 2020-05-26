@@ -33,7 +33,7 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
   pkgs <- switch (
     context,
     "introduction" = pkgs <- c(pkgs, "shinydashboard", "shinydashboardPlus", "rintrojs", "magrittr", "DT"),
-    "virtual-patient" = pkgs <- c(pkgs, "stringr", "shinyFeeback", "bs4Dash", "dplyr", "V8")
+    "virtual-patient" = pkgs <- c(pkgs, "stringr", "shinyFeedback", "bs4Dash", "dplyr", "V8")
   )
 
   # handle missing packages

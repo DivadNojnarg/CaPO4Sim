@@ -235,12 +235,23 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
               tags$li(
                 HTML(
                   paste(
-                    "<b><mark><font color=\"#FF0000\">Mouse
-                    over</font></mark></b> the organs to visualize detailed
-                    intra-cellular regulatory pathways</b>"
+                    "<b><mark><font color=\"#FF0000\">Double click</font></mark></b> on the ",
+                    "intestine", img(src = "CaPO4_network/intestine.svg",
+                                     style="vertical-align:bottom; width:25px; height:45px; object-fit: cover; object-position: 50% 0%;"),
+                    ", kidney",  img(src = "CaPO4_network/kidney_zoom1.svg",
+                                     style="vertical-align:bottom; width:25px; height:45px; object-fit: cover; object-position: 100% 0%;"),
+                    ", parathyroid gland", img(src = "CaPO4_network/parathyroid_gland.svg",
+                                               style="vertical-align:middle; width:40px; height:35px; object-fit: cover; object-position: 50% 0%;"),
+                    " or bone",  img(src = "CaPO4_network/bone.svg",
+                                     style="vertical-align:middle; width:40px; height:35px; object-fit: cover; object-position: 50% 0%;"),
+                    br(), "to visualize detailed intra-cellular regulatory pathways</b>"
+#DDZ                    "<b><mark><font color=\"#FF0000\">Mouse
+#DDZ                    over</font></mark></b> the organs to visualize detailed
+#DDZ                    intra-cellular regulatory pathways</b>"
                   )
                 )
               ),
+              br(),
               tags$li(HTML(paste("Open the right sidebar by clicking on", icon("gears")))),
               tags$li(HTML(paste("Select the first tab", icon("sliders")))),
               tags$li(paste("Play with the different options (enable/disable regulations,
