@@ -60,6 +60,8 @@ helpCaPO4 <- function(input, output, session) {
       events = list(
         # reset the session to hide sliders and back/next buttons
         "oncomplete" = I('history.go(0)'),
+        # reset session to circumvent display issues upon exit
+        "onexit" = I('history.go(0)'),
         "onbeforchange" = I("function(steps) { Shiny.onInputChange('current_step', data-stepnumber); }")#,
         #"onbeforechange" = I('
         #    if (targetElement.getAttribute("data-step") === "2") {
