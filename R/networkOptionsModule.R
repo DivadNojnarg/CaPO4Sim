@@ -69,7 +69,7 @@ networkOptionsUi <- function(id) {
     hr(),
 
     # Control Nodes size
-    h4("Nodes size"),
+    h4("Icon size"),
     rintrojs::introBox(
       data.step = 9,
       data.intro = help_text[9],
