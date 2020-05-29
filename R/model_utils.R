@@ -236,99 +236,144 @@ generate_userFields <- function(diseases, sliderDisease) {
     if (diseases$php1()) {
       req(sliderDisease())
       if (sliderDisease() == 20) {
-        stat1 <- HTML(
-          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>",
-                "1.5 mM", "</b></font>", "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(
-          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>",
-                "2.3 mM", "</b></font>", "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>",
-                "11.06 pM", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","<font color=\"#008000\"><b>","1.5 mM","</b></font>",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","2.3 mM",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","11.06 pM",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
       } else if (sliderDisease() == 100) {
-        stat1 <- HTML(
-          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>",
-                "2 mM", "</b></font>", "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(
-          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>",
-                "2 mM", "</b></font>", "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>",
-                "22.26", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","<font color=\"#008000\"><b>","2 mM","</b></font>",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"FF0000\"><b>","2 mM","</b></font>",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","22.26 pM","</b></font>",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/suffer.png"
         state <- "sick"
       } else {
-        stat1 <- HTML(
-          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#008000\"><b>",
-                "2 mM", "</b></font>", "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(
-          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"FF0000\"><b>",
-                "1.9 mM", "</b></font>", "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>",
-                "31.60 pM", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","<font color=\"#008000\"><b>","2 mM","</b></font>",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"FF0000\"><b>","1.9 mM","</b></font>",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","31.60 pM","</b></font>",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/dead.png"
         state <- "dead"
       }
     } else if (diseases$hypopara()) {
       req(sliderDisease())
       if (sliderDisease() == 0.5) {
-        stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 6.53 pM")), "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","1.2 mM",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","3 mM",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","6.53 pM",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/happy.png"
         state <- "sick"
       } else if (sliderDisease() == 0.1) {
-        stat1 <- HTML(
-          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>",
-                "1 mM", "</b></font>", "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(
-          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>",
-                "3.6 mM", "</b></font>", "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(paste(withMathJax(p("$$[PTH]_p$$ 4.26 pM")), "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","<font color=\"#FF0000\"><b>","1 mM","</b></font>",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","3.6 mM","</b></font>",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","4.26 pM",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
       } else {
-        stat1 <- HTML(
-          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>",
-                "0.6 mM", "</b></font>", "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(
-          paste(withMathJax(p("$$[P_i]_p$$")), "<font color=\"#008000\"><b>",
-                "3.8 mM", "</b></font>", "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#FF0000\"><b>",
-                "0 pM", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","<font color=\"#FF0000\"><b>","0.6 mM","</b></font>",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","3.8 mM","</b></font>",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#FF0000\"><b>","0 pM","</b></font>",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/suffer.png"
         state <- "sick"
       }
     } else {
       req(diseases$hypoD3())
       if (sliderDisease() == 0.5) {
-        stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>",
-                "10.92 pM", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","1.2 mM",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","3 mM",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","10.92 pM","</b></font>",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
       } else if (sliderDisease() == 0.1) {
-        stat1 <- HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.2 mM")), "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 3 mM")), "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>",
-                "18.41 pM", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","1.2 mM",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","3 mM",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","18.41 pM","</b></font>",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
       } else {
-        stat1 <- HTML(
-          paste(withMathJax(p("$$[Ca^{2+}]_p$$")), "<font color=\"#FF0000\"><b>",
-                "0.8 mM", "</b></font>", "<br/>", "(1.1-1.4 mM)"))
-        stat2 <- HTML(paste(withMathJax(p("$$[P_i]_p$$ 2.5 mM")), "<br/>", "(2.1-3.4 mM)"))
-        stat3 <- HTML(
-          paste(withMathJax(p("$$[PTH]_p$$")), "<font color=\"#008000\"><b>",
-                "23.56 pM", "</b></font>", "<br/>", "(1.5-15 pM)"))
+        stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
+                              "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
+                              "<br>","<font color=\"#FF0000\"><b>","0.8 mM","</b></font>",
+                              "<br>","(1.1-1.4 mM)"))
+        stat2 <- HTML( paste("<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","2.5 mM",
+                             "<br>","(2.1-3.4 mM)"))
+        stat3 <- HTML( paste("<br>","<p style=\"text-align:center;line-height:2.0\">",
+                             "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>",
+                             "<br>","<font color=\"#008000\"><b>","23.56 pM","</b></font>",
+                             "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
       }
