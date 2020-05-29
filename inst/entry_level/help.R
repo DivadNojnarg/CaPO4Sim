@@ -53,7 +53,7 @@ help_text <- c(
     "</ul>",
 
     "<br>",
-    "<b>In the case studies</b> (", icon("map-o"), "in the",
+    "<b>When a case study is selected</b> (", icon("map-o"), "in the",
     "<mark><font color=\"#FF0000\"><b>", "right sidebar",
     "</b></font></mark>", icon("gears"), "), animations illustrate",
     "the sequence of perturbations associated with the selected pathology:",
@@ -79,60 +79,59 @@ help_text <- c(
     ),
 
   paste(
-    "<b>When a case study</b> (",icon("map-o"), "in the",
-    "<mark><font color=\"#FF0000\"><b>", "right sidebar",
-    "</b></font></mark>",") <b>is selected</b>,",
-    "this panel displays changes in plasma concentrations and fluxes as a function of disease severity.",
-    "<br>","<br>",
-    "The x-axis shows the severity of the selected disease.",
+    "<b>This panel appears when a case study</b>",
+    "<br>","(",icon("map-o"),"under",icon("gears"),") <b>is selected.</b>",
+    "It displays changes in plasma concentrations and fluxes as a function of disease severity.",
     "<br>","<br>",
     "The curves do not represent a dynamic evolution in time:",
-    "<b>Concentrations and fluxes are given at steady-state</b>, i.e. after reaching a new, stable equilibrium.",
+    "<b>Concentrations and fluxes are given at steady-state</b>, i.e. after reaching a stable equilibrium for the given disease severity.",
     "<br>","<br>",
-    "<b>Concentrations and fluxes are normalized</b> by their physiological healthy value.",
+    "<b>X- and y-axis values are normalized</b> by their physiological healthy value.",
     "<ul>",
     "<li>","Values > 1 : higher than normal.","</li>",
     "<li>","Values < 1 : lower than normal.","</li>",
     "</ul>","<br>",
-    "Results were obtained using the model of",
-    "<a href=\"https://pubmed.ncbi.nlm.nih.gov/28747359/\"> Ca and PO4 homeostasis</a> developed by Granjon et al.",
+    "<font size=\"-1\"><em>Results were obtained using the model of",
+    "<a href=\"https://pubmed.ncbi.nlm.nih.gov/28747359/\"> Ca and PO4 homeostasis</a> developed by Granjon et al.</em></font>",
     sep = " "
     ),
 
   paste(
-    "Use this slider to shift the orange mark on the plots and
-    read concentrations and fluxes at the corresponding <font color=\"#0000FF\"><b>disease severity</b></font>.",
+    "Use this slider to move the orange bar on the plots and
+    read concentrations and fluxes at the <b>corresponding disease severity</b>.",
     "<br>","<br>",
     "<ul>",
-    "<li>", "<font color=\"#0000FF\"><b>PHP1</b></font>: PTH synthesis <b>increase</b>",
+    "<li>", "<font color=\"#0000FF\"><b>Hyper-/Hypo-parathyroidism</b></font>:",
+    "<br>", "Normalized PTH synthesis",
     "<ul>",
-    "<li>","= 0 fold : healthy.", "</li>",
-    "<li>","> 0 fold : increasing severity.","</li>",
+    "<li>","< 1 : hypoparathyroidism", "</li>",
+    "<li>","= 1 : normal", "</li>",
+    "<li>","> 1 : hyperparathyroidism","</li>",
     "</ul>","</li>","<br>",
-    "<li>", "<font color=\"#0000FF\"><b>Hypoparathyroidism or 25(OH) vitamin D3 deficiency</b></font>: PTH synthesis or vitD3 <b>decrease</b>",
+    "<li>", "<font color=\"#0000FF\"><b>25(OH) vitamin D3 deficiency</b></font>",
+    "<br>", "Normalized 25(OH)D stocks",
     "<ul>",
-    "<li>","= 0 fold : healthy.", "</li>",
-    "<li>","> 0 fold : increasing deficiency.", "</li>",
-    "<li>","= 1 fold : maximum severity. PTH synthesis or VitD3 stocks are fully abolished.","</li>",
+    "<li>","= 1 : normal", "</li>",
+    "<li>","< 1 : 25(OH)D deficiency", "</li>",
+    "<li>","= 0 : 25(OH)D stocks are fully depleted", "</li>",
     "</ul>","</li>","</ul>",
     "<br>",
-    "Mouse over the curves for exact numerical values.",
+    "Mouse over the curves for exact values.",
+    "<br>",
     sep = " "),
 
-  paste(
-    icon("question-circle"),
-    "<font color=\"#0000FF\"><b>Help section</b></font>"),
-
-  paste("Choose the <font color=\"#FF0000\"><b>background image</b></font> (Rat by default)."),
+  paste(icon("sliders fa-1.5x"),
+        "<b> Network Display Options</b>",
+        "<br>","<br>",
+        "Choose the <font color=\"#FF0000\"><b>background image</b></font> (Rat by default)."),
 
   paste("<font color=\"#FF0000\"><b>Enable/disable the display</b></font> of organs and
         hormonal regulations. By default, both are activated."),
 
-  paste("<font color=\"#FF0000\"><b>Select pathways</b></font> to show/hide",
+  paste("<font color=\"#FF0000\"><b>Select pathways</b></font> to show in the network",
         "(by default, all regulatory pathways are enabled).",
         "<br><br>",
-        "Display <font color=\"#FF0000\"><b>also depends</b></font> on whether regulations and organs
-        are enabled/disabled."),
+        "Check that regulations and organs <font color=\"#FF0000\"><b>are enabled</b></font>."),
 
   paste("Control the <font color=\"#FF0000\"><b>size</b></font> of the network icons."),
 

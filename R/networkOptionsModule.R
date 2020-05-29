@@ -10,10 +10,12 @@ networkOptionsUi <- function(id) {
   ns <- NS(id)
 
   tagList(
+
     # background choice
     rintrojs::introBox(
-      data.step = 6,
-      data.intro = help_text[6],
+      data.step = 5,
+      data.intro = help_text[5],
+      data.position = "left",
       shinyWidgets::prettyCheckboxGroup(
         inputId = ns("background_choice"),
         label = "Background",
@@ -29,8 +31,9 @@ networkOptionsUi <- function(id) {
 
     # enable hormones?
     rintrojs::introBox(
-      data.step = 7,
-      data.intro = help_text[7],
+      data.step = 6,
+      data.intro = help_text[6],
+      data.position = "left",
       shinyWidgets::prettySwitch(
         inputId = ns("hormonal_choice"),
         label = "Regulations?",
@@ -53,8 +56,9 @@ networkOptionsUi <- function(id) {
 
     # filter elements to display
     rintrojs::introBox(
-      data.step = 8,
-      data.intro = help_text[8],
+      data.step = 7,
+      data.intro = help_text[7],
+      data.position = "left",
       shinyWidgets::prettyCheckboxGroup(
         inputId = ns("components_choice"),
         label = "Choose your Network",
@@ -71,8 +75,9 @@ networkOptionsUi <- function(id) {
     # Control Nodes size
     h4("Icon size"),
     rintrojs::introBox(
-      data.step = 9,
-      data.intro = help_text[9],
+      data.step = 8,
+      data.intro = help_text[8],
+      data.position = "left",
       fluidRow(
         column(
           width = 6,
@@ -90,8 +95,9 @@ networkOptionsUi <- function(id) {
     # Control arrow properties
     h4("Arrow width"),
     rintrojs::introBox(
-      data.step = 10,
-      data.intro = help_text[10],
+      data.step = 9,
+      data.intro = help_text[9],
+      data.position = "left",
       fluidRow(
         column(
           width = 6,

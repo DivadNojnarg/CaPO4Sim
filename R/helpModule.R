@@ -12,20 +12,16 @@ helpCaPO4Ui <- function(id) {
   tags$li(
     title = "",
     class = "dropdown",
-    rintrojs::introBox(
-      shinyWidgets::actionBttn(
-        inputId = ns("help"),
-        label = "Help",
-        icon = NULL,
-        style = "fill",
-        color = "danger",
-        size = "lg",
-        block = FALSE,
-        no_outline = TRUE
-      ),
-      data.step = 5,
-      data.intro = help_text[5]
-    )
+    shinyWidgets::actionBttn(
+      inputId = ns("help"),
+      label = "Help",
+      icon = NULL,
+      style = "fill",
+      color = "danger",
+      size = "lg",
+      block = FALSE,
+      no_outline = TRUE
+    ),
   )
 }
 
