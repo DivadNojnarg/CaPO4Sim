@@ -29,7 +29,12 @@ make_plot_php1 <- function(sliderVal, isMobile) {
 
   # define x and y ranges
   xvar <- list(
-    title = "PTH synthesis fold increase",
+    title = "Normalized PTH synthesis",
+    range = c(min(php1_vec / php1_vec[1]),
+              max(php1_vec) / php1_vec[1])
+  )
+  xvar_bis <- list(
+    title = "",
     range = c(min(php1_vec / php1_vec[1]),
               max(php1_vec) / php1_vec[1])
   )
@@ -58,12 +63,12 @@ make_plot_php1 <- function(sliderVal, isMobile) {
       line = list(size = 6, color = 'orange', dash = "solid", width = 6)
       ) %>%
     plotly::add_annotations(
-      x = 400, y = 2.6, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>",
-      showarrow = TRUE) %>%
+      x = 200, y = 1.65, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>",
+      showarrow = TRUE, ax = 30, ay = 25) %>%
     plotly::add_annotations(
-      x = 400, y = 0.3, xref = "x", yref = "y",text = "<b>[Pi]p</b>",
-      showarrow = TRUE) %>%
-    plotly::layout(xaxis = NULL, yaxis = yvar1)
+      x = 200, y = 0.65, xref = "x", yref = "y",text = "<b>[Pi]p</b>",
+      showarrow = TRUE, ax = 30, ay = -25) %>%
+    plotly::layout(xaxis = xvar_bis, yaxis = yvar1)
 
   # plot PTH, D3 and FGF23 concentrations
   plot_hormones_php1 <- plotly::plot_ly(
@@ -92,16 +97,16 @@ make_plot_php1 <- function(sliderVal, isMobile) {
       line = list(size = 6, color = 'orange', dash = "solid", width = 6)
       ) %>%
     plotly::add_annotations(
-      x = 200, y = 5.2, xref = "x2", yref = "y2",
-      text = "<b>[PTH]p</b>", showarrow = TRUE, ax = 20, ay = 25
+      x = 200, y = 4.5, xref = "x2", yref = "y2",
+      text = "<b>[PTH]p</b>", showarrow = TRUE, ax = 30, ay = 25
       ) %>%
     plotly::add_annotations(
-      x = 400, y = 10, xref = "x2", yref = "y2", text = "<b>[D3]p</b>",
-      showarrow = TRUE) %>%
+      x = 200, y = 5.1, xref = "x2", yref = "y2", text = "<b>[D3]p</b>",
+      showarrow = TRUE, ax = 0, ay = -30) %>%
     plotly::add_annotations(
-      x = 600, y = 2, xref = "x2", yref = "y2", text = "<b>[FGF23]p</b>",
-      showarrow = TRUE) %>%
-    plotly::layout(xaxis = NULL, yaxis = yvar2)
+      x = 200, y = 1.4, xref = "x2", yref = "y2", text = "<b>[FGF23]p</b>",
+      showarrow = TRUE, ax = 30, ay = -25) %>%
+    plotly::layout(xaxis = xvar_bis, yaxis = yvar2)
 
   # plot Ca fluxes: resorption, intestinal absorption, urinary excretion
   # and bone storage
@@ -209,16 +214,16 @@ make_plot_hypoD3 <- function(sliderVal, isMobile) {
 
   # define x and y ranges
   xvar <- list(
-    title = "25(OH)D stock fold decrease",
-    range = c(max(hypoD3_vec / hypoD3_vec[1]),
-              min(hypoD3_vec) / hypoD3_vec[1]),
-    autorange = FALSE, autorange = "reversed"
+    title = "Normalized 25(OH)D stock",
+    range = c(min(hypoD3_vec / hypoD3_vec[1]),
+              max(hypoD3_vec / hypoD3_vec[1]))#,
+    #autorange = FALSE, autorange = "reversed"
   )
   xvar_bis <- list(
     title = "",
-    range = c(max(hypoD3_vec / hypoD3_vec[1]),
-              min(hypoD3_vec) / hypoD3_vec[1]),
-    autorange = FALSE, autorange = "reversed"
+    range = c(min(hypoD3_vec / hypoD3_vec[1]),
+              max(hypoD3_vec / hypoD3_vec[1]))#,
+    #autorange = FALSE, autorange = "reversed"
   )
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 1.1))
   yvar2 <- list(title = "Normalized concentrations", range = c(0, 4))
@@ -245,12 +250,12 @@ make_plot_hypoD3 <- function(sliderVal, isMobile) {
       line = list(size = 6, color = 'orange', dash = "solid", width = 6)
       ) %>%
     plotly::add_annotations(
-      x = 0.7, y = 0.95, xref = "x",
+      x = 0.65, y = 0.98, xref = "x",
       yref = "y",text = "<b>[Ca2+]p</b>",
-      showarrow = TRUE, ax = -20, ay = 40
+      showarrow = TRUE, ax = 0, ay = 30
       ) %>%
     plotly::add_annotations(
-      x = 0.4, y = 1.1, xref = "x",
+      x = 0.4, y = 1.05, xref = "x",
       yref = "y",text = "<b>[Pi]p</b>",
       showarrow = TRUE, ax = -20, ay = -20
       ) %>%
@@ -283,17 +288,19 @@ make_plot_hypoD3 <- function(sliderVal, isMobile) {
       line = list(size = 6, color = 'orange', dash = "solid", width = 6)
       ) %>%
     plotly::add_annotations(
-      x = 0, y = 2.3, xref = "x2", yref = "y2",
-      text = "<b>[PTH]p</b>", showarrow = TRUE
+      x = 0.18, y = 2.3, xref = "x2", yref = "y2",
+      text = "<b>[PTH]p</b>", showarrow = TRUE,
+      ax = 20, ay = -30
       ) %>%
     plotly::add_annotations(
-      x = 0.9, y = 0.9, xref = "paper", yref = "y2",
-      text = "<b>[D3]p</b>", showarrow = TRUE
+      x = 0.1, y = 0.9, xref = "x2", yref = "y2",
+      text = "<b>[D3]p</b>", showarrow = TRUE,
+      ax = 0, ay = -30
       ) %>%
     plotly::add_annotations(
-      x = 0.9, y = 0.4, xref = "paper", yref = "y2",
+      x = 0.07, y = 0.65, xref = "x2", yref = "y2",
       text = "<b>[FGF23]p</b>", showarrow = TRUE,
-      ax = -20, ay = 30
+      ax = 30, ay = 20
       ) %>%
     plotly::layout(xaxis = xvar_bis, yaxis = yvar2)
 
@@ -337,7 +344,7 @@ make_plot_hypoD3 <- function(sliderVal, isMobile) {
     y = hypoD3_table[,"U_PO4"] / hypoD3_table[1,"U_PO4"],
     type = "scatter", mode = "lines",
     line = list(color = colfuncPO4[1], width = 2, dash = "solid"),
-    name = "Urinary Excretion", showLegend = FALSE
+    name = "Urinary Excretion", showlegend = FALSE
   ) %>%
     plotly::add_lines(
       x = hypoD3_vec / hypoD3_vec[1],
@@ -407,16 +414,16 @@ make_plot_hypopara <- function(sliderVal, isMobile) {
 
   # define x and y ranges
   xvar <- list(
-    title = "PTH synthesis fold decrease",
-    range = c(max(hypopara_vec / hypopara_vec[1]),
-              min(hypopara_vec) / hypopara_vec[1]),
-    autorange = FALSE, autorange = "reversed"
+    title = "Normalized PTH synthesis",
+    range = c(min(hypopara_vec / hypopara_vec[1]),
+              max(hypopara_vec / hypopara_vec[1]))#,
+    #autorange = FALSE, autorange = "reversed"
   )
   xvar_bis <- list(
     title = "",
-    range = c(max(hypopara_vec / hypopara_vec[1]),
-              min(hypopara_vec) / hypopara_vec[1]),
-    autorange = FALSE, autorange = "reversed"
+    range = c(min(hypopara_vec / hypopara_vec[1]),
+              max(hypopara_vec / hypopara_vec[1]))#,
+    #autorange = FALSE, autorange = "reversed"
   )
   yvar1 <- list(title = "Normalized concentrations", range = c(0, 1.4))
   yvar2 <- list(title = "Normalized concentrations", range = c(0, 1))
@@ -443,12 +450,12 @@ make_plot_hypopara <- function(sliderVal, isMobile) {
       line = list(size = 6, color = 'orange', dash = "solid", width = 6)
     ) %>%
     plotly::add_annotations(
-      x = 0.5, y = 0.85, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>",
-      showarrow = TRUE, ax = -20, ay = 40
+      x = 0.15, y = 0.9, xref = "x", yref = "y",text = "<b>[Ca2+]p</b>",
+      showarrow = TRUE, ax = 20, ay = 30
     ) %>%
     plotly::add_annotations(
-      x = 0.1, y = 1.7, xref = "x", yref = "y",text = "<b>[Pi]p</b>",
-      showarrow = TRUE
+      x = 0.2, y = 1.08, xref = "x", yref = "y",text = "<b>[Pi]p</b>",
+      showarrow = TRUE, ax = 20, ay = -30
     ) %>%
     plotly::layout(xaxis = xvar_bis, yaxis = yvar1)
 
@@ -479,16 +486,16 @@ make_plot_hypopara <- function(sliderVal, isMobile) {
       line = list(size = 6, color = 'orange', dash = "solid", width = 6)
     ) %>%
     plotly::add_annotations(
-      x = 0.9, y = 0.2, xref = "paper", yref = "y2", text = "<b>[PTH]p</b>",
-      showarrow = TRUE, ax = -20, ay = 40
+      x = 0.15, y = 0.90, xref = "x2", yref = "y2", text = "<b>[D3]p</b>",
+      showarrow = TRUE, ax = -15, ay = -25
     ) %>%
     plotly::add_annotations(
-      x = 0.9, y = 0.67, xref = "paper", yref = "y2", text = "<b>[D3]p</b>",
-      showarrow = TRUE, ax = 15, ay = -30
+      x = 0.07, y = 0.54, xref = "x2", yref = "y2", text = "<b>[FGF23]p</b>",
+      showarrow = TRUE, ax = 50, ay = 0
     ) %>%
     plotly::add_annotations(
-      x = 0.88, y = 0.5, xref = "paper", yref = "y2", text = "<b>[FGF23]p</b>",
-      showarrow = TRUE, ax = -50, ay = 10
+      x = 0.04, y = 0.23, xref = "x2", yref = "y2", text = "<b>[PTH]p</b>",
+      showarrow = TRUE, ax = 40, ay = 0
     ) %>%
     plotly::layout(xaxis = xvar_bis, yaxis = yvar2)
 

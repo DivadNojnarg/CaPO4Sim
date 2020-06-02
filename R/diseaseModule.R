@@ -15,8 +15,7 @@ diseaseSelectUi <- function(id) {
   )
 
   tagList(
-    h6("Steady-state simulations"),
-    # primary hyperparathyroidism
+    h6("Case Studies"),
     lapply(seq_along(diseases$ids), function(i) {
       diseaseCheckBox(inputId = ns(diseases$ids[[i]]), label = diseases$labels[[i]])
     }),

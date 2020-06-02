@@ -65,7 +65,10 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 6,
-          HTML(paste(withMathJax(p("$$[Ca^{2+}]_p$$ 1.21 mM")), "<br/>", "(1.1-1.4 mM)"))
+          HTML(paste("<p style=\"text-align:center;line-height:2.0\">",
+                     "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>","<br>",
+                     "1.21 mM","<br>",
+                     "(1.1-1.4 mM)"))
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
@@ -73,7 +76,10 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 6,
-          HTML(paste(withMathJax(p("$$[P_i]_p$$ 2.96 mM")), "<br/>", "(2.1-3.4 mM)"))
+          HTML(paste("<p style=\"text-align:center;line-height:2.0\">",
+                     "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>P<sub>i</sub></b></em>]<sub><em><b>p</b></em></sub></font>","<br>",
+                     "2.96 mM","<br>",
+                     "(2.1-3.4 mM)"))
         )
       },
       if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
@@ -81,7 +87,11 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 12,
-          HTML(paste(withMathJax(p("$$[PTH]_p$$ 6.87 pM")), "<br/>", "(3-16 pM)"))
+          HTML(paste("<br>",
+                     "<p style=\"text-align:center;line-height:2.0\">",
+                     "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>PTH</b></em>]<sub><em><b>p</b></em></sub></font>","<br>",
+                     "6.87 pM","<br>",
+                     "(3-16 pM)"))
         )
       },
       br()

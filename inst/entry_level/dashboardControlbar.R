@@ -13,6 +13,7 @@
 rightsidebar <- rightSidebar(
   background = "dark",
   width = 230,
+
   rightSidebarTabContent(
     id = 1,
     active = TRUE,
@@ -32,4 +33,5 @@ rightsidebar <- rightSidebar(
     # change the dashboard main theme
     skinSelectUi(id = "skin")
   )
+
 )
