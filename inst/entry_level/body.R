@@ -1,6 +1,10 @@
 # useful datas for videos
 video_data <- data.frame(
-  caption = c("Calcium", "Phosphate", "Parathyroid hormone"),
+  caption = c(
+    "Calcium intake, excretion, reabsorption and storage",
+    "Phosphate intake, excretion, reabsorption and storage",
+    "Parathyroid hormone synthesis and regulation"
+  ),
   src = c(
     "https://www.youtube.com/embed/O5QVhiUNwUk",
     "https://www.youtube.com/embed/i1ZhOAKAWHg",

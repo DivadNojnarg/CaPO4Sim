@@ -14,23 +14,20 @@ videoUi <- function(id, data) {
   fluidRow(
     shinydashboardPlus::carousel(
       id = ns("carousel"),
-      .list = lapply(seq_along(video_data$caption), FUN = function(i) {
+      .list = lapply(seq_along(data$caption), FUN = function(i) {
         shinydashboardPlus::carouselItem(
-          caption = video_data$caption[[i]],
+          caption = data$caption[[i]],
           tags$iframe(
-            width = "100%",
-            height = "450",
-            src = video_data$src[[i]],
-            frameborder = "0",
-            `allowfullscreen` <- NA
+            src = data$src[[i]],
+            frameborder="0",
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+            allowfullscreen=NA
           )
         )
       })
     )
   )
 }
-
-
 
 
 #' @title Create a video server logic
