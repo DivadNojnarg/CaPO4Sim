@@ -1,6 +1,6 @@
-Package: CaPO4Sim
+Package: CardioRenalSim
 Type: Package
-Title: A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis
+Title: An eLearning Platform in the Context of Blood Pressure Regulation
 Version: 0.2.0.9000
 Authors@R: c(
     person("David", "Granjon", role = c("aut", "cre", "cph"), email = "dgranjon@ymail.com"),
@@ -14,14 +14,11 @@ Authors@R: c(
     person(family = "The Interface Group", role = "cph", comment = "Hosting Group"),
     person(family = "RinteRface", role = "cph", comment = "R/HTML Templates")
     )
-Maintainer: David Granjon <dgranjon@ymail.com>
-Description: Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps, 
-    building upon on a previously published mathematical model written in C, 
-    to ensure efficient computations. The underlying model is accessible
-    here <https://www.ncbi.nlm.nih.gov/pubmed/28747359>.
-    The first application explores the fundamentals of Ca-Pi homeostasis, 
+Maintainer: Diane de Zélicourt <diane.dezelicourt@physiol.uzh.ch>
+Description: Explore short and long-term blood presure regulation mechanisms with two novel 'Shiny' apps. 
+    The first application explores the fundamentals of principles of blood pressure regulation, 
     while the second provides interactive case studies for in-depth exploration of the topic, 
-    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. 
+    thereby seeking to foster student engagement and an integrative understanding. 
     These applications are hosted at <https://rinterface.com/AppsPhysiol.html>.
 Imports: 
     shiny, 
@@ -42,4 +39,4 @@ Imports:
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

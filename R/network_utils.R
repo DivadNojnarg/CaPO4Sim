@@ -1,6 +1,6 @@
-#' @title CaPO4 Network Generator
+#' @title CardioRenal Network Generator
 #'
-#' @description Create a CaPO4 network taking nodes and edges as inputs
+#' @description Create a CardioRenal network taking nodes and edges as inputs
 #'
 #' @param nodes A dataframe of nodes provided by \link{generate_nodes}.
 #' @param edges A dataframe of edges provided by \link{generate_edges}.
@@ -73,11 +73,11 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
 }
 
 
-#' @title CaPO4 Nodes Generator
+#' @title CardioRenal Nodes Generator
 #'
-#' @description Generate nodes for the CaPO4 network
+#' @description Generate nodes for the CardioRenal network
 #'
-#' @param components Shiny input CaPO4 component selector. See \link{networkOptions}.
+#' @param components Shiny input CardioRenal component selector. See \link{networkOptions}.
 #' @param organs Shiny input to toggle organs display. See \link{networkOptions}.
 #' @param regulations Shiny input to toggle hormone display. See \link{networkOptions}.
 #' @param background Shiny input background selector. See \link{networkOptions}.
@@ -112,21 +112,21 @@ generate_nodes <- function(components, organs, regulations, background, diseases
       ifelse(regulations(),"image","text")
     ),
     image = c(
-      "CaPO4_network/intestine.svg", "CaPO4_network/plasma.svg",
-      "CaPO4_network/rapid-bone.svg", "CaPO4_network/bone.svg",
-      "CaPO4_network/kidney.svg", "CaPO4_network/kidney_zoom1.svg",
-      "CaPO4_network/urine.svg", "CaPO4_network/cells.svg",
-      "CaPO4_network/Cap.svg", "CaPO4_network/PO4.svg",
+      "CardioRenal_network/intestine.svg", "CardioRenal_network/plasma.svg",
+      "CardioRenal_network/rapid-bone.svg", "CardioRenal_network/bone.svg",
+      "CardioRenal_network/kidney.svg", "CardioRenal_network/kidney_zoom1.svg",
+      "CardioRenal_network/urine.svg", "CardioRenal_network/cells.svg",
+      "CardioRenal_network/Cap.svg", "CardioRenal_network/PO4.svg",
       if (is.null(background())) {
-        "CaPO4_network/parathyroid_gland.svg"
+        "CardioRenal_network/parathyroid_gland.svg"
       } else if (background() == "rat") {
-        "CaPO4_network/parathyroid_gland.svg"
+        "CardioRenal_network/parathyroid_gland.svg"
       } else {
-        "CaPO4_network/parathyroid_gland_human.svg"
+        "CardioRenal_network/parathyroid_gland_human.svg"
       }
-      ,"CaPO4_network/PTH.svg", "CaPO4_network/D3.svg",
-      "CaPO4_network/D3.svg", "CaPO4_network/D3.svg",
-      "CaPO4_network/FGF23.svg"
+      ,"CardioRenal_network/PTH.svg", "CardioRenal_network/D3.svg",
+      "CardioRenal_network/D3.svg", "CardioRenal_network/D3.svg",
+      "CardioRenal_network/FGF23.svg"
     ),
     label = c(rep("", 6), rep("", 10)),
     fixed = list("x" = TRUE, "y" = TRUE),
@@ -209,11 +209,11 @@ generate_nodes <- function(components, organs, regulations, background, diseases
 
 
 
-#' @title CaPO4 Edges Generator
+#' @title CardioRenal Edges Generator
 #'
-#' @description Generate edges for the CaPO4 network
+#' @description Generate edges for the CardioRenal network
 #'
-#' @param components Shiny input CaPO4 component selector. See \link{networkOptions}.
+#' @param components Shiny input CardioRenal component selector. See \link{networkOptions}.
 #' @param organs Shiny input to toggle organs display. See \link{networkOptions}.
 #' @param regulations Shiny input to toggle hormone display. See \link{networkOptions}.
 #' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
@@ -401,7 +401,7 @@ generate_edges <- function(components, organs, regulations, diseases,
       1800,
       rep(200, 8)
     ),
-    # to show either Ca or PO4 or CaPO4 network arrows
+    # display option to show/hide specific species or regulatory network arrows
     hidden = c(
       ## organ arrows ##
       if (organs()) {

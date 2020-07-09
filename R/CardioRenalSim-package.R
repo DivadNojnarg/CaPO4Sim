@@ -1,6 +1,6 @@
-#' CaPO4Sim
+#' CardioRenalSim
 #'
-#' @name CaPO4Sim
+#' @name CardioRenalSim
 #' @import shiny
 #' @docType package
 NULL

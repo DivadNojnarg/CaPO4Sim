@@ -5,26 +5,24 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis • CaPO4Sim</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis">
-<meta property="og:description" content="Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps, 
-    building upon on a previously published mathematical model written in C, 
-    to ensure efficient computations. The underlying model is accessible
-    here &lt;https://www.ncbi.nlm.nih.gov/pubmed/28747359&gt;.
-    The first application explores the fundamentals of Ca-Pi homeostasis, 
+<title>An eLearning Platform in the Context of Blood Pressure Regulation • CardioRenalSim</title>
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="An eLearning Platform in the Context of Blood Pressure Regulation">
+<meta property="og:description" content="Explore short and long-term blood presure regulation mechanisms with two novel Shiny apps. 
+    The first application explores the fundamentals of principles of blood pressure regulation, 
     while the second provides interactive case studies for in-depth exploration of the topic, 
-    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. 
+    thereby seeking to foster student engagement and an integrative understanding. 
     These applications are hosted at &lt;https://rinterface.com/AppsPhysiol.html&gt;.">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -36,7 +34,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">CaPO4Sim</a>
+        <a class="navbar-link" href="index.html">CardioRenalSim</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
@@ -45,7 +43,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -65,19 +63,18 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="capo4sim-the-virtual-physiology-simulator" class="section level1">
+<div id="cardiorenalsim-elearning-application-for-blood-pressure-regulation" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#capo4sim-the-virtual-physiology-simulator" class="anchor"></a>CaPO4Sim, the Virtual Physiology Simulator <img src="reference/figures/CaPO4sim_hex.svg" width="200" align="right">
-</h1></div>
-
-<p>This apps were developed in the <a href="https://interfacegroup.ch">Interface Group</a>. <img src="https://lh5.googleusercontent.com/p/AF1QipMbcic6JUV3C8MuraR0BWq7hV-T-I4Y7QuAliz_=w160-h160-k-no"></p>
+<a href="#cardiorenalsim-elearning-application-for-blood-pressure-regulation" class="anchor"></a>CardioRenalSim, eLearning application for blood pressure regulation</h1></div>
+<p>These applications were developed in the <a href="https://interfacegroup.ch">Interface Group</a>. <img src="https://lh5.googleusercontent.com/p/AF1QipMbcic6JUV3C8MuraR0BWq7hV-T-I4Y7QuAliz_=w160-h160-k-no"></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>As this package is not currently on CRAN, install it via devtools:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"DivadNojnarg/CaPO4Sim"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"ddezel/CardioRenalSim"</span>)</pre></div>
 </div>
 <div id="access-apps" class="section level2">
 <h2 class="hasAnchor">
@@ -87,13 +84,12 @@
 <li>access the <a href="http://physiol-seafile.uzh.ch">Apps.Physiol</a> RStudio Connect server and selected the relevant app</li>
 <li>from the package (see below)</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(CaPO4Sim)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># entry level app</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span>(<span class="dt">context =</span> <span class="st">"introduction"</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># virtual patient Bootstrap 4</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span>(<span class="dt">context =</span> <span class="st">"virtual-patient"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CardioRenalSim</span>)
+<span class="co"># entry level app</span>
+<span class="fu"><a href="reference/run_CardioRenalSim.html">run_CardioRenalSim</a></span>(<span class="kw">context</span> <span class="kw">=</span> <span class="st">"introduction"</span>)
+<span class="co"># virtual patient Bootstrap 4</span>
+<span class="fu"><a href="reference/run_CardioRenalSim.html">run_CardioRenalSim</a></span>(<span class="kw">context</span> <span class="kw">=</span> <span class="st">"virtual-patient"</span>)</pre></div>
 <p>Note that for the patient simulator, you need to install a compiler: either <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> for windows or clang for <a href="https://cran.r-project.org/bin/macosx/tools/">Mac/Linux</a>. If you don’t want, you can still access these apps online.</p>
-<p>The Bootstrap 3 version will not be updated anymore but can be accessed <a href="http://physiol-seafile.uzh.ch:3939/virtual_patient/">here</a>.</p>
 </div>
 <div id="demonstration" class="section level2">
 <h2 class="hasAnchor">
@@ -101,19 +97,19 @@
 <div id="entry-level-application" class="section level3">
 <h3 class="hasAnchor">
 <a href="#entry-level-application" class="anchor"></a>Entry Level Application</h3>
-<p><img src="https://community.rstudio.com/uploads/default/original/2X/b/bd5306bab9eb7561da943c59d2693639dc719168.gif"></p>
+<p>Coming up soon</p>
 </div>
 <div id="virtual-patient-simulator" class="section level3">
 <h3 class="hasAnchor">
 <a href="#virtual-patient-simulator" class="anchor"></a>Virtual Patient Simulator</h3>
-<p><img src="https://community.rstudio.com/uploads/default/original/2X/e/eb1013fd09ccf10cbe13da3f0168eebfcb0eba75.gif"></p>
+<p>Coming up soon</p>
 </div>
 </div>
 <div id="contacts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contacts" class="anchor"></a><strong>Contacts</strong>
 </h2>
-<p><em>david.granjon_at_uzh.ch</em></p>
+<p><em>diane.dezelicourt_at_physiol.uzh.ch</em></p>
 </div>
 <div id="staff" class="section level2">
 <h2 class="hasAnchor">
@@ -169,15 +165,8 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div class="links">
-<h2>Links</h2>
-<ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=CaPO4Sim">https://​cloud.r-project.org/​package=CaPO4Sim</a>
-</li>
-</ul>
-</div>
-<div class="license">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
@@ -194,27 +183,23 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.com/DivadNojnarg/CaPO4Sim"><img src="https://travis-ci.com/DivadNojnarg/CaPO4Sim.svg?token=wk4LByQczpy1WzofyA7q&amp;branch=master" alt="Travis build status"></a></li>
-<li><a href="https://cran.r-project.org/package=CaPO4Sim"><img src="https://www.r-pkg.org/badges/version/CaPO4Sim" alt="CRAN status"></a></li>
-</ul>
+  </div>
 </div>
-</div>
-</div>
+
 
       <footer><div class="copyright">
   <p>Developed by David Granjon,  University of Lausanne,  University of Zurich,  Kidney NCCR.CH.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

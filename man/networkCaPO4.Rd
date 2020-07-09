@@ -4,9 +4,22 @@
 \alias{networkCaPO4}
 \title{CaPO4 Network server module}
 \usage{
-networkCaPO4(input, output, session, isMobile, components, organs,
-  regulations, background, diseases, organs_nodes_size,
-  hormones_nodes_size, organs_edges_size, hormones_edges_size, help)
+networkCaPO4(
+  input,
+  output,
+  session,
+  isMobile,
+  components,
+  organs,
+  regulations,
+  background,
+  diseases,
+  organs_nodes_size,
+  hormones_nodes_size,
+  organs_edges_size,
+  hormones_edges_size,
+  help
+)
 }
 \arguments{
 \item{input}{Shiny inputs}

@@ -22,7 +22,7 @@ library(shinyMobile)
 library(dplyr)
 library(V8)
 
-library(CaPO4Sim)
+library(CardioRenalSim)
 
 # Load the template components of UI
 source("patient_selector.R")

@@ -1,5 +1,5 @@
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to the Calcium Phosphate simulator, have Fun!")
-  addResourcePath('logos', system.file("logos", package = "CaPO4Sim"))
-  addResourcePath('CaPO4_network', system.file("CaPO4_network", package = "CaPO4Sim"))
+  packageStartupMessage("Welcome to the Cardio-Renal applications, have Fun!")
+  addResourcePath('logos', system.file("logos", package = "CardioRenalSim"))
+  addResourcePath('CardioRenal_network', system.file("CardioRenal_network", package = "CardioRenalSim"))
 }

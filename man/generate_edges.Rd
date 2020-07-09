@@ -4,8 +4,14 @@
 \alias{generate_edges}
 \title{CaPO4 Edges Generator}
 \usage{
-generate_edges(components, organs, regulations, diseases,
-  organs_edges_size, hormones_edges_size)
+generate_edges(
+  components,
+  organs,
+  regulations,
+  diseases,
+  organs_edges_size,
+  hormones_edges_size
+)
 }
 \arguments{
 \item{components}{Shiny input CaPO4 component selector. See \link{networkOptions}.}

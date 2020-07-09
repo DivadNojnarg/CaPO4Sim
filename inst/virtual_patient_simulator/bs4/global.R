@@ -22,7 +22,7 @@ library(shinyFeedback)
 library(bs4Dash)
 library(dplyr)
 
-library(CaPO4Sim)
+library(CardioRenalSim)
 
 # Load the template components of UI
 source("patient_selector.R")

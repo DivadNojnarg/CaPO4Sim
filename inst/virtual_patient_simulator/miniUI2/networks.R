@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------
-#  This codes contains all network skeletons for CaPO4, PTH, ...
+#  This codes contains all network skeletons for CardioRenal, PTH, ...
 #  For each network, we define two dataframe: node contains all informations
 #  related to nodes and edges to edges...
 #
@@ -73,34 +73,34 @@ generate_network <- function(input, nodes, edges, usephysics = FALSE) {
     )
 }
 
-# % % % % #
-#         #
-#  CaPO4  #
-#         #
-# % % % % #
+# % % % % % % % #
+#               #
+#  CardioRenal  #
+#               #
+# % % % % % % % #
 
-# Generate nodes for the CaPO4 network
+# Generate nodes for the CardioRenal network
 generate_nodes_Ca <- function(input) {
 
   data.frame(
     id = 1:16,
     shape = rep("image", 16),
     image = c(
-      "CaPO4_network/intestine.svg", "CaPO4_network/plasma.svg",
-      "CaPO4_network/rapid-bone.svg", "CaPO4_network/bone.svg",
-      "CaPO4_network/kidney.svg", "CaPO4_network/kidney_zoom1.svg",
-      "CaPO4_network/urine.svg", "CaPO4_network/cells.svg",
-      "CaPO4_network/Cap.svg", "CaPO4_network/PO4.svg",
+      "CardioRenal_network/intestine.svg", "CardioRenal_network/plasma.svg",
+      "CardioRenal_network/rapid-bone.svg", "CardioRenal_network/bone.svg",
+      "CardioRenal_network/kidney.svg", "CardioRenal_network/kidney_zoom1.svg",
+      "CardioRenal_network/urine.svg", "CardioRenal_network/cells.svg",
+      "CardioRenal_network/Cap.svg", "CardioRenal_network/PO4.svg",
       if (is.null(input$background_choice)) {
-        "CaPO4_network/parathyroid_gland.svg"
+        "CardioRenal_network/parathyroid_gland.svg"
       } else if (input$background_choice == "rat") {
-        "CaPO4_network/parathyroid_gland.svg"
+        "CardioRenal_network/parathyroid_gland.svg"
       } else {
-        "CaPO4_network/parathyroid_gland_human.svg"
+        "CardioRenal_network/parathyroid_gland_human.svg"
       }
-      , "CaPO4_network/PTH.svg", "CaPO4_network/D3.svg",
-      "CaPO4_network/D3.svg", "CaPO4_network/D3.svg",
-      "CaPO4_network/FGF23.svg"
+      , "CardioRenal_network/PTH.svg", "CardioRenal_network/D3.svg",
+      "CardioRenal_network/D3.svg", "CardioRenal_network/D3.svg",
+      "CardioRenal_network/FGF23.svg"
     ),
     label = c(rep("", 6), rep("",10)),
     # tooltip to display an image
@@ -185,7 +185,7 @@ generate_nodes_Ca <- function(input) {
   )
 }
 
-# Generate edges for the CaPO4 network
+# Generate edges for the regulation network
 generate_edges_Ca <- function(input) {
   req(input$width_organs, input$width_hormones)
   data.frame(
@@ -237,7 +237,7 @@ generate_edges_Ca <- function(input) {
     smooth = c(rep(TRUE,29)),
     length = c(200,rep(300,2),rep(300,2),200,300,
                200,rep(300,4),rep(200,8), 1700, rep(200,8)),
-    # to show either Ca or PO4 or CaPO4 network arrows
+    # to select which species to display of whether to show the regulatory network arrows
     hidden = c(
       ## organ arrows ##
       if (input$network_organ_choice == TRUE) {

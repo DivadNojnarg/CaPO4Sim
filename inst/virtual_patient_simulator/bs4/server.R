@@ -158,7 +158,7 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
   #  Render Patient boxes: patient_info,
   #  medical_history, timeline events as well
-  #  as the graph and CaPO4 network box
+  #  as the graph and CardioRenal network box
   #
   #-------------------------------------------------------------------------
 
@@ -628,7 +628,7 @@ server <- function(input, output, session) {
             br(),
             HTML(
               "You will be presented with a patient case-study related
-               to CaPO4 homeostasis. The goal of this activity is to
+               to blood pressure regulation. The goal of this activity is to
                <b>establish</b> a diagnosis and <b>treat</b>
                the patient correctly:
                <ol>
@@ -962,15 +962,15 @@ server <- function(input, output, session) {
         inputId = "plasma_analysis_intro",
         title = "How to deal with plasma analysis?",
         text = tagList(
-          img(src = "CaPO4_network/plasma.svg", width = "100px", height = "100px"),
+          img(src = "CardioRenal_network/plasma.svg", width = "100px", height = "100px"),
           br(),
           "You can access any plasma concentration by clicking on the",
-          img(src = "CaPO4_network/plasma.svg", width = "50px", height = "50px"),
+          img(src = "CardioRenal_network/plasma.svg", width = "50px", height = "50px"),
           " node. Besides, other compartments are available such as",
-          img(src = "CaPO4_network/parathyroid_gland_human.svg", width = "50px", height = "50px"),
-          img(src = "CaPO4_network/cells.svg", width = "50px", height = "50px"),
-          img(src = "CaPO4_network/bone.svg", width = "50px", height = "50px"),
-          "and", img(src = "CaPO4_network/rapid-bone.svg", width = "50px", height = "50px")
+          img(src = "CardioRenal_network/parathyroid_gland_human.svg", width = "50px", height = "50px"),
+          img(src = "CardioRenal_network/cells.svg", width = "50px", height = "50px"),
+          img(src = "CardioRenal_network/bone.svg", width = "50px", height = "50px"),
+          "and", img(src = "CardioRenal_network/rapid-bone.svg", width = "50px", height = "50px")
         ),
         btn_labels = c(NULL, "Ok"),
         type = "warning",
@@ -1812,7 +1812,7 @@ server <- function(input, output, session) {
       ) # to set the initial zoom (1 by default)
   })
 
-  # Events for the CaPO4 Homeostasis diagramm whenever a flux change
+  # Events for the CardioRenal Homeostasis diagramm whenever a flux change
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4
   # injection as well as PO4 gavage
   observe({

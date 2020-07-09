@@ -8,10 +8,10 @@
 #'
 #' @examples
 #' if (interactive()) {
-#'  run_CaPO4Sim(context = "introduction")
-#'  run_CaPO4Sim(context = "virtual-patient")
+#'  run_CardioRenalSim(context = "introduction")
+#'  run_CardioRenalSim(context = "virtual-patient")
 #' }
-run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
+run_CardioRenalSim <- function(context = c("introduction", "virtual-patient")) {
 
   context <- match.arg(context)
 
@@ -44,8 +44,8 @@ run_CaPO4Sim <- function(context = c("introduction", "virtual-patient")) {
 
   # run apps
   if (context == "introduction") {
-    runApp(appDir = system.file("entry_level", package = 'CaPO4Sim', mustWork = TRUE))
+    runApp(appDir = system.file("entry_level", package = 'CardioRenalSim', mustWork = TRUE))
   } else {
-    runApp(appDir = system.file("virtual_patient_simulator/bs4", package = 'CaPO4Sim', mustWork = TRUE))
+    runApp(appDir = system.file("virtual_patient_simulator/bs4", package = 'CardioRenalSim', mustWork = TRUE))
   }
 }

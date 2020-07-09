@@ -207,11 +207,11 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
       withMathJax(
         HTML(
           paste(
-            "<u><b>Mathematical model of calcium and phosphate homeostasis in the rat:</b></u>", br(), br(),
+            "<u><b>Mathematical model of blood pressure regulation:</b></u>", br(), br(),
             "<b>1) Regulatory mechanisms:</b>", br(),
             img(src = "rintrojs_help/node_help.svg",
                 height = "70px", width = "70px"),
-            "Organs involved in \\(Ca\\) and \\(P_i\\) metabolism", br(),
+            "Organs involved in the regulation of blood pressure", br(),
             img(src = "rintrojs_help/regulation_help.svg",
                 height = "60px", width = "70px"),
             "Regulatory hormones and ions", br(),
@@ -223,26 +223,26 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
             "Inhibitor", br(),
             img(src = "rintrojs_help/dashed_arrow_help.svg",
                 height = "40px", width = "70px"),
-            "Mixed effect or opposite effects on \\([Ca]_p\\) and \\([P_i]_p\\).
+            "Mixed effect or opposite effects.
             Click on the detailed cellular view to see individual actions", br(), br(), br(),
             "<b>2) FLuxes and concentrations:</b>", br(),
             "\\([...]_p\\)", "Plasma concentrations", br(),
             img(src = "rintrojs_help/arrow_help.svg",
                 height = "40px", width = "70px"),
-            "\\(Ca\\) and \\(P_i\\) fluxes", br(), br(),br(),
+            "Fluxes", br(), br(),br(),
             "<b>3) Explore <mark><font color=\"#FF0000\">regulatory pathways</font></mark>:</b>", br(),
             tags$ul(
               tags$li(
                 HTML(
                   paste(
                     "<b><mark><font color=\"#FF0000\">Double click</font></mark></b> on the ",
-                    "intestine", img(src = "CaPO4_network/intestine.svg",
+                    "intestine", img(src = "CardioRenal_network/intestine.svg",
                                      style="vertical-align:bottom; width:25px; height:45px; object-fit: cover; object-position: 50% 0%;"),
-                    ", kidney",  img(src = "CaPO4_network/kidney_zoom1.svg",
+                    ", kidney",  img(src = "CardioRenal_network/kidney_zoom1.svg",
                                      style="vertical-align:bottom; width:25px; height:45px; object-fit: cover; object-position: 100% 0%;"),
-                    ", parathyroid gland", img(src = "CaPO4_network/parathyroid_gland.svg",
+                    ", parathyroid gland", img(src = "CardioRenal_network/parathyroid_gland.svg",
                                                style="vertical-align:middle; width:40px; height:35px; object-fit: cover; object-position: 50% 0%;"),
-                    " or bone",  img(src = "CaPO4_network/bone.svg",
+                    " or bone",  img(src = "CardioRenal_network/bone.svg",
                                      style="vertical-align:middle; width:40px; height:35px; object-fit: cover; object-position: 50% 0%;"),
                     br(), "to visualize detailed intra-cellular regulatory pathways</b>"
 #DDZ                    "<b><mark><font color=\"#FF0000\">Mouse
@@ -275,7 +275,7 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
               the regulation is stronger, decreases if it is weaker")
               ),
               tags$li(
-                "Visualize changes in \\(Ca\\) and \\(P_i\\) fluxes:", br(),
+                "Visualize changes in fluxes:", br(),
                 img(src = "rintrojs_help/red_arrow_help.svg",
                     height = "70px", width = "70px"),
                 "if the flux is decreased", ",",

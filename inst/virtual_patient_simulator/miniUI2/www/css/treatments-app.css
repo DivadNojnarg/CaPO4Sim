@@ -1,7 +1,7 @@
 .network_cap{
   padding-left: 0;
   padding-right: 0;
-  background-image:url('CaPO4_network/rat_wholebody.svg');
+  background-image:url('CardioRenal_network/rat_wholebody.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -17,7 +17,7 @@
 .network_caprat{
   padding-left: 0;
   padding-right: 0;
-  background-image:url('CaPO4_network/rat_wholebody.svg');
+  background-image:url('CardioRenal_network/rat_wholebody.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -27,7 +27,7 @@
 .network_caphuman{
   padding-left: 0;
   padding-right: 0;
-  background-image:url('CaPO4_network/human_wholebody.svg');
+  background-image:url('CardioRenal_network/human_wholebody.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

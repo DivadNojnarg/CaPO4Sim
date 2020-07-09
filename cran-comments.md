@@ -13,7 +13,7 @@
 
 ## Re-submission
 I fixed the description file (calcium and phosphate and not Calcium and Phosphate).
-I cannot add examples in most of the R files since they correspond to tightly connected shiny modules that do not work alone, so not relevant in this case. run_CaPO4Sim is the only "real" function with a working example that calls all the previous functions together. See here for more details: https://shiny.rstudio.com/articles/communicate-bet-modules.html
+I cannot add examples in most of the R files since they correspond to tightly connected shiny modules that do not work alone, so not relevant in this case. run_CardioRenalSim is the only "real" function with a working example that calls all the previous functions together. See here for more details: https://shiny.rstudio.com/articles/communicate-bet-modules.html
 I fixed replace the beginning of the description by "Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps, 
     building upon on a previously published mathematical model written in C, 
     to ensure efficient computations".

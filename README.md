@@ -1,8 +1,7 @@
-# CaPO4Sim, the Virtual Physiology Simulator <img src="man/figures/CaPO4sim_hex.svg" width=200 align="right" />
-[![Travis build status](https://travis-ci.com/DivadNojnarg/CaPO4Sim.svg?token=wk4LByQczpy1WzofyA7q&branch=master)](https://travis-ci.com/DivadNojnarg/CaPO4Sim)
-[![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
+# CardioRenalSim, eLearning application for blood pressure regulation
 
-This apps were developed in the [Interface Group](https://interfacegroup.ch).
+
+These applications were developed in the [Interface Group](https://interfacegroup.ch).
 ![](https://lh5.googleusercontent.com/p/AF1QipMbcic6JUV3C8MuraR0BWq7hV-T-I4Y7QuAliz_=w160-h160-k-no)
 
 ## Installation
@@ -10,7 +9,7 @@ This apps were developed in the [Interface Group](https://interfacegroup.ch).
 As this package is not currently on CRAN, install it via devtools:
 
 ```r
-devtools::install_github("DivadNojnarg/CaPO4Sim")
+devtools::install_github("ddezel/CardioRenalSim")
 ```
 
 ## Access Apps
@@ -21,31 +20,29 @@ There are two ways to run these apps:
 - from the package (see below)
 
 ```r
-library(CaPO4Sim)
+library(CardioRenalSim)
 # entry level app
-run_CaPO4Sim(context = "introduction")
+run_CardioRenalSim(context = "introduction")
 # virtual patient Bootstrap 4
-run_CaPO4Sim(context = "virtual-patient")
+run_CardioRenalSim(context = "virtual-patient")
 ```
 
 Note that for the patient simulator, you need to install a compiler: either [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for windows or clang for [Mac/Linux](https://cran.r-project.org/bin/macosx/tools/). If you don't want,
 you can still access these apps online.
 
-The Bootstrap 3 version will not be updated anymore but can be accessed [here](http://physiol-seafile.uzh.ch:3939/virtual_patient/).
+
 
 ## Demonstration
 
 ### Entry Level Application
-
-![](https://community.rstudio.com/uploads/default/original/2X/b/bd5306bab9eb7561da943c59d2693639dc719168.gif)
+Coming up soon
 
 ### Virtual Patient Simulator
-
-![](https://community.rstudio.com/uploads/default/original/2X/e/eb1013fd09ccf10cbe13da3f0168eebfcb0eba75.gif)
+Coming up soon
 
 ## **Contacts** 
 
-*david.granjon_at_uzh.ch*
+*diane.dezelicourt_at_physiol.uzh.ch*
 
 ## **Staff** 
 + *Project manager*: [Dr. Diane de Zélicourt, Prof. Vartan Kurtcuoglu and Dr. David Granjon](http://interfacegroup.ch/people/)

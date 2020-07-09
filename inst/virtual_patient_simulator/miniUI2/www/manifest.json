@@ -1,7 +1,7 @@
 {
   "name": "Virtual Patient Simulator",
-  "short_name": "CaPO4Sim",
-  "description": "Role play game to practice knowledge around Calcium and Phosphate homeostasis",
+  "short_name": "CardioRenalSim",
+  "description": "Virtual Patient Case study on the theme of blood pressure control",
   "lang": "en-US",
   "start_url": "https://dgranjon.shinyapps.io/virtual_patient_v3",
   "display": "standalone",

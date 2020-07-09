@@ -17,7 +17,7 @@ library(rintrojs)
 library(magrittr)
 library(DT)
 
-library(CaPO4Sim)
+library(CardioRenalSim)
 
 # 2) Load the template components
 source("help.R")
