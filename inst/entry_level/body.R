@@ -1,14 +1,14 @@
 # useful datas for videos
 video_data <- data.frame(
   caption = c(
-    "Calcium intake, excretion, reabsorption and storage",
-    "Phosphate intake, excretion, reabsorption and storage",
-    "Parathyroid hormone synthesis and regulation"
+    "Human Physiology - Introduction to the Regulation of Mean Arterial Pressure by Dr. H.R. Ketchum",
+    "Regulation of Blood Pressure (Hormones) - Part I, by A. Hasudungan",
+    "Regulation of Blood Pressure (Hormones) - Part II, by A. Hasudungan"
   ),
   src = c(
-    "https://www.youtube.com/embed/O5QVhiUNwUk",
-    "https://www.youtube.com/embed/i1ZhOAKAWHg",
-    "https://www.youtube.com/embed/_Ol9-odgSxM"
+    "https://www.youtube.com/embed/cW71zR29v_M",
+    "https://www.youtube.com/embed/tANEMMGoy9k",
+    "https://www.youtube.com/embed/HzfAfsZVtYU"
   )
 )
 
