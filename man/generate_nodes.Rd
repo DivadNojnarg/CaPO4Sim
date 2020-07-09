@@ -2,7 +2,7 @@
 % Please edit documentation in R/network_utils.R
 \name{generate_nodes}
 \alias{generate_nodes}
-\title{CaPO4 Nodes Generator}
+\title{CardioRenal Nodes Generator}
 \usage{
 generate_nodes(
   components,
@@ -15,7 +15,7 @@ generate_nodes(
 )
 }
 \arguments{
-\item{components}{Shiny input CaPO4 component selector. See \link{networkOptions}.}
+\item{components}{Shiny input CardioRenal component selector. See \link{networkOptions}.}
 
 \item{organs}{Shiny input to toggle organs display. See \link{networkOptions}.}
 
@@ -30,5 +30,5 @@ generate_nodes(
 \item{hormones_nodes_size}{Shiny input for hormones node size. See \link{networkOptions}..}
 }
 \description{
-Generate nodes for the CaPO4 network
+Generate nodes for the CardioRenal network
 }

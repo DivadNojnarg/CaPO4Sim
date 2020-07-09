@@ -15,7 +15,7 @@ myCarousel(
 )
 }
 \arguments{
-\item{...}{Slot for \link(carouselItem)}
+\item{...}{Slot for \link{carouselItem}}
 
 \item{id}{Carousel id. Must be unique.}
 

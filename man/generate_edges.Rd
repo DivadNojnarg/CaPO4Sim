@@ -2,7 +2,7 @@
 % Please edit documentation in R/network_utils.R
 \name{generate_edges}
 \alias{generate_edges}
-\title{CaPO4 Edges Generator}
+\title{CardioRenal Edges Generator}
 \usage{
 generate_edges(
   components,
@@ -14,7 +14,7 @@ generate_edges(
 )
 }
 \arguments{
-\item{components}{Shiny input CaPO4 component selector. See \link{networkOptions}.}
+\item{components}{Shiny input CardioRenal component selector. See \link{networkOptions}.}
 
 \item{organs}{Shiny input to toggle organs display. See \link{networkOptions}.}
 
@@ -27,5 +27,5 @@ generate_edges(
 \item{hormones_edges_size}{Shiny input for hormones edges size. See \link{networkOptions}.}
 }
 \description{
-Generate edges for the CaPO4 network
+Generate edges for the CardioRenal network
 }

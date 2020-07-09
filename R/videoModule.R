@@ -49,7 +49,7 @@ video <- function(input, output, session) {}
 #'
 #' @description Creates a carousel. Adapted from shinydashboardplus to also allow control of the carousel animation
 #'
-#' @param ... Slot for \link(carouselItem)
+#' @param ... Slot for \link{carouselItem}
 #' @param id Carousel id. Must be unique.
 #' @param indicators Whether to display left and right indicators.
 #' @param width Carousel width. 6 by default.

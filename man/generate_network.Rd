@@ -2,7 +2,7 @@
 % Please edit documentation in R/network_utils.R
 \name{generate_network}
 \alias{generate_network}
-\title{CaPO4 Network Generator}
+\title{CardioRenal Network Generator}
 \usage{
 generate_network(nodes, edges, usephysics = FALSE, isMobile)
 }
@@ -16,5 +16,5 @@ generate_network(nodes, edges, usephysics = FALSE, isMobile)
 \item{isMobile}{Shiny input checking if the app is running on a cellphone/tablet.}
 }
 \description{
-Create a CaPO4 network taking nodes and edges as inputs
+Create a CardioRenal network taking nodes and edges as inputs
 }
