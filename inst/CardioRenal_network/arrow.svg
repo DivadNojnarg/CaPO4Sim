@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 71.178573 86.388507"
+   version="1.1"
+   id="svg438"
+   sodipodi:docname="arrow.svg"
+   width="71.178574"
+   height="86.388504"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata442">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     id="namedview440"
+     showgrid="false"
+     inkscape:zoom="7.6546555"
+     inkscape:cx="34.490367"
+     inkscape:cy="43.241147"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg438" />
+  <defs
+     id="defs428">
+    <style
+       id="style325">.cls-1{fill:url(#Unbenannter_Verlauf_18);}.cls-2{fill:url(#Unbenannter_Verlauf_14);}.cls-3{fill:none;stroke-width:3px;}.cls-10,.cls-11,.cls-13,.cls-14,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{stroke:#ae5536;}.cls-4{fill:#c27f68;}.cls-10,.cls-11,.cls-4,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{stroke-miterlimit:10;}.cls-10,.cls-11,.cls-13,.cls-14,.cls-4,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{stroke-width:0.5px;}.cls-5{fill:#dbb4a7;}.cls-6{fill:#f4e7e3;}.cls-7{fill:#e4c7bd;}.cls-8{fill:#e3b4a1;}.cls-9{fill:#b5d8e1;}.cls-10,.cls-14{fill:#f6e6a7;}.cls-11{fill:#eac83b;}.cls-12{mask:url(#mask);}.cls-13{fill:#f4e9e5;}.cls-13,.cls-14{stroke-linecap:round;stroke-linejoin:round;}.cls-15{filter:url(#luminosity-noclip);}</style>
+    <linearGradient
+       id="Unbenannter_Verlauf_18"
+       x1="17394.41"
+       y1="13425.33"
+       x2="17400.301"
+       y2="13425.33"
+       gradientTransform="matrix(-0.05,-0.96,-1,0.05,14306.85,16102.41)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0.59"
+         id="stop327" />
+      <stop
+         offset="1"
+         stop-color="#fff"
+         id="stop329" />
+    </linearGradient>
+    <linearGradient
+       id="Unbenannter_Verlauf_14"
+       x1="-2390.1299"
+       y1="6561.6401"
+       x2="-2384.24"
+       y2="6561.6401"
+       gradientTransform="matrix(0.4,0.88,0.91,-0.42,-4973.86,4855.75)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0.59"
+         id="stop332" />
+      <stop
+         offset="1"
+         stop-color="#fff"
+         id="stop334" />
+    </linearGradient>
+    <filter
+       id="luminosity-noclip"
+       x="35.34"
+       y="34.310001"
+       width="15.48"
+       height="26.33"
+       filterUnits="userSpaceOnUse"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         flood-color="#fff"
+         result="bg"
+         id="feFlood337" />
+      <feBlend
+         in="SourceGraphic"
+         in2="bg"
+         id="feBlend339"
+         mode="normal" />
+    </filter>
+    <symbol
+       id="Pfeil"
+       data-name="Pfeil"
+       viewBox="0 0 70 77.95">
+      <path
+         class="cls-1"
+         d="M 55.63,26.92 A 71.28,71.28 0 0 0 36.89,31.75 59,59 0 0 0 20.29,42.26 63.77,63.77 0 0 0 7.56,58.26 70.51,70.51 0 0 0 3,67.72 60.29,60.29 0 0 0 0,78 61.34,61.34 0 0 1 0.92,67.14 73.82,73.82 0 0 1 3.52,56.45 69.34,69.34 0 0 1 30.43,20.24 86.6,86.6 0 0 1 51.59,9.79 Z"
+         style="fill:#999999"
+         id="path404" />
+      <polygon
+         class="cls-1"
+         points="48.15,0 70,15.95 54.06,37.81 "
+         style="fill:#999999"
+         id="polygon406" />
+    </symbol>
+  </defs>
+  <g
+     id="Ebene_13"
+     data-name="Ebene 13"
+     transform="matrix(-0.045498,0.387765,0.396492,0.046522,40.279472,0.37059336)">
+    <use
+       width="70"
+       height="77.949997"
+       xlink:href="#Pfeil"
+       id="use435"
+       x="0"
+       y="0" />
+  </g>
+</svg>

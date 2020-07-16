@@ -1,0 +1,64 @@
+<svg 
+	viewBox="0 0 84.066354 100" 
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	overflow="hidden">
+<defs>
+	<style>
+		.cls-1{fill:#fdeabf;}
+		.cls-2{font-size:14px;font-family:Arial-BoldMT, Arial;font-weight:700;}
+		.cls-3,.cls-4,.cls-5{stroke:#c34a29;}
+		.cls-3,.cls-4,.cls-5{stroke-linecap:round;}
+		.cls-3,.cls-4,.cls-5{stroke-linejoin:round;}
+		.cls-3,.cls-4,.cls-5{stroke-width:2px;}
+		.cls-3{fill:rgb(175, 225, 232);}
+		.cls-4{fill:rgb(114, 202, 214);}
+		.cls-5{fill:rgb(206, 237, 241);}
+	</style>
+	<symbol 
+		viewBox="0 0 111.73 107.05" 
+		id="Veins" 
+		overflow="hidden">
+	<circle 
+		id="Background_Circle"
+		class="cls-1"
+		cx="61.66" 
+		cy="62.05" 
+		r="45"/>
+	<text 
+		id="Label"
+		class="cls-2" 
+		x="45"
+		y="91.29">Veins</text>
+	<g 
+		id="Vessel"
+		transform="matrix(-1,0,0,1,133,0)">
+		<path 
+			id="Vessel_wall"
+			class="cls-3"
+			d="M42.06 69C42.06 69 66.65 66 85.84 50.33 105.78 34.02 110.73 14.33 110.73 14.33 110.73 14.33 109.81 7.7 101 3.4 90.88-1.6 84.51 2.73 84.51 2.73 84.51 2.73 78.07 18.73 68.56 26.59 55.01 37.75 35.56 38.84 35.56 38.84Z"/>
+		<path 
+			id="CrossSection_blood"
+			class="cls-4"
+			d="M41.6 65.24C41.4676 65.345 41.3141 65.42 41.15 65.46 40.53 65.59 39.31 65.01 38 63.46 36.0601 60.9271 34.7507 57.969 34.18 54.83 33.5433 52.0687 33.4821 49.206 34 46.42 34.25 45.23 34.88 42.58 36.37 42.27 36.99 42.14 38.21 42.72 39.52 44.27 41.4599 46.8029 42.7693 49.761 43.34 52.9 44.72 59.46 43.11 64.13 41.6 65.24Z"/>
+		<path 
+			id="CrossSection_wall"
+			class="cls-5"
+			d="M47 52.19C45.29 43.79 40.22 37.74 35.68 38.66 31.14 39.58 28.85 47.15 30.57 55.55 32.29 63.95 37.34 70 41.88 69.06 46.42 68.12 48.71 60.59 47 52.19ZM41.6 65.24C41.4664 65.3429 41.3133 65.4178 41.15 65.46 40.53 65.58 39.31 65.01 37.99 63.46 36.0557 60.9249 34.75 57.9674 34.18 54.83 33.543 52.0722 33.4817 49.2126 34 46.43 34.25 45.24 34.89 42.58 36.38 42.28 37 42.16 38.22 42.73 39.54 44.28 41.4743 46.8151 42.78 49.7726 43.35 52.91 44.72 59.46 43.11 64.14 41.6 65.24Z"/>
+	</g>
+	</symbol>
+</defs>
+<g 
+	id="Group_Resized_H100px"
+	transform="matrix(0.93407058,0,0,0.93407058,-16.028651,0.00774497)">
+	<g 
+		id="Group_OriginalSize">
+		<use 
+			width="111.73" 
+			height="107.05" 
+			xlink:href="#Veins" 
+			transform="translate(0.5 0)">
+		</use>
+	</g>
+</g>
+</svg>

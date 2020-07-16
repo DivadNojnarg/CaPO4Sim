@@ -1,1 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 90 111.92"><defs><style>.cls-1{fill:#faf1ce;}.cls-2{font-size:14px;font-family:Arial-BoldMT, Arial;font-weight:700;}.cls-3{fill:#f6e6a7;stroke:#ae5536;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}.cls-4{fill:#fff;}</style><symbol id="Urine_2" data-name="Urine 2" viewBox="0 0 90 111.92"><circle class="cls-1" cx="45" cy="66.92" r="45"/><text class="cls-2" transform="translate(31.79 101.39)">Urine</text><path class="cls-3" d="M35,36A16.56,16.56,0,1,1,1.84,36C1.84,22.37,18.4,1,18.4,1S35,22.37,35,36Z"/><circle class="cls-4" cx="23.62" cy="39.02" r="4.46"/><path class="cls-3" d="M59.36,31a7.24,7.24,0,0,1-14.47,0c0-6,7.24-15.31,7.24-15.31S59.36,25.06,59.36,31Z"/><circle class="cls-4" cx="54.4" cy="32.33" r="1.95"/><path class="cls-3" d="M54.09,69a11.15,11.15,0,1,1-22.3,0c0-9.21,11.15-23.6,11.15-23.6S54.09,59.79,54.09,69Z"/><circle class="cls-4" cx="46.45" cy="71" r="3.01"/></symbol></defs><title>NaPO4_170927_Urine Icon</title><g id="Bild"><g id="Ebene_8" data-name="Ebene 8"><use id="Urine_2-3" data-name="Urine 2" width="90" height="111.92" xlink:href="#Urine_2"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 90 111.92">
+<defs>
+	<style>
+		.cls-1{fill:#fdeabf;}
+		.cls-2{font-size:14px;font-family:Arial-BoldMT, Arial;font-weight:700;}
+		.cls-3{fill:#f6e6a7;stroke:#c34a29;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}
+		.cls-4{fill:#fff;}
+	</style>
+	<symbol id="Urine_2" data-name="Urine 2" viewBox="0 0 90 111.92">
+		<circle class="cls-1" cx="45" cy="66.92" r="45"/>
+		<text class="cls-2" transform="translate(31.79 101.39)">Urine</text>
+		<path class="cls-3" d="M35,36A16.56,16.56,0,1,1,1.84,36C1.84,22.37,18.4,1,18.4,1S35,22.37,35,36Z"/>
+		<circle class="cls-4" cx="23.62" cy="39.02" r="4.46"/>
+		<path class="cls-3" d="M59.36,31a7.24,7.24,0,0,1-14.47,0c0-6,7.24-15.31,7.24-15.31S59.36,25.06,59.36,31Z"/>
+		<circle class="cls-4" cx="54.4" cy="32.33" r="1.95"/>
+		<path class="cls-3" d="M54.09,69a11.15,11.15,0,1,1-22.3,0c0-9.21,11.15-23.6,11.15-23.6S54.09,59.79,54.09,69Z"/>
+		<circle class="cls-4" cx="46.45" cy="71" r="3.01"/>
+	</symbol>
+</defs>
+<g id="Bild">
+	<g id="Ebene_8" data-name="Ebene 8">
+		<use id="Urine_2-3" data-name="Urine 2" width="90" height="111.92" xlink:href="#Urine_2"/>
+	</g>
+</g>
+</svg>

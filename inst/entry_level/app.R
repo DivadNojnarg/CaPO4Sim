@@ -39,7 +39,7 @@ source("network_modals.R")
 shinyApp(
   ui = dashboardPagePlus(
     skin = "black",
-    title = "CaPO4 Teaching App",
+    title = "Cardio-Renal Teaching App",
     collapse_sidebar = TRUE,
     enable_preloader = TRUE,
     header,

@@ -10,7 +10,7 @@ diseaseSelectUi <- function(id) {
   ns <- NS(id)
 
   diseases <- list(
-    labels = c("Primary hyperparathyroidism", "Hypoparathyroidism", "25(OH)D deficiency"),
+    labels = c("Baroreceptor Stimulation", "Haemorrhage", "High/Low Salt Diet"),
     ids = c("run_php1", "run_hypopara", "run_hypoD3")
   )
 
@@ -22,7 +22,7 @@ diseaseSelectUi <- function(id) {
     # reset button
     shinyWidgets::actionBttn(
       inputId = ns("cure"),
-      label = "Cure Rat",
+      label = "Cure Patient",
       style = "fill",
       icon = icon("medkit"),
       color = "success",

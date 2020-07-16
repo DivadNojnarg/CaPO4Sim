@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 600 662.38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <style>.cls-1{fill:#fdeabf;}.cls-2,.cls-40{font-size:14px;}.cls-2,.cls-44,.cls-46{font-family:Arial-BoldMT, Arial;font-weight:700;}.cls-3,.cls-7{fill:#f4aa95;}.cls-11,.cls-12,.cls-13,.cls-15,.cls-16,.cls-17,.cls-18,.cls-19,.cls-20,.cls-21,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{stroke:#c34a29;}.cls-11,.cls-12,.cls-13,.cls-15,.cls-17,.cls-18,.cls-19,.cls-20,.cls-21,.cls-23,.cls-28,.cls-29,.cls-3,.cls-31,.cls-32,.cls-33,.cls-34,.cls-35,.cls-36,.cls-4,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{stroke-linecap:round;stroke-linejoin:round;}.cls-11,.cls-12,.cls-15,.cls-16,.cls-18,.cls-21,.cls-3,.cls-4,.cls-49,.cls-5,.cls-50,.cls-8{stroke-width:2px;}.cls-4{fill:#f5ab96;}.cls-5{fill:#df847c;}.cls-6{fill:#f9cec2;}.cls-8{fill:#e0f4f6;}.cls-24,.cls-26,.cls-28,.cls-29,.cls-31,.cls-32,.cls-33,.cls-34,.cls-35,.cls-36,.cls-49,.cls-50,.cls-9{fill:none;}.cls-10{fill:#999;}.cls-11{fill:#afe1e8;}.cls-12{fill:#72cad6;}.cls-13{fill:#ceedf1;}.cls-14{letter-spacing:-0.06em;}.cls-15{fill:#f4a48f;}.cls-16{fill:#f4ded8;}.cls-16,.cls-24,.cls-26{stroke-miterlimit:10;}.cls-17{fill:#e9bcb0;stroke-width:1.25px;}.cls-18{fill:#b1e2e8;}.cls-19{fill:#dbf2f5;}.cls-20{fill:#55bfcd;}.cls-21{fill:#f1ac6a;}.cls-22{fill:#e1e8af;}.cls-23{fill:#b5c73b;stroke:#798728;}.cls-24{stroke:#1a4554;}.cls-24,.cls-26{stroke-width:2.5px;}.cls-25{fill:#1a4554;}.cls-26{stroke:#1c88c0;}.cls-27,.cls-41{fill:#1c88c0;}.cls-28,.cls-29,.cls-31,.cls-32,.cls-33,.cls-34,.cls-35{stroke:#1c8843;}.cls-28,.cls-29,.cls-31,.cls-32,.cls-33,.cls-34,.cls-35,.cls-36{stroke-width:3px;}.cls-29{stroke-dasharray:9.37 9.37;}.cls-30{fill:#1c8843;}.cls-31{stroke-dasharray:9.5 9.5;}.cls-32{stroke-dasharray:9.93 9.93;}.cls-33{stroke-dasharray:9.61 9.61;}.cls-34{stroke-dasharray:8.14 8.14;}.cls-35{stroke-dasharray:12.74 12.74;}.cls-36{stroke:#ff4c00;stroke-dasharray:10 10;}.cls-37{fill:#ff4c00;}.cls-38,.cls-39,.cls-41,.cls-44,.cls-46,.cls-47,.cls-48,.cls-49,.cls-50{font-size:16.8px;}.cls-38,.cls-39,.cls-41,.cls-48,.cls-49,.cls-50{font-family:ArialMT, Arial;}.cls-39,.cls-43{letter-spacing:0em;}.cls-42{letter-spacing:-0.04em;}.cls-44,.cls-46{fill:#798728;}.cls-44{letter-spacing:-0.07em;}.cls-45{letter-spacing:0em;}.cls-47{font-family:Arial-ItalicMT, Arial;font-style:italic;}.cls-48,.cls-50{letter-spacing:0em;}.cls-49,.cls-50{stroke:#fff;}</style>
+    <symbol id="Arteries" data-name="Arteries" viewBox="0 0 111.73 107.05">
+      <circle class="cls-1" cx="61.66" cy="62.05" r="45"/>
+      <text class="cls-2" transform="translate(34.32 91.29)" style="white-space: pre;">Arteries</text>
+      <path class="cls-3" d="M42.06,69s24.59-3,43.78-18.67c19.94-16.31,24.89-36,24.89-36S109.81,7.7,101,3.4c-10.12-5-16.48-.67-16.48-.67s-6.44,16-16,23.86c-13.55,11.16-33,12.24-33,12.24Z"/>
+      <ellipse class="cls-4" cx="38.78" cy="53.86" rx="8.39" ry="15.52" transform="translate(-9.99 8.85) rotate(-11.54)"/>
+      <path class="cls-5" d="M41.6,65.24a1.14,1.14,0,0,1-.45.21c-.62.13-1.84-.44-3.16-2a20.15,20.15,0,0,1-3.81-8.63A20.57,20.57,0,0,1,34,46.42c.26-1.19.88-3.84,2.37-4.14.63-.13,1.84.44,3.16,2a20.16,20.16,0,0,1,3.81,8.62C44.72,59.46,43.11,64.13,41.6,65.24Z"/>
+      <path class="cls-6" d="M47,52.19c-1.72-8.4-6.78-14.45-11.32-13.53s-6.83,8.48-5.12,16.88S37.34,70,41.88,69.06,48.71,60.59,47,52.19Zm-5.4,13a1.34,1.34,0,0,1-.45.22c-.62.12-1.84-.45-3.16-2a20.13,20.13,0,0,1-3.81-8.64A20.35,20.35,0,0,1,34,46.43c.25-1.2.88-3.85,2.37-4.16.62-.12,1.84.45,3.16,2a20.14,20.14,0,0,1,3.81,8.63C44.72,59.46,43.11,64.14,41.6,65.24Z"/>
+      <ellipse class="cls-7" cx="14.9" cy="47.65" rx="4.04" ry="8.24" transform="translate(-33.82 36.73) rotate(-60)"/>
+      <ellipse class="cls-7" cx="7.53" cy="69.88" rx="8.24" ry="4.04" transform="matrix(0.8, -0.6, 0.6, 0.8, -40.43, 18.5)"/>
+      <ellipse class="cls-7" cx="32.5" cy="60.97" rx="8.24" ry="4.04" transform="translate(-23.72 20.81) rotate(-26.4)"/>
+    </symbol>
+    <symbol id="Veins" data-name="Veins" viewBox="0 0 90 100.55">
+      <g id="Veins-3" data-name="Veins">
+        <circle class="cls-1" cx="45" cy="55.55" r="45"/>
+        <path class="cls-11" d="M75.6,69S51,66,31.82,50.32C11.88,34,6.93,14.32,6.93,14.32S7.85,7.7,16.62,3.4c10.12-5,16.49-.67,16.49-.67s6.43,16,16,23.86c13.54,11.16,33,12.24,33,12.24Z"/>
+        <ellipse class="cls-4" cx="78.88" cy="53.86" rx="15.52" ry="8.39" transform="translate(10.33 120.38) rotate(-78.46)"/>
+        <path class="cls-12" d="M76.06,65.24a1.25,1.25,0,0,0,.46.21c.62.13,1.83-.44,3.15-2a20,20,0,0,0,3.82-8.63,20.57,20.57,0,0,0,.13-8.38c-.25-1.19-.88-3.84-2.37-4.14-.62-.13-1.84.44-3.15,2a20,20,0,0,0-3.82,8.62C73,59.46,74.56,64.13,76.06,65.24Z"/>
+        <path class="cls-13" d="M75.78,69.06c4.54.93,9.61-5.12,11.32-13.52s-.57-16-5.11-16.88-9.61,5.13-11.32,13.53S71.24,68.15,75.78,69.06Zm-1.5-16.14a20.26,20.26,0,0,1,3.81-8.63c1.32-1.57,2.54-2.14,3.16-2,1.49.31,2.12,3,2.38,4.16a20.7,20.7,0,0,1-.14,8.37,20.13,20.13,0,0,1-3.82,8.64c-1.31,1.57-2.53,2.14-3.15,2a1.25,1.25,0,0,1-.45-.22C74.56,64.14,73,59.46,74.28,52.92Z"/>
+      </g>
+      <text class="cls-2" transform="translate(24.92 84.79)" style="white-space: pre;"><tspan class="cls-14">V</tspan><tspan x="8.57" y="0">eins</tspan></text>
+    </symbol>
+    <symbol id="Brain" data-name="Brain" viewBox="0 0 90 111.5">
+      <g id="Kidney-3" data-name="Kidney">
+        <circle class="cls-1" cx="45" cy="66.5" r="45"/>
+        <text class="cls-2" transform="translate(27.5 99.12)" style="white-space: pre;">Brain</text>
+      </g>
+      <path class="cls-8" d="M45,78.41V2.64A18.19,18.19,0,0,0,33.44,1.52c-5.57,1.54-9.69,7.71-9.89,11.15,0,0-7.94,0-12.43,9.4a20.09,20.09,0,0,0,1,19s-5.45,8.17-1.67,17.69c4.08,10.29,11.7,11,11.7,11A15.58,15.58,0,0,0,30,80.64C36.92,84.54,43.89,80.92,45,78.41Z"/>
+      <path class="cls-9" d="M35.11,18.52s-5.31-6-12.13-5.81"/>
+      <path class="cls-9" d="M20.49,26.18s-.28,6.54,5,9.47,7.81,2.79,7.81,2.79-2.66,8.49,1.8,12.39"/>
+      <path class="cls-9" d="M26.19,54.87s4.18,14.21-4,14.91"/>
+      <path class="cls-8" d="M45,78.41V2.64A18.12,18.12,0,0,1,56.56,1.52c5.57,1.53,9.69,7.7,9.89,11.14,0,0,7.94,0,12.43,9.41a20.05,20.05,0,0,1-1,19s5.45,8.17,1.67,17.69c-4.08,10.29-11.7,11-11.7,11A15.58,15.58,0,0,1,60,80.64C53.08,84.54,46.12,80.91,45,78.41Z"/>
+      <path class="cls-9" d="M61.84,58.23s.21,11.54,6,11.54"/>
+      <path class="cls-9" d="M56.25,57.26s6.69,3.35,11.17-2.39"/>
+      <path class="cls-9" d="M58.49,30.47S63.7,44,76.36,41.33"/>
+      <path class="cls-9" d="M56.5,18.52S60,10.27,66.69,12.66"/>
+    </symbol>
+    <symbol id="Pfeil" data-name="Pfeil" viewBox="0 0 70 77.95">
+      <path class="cls-10" d="M55.62,26.92a71.33,71.33,0,0,0-18.74,4.83A58.86,58.86,0,0,0,20.29,42.26a63.85,63.85,0,0,0-12.74,16A70.8,70.8,0,0,0,3,67.72,61.48,61.48,0,0,0,0,78,61.64,61.64,0,0,1,.92,67.14a74.64,74.64,0,0,1,2.6-10.69A70.48,70.48,0,0,1,13.72,36.4,69.79,69.79,0,0,1,30.43,20.24,86.18,86.18,0,0,1,51.59,9.79Z"/>
+      <polygon class="cls-10" points="54.06 37.81 48.15 0 70 15.95 54.06 37.81"/>
+    </symbol>
+  </defs>
+  <title>Nephron_180725_Zeichenfläche 52</title>
+  <g id="Bild">
+    <g id="Ebene_8" data-name="Ebene 8">
+      <g id="Plasma_2" data-name="Plasma 2">
+        <path class="cls-15" d="M220.06,131.3s5.67-1.33,10-2.66,7.24-2.21,7.24-2.21a8.91,8.91,0,0,1,4.76,6.54c1,5-1,5.67-1,5.67a25.7,25.7,0,0,1-11.33,4c-6.67.66-8.67-4-8.67-4Z"/>
+        <path class="cls-15" d="M234.55,157.31c-1-.46.06-2.71,8.38-2.13a28.72,28.72,0,0,1,11.47,3.12,13.73,13.73,0,0,1,0,7,10.15,10.15,0,0,1-4,5.38l-16.7-4Z"/>
+        <path class="cls-15" d="M91.06,151.64s-9.66-.34-16.33-1.34a44.41,44.41,0,0,1-11-3s-3.17.51-4.33,3c-2.34,5,.33,8,.33,8l13,7.34-17.33,11a6.72,6.72,0,0,0,1,6.33c2.33,3.33,4.66,3,4.66,3l17-7.67Z"/>
+        <path class="cls-15" d="M134.4,148.64S123.73,141,121.73,123.3s2.45-29.49,10.45-38.49S147.06,73.3,147.06,73.3a38.61,38.61,0,0,0-1.66-11.66c-.88-3-2.34-7-2.34-7a10,10,0,0,1,6.37-5.91c4.66-1.43,7.3.24,7.3.24a22.42,22.42,0,0,1,4,9.33,36.06,36.06,0,0,1,.67,9.34s5-3.44,6.66-7.67a72.06,72.06,0,0,0,3-11,11.44,11.44,0,0,1,5.78-.58c4.72,1,4.56,3.58,4.56,3.58v2.67a7,7,0,0,1,6.33-.67c3.67,1.33,3.67,3.33,3.67,3.33l-2.67,15a28.37,28.37,0,0,1,13.45,16c4,11.67,2.87,19.5,2.87,19.5L189.4,124.64l-8.67,12.66L161.06,141l-8.66,6-7,7.33Z"/>
+        <path class="cls-16" d="M143.4,154.64s-7-10.67-25-12c-15.3-1.14-33.32,4.6-43,28-13.67,33,8.66,58,8.66,58S78.73,250.3,94.4,271c28.21,37.22,117.33,64,154.33,49.67C283.83,307,261,181.39,238.4,177.3A47.26,47.26,0,0,0,239.73,159c-2-18-15-35.33-44.67-31l-18,.67-11.33,16Z"/>
+        <path class="cls-17" d="M249.06,261.3c-.29,18.38-10,34-24,29.67S191.4,240.64,186.4,229.3s-10.67-9.33-13.34-16.66c-1.06-2.92-.18-9.92,1.27-17.33,2.14-2.4,7.47-1.3,10.93,1.5,4,3.21,8.83,8.43,9.67,8.33,1.75-.21.29-6.62-8.63-14.08-1.64-1.38-6.77-4.49-8.65-6.73-1.22-2.77-.66-6.62-.22-8.35a30.12,30.12,0,0,0,1-4.34l1.3-11.34L184,137.89a42.81,42.81,0,0,1,28-2.75c11.33,2.66,18.69,11.75,20,18.5a47,47,0,0,1-1.59,22.58h0c-2.63,4.54-8.5,12-10.32,14.25-4.8,6-4.86,13-2.43,12.48,1.46-.3,2.43-6.48,10.55-12.94,3.42-2.71,7.75-2.71,8.35-2.15a54.12,54.12,0,0,1,7.7,16.52C248.26,219.26,249.4,240.3,249.06,261.3Z"/>
+        <path class="cls-17" d="M200.4,307c-8.4.54-67.34-15.33-90.67-41-14.75-16.23-13.5-37.58-13.5-37.58,3-1.91,5-4.67,8.5-2.46s7.53,6.88,7.53,3.55S108.07,222,101.9,220s-10.84,3.8-17.24-3.45c-.11-.13-4.73-5.08-6.18-18.67-1.67-15.61,2.75-27,9.25-35.5,8.55-11.18,24.08-18.08,38.25-12,12.25,5.25,7.75,18.5,7.75,18.5s-1.44,2.75-4.93,17.09-2.87,23.5-2.87,23.5-1.49,14.66,4.66,13.66c.58-.09-2.74-4.61.71-14.87,1.23-3.64,1.53-13.05,3.43-18.79a132.74,132.74,0,0,1,9.75-22.59c3.5-11.25,13.12-13.13,19.5-11,14.25,4.75,9,21,9,21A405.18,405.18,0,0,0,164.73,218c-1.92,13.2,11.33,46.33,24.33,66S210.73,306.3,200.4,307Z"/>
+        <path class="cls-18" d="M139.09,163.7s.58-9.33,7.91-21.67,12.67-17.66,12.67-17.66-3.15-5.37-3.08-5.52-.91-6.42,4.34-10.54c5.6-4.4,9.75-2.5,9.75-2.5l5.5,4.5A144.87,144.87,0,0,1,203,101.37c14-3,31.67-1.34,31.67-1.34l-1,17.67s-13,.33-20.67,2.67-16.27,5.27-22.33,14.66C181.53,149.19,177.59,174,177.59,174s3.75-16.25-12.25-21.5C144.82,145.72,139.09,163.7,139.09,163.7Z"/>
+        <path class="cls-19" d="M233.72,118.46c2.82.17,5.35-3.92,5.66-9.14s-1.73-9.58-4.55-9.75-5.35,3.93-5.66,9.15S230.9,118.3,233.72,118.46Z"/>
+        <path class="cls-20" d="M231.42,108.85a12.29,12.29,0,0,1,1.55-5.54c.66-1.06,1.34-1.51,1.73-1.49.92.05,1.53,1.6,1.79,2.3a12.44,12.44,0,0,1,.64,5.07,12.29,12.29,0,0,1-1.55,5.54c-.66,1.06-1.34,1.51-1.73,1.49a.88.88,0,0,1-.29-.09C232.56,115.59,231.18,112.91,231.42,108.85Z"/>
+      </g>
+    </g>
+    <circle class="cls-21" cx="134.88" cy="74.29" r="8.05"/>
+    <circle class="cls-21" cx="132.69" cy="85.19" r="8.05"/>
+  </g>
+  <g id="Icons">
+    <use width="111.73" height="107.05" transform="matrix(1.2000000476837158, 0, 0, 1.2000000476837158, 348.9599914550781, 21.18000030517578)" xlink:href="#Arteries"/>
+    <g id="_Gruppe_" data-name="&lt;Gruppe&gt;">
+      <use width="90" height="100.55" transform="matrix(1.2000000476837158, 0, 0, 1.2000000476837158, 372.0400085449219, 220.4499969482422)" xlink:href="#Veins"/>
+    </g>
+    <use width="90" height="111.5" transform="matrix(1.2000000476837158, 0, 0, 1.2000000476837158, 122.12000274658203, 490.1199951171875)" xlink:href="#Brain"/>
+    <circle class="cls-22" cx="312.23" cy="434.92" r="30"/>
+    <circle class="cls-23" cx="295.23" cy="421.45" r="4.79"/>
+    <circle class="cls-23" cx="277.74" cy="418.96" r="4.79"/>
+    <circle class="cls-23" cx="287.56" cy="407.99" r="4.79"/>
+    <circle class="cls-22" cx="523.08" cy="199.52" r="30"/>
+    <circle class="cls-23" cx="506.08" cy="186.05" r="4.79"/>
+    <circle class="cls-23" cx="488.59" cy="183.56" r="4.79"/>
+    <circle class="cls-23" cx="498.41" cy="172.59" r="4.79"/>
+    <circle class="cls-22" cx="316.35" cy="566.97" r="30"/>
+    <circle class="cls-23" cx="299.35" cy="553.5" r="4.79"/>
+    <circle class="cls-23" cx="281.86" cy="551.01" r="4.79"/>
+    <circle class="cls-23" cx="291.67" cy="540.04" r="4.79"/>
+  </g>
+  <g id="Pfeile">
+    <line class="cls-24" x1="209.76" y1="73.6" x2="329.64" y2="73.6"/>
+    <polygon class="cls-25" points="326.67 77.96 342.93 73.61 326.67 69.24 326.67 77.96"/>
+    <line class="cls-24" x1="360.63" y1="224.87" x2="222.32" y2="166.68"/>
+    <polygon class="cls-25" points="226.75 163.82 210.07 161.53 223.37 171.85 226.75 163.82"/>
+    <line class="cls-24" x1="423.75" y1="162.34" x2="423.75" y2="205.82"/>
+    <polygon class="cls-25" points="419.39 202.85 423.75 219.11 428.11 202.85 419.39 202.85"/>
+    <line class="cls-26" x1="418.12" y1="425.42" x2="418.12" y2="362.43"/>
+    <polygon class="cls-27" points="422.48 365.4 418.12 349.14 413.76 365.4 422.48 365.4"/>
+    <line class="cls-28" x1="176.52" y1="476.21" x2="176.52" y2="471.21"/>
+    <line class="cls-29" x1="176.52" y1="461.84" x2="176.52" y2="354.03"/>
+    <line class="cls-28" x1="176.52" y1="349.34" x2="176.52" y2="344.34"/>
+    <polygon class="cls-30" points="180.88 347.31 176.52 331.05 172.16 347.31 180.88 347.31"/>
+    <line class="cls-28" x1="319.43" y1="522.66" x2="319.43" y2="517.66"/>
+    <line class="cls-31" x1="319.43" y1="508.16" x2="319.43" y2="493.91"/>
+    <line class="cls-28" x1="319.43" y1="489.16" x2="319.43" y2="484.16"/>
+    <polygon class="cls-30" points="323.79 487.13 319.43 470.87 315.07 487.13 323.79 487.13"/>
+    <path class="cls-28" d="M243,640.48h5"/>
+    <path class="cls-32" d="M257.92,640.48H520a50.15,50.15,0,0,0,50-50V121.31"/>
+    <line class="cls-28" x1="569.97" y1="116.34" x2="569.97" y2="111.34"/>
+    <polygon class="cls-30" points="574.33 114.31 569.98 98.05 565.62 114.31 574.33 114.31"/>
+    <line class="cls-28" x1="534.61" y1="151.65" x2="534.61" y2="146.65"/>
+    <line class="cls-33" x1="534.61" y1="137.05" x2="534.61" y2="122.64"/>
+    <line class="cls-28" x1="534.61" y1="117.84" x2="534.61" y2="112.84"/>
+    <polygon class="cls-30" points="538.97 115.81 534.61 99.55 530.25 115.81 538.97 115.81"/>
+    <line class="cls-28" x1="352.1" y1="420.48" x2="356.27" y2="417.74"/>
+    <line class="cls-34" x1="363.07" y1="413.27" x2="386.88" y2="397.62"/>
+    <line class="cls-28" x1="390.28" y1="395.38" x2="394.46" y2="392.64"/>
+    <polygon class="cls-30" points="394.37 397.91 405.56 385.34 389.58 390.63 394.37 397.91"/>
+    <line class="cls-28" x1="225.48" y1="503.71" x2="229.66" y2="500.97"/>
+    <line class="cls-35" x1="240.3" y1="493.97" x2="256.27" y2="483.48"/>
+    <line class="cls-28" x1="261.59" y1="479.98" x2="265.77" y2="477.23"/>
+    <polygon class="cls-30" points="265.68 482.51 276.88 469.94 260.89 475.22 265.68 482.51"/>
+    <path class="cls-36" d="M114.17,74H74.55c-21.79,0-39.62,22.5-39.62,50V532.29c0,27.5,17.51,50,38.92,50h37.42"/>
+    <rect class="cls-37" x="109.77" y="572.54" width="3" height="19.5"/>
+    <line class="cls-36" x1="523.61" y1="235.48" x2="523.61" y2="273.64"/>
+    <rect class="cls-37" x="513.86" y="272.14" width="19.5" height="3"/>
+    <path class="cls-36" d="M247.49,612.5H473.61a50.15,50.15,0,0,0,50-50V317.14"/>
+    <rect class="cls-37" x="513.86" y="315.64" width="19.5" height="3"/>
+    <line class="cls-36" x1="512.61" y1="151.65" x2="512.61" y2="101.05"/>
+    <rect class="cls-37" x="502.86" y="99.55" width="19.5" height="3"/>
+  </g>
+  <g id="Text">
+    <text class="cls-38" transform="translate(214.7 33.55)" style="white-space: pre;">Aorta<tspan x="-14.79" y="18">(C</tspan></text>
+    <text class="cls-38" transform="translate(217.64 57.15) scale(0.58)" style="white-space: pre;">AO´ </text>
+    <text class="cls-39" transform="translate(237.77 51.55)" style="white-space: pre;">R</text>
+    <text class="cls-38" transform="translate(249.9 57.15) scale(0.58)" style="white-space: pre;">AO</text>
+    <text class="cls-38" transform="translate(264.05 51.55)" style="white-space: pre;">)</text>
+    <text class="cls-38" transform="translate(290.06 266.05)" style="white-space: pre;">Left <tspan x="-14.93" y="18">ventricle</tspan><tspan class="cls-40"><tspan x="-16.34" y="36">Elastance/</tspan><tspan x="-12.83" y="54">Heartrate</tspan></tspan></text>
+    <text class="cls-38" transform="translate(19.95 60.37)" style="white-space: pre;">Baroreceptors</text>
+    <text class="cls-38" transform="translate(101.33 643.88)" style="white-space: pre;">Sympathetic tone</text>
+    <text class="cls-41" transform="translate(398.72 449.05)" style="white-space: pre;"><tspan class="cls-42">W<tspan class="cls-43" x="15.23" y="0">ater </tspan></tspan><tspan x="2.01" y="18">intake</tspan></text>
+    <text class="cls-44" transform="translate(507.01 211.69)" style="white-space: pre;">A<tspan class="cls-45" x="10.89" y="0">T2</tspan></text>
+    <text class="cls-46" transform="translate(294.29 578.03)" style="white-space: pre;">[Na+]</text>
+    <text class="cls-46" transform="translate(293.21 444.86)" style="white-space: pre;">ADH</text>
+    <text class="cls-47" transform="translate(495 299.5)" style="white-space: pre;">(R</text>
+    <text class="cls-47" transform="translate(512.73 305.09) scale(0.58)" style="white-space: pre;">V´ </text>
+    <text class="cls-47" transform="translate(525.24 299.5)" style="white-space: pre;">C</text>
+    <text class="cls-47" transform="translate(537.37 305.09) scale(0.58)" style="white-space: pre;">V </text>
+    <text class="cls-47" transform="translate(546.63 299.5)" style="white-space: pre;">)</text>
+    <text class="cls-47" transform="translate(431.35 357.82)" style="white-space: pre;">≈<tspan class="cls-42" x="9.22" y="0">V</tspan><tspan class="cls-43" x="19.8" y="0">ecf</tspan></text>
+    <text class="cls-38" transform="translate(500.48 78.27)" style="white-space: pre;">(C</text>
+    <text class="cls-38" transform="translate(518.21 83.86) scale(0.58)" style="white-space: pre;">A´ </text>
+    <text class="cls-38" transform="translate(530.72 78.27)" style="white-space: pre;">R</text>
+    <text class="cls-48" transform="translate(542.85 83.86) scale(0.58)" style="white-space: pre;">A</text>
+    <text class="cls-38" transform="translate(549.39 78.27)" style="white-space: pre;">)</text>
+    <text class="cls-49" transform="translate(100.13 197.43)" style="white-space: pre;">R</text>
+    <text class="cls-50" transform="translate(112.26 203.03) scale(0.58)" style="white-space: pre;">AO valve</text>
+    <text class="cls-38" transform="translate(100.13 197.43)" style="white-space: pre;">R</text>
+    <text class="cls-48" transform="translate(112.26 203.03) scale(0.58)" style="white-space: pre;">AO valve</text>
+  </g>
+</svg>

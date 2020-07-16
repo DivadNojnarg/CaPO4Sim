@@ -18,13 +18,13 @@ networkOptionsUi <- function(id) {
       data.position = "left",
       shinyWidgets::prettyCheckboxGroup(
         inputId = ns("background_choice"),
-        label = "Background",
-        choices = c("rat", "human"),
+        label = "Show Background",
+        choices = c("human"), #c("rat", "human"),
         animation = "pulse",
         thick = TRUE,
         status = "primary",
         inline = TRUE,
-        selected = "rat"
+        selected = "human"
       )
     ),
     hr(),
@@ -61,8 +61,8 @@ networkOptionsUi <- function(id) {
       data.position = "left",
       shinyWidgets::prettyCheckboxGroup(
         inputId = ns("components_choice"),
-        label = "Choose your Network",
-        choices = c("Ca", "PO4", "PTH", "D3", "FGF23"),
+        label = "Show Selected Regulatory Networks",
+        choices = c("Ca", "PO4", "PTH", "D3", "FGF23"), #c("Na", "SNS", "RAAS", "ANP", "ADH"),
         animation = "pulse",
         thick = TRUE,
         status = "primary",

@@ -209,11 +209,11 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
           paste(
             "<u><b>Mathematical model of blood pressure regulation:</b></u>", br(), br(),
             "<b>1) Regulatory mechanisms:</b>", br(),
-            img(src = "rintrojs_help/node_help.svg",
-                height = "70px", width = "70px"),
+            img(src = "CardioRenal_network/heart.svg",
+                style="width:70px; height:50px; object-fit: contain; object-position: 50% 0%;"),
             "Organs involved in the regulation of blood pressure", br(),
-            img(src = "rintrojs_help/regulation_help.svg",
-                height = "60px", width = "70px"),
+            img(src = "CardioRenal_network/AT2.svg",
+                style="width:70px; height:30px; object-fit: contain; object-position: 50% 0%;"),
             "Regulatory hormones and ions", br(),
             img(src = "rintrojs_help/dashed_arrow_help_promotor.svg",
                 height = "40px", width = "70px"),
@@ -229,22 +229,22 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
             "\\([...]_p\\)", "Plasma concentrations", br(),
             img(src = "rintrojs_help/arrow_help.svg",
                 height = "40px", width = "70px"),
-            "Fluxes", br(), br(),br(),
+            "Blood flow / Fluxes", br(), br(),br(),
             "<b>3) Explore <mark><font color=\"#FF0000\">regulatory pathways</font></mark>:</b>", br(),
             tags$ul(
               tags$li(
                 HTML(
                   paste(
                     "<b><mark><font color=\"#FF0000\">Double click</font></mark></b> on the ",
-                    "intestine", img(src = "CardioRenal_network/intestine.svg",
-                                     style="vertical-align:bottom; width:25px; height:45px; object-fit: cover; object-position: 50% 0%;"),
-                    ", kidney",  img(src = "CardioRenal_network/kidney_zoom1.svg",
-                                     style="vertical-align:bottom; width:25px; height:45px; object-fit: cover; object-position: 100% 0%;"),
-                    ", parathyroid gland", img(src = "CardioRenal_network/parathyroid_gland.svg",
-                                               style="vertical-align:middle; width:40px; height:35px; object-fit: cover; object-position: 50% 0%;"),
-                    " or bone",  img(src = "CardioRenal_network/bone.svg",
-                                     style="vertical-align:middle; width:40px; height:35px; object-fit: cover; object-position: 50% 0%;"),
-                    br(), "to visualize detailed intra-cellular regulatory pathways</b>"
+                    "heart", img(src = "CardioRenal_network/heart.svg",
+                             style="vertical-align:bottom; width:50px; height:45px; object-fit: contain; object-position: 50% 0%;"),
+                    ", blood vessels",  img(src = "CardioRenal_network/arteries.svg",
+                                        style="vertical-align:bottom; width:50px; height:45px; object-fit: contain; object-position: 50% 0%;"),
+                    ", kidney",  img(src = "CardioRenal_network/kidney_zoom1_noarrows.svg",
+                                     style="vertical-align:bottom; width:50px; height:45px; object-fit: contain; object-position: 100% 0%;"),
+                    " or brain", img(src = "CardioRenal_network/brain.svg",
+                                     style="vertical-align:middle; width:50px; height:45px; object-fit: contain; object-position: 50% 0%;"),
+                    br(), "to visualize detailed regulatory pathways</b>"
 #DDZ                    "<b><mark><font color=\"#FF0000\">Mouse
 #DDZ                    over</font></mark></b> the organs to visualize detailed
 #DDZ                    intra-cellular regulatory pathways</b>"

@@ -1,0 +1,49 @@
+<svg 
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	viewBox="0 0 84.066002 104.10706">
+<defs>
+	<style>
+		.cls-1{fill:#fdeabf;}
+		.cls-2{font-size:14px;font-family:Arial-BoldMT, Arial;font-weight:700;}
+		.cls-3{fill:#e0f4f6;stroke-width:2px;}
+		.cls-3,.cls-4{stroke:#c34a29;stroke-linecap:round;stroke-linejoin:round;}
+		.cls-4{fill:none;}
+	</style>
+	<symbol id="Brain" data-name="Brain" viewBox="0 0 90 111.5">
+		<g id="Kidney">
+			<circle 
+				class="cls-1" 
+				cx="45" 
+				cy="66.5" 
+				r="45"/>
+			<text 
+				class="cls-2" 
+				transform="translate(27.5 99.12)">
+				Brain
+			</text>
+		</g>
+		<path class="cls-3" d="M45,78.41V2.64A18.19,18.19,0,0,0,33.44,1.52c-5.57,1.54-9.69,7.71-9.89,11.15,0,0-7.94,0-12.43,9.4a20.09,20.09,0,0,0,1,19s-5.45,8.17-1.67,17.69c4.08,10.29,11.7,11,11.7,11A15.58,15.58,0,0,0,30,80.64C36.92,84.54,43.89,80.92,45,78.41Z"/>
+		<path class="cls-4" d="M35.11,18.52s-5.31-6-12.13-5.81"/>
+		<path class="cls-4" d="M20.49,26.18s-.28,6.54,5,9.47,7.81,2.79,7.81,2.79-2.66,8.49,1.8,12.39"/>
+		<path class="cls-4" d="M26.19,54.87s4.18,14.21-4,14.91"/>
+		<path class="cls-3" d="M45,78.41V2.64A18.12,18.12,0,0,1,56.56,1.52c5.57,1.53,9.69,7.7,9.89,11.14,0,0,7.94,0,12.43,9.41a20.05,20.05,0,0,1-1,19s5.45,8.17,1.67,17.69c-4.08,10.29-11.7,11-11.7,11A15.58,15.58,0,0,1,60,80.64C53.08,84.54,46.12,80.91,45,78.41Z"/>
+		<path class="cls-4" d="M61.84,58.23s.21,11.54,6,11.54"/>
+		<path class="cls-4" d="M56.25,57.26s6.69,3.35,11.17-2.39"/>
+		<path class="cls-4" d="M58.49,30.47S63.7,44,76.36,41.33"/>
+		<path class="cls-4" d="M56.5,18.52S60,10.27,66.69,12.66"/>
+	</symbol>
+</defs>
+<g 
+	id="Group_Resized_W84px" 
+	transform="matrix(0.77838889,0,0,0.77838889,0,-0.04137759)">
+	<g 
+		id="Group_OriginalSize">
+		<use 
+			width="90" 
+			height="111.5" 
+			transform="scale(1.2)" 
+			xlink:href="#Brain"/>
+	</g>
+</g>
+</svg>

@@ -1,0 +1,12 @@
+name: cardiorenal_entrylevel
+title: CardioRenal_entryLevel
+username: ddezel
+account: ddezel
+server: 130.60.228.28
+hostUrl: http://130.60.228.28:3939/__api__
+appId: 21
+bundleId: 73
+url: http://130.60.228.28:3939/content/21/
+when: 1594294370.64874
+asMultiple: FALSE
+asStatic: FALSE

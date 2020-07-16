@@ -14,7 +14,7 @@
 
 header <- dashboardHeaderPlus(
   title = HTML(paste0(
-    '<span class = "logo-lg">CaPO4 Teaching Tool</span>',
+    '<span class = "logo-lg">Cardio-Renal Teaching Tool</span>',
     '<img src= "logos/online-learning.svg">'
   )),
 
