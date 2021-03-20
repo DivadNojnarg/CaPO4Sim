@@ -1,5 +1,5 @@
 # CaPO4Sim, the Virtual Physiology Simulator <img src="man/figures/CaPO4sim_hex.svg" width=200 align="right" />
-[![Travis build status](https://travis-ci.com/DivadNojnarg/CaPO4Sim.svg?token=wk4LByQczpy1WzofyA7q&branch=master)](https://travis-ci.com/DivadNojnarg/CaPO4Sim)
+[![R build status](https://github.com/DivadNojnarg/CaPO4Sim/workflows/R-CMD-check/badge.svg)](https://github.com/DivadNojnarg/CaPO4Sim/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
 This apps were developed in the [Interface Group](https://interfacegroup.ch).

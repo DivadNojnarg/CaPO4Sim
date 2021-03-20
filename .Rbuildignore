@@ -6,3 +6,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 inst/virtual_patient_simulator/miniUI2
+^pkgdown$
+^\.github$
