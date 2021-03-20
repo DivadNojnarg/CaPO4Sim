@@ -1,9 +1,8 @@
 # CaPO4Sim, the Virtual Physiology Simulator <img src="man/figures/CaPO4sim_hex.svg" width=200 align="right" />
-[![R build status](https://github.com/DivadNojnarg/CaPO4Sim/workflows/R-CMD-check/badge.svg)](https://github.com/DivadNojnarg/CaPO4Sim/actions)
+[![R-CMD-check](https://github.com/DivadNojnarg/CaPO4Sim/workflows/R-CMD-check/badge.svg)](https://github.com/DivadNojnarg/CaPO4Sim/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
 This apps were developed in the [Interface Group](https://interfacegroup.ch).
-![](https://lh5.googleusercontent.com/p/AF1QipMbcic6JUV3C8MuraR0BWq7hV-T-I4Y7QuAliz_=w160-h160-k-no)
 
 ## Installation
 
