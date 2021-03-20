@@ -67,6 +67,6 @@ left_footer <- fluidRow(
 )
 
 footer <- dashboardFooter(
-  left_text = left_footer,
-  right_text = NULL
+  left = left_footer,
+  right = NULL
 )

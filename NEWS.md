@@ -1,4 +1,5 @@
-# CaPO4Sim 0.2.0.9000
+# CaPO4Sim 0.2.0
+- Update to `shinydashboardPlus` 2.0.0
 - add `fullScreen()` and `fullScreenUI()` module to allow apps to turn in fullscreen mode
 
 

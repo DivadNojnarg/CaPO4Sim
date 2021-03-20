@@ -9,7 +9,8 @@ plotBoxUi <- function(id) {
 
   ns <- NS(id)
 
-  boxTag <- shinydashboardPlus::boxPlus(
+  boxTag <- shinydashboardPlus::box(
+    id = ns("boxPlot"),
     width = 12,
     solidHeader = FALSE,
     status = NULL,
@@ -85,7 +86,6 @@ plotBoxUi <- function(id) {
   # the box is actually wrapped in a column tag. Need to take the first child
   boxTag[[2]]$children[[1]] <- tagAppendAttributes(
     boxTag[[2]]$children[[1]],
-    id = "boxPlot",
     style = "overflow-y: auto;"
   )
 

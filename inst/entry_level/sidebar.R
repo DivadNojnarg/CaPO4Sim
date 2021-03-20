@@ -11,7 +11,8 @@
 # |
 # *------------------------------------------------------------------
 
-sidebar <- dashboardSidebar(
+sidebar <- shinydashboardPlus::dashboardSidebar(
+  id = "sidebar",
   width = 300,
   introBox(
     sidebarMenu(

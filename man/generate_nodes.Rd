@@ -4,8 +4,15 @@
 \alias{generate_nodes}
 \title{CaPO4 Nodes Generator}
 \usage{
-generate_nodes(components, organs, regulations, background, diseases,
-  organs_nodes_size, hormones_nodes_size)
+generate_nodes(
+  components,
+  organs,
+  regulations,
+  background,
+  diseases,
+  organs_nodes_size,
+  hormones_nodes_size
+)
 }
 \arguments{
 \item{components}{Shiny input CaPO4 component selector. See \link{networkOptions}.}

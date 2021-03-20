@@ -12,8 +12,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
+  \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 
-  \item{purrr}{\code{\link[purrr]{is_empty}}}
+  \item{purrr}{\code{\link[purrr:reexports]{is_empty}}}
 }}
 

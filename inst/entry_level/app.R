@@ -16,6 +16,7 @@ library(shinydashboardPlus)
 library(rintrojs)
 library(magrittr)
 library(DT)
+library(waiter)
 
 library(CaPO4Sim)
 
@@ -37,16 +38,15 @@ source("network_modals.R")
 
 # 4) App
 shinyApp(
-  ui = dashboardPagePlus(
+  ui = shinydashboardPlus::dashboardPage(
     skin = "black",
     title = "CaPO4 Teaching App",
-    collapse_sidebar = TRUE,
-    enable_preloader = TRUE,
-    header,
-    sidebar,
-    body,
-    footer,
-    rightsidebar
+    preloader = list(html = spin_1(), color = "#333e48"),
+    header = header,
+    sidebar = sidebar,
+    body = body,
+    footer = footer,
+    controlbar = controlbar
   ),
   server = function(input, output, session) {
 
@@ -66,7 +66,11 @@ shinyApp(
     callModule(module = skinSelect, id = "skin")
     callModule(module = glossaryCaPO4, id = "lexicus")
     diseases <- callModule(module = diseaseSelect, id = "diseases")
-    networkOptions <- callModule(module = networkOptions, id = "network_options", mobile = isMobile)
+    networkOptions <- callModule(
+      module = networkOptions,
+      id = "network_options",
+      mobile = isMobile
+    )
 
     # network module
     network_utils <- callModule(
@@ -95,9 +99,21 @@ shinyApp(
     )
 
     # plot module
-    slider_disease <- callModule(module = plotBox, id = "graphs", diseases = diseases, help = help, isMobile = isMobile)
+    slider_disease <- callModule(
+      module = plotBox,
+      id = "graphs",
+      diseases = diseases,
+      help = help,
+      isMobile = isMobile
+    )
 
     # userInfo module
-    callModule(module = userInfo, id = "rat", diseases = diseases, sliderDisease = slider_disease, help = help)
+    callModule(
+      module = userInfo,
+      id = "rat",
+      diseases = diseases,
+      sliderDisease = slider_disease,
+      help = help
+    )
   }
 )

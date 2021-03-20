@@ -9,15 +9,14 @@ glossaryCaPO4Ui <- function(id) {
 
   ns <- NS(id)
 
-  boxTag <- shinydashboard::box(
+  shinydashboardPlus::box(
+    id = ns("boxGlossary"),
     solidHeader = TRUE,
     width = 12,
     height = "50%",
     style = "overflow-x: scroll;",
     DT::dataTableOutput(ns("glossary"))
   )
-  boxTag$children[[1]] <- tagAppendAttributes(boxTag$children[[1]], id = "boxGlossary")
-  boxTag
 }
 
 

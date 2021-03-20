@@ -10,7 +10,8 @@ networkCaPO4Ui <- function(id) {
   ns <- NS(id)
 
 
-  boxTag <- shinydashboardPlus::boxPlus(
+  boxTag <- shinydashboardPlus::box(
+    id = ns("boxNetwork"),
     width = 12,
     solidHeader = FALSE,
     status = NULL,
@@ -35,7 +36,6 @@ networkCaPO4Ui <- function(id) {
     )
   )
 
-  boxTag[[2]]$children[[1]] <- tagAppendAttributes(boxTag[[2]]$children[[1]], id = "boxNetwork")
   # remove all spaces so that the network fits the whole body
   boxTag[[2]]$children[[1]]$children[[2]] <- tagAppendAttributes(
     boxTag[[2]]$children[[1]]$children[[2]],

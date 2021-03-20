@@ -10,28 +10,29 @@
 # |
 # |
 # *------------------------------------------------------------------
-rightsidebar <- rightSidebar(
-  background = "dark",
+controlbar <- dashboardControlbar(
+  id = "controlbar",
+  skin = "dark",
   width = 230,
-
-  rightSidebarTabContent(
-    id = 1,
-    active = TRUE,
-    icon = "sliders",
-    networkOptionsUi(id = "network_options")
-  ),
-  rightSidebarTabContent(
-    id = 2,
-    icon = "map",
-    diseaseSelectUi(id = "diseases"),
-    hr(),
-    infosUi(id = "infos")
-  ),
-  rightSidebarTabContent(
-    id = 3,
-    icon = "paint-brush",
-    # change the dashboard main theme
-    skinSelectUi(id = "skin")
+  controlbarMenu(
+    id = "controlbarmenu",
+    controlbarItem(
+      title = "Options",
+      icon = icon("sliders"),
+      networkOptionsUi(id = "network_options")
+    ),
+    controlbarItem(
+      title = "Diseases",
+      icon = icon("map"),
+      diseaseSelectUi(id = "diseases"),
+      hr(),
+      infosUi(id = "infos")
+    ),
+    controlbarItem(
+      title = "Skin",
+      icon = icon("paint-brush"),
+      # change the dashboard main theme
+      skinSelectUi(id = "skin")
+    )
   )
-
 )

@@ -41,7 +41,7 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
 
     shinydashboardPlus::dashboardUser(
       name = "Rat State",
-      src = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
+      image = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
         generate_userFields(diseases, sliderDisease)$image
       } else {
         "images_patient_info/happy.png"

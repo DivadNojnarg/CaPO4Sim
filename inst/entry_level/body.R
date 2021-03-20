@@ -29,7 +29,7 @@ body <- dashboardBody(
   use_bs_popover(),
   use_bs_tooltip(),
 
-  extendShinyjs(script = "www/js/fullscreen.js"),
+  extendShinyjs(script = "js/fullscreen.js", functions = c("toggleFullScreen")),
 
   # shinyEffects
   setShadow(id = "boxPlot"),
