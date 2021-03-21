@@ -10,4 +10,5 @@
 
 
 ## Note
-Fixed shinydashboardPlus warnings and NOTES
+- Fixed shinydashboardPlus warnings and NOTES
+- Fixed invalid URLs
