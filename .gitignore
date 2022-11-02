@@ -6,3 +6,5 @@ README.html
 **/.DS_Store
 **/*.dcf
 docs
+inst/virtual_patient_simulator/bs4/compiled_core.o
+inst/virtual_patient_simulator/bs4/compiled_core.so
