@@ -17,15 +17,13 @@
 # Define UI
 #header_box_network,
 ui <- bs4DashPage(
-  # options
-  enable_preloader = TRUE,
-  sidebar_collapsed = TRUE,
-  controlbar_collapsed = TRUE,
-  title = "Virtual Patient Simulator",
   # content
-  navbar = navbar,
+  header = navbar,
   sidebar = sidebar,
   body = body,
+  controlbar = controlbar,
   footer = footer,
-  controlbar = dashboardControlbar
+  preloader = list(html = spin_1(), color = "#333e48"),
+  # options
+  title = "Virtual Patient Simulator"
 )

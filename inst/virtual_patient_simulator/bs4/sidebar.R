@@ -24,12 +24,12 @@ sidebar <- bs4DashSidebar(
     bs4SidebarMenuItem(
       "App",
       tabName = "main",
-      icon = "home"
+      icon = icon("house")
     ),
     bs4SidebarMenuItem(
       "About",
       tabName = "about",
-      icon = "info-circle"
+      icon = icon("info")
     )
   )
 )

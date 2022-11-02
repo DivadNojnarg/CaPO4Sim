@@ -52,7 +52,4 @@ left_footer <- fluidRow(
   )
 )
 
-footer <- bs4DashFooter(
-  left_footer,
-  right_text = NULL
-)
+footer <- bs4DashFooter(left_footer)
