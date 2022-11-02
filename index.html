@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CaPO4Sim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -69,73 +65,71 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="capo4sim-the-virtual-physiology-simulator-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#capo4sim-the-virtual-physiology-simulator-" class="anchor"></a>CaPO4Sim, the Virtual Physiology Simulator <img src="reference/figures/CaPO4sim_hex.svg" width="200" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="capo4sim-the-virtual-physiology-simulator-">CaPO4Sim, the Virtual Physiology Simulator <img src="reference/figures/CaPO4sim_hex.svg" width="200" align="right"><a class="anchor" aria-label="anchor" href="#capo4sim-the-virtual-physiology-simulator-"></a>
 </h1></div>
 
-<p>This apps were developed in the <a href="https://interfacegroup.ch">Interface Group</a>.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<p>This apps were developed in the <a href="https://interfacegroup.ch" class="external-link">Interface Group</a>.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>As this package is not currently on CRAN, install it via devtools:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DivadNojnarg/CaPO4Sim"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DivadNojnarg/CaPO4Sim"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="access-apps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#access-apps" class="anchor"></a>Access Apps</h2>
+<div class="section level2">
+<h2 id="access-apps">Access Apps<a class="anchor" aria-label="anchor" href="#access-apps"></a>
+</h2>
 <p>There are two ways to run these apps:</p>
 <ul>
-<li>access the <a href="http://physiol-seafile.uzh.ch">Apps.Physiol</a> RStudio Connect server and selected the relevant app</li>
+<li>access the <a href="http://physiol-seafile.uzh.ch" class="external-link">Apps.Physiol</a> RStudio Connect server and selected the relevant app</li>
 <li>from the package (see below)</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">CaPO4Sim</span><span class="op">)</span>
-<span class="co"># entry level app</span>
-<span class="fu"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span><span class="op">(</span>context <span class="op">=</span> <span class="st">"introduction"</span><span class="op">)</span>
-<span class="co"># virtual patient Bootstrap 4</span>
-<span class="fu"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span><span class="op">(</span>context <span class="op">=</span> <span class="st">"virtual-patient"</span><span class="op">)</span></code></pre></div>
-<p>Note that for the patient simulator, you need to install a compiler: either <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> for windows or clang for <a href="https://cran.r-project.org/bin/macosx/tools/">Mac/Linux</a>. If you don’t want, you can still access these apps online.</p>
-<p>The Bootstrap 3 version will not be updated anymore but can be accessed <a href="http://physiol-seafile.uzh.ch:3939/virtual_patient/">here</a>.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">CaPO4Sim</span><span class="op">)</span></span>
+<span><span class="co"># entry level app</span></span>
+<span><span class="fu"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span><span class="op">(</span>context <span class="op">=</span> <span class="st">"introduction"</span><span class="op">)</span></span>
+<span><span class="co"># virtual patient Bootstrap 4</span></span>
+<span><span class="fu"><a href="reference/run_CaPO4Sim.html">run_CaPO4Sim</a></span><span class="op">(</span>context <span class="op">=</span> <span class="st">"virtual-patient"</span><span class="op">)</span></span></code></pre></div>
+<p>Note that for the patient simulator, you need to install a compiler: either <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a> for windows or clang for <a href="https://cran.r-project.org/bin/macosx/tools/" class="external-link">Mac/Linux</a>. If you don’t want, you can still access these apps online.</p>
+<p>The Bootstrap 3 version will not be updated anymore but can be accessed <a href="http://physiol-seafile.uzh.ch:3939/virtual_patient/" class="external-link">here</a>.</p>
 </div>
-<div id="demonstration" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demonstration" class="anchor"></a>Demonstration</h2>
-<div id="entry-level-application" class="section level3">
-<h3 class="hasAnchor">
-<a href="#entry-level-application" class="anchor"></a>Entry Level Application</h3>
+<div class="section level2">
+<h2 id="demonstration">Demonstration<a class="anchor" aria-label="anchor" href="#demonstration"></a>
+</h2>
+<div class="section level3">
+<h3 id="entry-level-application">Entry Level Application<a class="anchor" aria-label="anchor" href="#entry-level-application"></a>
+</h3>
 <p><img src="https://community.rstudio.com/uploads/default/original/2X/b/bd5306bab9eb7561da943c59d2693639dc719168.gif"></p>
 </div>
-<div id="virtual-patient-simulator" class="section level3">
-<h3 class="hasAnchor">
-<a href="#virtual-patient-simulator" class="anchor"></a>Virtual Patient Simulator</h3>
+<div class="section level3">
+<h3 id="virtual-patient-simulator">Virtual Patient Simulator<a class="anchor" aria-label="anchor" href="#virtual-patient-simulator"></a>
+</h3>
 <p><img src="https://community.rstudio.com/uploads/default/original/2X/e/eb1013fd09ccf10cbe13da3f0168eebfcb0eba75.gif"></p>
 </div>
 </div>
-<div id="contacts" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contacts" class="anchor"></a><strong>Contacts</strong>
+<div class="section level2">
+<h2 id="contacts">
+<strong>Contacts</strong><a class="anchor" aria-label="anchor" href="#contacts"></a>
 </h2>
 <p><em>david.granjon_at_uzh.ch</em></p>
 </div>
-<div id="staff" class="section level2">
-<h2 class="hasAnchor">
-<a href="#staff" class="anchor"></a><strong>Staff</strong>
+<div class="section level2">
+<h2 id="staff">
+<strong>Staff</strong><a class="anchor" aria-label="anchor" href="#staff"></a>
 </h2>
 <ul>
 <li>
-<em>Project manager</em>: <a href="https://interfacegroup.ch/people/">Dr. Diane de Zélicourt, Prof. Vartan Kurtcuoglu and Dr. David Granjon</a>
+<em>Project manager</em>: <a href="https://interfacegroup.ch/people/" class="external-link">Dr. Diane de Zélicourt, Prof. Vartan Kurtcuoglu and Dr. David Granjon</a>
 </li>
 <li>
-<em>Experts in Physiology</em>:
-<ul>
+<em>Experts in Physiology</em>:<ul>
 <li>Prof. François Verrey,</li>
 <li>
-<a href="https://www.unil.ch/dpt/home/menuinst/groupe-de-recherche/groupe-bonny.html">Prof. Olivier Bonny</a>,</li>
+<a href="https://www.unil.ch/dpt/home/menuinst/groupe-de-recherche/groupe-bonny.html" class="external-link">Prof. Olivier Bonny</a>,</li>
 <li>
-<a href="https://hset.org/organization/team/">Prof. Bernard Rossier</a>,</li>
-<li><a href="https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html">Prof. Carsten Wagner</a></li>
+<a href="https://hset.org/organization/team/" class="external-link">Prof. Bernard Rossier</a>,</li>
+<li><a href="https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html" class="external-link">Prof. Carsten Wagner</a></li>
 </ul>
 </li>
 <li>
@@ -143,7 +137,7 @@
 <li>
 <em>Animation</em>: Janine Meyer</li>
 <li>
-<em>Model developer</em>: <a href="https://divadnojnarg.github.io">Dr. David Granjon</a>
+<em>Model developer</em>: <a href="https://divadnojnarg.github.io" class="external-link">Dr. David Granjon</a>
 </li>
 <li>
 <em>Web/R developer</em>: Dr. David Granjon</li>
@@ -151,20 +145,14 @@
 <em>Server management</em>: Dr. David Granjon</li>
 </ul>
 </div>
-<div id="acknowledgments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+<div class="section level2">
+<h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h2>
 <p>I thank RStudio for providing us with RStudio Connect licences. All illustration backgrounds were designed by Tara Von Grebel and animations were produced by Janine Meyer, both of the Multimedia and eLearning-Services, University of Zurich.</p>
 <div class="row">
-<div class="col-sm-4">
-<img src="reference/figures/nccr.svg" height="200px" width="200px">
-</div>
-<div class="col-sm-4">
-<img src="reference/figures/unil.svg" height="200px" width="200px">
-</div>
-<div class="col-sm-4">
-<img src="reference/figures/uzh.svg" height="200px" width="200px">
-</div>
+<div class="col-sm-4"><p><img src="reference/figures/nccr.svg" height="200px" width="200px"></p></div>
+<div class="col-sm-4"><p><img src="reference/figures/unil.svg" height="200px" width="200px"></p></div>
+<div class="col-sm-4"><p><img src="reference/figures/uzh.svg" height="200px" width="200px"></p></div>
 </div>
 </div>
 </div>
@@ -172,46 +160,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=CaPO4Sim">https://​cloud.r-project.org/​package=CaPO4Sim</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=CaPO4Sim" class="external-link">View on CRAN</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing CaPO4Sim</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>David Granjon <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
 <li> University of Lausanne <br><small class="roles"> Funder </small>  </li>
 <li> University of Zurich <br><small class="roles"> Funder </small>  </li>
 <li> Kidney NCCR.CH <br><small class="roles"> Funder </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/DivadNojnarg/CaPO4Sim/actions"><img src="https://github.com/DivadNojnarg/CaPO4Sim/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://cran.r-project.org/package=CaPO4Sim"><img src="https://www.r-pkg.org/badges/version/CaPO4Sim" alt="CRAN status"></a></li>
+<li><a href="https://github.com/DivadNojnarg/CaPO4Sim/actions" class="external-link"><img src="https://github.com/DivadNojnarg/CaPO4Sim/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://cran.r-project.org/package=CaPO4Sim" class="external-link"><img src="https://www.r-pkg.org/badges/version/CaPO4Sim" alt="CRAN status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by David Granjon,  University of Lausanne,  University of Zurich,  Kidney NCCR.CH.</p>
+  <p></p>
+<p>Developed by David Granjon, University of Lausanne, University of Zurich, Kidney NCCR.CH.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -219,6 +219,8 @@
 
   
 
+
+  
 
   </body>
 </html>
