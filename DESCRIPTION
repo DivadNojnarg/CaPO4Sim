@@ -1,7 +1,7 @@
 Package: CaPO4Sim
 Type: Package
 Title: A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("David", "Granjon", role = c("aut", "cre", "cph"), email = "dgranjon@ymail.com"),
     person("Diane", "de Zélicourt", role = "cph"),
@@ -24,12 +24,9 @@ Description: Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 
     thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. 
     These applications are hosted at <https://rinterface.com/AppsPhysiol.html>.
 Imports: 
-    shiny, 
-    htmltools,
+    shiny,
     shinyjs, 
-    shinyWidgets, 
-    shinydashboard, 
-    shinydashboardPlus, 
+    shinyWidgets,
     shinyjqui, 
     plotly, 
     rintrojs, 
@@ -39,7 +36,10 @@ Imports:
     DT,
     magrittr,
     utils
+Suggests:
+    htmltools,
+    shinydashboard,
+    shinydashboardPlus
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1.9000
+RoxygenNote: 7.3.2

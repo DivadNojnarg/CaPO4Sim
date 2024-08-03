@@ -1,5 +1,5 @@
 # CaPO4Sim, the Virtual Physiology Simulator <img src="man/figures/CaPO4sim_hex.svg" width=200 align="right" />
-[![R-CMD-check](https://github.com/DivadNojnarg/CaPO4Sim/workflows/R-CMD-check/badge.svg)](https://github.com/DivadNojnarg/CaPO4Sim/actions)
+[![R-CMD-check](https://github.com/DivadNojnarg/CaPO4Sim/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DivadNojnarg/CaPO4Sim/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
 This apps were developed in the [Interface Group](https://interfacegroup.ch).
@@ -14,11 +14,6 @@ devtools::install_github("DivadNojnarg/CaPO4Sim")
 
 ## Access Apps
 
-There are two ways to run these apps:
-
-- access the [Apps.Physiol](http://physiol-seafile.uzh.ch) RStudio Connect server and selected the relevant app
-- from the package (see below)
-
 ```r
 library(CaPO4Sim)
 # entry level app
@@ -29,8 +24,6 @@ run_CaPO4Sim(context = "virtual-patient")
 
 Note that for the patient simulator, you need to install a compiler: either [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for windows or clang for [Mac/Linux](https://cran.r-project.org/bin/macosx/tools/). If you don't want,
 you can still access these apps online.
-
-The Bootstrap 3 version will not be updated anymore but can be accessed [here](http://physiol-seafile.uzh.ch:3939/virtual_patient/).
 
 ## Demonstration
 
@@ -55,7 +48,7 @@ The Bootstrap 3 version will not be updated anymore but can be accessed [here](h
   - [Prof. Carsten Wagner](https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html)
 + *Graphic designer*: Tara von Grebel and Dr. David Granjon
 + *Animation*: Janine Meyer
-+ *Model developer*: [Dr. David Granjon](https://divadnojnarg.github.io)
++ *Model developer*: [Dr. David Granjon](https://david.rinterface.com/)
 + *Web/R developer*: Dr. David Granjon
 + *Server management*: Dr. David Granjon
 

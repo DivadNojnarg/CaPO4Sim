@@ -11,5 +11,4 @@
 #'
 #' @name CaPO4Sim
 #' @import shiny
-#' @docType package
-NULL
+"_PACKAGE"

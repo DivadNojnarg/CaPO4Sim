@@ -15,7 +15,7 @@ myCarousel(
 )
 }
 \arguments{
-\item{...}{Slot for \link{carouselItem}}
+\item{...}{Slot for \link[shinydashboardPlus]{carouselItem}}
 
 \item{id}{Carousel id. Must be unique.}
 
@@ -23,7 +23,7 @@ myCarousel(
 
 \item{width}{Carousel width. 6 by default.}
 
-\item{.list}{Should you need to pass \link{carouselItem} via \link{lapply} or similar,
+\item{.list}{Should you need to pass \link[shinydashboardPlus]{carouselItem} via \link{lapply} or similar,
 put these item here instead of passing them in ...}
 
 \item{data.interval}{specify data-interval in ms. 5000ms by default, set to "false" to prevent automated animation of the slides.}

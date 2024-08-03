@@ -49,11 +49,11 @@ video <- function(input, output, session) {}
 #'
 #' @description Creates a carousel. Adapted from shinydashboardplus to also allow control of the carousel animation
 #'
-#' @param ... Slot for \link{carouselItem}
+#' @param ... Slot for \link[shinydashboardPlus]{carouselItem}
 #' @param id Carousel id. Must be unique.
 #' @param indicators Whether to display left and right indicators.
 #' @param width Carousel width. 6 by default.
-#' @param .list Should you need to pass \link{carouselItem} via \link{lapply} or similar,
+#' @param .list Should you need to pass \link[shinydashboardPlus]{carouselItem} via \link{lapply} or similar,
 #' put these item here instead of passing them in ...
 #' @param data.interval specify data-interval in ms. 5000ms by default, set to "false" to prevent automated animation of the slides.
 #' @param data.ride specify data-ride. "carousel" by default.

@@ -2,6 +2,7 @@
 % Please edit documentation in R/CaPO4Sim-package.R
 \docType{package}
 \name{CaPO4Sim}
+\alias{CaPO4Sim-package}
 \alias{CaPO4Sim}
 \title{CaPO4Sim}
 \description{
@@ -13,4 +14,21 @@ The first application explores the fundamentals of Ca-Pi homeostasis,
 while the second provides interactive case studies for in-depth exploration of the topic,
 thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation.
 These applications are hosted at <https://rinterface.com/AppsPhysiol.html>.
+}
+\author{
+\strong{Maintainer}: David Granjon \email{dgranjon@ymail.com} [copyright holder]
+
+Other contributors:
+\itemize{
+  \item Diane de Zélicourt [copyright holder]
+  \item Vartan Kurtcuoglu [copyright holder]
+  \item Olivier Bonny [copyright holder]
+  \item François Verrey [copyright holder]
+  \item  University of Lausanne [funder]
+  \item  University of Zurich [funder]
+  \item  Kidney NCCR.CH [funder]
+  \item  The Interface Group (Hosting Group) [copyright holder]
+  \item  RinteRface (R/HTML Templates) [copyright holder]
+}
+
 }

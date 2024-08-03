@@ -1,7 +1,6 @@
 ## Test environments
-* local OS X install, R 3.6.1
-* ubuntu 14.04 (on travis-ci), R 3.4.4
-* RHub check: Windows server, Ubuntu 16.04 and Fedora 
+* local OS X install, R 4.2.2
+* RHub check
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -10,5 +9,4 @@
 
 
 ## Note
-- Fixed shinydashboardPlus warnings and NOTES
-- Fixed invalid URLs
+- Fixed CRAN notes
