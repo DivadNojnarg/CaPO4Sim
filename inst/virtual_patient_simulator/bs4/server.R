@@ -180,31 +180,25 @@ server <- function(input, output, session) {
       collapsible = TRUE,
       collapsed = FALSE,
       closable = FALSE,
-      labelStatus = "danger",
-      labelText = len,
-      labelTooltip = NULL,
-      dropdownMenu = NULL,
-      dropdownIcon = "wrench",
-      overflow = FALSE,
-
+      label = boxLabel(
+        text = len,
+        status = "danger"
+      ),
       cardProfile(
-        src = patient_datas$picture,
+        image = patient_datas$picture,
         title = patient_datas$name,
-        subtitle = NULL,
-        cardProfileItemList(
-          bordered = FALSE,
-          cardProfileItem(
-            title = "Age",
-            description = patient_datas$age
-          ),
-          cardProfileItem(
-            title = "Height",
-            description = patient_datas$height
-          ),
-          cardProfileItem(
-            title = "Weight",
-            description = patient_datas$weight
-          )
+        bordered = FALSE,
+        cardProfileItem(
+          title = "Age",
+          description = patient_datas$age
+        ),
+        cardProfileItem(
+          title = "Height",
+          description = patient_datas$height
+        ),
+        cardProfileItem(
+          title = "Weight",
+          description = patient_datas$weight
         )
       ),
       br(),
@@ -212,12 +206,12 @@ server <- function(input, output, session) {
         userPost(
           id = i,
           collapsed = FALSE,
-          src = medical_history$doctors_avatars[[i]],
+          image = medical_history$doctors_avatars[[i]],
           author = medical_history$doctors[[i]],
           description = strong(medical_history$pathologies[[i]]),
-          HTML(paste(medical_history$disease_description[[i]])),
+          medical_history$disease_description[[i]],
           if (!is.null(medical_history$disease_image[[i]])) {
-            userPostMedia(src = medical_history$disease_image[[i]])
+            userPostMedia(image = medical_history$disease_image[[i]])
           }
         )
       })
@@ -233,9 +227,11 @@ server <- function(input, output, session) {
       bs4SocialCard(
         closable = FALSE,
         width = 12,
-        title = paste0(input$user_name, "'s notebook"),
-        subtitle = start_time,
-        src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+        title = userBlock(
+          title = paste0(input$user_name, "'s notebook"),
+          subtitle = start_time,
+          image = "https://image.flaticon.com/icons/svg/305/305983.svg"
+        ),
         if (events$animation >= 8) {
           tagList(
             column(
@@ -273,11 +269,11 @@ server <- function(input, output, session) {
             )
           )
         },
-        comments = if (len > 0) {
+        if (len > 0) {
           tagList(
             lapply(1:len, FUN = function(i) {
               cardComment(
-                src = "https://image.flaticon.com/icons/svg/305/305983.svg",
+                image = "https://image.flaticon.com/icons/svg/305/305983.svg",
                 title = questions[[i]],
                 date = comments$date[[i]],
                 comments$description[[i]]
@@ -286,8 +282,7 @@ server <- function(input, output, session) {
           )
         } else {
           NULL
-        },
-        footer = NULL
+        }
       )
     }
   })
@@ -316,13 +311,10 @@ server <- function(input, output, session) {
             collapsible = TRUE,
             collapsed = FALSE,
             closable = FALSE,
-            labelStatus = "danger",
-            labelText = len,
-            labelTooltip = NULL,
-            dropdownMenu = NULL,
-            dropdownIcon = "wrench",
-            overflow = TRUE,
-
+            label = boxLabel(
+              text = len,
+              status = "danger"
+            ),
             # treatments input are
             # in the event box
             if (!is.null(events$answered)) {
@@ -357,16 +349,16 @@ server <- function(input, output, session) {
                 item <- tagAppendAttributes(
                   bs4TimelineItem(
                     title = name[[i]],
-                    icon = "medkit",
-                    status = "orange",
+                    icon = icon("medkit"),
+                    color = "orange",
                     time = bs4Badge(
                       position = "left",
                       rounded = FALSE,
-                      status = "warning",
+                      color = "warning",
                       start_time[[i]]
                     ),
                     bs4TimelineItemMedia(
-                      src = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
+                      image = if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
                         "treatments_img/syringe.svg"
                       } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
                         "treatments_img/medicine.svg"
@@ -391,8 +383,7 @@ server <- function(input, output, session) {
                         # scale FGF23
                         paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
                       )
-                    },
-                    footer = NULL
+                    }
                     #if (!is.null(name[[i]])) {
                     #  if (name[[i]] != "PTX")
                     #    if (!(name[[i]] %in% c("PTX", "plasma analysis"))) {
@@ -416,11 +407,11 @@ server <- function(input, output, session) {
               bs4Timeline(
                 width = 12,
                 style = "height: 400px;",
-                bs4TimelineStart(status = "danger"),
+                bs4TimelineStart(color = "danger"),
                 br(),
                 items,
                 br(),
-                bs4TimelineEnd(status = "gray")
+                bs4TimelineEnd(color = "gray")
               )
             }
           )
@@ -502,8 +493,7 @@ server <- function(input, output, session) {
               type = 8,
               color = "#000000"
             )
-          ),
-          footer = NULL
+          )
         )
 
         cardTag[[2]]$children[[1]]$children[[2]] <- tagAppendAttributes(
@@ -888,7 +878,7 @@ server <- function(input, output, session) {
       class = "diagnosis-badge",
       bs4Badge(
         game_text,
-        status = game_status,
+        color = game_status,
         rounded = TRUE,
         position = "left"
       )
@@ -1116,8 +1106,8 @@ server <- function(input, output, session) {
     # use invalidate later to simulate a clock
     invalidateLater(1000)
     bs4SidebarUserPanel(
-      text = tags$small(paste(input$user_name, Sys.time())),
-      img = "https://image.flaticon.com/icons/svg/305/305983.svg"
+      name = tags$small(paste(input$user_name, Sys.time())),
+      image = "https://image.flaticon.com/icons/svg/305/305983.svg"
     )
   })
 

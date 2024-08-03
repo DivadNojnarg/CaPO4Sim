@@ -21,6 +21,7 @@ library(stringr)
 library(shinyFeedback)
 library(bs4Dash)
 library(dplyr)
+library(waiter)
 
 library(CaPO4Sim)
 

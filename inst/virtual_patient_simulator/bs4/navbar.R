@@ -12,19 +12,10 @@ navbar <- bs4DashNavbar(
   skin = "light",
   status = "white",
   border = TRUE,
-  sidebarIcon = "bars",
-  controlbarIcon = "th",
-  leftUi = tagList(
-    #uiOutput("currentTime"),
-    fullScreenUI(id = "fullScreenTrigger"),
-    uiOutput("user_game_status")
-    #uiOutput("current_calcium")
-  ),
-  rightUi = tagList(
-    downloadButton(
-      label = "logs",
-      outputId = "download_logs"
-    )
+  uiOutput("user_game_status"),
+  downloadButton(
+    label = "logs",
+    outputId = "download_logs"
   ),
   fixed = FALSE
 )
