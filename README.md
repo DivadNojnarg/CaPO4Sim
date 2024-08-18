@@ -2,14 +2,12 @@
 [![R-CMD-check](https://github.com/DivadNojnarg/CaPO4Sim/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DivadNojnarg/CaPO4Sim/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/CaPO4Sim)](https://cran.r-project.org/package=CaPO4Sim)
 
-This apps were developed in the [Interface Group](https://interfacegroup.ch).
+These apps were developed in the [Interface Group](https://interfacegroup.ch).
 
 ## Installation
 
-As this package is not currently on CRAN, install it via devtools:
-
 ```r
-devtools::install_github("DivadNojnarg/CaPO4Sim")
+install.packages("DivadNojnarg/CaPO4Sim")
 ```
 
 ## Access Apps
@@ -43,9 +41,9 @@ you can still access these apps online.
 + *Project manager*: [Dr. Diane de Zélicourt, Prof. Vartan Kurtcuoglu and Dr. David Granjon](https://interfacegroup.ch/people/)
 + *Experts in Physiology*: 
   - Prof. François Verrey,
-  - [Prof. Olivier Bonny](https://www.unil.ch/dpt/home/menuinst/groupe-de-recherche/groupe-bonny.html),
-  - [Prof. Bernard Rossier](https://hset.org/organization/team/),
-  - [Prof. Carsten Wagner](https://www.physiol.uzh.ch/en/research/institutegroups/Acidbasetransport/Grwagner/CWagner.html)
+  - [Prof. Olivier Bonny](https://www.h-fr.ch/annuaire/prof-olivier-bonny),
+  - [Prof. Bernard Rossier](https://hset.org/organization/board/),
+  - [Prof. Carsten Wagner](https://www.zurich-kidney.uzh.ch/en/members/Full-Members/cw.html)
 + *Graphic designer*: Tara von Grebel and Dr. David Granjon
 + *Animation*: Janine Meyer
 + *Model developer*: [Dr. David Granjon](https://david.rinterface.com/)

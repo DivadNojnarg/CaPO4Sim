@@ -21,8 +21,7 @@ Description: Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 
     here <https://pubmed.ncbi.nlm.nih.gov/28747359/)>.
     The first application explores the fundamentals of Ca-Pi homeostasis, 
     while the second provides interactive case studies for in-depth exploration of the topic, 
-    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. 
-    These applications are hosted at <https://rinterface.com/AppsPhysiol.html>.
+    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation
 Imports: 
     shiny,
     shinyjs, 
