@@ -8,3 +8,5 @@
 ^pkgdown$
 ^\.github$
 ^CRAN-SUBMISSION$
+inst/virtual_patient_simulator/miniUI2/rsconnect
+inst/virtual_patient_simulator/bs4/rsconnect
