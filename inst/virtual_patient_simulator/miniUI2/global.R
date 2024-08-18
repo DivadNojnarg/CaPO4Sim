@@ -53,8 +53,9 @@ source("generate_slider_events.R")
 Sys.setenv(TZ = "Europe/Zurich")
 
 # compile the C code containing equations
+so_name <- paste("compiled_core", .Platform$dynlib.ext, sep = "")
 system("R CMD SHLIB compiled_core.c")
-dyn.load(paste("compiled_core", .Platform$dynlib.ext, sep = ""))
+dyn.load(so_name)
 
 #-------------------------------------------------------------------------
 #
@@ -67,6 +68,15 @@ users_logs <- "www/users_data"
 if (!dir.exists(users_logs)) {
   dir.create(users_logs)
 }
+
+onStop(function() {
+  if (.Platform$OS.type == "unix") {
+    file.remove(so_name)
+    file.remove(gsub("so", "o", so_name))
+  } else if (.Platform$OS.type == "windows") {
+    file.remove(so_name)
+  }
+})
 
 # Bookmarking
 #enableBookmarking(store = "server") # save to the disk
