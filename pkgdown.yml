@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-08-03T17:18Z
+last_built: 2024-08-18T12:21Z
 urls:
   reference: https://divadnojnarg.github.io/CaPO4Sim/reference
   article: https://divadnojnarg.github.io/CaPO4Sim/articles
