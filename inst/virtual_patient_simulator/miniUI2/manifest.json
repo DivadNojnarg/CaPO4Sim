@@ -11,35 +11,27 @@
   },
   "packages": {
     "CaPO4Sim": {
-      "Source": "github",
-      "Repository": null,
+      "Source": "CRAN",
+      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
       "description": {
         "Package": "CaPO4Sim",
         "Type": "Package",
         "Title": "A Virtual Patient Simulator in the Context of Calcium and\nPhosphate Homeostasis",
-        "Version": "0.2.0",
+        "Version": "0.2.1",
         "Authors@R": "c(\n    person(\"David\", \"Granjon\", role = c(\"aut\", \"cre\", \"cph\"), email = \"dgranjon@ymail.com\"),\n    person(\"Diane\", \"de Zélicourt\", role = \"cph\"),\n    person(\"Vartan\", \"Kurtcuoglu\", role = \"cph\"),\n    person(\"Olivier\", \"Bonny\", role = \"cph\"),\n    person(\"François\", \"Verrey\", role = \"cph\"),\n    person(family = \"University of Lausanne\", role = \"fnd\"),\n    person(family = \"University of Zurich\", role = \"fnd\"),\n    person(family = \"Kidney NCCR.CH\", role = \"fnd\"),\n    person(family = \"The Interface Group\", role = \"cph\", comment = \"Hosting Group\"),\n    person(family = \"RinteRface\", role = \"cph\", comment = \"R/HTML Templates\")\n    )",
         "Maintainer": "David Granjon <dgranjon@ymail.com>",
-        "Description": "Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps, \n    building upon on a previously published mathematical model written in C, \n    to ensure efficient computations. The underlying model is accessible\n    here <https://pubmed.ncbi.nlm.nih.gov/28747359/)>.\n    The first application explores the fundamentals of Ca-Pi homeostasis, \n    while the second provides interactive case studies for in-depth exploration of the topic, \n    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation. \n    These applications are hosted at <https://rinterface.com/AppsPhysiol.html>.",
-        "Imports": "shiny, htmltools, shinyjs, shinyWidgets, shinydashboard,\nshinydashboardPlus, shinyjqui, plotly, rintrojs,\nshinycssloaders, visNetwork, purrr, DT, magrittr, utils",
+        "Description": "Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps, \n    building upon on a previously published mathematical model written in C, \n    to ensure efficient computations. The underlying model is accessible\n    here <https://pubmed.ncbi.nlm.nih.gov/28747359/)>.\n    The first application explores the fundamentals of Ca-Pi homeostasis, \n    while the second provides interactive case studies for in-depth exploration of the topic, \n    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation.",
+        "Imports": "shiny, shinyjs, shinyWidgets, shinyjqui, plotly, rintrojs,\nshinycssloaders, visNetwork, purrr, DT, magrittr, utils",
+        "Suggests": "htmltools, shinydashboard, shinydashboardPlus",
         "License": "GPL-3",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.1.1.9000",
+        "RoxygenNote": "7.3.2",
         "NeedsCompilation": "no",
-        "Packaged": "2024-07-12 12:16:05 UTC; davidgranjon",
+        "Packaged": "2024-08-18 13:30:12 UTC; davidgranjon",
         "Author": "David Granjon [aut, cre, cph],\n  Diane de Zélicourt [cph],\n  Vartan Kurtcuoglu [cph],\n  Olivier Bonny [cph],\n  François Verrey [cph],\n  University of Lausanne [fnd],\n  University of Zurich [fnd],\n  Kidney NCCR.CH [fnd],\n  The Interface Group [cph] (Hosting Group),\n  RinteRface [cph] (R/HTML Templates)",
-        "Built": "R 4.4.0; ; 2024-07-12 12:16:06 UTC; unix",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "CaPO4Sim",
-        "RemoteUsername": "DivadNojnarg",
-        "RemotePkgRef": "DivadNojnarg/CaPO4Sim",
-        "RemoteRef": "HEAD",
-        "RemoteSha": "8bd3d12702e159c95817c7a724af6824a0cd1517",
-        "GithubRepo": "CaPO4Sim",
-        "GithubUsername": "DivadNojnarg",
-        "GithubRef": "HEAD",
-        "GithubSHA1": "8bd3d12702e159c95817c7a724af6824a0cd1517"
+        "Repository": "RSPM",
+        "Date/Publication": "2024-08-18 13:50:02 UTC",
+        "Built": "R 4.4.0; ; 2024-08-19 04:23:24 UTC; unix"
       }
     },
     "DT": {
@@ -929,38 +921,6 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-11-16 17:30:02 UTC",
         "Built": "R 4.4.0; ; 2024-11-17 04:32:36 UTC; unix"
-      }
-    },
-    "fresh": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
-      "description": {
-        "Package": "fresh",
-        "Title": "Create Custom 'Bootstrap' Themes to Use in 'Shiny'",
-        "Version": "0.2.1",
-        "Authors@R": "c(\n  person(\"Victor\", \"Perrier\", email = \"victor.perrier@dreamrs.fr\", role = c(\"aut\", \"cre\", \"cph\")),\n  person(\"Fanny\", \"Meyer\", role = \"aut\"),\n  person(\"Thomas\", \"Park\", role = c(\"ctb\", \"cph\"), comment = \"Bootswatch themes\"),\n  person(\"Mark\", \"Otto\", role = \"ctb\", comment = \"Bootstrap library\"),\n  person(\"Jacob\", \"Thornton\", role = \"ctb\", comment = \"Bootstrap library\"),\n  person(family = \"Bootstrap contributors\", role = \"ctb\", comment = \"Bootstrap library\"),\n  person(family = \"Twitter, Inc\", role = \"cph\", comment = \"Bootstrap library\"),\n  person(\"onkbear\", role = c(\"ctb\", \"cph\"), comment = \"admin-lte-2-sass\"),\n  person(family = \"Colorlib\", role = c(\"ctb\", \"cph\"), comment = \"AdminLTE\"))",
-        "Description": "Customize 'Bootstrap' and 'Bootswatch' themes, like colors, fonts, grid layout, \n  to use in 'Shiny' applications, 'rmarkdown' documents and 'flexdashboard'.",
-        "URL": "https://github.com/dreamRs/fresh",
-        "BugReports": "https://github.com/dreamRs/fresh/issues",
-        "License": "GPL-3",
-        "Encoding": "UTF-8",
-        "Imports": "bslib, htmltools, rstudioapi, sass, shiny",
-        "Suggests": "bsicons, shinyWidgets, shinydashboard, bs4Dash, knitr,\nrmarkdown, testthat (>= 2.1.0), covr",
-        "RoxygenNote": "7.3.1",
-        "VignetteBuilder": "knitr",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-06-26 09:11:52 UTC; victorp",
-        "Author": "Victor Perrier [aut, cre, cph],\n  Fanny Meyer [aut],\n  Thomas Park [ctb, cph] (Bootswatch themes),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  onkbear [ctb, cph] (admin-lte-2-sass),\n  Colorlib [ctb, cph] (AdminLTE)",
-        "Maintainer": "Victor Perrier <victor.perrier@dreamrs.fr>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-06-26 09:50:11 UTC",
-        "Built": "R 4.4.0; ; 2024-06-27 04:45:08 UTC; unix",
-        "RemoteType": "standard",
-        "RemotePkgRef": "fresh",
-        "RemoteRef": "fresh",
-        "RemoteRepos": "https://rspm.cynkra.com/prod-cran/latest",
-        "RemotePkgPlatform": "aarch64-apple-darwin20",
-        "RemoteSha": "0.2.1"
       }
     },
     "fs": {
@@ -2100,31 +2060,6 @@
         "Built": "R 4.4.0; ; 2024-11-16 04:54:16 UTC; unix"
       }
     },
-    "rstudioapi": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
-      "description": {
-        "Package": "rstudioapi",
-        "Title": "Safely Access the RStudio API",
-        "Description": "Access the RStudio API (if available) and provide informative error\n    messages when it's not.",
-        "Version": "0.16.0",
-        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", role = c(\"aut\", \"cre\"), email = \"kevin@rstudio.com\"),\n    person(\"JJ\", \"Allaire\", role = c(\"aut\"), email = \"jj@posit.co\"),\n    person(\"Hadley\", \"Wickham\", role = c(\"aut\"), email = \"hadley@posit.co\"),\n    person(\"Gary\", \"Ritchie\", role = c(\"aut\"), email = \"gary@posit.co\"),\n    person(family = \"RStudio\", role = \"cph\")\n    )",
-        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "License": "MIT + file LICENSE",
-        "URL": "https://rstudio.github.io/rstudioapi/,\nhttps://github.com/rstudio/rstudioapi",
-        "BugReports": "https://github.com/rstudio/rstudioapi/issues",
-        "RoxygenNote": "7.3.1",
-        "Suggests": "testthat, knitr, rmarkdown, clipr, covr",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-03-23 21:59:09 UTC; kevin",
-        "Author": "Kevin Ushey [aut, cre],\n  JJ Allaire [aut],\n  Hadley Wickham [aut],\n  Gary Ritchie [aut],\n  RStudio [cph]",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-03-24 11:30:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 19:38:25 UTC; unix"
-      }
-    },
     "sass": {
       "Source": "CRAN",
       "Repository": "https://rspm.cynkra.com/prod-cran/latest",
@@ -2338,64 +2273,6 @@
         "RemoteRepos": "https://rspm.cynkra.com/prod-cran/latest",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "1.0.0"
-      }
-    },
-    "shinydashboard": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
-      "description": {
-        "Package": "shinydashboard",
-        "Title": "Create Dashboards with 'Shiny'",
-        "Version": "0.7.2",
-        "Authors@R": "c(\n    person(\"Winston\", \"Chang\", role = c(\"aut\", \"cre\"), email = \"winston@rstudio.com\"),\n    person(\"Barbara\", \"Borges Ribeiro\", role = \"aut\", email = \"barbara@rstudio.com\"),\n    person(family = \"RStudio\", role = \"cph\"),\n    person(family = \"Almasaeed Studio\", role = c(\"ctb\", \"cph\"), comment = \"AdminLTE theme for Bootstrap\"),\n    person(family = \"Adobe Systems Incorporated\", role = c(\"ctb\", \"cph\"), comment = \"Source Sans Pro font\")\n    )",
-        "Description": "Create dashboards with 'Shiny'. This package provides\n    a theme on top of 'Shiny', making it easy to create attractive dashboards.",
-        "URL": "http://rstudio.github.io/shinydashboard/",
-        "Depends": "R (>= 3.0)",
-        "License": "GPL (>= 2) | file LICENSE",
-        "Imports": "utils, shiny (>= 1.0.0), htmltools (>= 0.2.6), promises",
-        "BugReports": "https://github.com/rstudio/shinydashboard",
-        "RoxygenNote": "6.0.1.9000",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-09-29 17:40:23 UTC; winston",
-        "Author": "Winston Chang [aut, cre],\n  Barbara Borges Ribeiro [aut],\n  RStudio [cph],\n  Almasaeed Studio [ctb, cph] (AdminLTE theme for Bootstrap),\n  Adobe Systems Incorporated [ctb, cph] (Source Sans Pro font)",
-        "Maintainer": "Winston Chang <winston@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-09-30 12:10:06 UTC",
-        "Built": "R 4.4.0; ; 2024-04-06 09:15:52 UTC; unix",
-        "RemoteType": "standard",
-        "RemotePkgRef": "shinydashboard",
-        "RemoteRef": "shinydashboard",
-        "RemoteRepos": "https://rspm.cynkra.com/prod-cran/latest",
-        "RemotePkgPlatform": "aarch64-apple-darwin20",
-        "RemoteSha": "0.7.2"
-      }
-    },
-    "shinydashboardPlus": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
-      "description": {
-        "Package": "shinydashboardPlus",
-        "Type": "Package",
-        "Title": "Add More 'AdminLTE2' Components to 'shinydashboard'",
-        "Version": "2.0.5",
-        "Authors@R": "c(\n  person(\"David\", \"Granjon\", email = \"dgranjon@ymail.com\", role = c(\"aut\", \"cre\")),\n  person(family = \"RinteRface\", role = \"cph\"),\n  person(family = \"Almasaeed Studio\", role = c(\"ctb\", \"cph\"), comment = \"AdminLTE2 theme for Bootstrap 3\"),\n  person(\"Guang\", \"Yang\", role = c(\"ctb\", \"cph\"), comment = \"ygdashboard original template\"),\n  person(\"Winston\", \"Chang\", role = c(\"ctb\", \"cph\"), comment = \"Functions from shinydashboard\"),\n  person(\"Victor\", \"Perrier\", email = \"victor.perrier@dreamrs.fr\", role = \"ctb\",\n          comment = \"improved the shinydashboardPlusGallery\"))",
-        "Maintainer": "David Granjon <dgranjon@ymail.com>",
-        "Description": "Extend 'shinydashboard' with 'AdminLTE2' components. \n             'AdminLTE2' is a free 'Bootstrap 3' dashboard template available\n             at <https://adminlte.io>. Customize boxes, add timelines and a lot more. ",
-        "License": "GPL (>= 2) | file LICENSE",
-        "Imports": "shiny, htmltools, shinydashboard, fresh, waiter (>= 0.2.3),\nlifecycle",
-        "Suggests": "styler (>= 1.2.0), shinyAce, shinyWidgets, shinyEffects,\nshinyjqui, knitr, rmarkdown, jsonlite, bslib",
-        "URL": "https://github.com/RinteRface/shinydashboardPlus,\nhttps://shinydashboardPlus.rinterface.com/",
-        "BugReports": "https://github.com/RinteRface/shinydashboardPlus/issues",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.2",
-        "VignetteBuilder": "knitr",
-        "RdMacros": "lifecycle",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-08-18 12:49:06 UTC; davidgranjon",
-        "Author": "David Granjon [aut, cre],\n  RinteRface [cph],\n  Almasaeed Studio [ctb, cph] (AdminLTE2 theme for Bootstrap 3),\n  Guang Yang [ctb, cph] (ygdashboard original template),\n  Winston Chang [ctb, cph] (Functions from shinydashboard),\n  Victor Perrier [ctb] (improved the shinydashboardPlusGallery)",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-08-18 13:20:02 UTC",
-        "Built": "R 4.4.0; ; 2024-08-19 04:21:32 UTC; unix"
       }
     },
     "shinyjqui": {
@@ -2850,39 +2727,6 @@
         "RemoteRepos": "https://rspm.cynkra.com/prod-cran/latest",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "2.1.2"
-      }
-    },
-    "waiter": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
-      "description": {
-        "Package": "waiter",
-        "Title": "Loading Screen for 'Shiny'",
-        "Version": "0.2.5",
-        "Date": "2022-01-02",
-        "Authors@R": "c(\n    person(given = \"John\",\n           family = \"Coene\",\n           role = c(\"aut\", \"cre\"),\n           email = \"jcoenep@gmail.com\"),\n    person(given = \"Jinhwan\",\n           family = \"Kim\",\n           role = \"ctb\",\n           email = 'hwanistic@gmail.com'),\n    person(given = \"Victor\",\n           family = \"Granda\",\n           role = c(\"ctb\"),\n           email = \"victorgrandagarcia@gmail.com\",\n           comment = c(ORCID = \"0000-0002-0469-1991\")))",
-        "Description": "Full screen and partial loading screens for 'Shiny' with spinners, progress bars, and notifications.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://waiter.john-coene.com/,\nhttps://github.com/JohnCoene/waiter",
-        "BugReports": "https://github.com/JohnCoene/waiter/issues",
-        "Encoding": "UTF-8",
-        "Imports": "R6, shiny, htmltools",
-        "RoxygenNote": "7.1.2",
-        "Suggests": "httr, knitr, packer, rmarkdown",
-        "VignetteBuilder": "knitr",
-        "NeedsCompilation": "no",
-        "Packaged": "2022-01-03 13:33:14 UTC; john",
-        "Author": "John Coene [aut, cre],\n  Jinhwan Kim [ctb],\n  Victor Granda [ctb] (<https://orcid.org/0000-0002-0469-1991>)",
-        "Maintainer": "John Coene <jcoenep@gmail.com>",
-        "Repository": "RSPM",
-        "Date/Publication": "2022-01-03 14:30:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 06:26:24 UTC; unix",
-        "RemoteType": "standard",
-        "RemotePkgRef": "waiter",
-        "RemoteRef": "waiter",
-        "RemoteRepos": "https://rspm.cynkra.com/prod-cran/latest",
-        "RemotePkgPlatform": "aarch64-apple-darwin20",
-        "RemoteSha": "0.2.5"
       }
     },
     "withr": {
