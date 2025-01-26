@@ -2779,6 +2779,9 @@
     }
   },
   "files": {
+    "app.R": {
+      "checksum": "163aa55dff4a896bb10b408828c2a8fc"
+    },
     "body.R": {
       "checksum": "bfa84f8625a8d6239ad1bff80b8ffbe6"
     },
@@ -2798,7 +2801,7 @@
       "checksum": "08023fe9e36812b7cc17e30db4258de5"
     },
     "footer.R": {
-      "checksum": "792e655548b6c58e50abbd7842de1da5"
+      "checksum": "e7bd78ff4f7a4342b3eb0d08f68cc0e1"
     },
     "generate_questions.R": {
       "checksum": "0d3ae0ab6b87d6b25c5e6f68836e3735"
@@ -2808,9 +2811,6 @@
     },
     "getting_started.R": {
       "checksum": "4cb8f2562a6f2f3e2da928df829b7df5"
-    },
-    "global.R": {
-      "checksum": "acd67bc42821aa1185e077e6f112d277"
     },
     "model_utils.R": {
       "checksum": "4f319242defaad08a324fb1aeba59a55"
@@ -2828,7 +2828,7 @@
       "checksum": "8e4aaf5af05259e693d4dd0f092b1568"
     },
     "server.R": {
-      "checksum": "611153d7d65c58c66f435c01e5f6f39a"
+      "checksum": "b3e1d5115e12ecd8af02d1de57965bb6"
     },
     "sidebar.R": {
       "checksum": "72a487d3ae1c545825cbacc33e18b67a"

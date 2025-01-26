@@ -5,29 +5,13 @@ nccr_logo <- "logos/nccr.svg"
 
 left_footer <- fluidRow(
   column(
-    width = 3,
+    width = 6,
     align = "center",
     "The Interface Group",
     a(
       href = "http://interfacegroup.ch/people/",
       target = "_blank",
       img(src = interface_logo, height = "30px")
-    )
-  ),
-  column(
-    width = 3,
-    align = "center",
-    "With",
-    a(
-      href = "https://shiny.rstudio.com",
-      target = "_blank",
-      img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px")
-    ),
-    "by",
-    a(
-      href = "http://www.rstudio.com",
-      target = "_blank",
-      img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30px")
     )
   ),
   column(
