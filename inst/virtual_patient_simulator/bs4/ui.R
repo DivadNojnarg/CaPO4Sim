@@ -1,3 +1,9 @@
+source("navbar.R")
+source("sidebar.R")
+source("body.R")
+source("footer.R")
+source("dashboardControlbar.R")
+
 ui <- bs4Dash::dashboardPage(
   # content
   header = navbar,

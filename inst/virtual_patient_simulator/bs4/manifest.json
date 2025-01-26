@@ -2780,7 +2780,7 @@
   },
   "files": {
     "app.R": {
-      "checksum": "163aa55dff4a896bb10b408828c2a8fc"
+      "checksum": "bbfb97e0ba66cb422a1b12379d1ca155"
     },
     "body.R": {
       "checksum": "bfa84f8625a8d6239ad1bff80b8ffbe6"
@@ -2840,7 +2840,7 @@
       "checksum": "72a487d3ae1c545825cbacc33e18b67a"
     },
     "ui.R": {
-      "checksum": "1d97a5436585be4ab80277d157ec34c4"
+      "checksum": "b799d05cbe115bf483bc5a9259a8e12a"
     },
     "www/case_studies_img/patient1-1.svg": {
       "checksum": "81e0f312e2e3a7ef45f285a1f203d451"
