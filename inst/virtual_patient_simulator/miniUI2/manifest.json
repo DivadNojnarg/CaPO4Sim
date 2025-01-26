@@ -2182,8 +2182,8 @@
       }
     },
     "shinyMobile": {
-      "Source": "github",
-      "Repository": null,
+      "Source": "CRAN",
+      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
       "description": {
         "Package": "shinyMobile",
         "Type": "Package",
@@ -2200,23 +2200,14 @@
         "RoxygenNote": "7.3.2",
         "Suggests": "knitr, rmarkdown, stats, cli, testthat (>= 2.1.0),\nrstudioapi, shinyWidgets, apexcharter, ggplot2, dplyr, bslib,\nshinytest2, thematic",
         "VignetteBuilder": "knitr",
-        "Roxygen": "list(markdown = TRUE)",
         "Config/testthat/parallel": "true",
         "Config/testthat/edition": "3",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "shinyMobile",
-        "RemoteUsername": "RinteRface",
-        "RemoteRef": "HEAD",
-        "RemoteSha": "90e09384c040ba69c14293a49fc182e8d6ef26a8",
-        "GithubRepo": "shinyMobile",
-        "GithubUsername": "RinteRface",
-        "GithubRef": "HEAD",
-        "GithubSHA1": "90e09384c040ba69c14293a49fc182e8d6ef26a8",
         "NeedsCompilation": "no",
-        "Packaged": "2025-01-26 22:48:32 UTC; davidgranjon",
+        "Packaged": "2024-10-04 15:53:32 UTC; davidgranjon",
         "Author": "David Granjon [aut, cre],\n  Veerle van Leemput [aut],\n  AthlyticZ [fnd],\n  Victor Perrier [aut],\n  John Coene [ctb],\n  Isabelle Rudolf [aut],\n  Dieter Menne [ctb],\n  Marvelapp [ctb, cph] (device.css wrappers),\n  Vladimir Kharlampidi [ctb, cph] (Framework7 HTML template)",
-        "Built": "R 4.4.0; ; 2025-01-26 22:48:33 UTC; unix"
+        "Repository": "RSPM",
+        "Date/Publication": "2024-10-04 17:30:02 UTC",
+        "Built": "R 4.4.0; ; 2024-10-05 04:41:09 UTC; unix"
       }
     },
     "shinyWidgets": {
@@ -2871,7 +2862,7 @@
       "checksum": "4cb8f2562a6f2f3e2da928df829b7df5"
     },
     "global.R": {
-      "checksum": "83ca10c5436d6259795c6079b69a9fe1"
+      "checksum": "322211c928e7f4c38e23e56c19452214"
     },
     "model_utils.R": {
       "checksum": "ed15ea269f41699a62bb5899b0417fe0"

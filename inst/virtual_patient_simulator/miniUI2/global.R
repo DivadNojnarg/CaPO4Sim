@@ -24,6 +24,29 @@ library(V8)
 
 library(CaPO4Sim)
 
+f7Dialog <- function(
+  id = NULL,
+  title = NULL,
+  text,
+  type = c("alert", "confirm", "prompt", "login"),
+  session = shiny::getDefaultReactiveDomain()
+) {
+  type <- match.arg(type)
+  if (is.null(id) && type %in% c("confirm", "prompt", "login")) {
+    stop("Missing id.")
+  }
+  text <- if (any(class(text) %in% c("shiny.tag", "shiny.tag.list"))) {
+    as.character(force(text))
+  } else {
+    text
+  }
+  message <- dropNulls(list(id = id, title = title, text = text, type = type))
+  session$sendCustomMessage(
+    type = "dialog",
+    message = jsonlite::toJSON(message, auto_unbox = TRUE, json_verbatim = TRUE)
+  )
+}
+
 # Load the template components of UI
 source("patient_selector.R")
 source("getting_started.R")
