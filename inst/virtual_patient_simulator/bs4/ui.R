@@ -16,7 +16,7 @@
 
 # Define UI
 #header_box_network,
-ui <- dashboardPage(
+ui <- bs4Dash::dashboardPage(
   # content
   header = navbar,
   sidebar = sidebar,
