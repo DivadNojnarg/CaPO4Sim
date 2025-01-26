@@ -2780,10 +2780,7 @@
   },
   "files": {
     "app.R": {
-      "checksum": "08c5c465a1052bce9cf6c912cdfedaad"
-    },
-    "body.R": {
-      "checksum": "bfa84f8625a8d6239ad1bff80b8ffbe6"
+      "checksum": "3f809e541168c03838784a7a32f56c55"
     },
     "calc_change.R": {
       "checksum": "149d8f44a1b6bbefce1fc616258e3783"
@@ -2797,18 +2794,6 @@
     "compiled_core.c": {
       "checksum": "6b657e5369a1eb780943831a6ae0dbd2"
     },
-    "compiled_core.o": {
-      "checksum": "7ca1f7eaa69074a6661d06f2d65543d4"
-    },
-    "compiled_core.so": {
-      "checksum": "0d5fd644449a331968cc70a2374796ba"
-    },
-    "dashboardControlbar.R": {
-      "checksum": "08023fe9e36812b7cc17e30db4258de5"
-    },
-    "footer.R": {
-      "checksum": "e7bd78ff4f7a4342b3eb0d08f68cc0e1"
-    },
     "generate_questions.R": {
       "checksum": "0d3ae0ab6b87d6b25c5e6f68836e3735"
     },
@@ -2821,9 +2806,6 @@
     "model_utils.R": {
       "checksum": "4f319242defaad08a324fb1aeba59a55"
     },
-    "navbar.R": {
-      "checksum": "4a43b0675249b42e1c94f252afc6201c"
-    },
     "networks.R": {
       "checksum": "87d199565ba1e67cbf532d4b4ccceb2d"
     },
@@ -2833,14 +2815,8 @@
     "patient_selector.R": {
       "checksum": "8e4aaf5af05259e693d4dd0f092b1568"
     },
-    "server.R": {
-      "checksum": "b3e1d5115e12ecd8af02d1de57965bb6"
-    },
     "sidebar.R": {
       "checksum": "72a487d3ae1c545825cbacc33e18b67a"
-    },
-    "ui.R": {
-      "checksum": "b799d05cbe115bf483bc5a9259a8e12a"
     },
     "www/case_studies_img/patient1-1.svg": {
       "checksum": "81e0f312e2e3a7ef45f285a1f203d451"
