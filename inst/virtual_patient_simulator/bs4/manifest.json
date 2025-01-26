@@ -2780,7 +2780,7 @@
   },
   "files": {
     "app.R": {
-      "checksum": "869df587fc47e69b695fd9dd71f2900d"
+      "checksum": "163aa55dff4a896bb10b408828c2a8fc"
     },
     "body.R": {
       "checksum": "bfa84f8625a8d6239ad1bff80b8ffbe6"
@@ -2796,6 +2796,12 @@
     },
     "compiled_core.c": {
       "checksum": "6b657e5369a1eb780943831a6ae0dbd2"
+    },
+    "compiled_core.o": {
+      "checksum": "7ca1f7eaa69074a6661d06f2d65543d4"
+    },
+    "compiled_core.so": {
+      "checksum": "0d5fd644449a331968cc70a2374796ba"
     },
     "dashboardControlbar.R": {
       "checksum": "08023fe9e36812b7cc17e30db4258de5"
@@ -2832,6 +2838,9 @@
     },
     "sidebar.R": {
       "checksum": "72a487d3ae1c545825cbacc33e18b67a"
+    },
+    "ui.R": {
+      "checksum": "1d97a5436585be4ab80277d157ec34c4"
     },
     "www/case_studies_img/patient1-1.svg": {
       "checksum": "81e0f312e2e3a7ef45f285a1f203d451"
