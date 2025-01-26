@@ -85,7 +85,7 @@ onStop(function() {
 #enableBookmarking(store = "server") # save to the disk
 
 shinyApp(
-  ui = dashboardPage(
+  ui = bs4Dash::dashboardPage(
     # content
     header = navbar,
     sidebar = sidebar,
