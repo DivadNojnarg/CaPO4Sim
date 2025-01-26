@@ -24,6 +24,10 @@ library(V8)
 
 library(CaPO4Sim)
 
+dropNulls <- function(x) {
+  x[!vapply(x, is.null, FUN.VALUE = logical(1))]
+}
+
 f7Dialog <- function(
   id = NULL,
   title = NULL,
