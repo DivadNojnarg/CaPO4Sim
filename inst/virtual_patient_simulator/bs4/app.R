@@ -34,7 +34,6 @@ source("sidebar.R")
 source("body.R")
 source("footer.R")
 source("dashboardControlbar.R")
-source("ui.R")
 
 #-------------------------------------------------------------------------
 #
@@ -86,6 +85,16 @@ onStop(function() {
 #enableBookmarking(store = "server") # save to the disk
 
 shinyApp(
-  ui = ui,
+  ui = dashboardPage(
+    # content
+    header = navbar,
+    sidebar = sidebar,
+    body = body,
+    controlbar = controlbar,
+    footer = footer,
+    preloader = list(html = spin_1(), color = "#333e48"),
+    # options
+    title = "Virtual Patient Simulator"
+  ),
   server = server
 )
