@@ -1,4 +1,4 @@
-ui <- dashboardPage(
+ui <- bs4Dash::dashboardPage(
   # content
   header = navbar,
   sidebar = sidebar,
