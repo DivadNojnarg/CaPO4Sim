@@ -1,10 +1,4 @@
-source("navbar.R", local = TRUE)
-source("sidebar.R", local = TRUE)
-source("body.R", local = TRUE)
-source("footer.R", local = TRUE)
-source("dashboardControlbar.R", local = TRUE)
-
-ui <- bs4Dash::dashboardPage(
+ui <- dashboardPage(
   # content
   header = navbar,
   sidebar = sidebar,
