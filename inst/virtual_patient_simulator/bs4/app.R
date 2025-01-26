@@ -29,11 +29,6 @@ library(CaPO4Sim)
 source("patient_selector.R")
 source("getting_started.R")
 source("generate_questions.R")
-source("navbar.R", local = TRUE)
-source("sidebar.R", local = TRUE)
-source("body.R", local = TRUE)
-source("footer.R", local = TRUE)
-source("dashboardControlbar.R", local = TRUE)
 source("ui.R", local = TRUE)
 
 #-------------------------------------------------------------------------
