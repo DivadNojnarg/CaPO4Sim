@@ -57,6 +57,7 @@ so_name <- paste("compiled_core", .Platform$dynlib.ext, sep = "")
 system("R CMD SHLIB compiled_core.c")
 dyn.load(so_name)
 
+addResourcePath("www", "www")
 #-------------------------------------------------------------------------
 #
 #

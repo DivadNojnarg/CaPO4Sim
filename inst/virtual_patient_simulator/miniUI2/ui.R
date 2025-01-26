@@ -18,9 +18,7 @@
 #header_box_network,
 ui <- f7Page(
   title = "Virtual Patient Simulator",
-  init = f7Init(skin = "ios", theme = "light", hideNavOnPageScroll = FALSE),
   f7TabLayout(
-
     # include CSS
     includeCSS(path = "www/css/treatments-app.css"),
 
@@ -30,8 +28,11 @@ ui <- f7Page(
 
     # JS interactions
     useShinyjs(),
-    extendShinyjs(script = "www/js/fullscreen.js"),
-    extendShinyjs(script = "www/js/close.js"),
+    extendShinyjs(
+      script = "www/js/fullscreen.js",
+      functions = c("toggleFullScreen")
+    ),
+    extendShinyjs(script = "www/js/close.js", functions = c("closeWindow")),
     includeScript(path = "www/js/find-navigator.js"),
     setPulse(class = "timeline-item"),
     setPulse(class = "diagnosis-badge"),
@@ -40,7 +41,7 @@ ui <- f7Page(
     f7Panel(
       title = "Left Panel",
       side = "left",
-      theme = "light", "Blabla",
+      "Blabla",
       effect = "reveal",
       uiOutput("user_panel")
     ),

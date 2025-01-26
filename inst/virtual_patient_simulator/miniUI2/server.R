@@ -8,7 +8,6 @@
 #-------------------------------------------------------------------------
 
 server <- function(input, output, session) {
-
   #-------------------------------------------------------------------------
   #  useful datas: initialization. These data are not in global.R since
   #  they are some time reloaded by the program. In global.R they would not
@@ -91,18 +90,25 @@ server <- function(input, output, session) {
   # store the app url
   app_url <- reactive({
     paste0(
-      session$clientData$url_protocol, "//",
-      session$clientData$url_hostname, ":",
+      session$clientData$url_protocol,
+      "//",
+      session$clientData$url_hostname,
+      ":",
       session$clientData$url_port
     )
   })
 
   # store the current user folder
   user_folder <- reactive({
+    req(input$register_user)
     paste0(
-      users_logs, "/",
-      input$register_user, "-", start_time,
-      "/")
+      users_logs,
+      "/",
+      input$register_user,
+      "-",
+      start_time,
+      "/"
+    )
   })
 
   #-------------------------------------------------------------------------
@@ -113,7 +119,15 @@ server <- function(input, output, session) {
 
   # Basic reactive expressions needed by the solver
   times <- reactive({
-    seq(0, ifelse(parameters()[["t_stop"]] != 0, parameters()[["t_stop"]], input$tmax), by = 1)
+    seq(
+      0,
+      ifelse(
+        parameters()[["t_stop"]] != 0,
+        parameters()[["t_stop"]],
+        input$tmax
+      ),
+      by = 1
+    )
   })
 
   # initial conditions
@@ -135,17 +149,19 @@ server <- function(input, output, session) {
 
   # Create parameters sets for all diseases and treatments
   parameters_disease <- reactive({
-    c("k_prod_PTHg" = ifelse(
-      patient_disease == "php1", 300*4.192,
-      ifelse(patient_disease == "hypopara", 0, 4.192)
-    ),
-    "D3_inact" = ifelse(
-      patient_disease == "hypoD3", 0,
-      ifelse(patient_disease == "hyperD3", 5e-004, 2.5e-005)
-    )
+    c(
+      "k_prod_PTHg" = ifelse(
+        patient_disease == "php1",
+        300 * 4.192,
+        ifelse(patient_disease == "hypopara", 0, 4.192)
+      ),
+      "D3_inact" = ifelse(
+        patient_disease == "hypoD3",
+        0,
+        ifelse(patient_disease == "hyperD3", 5e-004, 2.5e-005)
+      )
     )
   })
-
 
   # make a vector of disease related parameters,
   # fixed_parameters and parameters related to events
@@ -166,10 +182,11 @@ server <- function(input, output, session) {
     len <- length(medical_history$pathologies)
 
     f7SocialCard(
-      author = f7Flex(
+      author = f7Grid(
+        cols = 3,
         patient_datas$name,
         uiOutput("user_game_status"),
-        f7Badge(len, color = "red")#,
+        f7Badge(len, color = "red") #,
         #fullScreenUI()
       ),
       author_img = patient_datas$picture,
@@ -179,13 +196,19 @@ server <- function(input, output, session) {
       # patient details
       f7List(
         f7ListItem(
-          title = HTML(paste("Age:", f7Badge(patient_datas$age, color = "lightblue")))
+          title = HTML(
+            paste("Age:", f7Badge(patient_datas$age, color = "lightblue"))
+          )
         ),
         f7ListItem(
-          title = HTML(paste("Height:", f7Badge(patient_datas$height, label = "pink")))
+          title = HTML(
+            paste("Height:", f7Badge(patient_datas$height, label = "pink"))
+          )
         ),
         f7ListItem(
-          title = HTML(paste("Weight:", f7Badge(patient_datas$weight, color = "orange")))
+          title = HTML(
+            paste("Weight:", f7Badge(patient_datas$weight, color = "orange"))
+          )
         )
       ),
 
@@ -194,15 +217,21 @@ server <- function(input, output, session) {
       f7Align(side = "center", h4("Patient Medical History")),
 
       f7Accordion(
-        lapply(1:len, FUN = function(i){
+        lapply(1:len, FUN = function(i) {
           f7AccordionItem(
             title = medical_history$doctors[[i]],
             f7Block(
-              f7Flex(
-                tags$img(src = medical_history$doctors_avatars[[i]], height = "20px", width = "20px"),
+              f7Grid(
+                cols = 2,
+                tags$img(
+                  src = medical_history$doctors_avatars[[i]],
+                  height = "20px",
+                  width = "20px"
+                ),
                 medical_history$doctors[[i]]
               ),
-              strong(medical_history$pathologies[[i]]), br(),
+              strong(medical_history$pathologies[[i]]),
+              br(),
               HTML(paste(medical_history$disease_description[[i]])),
               if (!is.null(medical_history$disease_image[[i]])) {
                 tagAppendAttributes(
@@ -257,7 +286,6 @@ server <- function(input, output, session) {
 
   # Event to be added in the timeLine
   output$recent_events <- renderUI({
-
     validate(need(input$current_node_id, "Select one node on the graph!"))
 
     if (events$logged) {
@@ -269,14 +297,13 @@ server <- function(input, output, session) {
         plasma_values <- plasma_analysis$history
 
         withMathJax(
-
           f7Card(
             title = tagList("Events History", f7Badge(len, color = "red")),
             # treatments input are
             # in the event box
             if (!is.null(events$answered)) {
               tagList(
-                f7checkBoxGroup(
+                f7CheckboxGroup(
                   inputId = "treatment_selected",
                   label = "Select a new treatment:",
                   choices = c(
@@ -298,8 +325,7 @@ server <- function(input, output, session) {
             },
 
             if (len > 0) {
-
-              items <- lapply(1:len, FUN = function(i){
+              items <- lapply(1:len, FUN = function(i) {
                 item_side <- if (i %% 2 == 0) "left" else "right"
                 items <- f7TimelineItem(
                   title = name[[i]],
@@ -308,27 +334,74 @@ server <- function(input, output, session) {
                     color = "yellow",
                     start_time[[i]]
                   ),
-                  subtitle =  if (name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")) {
-                    img(src = "treatments_img/syringe.svg", height = "20px", width = "20px")
-                  } else if (name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")) {
-                    img(src = "treatments_img/medicine.svg", height = "20px", width = "20px")
+                  subtitle = if (
+                    name[[i]] %in% c("D3_inject", "Ca_inject", "P_inject")
+                  ) {
+                    img(
+                      src = "treatments_img/syringe.svg",
+                      height = "20px",
+                      width = "20px"
+                    )
+                  } else if (
+                    name[[i]] %in% c("Ca_food", "P_food", "D3_intake_reduction")
+                  ) {
+                    img(
+                      src = "treatments_img/medicine.svg",
+                      height = "20px",
+                      width = "20px"
+                    )
                   } else if (name[[i]] == "PTX") {
-                    img(src = "treatments_img/surgery.svg", height = "20px", width = "20px")
-                  } else if (name[[i]] %in% c("cinacalcet", "furosemide", "bisphosphonate")) {
-                    img(src = "treatments_img/pills.svg", height = "20px", width = "20px")
+                    img(
+                      src = "treatments_img/surgery.svg",
+                      height = "20px",
+                      width = "20px"
+                    )
+                  } else if (
+                    name[[i]] %in%
+                      c("cinacalcet", "furosemide", "bisphosphonate")
+                  ) {
+                    img(
+                      src = "treatments_img/pills.svg",
+                      height = "20px",
+                      width = "20px"
+                    )
                   } else if (name[[i]] == "plasma analysis") {
-                    img(src = "treatments_img/test-tube.svg", height = "20px", width = "20px")
+                    img(
+                      src = "treatments_img/test-tube.svg",
+                      height = "20px",
+                      width = "20px"
+                    )
                   },
                   # in case of plasma analysis, display the results next to the logo
                   if (name[[i]] == "plasma analysis") {
                     tagList(
-                      paste0("$$[Ca^{2+}_p] = ", round(plasma_values[i, 'Ca_p'], 2), " mM [1.1-1.4 mM]$$"),
-                      paste0("$$[P_i] = ", round(plasma_values[i, "PO4_p"], 2), " mM [0.8-1.6 mM]$$"),
-                      paste0("$$[PTH_p] = ", round(plasma_values[i, "PTH_p"] * 100) * 1.33, " pM [3-16 pM]$$"),
+                      paste0(
+                        "$$[Ca^{2+}_p] = ",
+                        round(plasma_values[i, 'Ca_p'], 2),
+                        " mM [1.1-1.4 mM]$$"
+                      ),
+                      paste0(
+                        "$$[P_i] = ",
+                        round(plasma_values[i, "PO4_p"], 2),
+                        " mM [0.8-1.6 mM]$$"
+                      ),
+                      paste0(
+                        "$$[PTH_p] = ",
+                        round(plasma_values[i, "PTH_p"] * 100) * 1.33,
+                        " pM [3-16 pM]$$"
+                      ),
                       # scale D3
-                      paste0("$$[1,25D3_p] = ", round(plasma_values[i, "D3_p"]) / 4, " pM [36-150 pM]$$"),
+                      paste0(
+                        "$$[1,25D3_p] = ",
+                        round(plasma_values[i, "D3_p"]) / 4,
+                        " pM [36-150 pM]$$"
+                      ),
                       # scale FGF23
-                      paste0("$$[FGF23_p] = ", round(plasma_values[i, "FGF_p"] / 25, 2), " pM [0.3-2.1 pM]$$")
+                      paste0(
+                        "$$[FGF23_p] = ",
+                        round(plasma_values[i, "FGF_p"] / 25, 2),
+                        " pM [0.3-2.1 pM]$$"
+                      )
                     )
                   },
                   side = item_side
@@ -347,7 +420,6 @@ server <- function(input, output, session) {
 
   # graph box
   output$graphs_box <- renderUI({
-
     validate(need(input$current_node_id, "Select one node on the graph!"))
 
     if (events$logged) {
@@ -370,13 +442,17 @@ server <- function(input, output, session) {
 
   # network box
   output$network_box <- renderUI({
-    validate(need(
-      expr = isTRUE(events$animation_started),
-      message = "Please click on the next button in the first tab"))
+    validate(
+      need(
+        expr = isTRUE(events$animation_started),
+        message = "Please click on the next button in the first tab"
+      )
+    )
 
     if (events$logged) {
       if (events$animation_started) {
         f7Card(
+          height = "100vh",
           title = tagList(
             f7Button(
               inputId = "run",
@@ -395,7 +471,7 @@ server <- function(input, output, session) {
             id = "network_cap",
             withSpinner(
               visNetworkOutput(
-                "network_Ca"#,
+                "network_Ca" #,
                 #height = input$screenSize$height
               ),
               size = 2,
@@ -408,7 +484,6 @@ server <- function(input, output, session) {
       }
     }
   })
-
 
   #-------------------------------------------------------------------------
   #  Javascript alerts: to give instructions to users, handle when the
@@ -474,40 +549,32 @@ server <- function(input, output, session) {
   # I set up a delay of 5 seconds so that the alert is not displayed before
   # the page is fully loaded (in case we use preloaders in the dashboardPagePlus
   # the preloader lasts around 3s...)
-  observe({
+  observeEvent(events$logged, {
     if (!events$logged) {
-      shinyjs::delay(
-        1000,
-        f7Dialog(
-          session,
-          inputId = "register_user",
-          title = "How to start?",
-          type = "prompt",
-          text = tagList(
-            img(src = "interface_img/start.svg", width = "100px", height = "100px"),
-            br(),
-            HTML(
-              "You will be presented with a patient case-study related
-               to CaPO4 homeostasis. The goal of this activity is to
-               <b>establish</b> a diagnosis and <b>treat</b>
-               the patient correctly:
-               <ol>
-               <li> To establish your diagnostic, you can click on any compartment e.g.
-                click on plasma to conduct blood plasma analyses. </li>
-               <li> After having established an initial diagnostic you will be
-               offered multiple treatment options. </li>
-              </ol>"
-            ),
-            hr(),
-            column(
-              align = "center",
-              width = 12,
-              h4("Enter your name below")
-            )
-          )#,
-          #btn_labels = c(NULL, "Confirm"),
-          #type = "warning",
-          #html = TRUE
+      f7Dialog(
+        id = "register_user",
+        title = "How to start?",
+        type = "prompt",
+        text = tagList(
+          br(),
+          HTML(
+            "You will be presented with a patient case-study related
+             to CaPO4 homeostasis. The goal of this activity is to
+             <b>establish</b> a diagnosis and <b>treat</b>
+             the patient correctly:
+             <ol>
+             <li> To establish your diagnostic, you can click on any compartment e.g.
+              click on plasma to conduct blood plasma analyses. </li>
+             <li> After having established an initial diagnostic you will be
+             offered multiple treatment options. </li>
+            </ol>"
+          ),
+          hr(),
+          column(
+            align = "center",
+            width = 12,
+            h4("Enter your name below")
+          )
         )
       )
     }
@@ -524,7 +591,7 @@ server <- function(input, output, session) {
   })
 
   # when the user is registered, set logged to TRUE
-  observeEvent(input$register_user,{
+  observeEvent(input$register_user, {
     if (input$register_user != "") {
       events$logged <- TRUE
     }
@@ -581,7 +648,6 @@ server <- function(input, output, session) {
   #   }
   # })
 
-
   # init the directory where user datas will be saved
   observeEvent(input$register_user, {
     if (input$register_user != "") {
@@ -589,7 +655,6 @@ server <- function(input, output, session) {
       dir.create(user_folder())
     }
   })
-
 
   # # give the user the opportunity to load a previous session
   # observeEvent(input$register_user, {
@@ -636,12 +701,10 @@ server <- function(input, output, session) {
   #   }
   # })
 
-
   # handle case when the use press the diagnosis button
   observeEvent(input$diagnosis, {
     f7Dialog(
-      session,
-      inputId = "diagnosis_answer",
+      id = "diagnosis_answer",
       type = "prompt",
       title = "Diagnosis",
       text = "What is the disease of this patient?"
@@ -652,16 +715,19 @@ server <- function(input, output, session) {
   observeEvent(input$diagnosis_answer, {
     user_answer <- input$diagnosis_answer
     if (user_answer != "") {
-      test <- str_detect(answer, regex(paste0("\\b", user_answer, "\\b"), ignore_case = TRUE))
+      test <- str_detect(
+        answer,
+        regex(paste0("\\b", user_answer, "\\b"), ignore_case = TRUE)
+      )
       if (test) {
         events$answered <- TRUE
         f7Dialog(
-          session,
           type = "alert",
           title = paste0("Congratulations ", input$register_user, " !"),
           text = HTML(
             paste0(
-              "This patient has,", answer,
+              "This patient has,",
+              answer,
               "It would be better to treat him now. Remember you have
               <b>15 minutes</b> to complete this activity."
             )
@@ -670,10 +736,12 @@ server <- function(input, output, session) {
       } else {
         events$answered <- FALSE
         f7Dialog(
-          session = session,
           type = "alert",
           title = "Wasted!",
-          text = paste0(input$register_user, ", it seems that your answer is wrong!")
+          text = paste0(
+            input$register_user,
+            ", it seems that your answer is wrong!"
+          )
         )
       }
 
@@ -684,10 +752,12 @@ server <- function(input, output, session) {
       )
     } else {
       f7Dialog(
-        session,
         type = "alert",
         title = "Missing diagnosis!",
-        text = paste0(input$register_user, ", it seems that your answer is empty!")
+        text = paste0(
+          input$register_user,
+          ", it seems that your answer is empty!"
+        )
       )
     }
   })
@@ -712,8 +782,8 @@ server <- function(input, output, session) {
     }
     game_text <- if (!is.null(events$answered)) {
       if (events$answered)
-        paste0(input$diagnosis_answer, ": successful diagnosis")
-      else paste0(input$diagnosis_answer, ": unsuccessful diagnosis")
+        paste0(input$diagnosis_answer, ": successful diagnosis") else
+        paste0(input$diagnosis_answer, ": unsuccessful diagnosis")
     } else {
       "No diagnosis yet"
     }
@@ -761,23 +831,28 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
 
   # how to use the notebook
-  observe({
+  observeEvent(input$register_user, {
     if (!is_empty(input$register_user)) {
       shinyjs::delay(
         1000,
         f7Dialog(
-          session,
-          inputId = "diagnosis_intro",
+          id = "diagnosis_intro",
           title = "How to use the notebook?",
           type = "confirm",
           text = tagList(
-            img(src = "interface_img/notebook.svg", width = "100px", height = "100px"),
+            img(
+              src = "interface_img/notebook.svg",
+              width = "100px",
+              height = "100px"
+            ),
             br(),
-            HTML("A serie of questions will help you during
+            HTML(
+              "A serie of questions will help you during
                  the diagnostic process. Click on <img src='interface_img/next.svg' height='50' width='50'>
                  to go through the questions. Once you completed all questions,
                  submit your diagnosis by clicking on
-                 <img src='interface_img/diagnosis.svg' height='70' width='70'>.")
+                 <img src='interface_img/diagnosis.svg' height='70' width='70'>."
+            )
           )
         )
       )
@@ -788,20 +863,36 @@ server <- function(input, output, session) {
   observeEvent(input$user_add_comment, {
     if (events$animation == 3) {
       f7Dialog(
-        session,
-        inputId = "plasma_analysis_intro",
+        id = "plasma_analysis_intro",
         title = "How to deal with plasma analysis?",
         type = "confirm",
         text = tagList(
-          img(src = "CaPO4_network/plasma.svg", width = "100px", height = "100px"),
+          img(
+            src = "CaPO4_network/plasma.svg",
+            width = "100px",
+            height = "100px"
+          ),
           br(),
           "You can access any plasma concentration by clicking on the",
-          img(src = "CaPO4_network/plasma.svg", width = "50px", height = "50px"),
+          img(
+            src = "CaPO4_network/plasma.svg",
+            width = "50px",
+            height = "50px"
+          ),
           " node. Besides, other compartments are available such as",
-          img(src = "CaPO4_network/parathyroid_gland_human.svg", width = "50px", height = "50px"),
+          img(
+            src = "CaPO4_network/parathyroid_gland_human.svg",
+            width = "50px",
+            height = "50px"
+          ),
           img(src = "CaPO4_network/cells.svg", width = "50px", height = "50px"),
           img(src = "CaPO4_network/bone.svg", width = "50px", height = "50px"),
-          "and", img(src = "CaPO4_network/rapid-bone.svg", width = "50px", height = "50px")
+          "and",
+          img(
+            src = "CaPO4_network/rapid-bone.svg",
+            width = "50px",
+            height = "50px"
+          )
         )
       )
     }
@@ -813,12 +904,15 @@ server <- function(input, output, session) {
       shinyjs::delay(
         1000,
         f7Dialog(
-          session,
           type = "confirm",
-          inputId = "treatments_intro",
+          id = "treatments_intro",
           title = "How to deal with treatments?",
           text = tagList(
-            img(src = "treatments_img/pills.svg", width = "100px", height = "100px"),
+            img(
+              src = "treatments_img/pills.svg",
+              width = "100px",
+              height = "100px"
+            ),
             br(),
             column(
               width = 12,
@@ -859,7 +953,7 @@ server <- function(input, output, session) {
   })
 
   # say that the animation is started when the user has clicked on next
-  observeEvent(events$animation , {
+  observeEvent(events$animation, {
     if (events$animation == 1) {
       events$animation_started <- TRUE
     }
@@ -939,9 +1033,13 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
 
   output$user_panel <- renderUI({
+    req(input$register_user)
     # use invalidate later to simulate a clock
     invalidateLater(1000)
-    f7Icon("person_round_fill", tags$small(paste(input$register_user, Sys.time())))
+    f7Icon(
+      "person_round_fill",
+      tags$small(paste(input$register_user, Sys.time()))
+    )
   })
 
   #-------------------------------------------------------------------------
@@ -969,7 +1067,6 @@ server <- function(input, output, session) {
       comments$history <- rbind(comments$history, temp_comment)
     }
   })
-
 
   #-------------------------------------------------------------------------
   #  This part handle events, plasma analysis, triggered by the user
@@ -1010,15 +1107,19 @@ server <- function(input, output, session) {
     animation_started = FALSE
   )
 
-
   # handle plasma analysis history
-  plasma_analysis <- reactiveValues(history = data.frame(stringsAsFactors = FALSE))
+  plasma_analysis <- reactiveValues(
+    history = data.frame(stringsAsFactors = FALSE)
+  )
 
   observeEvent(input$current_node_id, {
     node_id <- input$current_node_id
     if (node_id == 2) {
       temp_plasma_analysis <- out()[nrow(out()), -1]
-      plasma_analysis$history <- rbind(plasma_analysis$history, temp_plasma_analysis)
+      plasma_analysis$history <- rbind(
+        plasma_analysis$history,
+        temp_plasma_analysis
+      )
     }
   })
 
@@ -1030,7 +1131,10 @@ server <- function(input, output, session) {
         NULL
       } else {
         temp_plasma_analysis <- out()[nrow(out()), -1]
-        plasma_analysis$history <- rbind(plasma_analysis$history, temp_plasma_analysis)
+        plasma_analysis$history <- rbind(
+          plasma_analysis$history,
+          temp_plasma_analysis
+        )
       }
     }
   })
@@ -1059,8 +1163,10 @@ server <- function(input, output, session) {
       } else {
         temp_event <- data.frame(
           id = events$counter,
-          real_time = if (events$history[nrow(events$history), "event"] == "PTX" ||
-                          events$history[nrow(events$history), "event"] == "plasma analysis") {
+          real_time = if (
+            events$history[nrow(events$history), "event"] == "PTX" ||
+              events$history[nrow(events$history), "event"] == "plasma analysis"
+          ) {
             events$history[nrow(events$history), "real_time"]
             # need to wait before the end of the previous event
           } else {
@@ -1108,8 +1214,12 @@ server <- function(input, output, session) {
           id = events$counter,
           real_time = Sys.time(),
           event = input$treatment_selected,
-          rate = if (!(input$treatment_selected %in%
-                       c("bisphosphonate", "furosemide", "cinacalcet"))) {
+          rate = if (
+            !(
+              input$treatment_selected %in%
+                c("bisphosphonate", "furosemide", "cinacalcet")
+            )
+          ) {
             input[[paste(input$treatment_selected)]]
           } else {
             "undefined"
@@ -1123,8 +1233,10 @@ server <- function(input, output, session) {
         temp_event <- data.frame(
           id = events$counter,
           # if PTX was performed before, we do not need to wait
-          real_time = if (events$history[nrow(events$history), "event"] == "PTX" ||
-                          events$history[nrow(events$history), "event"] == "plasma analysis") {
+          real_time = if (
+            events$history[nrow(events$history), "event"] == "PTX" ||
+              events$history[nrow(events$history), "event"] == "plasma analysis"
+          ) {
             events$history[nrow(events$history), "real_time"]
             # need to wait before the end of the previous event
           } else {
@@ -1150,8 +1262,12 @@ server <- function(input, output, session) {
             }
           },
           event = input$treatment_selected,
-          rate = if (!(input$treatment_selected %in%
-                       c("bisphosphonate", "furosemide", "cinacalcet"))) {
+          rate = if (
+            !(
+              input$treatment_selected %in%
+                c("bisphosphonate", "furosemide", "cinacalcet")
+            )
+          ) {
             input[[paste(input$treatment_selected)]]
           } else {
             "undefined"
@@ -1182,7 +1298,9 @@ server <- function(input, output, session) {
           temp_event <- data.frame(
             id = events$counter,
             # if PTX was performed before, we do not need to wait
-            real_time = if (events$history[nrow(events$history), "event"] == "plasma analysis") {
+            real_time = if (
+              events$history[nrow(events$history), "event"] == "plasma analysis"
+            ) {
               events$history[nrow(events$history), "real_time"]
               # need to wait before the end of the previous event
             } else {
@@ -1218,9 +1336,8 @@ server <- function(input, output, session) {
         events$counter <- events$counter + 1
         events$PTX <- TRUE
       } else {
-        showNotification(
-          "Cannot perform parathyroidectomy more than once!",
-          type = "error",
+        f7Toast(
+          text = "Cannot perform parathyroidectomy more than once!",
           closeButton = TRUE
         )
       }
@@ -1260,85 +1377,101 @@ server <- function(input, output, session) {
     summary = data.frame()
   )
 
-  out <- reactive({
-    input$run
-    isolate({
-      parameters <- parameters()
-      times <- times()
-      # always solve from the last state
-      as.data.frame(
-        ode(
-          # when opening the application, y will be state_0 since states$val
-          # is an empty list. However, for the next runs, states$val is
-          # populated with the last simulated final state and so on
-          # each time the user press run
-          y = if (is_empty(states$val)) {
-            patient_state_0
-          } else {
-            states$val[[length(states$val)]]
-          },
-          times = times,
-          func = "derivs",
-          parms = parameters,
-          dllname = "compiled_core",
-          initfunc = "initmod",
-          nout = 33,
-          outnames = c(
-            "U_Ca", "U_PO4", "Abs_int_Ca",
-            "Abs_int_PO4", "Res_Ca", "Res_PO4",
-            "Ac_Ca", "Ac_PO4", "Reabs_Ca", "Reabs_PO4",
-            "Ca_pf", "Ca_fp", "PO4_pf", "PO4_fp",
-            "PO4_pc", "PO4_cp", "PTHg_synth",
-            "PTHg_synth_D3", "PTHg_synth_PO4",
-            "PTHg_exo_CaSR", "PTHg_deg", "PTHg_exo",
-            "PTHp_deg", "Reabs_PT_PTH",
-            "Reabs_TAL_CaSR", "Reabs_TAL_PTH",
-            "Reabs_DCT_PTH", "Reabs_DCT_D3",
-            "Abs_int_D3", "Res_PTH", "Res_D3",
-            "Reabs_PT_PO4_PTH", "Reabs_PT_PO4_FGF"
-          )
+  out <- eventReactive(input$run, {
+    parameters <- parameters()
+    times <- times()
+    # always solve from the last state
+    as.data.frame(
+      ode(
+        # when opening the application, y will be state_0 since states$val
+        # is an empty list. However, for the next runs, states$val is
+        # populated with the last simulated final state and so on
+        # each time the user press run
+        y = if (is_empty(states$val)) {
+          patient_state_0
+        } else {
+          states$val[[length(states$val)]]
+        },
+        times = times,
+        func = "derivs",
+        parms = parameters,
+        dllname = "compiled_core",
+        initfunc = "initmod",
+        nout = 33,
+        outnames = c(
+          "U_Ca",
+          "U_PO4",
+          "Abs_int_Ca",
+          "Abs_int_PO4",
+          "Res_Ca",
+          "Res_PO4",
+          "Ac_Ca",
+          "Ac_PO4",
+          "Reabs_Ca",
+          "Reabs_PO4",
+          "Ca_pf",
+          "Ca_fp",
+          "PO4_pf",
+          "PO4_fp",
+          "PO4_pc",
+          "PO4_cp",
+          "PTHg_synth",
+          "PTHg_synth_D3",
+          "PTHg_synth_PO4",
+          "PTHg_exo_CaSR",
+          "PTHg_deg",
+          "PTHg_exo",
+          "PTHp_deg",
+          "Reabs_PT_PTH",
+          "Reabs_TAL_CaSR",
+          "Reabs_TAL_PTH",
+          "Reabs_DCT_PTH",
+          "Reabs_DCT_D3",
+          "Abs_int_D3",
+          "Res_PTH",
+          "Res_D3",
+          "Reabs_PT_PO4_PTH",
+          "Reabs_PT_PO4_FGF"
         )
       )
-    })
+    )
   })
 
   # update initial conditions to the last state of the system each time an event
   # has occured. Need to delayed by the time needed for computation before updating
   # which is not really obvious since we don't know exactly what time it will take.
-  observe({
-    input$run
+  observeEvent(input$run, {
     shinyjs::delay(1000, {
       out <- out()
       temp_state <- c(
-        "PTH_g" = out[nrow(out),"PTH_g"],
-        "PTH_p" = out[nrow(out),"PTH_p"],
-        "D3_p" = out[nrow(out),"D3_p"],
-        "FGF_p" = out[nrow(out),"FGF_p"],
-        "Ca_p" = out[nrow(out),"Ca_p"],
-        "Ca_f" = out[nrow(out),"Ca_f"],
-        "Ca_b" = out[nrow(out),"Ca_b"],
-        "PO4_p" = out[nrow(out),"PO4_p"],
-        "PO4_f" = out[nrow(out),"PO4_f"],
-        "PO4_b" = out[nrow(out),"PO4_b"],
-        "PO4_c" = out[nrow(out),"PO4_c"],
-        "CaHPO4_p" = out[nrow(out),"CaHPO4_p"],
-        "CaH2PO4_p" = out[nrow(out),"CaH2PO4_p"],
-        "CPP_p" = out[nrow(out),"CPP_p"],
-        "CaHPO4_f" = out[nrow(out),"CaHPO4_f"],
-        "CaH2PO4_f" = out[nrow(out),"CaH2PO4_f"],
-        "CaProt_p" = out[nrow(out),"CaProt_p"],
-        "NaPO4_p" = out[nrow(out),"NaPO4_p"],
-        "Ca_tot" = out[nrow(out),"Ca_tot"],
-        "PO4_tot" = out[nrow(out),"PO4_tot"],
-        "EGTA_p" = out[nrow(out),"EGTA_p"],
-        "CaEGTA_p" = out[nrow(out),"CaEGTA_p"]
+        "PTH_g" = out[nrow(out), "PTH_g"],
+        "PTH_p" = out[nrow(out), "PTH_p"],
+        "D3_p" = out[nrow(out), "D3_p"],
+        "FGF_p" = out[nrow(out), "FGF_p"],
+        "Ca_p" = out[nrow(out), "Ca_p"],
+        "Ca_f" = out[nrow(out), "Ca_f"],
+        "Ca_b" = out[nrow(out), "Ca_b"],
+        "PO4_p" = out[nrow(out), "PO4_p"],
+        "PO4_f" = out[nrow(out), "PO4_f"],
+        "PO4_b" = out[nrow(out), "PO4_b"],
+        "PO4_c" = out[nrow(out), "PO4_c"],
+        "CaHPO4_p" = out[nrow(out), "CaHPO4_p"],
+        "CaH2PO4_p" = out[nrow(out), "CaH2PO4_p"],
+        "CPP_p" = out[nrow(out), "CPP_p"],
+        "CaHPO4_f" = out[nrow(out), "CaHPO4_f"],
+        "CaH2PO4_f" = out[nrow(out), "CaH2PO4_f"],
+        "CaProt_p" = out[nrow(out), "CaProt_p"],
+        "NaPO4_p" = out[nrow(out), "NaPO4_p"],
+        "Ca_tot" = out[nrow(out), "Ca_tot"],
+        "PO4_tot" = out[nrow(out), "PO4_tot"],
+        "EGTA_p" = out[nrow(out), "EGTA_p"],
+        "CaEGTA_p" = out[nrow(out), "CaEGTA_p"]
       )
       states$counter <- states$counter + 1
       states$val[[states$counter]] <- temp_state
       states$name <- input$treatment_selected
     })
   })
-
 
   # when the user clicks on summary rerun the simulation with all events
   observeEvent(input$summary, {
@@ -1401,7 +1534,6 @@ server <- function(input, output, session) {
   #
   # })
 
-
   # cumulative datas
   datas_summary <- reactive({
     datas <- out_history$summary %>%
@@ -1409,16 +1541,36 @@ server <- function(input, output, session) {
       accumulate_by(~time)
 
     # add bounds for each variable
-    low_norm_Ca_p <- data.frame(low_norm_Ca_p = rep(1.1, length(datas[, "time"])))
-    high_norm_Ca_p <- data.frame(high_norm_Ca_p = rep(1.3, length(datas[, "time"])))
-    low_norm_PO4_p <- data.frame(low_norm_PO4_p = rep(0.8, length(datas[, "time"])))
-    high_norm_PO4_p <- data.frame(high_norm_PO4_p = rep(1.5, length(datas[, "time"])))
-    low_norm_PTH_p <- data.frame(low_norm_PTH_p = rep(1.5, length(datas[, "time"])))
-    high_norm_PTH_p <- data.frame(high_norm_PTH_p = rep(7, length(datas[, "time"])))
-    low_norm_D3_p <- data.frame(low_norm_D3_p = rep(50, length(datas[, "time"])))
-    high_norm_D3_p <- data.frame(high_norm_D3_p = rep(180, length(datas[, "time"])))
-    low_norm_FGF_p <- data.frame(low_norm_FGF_p = rep(8, length(datas[, "time"])))
-    high_norm_FGF_p <- data.frame(high_norm_FGF_p = rep(51, length(datas[, "time"])))
+    low_norm_Ca_p <- data.frame(
+      low_norm_Ca_p = rep(1.1, length(datas[, "time"]))
+    )
+    high_norm_Ca_p <- data.frame(
+      high_norm_Ca_p = rep(1.3, length(datas[, "time"]))
+    )
+    low_norm_PO4_p <- data.frame(
+      low_norm_PO4_p = rep(0.8, length(datas[, "time"]))
+    )
+    high_norm_PO4_p <- data.frame(
+      high_norm_PO4_p = rep(1.5, length(datas[, "time"]))
+    )
+    low_norm_PTH_p <- data.frame(
+      low_norm_PTH_p = rep(1.5, length(datas[, "time"]))
+    )
+    high_norm_PTH_p <- data.frame(
+      high_norm_PTH_p = rep(7, length(datas[, "time"]))
+    )
+    low_norm_D3_p <- data.frame(
+      low_norm_D3_p = rep(50, length(datas[, "time"]))
+    )
+    high_norm_D3_p <- data.frame(
+      high_norm_D3_p = rep(180, length(datas[, "time"]))
+    )
+    low_norm_FGF_p <- data.frame(
+      low_norm_FGF_p = rep(8, length(datas[, "time"]))
+    )
+    high_norm_FGF_p <- data.frame(
+      high_norm_FGF_p = rep(51, length(datas[, "time"]))
+    )
 
     # bind all values
     datas <- cbind(
@@ -1555,12 +1707,16 @@ server <- function(input, output, session) {
   #-------------------------------------------------------------------------
 
   # Generate the CaP Graph network
-  nodes_Ca <- reactive({generate_nodes_Ca(input)})
-  edges_Ca <- reactive({generate_edges_Ca(input)})
+  nodes_Ca <- reactive({
+    generate_nodes_Ca(input)
+  })
+  edges_Ca <- reactive({
+    generate_edges_Ca(input)
+  })
 
   # Generate the output of the Ca graph to be used in body
   output$network_Ca <- renderVisNetwork({
-
+    req(input$tabs == "Examination")
     nodes_Ca <- nodes_Ca()
     edges_Ca <- edges_Ca()
     input$network_hormonal_choice
@@ -1573,61 +1729,59 @@ server <- function(input, output, session) {
     ) %>%
       # simple click event to allow graph ploting
       visEvents(
-        selectNode = "
-          function(nodes) {
-            Shiny.onInputChange('current_node_id', nodes.nodes);
-          }"
+        selectNode = "function(nodes) {
+          Shiny.setInputValue('current_node_id', nodes.nodes);
+        }"
       ) %>%
       # unselect node event
       visEvents(
-        deselectNode = "
-          function(nodes) {
-            Shiny.onInputChange('current_node_id', 'null');
-          }"
+        deselectNode = "function(nodes) {
+          Shiny.setInputValue('current_node_id', 'null');
+        }"
       ) %>%
       # add the doubleclick function to handle zoom views
       visEvents(
-        doubleClick = "
-          function(nodes) {
-            Shiny.onInputChange('current_node_bis_id', nodes.nodes);
-          }"
+        doubleClick = "function(nodes) {
+          Shiny.setInputValue('current_node_bis_id', nodes.nodes);
+        }"
       ) %>%
       visEvents(
-        selectEdge = "
-          function(edges) {
-            Shiny.onInputChange('current_edge_id', edges.edges);
-          }"
+        selectEdge = "function(edges) {
+          Shiny.setInputValue('current_edge_id', edges.edges);
+        }"
       ) %>%
       visEvents(
-        deselectEdge = "
-          function(edges) {
-            Shiny.onInputChange('current_edge_id', 'null');
-          }"
+        deselectEdge = "function(edges) {
+          Shiny.setInputValue('current_edge_id', 'null');
+        }"
       ) %>%
       # very important: change the whole graph position after drawing
       visEvents(
         type = "on",
-        stabilized = "
-          function() {
-            this.moveTo({
-              position: {x:0, y:-13.43},
-              offset: {x: 0, y:0}
-            });
-          }"
+        stabilized = "function() {
+          this.moveTo({
+            position: {x:0, y:-13.43},
+            offset: {x: 0, y:0}
+          });
+        }"
       ) %>%
       # very important: allow to detect the web browser used by client
       # use before drawing the network. Works with find_navigator.js
       visEvents(
         type = "on",
-        initRedraw = paste0("
-          function() {
-            this.moveTo({scale:", 0.8 * input$screenSize$width / 1000, "});
-        }")
+        initRedraw = sprintf(
+          "function() {
+            this.moveTo({scale: %s});
+        }",
+          0.8 * input$screenSize$width / 1000
+        )
       ) # to set the initial zoom (1 by default)
   })
 
   observe(print(input$screenSize))
-  observeEvent(input$screenSize$height, {print( 0.8 * input$screenSize$width / 1000)})
+  observeEvent(input$screenSize$height, {
+    print(0.8 * input$screenSize$width / 1000)
+  })
 
   # Events for the CaPO4 Homeostasis diagramm whenever a flux change
   # Change arrow color relatively to the value of fluxes for Ca injection/PO4
@@ -1642,7 +1796,6 @@ server <- function(input, output, session) {
       t_target = input$t_now
     )
   })
-
 
   # change the selected node size to better highlight it
   last <- reactiveValues(selected_node = NULL, selected_edge = NULL)
@@ -1683,7 +1836,7 @@ server <- function(input, output, session) {
 
   # change the selected edge size to
   # better highlight it
-  observeEvent(input$current_edge_id,{
+  observeEvent(input$current_edge_id, {
     req(input$current_edge_id)
     selected_edge <- input$current_edge_id
     edges_Ca <- edges_Ca()
@@ -1723,13 +1876,13 @@ server <- function(input, output, session) {
   output$plot_node <- renderPlotly({
     validate(need(input$current_node_id, "Select one node on the graph!"))
     out <- out()
-    plot_node(input, node = input$current_node_id , out, parameters_fixed)
+    plot_node(input, node = input$current_node_id, out, parameters_fixed)
   })
 
   output$plot_edge <- renderPlotly({
     validate(need(input$current_edge_id, "Select one edge on the graph!"))
     out <- out()
-    plot_edge(edge = input$current_edge_id , out)
+    plot_edge(edge = input$current_edge_id, out)
   })
 
   #-------------------------------------------------------------------------
@@ -1740,12 +1893,10 @@ server <- function(input, output, session) {
 
   # prevent the user to put infinite value in the max time of integration
   # With compiled code, tmax = 100000 min is a correct value
-  observeEvent(input$tmax,{
-
+  observeEvent(input$tmax, {
     # check if input tmax does not exists or is not numeric
     if (is.na(input$tmax)) {
       f7Toast(
-        session,
         position = "bottom",
         text = "Invalid value: tmax should be set correctly."
       )
@@ -1754,7 +1905,6 @@ server <- function(input, output, session) {
       # if yes, check it is negative
       if (input$tmax <= 0) {
         f7Toast(
-          session,
           text = "Invalid value: tmax must be higher than 0.",
           position = "bottom"
         )
@@ -1762,7 +1912,6 @@ server <- function(input, output, session) {
         # check whether it is too high
       } else if (input$tmax > 100000) {
         f7Toast(
-          session,
           text = "Invalid value: the maximum
                        time of simulation is too high!",
           position = "bottom"
@@ -1780,7 +1929,7 @@ server <- function(input, output, session) {
 
   # reset parameters individually
   button_states <- reactiveValues(values = list())
-  observeEvent(input$reset_t_now,{
+  observeEvent(input$reset_t_now, {
     # call the function to reset the given slider
     sliders_reset(button_states, input)
   })
@@ -1818,7 +1967,7 @@ server <- function(input, output, session) {
   })
 
   # make diagnosis blinking when there remains 5 min
-  # before the app close, only if it exists (if the user
+  # before thebrowser() app close, only if it exists (if the user
   # never clicked on next, diagmosis does not exist!!!)
   # observe({
   #   if (countdown() <= 5) {
@@ -1844,7 +1993,13 @@ server <- function(input, output, session) {
       idx <- match(input$treatment_selected, treatment_choices)
       other_treatments <- treatment_choices[-idx]
       lapply(seq_along(other_treatments), FUN = function(j) {
-        disable(selector = paste0("#treatment_selected input[value='", other_treatments[[j]], "']"))
+        disable(
+          selector = paste0(
+            "#treatment_selected input[value='",
+            other_treatments[[j]],
+            "']"
+          )
+        )
       })
     } else {
       enable(id = "treatment_selected")
@@ -1855,7 +2010,7 @@ server <- function(input, output, session) {
   observe({
     # add invalidate later so that the background class is
     # applied after the application startup
-    invalidateLater(1000, session)
+    invalidateLater(1000)
     if (!is_empty(input$background_choice)) {
       if (input$background_choice == "rat") {
         addClass(id = "network_cap", class = "network_caprat")
@@ -1873,14 +2028,18 @@ server <- function(input, output, session) {
 
   # prevent user from selecting multiple background
   observe({
-    if (is.element("rat", input$background_choice) &&
-        !is.element("human", input$background_choice)) {
+    if (
+      is.element("rat", input$background_choice) &&
+        !is.element("human", input$background_choice)
+    ) {
       disable(selector = "#background_choice input[value='human']")
     } else {
       enable(selector = "#background_choice input[value='human']")
     }
-    if (is.element("human", input$background_choice) &&
-        !is.element("rat", input$background_choice)) {
+    if (
+      is.element("human", input$background_choice) &&
+        !is.element("rat", input$background_choice)
+    ) {
       disable(selector = "#background_choice input[value='rat']")
     } else {
       enable(selector = "#background_choice input[value='rat']")
@@ -1894,11 +2053,10 @@ server <- function(input, output, session) {
       updatePrettyCheckboxGroup(
         session,
         inputId = "network_Ca_choice",
-        selected = c("Ca","PO4", "PTH", "D3", "FGF23")
+        selected = c("Ca", "PO4", "PTH", "D3", "FGF23")
       )
     }
   })
-
 
   # delete compiled files right after session is closed...
   session$onSessionEnded(function() {

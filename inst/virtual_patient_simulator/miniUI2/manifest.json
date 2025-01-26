@@ -16,22 +16,16 @@
       "description": {
         "Package": "CaPO4Sim",
         "Type": "Package",
-        "Title": "A Virtual Patient Simulator in the Context of Calcium and\nPhosphate Homeostasis",
+        "Title": "A Virtual Patient Simulator in the Context of Calcium and Phosphate Homeostasis",
         "Version": "0.2.1",
-        "Authors@R": "c(\n    person(\"David\", \"Granjon\", role = c(\"aut\", \"cre\", \"cph\"), email = \"dgranjon@ymail.com\"),\n    person(\"Diane\", \"de Zélicourt\", role = \"cph\"),\n    person(\"Vartan\", \"Kurtcuoglu\", role = \"cph\"),\n    person(\"Olivier\", \"Bonny\", role = \"cph\"),\n    person(\"François\", \"Verrey\", role = \"cph\"),\n    person(family = \"University of Lausanne\", role = \"fnd\"),\n    person(family = \"University of Zurich\", role = \"fnd\"),\n    person(family = \"Kidney NCCR.CH\", role = \"fnd\"),\n    person(family = \"The Interface Group\", role = \"cph\", comment = \"Hosting Group\"),\n    person(family = \"RinteRface\", role = \"cph\", comment = \"R/HTML Templates\")\n    )",
+        "Authors@R": "c(\nperson(\"David\", \"Granjon\", role = c(\"aut\", \"cre\", \"cph\"), email = \"dgranjon@ymail.com\"),\nperson(\"Diane\", \"de Zélicourt\", role = \"cph\"),\nperson(\"Vartan\", \"Kurtcuoglu\", role = \"cph\"),\nperson(\"Olivier\", \"Bonny\", role = \"cph\"),\nperson(\"François\", \"Verrey\", role = \"cph\"),\nperson(family = \"University of Lausanne\", role = \"fnd\"),\nperson(family = \"University of Zurich\", role = \"fnd\"),\nperson(family = \"Kidney NCCR.CH\", role = \"fnd\"),\nperson(family = \"The Interface Group\", role = \"cph\", comment = \"Hosting Group\"),\nperson(family = \"RinteRface\", role = \"cph\", comment = \"R/HTML Templates\")\n)",
         "Maintainer": "David Granjon <dgranjon@ymail.com>",
-        "Description": "Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps, \n    building upon on a previously published mathematical model written in C, \n    to ensure efficient computations. The underlying model is accessible\n    here <https://pubmed.ncbi.nlm.nih.gov/28747359/)>.\n    The first application explores the fundamentals of Ca-Pi homeostasis, \n    while the second provides interactive case studies for in-depth exploration of the topic, \n    thereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation.",
-        "Imports": "shiny, shinyjs, shinyWidgets, shinyjqui, plotly, rintrojs,\nshinycssloaders, visNetwork, purrr, DT, magrittr, utils",
-        "Suggests": "htmltools, shinydashboard, shinydashboardPlus",
+        "Description": "Explore calcium (Ca) and phosphate (Pi) homeostasis with two novel 'Shiny' apps,\nbuilding upon on a previously published mathematical model written in C,\nto ensure efficient computations. The underlying model is accessible\nhere <https://pubmed.ncbi.nlm.nih.gov/28747359/)>.\nThe first application explores the fundamentals of Ca-Pi homeostasis,\nwhile the second provides interactive case studies for in-depth exploration of the topic,\nthereby seeking to foster student engagement and an integrative understanding of Ca-Pi regulation.",
+        "Imports": "shiny,\nshinyjs,\nshinyWidgets,\nshinyjqui,\nplotly,\nrintrojs,\nshinycssloaders,\nvisNetwork,\npurrr,\nDT,\nmagrittr,\nutils",
+        "Suggests": "htmltools,\nshinydashboard,\nshinydashboardPlus",
         "License": "GPL-3",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.2",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-08-18 13:30:12 UTC; davidgranjon",
-        "Author": "David Granjon [aut, cre, cph],\n  Diane de Zélicourt [cph],\n  Vartan Kurtcuoglu [cph],\n  Olivier Bonny [cph],\n  François Verrey [cph],\n  University of Lausanne [fnd],\n  University of Zurich [fnd],\n  Kidney NCCR.CH [fnd],\n  The Interface Group [cph] (Hosting Group),\n  RinteRface [cph] (R/HTML Templates)",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-08-18 13:50:02 UTC",
-        "Built": "R 4.4.0; ; 2024-08-19 04:23:24 UTC; unix"
+        "RoxygenNote": "7.3.2"
       }
     },
     "DT": {
@@ -2188,8 +2182,8 @@
       }
     },
     "shinyMobile": {
-      "Source": "CRAN",
-      "Repository": "https://rspm.cynkra.com/prod-cran/latest",
+      "Source": "github",
+      "Repository": null,
       "description": {
         "Package": "shinyMobile",
         "Type": "Package",
@@ -2209,10 +2203,20 @@
         "Roxygen": "list(markdown = TRUE)",
         "Config/testthat/parallel": "true",
         "Config/testthat/edition": "3",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteRepo": "shinyMobile",
+        "RemoteUsername": "RinteRface",
+        "RemoteRef": "HEAD",
+        "RemoteSha": "90e09384c040ba69c14293a49fc182e8d6ef26a8",
+        "GithubRepo": "shinyMobile",
+        "GithubUsername": "RinteRface",
+        "GithubRef": "HEAD",
+        "GithubSHA1": "90e09384c040ba69c14293a49fc182e8d6ef26a8",
         "NeedsCompilation": "no",
-        "Packaged": "2024-10-04 09:02:36 UTC; davidgranjon",
+        "Packaged": "2025-01-26 22:48:32 UTC; davidgranjon",
         "Author": "David Granjon [aut, cre],\n  Veerle van Leemput [aut],\n  AthlyticZ [fnd],\n  Victor Perrier [aut],\n  John Coene [ctb],\n  Isabelle Rudolf [aut],\n  Dieter Menne [ctb],\n  Marvelapp [ctb, cph] (device.css wrappers),\n  Vladimir Kharlampidi [ctb, cph] (Framework7 HTML template)",
-        "Built": "R 4.4.0; ; 2024-10-04 09:02:37 UTC; unix"
+        "Built": "R 4.4.0; ; 2025-01-26 22:48:33 UTC; unix"
       }
     },
     "shinyWidgets": {
@@ -2840,7 +2844,7 @@
   },
   "files": {
     "body.R": {
-      "checksum": "7e2d510ca95a5ddac21848686c3889e9"
+      "checksum": "d931265644f8a80e9fb93070dbef9934"
     },
     "calc_change.R": {
       "checksum": "149d8f44a1b6bbefce1fc616258e3783"
@@ -2855,7 +2859,7 @@
       "checksum": "6b657e5369a1eb780943831a6ae0dbd2"
     },
     "footer.R": {
-      "checksum": "49f3d96489aba767e83f093c4cf18dcc"
+      "checksum": "61e1f6c56728313548f029ce886bc5b4"
     },
     "generate_questions.R": {
       "checksum": "0d3ae0ab6b87d6b25c5e6f68836e3735"
@@ -2867,13 +2871,13 @@
       "checksum": "4cb8f2562a6f2f3e2da928df829b7df5"
     },
     "global.R": {
-      "checksum": "0968bdc2b6704921349d272cc86665b2"
+      "checksum": "83ca10c5436d6259795c6079b69a9fe1"
     },
     "model_utils.R": {
       "checksum": "ed15ea269f41699a62bb5899b0417fe0"
     },
     "navbar.R": {
-      "checksum": "7842a3b5c464db3ef88d3ba14d9474a1"
+      "checksum": "a0d95c7483994d2243081fd615db539d"
     },
     "networks.R": {
       "checksum": "7a9626a161d15514de4ed61e93d92f35"
@@ -2885,16 +2889,16 @@
       "checksum": "8e4aaf5af05259e693d4dd0f092b1568"
     },
     "rightPanel.R": {
-      "checksum": "b2bae7571ef4925f79734b49edd33366"
+      "checksum": "ab21bfcdcd83337b693fee84d7b80e55"
     },
     "server.R": {
-      "checksum": "bfe336d7aab08295d7a873b195874143"
+      "checksum": "1ea57b144f250261455ef85252999bf7"
     },
     "sidebar.R": {
       "checksum": "2605f4904b275cbb494844a8324f102e"
     },
     "ui.R": {
-      "checksum": "af4c543c29e57c394e735b2665cb6b7d"
+      "checksum": "b9d5bef88ddf04c6a33d460351cab35d"
     },
     "www/case_studies_img/patient1-1.svg": {
       "checksum": "81e0f312e2e3a7ef45f285a1f203d451"

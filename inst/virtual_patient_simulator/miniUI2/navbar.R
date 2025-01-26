@@ -10,12 +10,9 @@ fullScreenUI <- function() {
   )
 }
 
-
 navbar <- f7Navbar(
   title = "Virtual Patient Simulator",
-  hairline = TRUE,
-  shadow = TRUE,
-  left_panel = TRUE,
-  right_panel = TRUE,
+  leftPanel = TRUE,
+  rightPanel = TRUE,
   subNavbar = NULL
 )

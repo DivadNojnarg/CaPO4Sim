@@ -1,8 +1,10 @@
 content <- f7Tabs(
   animated = TRUE,
+  id = "tabs",
   #swipeable = TRUE,
   f7Tab(
-    tabName = "Patient Profile",
+    title = "Patient Profile",
+    tabName = "Patient_Profile",
     icon = f7Icon("archivebox"),
     active = TRUE,
     uiOutput("patient_info"),
@@ -32,7 +34,7 @@ content <- f7Tabs(
           "<img style=\"height: 100%; width: 100%; object-fit: contain\"
              border=\"0\" align=\"center\"  src=\"logos/about_us.jpg\"/>"
         )
-      )#,
+      ) #,
       #HTML(paste(tags$img(src = "about_us.jpg")))
     ),
     footer

@@ -9,18 +9,17 @@
 #'
 #' @export
 generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
-
   visNetwork::visNetwork(
     nodes,
     edges,
     width = "100%",
-    height = "100%") %>%
+    height = "100vh"
+  ) %>%
     visNetwork::visNodes(
-      shapeProperties =
-        list(
-          useBorderWithImage = FALSE,
-          interpolation = FALSE
-        )
+      shapeProperties = list(
+        useBorderWithImage = FALSE,
+        interpolation = FALSE
+      )
     ) %>%
     # put shadow on false
     visNetwork::visEdges(
@@ -72,7 +71,6 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
     visNetwork::visPhysics(stabilization = TRUE, enabled = usephysics)
 }
 
-
 #' @title CaPO4 Nodes Generator
 #'
 #' @description Generate nodes for the CaPO4 network
@@ -86,9 +84,15 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
 #' @param hormones_nodes_size Shiny input for hormones node size. See \link{networkOptions}..
 #'
 #' @export
-generate_nodes <- function(components, organs, regulations, background, diseases,
-                           organs_nodes_size, hormones_nodes_size) {
-
+generate_nodes <- function(
+  components,
+  organs,
+  regulations,
+  background,
+  diseases,
+  organs_nodes_size,
+  hormones_nodes_size
+) {
   req(organs_nodes_size(), hormones_nodes_size())
 
   data.frame(
@@ -102,49 +106,158 @@ generate_nodes <- function(components, organs, regulations, background, diseases
       "image",
       "image",
       "image",
-      ifelse(regulations(),"image","text"),
-      ifelse(regulations(),"image","text"),
+      ifelse(regulations(), "image", "text"),
+      ifelse(regulations(), "image", "text"),
       "image",
-      ifelse(regulations(),"image","text"),
-      ifelse(regulations(),"image","text"),
-      ifelse(regulations(),"image","text"),
-      ifelse(regulations(),"image","text"),
-      ifelse(regulations(),"image","text")
+      ifelse(regulations(), "image", "text"),
+      ifelse(regulations(), "image", "text"),
+      ifelse(regulations(), "image", "text"),
+      ifelse(regulations(), "image", "text"),
+      ifelse(regulations(), "image", "text")
     ),
     image = c(
-      "CaPO4_network/intestine.svg", "CaPO4_network/plasma.svg",
-      "CaPO4_network/rapid-bone.svg", "CaPO4_network/bone.svg",
-      "CaPO4_network/kidney.svg", "CaPO4_network/kidney_zoom1.svg",
-      "CaPO4_network/urine.svg", "CaPO4_network/cells.svg",
-      "CaPO4_network/Cap.svg", "CaPO4_network/PO4.svg",
+      "CaPO4_network/intestine.svg",
+      "CaPO4_network/plasma.svg",
+      "CaPO4_network/rapid-bone.svg",
+      "CaPO4_network/bone.svg",
+      "CaPO4_network/kidney.svg",
+      "CaPO4_network/kidney_zoom1.svg",
+      "CaPO4_network/urine.svg",
+      "CaPO4_network/cells.svg",
+      "CaPO4_network/Cap.svg",
+      "CaPO4_network/PO4.svg",
       if (is.null(background())) {
         "CaPO4_network/parathyroid_gland.svg"
       } else if (background() == "rat") {
         "CaPO4_network/parathyroid_gland.svg"
       } else {
         "CaPO4_network/parathyroid_gland_human.svg"
-      }
-      ,"CaPO4_network/PTH.svg", "CaPO4_network/D3.svg",
-      "CaPO4_network/D3.svg", "CaPO4_network/D3.svg",
+      },
+      "CaPO4_network/PTH.svg",
+      "CaPO4_network/D3.svg",
+      "CaPO4_network/D3.svg",
+      "CaPO4_network/D3.svg",
       "CaPO4_network/FGF23.svg"
     ),
     label = c(rep("", 6), rep("", 10)),
     fixed = list("x" = TRUE, "y" = TRUE),
     # node position tighlty depends on the selected background
     x = if (is.null(background())) {
-      c(38, -65, -65, -256, 180, 360, 170, -190, 290, 320, 41, -418, 330, 385, -386, 481)
+      c(
+        38,
+        -65,
+        -65,
+        -256,
+        180,
+        360,
+        170,
+        -190,
+        290,
+        320,
+        41,
+        -418,
+        330,
+        385,
+        -386,
+        481
+      )
     } else if (background() == "rat") {
-      c(38, -65, -65, -256, 180, 360, 170, -190, 290, 320, 41, -418, 330, 385, -386, 481)
+      c(
+        38,
+        -65,
+        -65,
+        -256,
+        180,
+        360,
+        170,
+        -190,
+        290,
+        320,
+        41,
+        -418,
+        330,
+        385,
+        -386,
+        481
+      )
     } else {
-      c(13, -80, -185, -322, 157, 333, 7, -175, 290, 320, 9, -466, 330, 385, -386, 481)
+      c(
+        13,
+        -80,
+        -185,
+        -322,
+        157,
+        333,
+        7,
+        -175,
+        290,
+        320,
+        9,
+        -466,
+        330,
+        385,
+        -386,
+        481
+      )
     },
 
     y = if (is.null(background())) {
-      c(-150, 195, 472, 460, 0, 230, 506, 0, -317, -633, -452, 240, -452, 0, -106, -452)
+      c(
+        -150,
+        195,
+        472,
+        460,
+        0,
+        230,
+        506,
+        0,
+        -317,
+        -633,
+        -452,
+        240,
+        -452,
+        0,
+        -106,
+        -452
+      )
     } else if (background() == "rat") {
-      c(-150, 195, 472, 460, 0, 230, 506, 0, -317, -633, -452, 240, -452, 0, -106, -452)
+      c(
+        -150,
+        195,
+        472,
+        460,
+        0,
+        230,
+        506,
+        0,
+        -317,
+        -633,
+        -452,
+        240,
+        -452,
+        0,
+        -106,
+        -452
+      )
     } else {
-      c(23, 320, 524, 214, 189, 439, 581, 88, -317, -633, -449, 400, -452, 0, -106, -452)
+      c(
+        23,
+        320,
+        524,
+        214,
+        189,
+        439,
+        581,
+        88,
+        -317,
+        -633,
+        -449,
+        400,
+        -452,
+        0,
+        -106,
+        -452
+      )
     },
 
     color = list(
@@ -165,49 +278,97 @@ generate_nodes <- function(components, organs, regulations, background, diseases
     hidden = c(
       ## organs ##
       if (organs()) {
-        c(rep(FALSE, 7),
+        c(
+          rep(FALSE, 7),
           # PO4 Cells
-          ifelse(is.element("PO4", components()), ifelse(is.element("Ca", components()), FALSE, FALSE), TRUE))
+          ifelse(
+            is.element("PO4", components()),
+            ifelse(is.element("Ca", components()), FALSE, FALSE),
+            TRUE
+          )
+        )
       } else {
         rep(TRUE, 8)
       },
       ## Hormones ##
       # Ca plasma
-      ifelse(regulations(), ifelse(is.element("Ca", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(is.element("Ca", components()), FALSE, TRUE),
+        TRUE
+      ),
       # PO4 plasma
-      ifelse(regulations(),
-             ifelse(is.element("PO4", components()) &
-                      (is.element("D3", components()) |
-                         is.element("PTH", components()) |
-                         is.element("FGF23", components())),
-                    FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("PO4", components()) &
+            (
+              is.element("D3", components()) |
+                is.element("PTH", components()) |
+                is.element("FGF23", components())
+            ),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # PTHg
-      ifelse(regulations(), ifelse(is.element("PTH", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(is.element("PTH", components()), FALSE, TRUE),
+        TRUE
+      ),
       # PTH plasma
       TRUE,
       # ifelse(organs(),
       #        ifelse(regulations(),
       #               ifelse(is.element("PTH", components()), FALSE, TRUE), TRUE), TRUE),
       # D3 regulation
-      ifelse(regulations(),
-             ifelse(is.element("D3", components()) &
-                      (is.element("PO4", components()) |
-                         is.element("Ca", components()) |
-                         is.element("PTH", components()) |
-                         is.element("FGF23", components())),
-                    FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("D3", components()) &
+            (
+              is.element("PO4", components()) |
+                is.element("Ca", components()) |
+                is.element("PTH", components()) |
+                is.element("FGF23", components())
+            ),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 plasma
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("D3", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("D3", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 plasma
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("D3", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("D3", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # FGF23
-      ifelse(regulations(), ifelse(is.element("FGF23", components()), FALSE, TRUE), TRUE)
+      ifelse(
+        regulations(),
+        ifelse(is.element("FGF23", components()), FALSE, TRUE),
+        TRUE
+      )
     ),
     stringsAsFactors = FALSE
   )
 }
-
-
 
 #' @title CaPO4 Edges Generator
 #'
@@ -221,9 +382,14 @@ generate_nodes <- function(components, organs, regulations, background, diseases
 #' @param hormones_edges_size Shiny input for hormones edges size. See \link{networkOptions}.
 #'
 #' @export
-generate_edges <- function(components, organs, regulations, diseases,
-                           organs_edges_size, hormones_edges_size) {
-
+generate_edges <- function(
+  components,
+  organs,
+  regulations,
+  diseases,
+  organs_edges_size,
+  hormones_edges_size
+) {
   req(organs_edges_size(), hormones_edges_size())
   data.frame(
     from = c(
@@ -247,7 +413,11 @@ generate_edges <- function(components, organs, regulations, diseases,
       } else {
         2
       },
-      rep(3, 2), 4, 2, rep(5, 2), rep(5, 2),
+      rep(3, 2),
+      4,
+      2,
+      rep(5, 2),
+      rep(5, 2),
       if (diseases$php1()) {
         2
       } else if (diseases$hypopara()) {
@@ -257,7 +427,14 @@ generate_edges <- function(components, organs, regulations, diseases,
       } else {
         2
       },
-      rep(9, 3), rep(10, 3), rep(11, 2), 11, rep(13, 2), rep(14, 2), rep(15, 2), rep(16, 2)
+      rep(9, 3),
+      rep(10, 3),
+      rep(11, 2),
+      11,
+      rep(13, 2),
+      rep(14, 2),
+      rep(15, 2),
+      rep(16, 2)
     ),
 
     to = c(
@@ -280,7 +457,11 @@ generate_edges <- function(components, organs, regulations, diseases,
       } else {
         3
       },
-      rep(4, 2), 2, 5, rep(2, 2), rep(7, 2),
+      rep(4, 2),
+      2,
+      5,
+      rep(2, 2),
+      rep(7, 2),
       if (diseases$php1()) {
         8
       } else if (diseases$hypopara()) {
@@ -290,8 +471,23 @@ generate_edges <- function(components, organs, regulations, diseases,
       } else {
         8
       },
-      11, 5,
-      13, 11, 13, 16, 5, 13, 4, 11, 16, 14, 5, 4, 1, 13, 5
+      11,
+      5,
+      13,
+      11,
+      13,
+      16,
+      5,
+      13,
+      4,
+      11,
+      16,
+      14,
+      5,
+      4,
+      1,
+      13,
+      5
     ),
 
     arrows = list(
@@ -299,9 +495,14 @@ generate_edges <- function(components, organs, regulations, diseases,
         enabled = c(
           TRUE,
           # show or hode arrow symbol depending on the net flux result
-          rep(if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) TRUE else FALSE, 2),
+          rep(
+            if (diseases$php1() | diseases$hypopara() | diseases$hypoD3())
+              TRUE else FALSE,
+            2
+          ),
           rep(TRUE, 8),
-          if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) TRUE else FALSE,
+          if (diseases$php1() | diseases$hypopara() | diseases$hypoD3())
+            TRUE else FALSE,
           rep(TRUE, 17)
         ),
         scaleFactor = 1,
@@ -406,16 +607,62 @@ generate_edges <- function(components, organs, regulations, diseases,
       ## organ arrows ##
       if (organs()) {
         c(
-          ifelse(is.element("Ca", components()) | is.element("PO4", components()), FALSE, TRUE),
-          ifelse(is.element("Ca", components()), ifelse(is.element("PO4", components()), FALSE, FALSE), TRUE),
-          ifelse(is.element("PO4", components()), ifelse(is.element("Ca", components()), FALSE, FALSE), TRUE),
-          ifelse(is.element("Ca", components()), ifelse(is.element("PO4", components()), FALSE, FALSE), TRUE),
-          ifelse(is.element("PO4", components()), ifelse(is.element("Ca", components()), FALSE, FALSE), TRUE),
-          rep(ifelse(is.element("Ca", components()) | is.element("PO4", components()), FALSE, TRUE), 2),
-          ifelse(is.element("Ca", components()), ifelse(is.element("PO4", components()), FALSE, FALSE), TRUE),
-          ifelse(is.element("PO4", components()), ifelse(is.element("Ca", components()), FALSE, FALSE), TRUE),
-          ifelse(is.element("Ca", components()), ifelse(is.element("PO4", components()), FALSE, FALSE), TRUE),
-          rep(ifelse(is.element("PO4", components()), ifelse(is.element("Ca", components()), FALSE, FALSE), TRUE), 2)
+          ifelse(
+            is.element("Ca", components()) | is.element("PO4", components()),
+            FALSE,
+            TRUE
+          ),
+          ifelse(
+            is.element("Ca", components()),
+            ifelse(is.element("PO4", components()), FALSE, FALSE),
+            TRUE
+          ),
+          ifelse(
+            is.element("PO4", components()),
+            ifelse(is.element("Ca", components()), FALSE, FALSE),
+            TRUE
+          ),
+          ifelse(
+            is.element("Ca", components()),
+            ifelse(is.element("PO4", components()), FALSE, FALSE),
+            TRUE
+          ),
+          ifelse(
+            is.element("PO4", components()),
+            ifelse(is.element("Ca", components()), FALSE, FALSE),
+            TRUE
+          ),
+          rep(
+            ifelse(
+              is.element("Ca", components()) | is.element("PO4", components()),
+              FALSE,
+              TRUE
+            ),
+            2
+          ),
+          ifelse(
+            is.element("Ca", components()),
+            ifelse(is.element("PO4", components()), FALSE, FALSE),
+            TRUE
+          ),
+          ifelse(
+            is.element("PO4", components()),
+            ifelse(is.element("Ca", components()), FALSE, FALSE),
+            TRUE
+          ),
+          ifelse(
+            is.element("Ca", components()),
+            ifelse(is.element("PO4", components()), FALSE, FALSE),
+            TRUE
+          ),
+          rep(
+            ifelse(
+              is.element("PO4", components()),
+              ifelse(is.element("Ca", components()), FALSE, FALSE),
+              TRUE
+            ),
+            2
+          )
         )
       } else {
         rep(TRUE, 12)
@@ -423,39 +670,175 @@ generate_edges <- function(components, organs, regulations, diseases,
 
       ## hormonal regulations arrows ##
       # Ca regulation to PTH
-      ifelse(regulations(), ifelse(is.element("PTH", components()) & is.element("Ca", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("PTH", components()) & is.element("Ca", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # Ca to Kidney
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("Ca", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("Ca", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # Ca regulation to D3
-      ifelse(regulations(), ifelse(is.element("D3", components()) & is.element("Ca", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("D3", components()) & is.element("Ca", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # PO4 regulation to PTH
-      ifelse(regulations(), ifelse(is.element("PTH", components()) & is.element("PO4", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("PTH", components()) & is.element("PO4", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # PO4 regulation to D3
-      ifelse(regulations(), ifelse(is.element("D3", components()) & is.element("PO4", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("D3", components()) & is.element("PO4", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # PO4 regulation to FGF23
-      ifelse(regulations(), ifelse(is.element("FGF23", components()) & is.element("PO4", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("FGF23", components()) & is.element("PO4", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # PTH regulation to kidney
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("PTH", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("PTH", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # PTH regulation to D3
-      ifelse(regulations(), ifelse(is.element("D3", components()) & is.element("PTH", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("D3", components()) & is.element("PTH", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # PTH regulation to bone
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("PTH", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("PTH", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 regulation to PTH
-      ifelse(regulations(), ifelse(is.element("PTH", components()) & is.element("D3", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("PTH", components()) & is.element("D3", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 regulation to FGF23
-      ifelse(regulations(), ifelse(is.element("FGF23", components()) & is.element("D3", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("FGF23", components()) & is.element("D3", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 regulation to D3
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("D3", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("D3", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 regulation to kidney
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("D3", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("D3", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 regulation to bone
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("D3", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("D3", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # D3 regulation to intestine
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("D3", components()), FALSE, TRUE), TRUE), TRUE),
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("D3", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      ),
       # FGF regulation to D3
-      ifelse(regulations(), ifelse(is.element("D3", components()) & is.element("FGF23", components()), FALSE, TRUE), TRUE),
+      ifelse(
+        regulations(),
+        ifelse(
+          is.element("D3", components()) & is.element("FGF23", components()),
+          FALSE,
+          TRUE
+        ),
+        TRUE
+      ),
       # FGF regulation to kidney
-      ifelse(organs(), ifelse(regulations(), ifelse(is.element("FGF23", components()), FALSE, TRUE), TRUE), TRUE)
+      ifelse(
+        organs(),
+        ifelse(
+          regulations(),
+          ifelse(is.element("FGF23", components()), FALSE, TRUE),
+          TRUE
+        ),
+        TRUE
+      )
     ),
     stringsAsFactors = FALSE
   )
